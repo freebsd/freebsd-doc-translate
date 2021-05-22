@@ -1,0 +1,985 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR The FreeBSD Project
+# This file is distributed under the same license as the FreeBSD Documentation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreeBSD Documentation VERSION\n"
+"POT-Creation-Date: 2021-02-21 18:54-0300\n"
+"PO-Revision-Date: 2021-04-11 12:24+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Chinese (Simplified) <https://translate-dev.freebsd.org/"
+"projects/documentation/bookshandbookaudit_index/zh_CN/>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.5.2\n"
+
+#. type: YAML Front Matter: part
+#: documentation/content/en/books/handbook/audit/_index.adoc:1
+#, no-wrap
+msgid "Part III. System Administration"
+msgstr ""
+
+#. type: YAML Front Matter: title
+#: documentation/content/en/books/handbook/audit/_index.adoc:1
+#, no-wrap
+msgid "Chapter 17. Security Event Auditing"
+msgstr ""
+
+#. type: Title =
+#: documentation/content/en/books/handbook/audit/_index.adoc:9
+#, no-wrap
+msgid "Security Event Auditing"
+msgstr "安全事件审计"
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/audit/_index.adoc:45
+#, no-wrap
+msgid "Synopsis"
+msgstr "简介"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:48
+msgid ""
+"The FreeBSD operating system includes support for security event "
+"auditing. Event auditing supports reliable, fine-grained, and configurable "
+"logging of a variety of security-relevant system events, including logins, "
+"configuration changes, and file and network access. These log records can be "
+"invaluable for live system monitoring, intrusion detection, and postmortem "
+"analysis. FreeBSD implements Sun(TM)'s published Basic Security Module (BSM) "
+"Application Programming Interface (API) and file format, and is "
+"interoperable with the Solaris(TM) and Mac OS(R) X audit implementations."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:50
+msgid ""
+"This chapter focuses on the installation and configuration of event "
+"auditing. It explains audit policies and provides an example audit "
+"configuration."
+msgstr "这一章的重点是安装和配置事件审计。 它介绍了事件策略， 并提供了一个审计的配置例子。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:52
+msgid "After reading this chapter, you will know:"
+msgstr "读完本章节，你将会知道："
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:54
+msgid "What event auditing is and how it works."
+msgstr "事件审计是什么， 以及它如何工作。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:55
+msgid "How to configure event auditing on FreeBSD for users and processes."
+msgstr "如何在 FreeBSD 上为用户和进程配置事件审计。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:56
+msgid "How to review the audit trail using the audit reduction and review tools."
+msgstr "如何使用审计记录摘要和复审工具来对审计记录进行复审。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:58
+msgid "Before reading this chapter, you should:"
+msgstr "在阅读这个章节之前，您应当："
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:60
+msgid ""
+"Understand UNIX(R) and FreeBSD basics (crossref:basics[basics,FreeBSD "
+"Basics])."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:61
+msgid ""
+"Be familiar with the basics of kernel configuration/compilation "
+"(crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel])."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:62
+msgid ""
+"Have some familiarity with security and how it pertains to FreeBSD "
+"(crossref:security[security,Security])."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:67
+#, fuzzy
+msgid ""
+"The audit facility has some known limitations. Not all security-relevant "
+"system events are auditable and some login mechanisms, such as Xorg-based "
+"display managers and third-party daemons, do not properly configure auditing "
+"for user login sessions."
+msgstr ""
+"审计机制中存在一些已知的限制，例如并不是所有与安全有关的系统事件都可以审计，另外某些登录机制，例如基于 <application>Xorg</"
+"application> 显示管理器，以及第三方服务的登录机制，都不会在用户的登录会话中正确配置审计。"
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:69
+#, fuzzy
+msgid ""
+"The security event auditing facility is able to generate very detailed logs "
+"of system activity. On a busy system, trail file data can be very large when "
+"configured for high detail, exceeding gigabytes a week in some "
+"configurations. Administrators should take into account the disk space "
+"requirements associated with high volume audit configurations. For example, "
+"it may be desirable to dedicate a file system to [.filename]#/var/audit# so "
+"that other file systems are not affected if the audit file system becomes "
+"full."
+msgstr ""
+"安全审计机制能够对系统活动生成非常详细的记录信息。在繁忙的系统中，记帐数据如果配置不当会非常的大，并在一周内迅速超过几个 GB "
+"的尺寸。管理员应考虑审计配置中的导致磁盘空间需求的这些问题。例如，可能需要为 <filename>/var/audit</filename> "
+"目录单独分配一个文件系统， 以防止在审计日志所用的文件系统被填满时影响其它文件系统。"
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/audit/_index.adoc:72
+#, no-wrap
+msgid "Key Terms"
+msgstr "本章出现的重要术语"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:75
+msgid "The following terms are related to security event auditing:"
+msgstr "本章中的一些关键术语："
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:77
+msgid ""
+"_event_: an auditable event is any event that can be logged using the audit "
+"subsystem. Examples of security-relevant events include the creation of a "
+"file, the building of a network connection, or a user logging in. Events are "
+"either \"attributable\", meaning that they can be traced to an authenticated "
+"user, or \"non-attributable\". Examples of non-attributable events are any "
+"events that occur before authentication in the login process, such as bad "
+"password attempts."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:78
+msgid ""
+"_class_: a named set of related events which are used in selection "
+"expressions. Commonly used classes of events include \"file creation\" (fc), "
+"\"exec\" (ex), and \"login_logout\" (lo)."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:79
+msgid ""
+"_record_: an audit log entry describing a security event. Records contain a "
+"record event type, information on the subject (user) performing the action, "
+"date and time information, information on any objects or arguments, and a "
+"success or failure condition."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:80
+#, fuzzy
+msgid ""
+"_trail_: a log file consisting of a series of audit records describing "
+"security events. Trails are in roughly chronological order with respect to "
+"the time events completed. Only authorized processes are allowed to commit "
+"records to the audit trail."
+msgstr ""
+"<emphasis>账目 (trail)</emphasis>：审计账目，或日志文件，包含了一系列描述安全事件的审计记录。典型情况下，审计账目基本上是以事"
+"件发生的时间顺序记录的。只有获得授权的进程，才能够向审计账目中提交记录。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:81
+msgid ""
+"_selection expression_: a string containing a list of prefixes and audit "
+"event class names used to match events."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:82
+#, fuzzy
+msgid ""
+"_preselection_: the process by which the system identifies which events are "
+"of interest to the administrator. The preselection configuration uses a "
+"series of selection expressions to identify which classes of events to audit "
+"for which users, as well as global settings that apply to both authenticated "
+"and unauthenticated processes."
+msgstr ""
+"<emphasis>预选 "
+"(preselection)</emphasis>：系统通过这一过程来识别事件是否是管理员所感兴趣的，从而避免为他们不感兴趣的事件生成记录。 "
+"预选配置使用一系列选择表达式，用以识别事件类别、 要审计的用户，以及适用于验证过用户身份，以及未验证用户身份的进程的全局配置。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:83
+#, fuzzy
+msgid ""
+"_reduction_: the process by which records from existing audit trails are "
+"selected for preservation, printing, or analysis. Likewise, the process by "
+"which undesired audit records are removed from the audit trail. Using "
+"reduction, administrators can implement policies for the preservation of "
+"audit data. For example, detailed audit trails might be kept for one month, "
+"but after that, trails might be reduced in order to preserve only login "
+"information for archival purposes."
+msgstr ""
+"<emphasis>浓缩 (reduction)</emphasis>：从现有的审计记帐中筛选出用于保留、打印或分析的过程。 "
+"除此之外，它也表示从审计记帐中删去不需要的审计记录的过程。 通过使用浓缩操作，管理员可以实现预留审计数据的策略。 "
+"例如，详细的审计记帐信息，可能会保留一个月之久，但在这之后，则对这些记帐信息执行浓缩操作，只保留登录信息用于存档。"
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/audit/_index.adoc:85
+#, no-wrap
+msgid "Audit Configuration"
+msgstr "对审计进行配置"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:88
+msgid ""
+"User space support for event auditing is installed as part of the base "
+"FreeBSD operating system. Kernel support is available in the "
+"[.filename]#GENERIC# kernel by default, and man:auditd[8] can be enabled by "
+"adding the following line to [.filename]#/etc/rc.conf#:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:92
+#, fuzzy, no-wrap
+msgid "auditd_enable=\"YES\"\n"
+msgstr "auditd_enable=\"YES\"\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:95
+msgid "Then, start the audit daemon:"
+msgstr "在后台启动审计程序："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:99
+#, no-wrap
+msgid "# service auditd start\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:102
+msgid ""
+"Users who prefer to compile a custom kernel must include the following line "
+"in their custom kernel configuration file:"
+msgstr "如果您使用的是定制内核， 就必须在内核配置文件中明确指定希望添加这一支持："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:106
+#, fuzzy, no-wrap
+msgid "options\tAUDIT\n"
+msgstr "options\tAUDIT\n"
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/audit/_index.adoc:108
+#, no-wrap
+msgid "Event Selection Expressions"
+msgstr "事件筛选表达式"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:111
+msgid ""
+"Selection expressions are used in a number of places in the audit "
+"configuration to determine which events should be audited. Expressions "
+"contain a list of event classes to match. Selection expressions are "
+"evaluated from left to right, and two expressions are combined by appending "
+"one onto the other."
+msgstr ""
+"在审计配置文件中的许多地方会用到筛选表达式来确定哪些事件是需要审计的。 表达式中需要指定要匹配的事件类型， 并使用前缀指定是否应接受或忽略匹配的事件， "
+"此外， 还可以指定一个可选项指明匹配成功或失败的操作。 选择表达式是按从左到右的顺序计算的， 而对于两个表达式的情形， "
+"则是通过将后一个追加到前一个之后来实现的。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:113
+msgid "<<event-selection>> summarizes the default audit event classes:"
+msgstr ""
+
+#. type: Block title
+#: documentation/content/en/books/handbook/audit/_index.adoc:115
+#, no-wrap
+msgid "Default Audit Event Classes"
+msgstr "默认审计类别"
+
+#. type: Table
+#: documentation/content/en/books/handbook/audit/_index.adoc:201
+#, no-wrap
+msgid ""
+"| Class Name\n"
+"| Description\n"
+"| Action\n"
+"\n"
+"|all\n"
+"|all\n"
+"|Match all event classes.\n"
+"\n"
+"|aa\n"
+"|authentication and authorization\n"
+"|\n"
+"\n"
+"|ad\n"
+"|administrative\n"
+"|Administrative actions performed on the system as a whole.\n"
+"\n"
+"|ap\n"
+"|application\n"
+"|Application defined action.\n"
+"\n"
+"|cl\n"
+"|file close\n"
+"|Audit calls to the `close` system call.\n"
+"\n"
+"|ex\n"
+"|exec\n"
+"|Audit program execution. Auditing of command line arguments and "
+"environmental variables is controlled via man:audit_control[5] using the "
+"`argv` and `envv` parameters to the `policy` setting.\n"
+"\n"
+"|fa\n"
+"|file attribute access\n"
+"|Audit the access of object attributes such as man:stat[1] and "
+"man:pathconf[2].\n"
+"\n"
+"|fc\n"
+"|file create\n"
+"|Audit events where a file is created as a result.\n"
+"\n"
+"|fd\n"
+"|file delete\n"
+"|Audit events where file deletion occurs.\n"
+"\n"
+"|fm\n"
+"|file attribute modify\n"
+"|Audit events where file attribute modification occurs, such as by "
+"man:chown[8], man:chflags[1], and man:flock[2].\n"
+"\n"
+"|fr\n"
+"|file read\n"
+"|Audit events in which data is read or files are opened for reading.\n"
+"\n"
+"|fw\n"
+"|file write\n"
+"|Audit events in which data is written or files are written or modified.\n"
+"\n"
+"|io\n"
+"|ioctl\n"
+"|Audit use of the `ioctl` system call.\n"
+"\n"
+"|ip\n"
+"|ipc\n"
+"|Audit various forms of Inter-Process Communication, including POSIX pipes "
+"and System V IPC operations.\n"
+"\n"
+"|lo\n"
+"|login_logout\n"
+"|Audit man:login[1] and man:logout[1] events.\n"
+"\n"
+"|na\n"
+"|non attributable\n"
+"|Audit non-attributable events.\n"
+"\n"
+"|no\n"
+"|invalid class\n"
+"|Match no audit events.\n"
+"\n"
+"|nt\n"
+"|network\n"
+"|Audit events related to network actions such as man:connect[2] and "
+"man:accept[2].\n"
+"\n"
+"|ot\n"
+"|other\n"
+"|Audit miscellaneous events.\n"
+"\n"
+"|pc\n"
+"|process\n"
+"|Audit process operations such as man:exec[3] and man:exit[3].\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:204
+#, fuzzy
+msgid ""
+"These audit event classes may be customized by modifying the "
+"[.filename]#audit_class# and [.filename]#audit_event# configuration files."
+msgstr ""
+"这些审计事件， 可以通过修改 <filename>audit_class</filename> 和 <filename>audit_event</"
+"filename> 这两个配置文件来进行定制。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:206
+msgid ""
+"Each audit event class may be combined with a prefix indicating whether "
+"successful/failed operations are matched, and whether the entry is adding or "
+"removing matching for the class and type. <<event-prefixes>> summarizes the "
+"available prefixes:"
+msgstr ""
+
+#. type: Block title
+#: documentation/content/en/books/handbook/audit/_index.adoc:208
+#, no-wrap
+msgid "Prefixes for Audit Event Classes"
+msgstr "审计类的前缀"
+
+#. type: Table
+#: documentation/content/en/books/handbook/audit/_index.adoc:228
+#, no-wrap
+msgid ""
+"| Prefix\n"
+"| Action\n"
+"\n"
+"|+\n"
+"|Audit successful events in this class.\n"
+"\n"
+"|-\n"
+"|Audit failed events in this class.\n"
+"\n"
+"|^\n"
+"|Audit neither successful nor failed events in this class.\n"
+"\n"
+"|^+\n"
+"|Do not audit successful events in this class.\n"
+"\n"
+"|^-\n"
+"|Do not audit failed events in this class.\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:231
+msgid ""
+"If no prefix is present, both successful and failed instances of the event "
+"will be audited."
+msgstr "如果不存在前缀，则将审核事件的成功实例和失败实例。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:233
+msgid ""
+"The following example selection string selects both successful and failed "
+"login/logout events, but only successful execution events:"
+msgstr "下面例子中的筛选字符串表示筛选成功和失败的登录/注销事件， 而对执行事件， 则只审计成功的："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:237
+#, fuzzy, no-wrap
+msgid "lo,+ex\n"
+msgstr "lo,+ex\n"
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/audit/_index.adoc:239
+#, no-wrap
+msgid "Configuration Files"
+msgstr "配置文件"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:242
+#, fuzzy
+msgid ""
+"The following configuration files for security event auditing are found in "
+"[.filename]#/etc/security#:"
+msgstr "所有用于安全审计的配置文件，都放在 <filename>/etc/security</filename>："
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:244
+#, fuzzy
+msgid "[.filename]#audit_class#: contains the definitions of the audit classes."
+msgstr "<filename>audit_class</filename> - 包含对于审计类的定义。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:245
+#, fuzzy
+msgid ""
+"[.filename]#audit_control#: controls aspects of the audit subsystem, such as "
+"default audit classes, minimum disk space to leave on the audit log volume, "
+"and maximum audit trail size."
+msgstr ""
+"<filename>audit_control</filename> - 控制审计子系统的特性， 例如默认审计类、 在审计日志所在的卷上保留的最小空间、 "
+"审计日志的最大尺寸， 等等。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:246
+#, fuzzy
+msgid ""
+"[.filename]#audit_event#: textual names and descriptions of system audit "
+"events and a list of which classes each event is in."
+msgstr "<filename>audit_event</filename> - 文字化的系统审计事件名称和描述， 以及每个事件属于哪个类别。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:247
+#, fuzzy
+msgid ""
+"[.filename]#audit_user#: user-specific audit requirements to be combined "
+"with the global defaults at login."
+msgstr "<filename>audit_user</filename> - 针对特定用户的审计需求， 这些配置在登录时会与全局的默认值合并。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:248
+msgid ""
+"[.filename]#audit_warn#: a customizable shell script used by man:auditd[8] "
+"to generate warning messages in exceptional situations, such as when space "
+"for audit records is running low or when the audit trail file has been "
+"rotated."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:253
+msgid ""
+"Audit configuration files should be edited and maintained carefully, as "
+"errors in configuration may result in improper logging of events."
+msgstr "在编辑和维护审计配置文件时一定要小心， 因为配置文件中的错误会导致记录事件不正确。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:256
+#, fuzzy
+msgid ""
+"In most cases, administrators will only need to modify "
+"[.filename]#audit_control# and [.filename]#audit_user#. The first file "
+"controls system-wide audit properties and policies and the second file may "
+"be used to fine-tune auditing by user."
+msgstr ""
+"多数情况下， 在配置审计系统时， 管理员只需修改两个文件： <filename>audit_control</filename> 和 "
+"<filename>audit_user</filename>。 前者控制系统级的审计属性和策略， 而后者则用于针对具体的用户来微调。"
+
+#. type: Title ====
+#: documentation/content/en/books/handbook/audit/_index.adoc:258
+#, no-wrap
+msgid "The [.filename]#audit_control# File"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:261
+#, fuzzy
+msgid ""
+"A number of defaults for the audit subsystem are specified in "
+"[.filename]#audit_control#:"
+msgstr ""
+"<filename>audit_control</filename> 文件指定了一系列用于审计子系统的默认设置。 通过查看这个文件， "
+"我们可以看到下面的内容："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:272
+#, fuzzy, no-wrap
+msgid ""
+"dir:/var/audit\n"
+"dist:off\n"
+"flags:lo,aa\n"
+"minfree:5\n"
+"naflags:lo,aa\n"
+"policy:cnt,argv\n"
+"filesz:2M\n"
+"expire-after:10M\n"
+msgstr ""
+"dir:/var/audit\n"
+"dist:off\n"
+"flags:lo,aa\n"
+"minfree:5\n"
+"naflags:lo,aa\n"
+"policy:cnt,argv\n"
+"filesz:2M\n"
+"expire-after:10M\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:275
+#, fuzzy
+msgid ""
+"The `dir` entry is used to set one or more directories where audit logs will "
+"be stored. If more than one directory entry appears, they will be used in "
+"order as they fill. It is common to configure audit so that audit logs are "
+"stored on a dedicated file system, in order to prevent interference between "
+"the audit subsystem and other subsystems if the file system fills."
+msgstr ""
+"这里的 <option>dir</option> 选项可以用来设置用于保存审计日志的一个或多个目录。 如果指定了多个目录， 则将在填满一个之后换用下一个。"
+" 一般而言， 审计通常都会配置为保存在一个专用的文件系统之下， 以避免审计系统与其它子系统在文件系统满的时候所产生的冲突。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:277
+msgid ""
+"If the `dist` field is set to `on` or `yes`, hard links will be created to "
+"all trail files in [.filename]#/var/audit/dist#."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:279
+#, fuzzy
+msgid ""
+"The `flags` field sets the system-wide default preselection mask for "
+"attributable events. In the example above, successful and failed "
+"login/logout events as well as authentication and authorization are audited "
+"for all users."
+msgstr ""
+"<option>flags</option> 字段用于为有主事件配置系统级的预选条件。 在前面的例子中， 所有用户成功和失败的登录和注销都会被审计。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:281
+msgid ""
+"The `minfree` entry defines the minimum percentage of free space for the "
+"file system where the audit trail is stored."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:283
+#, fuzzy
+msgid ""
+"The `naflags` entry specifies audit classes to be audited for non-attributed "
+"events, such as the login/logout process and authentication and "
+"authorization."
+msgstr "<option>naflags</option> 选项表示审计类审计无主事件， 例如作为登录进程和系统服务的那些进程的事件。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:285
+msgid ""
+"The `policy` entry specifies a comma-separated list of policy flags "
+"controlling various aspects of audit behavior. The `cnt` indicates that the "
+"system should continue running despite an auditing failure (this flag is "
+"highly recommended). The other flag, `argv`, causes command line arguments "
+"to the man:execve[2] system call to be audited as part of command execution."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:287
+#, fuzzy
+msgid ""
+"The `filesz` entry specifies the maximum size for an audit trail before "
+"automatically terminating and rotating the trail file. A value of `0` "
+"disables automatic log rotation. If the requested file size is below the "
+"minimum of 512k, it will be ignored and a log message will be generated."
+msgstr ""
+"<option>filesz</option> 选项指明了审计日志在自动停止记录和翻转之前允许的最大尺寸。 默认值 0 表示禁用自动日志翻转。 "
+"如果配置的值不是零， 但小于最小值 512k， 则这个配置会被忽略， 并在日志中记录这一消息。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:289
+msgid ""
+"The `expire-after` field specifies when audit log files will expire and be "
+"removed."
+msgstr ""
+
+#. type: Title ====
+#: documentation/content/en/books/handbook/audit/_index.adoc:291
+#, no-wrap
+msgid "The [.filename]#audit_user# File"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:294
+msgid ""
+"The administrator can specify further audit requirements for specific users "
+"in [.filename]#audit_user#. Each line configures auditing for a user via two "
+"fields: the `alwaysaudit` field specifies a set of events that should always "
+"be audited for the user, and the `neveraudit` field specifies a set of "
+"events that should never be audited for the user."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:296
+msgid ""
+"The following example entries audit login/logout events and successful "
+"command execution for `root` and file creation and successful command "
+"execution for `www`. If used with the default [.filename]#audit_control#, "
+"the `lo` entry for `root` is redundant, and login/logout events will also be "
+"audited for `www`."
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:301
+#, fuzzy, no-wrap
+msgid ""
+"root:lo,+ex:no\n"
+"www:fc,+ex:no\n"
+msgstr ""
+"root:lo,+ex:no\n"
+"www:fc,+ex:no\n"
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/audit/_index.adoc:304
+#, no-wrap
+msgid "Working with Audit Trails"
+msgstr "管理审计子系统"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:307
+#, fuzzy
+msgid ""
+"Since audit trails are stored in the BSM binary format, several built-in "
+"tools are available to modify or convert these trails to text. To convert "
+"trail files to a simple text format, use `praudit`. To reduce the audit "
+"trail file for analysis, archiving, or printing purposes, use "
+"`auditreduce`. This utility supports a variety of selection parameters, "
+"including event type, event class, user, date or time of the event, and the "
+"file path or object acted on."
+msgstr ""
+"审计记帐是以 BSM 二进制格式保存的， 因此必须使用工具来对其进行修改， 或将其转换为文本。 <citerefentry><refentrytitle>"
+"praudit</refentrytitle><manvolnum>1</manvolnum></citerefentry> "
+"命令能够将记帐文件转换为简单的文本格式； 而 <citerefentry><refentrytitle>auditreduce</refentrytitl"
+"e><manvolnum>1</manvolnum></citerefentry> 命令则可以为分析、 存档或打印目的来压缩审计日志文件。 "
+"<command>auditreduce</command> 支持一系列筛选参数， 包括事件类型、 事件类、 用户、 事件的日期和时间， "
+"以及文件路径或操作对象。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:309
+msgid ""
+"For example, to dump the entire contents of a specified audit log in plain "
+"text:"
+msgstr "例如， <command>praudit</command> 工具会将指定的审计记帐转存为简单文本格式的审计日志："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:313
+#, no-wrap
+msgid "# praudit /var/audit/AUDITFILE\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:316
+msgid "Where _AUDITFILE_ is the audit log to dump."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:318
+msgid ""
+"Audit trails consist of a series of audit records made up of tokens, which "
+"`praudit` prints sequentially, one per line. Each token is of a specific "
+"type, such as `header` (an audit record header) or `path` (a file path from "
+"a name lookup). The following is an example of an `execve` event:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:328
+#, fuzzy, no-wrap
+msgid ""
+"header,133,10,execve(2),0,Mon Sep 25 15:58:03 2006, + 384 msec\n"
+"exec arg,finger,doug\n"
+"path,/usr/bin/finger\n"
+"attribute,555,root,wheel,90,24918,104944\n"
+"subject,robert,root,wheel,root,wheel,38439,38032,42086,128.232.9.100\n"
+"return,success,0\n"
+"trailer,133\n"
+msgstr ""
+"header,133,10,execve(2),0,Mon Sep 25 15:58:03 2006, + 384 msec\n"
+"exec arg,finger,doug\n"
+"path,/usr/bin/finger\n"
+"attribute,555,root,wheel,90,24918,104944\n"
+"subject,robert,root,wheel,root,wheel,38439,38032,42086,128.232.9.100\n"
+"return,success,0\n"
+"trailer,133\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:331
+msgid ""
+"This audit represents a successful `execve` call, in which the command "
+"`finger doug` has been run. The `exec arg` token contains the processed "
+"command line presented by the shell to the kernel. The `path` token holds "
+"the path to the executable as looked up by the kernel. The `attribute` token "
+"describes the binary and includes the file mode. The `subject` token stores "
+"the audit user ID, effective user ID and group ID, real user ID and group "
+"ID, process ID, session ID, port ID, and login address. Notice that the "
+"audit user ID and real user ID differ as the user `robert` switched to the "
+"`root` account before running this command, but it is audited using the "
+"original authenticated user. The `return` token indicates the successful "
+"execution and the `trailer` concludes the record."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:333
+msgid "XML output format is also supported and can be selected by including `-x`."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:335
+msgid ""
+"Since audit logs may be very large, a subset of records can be selected "
+"using `auditreduce`. This example selects all audit records produced for the "
+"user `trhodes` stored in [.filename]#AUDITFILE#:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:339
+#, no-wrap
+msgid "# auditreduce -u trhodes /var/audit/AUDITFILE | praudit\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:342
+msgid ""
+"Members of the `audit` group have permission to read audit trails in "
+"[.filename]#/var/audit#. By default, this group is empty, so only the `root` "
+"user can read audit trails. Users may be added to the `audit` group in order "
+"to delegate audit review rights. As the ability to track audit log contents "
+"provides significant insight into the behavior of users and processes, it is "
+"recommended that the delegation of audit review rights be performed with "
+"caution."
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/audit/_index.adoc:343
+#, no-wrap
+msgid "Live Monitoring Using Audit Pipes"
+msgstr "通过审计管道来实时监控"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:346
+msgid ""
+"Audit pipes are cloning pseudo-devices which allow applications to tap the "
+"live audit record stream. This is primarily of interest to authors of "
+"intrusion detection and system monitoring applications. However, the audit "
+"pipe device is a convenient way for the administrator to allow live "
+"monitoring without running into problems with audit trail file ownership or "
+"log rotation interrupting the event stream. To track the live audit event "
+"stream:"
+msgstr ""
+"审计管道是位于设备文件系统中的自动复制 (cloning) 的虚拟设备， 用于让应用程序控制正在运行的审计记录流， "
+"这主要是为了满足入侵检测和系统监控软件作者的需要。 不过， 对管理员而言， 审计管道设备也提供了一种无需冒审计记帐文件属主出现问题的麻烦， "
+"或由于日志翻转而打断事件流的麻烦， 而实现实时监控的方便途径。 要跟踪实时事件流， 使用下面的命令行："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:350
+#, no-wrap
+msgid "# praudit /dev/auditpipe\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:353
+msgid ""
+"By default, audit pipe device nodes are accessible only to the `root` "
+"user. To make them accessible to the members of the `audit` group, add a "
+"`devfs` rule to [.filename]#/etc/devfs.rules#:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:357
+#, fuzzy, no-wrap
+msgid "add path 'auditpipe*' mode 0440 group audit\n"
+msgstr "add path 'auditpipe*' mode 0440 group audit\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:360
+msgid ""
+"See man:devfs.rules[5] for more information on configuring the devfs file "
+"system."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:365
+#, fuzzy
+msgid ""
+"It is easy to produce audit event feedback cycles, in which the viewing of "
+"each audit event results in the generation of more audit events. For "
+"example, if all network I/O is audited, and `praudit` is run from an SSH "
+"session, a continuous stream of audit events will be generated at a high "
+"rate, as each event being printed will generate another event. For this "
+"reason, it is advisable to run `praudit` on an audit pipe device from "
+"sessions without fine-grained I/O auditing."
+msgstr ""
+"很容易配置出审计事件反馈循环， 也就是查看事件的操作本身会产生更多的事件。 例如， 如果所有的网络 <acronym>I/O</acronym> "
+"均被审计， 又在 SSH 会话中执行 <citerefentry><refentrytitle>praudit</refentrytitle><manvo"
+"lnum>1</manvolnum></citerefentry>， 就会以很高的速率产生持续的审计事件流， 因为每显示一个事件都会产生新的事件。 "
+"建议您在需要在审计管道设备上执行 <command>praudit</command> 时， 选择一个没有进行细粒度 <acronym>I/O</"
+"acronym> 审计的会话来运行。"
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/audit/_index.adoc:367
+#, no-wrap
+msgid "Rotating and Compressing Audit Trail Files"
+msgstr "审计记帐文件的轮转"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:370
+msgid ""
+"Audit trails are written to by the kernel and managed by the audit daemon, "
+"man:auditd[8]. Administrators should not attempt to use "
+"man:newsyslog.conf[5] or other tools to directly rotate audit logs. Instead, "
+"`audit` should be used to shut down auditing, reconfigure the audit system, "
+"and perform log rotation. The following command causes the audit daemon to "
+"create a new audit log and signal the kernel to switch to using the new "
+"log. The old log will be terminated and renamed, at which point it may then "
+"be manipulated by the administrator:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:374
+#, no-wrap
+msgid "# audit -n\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:377
+msgid ""
+"If man:auditd[8] is not currently running, this command will fail and an "
+"error message will be produced."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:379
+#, fuzzy
+msgid ""
+"Adding the following line to [.filename]#/etc/crontab# will schedule this "
+"rotation every twelve hours:"
+msgstr ""
+"在 <filename>/etc/crontab</filename> 加入如下设置， 将使 "
+"<citerefentry><refentrytitle>cron</refentrytitle><manvolnum>8</manvolnum></"
+"citerefentry> 每十二小时将日志轮转一次："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:383
+#, fuzzy, no-wrap
+msgid "0     */12       *       *       *       root    /usr/sbin/audit -n\n"
+msgstr "0     */12       *       *       *       root    /usr/sbin/audit -n\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:386
+#, fuzzy
+msgid "The change will take effect once [.filename]#/etc/crontab# is saved."
+msgstr "这些修改会在您保存 <filename>/etc/crontab</filename> 后生效。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:388
+msgid ""
+"Automatic rotation of the audit trail file based on file size is possible "
+"using `filesz` in [.filename]#audit_control# as described in "
+"<<audit-auditcontrol>>."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:390
+#, fuzzy
+msgid ""
+"As audit trail files can become very large, it is often desirable to "
+"compress or otherwise archive trails once they have been closed by the audit "
+"daemon. The [.filename]#audit_warn# script can be used to perform customized "
+"operations for a variety of audit-related events, including the clean "
+"termination of audit trails when they are rotated. For example, the "
+"following may be added to [.filename]#/etc/security/audit_warn# to compress "
+"audit trails on close:"
+msgstr ""
+"由于审计记帐文件会变得很大， 通常会希望在审计服务关闭它时， 对其进行压缩或归档。 <filename>audit_warn</filename> "
+"脚本可以用来在一系列与审计有关的事件发生时， 执行一些用户定义的操作， 这也包括在审计记帐翻转时进行清理操作。 举例而言， 可以在 <filename>/"
+"etc/security/audit_warn</filename> 脚本中加入下列内容来在审计记帐关闭时压缩它："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:399
+#, fuzzy, no-wrap
+msgid ""
+"#\n"
+"# Compress audit trail files on close.\n"
+"#\n"
+"if [ \"$1\" = closefile ]; then\n"
+"        gzip -9 $2\n"
+"fi\n"
+msgstr ""
+"#\n"
+"# Compress audit trail files on close.\n"
+"#\n"
+"if [ \"$1\" = closefile ]; then\n"
+"        gzip -9 $2\n"
+"fi\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:401
+msgid ""
+"Other archiving activities might include copying trail files to a "
+"centralized server, deleting old trail files, or reducing the audit trail to "
+"remove unneeded records. This script will be run only when audit trail files "
+"are cleanly terminated. It will not be run on trails left unterminated "
+"following an improper shutdown."
+msgstr ""
+"其它存档操作也包括将审计记帐复制到一个中央的服务器， 删除旧的记帐文件， 或浓缩审计记帐并删除不需要的记录等。 "
+"这个脚本会在审计记帐文件正常关闭时执行一次， 因此在非正常关闭系统时， 就不会执行它了。"

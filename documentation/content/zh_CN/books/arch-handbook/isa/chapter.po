@@ -1,0 +1,3409 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR The FreeBSD Project
+# This file is distributed under the same license as the FreeBSD Documentation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreeBSD Documentation VERSION\n"
+"POT-Creation-Date: 2021-02-21 18:54-0300\n"
+"PO-Revision-Date: 2021-04-11 20:10+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Chinese (Simplified) <https://translate-dev.freebsd.org/"
+"projects/documentation/booksarch-handbookisachapter/zh_CN/>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.5.2\n"
+
+#. type: YAML Front Matter: title
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1
+#, no-wrap
+msgid "Chapter 10. ISA Device Drivers"
+msgstr ""
+
+#. type: Title =
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:8
+#, no-wrap
+msgid "ISA Device Drivers"
+msgstr "ISA 设备驱动"
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:33
+#, no-wrap
+msgid "Synopsis"
+msgstr "简介"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:36
+#, fuzzy
+msgid ""
+"This chapter introduces the issues relevant to writing a driver for an ISA "
+"device. The pseudo-code presented here is rather detailed and reminiscent of "
+"the real code but is still only pseudo-code. It avoids the details "
+"irrelevant to the subject of the discussion. The real-life examples can be "
+"found in the source code of real drivers. In particular the drivers `ep` and "
+"`aha` are good sources of information."
+msgstr ""
+"本章介绍了编写ISA设备驱动程序相关的一些问题。这儿展示的伪代码相当详细，很容易让人联想到真正的代码，不过这依然仅仅是伪代码。它避免了与所讨论的主题无关的"
+"细节。真实的例子可以在实际驱动程序的源代码中找到。<literal>ep</literal>和<literal>aha</literal>更是信息的好来源"
+"。"
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:38
+#, no-wrap
+msgid "Basic Information"
+msgstr "基本信息"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:41
+msgid "A typical ISA driver would need the following include files:"
+msgstr "典型的ISA驱动程序需要以下包含文件："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:49
+#, no-wrap
+msgid ""
+"#include <sys/module.h>\n"
+"#include <sys/bus.h>\n"
+"#include <machine/bus.h>\n"
+"#include <machine/resource.h>\n"
+"#include <sys/rman.h>\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:52
+#, no-wrap
+msgid ""
+"#include <isa/isavar.h>\n"
+"#include <isa/pnpvar.h>\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:55
+msgid "They describe the things specific to the ISA and generic bus subsystem."
+msgstr "它们描述了针对ISA和通用总线子系统的东西。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:57
+msgid ""
+"The bus subsystem is implemented in an object-oriented fashion, its main "
+"structures are accessed by associated method functions."
+msgstr "总线子系统是以面向对象的方式实现的，其主要结构通过相关联的方法函数来访问。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:59
+msgid ""
+"The list of bus methods implemented by an ISA driver is like one for any "
+"other bus. For a hypothetical driver named \"xxx\" they would be:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:61
+#, fuzzy
+msgid ""
+"`static void xxx_isa_identify (driver_t *, device_t);` Normally used for bus "
+"drivers, not device drivers. But for ISA devices this method may have "
+"special use: if the device provides some device-specific (non-PnP) way to "
+"auto-detect devices this routine may implement it."
+msgstr ""
+"<function>static void xxx_isa_identify (driver_t *,device_t);</function> "
+"通常用于总线驱动程序而不是设备驱动程序。但对于ISA设备，这个方法有特殊用途：如果设备提供某些设备特定的（非PnP）方法自动侦测设备，这个例程可以实现它。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:62
+#, fuzzy
+msgid ""
+"`static int xxx_isa_probe (device_t dev);` Probe for a device at a known (or "
+"PnP) location. This routine can also accommodate device-specific "
+"auto-detection of parameters for partially configured devices."
+msgstr ""
+"<function>static int xxx_isa_probe (device_tdev);</function> "
+"在已知（或PnP）位置探测设备。对于已经部分配置的设备，这个例程也能够提供设备特定的对某些参数的自动侦测。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:63
+msgid "`static int xxx_isa_attach (device_t dev);` Attach and initialize device."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:64
+msgid ""
+"`static int xxx_isa_detach (device_t dev);` Detach device before unloading "
+"the driver module."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:65
+msgid ""
+"`static int xxx_isa_shutdown (device_t dev);` Execute shutdown of the device "
+"before system shutdown."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:66
+msgid ""
+"`static int xxx_isa_suspend (device_t dev);` Suspend the device before the "
+"system goes to the power-save state. May also abort transition to the "
+"power-save state."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:67
+msgid ""
+"`static int xxx_isa_resume (device_t dev);` Resume the device activity after "
+"return from power-save state."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:69
+msgid ""
+"`xxx_isa_probe()` and `xxx_isa_attach()` are mandatory, the rest of the "
+"routines are optional, depending on the device's needs."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:71
+msgid "The driver is linked to the system with the following set of descriptions."
+msgstr "使用下面一组描述符将设备驱动链接到系统。"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:85
+#, no-wrap
+msgid ""
+"    /* table of supported bus methods */\n"
+"    static device_method_t xxx_isa_methods[] = {\n"
+"        /* list all the bus method functions supported by the driver */\n"
+"        /* omit the unsupported methods */\n"
+"        DEVMETHOD(device_identify,  xxx_isa_identify),\n"
+"        DEVMETHOD(device_probe,     xxx_isa_probe),\n"
+"        DEVMETHOD(device_attach,    xxx_isa_attach),\n"
+"        DEVMETHOD(device_detach,    xxx_isa_detach),\n"
+"        DEVMETHOD(device_shutdown,  xxx_isa_shutdown),\n"
+"        DEVMETHOD(device_suspend,   xxx_isa_suspend),\n"
+"        DEVMETHOD(device_resume,    xxx_isa_resume),\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:88
+#, no-wrap
+msgid ""
+"\tDEVMETHOD_END\n"
+"    };\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:94
+#, no-wrap
+msgid ""
+"    static driver_t xxx_isa_driver = {\n"
+"        \"xxx\",\n"
+"        xxx_isa_methods,\n"
+"        sizeof(struct xxx_softc),\n"
+"    };\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:96
+#, no-wrap
+msgid "    static devclass_t xxx_devclass;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:99
+#, no-wrap
+msgid ""
+"    DRIVER_MODULE(xxx, isa, xxx_isa_driver, xxx_devclass,\n"
+"        load_function, load_argument);\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:102
+msgid ""
+"Here struct `xxx_softc` is a device-specific structure that contains private "
+"driver data and descriptors for the driver's resources. The bus code "
+"automatically allocates one softc descriptor per device as needed."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:104
+#, fuzzy
+msgid ""
+"If the driver is implemented as a loadable module then `load_function()` is "
+"called to do driver-specific initialization or clean-up when the driver is "
+"loaded or unloaded and load_argument is passed as one of its arguments. If "
+"the driver does not support dynamic loading (in other words it must always "
+"be linked into the kernel) then these values should be set to 0 and the last "
+"definition would look like:"
+msgstr ""
+"如果驱动程序作为可加载模块实现，当驱动程序被加载或卸载时，会调用<function>load_function()</function>函数进行驱动程序特"
+"定的初始化或清理工作，并将load_argument作为函数的一个参量传递进去。如果驱动程序不支持动态加载（换句话说，它必须被链接到内核中），则这些值应当"
+"被设置为0，最后的定义将看起来如下所示："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:109
+#, fuzzy, no-wrap
+msgid ""
+" DRIVER_MODULE(xxx, isa, xxx_isa_driver,\n"
+"       xxx_devclass, 0, 0);\n"
+msgstr ""
+" DRIVER_MODULE(xxx, isa, xxx_isa_driver,\n"
+"       xxx_devclass, 0, 0);\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:112
+msgid ""
+"If the driver is for a device which supports PnP then a table of supported "
+"PnP IDs must be defined. The table consists of a list of PnP IDs supported "
+"by this driver and human-readable descriptions of the hardware types and "
+"models having these IDs. It looks like:"
+msgstr ""
+"如果驱动程序是为支持PnP的设备而写的，那么就必须定义一个包含所有支持的PnP ID的表。这个表由此驱动程序所支持的PnP "
+"ID的列表和以人可读的形式给出的、与这些ID对应的硬件类型和型号的描述组成。看起来如下："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:121
+#, fuzzy, no-wrap
+msgid ""
+"    static struct isa_pnp_id xxx_pnp_ids[] = {\n"
+"        /* a line for each supported PnP ID */\n"
+"        { 0x12345678,   \"Our device model 1234A\" },\n"
+"        { 0x12345679,   \"Our device model 1234B\" },\n"
+"        { 0,        NULL }, /* end of table */\n"
+"    };\n"
+msgstr ""
+"    static struct isa_pnp_id xxx_pnp_ids[] = {\n"
+"        /* a line for each supported PnP ID */\n"
+"        { 0x12345678,   \"Our device model 1234A\" },\n"
+"        { 0x12345679,   \"Our device model 1234B\" },\n"
+"        { 0,        NULL }, /* end of table */\n"
+"    };\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:124
+msgid ""
+"If the driver does not support PnP devices it still needs an empty PnP ID "
+"table, like:"
+msgstr "如果驱动程序不支持PnP设备，它仍然需要一个空的PnP ID表，如下所示："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:130
+#, fuzzy, no-wrap
+msgid ""
+"    static struct isa_pnp_id xxx_pnp_ids[] = {\n"
+"        { 0,        NULL }, /* end of table */\n"
+"    };\n"
+msgstr ""
+"    static struct isa_pnp_id xxx_pnp_ids[] = {\n"
+"        { 0,        NULL }, /* end of table */\n"
+"    };\n"
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:133
+#, no-wrap
+msgid "`device_t` Pointer"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:136
+msgid ""
+"`device_t` is the pointer type for the device structure. Here we consider "
+"only the methods interesting from the device driver writer's standpoint. The "
+"methods to manipulate values in the device structure are:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:138
+msgid "`device_t device_get_parent(dev)` Get the parent bus of a device."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:139
+msgid "`driver_t device_get_driver(dev)` Get pointer to its driver structure."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:140
+msgid ""
+"`char *device_get_name(dev)` Get the driver name, such as `\"xxx\"` for our "
+"example."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:141
+msgid ""
+"`int device_get_unit(dev)` Get the unit number (units are numbered from 0 "
+"for the devices associated with each driver)."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:142
+msgid ""
+"`char *device_get_nameunit(dev)` Get the device name including the unit "
+"number, such as \"xxx0\", \"xxx1\" and so on."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:143
+msgid ""
+"`char *device_get_desc(dev)` Get the device description. Normally it "
+"describes the exact model of device in human-readable form."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:144
+msgid ""
+"`device_set_desc(dev, desc)` Set the description. This makes the device "
+"description point to the string desc which may not be deallocated or changed "
+"after that."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:145
+msgid ""
+"`device_set_desc_copy(dev, desc)` Set the description. The description is "
+"copied into an internal dynamically allocated buffer, so the string desc may "
+"be changed afterwards without adverse effects."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:146
+msgid ""
+"`void *device_get_softc(dev)` Get pointer to the device descriptor (struct "
+"`xxx_softc`) associated with this device."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:147
+msgid ""
+"`u_int32_t device_get_flags(dev)` Get the flags specified for the device in "
+"the configuration file."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:149
+#, fuzzy
+msgid ""
+"A convenience function `device_printf(dev, fmt, ...)` may be used to print "
+"the messages from the device driver. It automatically prepends the unitname "
+"and colon to the message."
+msgstr ""
+"可以使用一个很方便的函数<function>device_printf(dev, "
+"fmt,...)</function>从设备驱动程序中打印讯息。它自动在讯息前添加单元名和冒号。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:151
+#, fuzzy
+msgid ""
+"The device_t methods are implemented in the file "
+"[.filename]#kern/bus_subr.c#."
+msgstr "device_t的这些方法在文件<filename>kern/bus_subr.c</filename>中实现。"
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:153
+#, no-wrap
+msgid ""
+"Configuration File and the Order of Identifying and Probing During "
+"Auto-Configuration"
+msgstr "配置文件与自动配置期间识别和探测的顺序"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:156
+msgid "The ISA devices are described in the kernel configuration file like:"
+msgstr "ISA设备在内核配置文件中的描述如下："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:161
+#, fuzzy, no-wrap
+msgid ""
+"device xxx0 at isa? port 0x300 irq 10 drq 5\n"
+"       iomem 0xd0000 flags 0x1 sensitive\n"
+msgstr ""
+"device xxx0 at isa? port 0x300 irq 10 drq 5\n"
+"       iomem 0xd0000 flags 0x1 sensitive\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:164
+#, fuzzy
+msgid ""
+"The values of port, IRQ and so on are converted to the resource values "
+"associated with the device. They are optional, depending on the device's "
+"needs and abilities for auto-configuration. For example, some devices do not "
+"need DRQ at all and some allow the driver to read the IRQ setting from the "
+"device configuration ports. If a machine has multiple ISA buses the exact "
+"bus may be specified in the configuration line, like `isa0` or `isa1`, "
+"otherwise the device would be searched for on all the ISA buses."
+msgstr ""
+"端口值、IRQ值和其他值被转换成与设备关联的资源值。根据设备对自动配置需要和支持程度的不同，这些值是可选的。例如，某些设备根本不需要读DRQ，而有些则允许"
+"设备从设备配置端口读取IRQ设置。如果机器有多个ISA总线，可以在配置文件中明确指定哪条总线，如<literal>isa0</literal>或<lite"
+"ral>isa1</literal>，否则将在所有ISA总线上搜索设备。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:166
+msgid ""
+"`sensitive` is a resource requesting that this device must be probed before "
+"all non-sensitive devices. It is supported but does not seem to be used in "
+"any current driver."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:168
+msgid ""
+"For legacy ISA devices in many cases the drivers are still able to detect "
+"the configuration parameters. But each device to be configured in the system "
+"must have a config line. If two devices of some type are installed in the "
+"system but there is only one configuration line for the corresponding "
+"driver, ie:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:171
+#, fuzzy, no-wrap
+msgid "device xxx0 at isa?\n"
+msgstr "device xxx0 at isa?\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:173
+#, no-wrap
+msgid " then only one device will be configured.\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:175
+msgid ""
+"But for the devices supporting automatic identification by the means of "
+"Plug-n-Play or some proprietary protocol one configuration line is enough to "
+"configure all the devices in the system, like the one above or just simply:"
+msgstr "但对于支持通过PnP或专有协议进行自动识别的设备，一个配置行就足够配置系统中的所有设备，如上面的配置行，或者简单地："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:179
+#, fuzzy, no-wrap
+msgid "device xxx at isa?\n"
+msgstr "device xxx at isa?\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:182
+msgid ""
+"If a driver supports both auto-identified and legacy devices and both kinds "
+"are installed at once in one machine then it is enough to describe in the "
+"config file the legacy devices only. The auto-identified devices will be "
+"added automatically."
+msgstr ""
+"如果设备驱动程序既支持能自动识别的设备又支持老设备，并且两类设备同时安装在一台机器上，那么只要在配置文件中描述老设备就足够了。自动识别的设备将被自动添加。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:184
+msgid "When an ISA bus is auto-configured the events happen as follows:"
+msgstr "如果ISA设备是自动配置的，发生的事件如下："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:186
+msgid ""
+"All the drivers' identify routines (including the PnP identify routine which "
+"identifies all the PnP devices) are called in random order. As they identify "
+"the devices they add them to the list on the ISA bus. Normally the drivers' "
+"identify routines associate their drivers with the new devices. The PnP "
+"identify routine does not know about the other drivers yet so it does not "
+"associate any with the new devices it adds."
+msgstr ""
+"所有设备驱动程序的识别例程（包括识别所有PnP设备的PnP识别例程）以随机顺序被调用。他们识别出设备后就把设备添加到ISA总线上的列表中。通常驱动程序的识"
+"别例程将新设备与它们的驱动程序关联起来。而PnP识别例程并不知道其他驱动程序，因此不能将驱动程序与它所添加的新设备关联起来。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:188
+msgid ""
+"The PnP devices are put to sleep using the PnP protocol to prevent them from "
+"being probed as legacy devices."
+msgstr "使用PnP协议让PnP设备进入睡眠，以防止它们被探测为老设备。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:190
+msgid ""
+"The probe routines of non-PnP devices marked as `sensitive` are called. If "
+"probe for a device went successfully, the attach routine is called for it."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:192
+msgid "The probe and attach routines of all non-PNP devices are called likewise."
+msgstr "所有非PnP设备的探测和连接例程以同样的方式被调用。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:194
+msgid ""
+"The PnP devices are brought back from the sleep state and assigned the "
+"resources they request: I/O and memory address ranges, IRQs and DRQs, all of "
+"them not conflicting with the attached legacy devices."
+msgstr "PnP设备从睡眠中恢复过来，并给它们分配所请求的资源：I/O、内存地址范围、IRQ和DRQ，所有这些与已连接的老设备不会冲突。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:196
+#, fuzzy
+msgid ""
+"Then for each PnP device the probe routines of all the present ISA drivers "
+"are called. The first one that claims the device gets attached. It is "
+"possible that multiple drivers would claim the device with different "
+"priority; in this case, the highest-priority driver wins. The probe routines "
+"must call `ISA_PNP_PROBE()` to compare the actual PnP ID with the list of "
+"the IDs supported by the driver and if the ID is not in the table return "
+"failure. That means that absolutely every driver, even the ones not "
+"supporting any PnP devices must call `ISA_PNP_PROBE()`, at least with an "
+"empty PnP ID table to return failure on unknown PnP devices."
+msgstr ""
+"对于每个PnP设备，所有ISA设备驱动程序的探测例程都会被调用。第一个要求此设备的驱动程序将被连接。多个驱动程序以不同的优先权要求一个设备的情况是可能的，"
+"这种情况下，具有最高优先权的驱动程序将获胜。探测例程必须调用<function>ISA_PNP_PROBE()</function>将真实的PnP ID和"
+"驱动程序支持的ID列表作比较，如果ID不在表中则返回失败。这意味着每个驱动程序，包括不支持任何PnP设备的驱动程序，都必须对未知的PnP设备无条件调用<f"
+"unction>ISA_PNP_PROBE()</function>，对于未知设备， 至少要用一个空的PnP ID表调用并返回失败。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:198
+msgid ""
+"The probe routine returns a positive value (the error code) on error, zero "
+"or negative value on success."
+msgstr "探测例程遇到错误时会返回一个正值（错误码），成功时返回零或负值。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:200
+msgid ""
+"The negative return values are used when a PnP device supports multiple "
+"interfaces. For example, an older compatibility interface and a newer "
+"advanced interface which are supported by different drivers. Then both "
+"drivers would detect the device. The driver which returns a higher value in "
+"the probe routine takes precedence (in other words, the driver returning 0 "
+"has highest precedence, returning -1 is next, returning -2 is after it and "
+"so on). In result the devices which support only the old interface will be "
+"handled by the old driver (which should return -1 from the probe routine) "
+"while the devices supporting the new interface as well will be handled by "
+"the new driver (which should return 0 from the probe routine). If multiple "
+"drivers return the same value then the one called first wins. So if a driver "
+"returns value 0 it may be sure that it won the priority arbitration."
+msgstr ""
+"负的返回值用于PnP设备支持多个接口的情况。例如，老的兼容接口和新的高级接口通过不同的驱动程序来提供支持。两个驱动程序都侦测设备。在探测例程中返回较高值的"
+"驱动程序优先（换句话说，返回0的驱动程序具有最高的优先级，返回-1的其次，返回-2的更在其后，如此下去）。如果多个驱动程序返回相同的值，那么最先调用的获胜"
+"。因此，如果驱动程序返回0，就基本能够确信它获得优先权仲裁。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:202
+msgid ""
+"The device-specific identify routines can also assign not a driver but a "
+"class of drivers to the device. Then all the drivers in the class are probed "
+"for this device, like the case with PnP. This feature is not implemented in "
+"any existing driver and is not considered further in this document."
+msgstr ""
+"设备特定的识别例程也能够将一类而不是单个驱动程序指派给设备。就象使用PnP的情况一样，对于某一设备，会探测这一类中所有的驱动程序。由于这个特性在任何现存的"
+"驱动程序中总均未实现，故本文档中不再予以考虑。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:204
+msgid ""
+"As the PnP devices are disabled when probing the legacy devices they will "
+"not be attached twice (once as legacy and once as PnP). But in case of "
+"device-dependent identify routines it is the responsibility of the driver to "
+"make sure that the same device will not be attached by the driver twice: "
+"once as legacy user-configured and once as auto-identified."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:206
+msgid ""
+"Another practical consequence for the auto-identified devices (both PnP and "
+"device-specific) is that the flags can not be passed to them from the kernel "
+"configuration file. So they must either not use the flags at all or use the "
+"flags from the device unit 0 for all the auto-identified devices or use the "
+"sysctl interface instead of flags."
+msgstr ""
+"对于自动识别的设备（包括PnP和设备特定的）的另一个实践结论是，不能从内核配置文件中向它们传递旗标。因此它们必须要么根本不使用旗标，要么为所有自动识别的设"
+"备使用单元号为0的设备的旗标，或者使用sysctl接口而不是旗标。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:208
+#, fuzzy
+msgid ""
+"Other unusual configurations may be accommodated by accessing the "
+"configuration resources directly with functions of families "
+"`resource_query_*()` and `resource_*_value()`. Their implementations are "
+"located in [.filename]#kern/subr_bus.c#. The old IDE disk driver "
+"[.filename]#i386/isa/wd.c# contains examples of such use. But the standard "
+"means of configuration must always be preferred. Leave parsing the "
+"configuration resources to the bus configuration code."
+msgstr ""
+"通过使用函数族<function>resource_query_*()</function>和<function>resource_*_value()</"
+"function>直接访问配置资源，从而可以提供其他不常用的配置。它们的实现位于<filename>kern/subr_bus."
+"c</filename>。老的IDE磁盘驱动器<filename>i386/isa/wd."
+"c</filename>包含这样使用的例子。但必须优先使用配置的标准方法。将解析配置资源这类事情留给总线配置代码。"
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:210
+#, no-wrap
+msgid "Resources"
+msgstr "资源"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:213
+#, fuzzy
+msgid ""
+"The information that a user enters into the kernel configuration file is "
+"processed and passed to the kernel as configuration resources. This "
+"information is parsed by the bus configuration code and transformed into a "
+"value of structure device_t and the bus resources associated with it. The "
+"drivers may access the configuration resources directly using functions "
+"`resource_*` for more complex cases of configuration. However, generally "
+"this is neither needed nor recommended, so this issue is not discussed "
+"further here."
+msgstr ""
+"用户写入到内核配置文件中的信息被作为配置资源处理，并传递到内核。总线配置代码解析这部分信息并将其转换为结构device_t的值和与之关联的总线资源。对于复"
+"杂情况下的配置，驱动程序可以直接使用<function>resource_*</function> 函数访问配置资源。 "
+"然而，通常既不需要也不推荐这样做，因此这儿不再进一步讨论这个问题。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:215
+msgid ""
+"The bus resources are associated with each device. They are identified by "
+"type and number within the type. For the ISA bus the following types are "
+"defined:"
+msgstr "总线资源与每个设备相关联。通过类型和类型中的数字标识它们。对于ISA总线，定义了下面的类型："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:217
+msgid "_SYS_RES_IRQ_ - interrupt number"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:218
+msgid "_SYS_RES_DRQ_ - ISA DMA channel number"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:219
+msgid ""
+"_SYS_RES_MEMORY_ - range of device memory mapped into the system memory "
+"space"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:220
+msgid "_SYS_RES_IOPORT_ - range of device I/O registers"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:222
+#, fuzzy
+msgid ""
+"The enumeration within types starts from 0, so if a device has two memory "
+"regions it would have resources of type `SYS_RES_MEMORY` numbered 0 and "
+"1. The resource type has nothing to do with the C language type, all the "
+"resource values have the C language type `unsigned long` and must be cast as "
+"necessary. The resource numbers do not have to be contiguous, although for "
+"ISA they normally would be. The permitted resource numbers for ISA devices "
+"are:"
+msgstr ""
+"类型内的枚举从0开始，因此如果设备有两个内存区域，它的<literal>SYS_RES_MEMORY</literal> "
+"类型的资源编号为0和1。资源类型与C语言的类型无关，所有资源值具有C语言 <literal>unsigned long</literal>类型，"
+"并且必要时必须进行类型强制转换 (cast)。资源号不必连续，尽管对于ISA它们一般是连续的。ISA设备允许的资源编号为："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:229
+#, fuzzy, no-wrap
+msgid ""
+"          IRQ: 0-1\n"
+"          DRQ: 0-1\n"
+"          MEMORY: 0-3\n"
+"          IOPORT: 0-7\n"
+msgstr ""
+"          IRQ: 0-1\n"
+"          DRQ: 0-1\n"
+"          MEMORY: 0-3\n"
+"          IOPORT: 0-7\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:232
+msgid ""
+"All the resources are represented as ranges, with a start value and "
+"count. For IRQ and DRQ resources the count would normally be equal to 1. The "
+"values for memory refer to the physical addresses."
+msgstr "所有资源被表示为带有起始值和计数的范围。对于IRQ和DRQ资源，计数一般等于1。内存的值引用物理地址。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:234
+msgid "Three types of activities can be performed on resources:"
+msgstr "对资源能够执行三种类型的动作："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:236
+msgid "set/get"
+msgstr "set/get"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:237
+msgid "allocate/release"
+msgstr "allocate/release"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:238
+msgid "activate/deactivate"
+msgstr "activate/deactivate"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:240
+msgid ""
+"Setting sets the range used by the resource. Allocation reserves the "
+"requested range that no other driver would be able to reserve it (and "
+"checking that no other driver reserved this range already). Activation makes "
+"the resource accessible to the driver by doing whatever is necessary for "
+"that (for example, for memory it would be mapping into the kernel virtual "
+"address space)."
+msgstr ""
+"Set设置资源使用的范围。Allocation保留出请求的范围，使得其它设备不能再占用（并检查此范围没有被其它设备占用）。Activation执行必要的动"
+"作使得驱动程序可以访问资源（例如，对于内存，它将被映射到内核的虚拟地址空间）。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:242
+msgid "The functions to manipulate resources are:"
+msgstr "操作资源的函数有："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:244
+msgid ""
+"`int bus_set_resource(device_t dev, int type, int rid, u_long start, u_long "
+"count)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:246
+msgid ""
+"  Set a range for a resource. Returns 0 if successful, error code "
+"otherwise. Normally, this function will return an error only if one of "
+"`type`, `rid`, `start` or `count` has a value that falls out of the "
+"permitted range."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:248
+msgid "dev - driver's device"
+msgstr "dev - 驱动程序的设备"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:249
+msgid "type - type of resource, SYS_RES_*"
+msgstr "type - 资源类型，SYS_RES_*"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:250
+msgid "rid - resource number (ID) within type"
+msgstr "rid - 类型内部的资源号（ID）"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:251
+msgid "start, count - resource range"
+msgstr "start, count - 资源范围"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:253
+msgid ""
+"`int bus_get_resource(device_t dev, int type, int rid, u_long *startp, "
+"u_long *countp)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:255
+#, fuzzy
+msgid ""
+"  Get the range of resource. Returns 0 if successful, error code if the "
+"resource is not defined yet."
+msgstr "  取得资源范围。成功则返回0，如果资源尚未定义则返回错误码。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:256
+msgid ""
+"`u_long bus_get_resource_start(device_t dev, int type, int rid) u_long "
+"bus_get_resource_count (device_t dev, int type, int rid)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:258
+#, fuzzy
+msgid ""
+"  Convenience functions to get only the start or count. Return 0 in case of "
+"error, so if the resource start has 0 among the legitimate values it would "
+"be impossible to tell if the value is 0 or an error occurred. Luckily, no "
+"ISA resources for add-on drivers may have a start value equal to 0."
+msgstr ""
+"  便捷函数，只用来获取start或count。出错的情况下返回0，因此如果0是资源的start合法值之一，将无法区分返回的0是否指示错误。幸运的是，对于"
+"附加驱动程序，没有ISA资源的start值从0开始。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:259
+msgid "`void bus_delete_resource(device_t dev, int type, int rid)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:261
+#, fuzzy
+msgid "  Delete a resource, make it undefined."
+msgstr "  删除资源，令其未定义。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:262
+msgid ""
+"`struct resource * bus_alloc_resource(device_t dev, int type, int *rid, "
+"u_long start, u_long end, u_long count, u_int flags)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:264
+#, fuzzy
+msgid ""
+"  Allocate a resource as a range of count values not allocated by anyone "
+"else, somewhere between start and end. Alas, alignment is not supported. If "
+"the resource was not set yet it is automatically created. The special values "
+"of start 0 and end ~0 (all ones) means that the fixed values previously set "
+"by `bus_set_resource()` must be used instead: start and count as themselves "
+"and end=(start+count), in this case if the resource was not defined before "
+"then an error is returned. Although rid is passed by reference it is not set "
+"anywhere by the resource allocation code of the ISA bus. (The other buses "
+"may use a different approach and modify it)."
+msgstr ""
+"  在start和end之间没有被其它设备占用的地方按count值的范围分配一个资源。不过，不支持对齐。如果资源尚未被设置，则自动创建它。start为0，"
+"end为~0（全1）的这对特殊值意味着必须使用以前通过<function>bus_set_resource()</function>设置的固定值：star"
+"t和count就是它们自己，end=(start+count)，这种情况下，如果以前资源没有定义，则返回错误。尽管rid通过引用传递，但它并不被ISA总线"
+"的资源分配代码设置（其它总线可能使用不同的方法并可能修改它）。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:266
+msgid "Flags are a bitmap, the flags interesting for the caller are:"
+msgstr "旗标是一个位映射，调用者感兴趣的有："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:268
+msgid ""
+"_RF_ACTIVE_ - causes the resource to be automatically activated after "
+"allocation."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:269
+msgid ""
+"_RF_SHAREABLE_ - resource may be shared at the same time by multiple "
+"drivers."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:270
+msgid ""
+"_RF_TIMESHARE_ - resource may be time-shared by multiple drivers, i.e., "
+"allocated at the same time by many but activated only by one at any given "
+"moment of time."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:271
+msgid ""
+"Returns 0 on error. The allocated values may be obtained from the returned "
+"handle using methods `rhand_*()`."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:272
+msgid ""
+"`int bus_release_resource(device_t dev, int type, int rid, struct resource "
+"*r)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:273
+msgid ""
+"Release the resource, r is the handle returned by "
+"`bus_alloc_resource()`. Returns 0 on success, error code otherwise."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:274
+msgid ""
+"`int bus_activate_resource(device_t dev, int type, int rid, struct resource "
+"*r) int bus_deactivate_resource(device_t dev, int type, int rid, struct "
+"resource *r)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:275
+msgid ""
+"Activate or deactivate resource. Return 0 on success, error code "
+"otherwise. If the resource is time-shared and currently activated by another "
+"driver then `EBUSY` is returned."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:276
+msgid ""
+"`int bus_setup_intr(device_t dev, struct resource *r, int flags, "
+"driver_intr_t *handler, void *arg, void **cookiep) int "
+"bus_teardown_intr(device_t dev, struct resource *r, void *cookie)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:277
+msgid ""
+"Associate or de-associate the interrupt handler with a device. Return 0 on "
+"success, error code otherwise."
+msgstr "关联/分离中断处理程序与设备。成功则返回0，否则返回错误码。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:278
+msgid "r - the activated resource handler describing the IRQ"
+msgstr "r - 被激活的描述IRQ的资源句柄"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:280
+#, fuzzy
+msgid "  flags - the interrupt priority level, one of:"
+msgstr "  flags - 中断优先级，如下之一："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:282
+msgid ""
+"`INTR_TYPE_TTY` - terminals and other likewise character-type devices. To "
+"mask them use `spltty()`."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:283
+#, fuzzy
+msgid ""
+"`(INTR_TYPE_TTY | INTR_TYPE_FAST)` - terminal type devices with small input "
+"buffer, critical to the data loss on input (such as the old-fashioned serial "
+"ports). To mask them use `spltty()`."
+msgstr ""
+"<function>(INTR_TYPE_TTY |INTR_TYPE_FAST)</function> - "
+"输入缓冲较小的终端类型设备，而且输入上的数据丢失很关键（例如老式串口）。使用<function>spltty()</function>屏蔽它们。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:284
+msgid ""
+"`INTR_TYPE_BIO` - block-type devices, except those on the CAM "
+"controllers. To mask them use `splbio()`."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:285
+msgid ""
+"`INTR_TYPE_CAM` - CAM (Common Access Method) bus controllers. To mask them "
+"use `splcam()`."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:286
+msgid ""
+"`INTR_TYPE_NET` - network interface controllers. To mask them use "
+"`splimp()`."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:287
+msgid ""
+"`INTR_TYPE_MISC` - miscellaneous devices. There is no other way to mask them "
+"than by `splhigh()` which masks all interrupts."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:289
+msgid ""
+"When an interrupt handler executes all the other interrupts matching its "
+"priority level will be masked. The only exception is the MISC level for "
+"which no other interrupts are masked and which is not masked by any other "
+"interrupt."
+msgstr "当中断处理程序执行时，匹配其优先级的所有其它中断都被屏蔽，唯一的例外是MISC级别，它不会屏蔽其它中断，也不会被其它中断屏蔽。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:291
+msgid ""
+"_handler_ - pointer to the handler function, the type driver_intr_t is "
+"defined as `void driver_intr_t(void *)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:292
+#, fuzzy
+msgid ""
+"_arg_ - the argument passed to the handler to identify this particular "
+"device. It is cast from void* to any real type by the handler. The old "
+"convention for the ISA interrupt handlers was to use the unit number as "
+"argument, the new (recommended) convention is using a pointer to the device "
+"softc structure."
+msgstr ""
+"<emphasis>arg</emphasis> - 传递给处理程序的参量，标识特定设备。由处理程序将它从void*转换为任何实际类型。ISA中断处理程序"
+"的旧约定是使用单元号作为参量，新约定（推荐）使用指向设备softc结构的指针。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:293
+msgid ""
+"_cookie[p]_ - the value received from `setup()` is used to identify the "
+"handler when passed to `teardown()`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:295
+msgid ""
+"A number of methods are defined to operate on the resource handlers (struct "
+"resource *). Those of interest to the device driver writers are:"
+msgstr "定义了若干方法来操作资源句柄(struct resource *)。设备驱动程序编写者感兴趣的有："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:297
+msgid ""
+"`u_long rman_get_start(r) u_long rman_get_end(r)` Get the start and end of "
+"allocated resource range."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:298
+msgid ""
+"`void *rman_get_virtual(r)` Get the virtual address of activated memory "
+"resource."
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:300
+#, no-wrap
+msgid "Bus Memory Mapping"
+msgstr "总线内存映射"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:303
+msgid ""
+"In many cases data is exchanged between the driver and the device through "
+"the memory. Two variants are possible:"
+msgstr "很多情况下设备驱动程序和设备之间的数据交换是通过内存进行的。有两种可能的变体："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:305
+msgid "(a) memory is located on the device card"
+msgstr "(a) 内存位于设备卡上"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:307
+msgid "(b) memory is the main memory of the computer"
+msgstr "(b) 内存为计算机的主内存"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:309
+#, fuzzy
+msgid ""
+"In case (a) the driver always copies the data back and forth between the "
+"on-card memory and the main memory as necessary. To map the on-card memory "
+"into the kernel virtual address space the physical address and length of the "
+"on-card memory must be defined as a `SYS_RES_MEMORY` resource. That resource "
+"can then be allocated and activated, and its virtual address obtained using "
+"`rman_get_virtual()`. The older drivers used the function `pmap_mapdev()` "
+"for this purpose, which should not be used directly any more. Now it is one "
+"of the internal steps of resource activation."
+msgstr ""
+"情况(a)中，驱动程序可能需要在卡上的内存与主存之间来回拷贝数据。为了将卡上的内存映射到内核的虚地址空间，卡上内存的物理地址和长度必须被定义为      "
+"<literal>SYS_RES_MEMORY</literal>资源。然后资源就可以被分配并激活，它的虚地址通过使用<function>rman_get"
+"_virtual()</function>获取。较老的驱动程序将函数      "
+"<function>pmap_mapdev()</function>用于此目的，现在不应当再直接使用此函数。它已成为资源激活的一个内部步骤。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:311
+msgid ""
+"Most of the ISA cards will have their memory configured for physical "
+"location somewhere in range 640KB-1MB. Some of the ISA cards require larger "
+"memory ranges which should be placed somewhere under 16MB (because of the "
+"24-bit address limitation on the ISA bus). In that case if the machine has "
+"more memory than the start address of the device memory (in other words, "
+"they overlap) a memory hole must be configured at the address range used by "
+"devices. Many BIOSes allow configuration of a memory hole of 1MB starting at "
+"14MB or 15MB. FreeBSD can handle the memory holes properly if the BIOS "
+"reports them properly (this feature may be broken on old BIOSes)."
+msgstr ""
+"大多数ISA卡的内存配置为物理地位于640KB-1MB范围之间的某个位置。某些ISA卡需要更大的内存范围，位于16M以下的某个位置（由于ISA总线上24位"
+"地址限制）。这种情况下，如果机器有比设备内存的起始地址更多的内存（换句话说，它们重叠），则必须在被设备使用的内存起始地址处配置一个内存空洞。许多BIOS允"
+"许在起始于14MB或15MB处配置1M的内存空洞。如果BIOS正确地报告内存空洞，FreeBSD就能够正确处理它们（此特性在老BIOS上可能会出问题）。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:313
+msgid ""
+"In case (b) just the address of the data is sent to the device, and the "
+"device uses DMA to actually access the data in the main memory. Two "
+"limitations are present: First, ISA cards can only access memory below "
+"16MB. Second, the contiguous pages in virtual address space may not be "
+"contiguous in physical address space, so the device may have to do "
+"scatter/gather operations. The bus subsystem provides ready solutions for "
+"some of these problems, the rest has to be done by the drivers themselves."
+msgstr ""
+"情况(b)中，只是数据的地址被发送到设备，设备使用DMA实际访问主存中的数据。存在两个限制：首先，ISA卡只能访问16MB以下的内存。其次，虚地址空间中连"
+"续的页面在物理地址空间中可能不连续，设备可能不得不进行分散/收集操作。总线子系统为这些问题提供现成现成的解决办法，剩下的必须由驱动程序自己完成。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:315
+#, fuzzy
+msgid ""
+"Two structures are used for DMA memory allocation, `bus_dma_tag_t` and "
+"`bus_dmamap_t`. Tag describes the properties required for the DMA "
+"memory. Map represents a memory block allocated according to these "
+"properties. Multiple maps may be associated with the same tag."
+msgstr ""
+"DMA内存分配使用了两个结构， <varname>bus_dma_tag_t</varname>和<varname>bus_dmamap_t</varna"
+"me>。标签（tag）描述了DMA内存要求的特性。映射（map）表示按照这些特性分配的内存块。多个映射可以与同一标签关联。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:317
+msgid ""
+"Tags are organized into a tree-like hierarchy with inheritance of the "
+"properties. A child tag inherits all the requirements of its parent tag, and "
+"may make them more strict but never more loose."
+msgstr "标签按照对特性的继承而被组织成树型层次结构。子标签继承父标签的所有要求，可以令其更严格，但不允许放宽要求。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:319
+msgid ""
+"Normally one top-level tag (with no parent) is created for each device "
+"unit. If multiple memory areas with different requirements are needed for "
+"each device then a tag for each of them may be created as a child of the "
+"parent tag."
+msgstr ""
+"一般地，每个设备单元创建一个顶层标签（没有父标签）。如果每个设备需要不同要求的内存区，则为每个内存区都会创建一个标签，这些标签作为父标签的孩子。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:321
+msgid "The tags can be used to create a map in two ways."
+msgstr "使用标签创建映射的方法有两种。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:323
+msgid ""
+"First, a chunk of contiguous memory conformant with the tag requirements may "
+"be allocated (and later may be freed). This is normally used to allocate "
+"relatively long-living areas of memory for communication with the "
+"device. Loading of such memory into a map is trivial: it is always "
+"considered as one chunk in the appropriate physical memory range."
+msgstr ""
+"其一，分配一大块符合标签要求的连续内存（以后可以被释放）。这一般用于分配为了与设备通信而存在相对较长时间的那些内存区。将这样的内存加载到映射中非常容易：它"
+"总是被看作位于适当物理内存范围的一整块。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:325
+#, fuzzy
+msgid ""
+"Second, an arbitrary area of virtual memory may be loaded into a map. Each "
+"page of this memory will be checked for conformance to the map "
+"requirement. If it conforms then it is left at its original location. If it "
+"is not then a fresh conformant \"bounce page\" is allocated and used as "
+"intermediate storage. When writing the data from the non-conformant original "
+"pages they will be copied to their bounce pages first and then transferred "
+"from the bounce pages to the device. When reading the data would go from the "
+"device to the bounce pages and then copied to their non-conformant original "
+"pages. The process of copying between the original and bounce pages is "
+"called synchronization. This is normally used on a per-transfer basis: "
+"buffer for each transfer would be loaded, transfer done and buffer unloaded."
+msgstr ""
+"其二，将虚拟内存中的任意区域加载到映射中。这片内存的每一页都被检查，看是否符合映射的要求。如何符合则留在原始位置。如果不符合则分配一个新的符合要求的<qu"
+"ote>反弹页面(bounce page)</quote>，用作中间存储。当从不符合的原始页面写入数据时，数据首先被拷贝到反弹页面，然后从反弹页面传递到设"
+"备。当读取时，数据将会从设备到反弹页面，然后被拷贝到它们不符合的原始页面。原始和反弹页面之间的拷贝处理被称作同步。这一般用于单次传输的基础之上：每次传输时"
+"加载缓冲区，完成传输，卸载缓冲区。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:327
+msgid "The functions working on the DMA memory are:"
+msgstr "工作在DMA内存上的函数有："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:329
+msgid ""
+"`int bus_dma_tag_create(bus_dma_tag_t parent, bus_size_t alignment, "
+"bus_size_t boundary, bus_addr_t lowaddr, bus_addr_t highaddr, "
+"bus_dma_filter_t *filter, void *filterarg, bus_size_t maxsize, int "
+"nsegments, bus_size_t maxsegsz, int flags, bus_dma_tag_t *dmat)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:331
+#, fuzzy
+msgid "  Create a new tag. Returns 0 on success, the error code otherwise."
+msgstr "  创建新标签。成功则返回0，否则返回错误码。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:333
+msgid "_parent_ - parent tag, or NULL to create a top-level tag."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:334
+msgid ""
+"_alignment_ - required physical alignment of the memory area to be allocated "
+"for this tag. Use value 1 for \"no specific alignment\". Applies only to the "
+"future `bus_dmamem_alloc()` but not `bus_dmamap_create()` calls."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:335
+msgid ""
+"_boundary_ - physical address boundary that must not be crossed when "
+"allocating the memory. Use value 0 for \"no boundary\". Applies only to the "
+"future `bus_dmamem_alloc()` but not `bus_dmamap_create()` calls. Must be "
+"power of 2. If the memory is planned to be used in non-cascaded DMA mode "
+"(i.e., the DMA addresses will be supplied not by the device itself but by "
+"the ISA DMA controller) then the boundary must be no larger than 64KB "
+"(64*1024) due to the limitations of the DMA hardware."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:336
+msgid ""
+"_lowaddr, highaddr_ - the names are slightly misleading; these values are "
+"used to limit the permitted range of physical addresses used to allocate the "
+"memory. The exact meaning varies depending on the planned future use:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:338
+msgid ""
+"For `bus_dmamem_alloc()` all the addresses from 0 to lowaddr-1 are "
+"considered permitted, the higher ones are forbidden."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:339
+#, fuzzy
+msgid ""
+"For `bus_dmamap_create()` all the addresses outside the inclusive range "
+"[lowaddr; highaddr] are considered accessible. The addresses of pages inside "
+"the range are passed to the filter function which decides if they are "
+"accessible. If no filter function is supplied then all the range is "
+"considered unaccessible."
+msgstr ""
+"对于<function>bus_dmamap_create()</function>，闭区间[lowaddr; "
+"highaddr]之外的所有地址被视为可访问。范围之内的地址页面被传递给过滤函数，由它决定是否可访问。如果没有提供过滤函数，则整个区间被视为不可访问。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:340
+msgid "For the ISA devices the normal values (with no filter function) are:"
+msgstr "对于ISA设备，正常值（没有过滤函数）为："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:342
+#, fuzzy
+msgid "  lowaddr = BUS_SPACE_MAXADDR_24BIT"
+msgstr "  lowaddr = BUS_SPACE_MAXADDR_24BIT"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:344
+#, fuzzy
+msgid "  highaddr = BUS_SPACE_MAXADDR"
+msgstr "  highaddr = BUS_SPACE_MAXADDR"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:346
+#, fuzzy
+msgid ""
+"_filter, filterarg_ - the filter function and its argument. If NULL is "
+"passed for filter then the whole range [lowaddr, highaddr] is considered "
+"unaccessible when doing `bus_dmamap_create()`. Otherwise the physical "
+"address of each attempted page in range [lowaddr; highaddr] is passed to the "
+"filter function which decides if it is accessible. The prototype of the "
+"filter function is: `int filterfunc(void *arg, bus_addr_t paddr)`. It must "
+"return 0 if the page is accessible, non-zero otherwise."
+msgstr ""
+"<emphasis>filter, filterarg</emphasis> - "
+"过滤函数及其参数。如果filter为NULL，则当调用<function>bus_dmamap_create()</function>时，整个区间["
+"lowaddr, highaddr]被视为不可访问。否则，区间[lowaddr; "
+"highaddr]内的每个被试图访问的页面的物理地址被传递给过滤函数，由它决定是否可访问。过滤函数的原型为：<function>int "
+"filterfunc(void *arg,bus_addr_t paddr)</function>。当页面可以被访问时它必须返回0，否则返回非零值。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:347
+msgid ""
+"_maxsize_ - the maximal size of memory (in bytes) that may be allocated "
+"through this tag. In case it is difficult to estimate or could be "
+"arbitrarily big, the value for ISA devices would be "
+"`BUS_SPACE_MAXSIZE_24BIT`."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:348
+#, fuzzy
+msgid ""
+"_nsegments_ - maximal number of scatter-gather segments supported by the "
+"device. If unrestricted then the value `BUS_SPACE_UNRESTRICTED` should be "
+"used. This value is recommended for the parent tags, the actual restrictions "
+"would then be specified for the descendant tags. Tags with nsegments equal "
+"to `BUS_SPACE_UNRESTRICTED` may not be used to actually load maps, they may "
+"be used only as parent tags. The practical limit for nsegments seems to be "
+"about 250-300, higher values will cause kernel stack overflow (the hardware "
+"can not normally support that many scatter-gather buffers anyway)."
+msgstr ""
+"<emphasis>nsegments</emphasis> - 设备支持的分散/收集段的最大数目。如果不加限制，则使用应当使用值<literal>BUS"
+"_SPACE_UNRESTRICTED</literal>。建议对父标签使用这个值，而为子孙标签指定实际限制。nsegments值等于 "
+"<literal>BUS_SPACE_UNRESTRICTED</literal>的标签不能用于实际加载映射，仅可以将它们作为父标签。 "
+"nsetments的实际限制大约为250-300，再高的值将导致内核堆栈溢出（硬件无法正常支持那么多的分散/收集缓冲区）。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:349
+msgid ""
+"_maxsegsz_ - maximal size of a scatter-gather segment supported by the "
+"device. The maximal value for ISA device would be `BUS_SPACE_MAXSIZE_24BIT`."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:350
+msgid "_flags_ - a bitmap of flags. The only interesting flags are:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:352
+msgid ""
+"_BUS_DMA_ALLOCNOW_ - requests to allocate all the potentially needed bounce "
+"pages when creating the tag."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:353
+msgid ""
+"_BUS_DMA_ISA_ - mysterious flag used only on Alpha machines. It is not "
+"defined for the i386 machines. Probably it should be used by all the ISA "
+"drivers for Alpha machines but it looks like there are no such drivers yet."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:355
+msgid "_dmat_ - pointer to the storage for the new tag to be returned."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:357
+msgid "`int bus_dma_tag_destroy(bus_dma_tag_t dmat)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:359
+#, fuzzy
+msgid "  Destroy a tag. Returns 0 on success, the error code otherwise."
+msgstr "  销毁标签。成功则返回0，否则返回错误码。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:361
+#, fuzzy
+msgid "  dmat - the tag to be destroyed."
+msgstr "  dmat - 被销毁的标签。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:362
+msgid ""
+"`int bus_dmamem_alloc(bus_dma_tag_t dmat, void** vaddr, int flags, "
+"bus_dmamap_t *mapp)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:364
+#, fuzzy
+msgid ""
+"  Allocate an area of contiguous memory described by the tag. The size of "
+"memory to be allocated is tag's maxsize. Returns 0 on success, the error "
+"code otherwise. The result still has to be loaded by `bus_dmamap_load()` "
+"before being used to get the physical address of the memory."
+msgstr ""
+"  分配标签所描述的一块连续内存区。被分配的内存的大小为标签的maxsize。成功则返回0，否则返回错误码。调用结果被用于获取内存的物理地址，但在此之前必"
+"须用<function>bus_dmamap_load()</function>将其加载。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:366
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:378
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:386
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:401
+msgid "_dmat_ - the tag"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:367
+msgid ""
+"_vaddr_ - pointer to the storage for the kernel virtual address of the "
+"allocated area to be returned."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:368
+msgid "flags - a bitmap of flags. The only interesting flag is:"
+msgstr "flags - 旗标的位图。唯一感兴趣的旗标为："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:370
+msgid ""
+"_BUS_DMA_NOWAIT_ - if the memory is not immediately available return the "
+"error. If this flag is not set then the routine is allowed to sleep until "
+"the memory becomes available."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:372
+msgid "_mapp_ - pointer to the storage for the new map to be returned."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:374
+msgid "`void bus_dmamem_free(bus_dma_tag_t dmat, void *vaddr, bus_dmamap_t map)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:376
+msgid ""
+"  Free the memory allocated by `bus_dmamem_alloc()`. At present, freeing of "
+"the memory allocated with ISA restrictions is not implemented. Due to this "
+"the recommended model of use is to keep and re-use the allocated areas for "
+"as long as possible. Do not lightly free some area and then shortly allocate "
+"it again. That does not mean that `bus_dmamem_free()` should not be used at "
+"all: hopefully it will be properly implemented soon."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:379
+msgid "_vaddr_ - the kernel virtual address of the memory"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:380
+msgid "_map_ - the map of the memory (as returned from `bus_dmamem_alloc()`)"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:382
+msgid "`int bus_dmamap_create(bus_dma_tag_t dmat, int flags, bus_dmamap_t *mapp)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:384
+msgid ""
+"  Create a map for the tag, to be used in `bus_dmamap_load()` later. Returns "
+"0 on success, the error code otherwise."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:387
+msgid ""
+"_flags_ - theoretically, a bit map of flags. But no flags are defined yet, "
+"so at present it will be always 0."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:388
+msgid "_mapp_ - pointer to the storage for the new map to be returned"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:390
+msgid "`int bus_dmamap_destroy(bus_dma_tag_t dmat, bus_dmamap_t map)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:392
+#, fuzzy
+msgid "  Destroy a map. Returns 0 on success, the error code otherwise."
+msgstr "  销毁映射。成功则返回0，否则返回错误码。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:394
+msgid "dmat - the tag to which the map is associated"
+msgstr "dmat - 与映射关联的标签"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:395
+msgid "map - the map to be destroyed"
+msgstr "map - 将要被销毁的映射"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:397
+msgid ""
+"`int bus_dmamap_load(bus_dma_tag_t dmat, bus_dmamap_t map, void *buf, "
+"bus_size_t buflen, bus_dmamap_callback_t *callback, void *callback_arg, int "
+"flags)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:399
+#, fuzzy
+msgid ""
+"  Load a buffer into the map (the map must be previously created by "
+"`bus_dmamap_create()` or `bus_dmamem_alloc()`). All the pages of the buffer "
+"are checked for conformance to the tag requirements and for those not "
+"conformant the bounce pages are allocated. An array of physical segment "
+"descriptors is built and passed to the callback routine. This callback "
+"routine is then expected to handle it in some way. The number of bounce "
+"buffers in the system is limited, so if the bounce buffers are needed but "
+"not immediately available the request will be queued and the callback will "
+"be called when the bounce buffers will become available. Returns 0 if the "
+"callback was executed immediately or `EINPROGRESS` if the request was queued "
+"for future execution. In the latter case the synchronization with queued "
+"callback routine is the responsibility of the driver."
+msgstr ""
+"  加载缓冲区到映射中(映射必须事先由<function>bus_dmamap_create()</function>或者<function>bus_dm"
+"amem_alloc()</function>)创建。缓冲区的所有页面都会被检查，看是否符合标签的要求，并为那些不符合的分配反弹页面。会创建物理段描述符的"
+"数组，并将其传递给回调函数。回调函数以某种方式处理这个数组。系统中的反弹缓冲区是受限的，因此如果需要的反弹缓冲区不能立即获得，则将请求入队，当反弹缓冲区可"
+"用时再调用回调函数。如果回调函数立即执行则返回0，如果请求被排队，等待将来执行，则返回<errorname>EINPROGRESS</errorname>"
+"。后一种情况下，与排队的回调函数之间的同步由驱动程序负责。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:402
+msgid "_map_ - the map"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:403
+msgid "_buf_ - kernel virtual address of the buffer"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:404
+msgid "_buflen_ - length of the buffer"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:405
+msgid "_callback_, `callback_arg` - the callback function and its argument"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:407
+msgid ""
+"  The prototype of callback function is: `void callback(void *arg, "
+"bus_dma_segment_t *seg, int nseg, int error)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:409
+msgid "_arg_ - the same as callback_arg passed to `bus_dmamap_load()`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:410
+msgid "_seg_ - array of the segment descriptors"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:411
+msgid "_nseg_ - number of descriptors in array"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:412
+msgid ""
+"_error_ - indication of the segment number overflow: if it is set to `EFBIG` "
+"then the buffer did not fit into the maximal number of segments permitted by "
+"the tag. In this case only the permitted number of descriptors will be in "
+"the array. Handling of this situation is up to the driver: depending on the "
+"desired semantics it can either consider this an error or split the buffer "
+"in two and handle the second part separately"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:414
+#, fuzzy
+msgid "  Each entry in the segments array contains the fields:"
+msgstr "  段数组中的每一项包含如下字段："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:416
+msgid "_ds_addr_ - physical bus address of the segment"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:417
+msgid "_ds_len_ - length of the segment"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:419
+msgid "`void bus_dmamap_unload(bus_dma_tag_t dmat, bus_dmamap_t map)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:421
+#, fuzzy
+msgid "  unload the map."
+msgstr "  卸载映射。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:423
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:430
+msgid "_dmat_ - tag"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:424
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:431
+msgid "_map_ - loaded map"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:426
+msgid ""
+"`void bus_dmamap_sync (bus_dma_tag_t dmat, bus_dmamap_t map, "
+"bus_dmasync_op_t op)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:428
+#, fuzzy
+msgid ""
+"  Synchronise a loaded buffer with its bounce pages before and after "
+"physical transfer to or from device. This is the function that does all the "
+"necessary copying of data between the original buffer and its mapped "
+"version. The buffers must be synchronized both before and after doing the "
+"transfer."
+msgstr ""
+"  与设备进行物理传输前后，将加载的缓冲区与其反弹页面进行同步。此函数完成原始缓冲区与其映射版本之间所有必需的数据拷贝工作。进行传输之前和之后必须对缓冲区"
+"进行同步。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:432
+msgid "_op_ - type of synchronization operation to perform:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:434
+msgid "`BUS_DMASYNC_PREREAD` - before reading from device into buffer"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:435
+msgid "`BUS_DMASYNC_POSTREAD` - after reading from device into buffer"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:436
+msgid "`BUS_DMASYNC_PREWRITE` - before writing the buffer to device"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:437
+msgid "`BUS_DMASYNC_POSTWRITE` - after writing the buffer to device"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:439
+#, fuzzy
+msgid ""
+"As of now PREREAD and POSTWRITE are null operations but that may change in "
+"the future, so they must not be ignored in the driver. Synchronization is "
+"not needed for the memory obtained from `bus_dmamem_alloc()`."
+msgstr ""
+"当前PREREAD和POSTWRITE为空操作，但将来可能会改变，因此驱动程序中不能忽略它们。由<function>bus_dmamem_alloc()<"
+"/function>获得的内存不需要同步。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:441
+msgid ""
+"Before calling the callback function from `bus_dmamap_load()` the segment "
+"array is stored in the stack. And it gets pre-allocated for the maximal "
+"number of segments allowed by the tag. As a result of this the practical "
+"limit for the number of segments on i386 architecture is about 250-300 (the "
+"kernel stack is 4KB minus the size of the user structure, size of a segment "
+"array entry is 8 bytes, and some space must be left). Since the array is "
+"allocated based on the maximal number this value must not be set higher than "
+"really needed. Fortunately, for most of hardware the maximal supported "
+"number of segments is much lower. But if the driver wants to handle buffers "
+"with a very large number of scatter-gather segments it should do that in "
+"portions: load part of the buffer, transfer it to the device, load next part "
+"of the buffer, and so on."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:443
+msgid ""
+"Another practical consequence is that the number of segments may limit the "
+"size of the buffer. If all the pages in the buffer happen to be physically "
+"non-contiguous then the maximal supported buffer size for that fragmented "
+"case would be (nsegments * page_size). For example, if a maximal number of "
+"10 segments is supported then on i386 maximal guaranteed supported buffer "
+"size would be 40K. If a higher size is desired then special tricks should be "
+"used in the driver."
+msgstr ""
+"另一个实践结论是段数目可能限制缓冲区的大小。如果缓冲区中的所有页面碰巧物理上不连续，则分片情况下支持的最大缓冲区尺寸为(nsegments * page_"
+"size)。例如，如果支持的段的最大数目为10，则在i386上可以确保支持的最大缓冲区大小为40K。如果希望更大的则需要在驱动程序中使用一些特殊技巧。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:445
+msgid ""
+"If the hardware does not support scatter-gather at all or the driver wants "
+"to support some buffer size even if it is heavily fragmented then the "
+"solution is to allocate a contiguous buffer in the driver and use it as "
+"intermediate storage if the original buffer does not fit."
+msgstr ""
+"如果硬件根本不支持分散/收集，或者驱动程序希望即使在严重分片的情况下仍然支持某种缓冲区大小，则解决办法是：如果无法容纳下原始缓冲区，就在驱动程序中分配一个"
+"连续的缓冲区作为中间存储。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:447
+#, fuzzy
+msgid ""
+"Below are the typical call sequences when using a map depend on the use of "
+"the map. The characters -> are used to show the flow of time."
+msgstr "下面是当使用映射时的典型调用顺序，根据对映射的具体使用而不同。字符-&gt;用于显示时间流。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:449
+msgid ""
+"For a buffer which stays practically fixed during all the time between "
+"attachment and detachment of a device:"
+msgstr "对于从连接到分离设备，这期间位置一直不变的缓冲区："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:451
+msgid ""
+"bus_dmamem_alloc -> bus_dmamap_load -> ...use buffer... -> -> "
+"bus_dmamap_unload -> bus_dmamem_free"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:453
+msgid "For a buffer that changes frequently and is passed from outside the driver:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:462
+#, no-wrap
+msgid ""
+"          bus_dmamap_create ->\n"
+"          -> bus_dmamap_load -> bus_dmamap_sync(PRE...) -> do transfer ->\n"
+"          -> bus_dmamap_sync(POST...) -> bus_dmamap_unload ->\n"
+"          ...\n"
+"          -> bus_dmamap_load -> bus_dmamap_sync(PRE...) -> do transfer ->\n"
+"          -> bus_dmamap_sync(POST...) -> bus_dmamap_unload ->\n"
+"          -> bus_dmamap_destroy\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:465
+#, fuzzy
+msgid ""
+"When loading a map created by `bus_dmamem_alloc()` the passed address and "
+"size of the buffer must be the same as used in `bus_dmamem_alloc()`. In this "
+"case it is guaranteed that the whole buffer will be mapped as one segment "
+"(so the callback may be based on this assumption) and the request will be "
+"executed immediately (EINPROGRESS will never be returned). All the callback "
+"needs to do in this case is to save the physical address."
+msgstr ""
+"当加载由<function>bus_dmamem_alloc()</function>创建的映射时，传递进去的缓冲区的地址和大小必须和<function>"
+"bus_dmamem_alloc()</function>中使用的一样。这种情况下就可以保证整个缓冲区被作为一个段而映射（因而回调可以基于此假设），并且请"
+"求被立即执行（永远不会返回EINPROGRESS）。这种情况下回调函数需要作的只是保存物理地址。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:467
+msgid "A typical example would be:"
+msgstr "典型示例如下："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:475
+#, no-wrap
+msgid ""
+"          static void\n"
+"        alloc_callback(void *arg, bus_dma_segment_t *seg, int nseg, int "
+"error)\n"
+"        {\n"
+"          *(bus_addr_t *)arg = seg[0].ds_addr;\n"
+"        }\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:486
+#, no-wrap
+msgid ""
+"          ...\n"
+"          int error;\n"
+"          struct somedata {\n"
+"            ....\n"
+"          };\n"
+"          struct somedata *vsomedata; /* virtual address */\n"
+"          bus_addr_t psomedata; /* physical bus-relative address */\n"
+"          bus_dma_tag_t tag_somedata;\n"
+"          bus_dmamap_t map_somedata;\n"
+"          ...\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:494
+#, no-wrap
+msgid ""
+"          error=bus_dma_tag_create(parent_tag, alignment,\n"
+"           boundary, lowaddr, highaddr, /*filter*/ NULL, /*filterarg*/ "
+"NULL,\n"
+"           /*maxsize*/ sizeof(struct somedata), /*nsegments*/ 1,\n"
+"           /*maxsegsz*/ sizeof(struct somedata), /*flags*/ 0,\n"
+"           &tag_somedata);\n"
+"          if(error)\n"
+"          return error;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:499
+#, no-wrap
+msgid ""
+"          error = bus_dmamem_alloc(tag_somedata, &vsomedata, /* flags*/ 0,\n"
+"             &map_somedata);\n"
+"          if(error)\n"
+"             return error;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:503
+#, no-wrap
+msgid ""
+"          bus_dmamap_load(tag_somedata, map_somedata, (void *)vsomedata,\n"
+"             sizeof (struct somedata), alloc_callback,\n"
+"             (void *) &psomedata, /*flags*/0);\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:506
+msgid ""
+"Looks a bit long and complicated but that is the way to do it. The practical "
+"consequence is: if multiple memory areas are allocated always together it "
+"would be a really good idea to combine them all into one structure and "
+"allocate as one (if the alignment and boundary limitations permit)."
+msgstr ""
+"代码看起来有点长，也比较复杂，但那是正确的使用方法。实际结果是：如果分配多个内存区域，则总将它们组合成一个结构并作为整体分配（如果对齐和边界限制允许的话）"
+"是一个很好的主意。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:508
+msgid ""
+"When loading an arbitrary buffer into the map created by "
+"`bus_dmamap_create()` special measures must be taken to synchronize with the "
+"callback in case it would be delayed. The code would look like:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:514
+#, no-wrap
+msgid ""
+"          {\n"
+"           int s;\n"
+"           int error;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:533
+#, fuzzy, no-wrap
+msgid ""
+"           s = splsoftvm();\n"
+"           error = bus_dmamap_load(\n"
+"               dmat,\n"
+"               dmamap,\n"
+"               buffer_ptr,\n"
+"               buffer_len,\n"
+"               callback,\n"
+"               /*callback_arg*/ buffer_descriptor,\n"
+"               /*flags*/0);\n"
+"           if (error == EINPROGRESS) {\n"
+"               /*\n"
+"                * Do whatever is needed to ensure synchronization\n"
+"                * with callback. Callback is guaranteed not to be started\n"
+"                * until we do splx() or tsleep().\n"
+"                */\n"
+"              }\n"
+"           splx(s);\n"
+"          }\n"
+msgstr ""
+"           {\n"
+"           int s;\n"
+"           int error;\n"
+"\n"
+"           s = splsoftvm();\n"
+"           error = bus_dmamap_load(\n"
+"               dmat,\n"
+"               dmamap,\n"
+"               buffer_ptr,\n"
+"               buffer_len,\n"
+"               callback,\n"
+"               /*callback_arg*/ buffer_descriptor,\n"
+"               /*flags*/0);\n"
+"           if (error == EINPROGRESS) {\n"
+"               /*\n"
+"                * Do whatever is needed to ensure synchronization\n"
+"                * with callback. Callback is guaranteed not to be started\n"
+"                * until we do splx() or tsleep().\n"
+"                */\n"
+"              }\n"
+"           splx(s);\n"
+"          }\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:536
+msgid "Two possible approaches for the processing of requests are:"
+msgstr "处理请求的两种方法分别是："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:538
+#, fuzzy
+msgid ""
+"If requests are completed by marking them explicitly as done (such as the "
+"CAM requests) then it would be simpler to put all the further processing "
+"into the callback driver which would mark the request when it is done. Then "
+"not much extra synchronization is needed. For the flow control reasons it "
+"may be a good idea to freeze the request queue until this request gets "
+"completed."
+msgstr ""
+"1. 如果通过显式地标记请求已经结束来完成请求（例如CAM请求），则将所有进一步的处理放入回调驱动程序中会比较简单，回调结束后会标记请求。之后不需要太多额"
+"外的同步。由于流控制的原因，冻结请求队列直到请求完成才释放可能是个好主意。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:540
+#, fuzzy
+msgid ""
+"If requests are completed when the function returns (such as classic read or "
+"write requests on character devices) then a synchronization flag should be "
+"set in the buffer descriptor and `tsleep()` called. Later when the callback "
+"gets called it will do its processing and check this synchronization "
+"flag. If it is set then the callback should issue a wakeup. In this approach "
+"the callback function could either do all the needed processing (just like "
+"the previous case) or simply save the segments array in the buffer "
+"descriptor. Then after callback completes the calling function could use "
+"this saved segments array and do all the processing."
+msgstr ""
+"2. 如果请求是在函数返回时完成（例如字符设备上传统的读写请求），则需要在缓冲区描述符上设置同步标志，并调用<function>tsleep()</fun"
+"ction>。后面当回调函数被调用时，它将执行处理并检查同步标志。如果设置了同步标志，它应该发出一个唤醒操作。在这种方法中，回调函数或者进行所由必需的处理"
+"（就像前面的情况），或者简单在缓冲区描述符中存储段数组。回调完成后，回调函数就能使用这个存储的段数组并进行所有的处理。"
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:542
+#, no-wrap
+msgid "DMA"
+msgstr "DMA"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:545
+msgid ""
+"The Direct Memory Access (DMA) is implemented in the ISA bus through the DMA "
+"controller (actually, two of them but that is an irrelevant detail). To make "
+"the early ISA devices simple and cheap the logic of the bus control and "
+"address generation was concentrated in the DMA controller. Fortunately, "
+"FreeBSD provides a set of functions that mostly hide the annoying details of "
+"the DMA controller from the device drivers."
+msgstr ""
+"ISA总线中Direct Memory Access (DMA)是通过DMA控制器（实际上是它们中的两个，但这只是无关细节）实现的。为了使以前的ISA设备"
+"简单便宜，总线控制和地址产生的逻辑都集中在DMA控制器中。幸运的是，FreeBSD提供了一套函数，这些函数大多把DMA控制器的繁琐细节对设备驱动程序隐藏了"
+"起来。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:547
+msgid ""
+"The simplest case is for the fairly intelligent devices. Like the bus master "
+"devices on PCI they can generate the bus cycles and memory addresses all by "
+"themselves. The only thing they really need from the DMA controller is bus "
+"arbitration. So for this purpose they pretend to be cascaded slave DMA "
+"controllers. And the only thing needed from the system DMA controller is to "
+"enable the cascaded mode on a DMA channel by calling the following function "
+"when attaching the driver:"
+msgstr ""
+"最简单情况是那些比较智能的设备。就象PCI上的总线主设备一样，它们自己能产生总线周期和内存地址。它们真正从DMA控制器需要的唯一事情是总线仲裁。所以为了此"
+"目的，它们假装是级联从DMA控制器。当连接驱动程序时，系统DMA控制器需要做的唯一事情就是通过调用如下函数在一个DMA通道上激活级联模式："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:549
+msgid "`void isa_dmacascade(int channel_number)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:551
+msgid ""
+"All the further activity is done by programming the device. When detaching "
+"the driver no DMA-related functions need to be called."
+msgstr "所有进一步的活动通过对设备编程完成。当卸载驱动程序时，不需要调用DMA相关的函数。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:553
+msgid "For the simpler devices things get more complicated. The functions used are:"
+msgstr "对于较简单的设备，事情反而变得复杂。使用的函数包括："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:555
+msgid "`int isa_dma_acquire(int chanel_number)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:557
+#, fuzzy
+msgid ""
+"  Reserve a DMA channel. Returns 0 on success or EBUSY if the channel was "
+"already reserved by this or a different driver. Most of the ISA devices are "
+"not able to share DMA channels anyway, so normally this function is called "
+"when attaching a device. This reservation was made redundant by the modern "
+"interface of bus resources but still must be used in addition to the "
+"latter. If not used then later, other DMA routines will panic."
+msgstr ""
+"  保留一个DMA通道。成功则返回0，如果通道已经被保留或被其它驱动程序保留则返回EBUSY。大多数的ISA设备都不能共享DMA通道，因此这个函数通常在连"
+"接设备时调用。总线资源的现代接口使得这种保留成为多余，但目前仍必须使用。如果不使用，则后面其它DMA例程将会panic。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:558
+msgid "`int isa_dma_release(int chanel_number)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:560
+#, fuzzy
+msgid ""
+"  Release a previously reserved DMA channel. No transfers must be in "
+"progress when the channel is released (in addition the device must not try "
+"to initiate transfer after the channel is released)."
+msgstr "  释放先前保留的DMA通道。释放通道时必须不能有正在进行中的传输（另外，释放通道后设备必须不能再试图发起传输）。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:561
+msgid "`void isa_dmainit(int chan, u_int bouncebufsize)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:563
+#, fuzzy
+msgid ""
+"  Allocate a bounce buffer for use with the specified channel. The requested "
+"size of the buffer can not exceed 64KB. This bounce buffer will be "
+"automatically used later if a transfer buffer happens to be not physically "
+"contiguous or outside of the memory accessible by the ISA bus or crossing "
+"the 64KB boundary. If the transfers will be always done from buffers which "
+"conform to these conditions (such as those allocated by `bus_dmamem_alloc()` "
+"with proper limitations) then `isa_dmainit()` does not have to be "
+"called. But it is quite convenient to transfer arbitrary data using the DMA "
+"controller. The bounce buffer will automatically care of the scatter-gather "
+"issues."
+msgstr ""
+"  分配由特定通道使用的反弹缓冲区。请求的缓冲区大小不能超过64KB。以后，如果传输缓冲区碰巧不是物理连续的，或超出ISA总线可访问的内存范围，或跨越64"
+"KB的边界，则会自动使用反弹缓冲区。如果传输总是使用符合上述条件的缓冲区（例如，由<function>bus_dmamem_alloc()</functi"
+"on>分配的那些），则不需要调用          "
+"<function>isa_dmainit()</function>。但使用此函数会让通过DMA控制器传输任意数据变得非常方便。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:565
+#, fuzzy
+msgid "_chan_ - channel number"
+msgstr "chan - 通道号"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:566
+msgid "_bouncebufsize_ - size of the bounce buffer in bytes"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:568
+msgid "`void isa_dmastart(int flags, caddr_t addr, u_int nbytes, int chan)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:570
+#, fuzzy
+msgid ""
+"  Prepare to start a DMA transfer. This function must be called to set up "
+"the DMA controller before actually starting transfer on the device. It "
+"checks that the buffer is contiguous and falls into the ISA memory range, if "
+"not then the bounce buffer is automatically used. If bounce buffer is "
+"required but not set up by `isa_dmainit()` or too small for the requested "
+"transfer size then the system will panic. In case of a write request with "
+"bounce buffer the data will be automatically copied to the bounce buffer."
+msgstr ""
+"  准备启动DMA传输。实际启动设备上的传输之前必需调用此函数来设置DMA控制器。它检查缓冲区是否连续的且在ISA内存范围之内，如果不是则自动使用反弹缓冲"
+"区。如果需要反弹缓冲区，但反弹缓冲区没有用 <function>isa_dmainit()</function>设置，或对于请求的传输大小来说太小，则系统"
+"将panic。写请求且使用反弹缓冲区的情况下，数据将被自动拷贝到反弹缓冲区。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:571
+msgid ""
+"flags - a bitmask determining the type of operation to be done. The "
+"direction bits B_READ and B_WRITE are mutually exclusive."
+msgstr "flags - 位掩码，决定将要完成的操作的类型。方向位B_READ和B_WRITE互斥。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:573
+msgid "B_READ - read from the ISA bus into memory"
+msgstr "B_READ - 从ISA总线读到内存"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:574
+msgid "B_WRITE - write from the memory to the ISA bus"
+msgstr "B_WRITE - 从内存写到ISA总线上"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:575
+#, fuzzy
+msgid ""
+"B_RAW - if set then the DMA controller will remember the buffer and after "
+"the end of transfer will automatically re-initialize itself to repeat "
+"transfer of the same buffer again (of course, the driver may change the data "
+"in the buffer before initiating another transfer in the device). If not set "
+"then the parameters will work only for one transfer, and `isa_dmastart()` "
+"will have to be called again before initiating the next transfer. Using "
+"B_RAW makes sense only if the bounce buffer is not used."
+msgstr ""
+"B_RAW - 如果设置则DMA控制器将会记住缓冲区，并在传输结束后自动重新初始化它自己，再次重复传输同一缓冲区（当然，驱动程序可能发起设备的另一个传输之"
+"前改变缓冲区中的数据）。如果没有设置，参数只对一次传输有效，在发起下一次传输之前必须再次调用<function>isa_dmastart()</funct"
+"ion>。只有在不使用反弹缓冲区时使用B_RAW才有意义。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:577
+msgid "addr - virtual address of the buffer"
+msgstr "addr - 缓冲区的虚地址"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:578
+msgid ""
+"nbytes - length of the buffer. Must be less or equal to 64KB. Length of 0 is "
+"not allowed: the DMA controller will understand it as 64KB while the kernel "
+"code will understand it as 0 and that would cause unpredictable effects. For "
+"channels number 4 and higher the length must be even because these channels "
+"transfer 2 bytes at a time. In case of an odd length the last byte will not "
+"be transferred."
+msgstr ""
+"nbytes - 缓冲区长度。必须小于等于64KB。不允许长度为0：因为DMA控制器将会理解为64KB，而内核代码把它理解为0，那样就会导致不可预测的效果"
+"。对于通道号等于和高于4的情况，长度必需为偶数，因为这些通道每次传输2字节。奇数长度情况下，最后一个字节不被传输。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:579
+msgid "chan - channel number"
+msgstr "chan - 通道号"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:580
+msgid "`void isa_dmadone(int flags, caddr_t addr, int nbytes, int chan)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:582
+#, fuzzy
+msgid ""
+"  Synchronize the memory after device reports that transfer is done. If that "
+"was a read operation with a bounce buffer then the data will be copied from "
+"the bounce buffer to the original buffer. Arguments are the same as for "
+"`isa_dmastart()`. Flag B_RAW is permitted but it does not affect "
+"`isa_dmadone()` in any way."
+msgstr ""
+"  设备报告传输完成后，同步内存。如果是使用反弹缓冲区的读操作，则将数据从反弹缓冲区拷贝到原始缓冲区。参量与<function>isa_dmastart("
+")</function>的相同。允许使用B_RAW标志，但它一点也不会影响<function>isa_dmadone()</function>。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:583
+msgid "`int isa_dmastatus(int channel_number)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:585
+#, fuzzy
+msgid ""
+"  Returns the number of bytes left in the current transfer to be "
+"transferred. In case the flag B_READ was set in `isa_dmastart()` the number "
+"returned will never be equal to zero. At the end of transfer it will be "
+"automatically reset back to the length of buffer. The normal use is to check "
+"the number of bytes left after the device signals that the transfer is "
+"completed. If the number of bytes is not 0 then something probably went "
+"wrong with that transfer."
+msgstr ""
+"  返回当前传输中剩余的字节数。在<function>isa_dmastart()</function>中设置了B_READ的情况下，返回的数字一定不会等"
+"于零。传输结束时它会被自动复位到缓冲区的长度。正式的用法是在设备发信号指示传输已完成时检查剩余的字节数。如果字节数不为0，则此次传输可能有问题。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:586
+msgid "`int isa_dmastop(int channel_number)`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:588
+#, fuzzy
+msgid ""
+"  Aborts the current transfer and returns the number of bytes left "
+"untransferred."
+msgstr "  放弃当前的传输并返回剩余未传输的字节数。"
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:590
+#, no-wrap
+msgid "xxx_isa_probe"
+msgstr "xxx_isa_probe"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:593
+msgid ""
+"This function probes if a device is present. If the driver supports "
+"auto-detection of some part of device configuration (such as interrupt "
+"vector or memory address) this auto-detection must be done in this routine."
+msgstr "这个函数探测设备是否存在。如果驱动程序支持自动侦测设备配置的某些部分（如中断向量或内存地址），则自动侦测必须在此例程中完成。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:595
+#, fuzzy
+msgid ""
+"As for any other bus, if the device cannot be detected or is detected but "
+"failed the self-test or some other problem happened then it returns a "
+"positive value of error. The value `ENXIO` must be returned if the device is "
+"not present. Other error values may mean other conditions. Zero or negative "
+"values mean success. Most of the drivers return zero as success."
+msgstr ""
+"对于任意其他总线，如果不能侦测到设备，或者侦测到但自检失败，或者发生某些其他问题，则应当返回一个正值的错误。如果设备不存在则必须返回值<errorname"
+">ENXIO</errorname>。其他错误值可能表示其他条件。零或负值意味着成功。大多数驱动程序返回零表示成功。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:597
+msgid ""
+"The negative return values are used when a PnP device supports multiple "
+"interfaces. For example, an older compatibility interface and a newer "
+"advanced interface which are supported by different drivers. Then both "
+"drivers would detect the device. The driver which returns a higher value in "
+"the probe routine takes precedence (in other words, the driver returning 0 "
+"has highest precedence, one returning -1 is next, one returning -2 is after "
+"it and so on). In result the devices which support only the old interface "
+"will be handled by the old driver (which should return -1 from the probe "
+"routine) while the devices supporting the new interface as well will be "
+"handled by the new driver (which should return 0 from the probe routine)."
+msgstr ""
+"当PnP设备支持多个接口时使用负返回值。例如，不同驱动程序支持老的兼容接口和较新的高级接口。则两个驱动程序都将侦测设备。在探测例程中返回较高值的驱动程序获"
+"得优先（换句话说，返回0的驱动程序具有最高的优先级，返回-1的其次，返回-2的更后，等等）。这样，仅支持老接口的设备将被老驱动程序处理（其应当从探测例程中"
+"返回-1），而同时也支持新接口的设备将由新驱动程序处理（其应当从探测例程中返回0）。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:599
+#, fuzzy
+msgid ""
+"The device descriptor struct xxx_softc is allocated by the system before "
+"calling the probe routine. If the probe routine returns an error the "
+"descriptor will be automatically deallocated by the system. So if a probing "
+"error occurs the driver must make sure that all the resources it used during "
+"probe are deallocated and that nothing keeps the descriptor from being "
+"safely deallocated. If the probe completes successfully the descriptor will "
+"be preserved by the system and later passed to the routine "
+"`xxx_isa_attach()`. If a driver returns a negative value it can not be sure "
+"that it will have the highest priority and its attach routine will be "
+"called. So in this case it also must release all the resources before "
+"returning and if necessary allocate them again in the attach routine. When "
+"`xxx_isa_probe()` returns 0 releasing the resources before returning is also "
+"a good idea and a well-behaved driver should do so. But in cases where there "
+"is some problem with releasing the resources the driver is allowed to keep "
+"resources between returning 0 from the probe routine and execution of the "
+"attach routine."
+msgstr ""
+"设备描述符结构xxx_softc由系统在调用探测例程之前分配。如果探测例程返回错误，描述符会被系统自动取消分配。因此如果出现探测错误，驱动程序必须保证取消"
+"分配探测期间它使用的所有资源，且确保没有什么能够阻止描述符被安全地取消分配。如果探测成功完成，描述符将由系统保存并在以后传递给例程<function>xx"
+"x_isa_attach()</function>。如果驱动程序返回负值，就不能保证它将获得最高优先权且其连接例程会被调用。因此这种情况下它也必须在返回前"
+"释放所有的资源，并在需要的时候在连接例程中重新分配它们。当<function>xxx_isa_probe()</function>返回0时，在返回前释放资"
+"源也是一个好主意，而且中规中矩的驱动程序应当这样做。但在释放资源会存在某些问题的情况下，允许驱动程序在从探测例程返回0和连接例程的执行之间保持资源。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:601
+msgid "A typical probe routine starts with getting the device descriptor and unit:"
+msgstr "典型的探测例程以取得设备描述符和单元号开始："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:608
+#, fuzzy, no-wrap
+msgid ""
+"         struct xxx_softc *sc = device_get_softc(dev);\n"
+"          int unit = device_get_unit(dev);\n"
+"          int pnperror;\n"
+"          int error = 0;\n"
+msgstr ""
+"         struct xxx_softc *sc = device_get_softc(dev);\n"
+"          int unit = device_get_unit(dev);\n"
+"          int error = 0;\n"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:611
+#, no-wrap
+msgid ""
+"          sc->dev = dev; /* link it back */\n"
+"          sc->unit = unit;\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:614
+msgid ""
+"Then check for the PnP devices. The check is carried out by a table "
+"containing the list of PnP IDs supported by this driver and human-readable "
+"descriptions of the device models corresponding to these IDs."
+msgstr ""
+"然后检查PnP设备。检查是通过一个包含PnP ID列表的表进行的。此表包含这个驱动程序支持的PnP "
+"ID和以人工可读形式给出的对应这些ID的设备型号的描述。"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:620
+#, fuzzy, no-wrap
+msgid ""
+"        pnperror=ISA_PNP_PROBE(device_get_parent(dev), dev,\n"
+"        xxx_pnp_ids); if(pnperror == ENXIO) return ENXIO;\n"
+msgstr ""
+"        pnperror=ISA_PNP_PROBE(device_get_parent(dev), dev,\n"
+"        xxx_pnp_ids); if(pnperror == ENXIO) return ENXIO;\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:623
+#, fuzzy
+msgid ""
+"The logic of ISA_PNP_PROBE is the following: If this card (device unit) was "
+"not detected as PnP then ENOENT will be returned. If it was detected as PnP "
+"but its detected ID does not match any of the IDs in the table then ENXIO is "
+"returned. Finally, if it has PnP support and it matches on of the IDs in the "
+"table, 0 is returned and the appropriate description from the table is set "
+"by `device_set_desc()`."
+msgstr ""
+"ISA_PNP_PROBE的逻辑如下：如果卡（设备单元）没有被作为PnP侦测到，则返回ENOENT。如果被作为PnP侦测到，但侦测到的ID不匹配表中的任一"
+"ID，则返回ENXIO。最后，如果设备能支持PnP且匹配表中的一个ID，则返回0，并且由<function>device_set_desc()</func"
+"tion>从表中取得适当的描述进行设置。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:625
+msgid "If a driver supports only PnP devices then the condition would look like:"
+msgstr "如果设备驱动程序仅支持PnP设备，则情况看起来如下："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:630
+#, fuzzy, no-wrap
+msgid ""
+"          if(pnperror != 0)\n"
+"              return pnperror;\n"
+msgstr ""
+"          if(pnperror != 0)\n"
+"              return pnperror;\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:633
+msgid ""
+"No special treatment is required for the drivers which do not support PnP "
+"because they pass an empty PnP ID table and will always get ENXIO if called "
+"on a PnP card."
+msgstr "对于不支持PnP的驱动程序不需要特殊处理，因为驱动程序会传递空的PnP ID表，且如果在PnP卡上调用会得到ENXIO。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:635
+msgid ""
+"The probe routine normally needs at least some minimal set of resources, "
+"such as I/O port number to find the card and probe it. Depending on the "
+"hardware the driver may be able to discover the other necessary resources "
+"automatically. The PnP devices have all the resources pre-set by the PnP "
+"subsystem, so the driver does not need to discover them by itself."
+msgstr ""
+"探测例程通常至少需要某些最少量的资源，如I/O端口号，来发现并探测卡。对于不同的硬件，驱动程序可能会自动发现其他必需的资源。PnP设备的所有资源由PnP子"
+"系统预先设置，因此驱动程序不需要自己发现它们。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:637
+msgid ""
+"Typically the minimal information required to get access to the device is "
+"the I/O port number. Then some devices allow to get the rest of information "
+"from the device configuration registers (though not all devices do that). So "
+"first we try to get the port start value:"
+msgstr ""
+"通常访问设备所需要的最少信息就是端口号。然后某些设备允许从设备配置寄存器中取得其余信息（尽管不是所有的设备都这样）。因此首先我们尝试取得端口起始值："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:642
+#, fuzzy, no-wrap
+msgid ""
+" sc->port0 = bus_get_resource_start(dev,\n"
+"        SYS_RES_IOPORT, 0 /*rid*/); if(sc->port0 == 0) return ENXIO;\n"
+msgstr ""
+" sc-&gt;port0 = bus_get_resource_start(dev,\n"
+"        SYS_RES_IOPORT, 0 /*rid*/); if(sc-&gt;port0 == 0) return ENXIO;\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:645
+msgid ""
+"The base port address is saved in the structure softc for future use. If it "
+"will be used very often then calling the resource function each time would "
+"be prohibitively slow. If we do not get a port we just return an error. Some "
+"device drivers can instead be clever and try to probe all the possible "
+"ports, like this:"
+msgstr ""
+"基端口地址被保存在softc结构中，以便将来使用。如果需要经常使用端口，则每次都调用资源函数将会慢的无法忍受。如果我们没有得到端口，则返回错误即可。相反，"
+"一些设备驱动程序相当聪明，尝试探测所有可能的端口，如下："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:659
+#, no-wrap
+msgid ""
+"          /* table of all possible base I/O port addresses for this device "
+"*/\n"
+"          static struct xxx_allports {\n"
+"              u_short port; /* port address */\n"
+"              short used; /* flag: if this port is already used by some unit "
+"*/\n"
+"          } xxx_allports = {\n"
+"              { 0x300, 0 },\n"
+"              { 0x320, 0 },\n"
+"              { 0x340, 0 },\n"
+"              { 0, 0 } /* end of table */\n"
+"          };\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:663
+#, no-wrap
+msgid ""
+"          ...\n"
+"          int port, i;\n"
+"          ...\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:669
+#, no-wrap
+msgid ""
+"          port =  bus_get_resource_start(dev, SYS_RES_IOPORT, 0 /*rid*/);\n"
+"          if(port !=0 ) {\n"
+"              for(i=0; xxx_allports[i].port!=0; i++) {\n"
+"                  if(xxx_allports[i].used || xxx_allports[i].port != port)\n"
+"                      continue;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:677
+#, no-wrap
+msgid ""
+"                  /* found it */\n"
+"                  xxx_allports[i].used = 1;\n"
+"                  /* do probe on a known port */\n"
+"                  return xxx_really_probe(dev, port);\n"
+"              }\n"
+"              return ENXIO; /* port is unknown or already used */\n"
+"          }\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:682
+#, no-wrap
+msgid ""
+"          /* we get here only if we need to guess the port */\n"
+"          for(i=0; xxx_allports[i].port!=0; i++) {\n"
+"              if(xxx_allports[i].used)\n"
+"                  continue;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:687
+#, no-wrap
+msgid ""
+"              /* mark as used - even if we find nothing at this port\n"
+"               * at least we won't probe it in future\n"
+"               */\n"
+"               xxx_allports[i].used = 1;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:694
+#, no-wrap
+msgid ""
+"              error = xxx_really_probe(dev, xxx_allports[i].port);\n"
+"              if(error == 0) /* found a device at that port */\n"
+"                  return 0;\n"
+"          }\n"
+"          /* probed all possible addresses, none worked */\n"
+"          return ENXIO;\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:697
+#, fuzzy
+msgid ""
+"Of course, normally the driver's `identify()` routine should be used for "
+"such things. But there may be one valid reason why it may be better to be "
+"done in `probe()`: if this probe would drive some other sensitive device "
+"crazy. The probe routines are ordered with consideration of the `sensitive` "
+"flag: the sensitive devices get probed first and the rest of the devices "
+"later. But the `identify()` routines are called before any probes, so they "
+"show no respect to the sensitive devices and may upset them."
+msgstr ""
+"当然，做这些事情通常应该使用驱动程序的<function>identify()</function>例程。但可能有一个正当的理由来说明为什么在函数<fun"
+"ction>probe()</function>中完成更好：如果这种探测会让一些其他敏感设备发疯。探测例程按旗标<literal>sensitive</l"
+"iteral>排序：敏感设备首先被探测，然后是其他设备。但<function>identify()</function>例程在所有探测之前被调用，因此它们"
+"不会考虑敏感设备并可能扰乱这些设备。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:699
+msgid ""
+"Now, after we got the starting port we need to set the port count (except "
+"for PnP devices) because the kernel does not have this information in the "
+"configuration file."
+msgstr "现在，我们得到起始端口以后就需要设置端口数（PnP设备除外），因为内核在配置文件中没有这个信息。"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:707
+#, no-wrap
+msgid ""
+"         if(pnperror /* only for non-PnP devices */\n"
+"         && bus_set_resource(dev, SYS_RES_IOPORT, 0, sc->port0,\n"
+"         XXX_PORT_COUNT)<0)\n"
+"             return ENXIO;\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:710
+msgid ""
+"Finally allocate and activate a piece of port address space (special values "
+"of start and end mean \"use those we set by ``bus_set_resource()``\"):"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:718
+#, no-wrap
+msgid ""
+"          sc->port0_rid = 0;\n"
+"          sc->port0_r = bus_alloc_resource(dev, SYS_RES_IOPORT,\n"
+"          &sc->port0_rid,\n"
+"              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:721
+#, no-wrap
+msgid ""
+"          if(sc->port0_r == NULL)\n"
+"              return ENXIO;\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:724
+msgid ""
+"Now having access to the port-mapped registers we can poke the device in "
+"some way and check if it reacts like it is expected to. If it does not then "
+"there is probably some other device or no device at all at this address."
+msgstr ""
+"现在可以访问端口映射的寄存器后，我们就可以以某种方式向设备写入数据并检查设备是否如我们期望的那样作出反应。如果没有，则说明可能其他的设备在这个地址上，或者"
+"这个地址上根本没有设备。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:726
+#, fuzzy
+msgid ""
+"Normally drivers do not set up the interrupt handlers until the attach "
+"routine. Instead they do probes in the polling mode using the `DELAY()` "
+"function for timeout. The probe routine must never hang forever, all the "
+"waits for the device must be done with timeouts. If the device does not "
+"respond within the time it is probably broken or misconfigured and the "
+"driver must return error. When determining the timeout interval give the "
+"device some extra time to be on the safe side: although `DELAY()` is "
+"supposed to delay for the same amount of time on any machine it has some "
+"margin of error, depending on the exact CPU."
+msgstr ""
+"通常驱动程序直到连接例程才会设置中断处理函数。这之前我们替代以轮询模式进行探测，超时则以<function>DELAY()</function>实现。探测"
+"例程必须确保不能永久挂起，设备上的所有等待必须在超时内完成。如果设备不在这段时间内响应，则可能设备出故障或配置错误，驱动程序必须返回错误，当确定超时间隔时"
+"，给设备一些额外时间以确保可靠：尽管假定<function>DELAY()</function>在任何机器上都延时相同数量的时间，但随具体CPU的不同，此"
+"函数还是有一定的误差幅度。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:728
+msgid ""
+"If the probe routine really wants to check that the interrupts really work "
+"it may configure and probe the interrupts too. But that is not recommended."
+msgstr "如果探测例程真的想检查中断是否真的工作，它可以也配置和探测中断。但不建议这样。"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:735
+#, fuzzy, no-wrap
+msgid ""
+"          /* implemented in some very device-specific way */\n"
+"          if(error = xxx_probe_ports(sc))\n"
+"              goto bad; /* will deallocate the resources before returning "
+"*/\n"
+msgstr ""
+"          /* implemented in some very device-specific way */\n"
+"          if(error = xxx_probe_ports(sc))\n"
+"              goto bad; /* will deallocate the resources before returning */"
+"\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:738
+#, fuzzy
+msgid ""
+"The function `xxx_probe_ports()` may also set the device description "
+"depending on the exact model of device it discovers. But if there is only "
+"one supported device model this can be as well done in a hardcoded way. Of "
+"course, for the PnP devices the PnP support sets the description from the "
+"table automatically."
+msgstr ""
+"依赖于所发现设备的确切型号，函数<function>xxx_probe_ports()</function>也可能设置设备描述。但如果只支持一种设备型号，"
+"则也可以硬编码的形式完成。当然，对于PnP设备，PnP支持从表中自动设置描述。"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:743
+#, fuzzy, no-wrap
+msgid ""
+"          if(pnperror)\n"
+"              device_set_desc(dev, \"Our device model 1234\");\n"
+msgstr ""
+"          if(pnperror)\n"
+"              device_set_desc(dev, \"Our device model 1234\");\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:746
+msgid ""
+"Then the probe routine should either discover the ranges of all the "
+"resources by reading the device configuration registers or make sure that "
+"they were set explicitly by the user. We will consider it with an example of "
+"on-board memory. The probe routine should be as non-intrusive as possible, "
+"so allocation and check of functionality of the rest of resources (besides "
+"the ports) would be better left to the attach routine."
+msgstr ""
+"探测例程应当或者通过读取设备配置寄存器来发现所有资源的范围，或者确保由用户显式设置。我们将假定一个带板上内存的例子。探测例程应当尽可能是非插入式的，这样分"
+"配和检查其余资源功能性的工作就可以更好地留给连接例程来做。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:748
+msgid ""
+"The memory address may be specified in the kernel configuration file or on "
+"some devices it may be pre-configured in non-volatile configuration "
+"registers. If both sources are available and different, which one should be "
+"used? Probably if the user bothered to set the address explicitly in the "
+"kernel configuration file they know what they are doing and this one should "
+"take precedence. An example of implementation could be:"
+msgstr ""
+"内存地址可以在内核配置文件中指定，或者对应某些设备可以在非易失性配置寄存器中预先配置。如果两种做法均可用却不同，那么应当用哪个呢？可能用户厌烦在内核配置文"
+"件中明确设置地址，但他们知道自己在干什么，则应当优先使用这个。一个实现的例子可能是这样的："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:756
+#, no-wrap
+msgid ""
+"          /* try to find out the config address first */\n"
+"          sc->mem0_p = bus_get_resource_start(dev, SYS_RES_MEMORY, 0 "
+"/*rid*/);\n"
+"          if(sc->mem0_p == 0) { /* nope, not specified by user */\n"
+"              sc->mem0_p = xxx_read_mem0_from_device_config(sc);\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:764
+#, no-wrap
+msgid ""
+"          if(sc->mem0_p == 0)\n"
+"                  /* can't get it from device config registers either */\n"
+"                  goto bad;\n"
+"          } else {\n"
+"              if(xxx_set_mem0_address_on_device(sc) < 0)\n"
+"                  goto bad; /* device does not support that address */\n"
+"          }\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:776
+#, no-wrap
+msgid ""
+"          /* just like the port, set the memory size,\n"
+"           * for some devices the memory size would not be constant\n"
+"           * but should be read from the device configuration registers "
+"instead\n"
+"           * to accommodate different models of devices. Another option "
+"would\n"
+"           * be to let the user set the memory size as \"msize\" "
+"configuration\n"
+"           * resource which will be automatically handled by the ISA bus.\n"
+"           */\n"
+"           if(pnperror) { /* only for non-PnP devices */\n"
+"              sc->mem0_size = bus_get_resource_count(dev, SYS_RES_MEMORY, 0 "
+"/*rid*/);\n"
+"              if(sc->mem0_size == 0) /* not specified by user */\n"
+"                  sc->mem0_size = "
+"xxx_read_mem0_size_from_device_config(sc);\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:785
+#, no-wrap
+msgid ""
+"              if(sc->mem0_size == 0) {\n"
+"                  /* suppose this is a very old model of device without\n"
+"                   * auto-configuration features and the user gave no "
+"preference,\n"
+"                   * so assume the minimalistic case\n"
+"                   * (of course, the real value will vary with the driver)\n"
+"                   */\n"
+"                  sc->mem0_size = 8*1024;\n"
+"              }\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:788
+#, no-wrap
+msgid ""
+"              if(xxx_set_mem0_size_on_device(sc) < 0)\n"
+"                  goto bad; /* device does not support that size */\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:795
+#, no-wrap
+msgid ""
+"              if(bus_set_resource(dev, SYS_RES_MEMORY, /*rid*/0,\n"
+"                      sc->mem0_p, sc->mem0_size)<0)\n"
+"                  goto bad;\n"
+"          } else {\n"
+"              sc->mem0_size = bus_get_resource_count(dev, SYS_RES_MEMORY, 0 "
+"/*rid*/);\n"
+"          }\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:798
+msgid "Resources for IRQ and DRQ are easy to check by analogy."
+msgstr "类似, 很容易检查IRQ和DRQ所用的资源。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:800
+msgid "If all went well then release all the resources and return success."
+msgstr "如果一切进行正常，然后就可以释放所有资源并返回成功。"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:805
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1068
+#, fuzzy, no-wrap
+msgid ""
+"          xxx_free_resources(sc);\n"
+"          return 0;\n"
+msgstr ""
+"          xxx_free_resources(sc);\n"
+"          return 0;\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:808
+msgid ""
+"Finally, handle the troublesome situations. All the resources should be "
+"deallocated before returning. We make use of the fact that before the "
+"structure softc is passed to us it gets zeroed out, so we can find out if "
+"some resource was allocated: then its descriptor is non-zero."
+msgstr ""
+"最后，处理棘手情况。所有资源应当在返回前被释放。我们利用这样一个事实：softc结构在传递给我们以前被零化，因此我们能够找出是否分配了某些资源：如果分配则"
+"这些资源的描述符非零。"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:812
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1029
+#, no-wrap
+msgid "          bad:\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:818
+#, no-wrap
+msgid ""
+"          xxx_free_resources(sc);\n"
+"          if(error)\n"
+"                return error;\n"
+"          else /* exact error is unknown */\n"
+"              return ENXIO;\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:821
+msgid ""
+"That would be all for the probe routine. Freeing of resources is done from "
+"multiple places, so it is moved to a function which may look like:"
+msgstr "这是完整的探测例程。资源的释放从多个地方完成，因此将它挪到一个函数中，看起来可能像下面的样子："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:829
+#, no-wrap
+msgid ""
+"static void\n"
+"           xxx_free_resources(sc)\n"
+"              struct xxx_softc *sc;\n"
+"          {\n"
+"              /* check every resource and free if not zero */\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:837
+#, no-wrap
+msgid ""
+"              /* interrupt handler */\n"
+"              if(sc->intr_r) {\n"
+"                  bus_teardown_intr(sc->dev, sc->intr_r, sc->intr_cookie);\n"
+"                  bus_release_resource(sc->dev, SYS_RES_IRQ, sc->intr_rid,\n"
+"                      sc->intr_r);\n"
+"                  sc->intr_r = 0;\n"
+"              }\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:852
+#, no-wrap
+msgid ""
+"              /* all kinds of memory maps we could have allocated */\n"
+"              if(sc->data_p) {\n"
+"                  bus_dmamap_unload(sc->data_tag, sc->data_map);\n"
+"                  sc->data_p = 0;\n"
+"              }\n"
+"               if(sc->data) { /* sc->data_map may be legitimately equal to 0 "
+"*/\n"
+"                  /* the map will also be freed */\n"
+"                  bus_dmamem_free(sc->data_tag, sc->data, sc->data_map);\n"
+"                  sc->data = 0;\n"
+"              }\n"
+"              if(sc->data_tag) {\n"
+"                  bus_dma_tag_destroy(sc->data_tag);\n"
+"                  sc->data_tag = 0;\n"
+"              }\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:854
+#, no-wrap
+msgid "              ... free other maps and tags if we have them ...\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:859
+#, no-wrap
+msgid ""
+"              if(sc->parent_tag) {\n"
+"                  bus_dma_tag_destroy(sc->parent_tag);\n"
+"                  sc->parent_tag = 0;\n"
+"              }\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:873
+#, no-wrap
+msgid ""
+"              /* release all the bus resources */\n"
+"              if(sc->mem0_r) {\n"
+"                  bus_release_resource(sc->dev, SYS_RES_MEMORY, "
+"sc->mem0_rid,\n"
+"                      sc->mem0_r);\n"
+"                  sc->mem0_r = 0;\n"
+"              }\n"
+"              ...\n"
+"              if(sc->port0_r) {\n"
+"                  bus_release_resource(sc->dev, SYS_RES_IOPORT, "
+"sc->port0_rid,\n"
+"                      sc->port0_r);\n"
+"                  sc->port0_r = 0;\n"
+"              }\n"
+"          }\n"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:876
+#, no-wrap
+msgid "xxx_isa_attach"
+msgstr "xxx_isa_attach"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:879
+msgid ""
+"The attach routine actually connects the driver to the system if the probe "
+"routine returned success and the system had chosen to attach that driver. If "
+"the probe routine returned 0 then the attach routine may expect to receive "
+"the device structure softc intact, as it was set by the probe routine. Also "
+"if the probe routine returns 0 it may expect that the attach routine for "
+"this device shall be called at some point in the future. If the probe "
+"routine returns a negative value then the driver may make none of these "
+"assumptions."
+msgstr ""
+"如果探测例程返回成功并且系统选择连接那个驱动程序，则连接例程负责将驱动程序实际连接到系统。如果探测例程返回0 ，则连接例程期望接收完整的设备结构softc"
+"，此结构由探测例程设置。同时，如果探测例程返回0，它可能期望这个设备的连接例程应当在将来的某点被调用。如果探测例程返回负值，则驱动程序可能不会作此假设。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:881
+msgid ""
+"The attach routine returns 0 if it completed successfully or error code "
+"otherwise."
+msgstr "如果成功完成，连接例程返回0，否则返回错误码。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:883
+msgid ""
+"The attach routine starts just like the probe routine, with getting some "
+"frequently used data into more accessible variables."
+msgstr "连接例程的启动跟探测例程相似，将一些常用数据取到一些更容易访问的变量中。"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:889
+#, fuzzy, no-wrap
+msgid ""
+"          struct xxx_softc *sc = device_get_softc(dev);\n"
+"          int unit = device_get_unit(dev);\n"
+"          int error = 0;\n"
+msgstr ""
+"          struct xxx_softc *sc = device_get_softc(dev);\n"
+"          int unit = device_get_unit(dev);\n"
+"          int error = 0;\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:892
+msgid ""
+"Then allocate and activate all the necessary resources. As normally the port "
+"range will be released before returning from probe, it has to be allocated "
+"again. We expect that the probe routine had properly set all the resource "
+"ranges, as well as saved them in the structure softc. If the probe routine "
+"had left some resource allocated then it does not need to be allocated again "
+"(which would be considered an error)."
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:898
+#, no-wrap
+msgid ""
+"          sc->port0_rid = 0;\n"
+"          sc->port0_r = bus_alloc_resource(dev, SYS_RES_IOPORT,  "
+"&sc->port0_rid,\n"
+"              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:901
+#, no-wrap
+msgid ""
+"          if(sc->port0_r == NULL)\n"
+"               return ENXIO;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:906
+#, no-wrap
+msgid ""
+"          /* on-board memory */\n"
+"          sc->mem0_rid = 0;\n"
+"          sc->mem0_r = bus_alloc_resource(dev, SYS_RES_MEMORY,  "
+"&sc->mem0_rid,\n"
+"              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:909
+#, no-wrap
+msgid ""
+"          if(sc->mem0_r == NULL)\n"
+"                goto bad;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:912
+#, no-wrap
+msgid ""
+"          /* get its virtual address */\n"
+"          sc->mem0_v = rman_get_virtual(sc->mem0_r);\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:915
+#, fuzzy
+msgid ""
+"The DMA request channel (DRQ) is allocated likewise. To initialize it use "
+"functions of the `isa_dma*()` family. For example:"
+msgstr "DMA请求通道(DRQ)以相似方式被分配。使用<function>isa_dma*()</function>函数族进行初始化。例如："
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:917
+msgid "`isa_dmacascade(sc->drq0);`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:919
+msgid ""
+"The interrupt request line (IRQ) is a bit special. Besides allocation the "
+"driver's interrupt handler should be associated with it. Historically in the "
+"old ISA drivers the argument passed by the system to the interrupt handler "
+"was the device unit number. But in modern drivers the convention suggests "
+"passing the pointer to structure softc. The important reason is that when "
+"the structures softc are allocated dynamically then getting the unit number "
+"from softc is easy while getting softc from the unit number is "
+"difficult. Also this convention makes the drivers for different buses look "
+"more uniform and allows them to share the code: each bus gets its own probe, "
+"attach, detach and other bus-specific routines while the bulk of the driver "
+"code may be shared among them."
+msgstr ""
+"中断请求线(IRQ)有点特殊。除了分配以外，驱动程序的中断处理函数也应当与它关联。在古老的ISA驱动程序中，由系统传递给中断处理函数的参量是设备单元号。但"
+"在现代驱动程序中，按照约定，建议传递指向结构softc的指针。一个很重要的原因在于当结构softc被动态分配后，从softc取得单元号很容易，而从单元号取"
+"得softc很困难。同时，这个约定也使得用于不同总线的应用程序看起来统一，并允许它们共享代码：每个总线有其自己的探测，连接，分离和其他总线相关的例程，而它"
+"们之间可以共享大块的驱动程序代码。"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:926
+#, no-wrap
+msgid ""
+"          sc->intr_rid = 0;\n"
+"          sc->intr_r = bus_alloc_resource(dev, SYS_RES_MEMORY,  "
+"&sc->intr_rid,\n"
+"                /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:929
+#, no-wrap
+msgid ""
+"          if(sc->intr_r == NULL)\n"
+"              goto bad;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:938
+#, no-wrap
+msgid ""
+"          /*\n"
+"           * XXX_INTR_TYPE is supposed to be defined depending on the type "
+"of\n"
+"           * the driver, for example as INTR_TYPE_CAM for a CAM driver\n"
+"           */\n"
+"          error = bus_setup_intr(dev, sc->intr_r, XXX_INTR_TYPE,\n"
+"              (driver_intr_t *) xxx_intr, (void *) sc, &sc->intr_cookie);\n"
+"          if(error)\n"
+"              goto bad;\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:941
+msgid ""
+"If the device needs to make DMA to the main memory then this memory should "
+"be allocated like described before:"
+msgstr "如果驱动程序需要与内存进行DMA，则这块内存应当按前述方式分配："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:953
+#, no-wrap
+msgid ""
+"          error=bus_dma_tag_create(NULL, /*alignment*/ 4,\n"
+"              /*boundary*/ 0, /*lowaddr*/ BUS_SPACE_MAXADDR_24BIT,\n"
+"              /*highaddr*/ BUS_SPACE_MAXADDR, /*filter*/ NULL, /*filterarg*/ "
+"NULL,\n"
+"              /*maxsize*/ BUS_SPACE_MAXSIZE_24BIT,\n"
+"              /*nsegments*/ BUS_SPACE_UNRESTRICTED,\n"
+"              /*maxsegsz*/ BUS_SPACE_MAXSIZE_24BIT, /*flags*/ 0,\n"
+"              &sc->parent_tag);\n"
+"          if(error)\n"
+"              goto bad;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:970
+#, no-wrap
+msgid ""
+"          /* many things get inherited from the parent tag\n"
+"           * sc->data is supposed to point to the structure with the shared "
+"data,\n"
+"           * for example for a ring buffer it could be:\n"
+"           * struct {\n"
+"           *   u_short rd_pos;\n"
+"           *   u_short wr_pos;\n"
+"           *   char    bf[XXX_RING_BUFFER_SIZE]\n"
+"           * } *data;\n"
+"           */\n"
+"          error=bus_dma_tag_create(sc->parent_tag, 1,\n"
+"              0, BUS_SPACE_MAXADDR, 0, /*filter*/ NULL, /*filterarg*/ "
+"NULL,\n"
+"              /*maxsize*/ sizeof(* sc->data), /*nsegments*/ 1,\n"
+"              /*maxsegsz*/ sizeof(* sc->data), /*flags*/ 0,\n"
+"              &sc->data_tag);\n"
+"          if(error)\n"
+"              goto bad;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:975
+#, no-wrap
+msgid ""
+"          error = bus_dmamem_alloc(sc->data_tag, &sc->data, /* flags*/ 0,\n"
+"              &sc->data_map);\n"
+"          if(error)\n"
+"               goto bad;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:991
+#, no-wrap
+msgid ""
+"          /* xxx_alloc_callback() just saves the physical address at\n"
+"           * the pointer passed as its argument, in this case &sc->data_p.\n"
+"           * See details in the section on bus memory mapping.\n"
+"           * It can be implemented like:\n"
+"           *\n"
+"           * static void\n"
+"           * xxx_alloc_callback(void *arg, bus_dma_segment_t *seg,\n"
+"           *     int nseg, int error)\n"
+"           * {\n"
+"           *    *(bus_addr_t *)arg = seg[0].ds_addr;\n"
+"           * }\n"
+"           */\n"
+"          bus_dmamap_load(sc->data_tag, sc->data_map, (void *)sc->data,\n"
+"              sizeof (* sc->data), xxx_alloc_callback, (void *) "
+"&sc->data_p,\n"
+"              /*flags*/0);\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:994
+msgid ""
+"After all the necessary resources are allocated the device should be "
+"initialized. The initialization may include testing that all the expected "
+"features are functional."
+msgstr "分配了所有的资源后，设备应当被初始化。初始化可能包括测试所有特性，确保它们起作用。"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:999
+#, no-wrap
+msgid ""
+"          if(xxx_initialize(sc) < 0)\n"
+"               goto bad;\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1002
+msgid ""
+"The bus subsystem will automatically print on the console the device "
+"description set by probe. But if the driver wants to print some extra "
+"information about the device it may do so, for example:"
+msgstr "总线子系统将自动在控制台上打印由探测例程设置的设备描述。但如果驱动程序想打印一些关于设备的额外信息，也是可能的，例如："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1007
+#, no-wrap
+msgid ""
+"        device_printf(dev, \"has on-card FIFO buffer of %d bytes\\n\", "
+"sc->fifosize);\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1010
+msgid ""
+"If the initialization routine experiences any problems then printing "
+"messages about them before returning error is also recommended."
+msgstr "如果初始化例程遇到任何问题，建议返回错误之前打印有关信息。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1012
+msgid ""
+"The final step of the attach routine is attaching the device to its "
+"functional subsystem in the kernel. The exact way to do it depends on the "
+"type of the driver: a character device, a block device, a network device, a "
+"CAM SCSI bus device and so on."
+msgstr ""
+"连接例程的最后一步是将设备连接到内核中的功能子系统。完成这个步骤的精确方式依赖于驱动程序的类型：字符设备、块设备、网络设备、CAM SCSI总线设备等等。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1014
+msgid "If all went well then return success."
+msgstr "如果所有均工作正常则返回成功。"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1020
+#, no-wrap
+msgid ""
+"          error = xxx_attach_subsystem(sc);\n"
+"          if(error)\n"
+"              goto bad;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1022
+#, no-wrap
+msgid "          return 0;\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1025
+msgid ""
+"Finally, handle the troublesome situations. All the resources should be "
+"deallocated before returning an error. We make use of the fact that before "
+"the structure softc is passed to us it gets zeroed out, so we can find out "
+"if some resource was allocated: then its descriptor is non-zero."
+msgstr ""
+"最后，处理棘手情况。返回错误前，所有资源应当被取消分配。我们利用这样一个事实：结构softc传递给我们之前被零化，因此我们能找出是否分配了某些资源：如果分"
+"配则它们的描述符非零。"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1035
+#, no-wrap
+msgid ""
+"          xxx_free_resources(sc);\n"
+"          if(error)\n"
+"              return error;\n"
+"          else /* exact error is unknown */\n"
+"              return ENXIO;\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1038
+msgid "That would be all for the attach routine."
+msgstr "这就是连接例程的全部。"
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1040
+#, no-wrap
+msgid "xxx_isa_detach"
+msgstr "xxx_isa_detach"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1043
+msgid ""
+"If this function is present in the driver and the driver is compiled as a "
+"loadable module then the driver gets the ability to be unloaded. This is an "
+"important feature if the hardware supports hot plug. But the ISA bus does "
+"not support hot plug, so this feature is not particularly important for the "
+"ISA devices. The ability to unload a driver may be useful when debugging it, "
+"but in many cases installation of the new version of the driver would be "
+"required only after the old version somehow wedges the system and a reboot "
+"will be needed anyway, so the efforts spent on writing the detach routine "
+"may not be worth it. Another argument that unloading would allow upgrading "
+"the drivers on a production machine seems to be mostly "
+"theoretical. Installing a new version of a driver is a dangerous operation "
+"which should never be performed on a production machine (and which is not "
+"permitted when the system is running in secure mode). Still, the detach "
+"routine may be provided for the sake of completeness."
+msgstr ""
+"如果驱动程序中存在这个函数，且驱动程序被编译为可加载模块，则驱动程序具有被卸载的能力。如果硬件支持热插拔，这是一个很重要的特性。但ISA总线不支持热插拔，"
+"因此这个特性对于ISA设备不是特别重要。卸载驱动程序的能力可能在调试时有用，但很多情况下只有在老版本的驱动程序莫名其妙地卡住系统的情况下才需要安装新版本的"
+"驱动程序，并且无论如何都需要重启，这样使得花费精力写分离例程有些不值得。另一个宣称卸载允许在用于生产的机器上升级驱动程序的论点看起来似乎更多的只是理论而已"
+"。升级驱动程序是一项危险的操作，决不不应当在用于生产的机器上实行（并且当系统运行于安全模式时这也是不被允许的）。然而，出于完整性考虑，还是会提供分离例程。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1045
+msgid ""
+"The detach routine returns 0 if the driver was successfully detached or the "
+"error code otherwise."
+msgstr "如果驱动程序成功分离，分离例程返回0，否则返回错误码。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1047
+msgid ""
+"The logic of detach is a mirror of the attach. The first thing to do is to "
+"detach the driver from its kernel subsystem. If the device is currently open "
+"then the driver has two choices: refuse to be detached or forcibly close and "
+"proceed with detach. The choice used depends on the ability of the "
+"particular kernel subsystem to do a forced close and on the preferences of "
+"the driver's author. Generally the forced close seems to be the preferred "
+"alternative."
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1052
+#, no-wrap
+msgid ""
+"          struct xxx_softc *sc = device_get_softc(dev);\n"
+"          int error;\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1056
+#, no-wrap
+msgid ""
+"          error = xxx_detach_subsystem(sc);\n"
+"          if(error)\n"
+"              return error;\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1059
+msgid ""
+"Next the driver may want to reset the hardware to some consistent "
+"state. That includes stopping any ongoing transfers, disabling the DMA "
+"channels and interrupts to avoid memory corruption by the device. For most "
+"of the drivers this is exactly what the shutdown routine does, so if it is "
+"included in the driver we can just call it."
+msgstr ""
+"下一步，驱动程序可能希望复位硬件到某种一致的状态。包括停止任何将要进行的传输，禁用DMA通道和中断以避免设备破坏内存。对于大多数驱动程序而言，这正是关闭例"
+"程所做的，因此如果驱动程序中包括关闭例程，我们只要调用它就可以了。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1061
+msgid "`xxx_isa_shutdown(dev);`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1063
+msgid "And finally release all the resources and return success."
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1071
+#, no-wrap
+msgid "xxx_isa_shutdown"
+msgstr "xxx_isa_shutdown"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1074
+msgid ""
+"This routine is called when the system is about to be shut down. It is "
+"expected to bring the hardware to some consistent state. For most of the ISA "
+"devices no special action is required, so the function is not really "
+"necessary because the device will be re-initialized on reboot anyway. But "
+"some devices have to be shut down with a special procedure, to make sure "
+"that they will be properly detected after soft reboot (this is especially "
+"true for many devices with proprietary identification protocols). In any "
+"case disabling DMA and interrupts in the device registers and stopping any "
+"ongoing transfers is a good idea. The exact action depends on the hardware, "
+"so we do not consider it here in any detail."
+msgstr ""
+"当系统要关闭的时候调用此例程。通过它使硬件进入某种一致的状态。对于大多数ISA设备而言不需要特殊动作，因此这个函数并非真正必需，因为不管怎样重启动时设备会"
+"被重新初始化。但有些设备必须按特定步骤关闭，以确保在软重启后能被正确地检测到（对于很多使用私有识别协议的设备特别有用）。很多情况下，在设备寄存器中禁用DM"
+"A和中断，并停止将要进行的传输是个好主意。确切动作取决于硬件，因此我们无法在此详细讨论。"
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1076
+#, no-wrap
+msgid "xxx_intr"
+msgstr "xxx_intr"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1079
+msgid ""
+"The interrupt handler is called when an interrupt is received which may be "
+"from this particular device. The ISA bus does not support interrupt sharing "
+"(except in some special cases) so in practice if the interrupt handler is "
+"called then the interrupt almost for sure came from its device. Still, the "
+"interrupt handler must poll the device registers and make sure that the "
+"interrupt was generated by its device. If not it should just return."
+msgstr ""
+"当收到来自特定设备的中断时就会调用中断处理函数。ISA总线不支持中断共享（某些特殊情况例外），因此实际上如果中断处理函数被调用，几乎可以确信中断是来自其设"
+"备。然而，中断处理函数必须轮询设备寄存器并确保中断是由它的设备产生的。如果不是，中断处理函数应当返回。"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1081
+#, fuzzy
+msgid ""
+"The old convention for the ISA drivers was getting the device unit number as "
+"an argument. This is obsolete, and the new drivers receive whatever argument "
+"was specified for them in the attach routine when calling "
+"`bus_setup_intr()`. By the new convention it should be the pointer to the "
+"structure softc. So the interrupt handler commonly starts as:"
+msgstr ""
+"ISA驱动程序的旧约定是取设备单元号作为参量。现在已经废弃，当调用<function>bus_setup_intr()</function>时新驱动程序接"
+"收任何在连接例程中为他们指定的参量。根据新约定，它应当是指向结构softc的指针。因此中断处理函数通常像下面那样开始："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1088
+#, fuzzy, no-wrap
+msgid ""
+"          static void\n"
+"          xxx_intr(struct xxx_softc *sc)\n"
+"          {\n"
+msgstr ""
+"          static void\n"
+"          xxx_intr(struct xxx_softc *sc)\n"
+"          {\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1091
+msgid ""
+"It runs at the interrupt priority level specified by the interrupt type "
+"parameter of `bus_setup_intr()`. That means that all the other interrupts of "
+"the same type as well as all the software interrupts are disabled."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1093
+msgid "To avoid races it is commonly written as a loop:"
+msgstr "为了避免竞争，中断处理例程通写成循环形式："
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1101
+#, fuzzy, no-wrap
+msgid ""
+"          while(xxx_interrupt_pending(sc)) {\n"
+"              xxx_process_interrupt(sc);\n"
+"              xxx_acknowledge_interrupt(sc);\n"
+"          }\n"
+msgstr ""
+"          while(xxx_interrupt_pending(sc)) {\n"
+"              xxx_process_interrupt(sc);\n"
+"              xxx_acknowledge_interrupt(sc);\n"
+"          }\n"
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/isa/chapter.adoc:1103
+msgid ""
+"The interrupt handler has to acknowledge interrupt to the device only but "
+"not to the interrupt controller, the system takes care of the latter."
+msgstr "中断处理函数必须只向设备应答中断，但不能向中断控制器应答，后者由系统负责处理。"

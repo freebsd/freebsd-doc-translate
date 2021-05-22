@@ -1,0 +1,886 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR The FreeBSD Project
+# This file is distributed under the same license as the FreeBSD Documentation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreeBSD Documentation VERSION\n"
+"POT-Creation-Date: 2021-02-21 18:54-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: YAML Front Matter: part
+#: documentation/content/en/books/handbook/audit/_index.adoc:1
+#, no-wrap
+msgid "Part III. System Administration"
+msgstr ""
+
+#. type: YAML Front Matter: title
+#: documentation/content/en/books/handbook/audit/_index.adoc:1
+#, no-wrap
+msgid "Chapter 17. Security Event Auditing"
+msgstr ""
+
+#. type: Title =
+#: documentation/content/en/books/handbook/audit/_index.adoc:9
+#, no-wrap
+msgid "Security Event Auditing"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/audit/_index.adoc:45
+#, no-wrap
+msgid "Synopsis"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:48
+msgid ""
+"The FreeBSD operating system includes support for security event "
+"auditing. Event auditing supports reliable, fine-grained, and configurable "
+"logging of a variety of security-relevant system events, including logins, "
+"configuration changes, and file and network access. These log records can be "
+"invaluable for live system monitoring, intrusion detection, and postmortem "
+"analysis. FreeBSD implements Sun(TM)'s published Basic Security Module (BSM) "
+"Application Programming Interface (API) and file format, and is "
+"interoperable with the Solaris(TM) and Mac OS(R) X audit implementations."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:50
+msgid ""
+"This chapter focuses on the installation and configuration of event "
+"auditing. It explains audit policies and provides an example audit "
+"configuration."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:52
+msgid "After reading this chapter, you will know:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:54
+msgid "What event auditing is and how it works."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:55
+msgid "How to configure event auditing on FreeBSD for users and processes."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:56
+msgid "How to review the audit trail using the audit reduction and review tools."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:58
+msgid "Before reading this chapter, you should:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:60
+msgid ""
+"Understand UNIX(R) and FreeBSD basics (crossref:basics[basics,FreeBSD "
+"Basics])."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:61
+msgid ""
+"Be familiar with the basics of kernel configuration/compilation "
+"(crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel])."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:62
+msgid ""
+"Have some familiarity with security and how it pertains to FreeBSD "
+"(crossref:security[security,Security])."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:67
+msgid ""
+"The audit facility has some known limitations. Not all security-relevant "
+"system events are auditable and some login mechanisms, such as Xorg-based "
+"display managers and third-party daemons, do not properly configure auditing "
+"for user login sessions."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:69
+msgid ""
+"The security event auditing facility is able to generate very detailed logs "
+"of system activity. On a busy system, trail file data can be very large when "
+"configured for high detail, exceeding gigabytes a week in some "
+"configurations. Administrators should take into account the disk space "
+"requirements associated with high volume audit configurations. For example, "
+"it may be desirable to dedicate a file system to [.filename]#/var/audit# so "
+"that other file systems are not affected if the audit file system becomes "
+"full."
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/audit/_index.adoc:72
+#, no-wrap
+msgid "Key Terms"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:75
+msgid "The following terms are related to security event auditing:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:77
+msgid ""
+"_event_: an auditable event is any event that can be logged using the audit "
+"subsystem. Examples of security-relevant events include the creation of a "
+"file, the building of a network connection, or a user logging in. Events are "
+"either \"attributable\", meaning that they can be traced to an authenticated "
+"user, or \"non-attributable\". Examples of non-attributable events are any "
+"events that occur before authentication in the login process, such as bad "
+"password attempts."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:78
+msgid ""
+"_class_: a named set of related events which are used in selection "
+"expressions. Commonly used classes of events include \"file creation\" (fc), "
+"\"exec\" (ex), and \"login_logout\" (lo)."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:79
+msgid ""
+"_record_: an audit log entry describing a security event. Records contain a "
+"record event type, information on the subject (user) performing the action, "
+"date and time information, information on any objects or arguments, and a "
+"success or failure condition."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:80
+msgid ""
+"_trail_: a log file consisting of a series of audit records describing "
+"security events. Trails are in roughly chronological order with respect to "
+"the time events completed. Only authorized processes are allowed to commit "
+"records to the audit trail."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:81
+msgid ""
+"_selection expression_: a string containing a list of prefixes and audit "
+"event class names used to match events."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:82
+msgid ""
+"_preselection_: the process by which the system identifies which events are "
+"of interest to the administrator. The preselection configuration uses a "
+"series of selection expressions to identify which classes of events to audit "
+"for which users, as well as global settings that apply to both authenticated "
+"and unauthenticated processes."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:83
+msgid ""
+"_reduction_: the process by which records from existing audit trails are "
+"selected for preservation, printing, or analysis. Likewise, the process by "
+"which undesired audit records are removed from the audit trail. Using "
+"reduction, administrators can implement policies for the preservation of "
+"audit data. For example, detailed audit trails might be kept for one month, "
+"but after that, trails might be reduced in order to preserve only login "
+"information for archival purposes."
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/audit/_index.adoc:85
+#, no-wrap
+msgid "Audit Configuration"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:88
+msgid ""
+"User space support for event auditing is installed as part of the base "
+"FreeBSD operating system. Kernel support is available in the "
+"[.filename]#GENERIC# kernel by default, and man:auditd[8] can be enabled by "
+"adding the following line to [.filename]#/etc/rc.conf#:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:92
+#, no-wrap
+msgid "auditd_enable=\"YES\"\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:95
+msgid "Then, start the audit daemon:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:99
+#, no-wrap
+msgid "# service auditd start\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:102
+msgid ""
+"Users who prefer to compile a custom kernel must include the following line "
+"in their custom kernel configuration file:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:106
+#, no-wrap
+msgid "options\tAUDIT\n"
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/audit/_index.adoc:108
+#, no-wrap
+msgid "Event Selection Expressions"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:111
+msgid ""
+"Selection expressions are used in a number of places in the audit "
+"configuration to determine which events should be audited. Expressions "
+"contain a list of event classes to match. Selection expressions are "
+"evaluated from left to right, and two expressions are combined by appending "
+"one onto the other."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:113
+msgid "<<event-selection>> summarizes the default audit event classes:"
+msgstr ""
+
+#. type: Block title
+#: documentation/content/en/books/handbook/audit/_index.adoc:115
+#, no-wrap
+msgid "Default Audit Event Classes"
+msgstr ""
+
+#. type: Table
+#: documentation/content/en/books/handbook/audit/_index.adoc:201
+#, no-wrap
+msgid ""
+"| Class Name\n"
+"| Description\n"
+"| Action\n"
+"\n"
+"|all\n"
+"|all\n"
+"|Match all event classes.\n"
+"\n"
+"|aa\n"
+"|authentication and authorization\n"
+"|\n"
+"\n"
+"|ad\n"
+"|administrative\n"
+"|Administrative actions performed on the system as a whole.\n"
+"\n"
+"|ap\n"
+"|application\n"
+"|Application defined action.\n"
+"\n"
+"|cl\n"
+"|file close\n"
+"|Audit calls to the `close` system call.\n"
+"\n"
+"|ex\n"
+"|exec\n"
+"|Audit program execution. Auditing of command line arguments and "
+"environmental variables is controlled via man:audit_control[5] using the "
+"`argv` and `envv` parameters to the `policy` setting.\n"
+"\n"
+"|fa\n"
+"|file attribute access\n"
+"|Audit the access of object attributes such as man:stat[1] and "
+"man:pathconf[2].\n"
+"\n"
+"|fc\n"
+"|file create\n"
+"|Audit events where a file is created as a result.\n"
+"\n"
+"|fd\n"
+"|file delete\n"
+"|Audit events where file deletion occurs.\n"
+"\n"
+"|fm\n"
+"|file attribute modify\n"
+"|Audit events where file attribute modification occurs, such as by "
+"man:chown[8], man:chflags[1], and man:flock[2].\n"
+"\n"
+"|fr\n"
+"|file read\n"
+"|Audit events in which data is read or files are opened for reading.\n"
+"\n"
+"|fw\n"
+"|file write\n"
+"|Audit events in which data is written or files are written or modified.\n"
+"\n"
+"|io\n"
+"|ioctl\n"
+"|Audit use of the `ioctl` system call.\n"
+"\n"
+"|ip\n"
+"|ipc\n"
+"|Audit various forms of Inter-Process Communication, including POSIX pipes "
+"and System V IPC operations.\n"
+"\n"
+"|lo\n"
+"|login_logout\n"
+"|Audit man:login[1] and man:logout[1] events.\n"
+"\n"
+"|na\n"
+"|non attributable\n"
+"|Audit non-attributable events.\n"
+"\n"
+"|no\n"
+"|invalid class\n"
+"|Match no audit events.\n"
+"\n"
+"|nt\n"
+"|network\n"
+"|Audit events related to network actions such as man:connect[2] and "
+"man:accept[2].\n"
+"\n"
+"|ot\n"
+"|other\n"
+"|Audit miscellaneous events.\n"
+"\n"
+"|pc\n"
+"|process\n"
+"|Audit process operations such as man:exec[3] and man:exit[3].\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:204
+msgid ""
+"These audit event classes may be customized by modifying the "
+"[.filename]#audit_class# and [.filename]#audit_event# configuration files."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:206
+msgid ""
+"Each audit event class may be combined with a prefix indicating whether "
+"successful/failed operations are matched, and whether the entry is adding or "
+"removing matching for the class and type. <<event-prefixes>> summarizes the "
+"available prefixes:"
+msgstr ""
+
+#. type: Block title
+#: documentation/content/en/books/handbook/audit/_index.adoc:208
+#, no-wrap
+msgid "Prefixes for Audit Event Classes"
+msgstr ""
+
+#. type: Table
+#: documentation/content/en/books/handbook/audit/_index.adoc:228
+#, no-wrap
+msgid ""
+"| Prefix\n"
+"| Action\n"
+"\n"
+"|+\n"
+"|Audit successful events in this class.\n"
+"\n"
+"|-\n"
+"|Audit failed events in this class.\n"
+"\n"
+"|^\n"
+"|Audit neither successful nor failed events in this class.\n"
+"\n"
+"|^+\n"
+"|Do not audit successful events in this class.\n"
+"\n"
+"|^-\n"
+"|Do not audit failed events in this class.\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:231
+msgid ""
+"If no prefix is present, both successful and failed instances of the event "
+"will be audited."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:233
+msgid ""
+"The following example selection string selects both successful and failed "
+"login/logout events, but only successful execution events:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:237
+#, no-wrap
+msgid "lo,+ex\n"
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/audit/_index.adoc:239
+#, no-wrap
+msgid "Configuration Files"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:242
+msgid ""
+"The following configuration files for security event auditing are found in "
+"[.filename]#/etc/security#:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:244
+msgid "[.filename]#audit_class#: contains the definitions of the audit classes."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:245
+msgid ""
+"[.filename]#audit_control#: controls aspects of the audit subsystem, such as "
+"default audit classes, minimum disk space to leave on the audit log volume, "
+"and maximum audit trail size."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:246
+msgid ""
+"[.filename]#audit_event#: textual names and descriptions of system audit "
+"events and a list of which classes each event is in."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:247
+msgid ""
+"[.filename]#audit_user#: user-specific audit requirements to be combined "
+"with the global defaults at login."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:248
+msgid ""
+"[.filename]#audit_warn#: a customizable shell script used by man:auditd[8] "
+"to generate warning messages in exceptional situations, such as when space "
+"for audit records is running low or when the audit trail file has been "
+"rotated."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:253
+msgid ""
+"Audit configuration files should be edited and maintained carefully, as "
+"errors in configuration may result in improper logging of events."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:256
+msgid ""
+"In most cases, administrators will only need to modify "
+"[.filename]#audit_control# and [.filename]#audit_user#. The first file "
+"controls system-wide audit properties and policies and the second file may "
+"be used to fine-tune auditing by user."
+msgstr ""
+
+#. type: Title ====
+#: documentation/content/en/books/handbook/audit/_index.adoc:258
+#, no-wrap
+msgid "The [.filename]#audit_control# File"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:261
+msgid ""
+"A number of defaults for the audit subsystem are specified in "
+"[.filename]#audit_control#:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:272
+#, no-wrap
+msgid ""
+"dir:/var/audit\n"
+"dist:off\n"
+"flags:lo,aa\n"
+"minfree:5\n"
+"naflags:lo,aa\n"
+"policy:cnt,argv\n"
+"filesz:2M\n"
+"expire-after:10M\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:275
+msgid ""
+"The `dir` entry is used to set one or more directories where audit logs will "
+"be stored. If more than one directory entry appears, they will be used in "
+"order as they fill. It is common to configure audit so that audit logs are "
+"stored on a dedicated file system, in order to prevent interference between "
+"the audit subsystem and other subsystems if the file system fills."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:277
+msgid ""
+"If the `dist` field is set to `on` or `yes`, hard links will be created to "
+"all trail files in [.filename]#/var/audit/dist#."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:279
+msgid ""
+"The `flags` field sets the system-wide default preselection mask for "
+"attributable events. In the example above, successful and failed "
+"login/logout events as well as authentication and authorization are audited "
+"for all users."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:281
+msgid ""
+"The `minfree` entry defines the minimum percentage of free space for the "
+"file system where the audit trail is stored."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:283
+msgid ""
+"The `naflags` entry specifies audit classes to be audited for non-attributed "
+"events, such as the login/logout process and authentication and "
+"authorization."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:285
+msgid ""
+"The `policy` entry specifies a comma-separated list of policy flags "
+"controlling various aspects of audit behavior. The `cnt` indicates that the "
+"system should continue running despite an auditing failure (this flag is "
+"highly recommended). The other flag, `argv`, causes command line arguments "
+"to the man:execve[2] system call to be audited as part of command execution."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:287
+msgid ""
+"The `filesz` entry specifies the maximum size for an audit trail before "
+"automatically terminating and rotating the trail file. A value of `0` "
+"disables automatic log rotation. If the requested file size is below the "
+"minimum of 512k, it will be ignored and a log message will be generated."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:289
+msgid ""
+"The `expire-after` field specifies when audit log files will expire and be "
+"removed."
+msgstr ""
+
+#. type: Title ====
+#: documentation/content/en/books/handbook/audit/_index.adoc:291
+#, no-wrap
+msgid "The [.filename]#audit_user# File"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:294
+msgid ""
+"The administrator can specify further audit requirements for specific users "
+"in [.filename]#audit_user#. Each line configures auditing for a user via two "
+"fields: the `alwaysaudit` field specifies a set of events that should always "
+"be audited for the user, and the `neveraudit` field specifies a set of "
+"events that should never be audited for the user."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:296
+msgid ""
+"The following example entries audit login/logout events and successful "
+"command execution for `root` and file creation and successful command "
+"execution for `www`. If used with the default [.filename]#audit_control#, "
+"the `lo` entry for `root` is redundant, and login/logout events will also be "
+"audited for `www`."
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:301
+#, no-wrap
+msgid ""
+"root:lo,+ex:no\n"
+"www:fc,+ex:no\n"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/audit/_index.adoc:304
+#, no-wrap
+msgid "Working with Audit Trails"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:307
+msgid ""
+"Since audit trails are stored in the BSM binary format, several built-in "
+"tools are available to modify or convert these trails to text. To convert "
+"trail files to a simple text format, use `praudit`. To reduce the audit "
+"trail file for analysis, archiving, or printing purposes, use "
+"`auditreduce`. This utility supports a variety of selection parameters, "
+"including event type, event class, user, date or time of the event, and the "
+"file path or object acted on."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:309
+msgid ""
+"For example, to dump the entire contents of a specified audit log in plain "
+"text:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:313
+#, no-wrap
+msgid "# praudit /var/audit/AUDITFILE\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:316
+msgid "Where _AUDITFILE_ is the audit log to dump."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:318
+msgid ""
+"Audit trails consist of a series of audit records made up of tokens, which "
+"`praudit` prints sequentially, one per line. Each token is of a specific "
+"type, such as `header` (an audit record header) or `path` (a file path from "
+"a name lookup). The following is an example of an `execve` event:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:328
+#, no-wrap
+msgid ""
+"header,133,10,execve(2),0,Mon Sep 25 15:58:03 2006, + 384 msec\n"
+"exec arg,finger,doug\n"
+"path,/usr/bin/finger\n"
+"attribute,555,root,wheel,90,24918,104944\n"
+"subject,robert,root,wheel,root,wheel,38439,38032,42086,128.232.9.100\n"
+"return,success,0\n"
+"trailer,133\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:331
+msgid ""
+"This audit represents a successful `execve` call, in which the command "
+"`finger doug` has been run. The `exec arg` token contains the processed "
+"command line presented by the shell to the kernel. The `path` token holds "
+"the path to the executable as looked up by the kernel. The `attribute` token "
+"describes the binary and includes the file mode. The `subject` token stores "
+"the audit user ID, effective user ID and group ID, real user ID and group "
+"ID, process ID, session ID, port ID, and login address. Notice that the "
+"audit user ID and real user ID differ as the user `robert` switched to the "
+"`root` account before running this command, but it is audited using the "
+"original authenticated user. The `return` token indicates the successful "
+"execution and the `trailer` concludes the record."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:333
+msgid "XML output format is also supported and can be selected by including `-x`."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:335
+msgid ""
+"Since audit logs may be very large, a subset of records can be selected "
+"using `auditreduce`. This example selects all audit records produced for the "
+"user `trhodes` stored in [.filename]#AUDITFILE#:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:339
+#, no-wrap
+msgid "# auditreduce -u trhodes /var/audit/AUDITFILE | praudit\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:342
+msgid ""
+"Members of the `audit` group have permission to read audit trails in "
+"[.filename]#/var/audit#. By default, this group is empty, so only the `root` "
+"user can read audit trails. Users may be added to the `audit` group in order "
+"to delegate audit review rights. As the ability to track audit log contents "
+"provides significant insight into the behavior of users and processes, it is "
+"recommended that the delegation of audit review rights be performed with "
+"caution."
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/audit/_index.adoc:343
+#, no-wrap
+msgid "Live Monitoring Using Audit Pipes"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:346
+msgid ""
+"Audit pipes are cloning pseudo-devices which allow applications to tap the "
+"live audit record stream. This is primarily of interest to authors of "
+"intrusion detection and system monitoring applications. However, the audit "
+"pipe device is a convenient way for the administrator to allow live "
+"monitoring without running into problems with audit trail file ownership or "
+"log rotation interrupting the event stream. To track the live audit event "
+"stream:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:350
+#, no-wrap
+msgid "# praudit /dev/auditpipe\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:353
+msgid ""
+"By default, audit pipe device nodes are accessible only to the `root` "
+"user. To make them accessible to the members of the `audit` group, add a "
+"`devfs` rule to [.filename]#/etc/devfs.rules#:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:357
+#, no-wrap
+msgid "add path 'auditpipe*' mode 0440 group audit\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:360
+msgid ""
+"See man:devfs.rules[5] for more information on configuring the devfs file "
+"system."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:365
+msgid ""
+"It is easy to produce audit event feedback cycles, in which the viewing of "
+"each audit event results in the generation of more audit events. For "
+"example, if all network I/O is audited, and `praudit` is run from an SSH "
+"session, a continuous stream of audit events will be generated at a high "
+"rate, as each event being printed will generate another event. For this "
+"reason, it is advisable to run `praudit` on an audit pipe device from "
+"sessions without fine-grained I/O auditing."
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/audit/_index.adoc:367
+#, no-wrap
+msgid "Rotating and Compressing Audit Trail Files"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:370
+msgid ""
+"Audit trails are written to by the kernel and managed by the audit daemon, "
+"man:auditd[8]. Administrators should not attempt to use "
+"man:newsyslog.conf[5] or other tools to directly rotate audit logs. Instead, "
+"`audit` should be used to shut down auditing, reconfigure the audit system, "
+"and perform log rotation. The following command causes the audit daemon to "
+"create a new audit log and signal the kernel to switch to using the new "
+"log. The old log will be terminated and renamed, at which point it may then "
+"be manipulated by the administrator:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:374
+#, no-wrap
+msgid "# audit -n\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:377
+msgid ""
+"If man:auditd[8] is not currently running, this command will fail and an "
+"error message will be produced."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:379
+msgid ""
+"Adding the following line to [.filename]#/etc/crontab# will schedule this "
+"rotation every twelve hours:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:383
+#, no-wrap
+msgid "0     */12       *       *       *       root    /usr/sbin/audit -n\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:386
+msgid "The change will take effect once [.filename]#/etc/crontab# is saved."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:388
+msgid ""
+"Automatic rotation of the audit trail file based on file size is possible "
+"using `filesz` in [.filename]#audit_control# as described in "
+"<<audit-auditcontrol>>."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:390
+msgid ""
+"As audit trail files can become very large, it is often desirable to "
+"compress or otherwise archive trails once they have been closed by the audit "
+"daemon. The [.filename]#audit_warn# script can be used to perform customized "
+"operations for a variety of audit-related events, including the clean "
+"termination of audit trails when they are rotated. For example, the "
+"following may be added to [.filename]#/etc/security/audit_warn# to compress "
+"audit trails on close:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/audit/_index.adoc:399
+#, no-wrap
+msgid ""
+"#\n"
+"# Compress audit trail files on close.\n"
+"#\n"
+"if [ \"$1\" = closefile ]; then\n"
+"        gzip -9 $2\n"
+"fi\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/audit/_index.adoc:401
+msgid ""
+"Other archiving activities might include copying trail files to a "
+"centralized server, deleting old trail files, or reducing the audit trail to "
+"remove unneeded records. This script will be run only when audit trail files "
+"are cleanly terminated. It will not be run on trails left unterminated "
+"following an improper shutdown."
+msgstr ""

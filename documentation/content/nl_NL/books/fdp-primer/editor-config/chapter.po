@@ -1,0 +1,383 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR The FreeBSD Project
+# This file is distributed under the same license as the FreeBSD Documentation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreeBSD Documentation VERSION\n"
+"POT-Creation-Date: 2021-02-21 18:54-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: YAML Front Matter: title
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:1
+#, no-wrap
+msgid "Chapter 12. Editor Configuration"
+msgstr ""
+
+#. type: Title =
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:8
+#, no-wrap
+msgid "Editor Configuration"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:26
+msgid ""
+"Adjusting your text editor configuration can make working on document files "
+"quicker and easier, and help documents conform to FDP guidelines."
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:28
+#, no-wrap
+msgid "Vim"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:31
+msgid ""
+"Install from package:editors/vim[], package:editors/vim-console[], or "
+"package:editors/vim-tiny[] then follow the configuration instructions in "
+"<<editor-config-vim-config>>."
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:33
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:197
+#, no-wrap
+msgid "Use"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:36
+msgid ""
+"Press kbd:[P] to reformat paragraphs or text that has been selected in "
+"Visual mode. Press kbd:[T] to replace groups of eight spaces with a tab."
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:38
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:163
+#, no-wrap
+msgid "Configuration"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:41
+msgid "Edit [.filename]#~/.vimrc#, adding these lines to the end of the file:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:48
+#, no-wrap
+msgid ""
+"if has(\"autocmd\")\n"
+"    au BufNewFile,BufRead *.sgml,*.ent,*.xsl,*.xml call Set_SGML()\n"
+"    au BufNewFile,BufRead *.[1-9] call ShowSpecial()\n"
+"endif \" has(autocmd)\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:55
+#, no-wrap
+msgid ""
+"function Set_Highlights()\n"
+"    \"match ExtraWhitespace /^\\s* \\s*\\|\\s\\+$/\n"
+"    highlight default link OverLength ErrorMsg\n"
+"    match OverLength /\\%71v.\\+/\n"
+"    return 0\n"
+"endfunction \" Set_Highlights()\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:61
+#, no-wrap
+msgid ""
+"function ShowSpecial()\n"
+"    setlocal list listchars=tab:>>,trail:*,eol:$\n"
+"    hi def link nontext ErrorMsg\n"
+"    return 0\n"
+"endfunction \" ShowSpecial()\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:82
+#, no-wrap
+msgid ""
+"function Set_SGML()\n"
+"    setlocal number\n"
+"    syn match sgmlSpecial \"&[^;]*;\"\n"
+"    setlocal syntax=sgml\n"
+"    setlocal filetype=xml\n"
+"    setlocal shiftwidth=2\n"
+"    setlocal textwidth=70\n"
+"    setlocal tabstop=8\n"
+"    setlocal softtabstop=2\n"
+"    setlocal formatprg=\"fmt -p\"\n"
+"    setlocal autoindent\n"
+"    setlocal smartindent\n"
+"    \" Rewrap paragraphs\n"
+"    noremap P gqj\n"
+"    \" Replace spaces with tabs\n"
+"    noremap T :s/        /\\t/<CR>\n"
+"    call ShowSpecial()\n"
+"    call Set_Highlights()\n"
+"    return 0\n"
+"endfunction \" Set_SGML()\n"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:85
+#, no-wrap
+msgid "Emacs"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:88
+msgid "Install from package:editors/emacs[] or package:editors/emacs-devel[]."
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:90
+#, no-wrap
+msgid "Validation"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:93
+msgid ""
+"Emacs's nxml-mode uses compact relax NG schemas for validating XML. A "
+"compact relax NG schema for FreeBSD's extension to DocBook 5.0 is included "
+"in the documentation repository. To configure nxml-mode to validate using "
+"this schema, create [.filename]#~/.emacs.d/schema/schemas.xml# and add these "
+"lines to the file:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:102
+#, no-wrap
+msgid ""
+"locatingRules xmlns=\"http://thaiopensource.com/ns/locating-rules/1.0\"\n"
+"  documentElement localName=\"section\" typeId=\"DocBook\"\n"
+"  documentElement localName=\"chapter\" typeId=\"DocBook\"\n"
+"  documentElement localName=\"article\" typeId=\"DocBook\"\n"
+"  documentElement localName=\"book\" typeId=\"DocBook\"\n"
+"  typeId id=\"DocBook\" "
+"uri=\"/usr/local/shared/xml/docbook/5.0/rng/docbook.rnc\"\n"
+"locatingRules\n"
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:105
+#, no-wrap
+msgid "Automated Proofreading with Flycheck and Igor"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:108
+msgid ""
+"The Flycheck package is available from Milkypostman's Emacs Lisp Package "
+"Archive (MELPA). If MELPA is not already in Emacs's packages-archives, it "
+"can be added by evaluating"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:111
+#, no-wrap
+msgid ""
+"(add-to-list 'package-archives '(\"melpa\" "
+". \"http://stable.melpa.org/packages/\") t)\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:114
+msgid ""
+"Add the line to Emacs's initialization file (one of [.filename]#~/.emacs#, "
+"[.filename]#~/.emacs.el#, or [.filename]#~.emacs.d/init.el#) to make this "
+"change permanent."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:116
+msgid "To install Flycheck, evaluate"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:119
+#, no-wrap
+msgid "(package-install 'flycheck)\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:122
+msgid "Create a Flycheck checker for package:textproc/igor[] by evaluating"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:126
+#, no-wrap
+msgid ""
+"(flycheck-define-checker igor\n"
+"  \"FreeBSD Documentation Project sanity checker.\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:133
+#, no-wrap
+msgid ""
+"See URLs https://www.freebsd.org/docproj/ and\n"
+"http://www.freshports.org/textproc/igor/.\"\n"
+"  :command (\"igor\" \"-X\" source-inplace)\n"
+"  :error-parser flycheck-parse-checkstyle\n"
+"  :modes (nxml-mode)\n"
+"  :standard-input t)\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:135
+#, no-wrap
+msgid "  (add-to-list 'flycheck-checkers 'igor 'append)\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:138
+msgid ""
+"Again, add these lines to Emacs's initialization file to make the changes "
+"permanent."
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:140
+#, no-wrap
+msgid "FreeBSD Documentation Specific Settings"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:143
+msgid ""
+"To apply settings specific to the FreeBSD documentation project, create "
+"[.filename]#.dir-locals.el# in the root directory of the documentation "
+"repository and add these lines to the file:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:147
+#, no-wrap
+msgid ""
+";;; Directory Local Variables\n"
+";;; For more information see (info \"(emacs) Directory Variables\")\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:155
+#, no-wrap
+msgid ""
+"((nxml-mode\n"
+"  (eval . (turn-on-auto-fill))\n"
+"  (fill-column . 70)\n"
+"  (eval . (require 'flycheck))\n"
+"  (eval . (flycheck-mode 1))\n"
+"  (flycheck-checker . igor)\n"
+"  (eval . (add-to-list 'rng-schema-locating-files "
+"\"~/.emacs.d/schema/schemas.xml\"))))\n"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:158
+#, no-wrap
+msgid "nano"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:161
+msgid "Install from package:editors/nano[] or package:editors/nano-devel[]."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:166
+msgid "Copy the sample XML syntax highlight file to the user's home directory:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:170
+#, no-wrap
+msgid "% cp /usr/local/shared/nano/xml.nanorc ~/.nanorc\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:173
+msgid ""
+"Use an editor to replace the lines in the [.filename]#~/.nanorc# `syntax "
+"\"xml\"` block with these rules:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:187
+#, no-wrap
+msgid ""
+"syntax \"xml\" \"\\.([jrs]html?|xml|xslt?)$\"\n"
+"# trailing whitespace\n"
+"color ,blue \"[[:space:]]+$\"\n"
+"# multiples of eight spaces at the start a line\n"
+"# (after zero or more tabs) should be a tab\n"
+"color ,blue \"^([TAB]*[ ]{8})+\"\n"
+"# tabs after spaces\n"
+"color ,yellow \"( )+TAB\"\n"
+"# highlight indents that have an odd number of spaces\n"
+"color ,red \"^(([ ]{2})+|(TAB+))*[ ]{1}[^ ]{1}\"\n"
+"# lines longer than 70 characters\n"
+"color ,yellow \"^(.{71})|(TAB.{63})|(TAB{2}.{55})|(TAB{3}.{47}).+$\"\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:190
+msgid "Process the file to create embedded tabs:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:194
+#, no-wrap
+msgid "% perl -i'' -pe 's/TAB/\\t/g' ~/.nanorc\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:200
+msgid "Specify additional helpful options when running the editor:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:204
+#, no-wrap
+msgid "% nano -AKipwz -r 70 -T8 _index.adoc\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:207
+msgid ""
+"Users of man:csh[1] can define an alias in [.filename]#~/.cshrc# to automate "
+"these options:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:210
+#, no-wrap
+msgid "alias nano \"nano -AKipwz -r 70 -T8\"\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:213
+msgid "After the alias is defined, the options will be added automatically:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/fdp-primer/editor-config/chapter.adoc:217
+#, no-wrap
+msgid "% nano _index.adoc\n"
+msgstr ""

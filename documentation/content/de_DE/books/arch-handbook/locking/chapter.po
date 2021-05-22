@@ -1,0 +1,278 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR The FreeBSD Project
+# This file is distributed under the same license as the FreeBSD Documentation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreeBSD Documentation VERSION\n"
+"POT-Creation-Date: 2021-02-21 18:54-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: YAML Front Matter: title
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:1
+#, no-wrap
+msgid "Chapter 2. Locking Notes"
+msgstr ""
+
+#. type: Title =
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:8
+#, no-wrap
+msgid "Locking Notes"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:33
+msgid "_This chapter is maintained by the FreeBSD SMP Next Generation Project._"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:35
+msgid ""
+"This document outlines the locking used in the FreeBSD kernel to permit "
+"effective multi-processing within the kernel. Locking can be achieved via "
+"several means. Data structures can be protected by mutexes or man:lockmgr[9] "
+"locks. A few variables are protected simply by always using atomic "
+"operations to access them."
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:37
+#, no-wrap
+msgid "Mutexes"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:40
+msgid ""
+"A mutex is simply a lock used to guarantee mutual exclusion. Specifically, a "
+"mutex may only be owned by one entity at a time. If another entity wishes to "
+"obtain a mutex that is already owned, it must wait until the mutex is "
+"released. In the FreeBSD kernel, mutexes are owned by processes."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:42
+msgid ""
+"Mutexes may be recursively acquired, but they are intended to be held for a "
+"short period of time. Specifically, one may not sleep while holding a "
+"mutex. If you need to hold a lock across a sleep, use a man:lockmgr[9] lock."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:44
+msgid "Each mutex has several properties of interest:"
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:45
+#, no-wrap
+msgid "Variable Name"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:47
+msgid "The name of the struct mtx variable in the kernel source."
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:48
+#, no-wrap
+msgid "Logical Name"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:50
+msgid ""
+"The name of the mutex assigned to it by `mtx_init`. This name is displayed "
+"in KTR trace messages and witness errors and warnings and is used to "
+"distinguish mutexes in the witness code."
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:51
+#, no-wrap
+msgid "Type"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:53
+msgid ""
+"The type of the mutex in terms of the `MTX_*` flags. The meaning for each "
+"flag is related to its meaning as documented in man:mutex[9]."
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:54
+#, no-wrap
+msgid "`MTX_DEF`:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:56
+msgid "A sleep mutex"
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:57
+#, no-wrap
+msgid "`MTX_SPIN`:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:59
+msgid "A spin mutex"
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:60
+#, no-wrap
+msgid "`MTX_RECURSE`:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:62
+msgid "This mutex is allowed to recurse."
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:63
+#, no-wrap
+msgid "Protectees"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:65
+msgid ""
+"A list of data structures or data structure members that this entry "
+"protects. For data structure members, the name will be in the form of "
+"`structure name`.`member name`."
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:66
+#, no-wrap
+msgid "Dependent Functions"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:68
+msgid "Functions that can only be called if this mutex is held."
+msgstr ""
+
+#. type: Block title
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:69
+#, no-wrap
+msgid "Mutex List"
+msgstr ""
+
+#. type: Table
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:101
+#, no-wrap
+msgid ""
+"| Variable Name\n"
+"| Logical Name\n"
+"| Type\n"
+"| Protectees\n"
+"| Dependent Functions\n"
+"\n"
+"|sched_lock\n"
+"|\"sched lock\"\n"
+"|`MTX_SPIN` \\| `MTX_RECURSE`\n"
+"|`_gmonparam`, `cnt.v_swtch`, `cp_time`, `curpriority`, `mtx`.`mtx_blocked`, "
+"`mtx`.`mtx_contested`, `proc`.`p_procq`, `proc`.`p_slpq`, `proc`.`p_sflag`, "
+"`proc`.`p_stat`, `proc`.`p_estcpu`, `proc`.`p_cpticks` `proc`.`p_pctcpu`, "
+"`proc`.`p_wchan`, `proc`.`p_wmesg`, `proc`.`p_swtime`, `proc`.`p_slptime`, "
+"`proc`.`p_runtime`, `proc`.`p_uu`, `proc`.`p_su`, `proc`.`p_iu`, "
+"`proc`.`p_uticks`, `proc`.`p_sticks`, `proc`.`p_iticks`, `proc`.`p_oncpu`, "
+"`proc`.`p_lastcpu`, `proc`.`p_rqindex`, `proc`.`p_heldmtx`, "
+"`proc`.`p_blocked`, `proc`.`p_mtxname`, `proc`.`p_contested`, "
+"`proc`.`p_priority`, `proc`.`p_usrpri`, `proc`.`p_nativepri`, "
+"`proc`.`p_nice`, `proc`.`p_rtprio`, `pscnt`, `slpque`, `itqueuebits`, "
+"`itqueues`, `rtqueuebits`, `rtqueues`, `queuebits`, `queues`, `idqueuebits`, "
+"`idqueues`, `switchtime`, `switchticks`\n"
+"|`setrunqueue`, `remrunqueue`, `mi_switch`, `chooseproc`, `schedclock`, "
+"`resetpriority`, `updatepri`, `maybe_resched`, `cpu_switch`, `cpu_throw`, "
+"`need_resched`, `resched_wanted`, `clear_resched`, `aston`, `astoff`, "
+"`astpending`, `calcru`, `proc_compare`\n"
+"\n"
+"|vm86pcb_lock\n"
+"|\"vm86pcb lock\"\n"
+"|`MTX_DEF`\n"
+"|`vm86pcb`\n"
+"|`vm86_bioscall`\n"
+"\n"
+"|Giant\n"
+"|\"Giant\"\n"
+"|`MTX_DEF` \\| `MTX_RECURSE`\n"
+"|nearly everything\n"
+"|lots\n"
+"\n"
+"|callout_lock\n"
+"|\"callout lock\"\n"
+"|`MTX_SPIN` \\| `MTX_RECURSE`\n"
+"|`callfree`, `callwheel`, `nextsoftcheck`, `proc`.`p_itcallout`, "
+"`proc`.`p_slpcallout`, `softticks`, `ticks`\n"
+"|\n"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:104
+#, no-wrap
+msgid "Shared Exclusive Locks"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:107
+msgid ""
+"These locks provide basic reader-writer type functionality and may be held "
+"by a sleeping process. Currently they are backed by man:lockmgr[9]."
+msgstr ""
+
+#. type: Block title
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:108
+#, no-wrap
+msgid "Shared Exclusive Lock List"
+msgstr ""
+
+#. type: Table
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:119
+#, no-wrap
+msgid ""
+"| Variable Name\n"
+"| Protectees\n"
+"\n"
+"|`allproc_lock`\n"
+"|`allproc` `zombproc` `pidhashtbl` `proc`.`p_list` `proc`.`p_hash` "
+"`nextpid`\n"
+"\n"
+"|`proctree_lock`\n"
+"|`proc`.`p_children` `proc`.`p_sibling`\n"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:122
+#, no-wrap
+msgid "Atomically Protected Variables"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:125
+msgid ""
+"An atomically protected variable is a special variable that is not protected "
+"by an explicit lock. Instead, all data accesses to the variables use special "
+"atomic operations as described in man:atomic[9]. Very few variables are "
+"treated this way, although other synchronization primitives such as mutexes "
+"are implemented with atomically protected variables."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/locking/chapter.adoc:126
+msgid "`mtx`.`mtx_lock`"
+msgstr ""
