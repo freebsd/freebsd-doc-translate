@@ -7,13 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2021-05-22 14:48-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-05-30 10:54+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
+"projects/documentation/booksarch-handbookscsi_index/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.6.2\n"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1
@@ -31,7 +34,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:35
 #, no-wrap
 msgid "Synopsis"
-msgstr ""
+msgstr "Sinopse"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:38
@@ -191,9 +194,10 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:89
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "SIZE = NUMBER_OF_SUPPORTED_TARGETS * MAX_SIMULTANEOUS_COMMANDS_PER_TARGET\n"
 msgstr ""
+"SIZE = NUMBER_OF_SUPPORTED_TARGETS * MAX_SIMULTANEOUS_COMMANDS_PER_TARGET\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:92
@@ -208,7 +212,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:103
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "    if(( sim = cam_sim_alloc(action_func, poll_func, driver_name,\n"
 "            softc, unit, mtx, max_dev_transactions,\n"
@@ -217,6 +221,14 @@ msgid ""
 "        error; /* some code to handle the error */\n"
 "    }\n"
 msgstr ""
+"    struct cam_sim *sim;\n"
+"\n"
+"    if(( sim = cam_sim_alloc(action_func, poll_func, driver_name,\n"
+"            softc, unit, mtx, max_dev_transactions,\n"
+"            max_tagged_dev_transactions, devq) )==NULL) {\n"
+"        cam_simq_free(devq);\n"
+"        error; /* some code to handle the error */\n"
+"    }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:106
@@ -332,13 +344,17 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:144
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "    if(xpt_bus_register(sim, softc, bus_number) != CAM_SUCCESS) {\n"
 "        cam_sim_free(sim, /*free_devq*/ TRUE);\n"
 "        error; /* some code to handle the error */\n"
 "    }\n"
 msgstr ""
+"    if(xpt_bus_register(sim, softc, bus_number) != CAM_SUCCESS) {\n"
+"        cam_sim_free(sim, /*free_devq*/ TRUE);\n"
+"        error; /* some code to handle the error */\n"
+"    }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:147
@@ -737,11 +753,13 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:268
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "#define ccb_some_meaningful_name    sim_priv.entries[0].bytes\n"
 "#define ccb_hcb spriv_ptr1 /* for hardware control block */\n"
 msgstr ""
+"#define ccb_some_meaningful_name    sim_priv.entries[0].bytes\n"
+"#define ccb_hcb spriv_ptr1 /* for hardware control block */\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:271
@@ -866,7 +884,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:318
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "    if(ccb_h->target_id > OUR_MAX_SUPPORTED_TARGET_ID\n"
 "    || cch_h->target_id == OUR_SCSI_CONTROLLERS_OWN_ID) {\n"
@@ -880,6 +898,17 @@ msgid ""
 "        return;\n"
 "    }\n"
 msgstr ""
+"    if(ccb_h-&gt;target_id &gt; OUR_MAX_SUPPORTED_TARGET_ID\n"
+"    || cch_h-&gt;target_id == OUR_SCSI_CONTROLLERS_OWN_ID) {\n"
+"        ccb_h-&gt;status = CAM_TID_INVALID;\n"
+"        xpt_done(ccb);\n"
+"        return;\n"
+"    }\n"
+"    if(ccb_h-&gt;target_lun &gt; OUR_MAX_SUPPORTED_LUN) {\n"
+"        ccb_h-&gt;status = CAM_LUN_INVALID;\n"
+"        xpt_done(ccb);\n"
+"        return;\n"
+"    }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:321
@@ -932,7 +961,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:348
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "    hcb->target = ccb_h->target_id; hcb->lun = ccb_h->target_lun;\n"
 "    generate_identify_message(hcb);\n"
@@ -941,6 +970,13 @@ msgid ""
 "    if( !target_negotiated(hcb) )\n"
 "        generate_negotiation_messages(hcb);\n"
 msgstr ""
+"    hcb-&gt;target = ccb_h-&gt;target_id; hcb-&gt;lun = ccb_h-&gt;target_lun;"
+"\n"
+"    generate_identify_message(hcb);\n"
+"    if( ccb_h-&gt;tag_action != CAM_TAG_ACTION_NONE )\n"
+"        generate_unique_tag_message(hcb, ccb_h-&gt;tag_action);\n"
+"    if( !target_negotiated(hcb) )\n"
+"        generate_negotiation_messages(hcb);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:351
@@ -1126,13 +1162,18 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:454
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "    ccb_h->timeout_ch = timeout(xxx_timeout, (caddr_t) hcb,\n"
 "        (ccb_h->timeout * hz) / 1000); /* convert milliseconds to ticks */\n"
 "    put_hcb_into_hardware_queue(hcb);\n"
 "    return;\n"
 msgstr ""
+"    ccb_h-&gt;timeout_ch = timeout(xxx_timeout, (caddr_t) hcb,\n"
+"        (ccb_h-&gt;timeout * hz) / 1000); /* convert milliseconds to ticks */"
+"\n"
+"    put_hcb_into_hardware_queue(hcb);\n"
+"    return;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:457
@@ -1500,7 +1541,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:640
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "    case HCB_BEING_TRANSFERRED:\n"
 "        untimeout(xxx_timeout, (caddr_t) hcb, "
@@ -1517,6 +1558,22 @@ msgid ""
 "            goto abort_again;\n"
 "        }\n"
 msgstr ""
+"    case HCB_BEING_TRANSFERRED:\n"
+"        untimeout(xxx_timeout, (caddr_t) hcb, abort_ccb-&gt;ccb_h."
+"timeout_ch);\n"
+"        abort_ccb-&gt;ccb_h.timeout_ch =\n"
+"            timeout(xxx_timeout, (caddr_t) hcb, 10 * hz);\n"
+"        abort_ccb-&gt;ccb_h.status = CAM_REQ_ABORTED;\n"
+"        /* ask the controller to abort that HCB, then generate\n"
+"         * an interrupt and stop\n"
+"         */\n"
+"        if(signal_hardware_to_abort_hcb_and_stop(hcb) &lt; 0) {\n"
+"            /* oops, we missed the race with hardware, this transaction\n"
+"             * got off the bus before we aborted it, try again */\n"
+"            goto abort_again;\n"
+"        }\n"
+"\n"
+"        break;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:642
@@ -1534,7 +1591,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:659
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "    case HCB_DISCONNECTED:\n"
 "        untimeout(xxx_timeout, (caddr_t) hcb, "
@@ -1549,6 +1606,18 @@ msgid ""
 "    xpt_done(ccb);\n"
 "    return;\n"
 msgstr ""
+"    case HCB_DISCONNECTED:\n"
+"        untimeout(xxx_timeout, (caddr_t) hcb, abort_ccb-&gt;ccb_h."
+"timeout_ch);\n"
+"        abort_ccb-&gt;ccb_h.timeout_ch =\n"
+"            timeout(xxx_timeout, (caddr_t) hcb, 10 * hz);\n"
+"        put_abort_message_into_hcb(hcb);\n"
+"        put_hcb_at_the_front_of_hardware_queue(hcb);\n"
+"        break;\n"
+"    }\n"
+"    ccb-&gt;ccb_h.status = CAM_REQ_CMP;\n"
+"    xpt_done(ccb);\n"
+"    return;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:662
@@ -1958,11 +2027,13 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:839
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "    128 heads, 63 sectors - Symbios controllers\n"
 "    16 heads, 63 sectors - old controllers\n"
 msgstr ""
+"    128 heads, 63 sectors - Symbios controllers\n"
+"    16 heads, 63 sectors - old controllers\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:842
@@ -2195,7 +2266,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:903
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "static void\n"
 "xxx_poll(struct cam_sim *sim)\n"
@@ -2203,15 +2274,20 @@ msgid ""
 "    xxx_intr((struct xxx_softc *)cam_sim_softc(sim)); /* for PCI device */\n"
 "}\n"
 msgstr ""
+"static void\n"
+"xxx_poll(struct cam_sim *sim)\n"
+"{\n"
+"    xxx_intr((struct xxx_softc *)cam_sim_softc(sim)); /* for PCI device */\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:906
 msgid "or"
-msgstr ""
+msgstr "ou"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:914
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "static void\n"
 "xxx_poll(struct cam_sim *sim)\n"
@@ -2219,6 +2295,11 @@ msgid ""
 "    xxx_intr(cam_sim_unit(sim)); /* for ISA device */\n"
 "}\n"
 msgstr ""
+"static void\n"
+"xxx_poll(struct cam_sim *sim)\n"
+"{\n"
+"    xxx_intr(cam_sim_unit(sim)); /* for ISA device */\n"
+"}\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:917
@@ -2235,12 +2316,15 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:925
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "static void\n"
 "ahc_async(void *callback_arg, u_int32_t code, struct cam_path *path, void "
 "*arg)\n"
 msgstr ""
+"static void\n"
+"ahc_async(void *callback_arg, u_int32_t code, struct cam_path *path, void "
+"*arg)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:928
@@ -2546,11 +2630,13 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1084
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "    if(hcb_status == COMPLETED) {\n"
 "        scsi_status = get_completion_status(hcb);\n"
 msgstr ""
+"    if(hcb_status == COMPLETED) {\n"
+"        scsi_status = get_completion_status(hcb);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1087
@@ -2561,7 +2647,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1101
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "        if(hcb->flags & DOING_AUTOSENSE) {\n"
 "            if(scsi_status == GOOD) { /* autosense was successful */\n"
@@ -2576,6 +2662,19 @@ msgid ""
 "            return;\n"
 "        }\n"
 msgstr ""
+"        if(hcb-&gt;flags &amp; DOING_AUTOSENSE) {\n"
+"            if(scsi_status == GOOD) { /* autosense was successful */\n"
+"                hcb-&gt;ccb-&gt;ccb_h.status |= CAM_AUTOSNS_VALID;\n"
+"                free_hcb_and_ccb_done(hcb, hcb-&gt;ccb, "
+"CAM_SCSI_STATUS_ERROR);\n"
+"            } else {\n"
+"        autosense_failed:\n"
+"                free_hcb_and_ccb_done(hcb, hcb-&gt;ccb, CAM_AUTOSENSE_FAIL);"
+"\n"
+"            }\n"
+"            schedule_next_hcb(softc);\n"
+"            return;\n"
+"        }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1104
@@ -2840,7 +2939,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1281
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "    case SELECTION_TIMEOUT:\n"
 "        ccb_status = CAM_SEL_TIMEOUT;\n"
@@ -2864,6 +2963,27 @@ msgid ""
 "        break;\n"
 "    }\n"
 msgstr ""
+"    case SELECTION_TIMEOUT:\n"
+"        ccb_status = CAM_SEL_TIMEOUT;\n"
+"        /* request the further code to freeze the queue */\n"
+"        hcb-&gt;ccb-&gt;ccb_h.status |= CAM_DEV_QFRZN;\n"
+"        lun_to_freeze = CAM_LUN_WILDCARD;\n"
+"        break;\n"
+"    case PARITY_ERROR:\n"
+"        ccb_status = CAM_UNCOR_PARITY;\n"
+"        break;\n"
+"    case DATA_OVERRUN:\n"
+"    case ODD_WIDE_TRANSFER:\n"
+"        ccb_status = CAM_DATA_RUN_ERR;\n"
+"        break;\n"
+"    default:\n"
+"        /* all other errors are handled in a generic way */\n"
+"        ccb_status = CAM_REQ_CMP_ERR;\n"
+"        /* request the further code to freeze the queue */\n"
+"        hcb-&gt;ccb-&gt;ccb_h.status |= CAM_DEV_QFRZN;\n"
+"        lun_to_freeze = CAM_LUN_WILDCARD;\n"
+"        break;\n"
+"    }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1284
