@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2021-03-14 11:02-0300\n"
-"PO-Revision-Date: 2021-04-08 03:22+0000\n"
+"PO-Revision-Date: 2021-05-30 10:54+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/bookshandbookzfs_index/pt_BR/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.5.2\n"
+"X-Generator: Weblate 4.6.2\n"
 
 #. type: YAML Front Matter: part
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1
@@ -1059,6 +1059,7 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:518
+#, fuzzy
 msgid ""
 "A pool created with a single disk lacks redundancy. Corruption can be "
 "detected but not repaired, because there is no other copy of the data. The "
@@ -1072,6 +1073,19 @@ msgid ""
 "the layout of the first disk on to the second. `gpart backup` and `gpart "
 "restore` can be used to make this process easier."
 msgstr ""
+"Um pool criado com um único disco não tem redundância. Dados corrompidos "
+"podem ser detectados, mas não reparados, porque não há outra cópia dos "
+"dados. A propriedade <link linkend=\"zfs-term-copies\">copies</link> pode "
+"ser capaz de se recuperar de uma pequena falha, como um setor defeituoso, "
+"mas não fornece o mesmo nível de proteção que o mirror ou o <acronym>RAID-Z</"
+"acronym>. Começando com um pool de um único disco vdev, o <command>zpool "
+"attach</command> pode ser usado para adicionar um disco adicional ao vdev, "
+"criando um mirror. O <command> zpool attach </command> também pode ser usado "
+"para adicionar discos adicionais a um mirror group, aumentando a redundância "
+"e o desempenho de leitura. Se os discos usados para o pool forem "
+"particionados, replicar o layout do primeiro disco para o segundo, <command> "
+"gpart backup </command> e <command> gpart restore </command> pode ser usado "
+"para facilitar esse processo ."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:520
@@ -1517,6 +1531,7 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:766
+#, fuzzy
 msgid ""
 "If the vdev does not have any redundancy, or if multiple devices have failed "
 "and there is not enough redundancy to compensate, the pool enters the <<zfs-"
@@ -1524,6 +1539,11 @@ msgid ""
 "reconnected to the pool, the pool becomes inoperative and data must be "
 "restored from backups."
 msgstr ""
+"Se o vdev não tiver redundância, ou se vários dispositivos falharem e não "
+"houver redundância suficiente para compensar, o pool entrará no estado <link "
+"linkend=\"zfs-term-faulted\">failed</link>. Se um número suficiente de "
+"dispositivos não puder ser reconectado ao pool, o pool se tornará inoperante "
+"e os dados deverão ser restaurados dos backups."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:768
@@ -1964,6 +1984,7 @@ msgstr "Crescendo um Pool"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1027
+#, fuzzy
 msgid ""
 "The usable size of a redundant pool is limited by the capacity of the "
 "smallest device in each vdev. The smallest device can be replaced with a "
@@ -1975,6 +1996,17 @@ msgid ""
 "the new drive. As both of the devices now have 2 TB capacity, the mirror's "
 "available space can be grown to 2 TB."
 msgstr ""
+"O tamanho utilizável de um pool redundante é limitado pela capacidade do "
+"menor dispositivo em cada vdev. O menor dispositivo pode ser substituído por "
+"um dispositivo maior. Depois de concluir uma operação <link linkend=\"zfs-"
+"zpool-replace\">replace</link> ou <link linkend=\"zfs-term-resilver\""
+">resilver</link>, o pool pode crescer para usar a capacidade do Novo "
+"dispositivo. Por exemplo, considere um espelho de uma unidade de 1 TB e uma "
+"unidade de 2 TB. O espaço utilizável é de 1 TB. Quando a unidade de 1 TB é "
+"substituída por outra unidade de 2 TB, o processo de resilverização copia os "
+"dados existentes para a nova unidade. Como os dois dispositivos agora têm "
+"capacidade para 2 TB, o espaço disponível do espelho pode ser aumentado para "
+"2 TB."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1029
@@ -4665,6 +4697,7 @@ msgstr "Desduplicação"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2120
+#, fuzzy
 msgid ""
 "When enabled, <<zfs-term-deduplication,deduplication>> uses the checksum of "
 "each block to detect duplicate blocks. When a new block is a duplicate of an "
@@ -4675,6 +4708,15 @@ msgid ""
 "of the space savings can be had without the extra cost by enabling "
 "compression instead."
 msgstr ""
+"Quando ativado, a <link linkend=\"zfs-term-deduplication\">deduplicação</"
+"link> usa o checksum de cada bloco para detectar blocos duplicados. Quando "
+"um novo bloco é uma duplicata de um bloco existente, o <acronym>ZFS</"
+"acronym> grava uma referência adicional aos dados existentes, em vez de todo "
+"o bloco duplicado. Uma enorme economia de espaço é possível se os dados "
+"contiverem muitos arquivos duplicados ou informações repetidas. Esteja "
+"avisado: a desduplicação requer uma quantidade extremamente grande de "
+"memória, e a maior parte da economia de espaço pode ser obtida sem o custo "
+"extra, permitindo a compactação."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2122
@@ -5229,12 +5271,17 @@ msgstr "Ajustes do Carregador"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2258
+#, fuzzy
 msgid ""
 "The [.filename]#kmem# address space can be increased on all FreeBSD "
 "architectures. On a test system with 1 GB of physical memory, success was "
 "achieved with these options added to [.filename]#/boot/loader.conf#, and the "
 "system restarted:"
 msgstr ""
+"O espaço de endereçamento <filename>kmem</filename> pode ser aumentado em "
+"todas as arquiteturas do FreeBSD. Em um sistema de teste com 1 GB de memória "
+"física, o sucesso foi alcançado com essas opções abaixo adicionadas ao "
+"<filename>/boot/loader.conf</filename>, e o sistema reiniciado:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2265
