@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2021-03-20 17:26-0300\n"
-"PO-Revision-Date: 2021-04-08 23:28+0000\n"
+"PO-Revision-Date: 2021-05-30 20:31+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlessolid-state_index/pt_BR/>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.5.2\n"
+"X-Generator: Weblate 4.6.2\n"
 
 #. type: Title =
 #: documentation/content/en/articles/solid-state/_index.adoc:1
@@ -54,6 +54,7 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:31
+#, fuzzy
 msgid ""
 "Specific topics to be covered include the types and attributes of solid "
 "state media suitable for disk use in FreeBSD, kernel options that are of "
@@ -63,6 +64,13 @@ msgid ""
 "conclude with some general strategies for small and read-only FreeBSD "
 "environments."
 msgstr ""
+"Tópicos específicos a serem abordados incluem os tipos e atributos das mídia "
+"de estado sólido adequadas para uso como disco no FreeBSD, opções de kernel "
+"que são de interesse em tal ambiente, os mecanismos <filename>rc."
+"initdiskless</filename> que automatizam a inicialização de tais sistemas e a "
+"necessidade de sistemas de arquivos read-only e a construção de sistemas de "
+"arquivos a partir do zero. O artigo será concluído com algumas estratégias "
+"gerais para ambientes FreeBSD pequenos e read-only ."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:33
@@ -238,6 +246,7 @@ msgstr "Lembre-se de que esse valor é informado em setores, por padrão."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:96
+#, fuzzy
 msgid ""
 "The fact that [.filename]#/var# is a read-write filesystem is an important "
 "distinction, as the [.filename]#/# partition (and any other partitions you "
@@ -251,6 +260,19 @@ msgid ""
 "`swap` entry from your [.filename]#/etc/fstab#, you should also change the "
 "Options field for each filesystem to `ro` as follows:"
 msgstr ""
+"O fato do <filename>/var</filename> ser um sistema de arquivos read-write é "
+"uma distinção importante, pois a partição <filename>/</filename> (e "
+"quaisquer outras partições que você possa ter em sua mídia flash) deve ser "
+"montada como read-only. Lembre-se que em <xref linkend=\"intro\"/> "
+"detalhamos as limitações da memória flash - especificamente a capacidade de "
+"gravação limitada. A importância de não montar sistemas de arquivos em mídia "
+"flash em modo read-write, e a importância de não usar um arquivo de swap, "
+"não pode ser exagerado. Um arquivo de swap em um sistema ocupado pode "
+"inutilizar uma mídia flash em menos de um ano. Criação de log pesado ou "
+"criação e destruição de arquivos temporários podem fazer o mesmo. Portanto, "
+"além de remover a entrada <literal>swap</literal> do seu <filename>/etc/"
+"fstab</filename>, você também deve alterar o campo Options para cada sistema "
+"de arquivos para <literal>ro</literal> como segue:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/solid-state/_index.adoc:101
@@ -265,6 +287,7 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:106
+#, fuzzy
 msgid ""
 "A few applications in the average system will immediately begin to fail as a "
 "result of this change.  For instance, cron will not run properly as a result "
@@ -275,6 +298,15 @@ msgid ""
 "though, and are addressed, along with solutions to the execution of other "
 "common software packages in <<strategies>>."
 msgstr ""
+"Alguns aplicativos no sistema começarão a falhar imediatamente como "
+"resultado desta alteração. Por exemplo, o cron não será executado "
+"corretamente como resultado da falta de crontabs no <filename>/var</"
+"filename> criado pelo <filename>/etc/rc.d/var</filename>, o syslog e o dhcp "
+"também irão encontrar problemas como resultado do sistema de arquivos estar "
+"em modo read-only e dos itens ausentes no <filename>/var</filename> que o "
+"<filename>/etc/rc.d/var</filename> criou. Estes são apenas problemas "
+"temporários, embora sejam abordados, juntamente com soluções para a execução "
+"de outros pacotes de software comuns em <xref linkend=\"strategies\"/>."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:108
@@ -362,6 +394,7 @@ msgstr "Particionando seu Dispositivo de Mídia Flash"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:147
+#, fuzzy
 msgid ""
 "  After booting with the kern and mfsroot floppies, choose `custom` from the "
 "installation menu.  In the custom installation menu, choose `partition`.  In "
@@ -375,6 +408,19 @@ msgid ""
 "the partition menu.  You will be shown the boot manager menu once more - "
 "repeat the choice you made earlier."
 msgstr ""
+"  Após inicializar com os disquetes do kern e mfsroot, escolha "
+"<literal>custom</literal> no menu de instalação. No menu de instalação "
+"personalizada, escolha <literal>partition</literal>. No menu de partições, "
+"você deve apagar todas as partições existentes usando a tecla <keycap>d</"
+"keycap>. Depois de excluir todas as partições existentes, crie uma partição "
+"usando a tecla <keycap>c</keycap> e aceite o valor padrão para o tamanho da "
+"partição. Quando perguntado sobre o tipo da partição, certifique-se de que o "
+"valor esteja configurado para <literal>165</literal>. Agora escreva esta "
+"tabela de partições no disco pressionando <keycap>w</keycap> (esta é uma "
+"opção oculta nesta tela). Se você estiver usando um cartão compact flash "
+"compatível com ATA, deverá escolher o FreeBSD Boot Manager. Agora pressione "
+"<keycap>q</keycap> para sair do menu de partições. Você verá novamente o "
+"menu do gerenciador de inicialização - repita a escolha feita anteriormente."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:148
@@ -551,6 +597,7 @@ msgstr "Estratégias do Sistema para Ambientes Pequenos e Somente Leitura"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:227
+#, fuzzy
 msgid ""
 "In <<ro-fs>>, it was pointed out that the [.filename]#/var# filesystem "
 "constructed by [.filename]#/etc/rc.d/var# and the presence of a read-only "
@@ -558,6 +605,12 @@ msgid ""
 "FreeBSD.  In this article, suggestions for successfully running cron, "
 "syslog, ports installations, and the Apache web server will be provided."
 msgstr ""
+"Em <xref linkend=\"ro-fs\"/>, foi apontado que o sistema de arquivos "
+"<filename>/var</filename> construído pelo <filename>/etc/rc.d/var</filename> "
+"e a presença de um sistema de arquivos raiz read-only causa problemas com "
+"muitos pacotes de software comuns usados com o FreeBSD. Neste artigo, serão "
+"fornecidas sugestões para a execução bem-sucedida do cron, do syslog, "
+"instalações de ports e do servidor Web Apache."
 
 #. type: Title ===
 #: documentation/content/en/articles/solid-state/_index.adoc:228
@@ -576,6 +629,7 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:236
+#, fuzzy
 msgid ""
 "However, this does not solve the problem of maintaining cron tabs across "
 "reboots.  When the system reboots, the [.filename]#/var# filesystem that is "
@@ -589,6 +643,19 @@ msgid ""
 "changes modes and permissions on the directories you create and the files "
 "you copy with [.filename]#/etc/rc.initdiskless#."
 msgstr ""
+"No entanto, isso não resolve o problema de manter as crontabs entre nas "
+"reinicializações. Quando o sistema for reinicializado, o sistema de arquivos "
+"<filename>/var</filename> que está na memória desaparecerá e todas as "
+"crontabs que você tenha nele também desaparecerão. Portanto, uma solução "
+"seria criar crontabs para os usuários que precisam delas, montar seu sistema "
+"de arquivos <filename>/</filename> como read-write e copiar estas crontabs "
+"para algum lugar seguro, como <filename>/etc/tabs</filename>, em seguida, "
+"adicione uma linha ao final do  <filename>/etc/rc.initdiskless</filename> "
+"que copie estes crontabs para <filename>/var/cron/tabs</filename> depois que "
+"o diretório for criado durante inicialização do sistema. Você também pode "
+"precisar adicionar uma linha que altere modos e permissões nos diretórios "
+"criados e nos arquivos copiados com <filename>/etc/rc."
+"initdiskless</filename>."
 
 #. type: Title ===
 #: documentation/content/en/articles/solid-state/_index.adoc:237
@@ -598,6 +665,7 @@ msgstr "Syslog"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:242
+#, fuzzy
 msgid ""
 "[.filename]#syslog.conf# specifies the locations of certain log files that "
 "exist in [.filename]#/var/log#.  These files are not created by [.filename]#/"
@@ -605,6 +673,12 @@ msgid ""
 "filename]#/etc/rc.d/var#, after the section that creates the directories in "
 "[.filename]#/var#, you will need to add something like this:"
 msgstr ""
+"O <filename>syslog.conf</filename> especifica os locais de certos arquivos "
+"de log que existem em <filename>/var/log</filename>. Esses arquivos não são "
+"criados pelo <filename>/etc/rc.d/var</filename> na inicialização do sistema. "
+"Portanto, em algum lugar do <filename>/etc/rc.d/var</filename>, logo após a "
+"seção que cria os diretórios em <filename>/var</filename>, você precisará "
+"adicionar algo como isto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/solid-state/_index.adoc:247
@@ -701,12 +775,17 @@ msgstr "Servidor Web Apache"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:281
+#, fuzzy
 msgid ""
 "The steps in this section are only necessary if Apache is set up to write "
 "its pid or log information outside of [.filename]#/var#.  By default, Apache "
 "keeps its pid file in [.filename]#/var/run/httpd.pid# and its log files in [."
 "filename]#/var/log#."
 msgstr ""
+"As etapas nesta seção são necessárias apenas se o Apache estiver configurado "
+"para gravar suas informações de pid ou log fora do <filename>/var</"
+"filename>. Por padrão, o Apache mantém seu arquivo pid em <filename>/var/run/"
+"httpd.pid</filename> e seus arquivos de log em <filename>/var/log</filename>."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:287
