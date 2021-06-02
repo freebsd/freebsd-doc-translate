@@ -7,13 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2021-05-22 14:48-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-06-03 00:09+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Chinese (Simplified) <https://translate-dev.freebsd.org/"
+"projects/documentation/booksarch-handbookpccard_index/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.6.2\n"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:1
@@ -25,7 +28,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:10
 #, no-wrap
 msgid "PC Card"
-msgstr ""
+msgstr "PC Card"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:35
@@ -34,12 +37,14 @@ msgid ""
 "driver for a PC Card or CardBus device. However, at present it just "
 "documents how to add a new device to an existing pccard driver."
 msgstr ""
+"本章将讨论FreeBSD为编写PC Card或CardBus设备的驱动程序而提供的机制。 "
+"但目前本文只记录了如何向现有的pccard驱动程序中添加驱动程序。"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:37
 #, no-wrap
 msgid "Adding a Device"
-msgstr ""
+msgstr "添加设备"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:40
@@ -47,15 +52,19 @@ msgid ""
 "Device drivers know what devices they support. There is a table of supported "
 "devices in the kernel that drivers use to attach to a device."
 msgstr ""
+"向所支持的pccard设备列表中添加新设备的步骤已经与系统在FreeBSD 4 中使用的方法不同了。在以前的版本中，需要编辑 "
+"<filename>/etc</filename>中的一个文件来列出设备。从FreeBSD 5.0开始， "
+"设备驱动程序知道它们支持什么设备。现在内核中有一个受支持设备的表， 驱动程序用它来连接设备。"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:42
 #, no-wrap
 msgid "Overview"
-msgstr ""
+msgstr "总览"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:45
+#, fuzzy
 msgid ""
 "PC Cards are identified in one of two ways, both based on the _Card "
 "Information Structure_ (CIS) stored on the card. The first method is to use "
@@ -64,9 +73,13 @@ msgid ""
 "uses a centralized database and some macros to facilitate a design pattern "
 "to help the driver writer match devices to his driver."
 msgstr ""
+"可以有两种方法来识别PC Card，他们都基于卡上的 <acronym>CIS</acronym>信息。第一种方法是使用制造商和产品的数字编号。 "
+"第二种方法是使用人可读的字符串，字符串也是包含在CIS中。PC Card总线 使用集中式数据库和一些宏来提供一个易用的设计模式，让驱动程序的编写 "
+"者很容易地确定匹配其驱动程序的设备。"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:47
+#, fuzzy
 msgid ""
 "Original equipment manufacturers (OEMs) often develop a reference design for "
 "a PC Card product, then sell this design to other companies to market. Those "
@@ -77,6 +90,9 @@ msgid ""
 "the human readable strings in the CIS space, but leave the manufacturer and "
 "product IDs unchanged."
 msgstr ""
+"一个很普遍的实际情况是，某个公司为一款PC Card产品开发出参考 设计，然后把这个设计卖给另外的公司，以便在市场上出售。那些公司改进 "
+"原设计，把向他们的目标客户群或地理区域出售产品，并将他们自己的名字 放到卡中。然而所谓的对现有卡的改进，即使做过任何修改，这些修改通常 "
+"也微乎其微。然而，为了强化他们自己版本的品牌，这些供货商常常会把他们 公司的名字放入CIS空间的可读字符串中，却不会改动制造商和产品的ID。"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:49
@@ -94,6 +110,7 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:51
+#, fuzzy
 msgid ""
 "The PC Card bus code keeps a central database of card information, but not "
 "which driver is associated with them, in "
@@ -101,9 +118,12 @@ msgid ""
 "that allow one to easily construct simple entries in the table the driver "
 "uses to claim devices."
 msgstr ""
+"PC Card总线在其中心数据库 <filename>/sys/dev/pccard/pccarddevs</filename>中保存了卡的信息， "
+"但不包含哪个驱动程序与它们关联的信息。它也提供了一套宏，以允许在 驱动程序用来声明设备的表中容易地创建简单条目。"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:53
+#, fuzzy
 msgid ""
 "Finally, some really low end devices do not contain manufacturer "
 "identification at all. These devices must be detected by matching the human "
@@ -114,6 +134,9 @@ msgid ""
 "recognition of the OEM nature of the PC Card business. When adding new "
 "devices, prefer using the numeric method."
 msgstr ""
+"最后，某些非常低端的设备根本不包含制造商标识。这些设备需要使用 可读CIS字符串来匹配它们。如果我们不需要这种应急办法该有多好，但对于 "
+"某些非常低端却非常流行的CD-ROM播放器来说却是必需的。通常应当避免 使用这种方法，但本节中还是列出了很多设备，因为它们是在认识到PC "
+"Card商业的<acronym>OEM</acronym>本质之前加入的，应当优先使用 数字方法。"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:55
@@ -123,6 +146,7 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:58
+#, fuzzy
 msgid ""
 "There are four sections in the [.filename]#pccarddevs# files. The first "
 "section lists the manufacturer numbers for vendors that use them. This "
@@ -135,6 +159,9 @@ msgid ""
 "comments enclosed in `/*` and `*/` characters are allowed anywhere in the "
 "file."
 msgstr ""
+"<filename>pccarddevs</filename>文件有四节。第一节为使用 它们的那些供货商列出了制造商号码。本节按数字排序。下一节包含了 "
+"这些供货商使用的所有产品，包括他们的产品ID号码和描述字符串。 描述字符串通常不会被使用（相反，即使我们可以匹配数字版本号，我们 "
+"仍然基于人可读的CIS设置设备的描述）。然后为使用字符串匹配方法的 那些设备重复这两节的东西。最后，文件任何地方可以使用C风格的注释。"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:60
@@ -144,19 +171,26 @@ msgid ""
 "because we share it with NetBSD to help facilitate a common clearing house "
 "for this information. For example, here are the first few vendor IDs:"
 msgstr ""
+"文件的第一节包含供货商ID。请保持列表按数字排序。此外，为了 能有一个通用清晰的保存地来方便地保存这些信息，我们与NetBSD共享此 "
+"文件，因此请协调对此文件的任何更改。例如："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:67
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "vendor FUJITSU\t\t\t0x0004  Fujitsu Corporation\n"
 "vendor NETGEAR_2\t\t0x000b  Netgear\n"
 "vendor PANASONIC\t\t0x0032\tMatsushita Electric Industrial Co.\n"
 "vendor SANDISK\t\t\t0x0045\tSandisk Corporation\n"
 msgstr ""
+"vendor FUJITSU\t\t\t0x0004  Fujitsu Corporation\n"
+"vendor NETGEAR_2\t\t0x000b  Netgear\n"
+"vendor PANASONIC\t\t0x0032\tMatsushita Electric Industrial Co.\n"
+"vendor SANDISK\t\t\t0x0045\tSandisk Corporation\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:70
+#, fuzzy
 msgid ""
 "Chances are very good that the `NETGEAR_2` entry is really an OEM that "
 "NETGEAR purchased cards from and the author of support for those cards was "
@@ -172,13 +206,20 @@ msgid ""
 "that makes the card. This string is not used in FreeBSD for anything but "
 "commentary purposes."
 msgstr ""
+"显示了几个供货商ID。很凑巧的是<literal>NETGEAR_2</literal> 实际上是NETGEAR从其购买卡的OEM，"
+"对那些卡提供支持的作者那时并不知道 NETgear使用的是别人的ID。这些条目相当直接易懂。每行上都有供货商 关键字来指示本行的类别。也有供货商的名字。"
+"名字将会在pccarddevs文件 的后面重复出现，名字也会用在驱动程序的匹配表中，因此保持它的短小 "
+"并且是有效的C标识符。还有一个给供货商的十六进制数字ID。不要添加 "
+"<literal>0xffffffff</literal>或<literal>0xffff</literal>形式的ID， "
+"因为它们是保留ID（前者是'空ID集合'，而后者有时会在质量极其差的卡中 看到，用来指示none）。最后还有关于制卡公司的描述字符串。这个字符串 "
+"在FreeBSD中除了用于注释目的外并没有被使用过。"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:72
 msgid ""
 "The second section of the file contains the products. As shown in this "
 "example, the format is similar to the vendor lines:"
-msgstr ""
+msgstr "文件的第二节包含产品. 如你在下面例子中看到的:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:77
@@ -198,6 +239,7 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:83
+#, fuzzy
 msgid ""
 "The `product` keyword is followed by the vendor name, repeated from "
 "above. This is followed by the product name, which is used by the driver and "
@@ -211,6 +253,11 @@ msgid ""
 "numerical order by product ID. They have a C comment before each "
 "manufacturer's entries and there is a blank line between entries."
 msgstr ""
+"格式与供货商的那些行相似。其中有产品关键字。然后是供货商名字， 由上面重复而来。后面跟着产品名字，此名字在驱动程序中使用，且应当 "
+"是一个有效C标识符，但可以以数字开头。然后是卡的十六进制产品ID。 供货商通常对<literal>0xffffffff</literal>和 "
+"<literal>0xffff</literal>有相同的约定。最后是关于设备自身的字符串 描述。"
+"由于FreeBSD的pccard总线驱动程序会从人可读的CIS条目创建一个 字符串，因此这个字符串在FreeBSD中通常不被使用，但某些CIS条目不能 "
+"满足要求的情况下还可能使用。产品按制造商的字母顺序排序，然后再按 产品ID的数字排序。每个制造商条目前有一条C注释，条目之间有一个空行。"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:85
@@ -228,20 +275,25 @@ msgid ""
 "The final section contains the entries for those cards that must be "
 "identified by string entries. This section's format is a little different "
 "from the generic section:"
-msgstr ""
+msgstr "最后一节包含那些必须用字符串匹配的卡。这一节的格式与通用 节的格式有点不同："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:92
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "product ADDTRON AWP100\t\t{ \"Addtron\", \"AWP-100&spWireless&spPCMCIA\", "
 "\"Version&sp01.02\", NULL }\n"
 "product ALLIEDTELESIS WR211PCM\t{ \"Allied&spTelesis&spK.K.\", \"WR211PCM\", "
 "NULL, NULL } Allied Telesis WR211PCM\n"
 msgstr ""
+"product ADDTRON AWP100\t\t{ \"Addtron\", \"AWP-100&amp;spWireless&amp;"
+"spPCMCIA\", \"Version&amp;sp01.02\", NULL }\n"
+"product ALLIEDTELESIS WR211PCM\t{ \"Allied&amp;spTelesis&amp;spK.K.\", "
+"\"WR211PCM\", NULL, NULL } Allied Telesis WR211PCM\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:95
+#, fuzzy
 msgid ""
 "The familiar `product` keyword is followed by the vendor name and the card "
 "name, just as in the second section of the file. Here the format deviates "
@@ -261,12 +313,19 @@ msgid ""
 "vendor kept the same manufacturer/product pair. Regular expression matching "
 "is not available at this time."
 msgstr ""
+"我们已经熟悉了产品关键字，后跟供货商名字，然后再跟卡的名字， 就象在文件第二节中那样。然而，这之后就与那格式不同了。有一个 {}分组，后跟几个字符串。"
+"这些字符串对应CIS_INFO三元组中定义的 供货商，产品和额外信息。这些字符串被产生 <filename>pccarddevs."
+"h</filename>的程序过滤，将 &amp;sp替换为 实际的空格。空条目意味着条目的这部分应当被忽略。在我选择的例子中 "
+"有一个错误的条目。除非对卡的操作来说至关重要，否则不应当在其中 包含版本号。有时供货商在这个字段中会有卡的很多不同版本，这些版本 都能工作，"
+"这种情况下那些信息只会让那些拥有相似卡的人在FreeBSD中 更难以使用。有时当供货商出于市场考虑（可用性，价格等等），希望出售 "
+"同一品牌下的很多不同部分时，这也是有必要的。如果这样，则在那些 供货商仍然保持相同的制造商/产品对的少见情况下，能否区分开卡至关 重要. "
+"此时不能使用正则表达式匹配。"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:97
 #, no-wrap
 msgid "Sample Probe Routine"
-msgstr ""
+msgstr "探测例程样例"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:100
@@ -277,10 +336,12 @@ msgid ""
 "for OLDCARD present as well. Since only the window-dressing is different, an "
 "idealized version will be presented here."
 msgstr ""
+"要懂得如何向所支持的设备列表中添加设备，就必须懂得很多驱动程序 都有的探测和/或匹配例程。由于也为老卡提供了一个兼容层，这在 FreeBSD 5."
+"x中有一点复杂。由于只是window-dressing不同，这儿给出了 一个理想化的版本。"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:110
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "static const struct pccard_product wi_pccard_products[] = {\n"
 "\tPCMCIA_CARD(3COM, 3CRWE737A, 0),\n"
@@ -290,6 +351,14 @@ msgid ""
 "\t{ NULL }\n"
 "};\n"
 msgstr ""
+"static const struct pccard_product wi_pccard_products[] = {\n"
+"\tPCMCIA_CARD(3COM, 3CRWE737A, 0),\n"
+"\tPCMCIA_CARD(BUFFALO, WLI_PCM_S11, 0),\n"
+"\tPCMCIA_CARD(BUFFALO, WLI_CF_S11G, 0),\n"
+"+\tPCMCIA_CARD(BUFFALO, WLI_CF2_S11G, 0),\n"
+"\tPCMCIA_CARD(TDK, LAK_CD011WL, 0),\n"
+"\t{ NULL }\n"
+"};\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:116
@@ -318,6 +387,7 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:128
+#, fuzzy
 msgid ""
 "Here we have a simple pccard probe routine that matches a few devices. As "
 "stated above, the name may vary (if it is not `foo_pccard_probe()` it will "
@@ -328,6 +398,12 @@ msgid ""
 "may be some variance in the table. The only requirement is that each row of "
 "the table must have a `struct pccard_product` as the first element."
 msgstr ""
+"这儿我们有一个可以匹配少数几个设备的简单pccard探测例程。如上面 所提到，名字可能不同（如果不是 "
+"<function>foo_pccard_probe()</function>则就是 "
+"<function>foo_pccard_match()</function>）。函数 "
+"<function>pccard_product_lookup()</function>是一个通用函数，它遍历 表并返回指向它所匹配的第一项的指针。"
+"一些驱动程序可能使用这个机制来 将某些卡的附加信息传递到驱动程序的其它部分，因此表中可能有些变体。 唯一的要求就是如果你有一个不同的表，"
+"则让表的结构的第一个元素为 结构pccard_product。"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:130
@@ -348,19 +424,22 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:132
 #, no-wrap
 msgid "Putting it All Together"
-msgstr ""
+msgstr "将它合在一起"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:135
+#, fuzzy
 msgid ""
 "To add a new device, one must first obtain the identification information "
 "from the device. The easiest way to do this is to insert the device into a "
 "PC Card or CF slot and issue `devinfo -v`. Sample output:"
 msgstr ""
+"因此，为了一个增加新设备，必须进行下面步骤。首先，必须从设备 获得标识信息。完成这个最容易的方法就是将设备插入到PC Card或CF槽中， "
+"并发出<command>devinfo -v</command>。你可能会看到一些类似下面的 东西："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:142
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "        cbb1 pnpinfo vendor=0x104c device=0xac51 subvendor=0x1265 "
 "subdevice=0x0300 class=0x060700 at slot=10 function=1\n"
@@ -370,6 +449,12 @@ msgid ""
 "cisvendor=\"BUFFALO\" cisproduct=\"WLI2-CF-S11\" function_type=6 at "
 "function=0\n"
 msgstr ""
+"        cbb1 pnpinfo vendor=0x104c device=0xac51 subvendor=0x1265 "
+"subdevice=0x0300 class=0x060700 at slot=10 function=1\n"
+"          cardbus1\n"
+"          pccard1\n"
+"            unknown pnpinfo manufacturer=0x026f product=0x030c cisvendor="
+"\"BUFFALO\" cisproduct=\"WLI2-CF-S11\" function_type=6 at function=0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:145
@@ -387,21 +472,23 @@ msgid ""
 "purpose of this example. The vendor is BUFFALO, which we see already has an "
 "entry:"
 msgstr ""
+"由于我们首先想优先使用数字选项，因此首先尝试创建基于此的条目。 为了示例，上面的卡已经被稍稍虚构化了。我们看到的供货商为BUFFALO， "
+"它已经有一个条目了："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:151
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "vendor BUFFALO\t\t\t0x026f\tBUFFALO (Melco Corporation)\n"
-msgstr ""
+msgstr "vendor BUFFALO\t\t\t0x026f\tBUFFALO (Melco Corporation)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:154
 msgid "But there is no entry for this particular card. Instead we find:"
-msgstr ""
+msgstr "这样我们就可以了。为这个卡查找一个条目，但我们没有发现。但我们 发现："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:162
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "/* BUFFALO */\n"
 "product BUFFALO WLI_PCM_S11\t0x0305\tBUFFALO AirStation 11Mbps WLAN\n"
@@ -409,17 +496,24 @@ msgid ""
 "product\tBUFFALO\tLPC3_CLT\t0x030a\tBUFFALO LPC3-CLT Ethernet Adapter\n"
 "product BUFFALO WLI_CF_S11G\t0x030b\tBUFFALO AirStation 11Mbps CF WLAN\n"
 msgstr ""
+"/* BUFFALO */\n"
+"product BUFFALO WLI_PCM_S11\t0x0305\tBUFFALO AirStation 11Mbps WLAN\n"
+"product BUFFALO LPC_CF_CLT\t0x0307\tBUFFALO LPC-CF-CLT\n"
+"product\tBUFFALO\tLPC3_CLT\t0x030a\tBUFFALO LPC3-CLT Ethernet Adapter\n"
+"product BUFFALO WLI_CF_S11G\t0x030b\tBUFFALO AirStation 11Mbps CF WLAN\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:165
+#, fuzzy
 msgid "To add the device, we can just add this entry to [.filename]#pccarddevs#:"
-msgstr ""
+msgstr "我们就可以向<filename>pccarddevs</filename>中添加："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:169
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "product BUFFALO WLI2_CF_S11G\t0x030c\tBUFFALO AirStation ultra 802.11b CF\n"
 msgstr ""
+"product BUFFALO WLI2_CF_S11G\t0x030c\tBUFFALO AirStation ultra 802.11b CF\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:172
@@ -427,10 +521,12 @@ msgid ""
 "Once these steps are complete, the card can be added to the driver. That is "
 "a simple operation of adding one line:"
 msgstr ""
+"目前，需要一个手动步骤来 重新产生<filename>pccarddevs.h</filename>，用来将这些标识符转换 "
+"到客户驱动程序。你在驱动程序中使用它们之前必须完成下面步骤："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:183
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "static const struct pccard_product wi_pccard_products[] = {\n"
 "\tPCMCIA_CARD(3COM, 3CRWE737A, 0),\n"
@@ -441,9 +537,18 @@ msgid ""
 "\t{ NULL }\n"
 "};\n"
 msgstr ""
+"static const struct pccard_product wi_pccard_products[] = {\n"
+"\tPCMCIA_CARD(3COM, 3CRWE737A, 0),\n"
+"\tPCMCIA_CARD(BUFFALO, WLI_PCM_S11, 0),\n"
+"\tPCMCIA_CARD(BUFFALO, WLI_CF_S11G, 0),\n"
+"+\tPCMCIA_CARD(BUFFALO, WLI_CF2_S11G, 0),\n"
+"\tPCMCIA_CARD(TDK, LAK_CD011WL, 0),\n"
+"\t{ NULL }\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:186
+#, fuzzy
 msgid ""
 "Note that I have included a '`+`' in the line before the line that I added, "
 "but that is simply to highlight the line. Do not add it to the actual "
@@ -453,9 +558,13 @@ msgid ""
 "and submit a patch. If the device is not recognized at all, you have done "
 "something wrong and should recheck each step."
 msgstr ""
+"注意，我在我添加的行前面包含了'<literal>+</literal>'，但这只是 用来强调这一行。不要把它添加到实际驱动程序中。一旦你添加了这行，就 "
+"可以重新编译内核或模块，并试着看它是否能识别设备。如果它识别出设备 并能工作，请提交补丁。如果它不工作，请找出让它工作所需要的东西并 "
+"提交一个补丁。如果它根本不识别设备，那么你可能做错了什么，应当重新 检查每一步。"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:188
+#, fuzzy
 msgid ""
 "If you are a FreeBSD src committer, and everything appears to be working, "
 "then you can commit the changes to the tree. However, there are some minor "
@@ -464,15 +573,20 @@ msgid ""
 "committed as a second step, ensuring that the right $FreeBSD$ tag is in the "
 "latter file. Finally, commit the additions to the driver."
 msgstr ""
+"如果你是一个FreeBSD源代码的committer，并且所有东西看起来都 正常工作，则你应当把这些改变提交到树中。然而有些小技巧的东西你 "
+"需要考虑。首先，你必须提交<filename>pccarddevs</filename>文件到 "
+"树中。完成后，你必须重新产生<filename>pccarddevs.h</filename> 并将它作为另一次提交来提交（这是为了确保正确的 "
+"$FreeBSD$标签会留在后面的文件中）。最后，你需要把 其它东西提交到驱动程序。"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:190
 #, no-wrap
 msgid "Submitting a New Device"
-msgstr ""
+msgstr "提交新设备"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:192
+#, fuzzy
 msgid ""
 "Please do not send entries for new devices to the author directly. Instead, "
 "submit them as a PR and send the author the PR number for his records. This "
@@ -484,3 +598,7 @@ msgid ""
 "investigation. Committers should not commit OEM99, but instead find the "
 "highest OEM entry and commit one more than that."
 msgstr ""
+"很多人直接把新设备的条目发送给作者。请不要那样做。请将它们作为 PR来提交，并将PR号码发送给作者用于记录。这样确保条目不会丢失。提交 "
+"PR时，补丁中没有必要包含<filename>pccardevs.h</filename>的diff， 因为那些东西可以重新产生。"
+"包含设备的描述和客户驱动程序的补丁是必要 的。如果你不知道名字，使用OEM99作为名字，作者将会调查后相应地调整 OEM99。提交者不应当提交OEM99，"
+"而应该找到最高的OEM条目并提交高于那个 的一个。"
