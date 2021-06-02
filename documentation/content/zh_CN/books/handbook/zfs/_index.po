@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2021-03-14 11:02-0300\n"
-"PO-Revision-Date: 2021-04-12 20:52+0000\n"
+"PO-Revision-Date: 2021-06-03 00:07+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Chinese (Simplified) <https://translate-dev.freebsd.org/"
 "projects/documentation/bookshandbookzfs_index/zh_CN/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.5.2\n"
+"X-Generator: Weblate 4.6.2\n"
 
 #. type: YAML Front Matter: part
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1
@@ -996,6 +996,7 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:518
+#, fuzzy
 msgid ""
 "A pool created with a single disk lacks redundancy. Corruption can be "
 "detected but not repaired, because there is no other copy of the data. The "
@@ -1009,6 +1010,12 @@ msgid ""
 "the layout of the first disk on to the second. `gpart backup` and `gpart "
 "restore` can be used to make this process easier."
 msgstr ""
+"由单一磁盘建立的存储池缺乏冗余备份功能，可以检测到数据损坏单无法修复，因为数据没有其他备份。备份（<link linkend=\"zfs-term-"
+"copies\">copies</link>）属性可以让您从较小的故障（比如磁盘坏道）。单无法提供与镜像和 <acronym>RAID-Z</"
+"acronym> 同样级别的保护。由单一磁盘所建立的存储池可用 <command>zpool attach</command> 加入新设备，建里镜像。"
+"<command>zpool attach</command> "
+"也可用来加入额外的磁盘到镜像群组以增加备份和读取速度。若使用的磁盘已有分区，可以复制给磁盘分区到另一个，使用 <command>gpart "
+"backup</command> 与 <command>gpart restore</command> 可以让这个过程更简单。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:520
@@ -1432,6 +1439,7 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:766
+#, fuzzy
 msgid ""
 "If the vdev does not have any redundancy, or if multiple devices have failed "
 "and there is not enough redundancy to compensate, the pool enters the <<zfs-"
@@ -1439,6 +1447,8 @@ msgid ""
 "reconnected to the pool, the pool becomes inoperative and data must be "
 "restored from backups."
 msgstr ""
+"若 vdev 没有任何备份数据或有多个设备故障，没有足够的备援数据可以补偿，存储便会进入故障（<link linkend=\"zfs-term-"
+"faulted\">faulted</link>）的状态。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:768
@@ -1867,6 +1877,7 @@ msgstr "扩增存储池"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1027
+#, fuzzy
 msgid ""
 "The usable size of a redundant pool is limited by the capacity of the "
 "smallest device in each vdev. The smallest device can be replaced with a "
@@ -1878,6 +1889,11 @@ msgid ""
 "the new drive. As both of the devices now have 2 TB capacity, the mirror's "
 "available space can be grown to 2 TB."
 msgstr ""
+"可用的备援存储池大小会受到每个 vdev 中容量最小的设备限制。最小的设备可以替换成较大的设备，在更换（<link linkend=\"zfs-"
+"zpool-replace\">Replace</link>）或修复（<link linkend=\"zfs-term-resilver\""
+">Resilver</link>）作业后，存储池可以成长到该新设备的可用容量。例如，要做一个 1 TB 磁盘机与一个 2 TB 磁盘机的镜像，"
+"可用的空间会是1 TB，当1 TB 磁盘机备更换成另一个 2 TB 的磁盘机时，修复程序会复制既有的资料到新的磁盘机，由于现在两个设备都有 2 TB "
+"的容量，所以镜像的可用空间便会成长到 2 TB。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1029
@@ -4360,6 +4376,7 @@ msgstr "去重复(Deduplication）"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2120
+#, fuzzy
 msgid ""
 "When enabled, <<zfs-term-deduplication,deduplication>> uses the checksum of "
 "each block to detect duplicate blocks. When a new block is a duplicate of an "
@@ -4370,6 +4387,10 @@ msgid ""
 "of the space savings can be had without the extra cost by enabling "
 "compression instead."
 msgstr ""
+"当开启，去重复（<link linkend=\"zfs-term-deduplication\">Deduplication</link>）功能会使用每个"
+"资料区块的校验码(Checksum）来侦测重复的资料区块，当新的资料区块与现有的资料区块重复，<acronym>ZFS</acronym> 便会写入连接到"
+"现有资料的参考来替代写入重复的资料区块，这在资料中有大量重复的文件或资讯时可以节省大量的空间，要注意的是：去重复功能需要使用大量的内存且大部份可节省的空间"
+"可改开启压缩功能来达成，而压缩功能不需要使用额外的内存。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2122
@@ -4902,12 +4923,15 @@ msgstr "载入程序可调参数"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2258
+#, fuzzy
 msgid ""
 "The [.filename]#kmem# address space can be increased on all FreeBSD "
 "architectures. On a test system with 1 GB of physical memory, success was "
 "achieved with these options added to [.filename]#/boot/loader.conf#, and the "
 "system restarted:"
 msgstr ""
+"在所有的FreeBSD 架构上均可增加<filename>kmem</filename> 位址空间，经测试在一个1 GB "
+"实体内存的测试系统上，加入以下选项到<filename>/boot/loader.conf</filename>，重新开启系统，可成功设定："
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2265
