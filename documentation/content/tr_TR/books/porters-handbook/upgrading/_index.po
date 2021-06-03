@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-05-22 14:48-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -14,6 +14,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#. type: YAML Front Matter: description
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:1
+#, no-wrap
+msgid "Upgrading a FreeBSD Port"
+msgstr ""
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:1
@@ -219,7 +225,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "% git clone https://git.FreeBSD.org/ports.git ~/my_wrkdir <.> <.>\n"
-"% cd ~/my_wrkdir/dns/pdnsd\n"
+"% cd ~/my_wrkdir\n"
 msgstr ""
 
 #. type: Plain text
@@ -261,35 +267,49 @@ msgid ""
 "portlint,Checking the Port with `portlint`]."
 msgstr ""
 
+#. type: Plain text
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:114
+msgid ""
+"Before making the patch, fetch the latest repository and rebase the changes "
+"on top of it.  Watch and follow the output carefully.  If any of the files "
+"failed to rebase, it means that the upstream files changed while you were "
+"editing the same file, and the conflicts need to be resolved manually."
+msgstr ""
+
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:115
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:119
 #, no-wrap
 msgid ""
-"% git status --short\n"
-"% git pull --rebase <.>\n"
+"% git fetch origin main\n"
+"% git rebase origin/main\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:118
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:122
+msgid "Check the changes staged for the patch:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:127
+#, no-wrap
 msgid ""
-"<.> This will attempt to merge the differences between the patch and current "
-"repository version. Watch the output carefully. The letter in front of each "
-"file name indicates what was done with it."
+"% git status\n"
+"% git diff --staged\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:120
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:130
 msgid "The last step is to make a unified man:diff[1] of the changes:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:124
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:134
 #, no-wrap
-msgid "% git diff . > ../`make -VPKGNAME`.diff\n"
+msgid "% git diff --staged > ../`make -VPKGNAME`.diff\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:129
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:139
 msgid ""
 "If files have been added, moved, or removed, include the man:git[1] `add`, "
 "`mv`, and `rm` commands that were used. `git mv` must be run before the "
@@ -298,26 +318,26 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:132
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:142
 msgid ""
 "Send the patch following the link:{problem-reports}#pr-writing/[problem "
 "report submission guidelines]."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:134
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:144
 #, no-wrap
 msgid "UPDATING and MOVED"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:137
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:147
 #, no-wrap
 msgid "/usr/ports/UPDATING"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:140
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:150
 msgid ""
 "If upgrading the port requires special steps like changing configuration "
 "files or running a specific program, it must be documented in this file. The "
@@ -325,7 +345,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:146
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:156
 #, no-wrap
 msgid ""
 "YYYYMMDD:\n"
@@ -334,39 +354,39 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:148
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:158
 #, no-wrap
 msgid "  Special instructions\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:154
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:164
 msgid ""
 "When including exact portmaster, portupgrade, and/or pkg instructions, "
 "please make sure to get the shell escaping right. For example, do _not_ use:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:158
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:168
 #, no-wrap
 msgid "# pkg delete -g -f docbook-xml* docbook-sk* docbook[2345]??-* docbook-4*\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:161
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:171
 msgid ""
 "As shown, the command will only work with bourne shells. Instead, use the "
 "form shown below, which will work with both bourne shell and c-shell:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:165
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:175
 #, no-wrap
 msgid "# pkg delete -g -f docbook-xml\\* docbook-sk\\* docbook\\[2345\\]\\?\\?-\\* docbook-4\\*\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:172
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:182
 msgid ""
 "It is recommended that the AFFECTS line contains a glob matching all the "
 "ports affected by the entry so that automated tools can parse it as easily "
@@ -376,13 +396,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:175
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:185
 #, no-wrap
 msgid "/usr/ports/MOVED"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:178
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:188
 msgid ""
 "This file is used to list moved or removed ports. Each line in the file is "
 "made up of the name of the port, where the port was moved, when, and why. If "
@@ -391,13 +411,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:182
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:192
 #, no-wrap
 msgid "old name|new name (blank for deleted)|date of move|reason\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:185
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:195
 msgid ""
 "The date must be entered in the form `YYYY-MM-DD`. New entries are added to "
 "the end of the list to keep it in chronological order, with the oldest entry "
@@ -405,14 +425,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:187
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:197
 msgid ""
 "If a port was removed but has since been restored, delete the line in this "
 "file that states that it was removed."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:189
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:199
 msgid ""
 "If a port was renamed and then renamed back to its original name, add a new "
 "one with the intermediate name to the old name, and remove the old entry as "
@@ -420,17 +440,17 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:193
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:203
 msgid "Any changes must be validated with `Tools/scripts/MOVEDlint.awk`."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:195
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:205
 msgid "If using a ports directory other than [.filename]#/usr/ports#, use:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:200
+#: documentation/content/en/books/porters-handbook/upgrading/_index.adoc:210
 #, no-wrap
 msgid ""
 "% cd /home/user/ports\n"
