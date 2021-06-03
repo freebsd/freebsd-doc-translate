@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-03-20 17:26-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -15,26 +15,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#. type: YAML Front Matter: description
+#: documentation/content/en/articles/vinum/_index.adoc:1
+#, no-wrap
+msgid "The vinum Volume Manager in FreeBSD"
+msgstr ""
+
 #. type: Title =
 #: documentation/content/en/articles/vinum/_index.adoc:1
-#: documentation/content/en/articles/vinum/_index.adoc:7
+#: documentation/content/en/articles/vinum/_index.adoc:9
 #, no-wrap
 msgid "The vinum Volume Manager"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:32
+#: documentation/content/en/articles/vinum/_index.adoc:35
 msgid "'''"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/vinum/_index.adoc:36
+#: documentation/content/en/articles/vinum/_index.adoc:39
 #, no-wrap
 msgid "Synopsis"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:43
+#: documentation/content/en/articles/vinum/_index.adoc:46
 msgid ""
 "No matter the type of disks, there are always potential problems.  The disks "
 "can be too small, too slow, or too unreliable to meet the system's "
@@ -45,7 +51,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:47
+#: documentation/content/en/articles/vinum/_index.adoc:50
 msgid ""
 "One method is through the use of multiple, and sometimes redundant, disks.  "
 "In addition to supporting various cards and controllers for hardware "
@@ -58,14 +64,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:49
+#: documentation/content/en/articles/vinum/_index.adoc:52
 msgid ""
 "This chapter provides an overview of potential problems with traditional "
 "disk storage, and an introduction to the [.filename]#vinum# volume manager."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/vinum/_index.adoc:57
+#: documentation/content/en/articles/vinum/_index.adoc:60
 msgid ""
 "Starting with FreeBSD 5, [.filename]#vinum# has been rewritten in order to "
 "fit into the link:{handbook}#geom[GEOM architecture], while retaining the "
@@ -80,13 +86,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/vinum/_index.adoc:60
+#: documentation/content/en/articles/vinum/_index.adoc:63
 #, no-wrap
 msgid "Access Bottlenecks"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:64
+#: documentation/content/en/articles/vinum/_index.adoc:67
 msgid ""
 "Modern systems frequently need to access data in a highly concurrent "
 "manner.  For example, large FTP or HTTP servers can maintain thousands of "
@@ -95,7 +101,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:68
+#: documentation/content/en/articles/vinum/_index.adoc:71
 msgid ""
 "Current disk drives can transfer data sequentially at up to 70 MB/s, but "
 "this value is of little importance in an environment where many independent "
@@ -107,7 +113,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:71
+#: documentation/content/en/articles/vinum/_index.adoc:74
 msgid ""
 "In any disk transfer, the drive must first position the heads, wait for the "
 "first sector to pass under the read head, and then perform the transfer.  "
@@ -116,7 +122,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:76
+#: documentation/content/en/articles/vinum/_index.adoc:79
 msgid ""
 "[[vinum-latency]] Consider a typical transfer of about 10 kB: the current "
 "generation of high-performance disks can position the heads in an average of "
@@ -128,7 +134,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:79
+#: documentation/content/en/articles/vinum/_index.adoc:82
 msgid ""
 "The traditional and obvious solution to this bottleneck is \"more spindles"
 "\": rather than using one large disk, use several smaller disks with the "
@@ -138,7 +144,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:83
+#: documentation/content/en/articles/vinum/_index.adoc:86
 msgid ""
 "The actual throughput improvement is smaller than the number of disks "
 "involved.  Although each drive is capable of transferring in parallel, there "
@@ -147,7 +153,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:91
+#: documentation/content/en/articles/vinum/_index.adoc:94
 msgid ""
 "The evenness of the load on the disks is strongly dependent on the way the "
 "data is shared across the drives.  In the following discussion, it is "
@@ -166,19 +172,19 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/articles/vinum/_index.adoc:93
+#: documentation/content/en/articles/vinum/_index.adoc:96
 #, no-wrap
 msgid "Concatenated Organization"
 msgstr ""
 
 #. type: Target for macro image
-#: documentation/content/en/articles/vinum/_index.adoc:94
+#: documentation/content/en/articles/vinum/_index.adoc:97
 #, no-wrap
 msgid "vinum-concat.png"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:100
+#: documentation/content/en/articles/vinum/_index.adoc:103
 msgid ""
 "An alternative mapping is to divide the address space into smaller, equal-"
 "sized components and store them sequentially on different devices.  For "
@@ -189,7 +195,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:104
+#: documentation/content/en/articles/vinum/_index.adoc:107
 msgid ""
 "`RAID` offers various forms of fault tolerance, though RAID-0 is somewhat "
 "misleading as it provides no redundancy.  Striping requires somewhat more "
@@ -201,25 +207,25 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/articles/vinum/_index.adoc:106
+#: documentation/content/en/articles/vinum/_index.adoc:109
 #, no-wrap
 msgid "Striped Organization"
 msgstr ""
 
 #. type: Target for macro image
-#: documentation/content/en/articles/vinum/_index.adoc:107
+#: documentation/content/en/articles/vinum/_index.adoc:110
 #, no-wrap
 msgid "vinum-striped.png"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/vinum/_index.adoc:110
+#: documentation/content/en/articles/vinum/_index.adoc:113
 #, no-wrap
 msgid "Data Integrity"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:115
+#: documentation/content/en/articles/vinum/_index.adoc:118
 msgid ""
 "The final problem with disks is that they are unreliable.  Although "
 "reliability has increased tremendously over the last few years, disk drives "
@@ -229,7 +235,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:118
+#: documentation/content/en/articles/vinum/_index.adoc:121
 msgid ""
 "One approach to this problem is _mirroring_, or `RAID-1`, which keeps two "
 "copies of the data on different physical hardware.  Any write to the volume "
@@ -238,17 +244,17 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:120
+#: documentation/content/en/articles/vinum/_index.adoc:123
 msgid "Mirroring has two problems:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:122
+#: documentation/content/en/articles/vinum/_index.adoc:125
 msgid "It requires twice as much disk storage as a non-redundant solution."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:123
+#: documentation/content/en/articles/vinum/_index.adoc:126
 msgid ""
 "Writes must be performed to both drives, so they take up twice the bandwidth "
 "of a non-mirrored volume. Reads do not suffer from a performance penalty and "
@@ -256,7 +262,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:130
+#: documentation/content/en/articles/vinum/_index.adoc:133
 msgid ""
 "An alternative solution is _parity_, implemented in `RAID` levels 2, 3, 4 "
 "and 5.  Of these, `RAID-5` is the most interesting.  As implemented in [."
@@ -270,19 +276,19 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/articles/vinum/_index.adoc:132
+#: documentation/content/en/articles/vinum/_index.adoc:135
 #, no-wrap
 msgid "`RAID`-5 Organization"
 msgstr ""
 
 #. type: Target for macro image
-#: documentation/content/en/articles/vinum/_index.adoc:133
+#: documentation/content/en/articles/vinum/_index.adoc:136
 #, no-wrap
 msgid "vinum-raid5-org.png"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:138
+#: documentation/content/en/articles/vinum/_index.adoc:141
 msgid ""
 "Compared to mirroring, `RAID-5` has the advantage of requiring significantly "
 "less storage space.  Read access is similar to that of striped "
@@ -294,20 +300,20 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/vinum/_index.adoc:140
+#: documentation/content/en/articles/vinum/_index.adoc:143
 #, no-wrap
 msgid "[.filename]#vinum# Objects"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:143
+#: documentation/content/en/articles/vinum/_index.adoc:146
 msgid ""
 "In order to address these problems, [.filename]#vinum# implements a four-"
 "level hierarchy of objects:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:145
+#: documentation/content/en/articles/vinum/_index.adoc:148
 msgid ""
 "The most visible object is the virtual disk, called a _volume_. Volumes have "
 "essentially the same properties as a UNIX(R) disk drive, though there are "
@@ -315,7 +321,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:146
+#: documentation/content/en/articles/vinum/_index.adoc:149
 msgid ""
 "Volumes are composed of _plexes_, each of which represent the total address "
 "space of a volume. This level in the hierarchy provides redundancy. Think of "
@@ -324,7 +330,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:147
+#: documentation/content/en/articles/vinum/_index.adoc:150
 msgid ""
 "Since [.filename]#vinum# exists within the UNIX(R) disk storage framework, "
 "it would be possible to use UNIX(R) partitions as the building block for "
@@ -336,7 +342,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:148
+#: documentation/content/en/articles/vinum/_index.adoc:151
 msgid ""
 "Subdisks reside on [.filename]#vinum#_drives_, currently UNIX(R) partitions. "
 "[.filename]#vinum# drives can contain any number of subdisks. With the "
@@ -346,20 +352,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:150
+#: documentation/content/en/articles/vinum/_index.adoc:153
 msgid ""
 "The following sections describe the way these objects provide the "
 "functionality required of [.filename]#vinum#."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:151
+#: documentation/content/en/articles/vinum/_index.adoc:154
 #, no-wrap
 msgid "Volume Size Considerations"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:155
+#: documentation/content/en/articles/vinum/_index.adoc:158
 msgid ""
 "Plexes can include multiple subdisks spread over all drives in the [."
 "filename]#vinum# configuration.  As a result, the size of an individual "
@@ -367,13 +373,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:156
+#: documentation/content/en/articles/vinum/_index.adoc:159
 #, no-wrap
 msgid "Redundant Data Storage"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:161
+#: documentation/content/en/articles/vinum/_index.adoc:164
 msgid ""
 "[.filename]#vinum# implements mirroring by attaching multiple plexes to a "
 "volume.  Each plex is a representation of the data in a volume.  A volume "
@@ -381,7 +387,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:164
+#: documentation/content/en/articles/vinum/_index.adoc:167
 msgid ""
 "Although a plex represents the complete data of a volume, it is possible for "
 "parts of the representation to be physically missing, either by design (by "
@@ -391,20 +397,20 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:165
+#: documentation/content/en/articles/vinum/_index.adoc:168
 #, no-wrap
 msgid "Which Plex Organization?"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:168
+#: documentation/content/en/articles/vinum/_index.adoc:171
 msgid ""
 "[.filename]#vinum# implements both concatenation and striping at the plex "
 "level:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:170
+#: documentation/content/en/articles/vinum/_index.adoc:173
 msgid ""
 "A _concatenated plex_ uses the address space of each subdisk in turn. "
 "Concatenated plexes are the most flexible as they can contain any number of "
@@ -416,7 +422,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:171
+#: documentation/content/en/articles/vinum/_index.adoc:174
 msgid ""
 "A _striped plex_ stripes the data across each subdisk. The subdisks must all "
 "be the same size and there must be at least two subdisks in order to "
@@ -428,20 +434,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:173
+#: documentation/content/en/articles/vinum/_index.adoc:176
 msgid ""
 "<<vinum-comparison, [.filename]#vinum# Plex Organizations>> summarizes the "
 "advantages and disadvantages of each plex organization."
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/articles/vinum/_index.adoc:175
+#: documentation/content/en/articles/vinum/_index.adoc:178
 #, no-wrap
 msgid "[.filename]#vinum# Plex Organizations"
 msgstr ""
 
 #. type: Table
-#: documentation/content/en/articles/vinum/_index.adoc:195
+#: documentation/content/en/articles/vinum/_index.adoc:198
 #, no-wrap
 msgid ""
 "| Plex type\n"
@@ -464,13 +470,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/vinum/_index.adoc:198
+#: documentation/content/en/articles/vinum/_index.adoc:201
 #, no-wrap
 msgid "Some Examples"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:204
+#: documentation/content/en/articles/vinum/_index.adoc:207
 msgid ""
 "[.filename]#vinum# maintains a _configuration database_ which describes the "
 "objects known to an individual system.  Initially, the user creates the "
@@ -482,20 +488,20 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:205
+#: documentation/content/en/articles/vinum/_index.adoc:208
 #, no-wrap
 msgid "The Configuration File"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:209
+#: documentation/content/en/articles/vinum/_index.adoc:212
 msgid ""
 "The configuration file describes individual [.filename]#vinum# objects.  The "
 "definition of a simple volume might be:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:216
+#: documentation/content/en/articles/vinum/_index.adoc:219
 #, no-wrap
 msgid ""
 "    drive a device /dev/da3h\n"
@@ -505,12 +511,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:219
+#: documentation/content/en/articles/vinum/_index.adoc:222
 msgid "This file describes four [.filename]#vinum# objects:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:221
+#: documentation/content/en/articles/vinum/_index.adoc:224
 msgid ""
 "The _drive_ line describes a disk partition (_drive_) and its location "
 "relative to the underlying hardware. It is given the symbolic name _a_. This "
@@ -519,14 +525,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:222
+#: documentation/content/en/articles/vinum/_index.adoc:225
 msgid ""
 "The _volume_ line describes a volume. The only required attribute is the "
 "name, in this case _myvol_."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:223
+#: documentation/content/en/articles/vinum/_index.adoc:226
 msgid ""
 "The _plex_ line defines a plex. The only required parameter is the "
 "organization, in this case _concat_. No name is necessary as the system "
@@ -536,7 +542,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:224
+#: documentation/content/en/articles/vinum/_index.adoc:227
 msgid ""
 "The _sd_ line describes a subdisk. The minimum specifications are the name "
 "of a drive on which to store it, and the length of the subdisk. No name is "
@@ -546,13 +552,13 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:226
+#: documentation/content/en/articles/vinum/_index.adoc:229
 msgid ""
 "After processing this file, man:gvinum[8] produces the following output:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:236
+#: documentation/content/en/articles/vinum/_index.adoc:239
 #, no-wrap
 msgid ""
 "#  gvinum -> create config1\n"
@@ -564,31 +570,31 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:238
+#: documentation/content/en/articles/vinum/_index.adoc:241
 #, no-wrap
 msgid "  D a                     State: up       Device /dev/da3h      Avail: 2061/2573 MB (80%)\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:240
+#: documentation/content/en/articles/vinum/_index.adoc:243
 #, no-wrap
 msgid "  V myvol                 State: up       Plexes:       1 Size:      512 MB\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:242
+#: documentation/content/en/articles/vinum/_index.adoc:245
 #, no-wrap
 msgid "  P myvol.p0            C State: up       Subdisks:     1 Size:      512 MB\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:244
+#: documentation/content/en/articles/vinum/_index.adoc:247
 #, no-wrap
 msgid "  S myvol.p0.s0           State: up       PO:        0  B Size:      512 MB\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:248
+#: documentation/content/en/articles/vinum/_index.adoc:251
 msgid ""
 "This output shows the brief listing format of man:gvinum[8].  It is "
 "represented graphically in <<vinum-simple-vol, A Simple [.filename]#vinum# "
@@ -596,19 +602,19 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/articles/vinum/_index.adoc:250
+#: documentation/content/en/articles/vinum/_index.adoc:253
 #, no-wrap
 msgid "A Simple [.filename]#vinum# Volume"
 msgstr ""
 
 #. type: Target for macro image
-#: documentation/content/en/articles/vinum/_index.adoc:251
+#: documentation/content/en/articles/vinum/_index.adoc:254
 #, no-wrap
 msgid "vinum-simple-vol.png"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:255
+#: documentation/content/en/articles/vinum/_index.adoc:258
 msgid ""
 "This figure, and the ones which follow, represent a volume, which contains "
 "the plexes, which in turn contains the subdisks.  In this example, the "
@@ -616,7 +622,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:260
+#: documentation/content/en/articles/vinum/_index.adoc:263
 msgid ""
 "This particular volume has no specific advantage over a conventional disk "
 "partition.  It contains a single plex, so it is not redundant.  The plex "
@@ -626,13 +632,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:261
+#: documentation/content/en/articles/vinum/_index.adoc:264
 #, no-wrap
 msgid "Increased Resilience: Mirroring"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:266
+#: documentation/content/en/articles/vinum/_index.adoc:269
 msgid ""
 "The resilience of a volume can be increased by mirroring.  When laying out a "
 "mirrored volume, it is important to ensure that the subdisks of each plex "
@@ -641,7 +647,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:275
+#: documentation/content/en/articles/vinum/_index.adoc:278
 #, no-wrap
 msgid ""
 "\tdrive b device /dev/da4h\n"
@@ -653,7 +659,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:279
+#: documentation/content/en/articles/vinum/_index.adoc:282
 msgid ""
 "In this example, it was not necessary to specify a definition of drive _a_ "
 "again, since [.filename]#vinum# keeps track of all objects in its "
@@ -662,7 +668,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:287
+#: documentation/content/en/articles/vinum/_index.adoc:290
 #, no-wrap
 msgid ""
 "\tDrives:         2 (4 configured)\n"
@@ -672,7 +678,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:290
+#: documentation/content/en/articles/vinum/_index.adoc:293
 #, no-wrap
 msgid ""
 "\tD a                     State: up       Device /dev/da3h       Avail: 1549/2573 MB (60%)\n"
@@ -680,7 +686,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:293
+#: documentation/content/en/articles/vinum/_index.adoc:296
 #, no-wrap
 msgid ""
 "    V myvol                 State: up       Plexes:       1 Size:        512 MB\n"
@@ -688,7 +694,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:297
+#: documentation/content/en/articles/vinum/_index.adoc:300
 #, no-wrap
 msgid ""
 "    P myvol.p0            C State: up       Subdisks:     1 Size:        512 MB\n"
@@ -697,7 +703,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:301
+#: documentation/content/en/articles/vinum/_index.adoc:304
 #, no-wrap
 msgid ""
 "    S myvol.p0.s0           State: up       PO:        0  B Size:        512 MB\n"
@@ -706,39 +712,39 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:304
+#: documentation/content/en/articles/vinum/_index.adoc:307
 msgid ""
 "<<vinum-mirrored-vol, A Mirrored [.filename]#vinum# Volume>> shows the "
 "structure graphically."
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/articles/vinum/_index.adoc:306
+#: documentation/content/en/articles/vinum/_index.adoc:309
 #, no-wrap
 msgid "A Mirrored [.filename]#vinum# Volume"
 msgstr ""
 
 #. type: Target for macro image
-#: documentation/content/en/articles/vinum/_index.adoc:307
+#: documentation/content/en/articles/vinum/_index.adoc:310
 #, no-wrap
 msgid "vinum-mirrored-vol.png"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:311
+#: documentation/content/en/articles/vinum/_index.adoc:314
 msgid ""
 "In this example, each plex contains the full 512 MB of address space.  As in "
 "the previous example, each plex contains only a single subdisk."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:312
+#: documentation/content/en/articles/vinum/_index.adoc:315
 #, no-wrap
 msgid "Optimizing Performance"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:317
+#: documentation/content/en/articles/vinum/_index.adoc:320
 msgid ""
 "The mirrored volume in the previous example is more resistant to failure "
 "than an unmirrored volume, but its performance is less as each write to the "
@@ -750,7 +756,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:328
+#: documentation/content/en/articles/vinum/_index.adoc:331
 #, no-wrap
 msgid ""
 "        drive c device /dev/da5h\n"
@@ -764,7 +770,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:332
+#: documentation/content/en/articles/vinum/_index.adoc:335
 msgid ""
 "As before, it is not necessary to define the drives which are already known "
 "to [.filename]#vinum#.  After processing this definition, the configuration "
@@ -772,7 +778,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:340
+#: documentation/content/en/articles/vinum/_index.adoc:343
 #, no-wrap
 msgid ""
 "\tDrives:         4 (4 configured)\n"
@@ -782,7 +788,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:345
+#: documentation/content/en/articles/vinum/_index.adoc:348
 #, no-wrap
 msgid ""
 "    D a                     State: up       Device /dev/da3h        Avail: 1421/2573 MB (55%)\n"
@@ -792,7 +798,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:349
+#: documentation/content/en/articles/vinum/_index.adoc:352
 #, no-wrap
 msgid ""
 "    V myvol                 State: up       Plexes:       1 Size:        512 MB\n"
@@ -801,7 +807,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:354
+#: documentation/content/en/articles/vinum/_index.adoc:357
 #, no-wrap
 msgid ""
 "    P myvol.p0            C State: up       Subdisks:     1 Size:        512 MB\n"
@@ -811,7 +817,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:362
+#: documentation/content/en/articles/vinum/_index.adoc:365
 #, no-wrap
 msgid ""
 "    S myvol.p0.s0           State: up       PO:        0  B Size:        512 MB\n"
@@ -824,19 +830,19 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/articles/vinum/_index.adoc:365
+#: documentation/content/en/articles/vinum/_index.adoc:368
 #, no-wrap
 msgid "A Striped [.filename]#vinum# Volume"
 msgstr ""
 
 #. type: Target for macro image
-#: documentation/content/en/articles/vinum/_index.adoc:366
+#: documentation/content/en/articles/vinum/_index.adoc:369
 #, no-wrap
 msgid "vinum-striped-vol.png"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:370
+#: documentation/content/en/articles/vinum/_index.adoc:373
 msgid ""
 "This volume is represented in <<vinum-striped-vol, A Striped [."
 "filename]#vinum# Volume>>.  The darkness of the stripes indicates the "
@@ -845,13 +851,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:371
+#: documentation/content/en/articles/vinum/_index.adoc:374
 #, no-wrap
 msgid "Resilience and Performance"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:375
+#: documentation/content/en/articles/vinum/_index.adoc:378
 msgid ""
 "[[vinum-resilience]]With sufficient hardware, it is possible to build "
 "volumes which show both increased resilience and increased performance "
@@ -860,7 +866,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:391
+#: documentation/content/en/articles/vinum/_index.adoc:394
 #, no-wrap
 msgid ""
 "\tvolume raid10\n"
@@ -879,7 +885,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:395
+#: documentation/content/en/articles/vinum/_index.adoc:398
 msgid ""
 "The subdisks of the second plex are offset by two drives from those of the "
 "first plex.  This helps to ensure that writes do not go to the same subdisks "
@@ -887,32 +893,32 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:397
+#: documentation/content/en/articles/vinum/_index.adoc:400
 msgid ""
 "<<vinum-raid10-vol, A Mirrored, Striped [.filename]#vinum# Volume>> "
 "represents the structure of this volume."
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/articles/vinum/_index.adoc:399
+#: documentation/content/en/articles/vinum/_index.adoc:402
 #, no-wrap
 msgid "A Mirrored, Striped [.filename]#vinum# Volume"
 msgstr ""
 
 #. type: Target for macro image
-#: documentation/content/en/articles/vinum/_index.adoc:400
+#: documentation/content/en/articles/vinum/_index.adoc:403
 #, no-wrap
 msgid "vinum-raid10-vol.png"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/vinum/_index.adoc:403
+#: documentation/content/en/articles/vinum/_index.adoc:406
 #, no-wrap
 msgid "Object Naming"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:407
+#: documentation/content/en/articles/vinum/_index.adoc:410
 msgid ""
 "[.filename]#vinum# assigns default names to plexes and subdisks, although "
 "they may be overridden.  Overriding the default names is not recommended as "
@@ -920,7 +926,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:410
+#: documentation/content/en/articles/vinum/_index.adoc:413
 msgid ""
 "Names may contain any non-blank character, but it is recommended to restrict "
 "them to letters, digits and the underscore characters.  The names of "
@@ -929,7 +935,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:413
+#: documentation/content/en/articles/vinum/_index.adoc:416
 msgid ""
 "[.filename]#vinum# objects are assigned device nodes in the hierarchy [."
 "filename]#/dev/gvinum#.  The configuration shown above would cause [."
@@ -937,7 +943,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:415
+#: documentation/content/en/articles/vinum/_index.adoc:418
 msgid ""
 "Device entries for each volume. These are the main devices used by [."
 "filename]#vinum#. The configuration above would include the devices [."
@@ -947,12 +953,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:416
+#: documentation/content/en/articles/vinum/_index.adoc:419
 msgid "All volumes get direct entries under [.filename]#/dev/gvinum/#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:417
+#: documentation/content/en/articles/vinum/_index.adoc:420
 msgid ""
 "The directories [.filename]#/dev/gvinum/plex#, and [.filename]#/dev/gvinum/"
 "sd#, which contain device nodes for each plex and for each subdisk, "
@@ -960,12 +966,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:419
+#: documentation/content/en/articles/vinum/_index.adoc:422
 msgid "For example, consider the following configuration file:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:432
+#: documentation/content/en/articles/vinum/_index.adoc:435
 #, no-wrap
 msgid ""
 "\tdrive drive1 device /dev/sd1h\n"
@@ -981,14 +987,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:435
+#: documentation/content/en/articles/vinum/_index.adoc:438
 msgid ""
 "After processing this file, man:gvinum[8] creates the following structure in "
 "[.filename]#/dev/gvinum#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:442
+#: documentation/content/en/articles/vinum/_index.adoc:445
 #, no-wrap
 msgid ""
 "\tdrwxr-xr-x  2 root  wheel       512 Apr 13\n"
@@ -998,7 +1004,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:446
+#: documentation/content/en/articles/vinum/_index.adoc:449
 #, no-wrap
 msgid ""
 "    /dev/vinum/plex:\n"
@@ -1007,7 +1013,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:453
+#: documentation/content/en/articles/vinum/_index.adoc:456
 #, no-wrap
 msgid ""
 "    /dev/vinum/sd:\n"
@@ -1019,7 +1025,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:458
+#: documentation/content/en/articles/vinum/_index.adoc:461
 msgid ""
 "Although it is recommended that plexes and subdisks should not be allocated "
 "specific names, [.filename]#vinum# drives must be named.  This makes it "
@@ -1028,13 +1034,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:459
+#: documentation/content/en/articles/vinum/_index.adoc:462
 #, no-wrap
 msgid "Creating File Systems"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:467
+#: documentation/content/en/articles/vinum/_index.adoc:470
 msgid ""
 "Volumes appear to the system to be identical to disks, with one exception.  "
 "Unlike UNIX(R) drives, [.filename]#vinum# does not partition volumes, which "
@@ -1051,24 +1057,24 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:469
+#: documentation/content/en/articles/vinum/_index.adoc:472
 msgid "In order to create a file system on this volume, use man:newfs[8]:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:473
+#: documentation/content/en/articles/vinum/_index.adoc:476
 #, no-wrap
 msgid "# newfs /dev/gvinum/concat\n"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/vinum/_index.adoc:476
+#: documentation/content/en/articles/vinum/_index.adoc:479
 #, no-wrap
 msgid "Configuring [.filename]#vinum#"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:482
+#: documentation/content/en/articles/vinum/_index.adoc:485
 msgid ""
 "The [.filename]#GENERIC# kernel does not contain [.filename]#vinum#.  It is "
 "possible to build a custom kernel which includes [.filename]#vinum#, but "
@@ -1079,13 +1085,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:483
+#: documentation/content/en/articles/vinum/_index.adoc:486
 #, no-wrap
 msgid "Startup"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:488
+#: documentation/content/en/articles/vinum/_index.adoc:491
 msgid ""
 "[.filename]#vinum# stores configuration information on the disk slices in "
 "essentially the same form as in the configuration files.  When reading from "
@@ -1095,7 +1101,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:510
+#: documentation/content/en/articles/vinum/_index.adoc:513
 #, no-wrap
 msgid ""
 "volume myvol state up\n"
@@ -1120,7 +1126,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:516
+#: documentation/content/en/articles/vinum/_index.adoc:519
 msgid ""
 "The obvious differences here are the presence of explicit location "
 "information and naming, both of which are allowed but discouraged, and the "
@@ -1132,13 +1138,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/articles/vinum/_index.adoc:518
+#: documentation/content/en/articles/vinum/_index.adoc:521
 #, no-wrap
 msgid "Automatic Startup"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:522
+#: documentation/content/en/articles/vinum/_index.adoc:525
 msgid ""
 "_Gvinum_ always features an automatic startup once the kernel module is "
 "loaded, via man:loader.conf[5].  To load the _Gvinum_ module at boot time, "
@@ -1146,7 +1152,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:527
+#: documentation/content/en/articles/vinum/_index.adoc:530
 msgid ""
 "When [.filename]#vinum# is started with `gvinum start`, [.filename]#vinum# "
 "reads the configuration database from one of the [.filename]#vinum# drives.  "
@@ -1158,13 +1164,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/vinum/_index.adoc:529
+#: documentation/content/en/articles/vinum/_index.adoc:532
 #, no-wrap
 msgid "Using [.filename]#vinum# for the Root File System"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:533
+#: documentation/content/en/articles/vinum/_index.adoc:536
 msgid ""
 "For a machine that has fully-mirrored file systems using [.filename]#vinum#, "
 "it is desirable to also mirror the root file system.  Setting up such a "
@@ -1173,7 +1179,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:535
+#: documentation/content/en/articles/vinum/_index.adoc:538
 msgid ""
 "The root file system must be available very early during the boot process, "
 "so the [.filename]#vinum# infrastructure must already be available at this "
@@ -1181,7 +1187,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:536
+#: documentation/content/en/articles/vinum/_index.adoc:539
 msgid ""
 "The volume containing the root file system also contains the system "
 "bootstrap and the kernel. These must be read using the host system's native "
@@ -1190,20 +1196,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:538
+#: documentation/content/en/articles/vinum/_index.adoc:541
 msgid ""
 "In the following sections, the term \"root volume\" is generally used to "
 "describe the [.filename]#vinum# volume that contains the root file system."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:539
+#: documentation/content/en/articles/vinum/_index.adoc:542
 #, no-wrap
 msgid "Starting up [.filename]#vinum# Early Enough for the Root File System"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:543
+#: documentation/content/en/articles/vinum/_index.adoc:546
 msgid ""
 "[.filename]#vinum# must be available early in the system boot as man:"
 "loader[8] must be able to load the vinum kernel module before starting the "
@@ -1212,19 +1218,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:547
+#: documentation/content/en/articles/vinum/_index.adoc:550
 #, no-wrap
 msgid "geom_vinum_load=\"YES\"\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:549
+#: documentation/content/en/articles/vinum/_index.adoc:552
 #, no-wrap
 msgid "Making a [.filename]#vinum#-based Root Volume Accessible to the Bootstrap"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:554
+#: documentation/content/en/articles/vinum/_index.adoc:557
 msgid ""
 "The current FreeBSD bootstrap is only 7.5 KB of code and does not understand "
 "the internal [.filename]#vinum# structures.  This means that it cannot parse "
@@ -1235,25 +1241,25 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:556
+#: documentation/content/en/articles/vinum/_index.adoc:559
 msgid ""
 "For this to be possible, the following requirements must be met for the root "
 "volume:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:558
+#: documentation/content/en/articles/vinum/_index.adoc:561
 msgid "The root volume must not be a stripe or `RAID`-5."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:559
+#: documentation/content/en/articles/vinum/_index.adoc:562
 msgid ""
 "The root volume must not contain more than one concatenated subdisk per plex."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:565
+#: documentation/content/en/articles/vinum/_index.adoc:568
 msgid ""
 "Note that it is desirable and possible to use multiple plexes, each "
 "containing one replica of the root file system.  The bootstrap process will "
@@ -1268,14 +1274,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:567
+#: documentation/content/en/articles/vinum/_index.adoc:570
 msgid ""
 "In order to set up these `a` partitions for each device containing part of "
 "the root volume, the following is required:"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/vinum/_index.adoc:571
+#: documentation/content/en/articles/vinum/_index.adoc:574
 msgid ""
 "The location, offset from the beginning of the device, and size of this "
 "device's subdisk that is part of the root volume needs to be examined, using "
@@ -1283,13 +1289,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:575
+#: documentation/content/en/articles/vinum/_index.adoc:578
 #, no-wrap
 msgid "# gvinum l -rv root\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:579
+#: documentation/content/en/articles/vinum/_index.adoc:582
 msgid ""
 "  [.filename]#vinum# offsets and sizes are measured in bytes.  They must be "
 "divided by 512 in order to obtain the block numbers that are to be used by "
@@ -1297,18 +1303,18 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:580
+#: documentation/content/en/articles/vinum/_index.adoc:583
 msgid "Run this command for each device that participates in the root volume:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:584
+#: documentation/content/en/articles/vinum/_index.adoc:587
 #, no-wrap
 msgid "# bsdlabel -e devname\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:587
+#: documentation/content/en/articles/vinum/_index.adoc:590
 msgid ""
 "  _devname_ must be either the name of the disk, like [.filename]#da0# for "
 "disks without a slice table, or the name of the slice, like [."
@@ -1316,7 +1322,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:590
+#: documentation/content/en/articles/vinum/_index.adoc:593
 msgid ""
 "  If there is already an `a` partition on the device from a pre-[."
 "filename]#vinum# root file system, it should be renamed to something else so "
@@ -1328,7 +1334,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:596
+#: documentation/content/en/articles/vinum/_index.adoc:599
 msgid ""
 "  The offset of the [.filename]#vinum# partition on this device (if any) "
 "must be added to the offset of the respective root volume subdisk on this "
@@ -1340,7 +1346,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:599
+#: documentation/content/en/articles/vinum/_index.adoc:602
 msgid ""
 "  That way, a new `a` partition will be established that overlaps the [."
 "filename]#vinum# partition on this device.  `bsdlabel` will only allow for "
@@ -1349,7 +1355,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:600
+#: documentation/content/en/articles/vinum/_index.adoc:603
 msgid ""
 "A faked `a` partition now exists on each device that has one replica of the "
 "root volume. It is highly recommendable to verify the result using a command "
@@ -1357,13 +1363,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:604
+#: documentation/content/en/articles/vinum/_index.adoc:607
 #, no-wrap
 msgid "# fsck -n /dev/devnamea\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/vinum/_index.adoc:609
+#: documentation/content/en/articles/vinum/_index.adoc:612
 msgid ""
 "It should be remembered that all files containing control information must "
 "be relative to the root file system in the [.filename]#vinum# volume which, "
@@ -1373,7 +1379,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/vinum/_index.adoc:612
+#: documentation/content/en/articles/vinum/_index.adoc:615
 msgid ""
 "At next reboot, the bootstrap should figure out the appropriate control "
 "information from the new [.filename]#vinum#-based root file system, and act "
@@ -1383,26 +1389,26 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:616
+#: documentation/content/en/articles/vinum/_index.adoc:619
 #, no-wrap
 msgid "Mounting root from ufs:/dev/gvinum/root\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:618
+#: documentation/content/en/articles/vinum/_index.adoc:621
 #, no-wrap
 msgid "Example of a [.filename]#vinum#-based Root Setup"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:621
+#: documentation/content/en/articles/vinum/_index.adoc:624
 msgid ""
 "After the [.filename]#vinum# root volume has been set up, the output of "
 "`gvinum l -rv root` could look like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:630
+#: documentation/content/en/articles/vinum/_index.adoc:633
 #, no-wrap
 msgid ""
 "...\n"
@@ -1414,7 +1420,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:636
+#: documentation/content/en/articles/vinum/_index.adoc:639
 #, no-wrap
 msgid ""
 "Subdisk root.p1.s0:\n"
@@ -1425,7 +1431,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:642
+#: documentation/content/en/articles/vinum/_index.adoc:645
 msgid ""
 "The values to note are `135680` for the offset, relative to partition [."
 "filename]#/dev/da0h#.  This translates to 265 512-byte disk blocks in "
@@ -1435,12 +1441,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:644
+#: documentation/content/en/articles/vinum/_index.adoc:647
 msgid "The bsdlabel for these devices might look like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/vinum/_index.adoc:653
+#: documentation/content/en/articles/vinum/_index.adoc:656
 #, no-wrap
 msgid ""
 "...\n"
@@ -1452,7 +1458,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:658
+#: documentation/content/en/articles/vinum/_index.adoc:661
 msgid ""
 "It can be observed that the `size` parameter for the faked `a` partition "
 "matches the value outlined above, while the `offset` parameter is the sum of "
@@ -1465,31 +1471,31 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:660
+#: documentation/content/en/articles/vinum/_index.adoc:663
 msgid ""
 "In the above example, the entire device is dedicated to [.filename]#vinum# "
 "and there is no leftover pre-[.filename]#vinum# root partition."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/vinum/_index.adoc:661
+#: documentation/content/en/articles/vinum/_index.adoc:664
 #, no-wrap
 msgid "Troubleshooting"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:664
+#: documentation/content/en/articles/vinum/_index.adoc:667
 msgid "The following list contains a few known pitfalls and solutions."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/articles/vinum/_index.adoc:665
+#: documentation/content/en/articles/vinum/_index.adoc:668
 #, no-wrap
 msgid "System Bootstrap Loads, but System Does Not Boot"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:669
+#: documentation/content/en/articles/vinum/_index.adoc:672
 msgid ""
 "If for any reason the system does not continue to boot, the bootstrap can be "
 "interrupted by pressing kbd:[space] at the 10-seconds warning.  The loader "
@@ -1498,14 +1504,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:671
+#: documentation/content/en/articles/vinum/_index.adoc:674
 msgid ""
 "If the [.filename]#vinum# kernel module was not yet in the list of modules "
 "to load automatically, type `load geom_vinum`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:674
+#: documentation/content/en/articles/vinum/_index.adoc:677
 msgid ""
 "When ready, the boot process can be continued by typing `boot -as` which `-"
 "as` requests the kernel to ask for the root file system to mount (`-a`) and "
@@ -1516,7 +1522,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:680
+#: documentation/content/en/articles/vinum/_index.adoc:683
 msgid ""
 "At the prompt asking for a root file system to mount, any device that "
 "contains a valid root file system can be entered.  If [.filename]#/etc/"
@@ -1533,13 +1539,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/articles/vinum/_index.adoc:681
+#: documentation/content/en/articles/vinum/_index.adoc:684
 #, no-wrap
 msgid "Only Primary Bootstrap Loads"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:686
+#: documentation/content/en/articles/vinum/_index.adoc:689
 msgid ""
 "If [.filename]#/boot/loader# fails to load, but the primary bootstrap still "
 "loads (visible by a single dash in the left column of the screen right after "
@@ -1551,13 +1557,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/articles/vinum/_index.adoc:688
+#: documentation/content/en/articles/vinum/_index.adoc:691
 #, no-wrap
 msgid "Nothing Boots, the Bootstrap Panics"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:694
+#: documentation/content/en/articles/vinum/_index.adoc:697
 msgid ""
 "This situation will happen if the bootstrap had been destroyed by the [."
 "filename]#vinum# installation.  Unfortunately, [.filename]#vinum# "
@@ -1570,7 +1576,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/vinum/_index.adoc:697
+#: documentation/content/en/articles/vinum/_index.adoc:700
 msgid ""
 "Similarly, if the above situation has been recovered, by booting from a "
 "\"Fixit\" media, and the bootstrap has been re-installed using `bsdlabel -B` "
