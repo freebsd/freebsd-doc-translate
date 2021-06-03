@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-05-22 14:48-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: 2021-06-01 16:07+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
@@ -17,6 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.6.2\n"
+
+#. type: YAML Front Matter: description
+#: documentation/content/en/books/porters-handbook/testing/_index.adoc:1
+#, fuzzy, no-wrap
+#| msgid "Testing the Port"
+msgid "Testing a FreeBSD Port"
+msgstr "Probando el puerto"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:1
@@ -41,9 +48,9 @@ msgstr ""
 msgid ""
 "Several of the FreeBSD port maintenance tools, such as man:portupgrade[1], "
 "rely on a database called [.filename]#/usr/ports/INDEX# which keeps track of "
-"such items as port dependencies. [.filename]#INDEX# is created by the "
-"top-level [.filename]#ports/Makefile# via `make index`, which descends into "
-"each port subdirectory and executes `make describe` there. Thus, if `make "
+"such items as port dependencies. [.filename]#INDEX# is created by the top-"
+"level [.filename]#ports/Makefile# via `make index`, which descends into each "
+"port subdirectory and executes `make describe` there. Thus, if `make "
 "describe` fails in any port, no one can generate [.filename]#INDEX#, and "
 "many people will quickly become unhappy."
 msgstr ""
@@ -53,9 +60,9 @@ msgstr ""
 msgid ""
 "It is important to be able to generate this file no matter what options are "
 "present in [.filename]#make.conf#, so please avoid doing things such as "
-"using `.error` statements when (for instance) a dependency is not "
-"satisfied. (See crossref:porting-dads[dads-dot-error,Avoid Use of the "
-"`.error` Construct].)"
+"using `.error` statements when (for instance) a dependency is not satisfied. "
+"(See crossref:porting-dads[dads-dot-error,Avoid Use of the `.error` "
+"Construct].)"
 msgstr ""
 
 #. type: Plain text
@@ -119,8 +126,8 @@ msgid ""
 "Since `portlint` uses heuristics to try to figure out errors, it can produce "
 "false positive warnings. In addition, occasionally something that is flagged "
 "as a problem really cannot be done in any other way due to limitations in "
-"the ports framework. When in doubt, the best thing to do is ask on "
-"{freebsd-ports}."
+"the ports framework. When in doubt, the best thing to do is ask on {freebsd-"
+"ports}."
 msgstr ""
 
 #. type: Title ==
@@ -131,15 +138,16 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:68
-msgid "The package:ports-mgmt/porttools[] program is part of the Ports Collection."
+msgid ""
+"The package:ports-mgmt/porttools[] program is part of the Ports Collection."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:70
 msgid ""
-"`port` is the front-end script, which can help simplify the testing "
-"job. Whenever a new port or an update to an existing one needs testing, use "
-"`port test` to test the port, including the <<testing-portlint,`portlint`>> "
+"`port` is the front-end script, which can help simplify the testing job. "
+"Whenever a new port or an update to an existing one needs testing, use `port "
+"test` to test the port, including the <<testing-portlint,`portlint`>> "
 "checking. This command also detects and lists any files that are not listed "
 "in [.filename]#pkg-plist#. For example:"
 msgstr ""
@@ -159,9 +167,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:80
 msgid ""
-"`PREFIX` determines where the port will be installed. It defaults to "
-"[.filename]#/usr/local#, but can be set by the user to a custom path like "
-"[.filename]#/opt#. The port must respect the value of this variable."
+"`PREFIX` determines where the port will be installed. It defaults to [."
+"filename]#/usr/local#, but can be set by the user to a custom path like [."
+"filename]#/opt#. The port must respect the value of this variable."
 msgstr ""
 
 #. type: Plain text
@@ -169,38 +177,37 @@ msgstr ""
 msgid ""
 "`DESTDIR`, if set by the user, determines the complete alternative "
 "environment, usually a jail or an installed system mounted somewhere other "
-"than [.filename]#/#. A port will actually install into "
-"[.filename]#DESTDIR/PREFIX#, and register with the package database in "
-"[.filename]#DESTDIR/var/db/pkg#. `DESTDIR` is handled automatically by the "
-"ports infrastructure with man:chroot[8]. There is no need for modifications "
-"or any extra care to write `DESTDIR`-compliant ports."
+"than [.filename]#/#. A port will actually install into [.filename]#DESTDIR/"
+"PREFIX#, and register with the package database in [.filename]#DESTDIR/var/"
+"db/pkg#. `DESTDIR` is handled automatically by the ports infrastructure with "
+"man:chroot[8]. There is no need for modifications or any extra care to write "
+"`DESTDIR`-compliant ports."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:84
 msgid ""
-"The value of `PREFIX` will be set to `LOCALBASE` (defaulting to "
-"[.filename]#/usr/local#). If `USE_LINUX_PREFIX` is set, `PREFIX` will be "
-"`LINUXBASE` (defaulting to [.filename]#/compat/linux#)."
+"The value of `PREFIX` will be set to `LOCALBASE` (defaulting to [.filename]#/"
+"usr/local#). If `USE_LINUX_PREFIX` is set, `PREFIX` will be `LINUXBASE` "
+"(defaulting to [.filename]#/compat/linux#)."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:86
 msgid ""
 "Avoiding hard-coded [.filename]#/usr/local# paths in the source makes the "
-"port much more flexible and able to cater to the needs of other "
-"sites. Often, this can be accomplished by replacing occurrences of "
-"[.filename]#/usr/local# in the port's various [.filename]##Makefile##s with "
-"`${PREFIX}`. This variable is automatically passed down to every stage of "
-"the build and install processes."
+"port much more flexible and able to cater to the needs of other sites. "
+"Often, this can be accomplished by replacing occurrences of [.filename]#/usr/"
+"local# in the port's various [.filename]##Makefile##s with `${PREFIX}`. This "
+"variable is automatically passed down to every stage of the build and "
+"install processes."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:88
 msgid ""
-"Make sure the application is not installing things in "
-"[.filename]#/usr/local# instead of `PREFIX`. A quick test for such "
-"hard-coded paths is:"
+"Make sure the application is not installing things in [.filename]#/usr/"
+"local# instead of `PREFIX`. A quick test for such hard-coded paths is:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -266,8 +273,8 @@ msgstr ""
 msgid ""
 "Refer to programs and files from other ports with the variables mentioned "
 "above, not explicit pathnames. For instance, if the port requires a macro "
-"`PAGER` to have the full pathname of `less`, do not use a literal path of "
-"[.filename]#/usr/local/bin/less#. Instead, use `${LOCALBASE}`:"
+"`PAGER` to have the full pathname of `less`, do not use a literal path of [."
+"filename]#/usr/local/bin/less#. Instead, use `${LOCALBASE}`:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -382,8 +389,8 @@ msgstr ""
 msgid ""
 "The examples in this section show a default file layout, as standard in "
 "FreeBSD. Substitute any local changes accordingly. The ports tree, "
-"represented by `${PORTSDIR}`, is located in [.filename]#/usr/ports#. Both "
-"`${LOCALBASE}` and `${PREFIX}` are [.filename]#/usr/local# by default."
+"represented by `${PORTSDIR}`, is located in [.filename]#/usr/ports#. Both `"
+"${LOCALBASE}` and `${PREFIX}` are [.filename]#/usr/local# by default."
 msgstr ""
 
 #. type: Title ===
@@ -395,9 +402,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:151
 msgid ""
-"Poudriere is available in the ports tree in "
-"package:ports-mgmt/poudriere[]. It can be installed using man:pkg[8] or from "
-"ports:"
+"Poudriere is available in the ports tree in package:ports-mgmt/poudriere[]. "
+"It can be installed using man:pkg[8] or from ports:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -422,18 +428,18 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:165
 msgid ""
 "There is also a work-in-progress version of Poudriere which will eventually "
-"become the next release. It is available in "
-"package:ports-mgmt/poudriere-devel[]. This development version is used for "
-"the official FreeBSD package builds, so it is well tested. It often has "
-"newer interesting features. A ports committer will want to use the "
-"development version because it is what is used in production, and has all "
-"the new features that will make sure everything is exactly right. A "
-"contributor will not necessarily need those as the most important fixes are "
-"backported to released version. The main reason for the use of the "
-"development version to build the official package is because it is faster, "
-"in a way that will shorten a full build from 18 hours to 17 hours when using "
-"a high end 32 CPU server with 128GB of RAM. Those optimizations will not "
-"matter a lot when building ports on a desktop machine."
+"become the next release. It is available in package:ports-mgmt/poudriere-"
+"devel[]. This development version is used for the official FreeBSD package "
+"builds, so it is well tested. It often has newer interesting features. A "
+"ports committer will want to use the development version because it is what "
+"is used in production, and has all the new features that will make sure "
+"everything is exactly right. A contributor will not necessarily need those "
+"as the most important fixes are backported to released version. The main "
+"reason for the use of the development version to build the official package "
+"is because it is faster, in a way that will shorten a full build from 18 "
+"hours to 17 hours when using a high end 32 CPU server with 128GB of RAM. "
+"Those optimizations will not matter a lot when building ports on a desktop "
+"machine."
 msgstr ""
 
 #. type: Title ===
@@ -445,10 +451,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:170
 msgid ""
-"The port installs a default configuration file, "
-"[.filename]#/usr/local/etc/poudriere.conf#. Each parameter is documented in "
-"the configuration file and in man:poudriere[8]. Here is a minimal example "
-"config file:"
+"The port installs a default configuration file, [.filename]#/usr/local/etc/"
+"poudriere.conf#. Each parameter is documented in the configuration file and "
+"in man:poudriere[8]. Here is a minimal example config file:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -544,8 +549,8 @@ msgstr ""
 msgid ""
 "The FTP/HTTP server to use when the jails are installed from FreeBSD "
 "releases and updated with man:freebsd-update[8]. Choose a server location "
-"which is close, for example if the machine is located in Australia, use "
-"`ftp.au.freebsd.org`."
+"which is close, for example if the machine is located in Australia, use `ftp."
+"au.freebsd.org`."
 msgstr ""
 
 #. type: Labeled list
@@ -557,10 +562,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:202
 msgid ""
-"The server from where jails are installed and updated when using "
-"Subversion. Also used for ports tree when not using man:portsnap[8]. Again, "
-"choose a nearby location. A list of official Subversion mirrors can be found "
-"in the link:{handbook}#svn-mirrors[FreeBSD Handbook Subversion section]."
+"The server from where jails are installed and updated when using Subversion. "
+"Also used for ports tree when not using man:portsnap[8]. Again, choose a "
+"nearby location. A list of official Subversion mirrors can be found in the "
+"link:{handbook}#svn-mirrors[FreeBSD Handbook Subversion section]."
 msgstr ""
 
 #. type: Title ===
@@ -585,9 +590,9 @@ msgstr ""
 msgid ""
 "Fetch a `11.4-RELEASE` for `amd64` from the FTP server given by "
 "`FREEBSD_HOST` in [.filename]#poudriere.conf#, create the zfs file system "
-"`tank/poudriere/jails/114Ramd64`, mount it on "
-"[.filename]#/poudriere/jails/114Ramd64# and extract the `11.4-RELEASE` "
-"tarballs into this file system."
+"`tank/poudriere/jails/114Ramd64`, mount it on [.filename]#/poudriere/"
+"jails/114Ramd64# and extract the `11.4-RELEASE` tarballs into this file "
+"system."
 msgstr ""
 
 #. type: delimited block . 4
@@ -599,12 +604,11 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:221
 msgid ""
-"Create `tank/poudriere/jails/11i386`, mount it on "
-"[.filename]#/poudriere/jails/11i386#, then check out the tip of the "
-"Subversion branch of `FreeBSD-11-STABLE` from `SVN_HOST` in "
-"[.filename]#poudriere.conf# into "
-"[.filename]#/poudriere/jails/11i386/usr/src#, then complete a `buildworld` "
-"and install it into [.filename]#/poudriere/jails/11i386#."
+"Create `tank/poudriere/jails/11i386`, mount it on [.filename]#/poudriere/"
+"jails/11i386#, then check out the tip of the Subversion branch of "
+"`FreeBSD-11-STABLE` from `SVN_HOST` in [.filename]#poudriere.conf# into [."
+"filename]#/poudriere/jails/11i386/usr/src#, then complete a `buildworld` and "
+"install it into [.filename]#/poudriere/jails/11i386#."
 msgstr ""
 
 #. type: delimited block = 4
@@ -625,8 +629,8 @@ msgstr ""
 msgid ""
 "While it is possible to build a newer version of FreeBSD on an older "
 "version, most of the time it will not run. For example, if a `stable/11` "
-"jail is needed, the host will have to run `stable/11` too. Running "
-"`11.4-RELEASE` is not enough."
+"jail is needed, the host will have to run `stable/11` too. Running `11.4-"
+"RELEASE` is not enough."
 msgstr ""
 
 #. type: Plain text
@@ -643,8 +647,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:249
 msgid ""
-"In order to run a `14.0-CURRENT` Poudriere jail you must be running "
-"`14.0-CURRENT`. In general, newer kernels can build and run older jails. For "
+"In order to run a `14.0-CURRENT` Poudriere jail you must be running `14.0-"
+"CURRENT`. In general, newer kernels can build and run older jails. For "
 "instance, a `14.0-CURRENT` kernel can build and run a `11.4-STABLE` "
 "Poudriere jail if the `COMPAT_FREEBSD11` kernel option was compiled in (on "
 "by default in `14.0-CURRENT`[.filename]#GENERIC# kernel config)."
@@ -746,10 +750,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:309
 msgid ""
-"These commands create `tank/poudriere/ports/default`, mount it on "
-"[.filename]#/poudriere/ports/default#, and populate it using Git, "
-"man:portsnap[8], or Subversion. Afterward it is included in the list of "
-"known ports trees:"
+"These commands create `tank/poudriere/ports/default`, mount it on [."
+"filename]#/poudriere/ports/default#, and populate it using Git, man:"
+"portsnap[8], or Subversion. Afterward it is included in the list of known "
+"ports trees:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -925,19 +929,19 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:400
 msgid ""
-"The complete build of every port is logged to "
-"[.filename]#/poudriere/data/logs/bulk/114Ri386-development/build-time/logs#."
+"The complete build of every port is logged to [.filename]#/poudriere/data/"
+"logs/bulk/114Ri386-development/build-time/logs#."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:402
 msgid ""
-"The directory name `114Ri386-development` is derived from the arguments to "
-"`-j` and `-p`, respectively. For convenience, a symbolic link "
-"[.filename]#/poudriere/data/logs/bulk/114Ri386-development/latest# is also "
-"maintained. The link points to the latest _build-time_ directory. Also in "
-"this directory is an [.filename]#index.html# for observing the build process "
-"with a web browser."
+"The directory name `114Ri386-development` is derived from the arguments to `-"
+"j` and `-p`, respectively. For convenience, a symbolic link [.filename]#/"
+"poudriere/data/logs/bulk/114Ri386-development/latest# is also maintained. "
+"The link points to the latest _build-time_ directory. Also in this directory "
+"is an [.filename]#index.html# for observing the build process with a web "
+"browser."
 msgstr ""
 
 #. type: Plain text
@@ -958,10 +962,10 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:411
 msgid ""
 "After the build completes, and regardless of whether it was successful, a "
-"shell is provided within the jail. The shell is used to investigate "
-"further. Poudriere can be told to leave the jail running after the build "
-"finishes with `-I`. Poudriere will show the command to run when the jail is "
-"no longer needed. It is then possible to man:jexec[8] into it:"
+"shell is provided within the jail. The shell is used to investigate further. "
+"Poudriere can be told to leave the jail running after the build finishes "
+"with `-I`. Poudriere will show the command to run when the jail is no longer "
+"needed. It is then possible to man:jexec[8] into it:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -971,10 +975,8 @@ msgid ""
 "# poudriere testport -j 114Ramd64 -p development -I -o www/firefox\n"
 "[...]\n"
 "====>> Installing local Pkg repository to /usr/local/etc/pkg/repos\n"
-"====>> Leaving jail 114Ramd64-development-n running, mounted at "
-"/poudriere/data/.m/114Ramd64-development/ref for interactive run testing\n"
-"====>> To enter jail: jexec 114Ramd64-development-n env -i TERM=$TERM "
-"/usr/bin/login -fp root\n"
+"====>> Leaving jail 114Ramd64-development-n running, mounted at /poudriere/data/.m/114Ramd64-development/ref for interactive run testing\n"
+"====>> To enter jail: jexec 114Ramd64-development-n env -i TERM=$TERM /usr/bin/login -fp root\n"
 "====>> To stop jail: poudriere jail -k -j 114Ramd64 -p development\n"
 "# jexec 114Ramd64-development-n env -i TERM=$TERM /usr/bin/login -fp root\n"
 "# [do some stuff in the jail]\n"
@@ -1024,8 +1026,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:446
 msgid ""
-"For all actions involving builds, a so-called _set_ can be specified using "
-"`-z _setname_`. A set refers to a fully independent build. This allows, for "
+"For all actions involving builds, a so-called _set_ can be specified using `-"
+"z _setname_`. A set refers to a fully independent build. This allows, for "
 "instance, usage of `testport` with non-standard options for the dependent "
 "ports."
 msgstr ""
@@ -1037,8 +1039,8 @@ msgid ""
 "`PORT_DBDIR`, defaults to [.filename]#/var/db/ports# in its configuration "
 "directory. This directory is then man:nullfs[5]-mounted into the jails where "
 "the ports and their dependencies are built. Usually a suitable starting "
-"point can be obtained by recursively copying the existing `PORT_DBDIR` to "
-"[.filename]#/usr/local/etc/poudriere.d/jailname-portname-setname-options#. "
+"point can be obtained by recursively copying the existing `PORT_DBDIR` to [."
+"filename]#/usr/local/etc/poudriere.d/jailname-portname-setname-options#. "
 "This is described in detail in man:poudriere[8]. For instance, testing "
 "package:www/firefox[] in a specific set named `devset`, add the `-z devset` "
 "parameter to the testport command:"
@@ -1058,7 +1060,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:457
-msgid "[.filename]#/usr/local/etc/poudriere.d/114Ramd64-development-devset-options#"
+msgid ""
+"[.filename]#/usr/local/etc/poudriere.d/114Ramd64-development-devset-options#"
 msgstr ""
 
 #. type: Plain text
@@ -1137,15 +1140,16 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:484
 msgid ""
-"Similar to using sets, Poudriere will also use a custom "
-"[.filename]#make.conf# if it is provided. No special command line argument "
-"is necessary. Instead, Poudriere looks for existing files matching a name "
-"scheme derived from the command line. For instance:"
+"Similar to using sets, Poudriere will also use a custom [.filename]#make."
+"conf# if it is provided. No special command line argument is necessary. "
+"Instead, Poudriere looks for existing files matching a name scheme derived "
+"from the command line. For instance:"
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:491
-msgid "causes Poudriere to check for the existence of these files in this order:"
+msgid ""
+"causes Poudriere to check for the existence of these files in this order:"
 msgstr ""
 
 #. type: Plain text
@@ -1180,7 +1184,9 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:499
-msgid "[.filename]#/usr/local/etc/poudriere.d/114Ramd64-development-devset-make.conf#"
+msgid ""
+"[.filename]#/usr/local/etc/poudriere.d/114Ramd64-development-devset-make."
+"conf#"
 msgstr ""
 
 #. type: Plain text
@@ -1188,11 +1194,11 @@ msgstr ""
 msgid ""
 "Unlike with sets, all of the found files will be appended, _in that order_, "
 "into one [.filename]#make.conf# inside the build jails. It is hence possible "
-"to have general make variables, intended to affect all builds in "
-"[.filename]#/usr/local/etc/poudriere.d/make.conf#. Special variables, "
-"intended to affect only certain jails or sets can be set in specialised "
-"[.filename]#make.conf# files, such as "
-"[.filename]#/usr/local/etc/poudriere.d/114Ramd64-development-devset-make.conf#."
+"to have general make variables, intended to affect all builds in [."
+"filename]#/usr/local/etc/poudriere.d/make.conf#. Special variables, intended "
+"to affect only certain jails or sets can be set in specialised [."
+"filename]#make.conf# files, such as [.filename]#/usr/local/etc/poudriere."
+"d/114Ramd64-development-devset-make.conf#."
 msgstr ""
 
 #. type: Block title
@@ -1218,8 +1224,8 @@ msgstr ""
 #. type: delimited block * 4
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:516
 msgid ""
-"Note the use of `+=` so that if the variable is already set in the default "
-"[.filename]#make.conf# its content will not be overwritten."
+"Note the use of `+=` so that if the variable is already set in the default [."
+"filename]#make.conf# its content will not be overwritten."
 msgstr ""
 
 #. type: Title ===
@@ -1244,11 +1250,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/testing/_index.adoc:531
 msgid ""
-"will scan the distfiles folder, `DISTFILES_CACHE` in "
-"[.filename]#poudriere.conf#, versus the ports tree given by the `-p "
-"_portstree_` argument and prompt for removal of those distfiles. To skip the "
-"prompt and remove all unused files unconditionally, the `-y` argument can be "
-"added:"
+"will scan the distfiles folder, `DISTFILES_CACHE` in [.filename]#poudriere."
+"conf#, versus the ports tree given by the `-p _portstree_` argument and "
+"prompt for removal of those distfiles. To skip the prompt and remove all "
+"unused files unconditionally, the `-y` argument can be added:"
 msgstr ""
 
 #. type: delimited block . 4
