@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-05-22 14:48-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: 2021-06-03 00:09+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Chinese (Simplified) <https://translate-dev.freebsd.org/"
@@ -18,16 +18,17 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.6.2\n"
 
+#. type: Title =
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:1
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:10
+#, no-wrap
+msgid "Advanced pkg-plist Practices"
+msgstr ""
+
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:1
 #, no-wrap
 msgid "Chapter 8. Advanced pkg-plist Practices"
-msgstr ""
-
-#. type: Title =
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:10
-#, no-wrap
-msgid "Advanced pkg-plist Practices"
 msgstr ""
 
 #. type: Title ==
@@ -39,33 +40,33 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:38
 msgid ""
-"Some ports, particularly the `p5-` ports, need to change their "
-"[.filename]#pkg-plist# depending on what options they are configured with "
-"(or version of `perl`, in the case of `p5-` ports). To make this easy, any "
-"instances in [.filename]#pkg-plist# of `%%OSREL%%`, `%%PERL_VER%%`, and "
-"`%%PERL_VERSION%%` will be substituted appropriately. The value of "
-"`%%OSREL%%` is the numeric revision of the operating system (for example, "
-"`4.9`). `%%PERL_VERSION%%` and `%%PERL_VER%%` is the full version number of "
-"`perl` (for example, `5.8.9`). Several other `%%_VARS_%%` related to port's "
-"documentation files are described in "
-"crossref:makefiles[install-documentation,the relevant section]."
+"Some ports, particularly the `p5-` ports, need to change their [."
+"filename]#pkg-plist# depending on what options they are configured with (or "
+"version of `perl`, in the case of `p5-` ports). To make this easy, any "
+"instances in [.filename]#pkg-plist# of `%%OSREL%%`, `%%PERL_VER%%`, and `%"
+"%PERL_VERSION%%` will be substituted appropriately. The value of `%%OSREL%%` "
+"is the numeric revision of the operating system (for example, `4.9`). `%"
+"%PERL_VERSION%%` and `%%PERL_VER%%` is the full version number of `perl` "
+"(for example, `5.8.9`). Several other `%%_VARS_%%` related to port's "
+"documentation files are described in crossref:makefiles[install-"
+"documentation,the relevant section]."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:40
 msgid ""
 "To make other substitutions, set `PLIST_SUB` with a list of `_VAR=VALUE_` "
-"pairs and instances of `%%_VAR_%%` will be substituted with _VALUE_ in "
-"[.filename]#pkg-plist#."
+"pairs and instances of `%%_VAR_%%` will be substituted with _VALUE_ in [."
+"filename]#pkg-plist#."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:42
 msgid ""
 "For instance, if a port installs many files in a version-specific "
-"subdirectory, use a placeholder for the version so that "
-"[.filename]#pkg-plist# does not have to be regenerated every time the port "
-"is updated. For example:"
+"subdirectory, use a placeholder for the version so that [.filename]#pkg-"
+"plist# does not have to be regenerated every time the port is updated. For "
+"example, set:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -89,10 +90,10 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:52
 msgid ""
 "If files are installed conditionally on the options set in the port, the "
-"usual way of handling it is prefixing [.filename]#pkg-plist# lines with a "
-"`%%OPT%%` for lines needed when the option is enabled, or `%%NO_OPT%%` when "
-"the option is disabled, and adding `OPTIONS_SUB=yes` to the "
-"[.filename]#Makefile#. See crossref:makefiles[options_sub,`OPTIONS_SUB`] for "
+"usual way of handling it is prefixing [.filename]#pkg-plist# lines with a `%"
+"%OPT%%` for lines needed when the option is enabled, or `%%NO_OPT%%` when "
+"the option is disabled, and adding `OPTIONS_SUB=yes` to the [."
+"filename]#Makefile#. See crossref:makefiles[options_sub,`OPTIONS_SUB`] for "
 "more information."
 msgstr ""
 
@@ -128,11 +129,11 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:69
 msgid ""
 "This substitution will be done between the `pre-install` and `do-install` "
-"targets, by reading from [.filename]#PLIST# and writing to "
-"[.filename]#TMPPLIST# (default: [.filename]#WRKDIR/.PLIST.mktmp#). So if the "
-"port builds [.filename]#PLIST# on the fly, do so in or before "
-"`pre-install`. Also, if the port needs to edit the resulting file, do so in "
-"`post-install` to a file named [.filename]#TMPPLIST#."
+"targets, by reading from [.filename]#PLIST# and writing to [."
+"filename]#TMPPLIST# (default: [.filename]#WRKDIR/.PLIST.mktmp#). So if the "
+"port builds [.filename]#PLIST# on the fly, do so in or before `pre-install`. "
+"Also, if the port needs to edit the resulting file, do so in `post-install` "
+"to a file named [.filename]#TMPPLIST#."
 msgstr ""
 
 #. type: Plain text
@@ -192,12 +193,12 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:92
 msgid ""
-"When being de-installed, a port has to remove empty directories it "
-"created. Most of these directories are removed automatically by man:pkg[8], "
-"but for directories created outside of [.filename]#${PREFIX}#, or empty "
-"directories, some more work needs to be done. This is usually accomplished "
-"by adding `@dir` lines for those directories. Subdirectories must be deleted "
-"before deleting parent directories."
+"When being de-installed, a port has to remove empty directories it created. "
+"Most of these directories are removed automatically by man:pkg[8], but for "
+"directories created outside of [.filename]#${PREFIX}#, or empty directories, "
+"some more work needs to be done. This is usually accomplished by adding "
+"`@dir` lines for those directories. Subdirectories must be deleted before "
+"deleting parent directories."
 msgstr ""
 
 #. type: delimited block . 4
@@ -218,9 +219,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:104
 msgid ""
-"Empty directories created during port installation need special "
-"attention. They must be present when the package is created. If they are not "
-"created by the port code, create them in the [.filename]#Makefile#:"
+"Empty directories created during port installation need special attention. "
+"They must be present when the package is created. If they are not created by "
+"the port code, create them in the [.filename]#Makefile#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -233,7 +234,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:112
-msgid "Add the directory to [.filename]#pkg-plist# like any other. For example:"
+msgid ""
+"Add the directory to [.filename]#pkg-plist# like any other. For example:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -260,10 +262,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:124
 msgid ""
-"Instead, install sample files with a [.filename]#filename.sample# "
-"extension. The `@sample` macro automates this, see <<plist-keywords-sample>> "
-"for what it does exactly. For each sample file, add a line to "
-"[.filename]#pkg-plist#:"
+"Instead, install sample files with a [.filename]#filename.sample# extension. "
+"The `@sample` macro automates this, see <<plist-keywords-sample>> for what "
+"it does exactly. For each sample file, add a line to [.filename]#pkg-plist#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -277,20 +278,19 @@ msgstr ""
 msgid ""
 "If there is a very good reason not to install a working configuration file "
 "by default, only list the sample filename in [.filename]#pkg-plist#, without "
-"the `@sample` followed by a space part, and add a "
-"crossref:pkg-files[porting-message,message] pointing out that the user must "
-"copy and edit the file before the software will work."
+"the `@sample` followed by a space part, and add a crossref:pkg-files[porting-"
+"message,message] pointing out that the user must copy and edit the file "
+"before the software will work."
 msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:136
 msgid ""
-"When a port installs its configuration in a subdirectory of "
-"[.filename]#${PREFIX}/etc#, use `ETCDIR`, which defaults to "
-"`${PREFIX}/etc/${PORTNAME}`, it can be overridden in the ports "
-"[.filename]#Makefile# if there is a convention for the port to use some "
-"other directory. The `%%ETCDIR%%` macro will be used in its stead in "
-"[.filename]#pkg-plist#."
+"When a port installs its configuration in a subdirectory of [.filename]#"
+"${PREFIX}/etc#, use `ETCDIR`, which defaults to `${PREFIX}/etc/${PORTNAME}`, "
+"it can be overridden in the ports [.filename]#Makefile# if there is a "
+"convention for the port to use some other directory. The `%%ETCDIR%%` macro "
+"will be used in its stead in [.filename]#pkg-plist#."
 msgstr ""
 
 #. type: delimited block = 4
@@ -357,8 +357,8 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:165
 msgid ""
 "While the use of dynamic package lists is not forbidden, maintainers should "
-"use static package lists wherever possible, as it enables users to "
-"man:grep[1] through available ports to discover, for example, which port "
+"use static package lists wherever possible, as it enables users to man:"
+"grep[1] through available ports to discover, for example, which port "
 "installs a certain file. Dynamic lists should be primarily used for complex "
 "ports where the package list changes drastically based upon optional "
 "features of the port (and thus maintaining a static package list is "
@@ -376,23 +376,22 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:170
 msgid ""
-"First, make sure the port is almost complete, with only "
-"[.filename]#pkg-plist# missing. Running `make makeplist` will show an "
-"example for [.filename]#pkg-plist#. The output of `makeplist` must be double "
-"checked for correctness as it tries to automatically guess a few things, and "
-"can get it wrong."
+"First, make sure the port is almost complete, with only [.filename]#pkg-"
+"plist# missing. Running `make makeplist` will show an example for [."
+"filename]#pkg-plist#. The output of `makeplist` must be double checked for "
+"correctness as it tries to automatically guess a few things, and can get it "
+"wrong."
 msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:172
 msgid ""
-"User configuration files should be installed as "
-"[.filename]#filename.sample#, as it is described in "
-"<<plist-config>>. [.filename]#info/dir# must not be listed and appropriate "
-"[.filename]#install-info# lines must be added as noted in the "
-"crossref:makefiles[makefile-info,info files] section. Any libraries "
-"installed by the port must be listed as specified in the "
-"crossref:special[porting-shlibs,shared libraries] section."
+"User configuration files should be installed as [.filename]#filename."
+"sample#, as it is described in <<plist-config>>. [.filename]#info/dir# must "
+"not be listed and appropriate [.filename]#install-info# lines must be added "
+"as noted in the crossref:makefiles[makefile-info,info files] section. Any "
+"libraries installed by the port must be listed as specified in the crossref:"
+"special[porting-shlibs,shared libraries] section."
 msgstr ""
 
 #. type: Title ===
@@ -428,8 +427,8 @@ msgid ""
 "Perl ports can install architecture dependent files in a specific tree. On "
 "FreeBSD to ease porting, this tree is called `mach`. For example, a port "
 "that installs a file whose path contains `mach` could have that part of the "
-"path string replaced with the wrong values. Consider this "
-"[.filename]#Makefile#:"
+"path string replaced with the wrong values. Consider this [."
+"filename]#Makefile#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -577,8 +576,8 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:275
 msgid ""
 "This is because the options plist helpers are used to comment out the line, "
-"so they need to be put first. See "
-"crossref:makefiles[options_sub,`OPTIONS_SUB`] for more information."
+"so they need to be put first. See crossref:makefiles[options_sub,"
+"`OPTIONS_SUB`] for more information."
 msgstr ""
 
 #. type: Title ===
@@ -590,10 +589,9 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:281
 msgid ""
-"Will run `update-desktop-database -q` after installation and "
-"deinstallation. _Never_ use directly, add "
-"crossref:uses[uses-desktop-file-utils,`USES=desktop-file-utils`] to the "
-"[.filename]#Makefile#."
+"Will run `update-desktop-database -q` after installation and deinstallation. "
+"_Never_ use directly, add crossref:uses[uses-desktop-file-utils,"
+"`USES=desktop-file-utils`] to the [.filename]#Makefile#."
 msgstr ""
 
 #. type: Title ===
@@ -605,8 +603,8 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:286
 msgid ""
-"Add a `@dir` entry for the directory passed as an argument, and run "
-"`fc-cache -fs` on that directory after installation and deinstallation."
+"Add a `@dir` entry for the directory passed as an argument, and run `fc-"
+"cache -fs` on that directory after installation and deinstallation."
 msgstr ""
 
 #. type: Title ===
@@ -618,13 +616,12 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:291
 msgid ""
-"Add a `@dir` entry for the directory passed as an argument, and run "
-"`fc-cache -fs`, `mkfontscale` and `mkfontdir` on that directory after "
+"Add a `@dir` entry for the directory passed as an argument, and run `fc-"
+"cache -fs`, `mkfontscale` and `mkfontdir` on that directory after "
 "installation and deinstallation. Additionally, on deinstallation, it removes "
 "the [.filename]#fonts.scale# and [.filename]#fonts.dir# cache files if they "
-"are empty. This keyword is equivalent to adding both "
-"<<plist-keywords-fc,`@fc` _directory_>> and "
-"<<plist-keywords-fontsdir,`@fontsdir` _directory_>>."
+"are empty. This keyword is equivalent to adding both <<plist-keywords-fc,"
+"`@fc` _directory_>> and <<plist-keywords-fontsdir,`@fontsdir` _directory_>>."
 msgstr ""
 
 #. type: Title ===
@@ -638,8 +635,8 @@ msgstr ""
 msgid ""
 "Add a `@dir` entry for the directory passed as an argument, and run "
 "`mkfontscale` and `mkfontdir` on that directory after installation and "
-"deinstallation. Additionally, on deinstallation, it removes the "
-"[.filename]#fonts.scale# and [.filename]#fonts.dir# cache files if they are "
+"deinstallation. Additionally, on deinstallation, it removes the [."
+"filename]#fonts.scale# and [.filename]#fonts.dir# cache files if they are "
 "empty."
 msgstr ""
 
@@ -679,9 +676,8 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:311
 msgid ""
-"Runs `kldxref` on the directory on installation and "
-"deinstallation. Additionally, on deinstallation, it will remove the "
-"directory if empty."
+"Runs `kldxref` on the directory on installation and deinstallation. "
+"Additionally, on deinstallation, it will remove the directory if empty."
 msgstr ""
 
 #. type: Title ===
@@ -708,8 +704,8 @@ msgstr ""
 msgid ""
 "This is used to handle installation of configuration files, through example "
 "files bundled with the package. The \"actual\", non-sample, file is either "
-"the second filename, if present, or the first filename without the "
-"[.filename]#.sample# extension."
+"the second filename, if present, or the first filename without the [."
+"filename]#.sample# extension."
 msgstr ""
 
 #. type: delimited block = 4
@@ -750,8 +746,8 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:335
 msgid ""
 "On installation, add the full path to _file_ to [.filename]#/etc/shells#, "
-"while making sure it is not added twice. On deinstallation, remove it from "
-"[.filename]#/etc/shells#."
+"while making sure it is not added twice. On deinstallation, remove it from [."
+"filename]#/etc/shells#."
 msgstr ""
 
 #. type: Title ===
@@ -770,9 +766,9 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:342
 msgid ""
-"On installation and deinstallation, if `tic` is present, refresh "
-"[.filename]#${PREFIX}/shared/misc/terminfo.db# from the "
-"[.filename]#*.terminfo# files in [.filename]#${PREFIX}/shared/misc#."
+"On installation and deinstallation, if `tic` is present, refresh [.filename]#"
+"${PREFIX}/shared/misc/terminfo.db# from the [.filename]#*.terminfo# files in "
+"[.filename]#${PREFIX}/shared/misc#."
 msgstr ""
 
 #. type: Title ===
@@ -784,9 +780,8 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:347
 msgid ""
-"There are a few keywords that are hardcoded, and documented in "
-"man:pkg-create[8]. For the sake of completeness, they are also documented "
-"here."
+"There are a few keywords that are hardcoded, and documented in man:pkg-"
+"create[8]. For the sake of completeness, they are also documented here."
 msgstr ""
 
 #. type: Title ====
@@ -812,9 +807,7 @@ msgstr ""
 #. type: Title ====
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:359
 #, no-wrap
-msgid ""
-"`@preexec` _command_, `@postexec` _command_, `@preunexec` _command_, "
-"`@postunexec` _command_"
+msgid "`@preexec` _command_, `@postexec` _command_, `@preunexec` _command_, `@postunexec` _command_"
 msgstr ""
 
 #. type: Plain text
@@ -872,9 +865,8 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:376
 msgid ""
 "If _command_ contains any of these sequences somewhere in it, they are "
-"expanded inline. For these examples, assume that `@cwd` is set to "
-"[.filename]#/usr/local# and the last extracted file was "
-"[.filename]#bin/emacs#."
+"expanded inline. For these examples, assume that `@cwd` is set to [."
+"filename]#/usr/local# and the last extracted file was [.filename]#bin/emacs#."
 msgstr ""
 
 #. type: Labeled list
@@ -886,8 +878,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:379
 msgid ""
-"Expand to the last filename extracted (as specified). In the example case "
-"[.filename]#bin/emacs#."
+"Expand to the last filename extracted (as specified). In the example case [."
+"filename]#bin/emacs#."
 msgstr ""
 
 #. type: Labeled list
@@ -926,8 +918,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:388
 msgid ""
-"Expand to the filename part of the fully qualified name, or the converse of "
-"`%B`. In the example case, [.filename]#emacs#."
+"Expand to the filename part of the fully qualified name, or the converse of `"
+"%B`. In the example case, [.filename]#emacs#."
 msgstr ""
 
 #. type: delimited block = 4
@@ -948,9 +940,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:398
 msgid ""
-"Set default permission for all subsequently extracted files to "
-"_mode_. Format is the same as that used by man:chmod[1]. Use without an arg "
-"to set back to default permissions (mode of the file while being packed)."
+"Set default permission for all subsequently extracted files to _mode_. "
+"Format is the same as that used by man:chmod[1]. Use without an arg to set "
+"back to default permissions (mode of the file while being packed)."
 msgstr ""
 
 #. type: delimited block = 4
@@ -1024,8 +1016,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:428
 msgid ""
-"Execute _command_ as part of the installation or deinstallation "
-"process. Please use <<plist-keywords-base-exec>> instead."
+"Execute _command_ as part of the installation or deinstallation process. "
+"Please use <<plist-keywords-base-exec>> instead."
 msgstr ""
 
 #. type: Title ====
@@ -1064,10 +1056,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:443
 msgid ""
-"Package list files can be extended by keywords that are defined in the "
-"[.filename]#${PORTSDIR}/Keywords# directory. The settings for each keyword "
-"are stored in a UCL file named [.filename]#keyword.ucl#. The file must "
-"contain at least one of these sections:"
+"Package list files can be extended by keywords that are defined in the [."
+"filename]#${PORTSDIR}/Keywords# directory. The settings for each keyword are "
+"stored in a UCL file named [.filename]#keyword.ucl#. The file must contain "
+"at least one of these sections:"
 msgstr ""
 
 #. type: Title ====
@@ -1118,9 +1110,9 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:457
 msgid ""
 "Changes the owner, group, or mode used by the keyword. Contains an "
-"associative array where the possible keys are `owner`, `group`, and "
-"`mode`. The values are, respectively, a user name, a group name, and a file "
-"mode. For example:"
+"associative array where the possible keys are `owner`, `group`, and `mode`. "
+"The values are, respectively, a user name, a group name, and a file mode. "
+"For example:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -1295,9 +1287,7 @@ msgstr ""
 #. type: Title ====
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:524
 #, no-wrap
-msgid ""
-"`pre-install`, `post-install`, `pre-deinstall`, `post-deinstall`, "
-"`pre-upgrade`, `post-upgrade`"
+msgid "`pre-install`, `post-install`, `pre-deinstall`, `post-deinstall`, `pre-upgrade`, `post-upgrade`"
 msgstr ""
 
 #. type: Plain text
@@ -1398,8 +1388,7 @@ msgid ""
 "  if cmp -s \"${target_file}\" \"${sample_file}\"; then\n"
 "    rm -f \"${target_file}\"\n"
 "  else\n"
-"    echo \"You may need to manually remove ${target_file} if it is no longer "
-"needed.\"\n"
+"    echo \"You may need to manually remove ${target_file} if it is no longer needed.\"\n"
 "  fi\n"
 "EOD\n"
 msgstr ""
