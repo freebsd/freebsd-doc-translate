@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-05-22 14:48-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: 2021-06-03 00:08+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Chinese (Traditional) <https://translate-dev.freebsd.org/"
@@ -18,16 +18,17 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.6.2\n"
 
+#. type: Title =
+#: documentation/content/en/books/arch-handbook/newbus/_index.adoc:1
+#: documentation/content/en/books/arch-handbook/newbus/_index.adoc:15
+#, no-wrap
+msgid "Newbus"
+msgstr ""
+
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:1
 #, no-wrap
 msgid "Chapter 14. Newbus"
-msgstr ""
-
-#. type: Title =
-#: documentation/content/en/books/arch-handbook/newbus/_index.adoc:15
-#, no-wrap
-msgid "Newbus"
 msgstr ""
 
 #. type: Plain text
@@ -100,9 +101,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:60
 msgid ""
-"_Block devices_ performed in a way that used fixed size blocks [of "
-"data]. This type of driver depended on the so-called _buffer cache_, which "
-"had cached accessed blocks of data in a dedicated part of memory. Often this "
+"_Block devices_ performed in a way that used fixed size blocks [of data]. "
+"This type of driver depended on the so-called _buffer cache_, which had "
+"cached accessed blocks of data in a dedicated part of memory. Often this "
 "buffer cache was based on write-behind, which meant that when data was "
 "modified in memory it got synced to disk whenever the system did its "
 "periodical disk flushing, thus optimizing writes."
@@ -170,11 +171,11 @@ msgstr ""
 msgid ""
 "At the top level resides the _\"root\"_ device which is the parent to hang "
 "all other devices on. For each architecture, there is typically a single "
-"child of \"root\" which has such things as _host-to-PCI bridges_, "
-"etc. attached to it. For x86, this \"root\" device is the _\"nexus\"_ "
-"device. For Alpha, various different models of Alpha have different "
-"top-level devices corresponding to the different hardware chipsets, "
-"including _lca_, _apecs_, _cia_ and _tsunami_."
+"child of \"root\" which has such things as _host-to-PCI bridges_, etc. "
+"attached to it. For x86, this \"root\" device is the _\"nexus\"_ device. For "
+"Alpha, various different models of Alpha have different top-level devices "
+"corresponding to the different hardware chipsets, including _lca_, _apecs_, "
+"_cia_ and _tsunami_."
 msgstr ""
 
 #. type: Plain text
@@ -190,34 +191,34 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:83
 msgid ""
-"Often, a connection between different kinds of bus is represented by a "
-"_\"bridge\"_ device, which normally has one child for the attached bus. An "
-"example of this is a _PCI-to-PCI bridge_ which is represented by a device "
-"_[.filename]#pcibN#_ on the parent PCI bus and has a child "
-"_[.filename]#pciN#_ for the attached bus. This layout simplifies the "
-"implementation of the PCI bus tree, allowing common code to be used for both "
-"top-level and bridged busses."
+"Often, a connection between different kinds of bus is represented by a _"
+"\"bridge\"_ device, which normally has one child for the attached bus. An "
+"example of this is a _PCI-to-PCI bridge_ which is represented by a device _[."
+"filename]#pcibN#_ on the parent PCI bus and has a child _[.filename]#pciN#_ "
+"for the attached bus. This layout simplifies the implementation of the PCI "
+"bus tree, allowing common code to be used for both top-level and bridged "
+"busses."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:85
 msgid ""
-"Each device in the Newbus architecture asks its parent to map its "
-"resources. The parent then asks its own parent until the nexus is "
-"reached. So, basically the nexus is the only part of the Newbus system which "
-"knows about all resources."
+"Each device in the Newbus architecture asks its parent to map its resources. "
+"The parent then asks its own parent until the nexus is reached. So, "
+"basically the nexus is the only part of the Newbus system which knows about "
+"all resources."
 msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:89
 msgid ""
 "An ISA device might want to map its IO port at `0x230`, so it asks its "
-"parent, in this case the ISA bus. The ISA bus hands it over to the "
-"PCI-to-ISA bridge which in its turn asks the PCI bus, which reaches the "
-"host-to-PCI bridge and finally the nexus. The beauty of this transition "
-"upwards is that there is room to translate the requests. For example, the "
-"`0x230` IO port request might become memory-mapped at `0xb0000230` on a MIPS "
-"box by the PCI bridge."
+"parent, in this case the ISA bus. The ISA bus hands it over to the PCI-to-"
+"ISA bridge which in its turn asks the PCI bus, which reaches the host-to-PCI "
+"bridge and finally the nexus. The beauty of this transition upwards is that "
+"there is room to translate the requests. For example, the `0x230` IO port "
+"request might become memory-mapped at `0xb0000230` on a MIPS box by the PCI "
+"bridge."
 msgstr ""
 
 #. type: Plain text
@@ -238,8 +239,8 @@ msgid ""
 "In order to normalize access to memory and port mapped resources, Newbus "
 "integrates the `bus_space` APIs from NetBSD. These provide a single API to "
 "replace inb/outb and direct memory reads/writes. The advantage of this is "
-"that a single driver can easily use either memory-mapped registers or "
-"port-mapped registers (some hardware supports both)."
+"that a single driver can easily use either memory-mapped registers or port-"
+"mapped registers (some hardware supports both)."
 msgstr ""
 
 #. type: Plain text
@@ -262,11 +263,11 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:100
 msgid ""
 "The core of the Newbus system is an extensible \"object-based programming\" "
-"model. Each device in the system has a table of methods which it "
-"supports. The system and other devices uses those methods to control the "
-"device and request services. The different methods supported by a device are "
-"defined by a number of \"interfaces\". An \"interface\" is simply a group of "
-"related methods which can be implemented by a device."
+"model. Each device in the system has a table of methods which it supports. "
+"The system and other devices uses those methods to control the device and "
+"request services. The different methods supported by a device are defined by "
+"a number of \"interfaces\". An \"interface\" is simply a group of related "
+"methods which can be implemented by a device."
 msgstr ""
 
 #. type: Plain text
@@ -285,8 +286,8 @@ msgstr ""
 msgid ""
 "The interfaces are described by an interface definition language similar to "
 "the language used to define vnode operations for file systems. The interface "
-"would be stored in a methods file (which would normally be named "
-"[.filename]#foo_if.m#)."
+"would be stored in a methods file (which would normally be named [."
+"filename]#foo_if.m#)."
 msgstr ""
 
 #. type: Block title
@@ -337,8 +338,8 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:129
 msgid ""
-"When this interface is compiled, it generates a header file "
-"\"[.filename]#foo_if.h#\" which contains function declarations:"
+"When this interface is compiled, it generates a header file \"[."
+"filename]#foo_if.h#\" which contains function declarations:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -362,11 +363,10 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:139
 msgid ""
 "The system defines two main interfaces. The first fundamental interface is "
-"called _\"device\"_ and includes methods which are relevant to all "
-"devices. Methods in the _\"device\"_ interface include _\"probe\"_, "
-"_\"attach\"_ and _\"detach\"_ to control detection of hardware and "
-"_\"shutdown\"_, _\"suspend\"_ and _\"resume\"_ for critical event "
-"notification."
+"called _\"device\"_ and includes methods which are relevant to all devices. "
+"Methods in the _\"device\"_ interface include _\"probe\"_, _\"attach\"_ and _"
+"\"detach\"_ to control detection of hardware and _\"shutdown\"_, _\"suspend"
+"\"_ and _\"resume\"_ for critical event notification."
 msgstr ""
 
 #. type: Plain text
@@ -374,11 +374,11 @@ msgstr ""
 msgid ""
 "The second, more complex interface is _\"bus\"_. This interface contains "
 "methods suitable for devices which have children, including methods to "
-"access bus specific per-device information "
-"footnote:[man:bus_generic_read_ivar[9] and man:bus_generic_write_ivar[9]], "
-"event notification (`_child_detached_`, `_driver_added_`) and resource "
-"management (`_alloc_resource_`, `_activate_resource_`, "
-"`_deactivate_resource_`, `_release_resource_`)."
+"access bus specific per-device information footnote:[man:"
+"bus_generic_read_ivar[9] and man:bus_generic_write_ivar[9]], event "
+"notification (`_child_detached_`, `_driver_added_`) and resource management "
+"(`_alloc_resource_`, `_activate_resource_`, `_deactivate_resource_`, "
+"`_release_resource_`)."
 msgstr ""
 
 #. type: Plain text
@@ -388,8 +388,8 @@ msgid ""
 "of the bus device. These methods would normally use the first two arguments "
 "to specify the bus providing the service and the child device which is "
 "requesting the service. To simplify driver code, many of these methods have "
-"accessor functions which lookup the parent and call a method on the "
-"parent. For instance the method `BUS_TEARDOWN_INTR(device_t dev, device_t "
+"accessor functions which lookup the parent and call a method on the parent. "
+"For instance the method `BUS_TEARDOWN_INTR(device_t dev, device_t "
 "child, ...)` can be called using the function `bus_teardown_intr(device_t "
 "child, ...)`."
 msgstr ""
@@ -412,8 +412,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:150
 msgid ""
-"As the Newbus API is huge, this section makes some effort at documenting "
-"it. More information to come in the next revision of this document."
+"As the Newbus API is huge, this section makes some effort at documenting it. "
+"More information to come in the next revision of this document."
 msgstr ""
 
 #. type: Title ===
@@ -461,24 +461,22 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:164
 msgid ""
-"`devclass_t` - This is a type definition of a pointer to a `struct "
-"devclass`."
+"`devclass_t` - This is a type definition of a pointer to a `struct devclass`."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:166
 msgid ""
-"`device_method_t` - This is the same as `kobj_method_t` (see "
-"[.filename]#src/sys/kobj.h#)."
+"`device_method_t` - This is the same as `kobj_method_t` (see [.filename]#src/"
+"sys/kobj.h#)."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:168
 msgid ""
-"`device_t` - This is a type definition of a pointer to a `struct "
-"device`. `device_t` represents a device in the system. It is a kernel "
-"object. See [.filename]#src/sys/sys/bus_private.h# for implementation "
-"details."
+"`device_t` - This is a type definition of a pointer to a `struct device`. "
+"`device_t` represents a device in the system. It is a kernel object. See [."
+"filename]#src/sys/sys/bus_private.h# for implementation details."
 msgstr ""
 
 #. type: Plain text
