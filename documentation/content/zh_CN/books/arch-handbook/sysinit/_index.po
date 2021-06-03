@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-05-22 14:48-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: 2021-06-03 00:09+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Chinese (Simplified) <https://translate-dev.freebsd.org/"
@@ -18,37 +18,40 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.6.2\n"
 
+#. type: Title =
+#: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:1
+#: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:10
+#, no-wrap
+msgid "The SYSINIT Framework"
+msgstr ">SYSINIT框架"
+
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:1
 #, no-wrap
 msgid "Chapter 5. The SYSINIT Framework"
 msgstr ""
 
-#. type: Title =
-#: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:10
-#, no-wrap
-msgid "The SYSINIT Framework"
-msgstr ">SYSINIT框架"
-
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:35
 #, fuzzy
 msgid ""
-"SYSINIT is the framework for a generic call sort and dispatch "
-"mechanism. FreeBSD currently uses it for the dynamic initialization of the "
-"kernel. SYSINIT allows FreeBSD's kernel subsystems to be reordered, and "
-"added, removed, and replaced at kernel link time when the kernel or one of "
-"its modules is loaded without having to edit a statically ordered "
-"initialization routing and recompile the kernel. This system also allows "
-"kernel modules, currently called _KLD's_, to be separately compiled, linked, "
-"and initialized at boot time and loaded even later while the system is "
-"already running. This is accomplished using the \"kernel linker\" and "
-"\"linker sets\"."
+"SYSINIT is the framework for a generic call sort and dispatch mechanism. "
+"FreeBSD currently uses it for the dynamic initialization of the kernel. "
+"SYSINIT allows FreeBSD's kernel subsystems to be reordered, and added, "
+"removed, and replaced at kernel link time when the kernel or one of its "
+"modules is loaded without having to edit a statically ordered initialization "
+"routing and recompile the kernel. This system also allows kernel modules, "
+"currently called _KLD's_, to be separately compiled, linked, and initialized "
+"at boot time and loaded even later while the system is already running. This "
+"is accomplished using the \"kernel linker\" and \"linker sets\"."
 msgstr ""
-"SYSINIT是一个通用的调用排序与分别执行机制的框架。FreeBSD目前使用它来进行内核的动态初始化。SYSINIT使得FreeBSD的内核各子系统可以"
-"在内核或模块动态加载链接时被重整、添加、删除、替换，这样，内核和模块加载时就不必去修改一个静态的有序初始化安排表甚至重新编译内核。这个体系也使得内核模块("
-"现在称为<firstterm>KLD</firstterm>可以与内核不同时编译、链接、在引导系统时加载，甚至在系统运行时加载。这些操作是通过<quote"
-">内核链接器</quote>(kernel linker)和<quote>链接器集合</quote>(linker set)完成的。"
+"SYSINIT是一个通用的调用排序与分别执行机制的框架。FreeBSD目前使用它来进行内核"
+"的动态初始化。SYSINIT使得FreeBSD的内核各子系统可以在内核或模块动态加载链接时"
+"被重整、添加、删除、替换，这样，内核和模块加载时就不必去修改一个静态的有序初"
+"始化安排表甚至重新编译内核。这个体系也使得内核模块(现在称为<firstterm>KLD</"
+"firstterm>可以与内核不同时编译、链接、在引导系统时加载，甚至在系统运行时加"
+"载。这些操作是通过<quote>内核链接器</quote>(kernel linker)和<quote>链接器集合"
+"</quote>(linker set)完成的。"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:37
@@ -68,7 +71,9 @@ msgid ""
 "A linker technique in which the linker gathers statically declared data "
 "throughout a program's source files into a single contiguously addressable "
 "unit of data."
-msgstr "一种链接方法。这种方法将整个程序源文件中静态申明的数据收集到一个可邻近寻址的数据单元中。"
+msgstr ""
+"一种链接方法。这种方法将整个程序源文件中静态申明的数据收集到一个可邻近寻址的"
+"数据单元中。"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:43
@@ -87,8 +92,10 @@ msgid ""
 "each consumer's call order, function, and a pointer to the data to pass to "
 "that function."
 msgstr ""
-"SYSINIT要依靠链接器获取遍布整个程序源代码多处申明的静态数据并把它们组成一个彼此相邻的数据块。这种链接方法被称为<quote>链接器集合</quot"
-"e>(linker set)。SYSINIT使用两个链接器集合以维护两个数据集合，包含每个数据条目的调用顺序、函数、一个会被提交给该函数的数据指针。"
+"SYSINIT要依靠链接器获取遍布整个程序源代码多处申明的静态数据并把它们组成一个彼"
+"此相邻的数据块。这种链接方法被称为<quote>链接器集合</quote>(linker set)。"
+"SYSINIT使用两个链接器集合以维护两个数据集合，包含每个数据条目的调用顺序、函"
+"数、一个会被提交给该函数的数据指针。"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:48
@@ -96,16 +103,17 @@ msgstr ""
 msgid ""
 "SYSINIT uses two priorities when ordering the functions for execution. The "
 "first priority is a subsystem ID giving an overall order for SYSINIT's "
-"dispatch of functions. Current predeclared ID's are in "
-"[.filename]#<sys/kernel.h># in the enum list `sysinit_sub_id`. The second "
-"priority used is an element order within the subsystem. Current predeclared "
-"subsystem element orders are in [.filename]#<sys/kernel.h># in the enum list "
+"dispatch of functions. Current predeclared ID's are in [.filename]#<sys/"
+"kernel.h># in the enum list `sysinit_sub_id`. The second priority used is an "
+"element order within the subsystem. Current predeclared subsystem element "
+"orders are in [.filename]#<sys/kernel.h># in the enum list "
 "`sysinit_elem_order`."
 msgstr ""
-"SYSINIT按照两类优先级标识对函数排序以便执行。第一类优先级的标识是子系统的标识，给出SYSINIT分别执行子系统的函数的全局顺序，定义在<filen"
-"ame>&lt;sys/kernel.h&gt;</filename>中的枚举<literal>sysinit_sub_id</literal>内。第二类"
-"优先级标识在子系统中的元素的顺序，定义在<filename>&lt;sys/kernel."
-"h&gt;</filename>中的枚举<literal>sysinit_elem_order</literal>内。"
+"SYSINIT按照两类优先级标识对函数排序以便执行。第一类优先级的标识是子系统的标"
+"识，给出SYSINIT分别执行子系统的函数的全局顺序，定义在<filename>&lt;sys/"
+"kernel.h&gt;</filename>中的枚举<literal>sysinit_sub_id</literal>内。第二类优"
+"先级标识在子系统中的元素的顺序，定义在<filename>&lt;sys/kernel.h&gt;</"
+"filename>中的枚举<literal>sysinit_elem_order</literal>内。"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:50
@@ -123,11 +131,14 @@ msgid ""
 "call `SYSINIT()` itself. For pseudo-devices, which are not part of a bus "
 "structure, use `DEV_MODULE()`."
 msgstr ""
-"有两种时刻需要使用SYSINIT：系统启动或内核模块加载时，系统析构或内核模块卸载时。内核子系统通常在系统启动时使用SYSINIT的定义项以初始化数据结构"
-"。例如，进程调度子系统使用一个SYSINIT定义项来初始化运行队列数据结构。设备驱动程序应避免直接使用<literal>SYSINIT()</litera"
-"l>，对于总线结构上的物理真实设备应使用<literal>DRIVER_MODULE()</literal>调用的函数先侦测设备的存在，如果存在，再进行设"
-"备的初始化。这一系统过程中，会做一些专门针对设备的事情，然后调用<literal>SYSINIT()</literal>本身。对于非总线结构一部分的虚设备"
-"，应改用<literal>DEV_MODULE()</literal>。"
+"有两种时刻需要使用SYSINIT：系统启动或内核模块加载时，系统析构或内核模块卸载"
+"时。内核子系统通常在系统启动时使用SYSINIT的定义项以初始化数据结构。例如，进程"
+"调度子系统使用一个SYSINIT定义项来初始化运行队列数据结构。设备驱动程序应避免直"
+"接使用<literal>SYSINIT()</literal>，对于总线结构上的物理真实设备应使用"
+"<literal>DRIVER_MODULE()</literal>调用的函数先侦测设备的存在，如果存在，再进"
+"行设备的初始化。这一系统过程中，会做一些专门针对设备的事情，然后调用"
+"<literal>SYSINIT()</literal>本身。对于非总线结构一部分的虚设备，应改用"
+"<literal>DEV_MODULE()</literal>。"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:52
@@ -186,9 +197,11 @@ msgid ""
 "subsystem element order, the function to call, and the data to pass the "
 "function. All functions must take a constant pointer argument."
 msgstr ""
-">宏<literal>SYSINIT()</literal>在SYSINIT启动数据集合中建立一个SYSINIT数据项，以便SYSINIT在系统启动或模块"
-"加载时排序并执行其中的函数。<literal>SYSINIT()</literal>有一个参数uniquifier，SYSINIT用它来标识数据项，随后是"
-"子系统顺序号、子系统元素顺序号、待调用函数、传递给函数的数据。所有的函数必须有一个恒量指针参数。"
+">宏<literal>SYSINIT()</literal>在SYSINIT启动数据集合中建立一个SYSINIT数据项，"
+"以便SYSINIT在系统启动或模块加载时排序并执行其中的函数。<literal>SYSINIT()</"
+"literal>有一个参数uniquifier，SYSINIT用它来标识数据项，随后是子系统顺序号、子"
+"系统元素顺序号、待调用函数、传递给函数的数据。所有的函数必须有一个恒量指针参"
+"数。"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:75
@@ -245,10 +258,11 @@ msgid ""
 "order a SYSINIT will run in. This example shows a SYSINIT that needs to be "
 "run just barely before the SYSINIT's that handle tuning kernel parameters."
 msgstr ""
-"注意，<literal>SI_SUB_FOO</literal>和<literal>SI_ORDER_FOO</literal>应当分别在上面提到的枚举<"
-"literal>sysinit_sub_id</literal>和<literal>sysinit_elem_order</literal>之中。既可以使"
-"用已有的枚举项，也可以将自己的枚举项添加到这两个枚举的定义之中。你可以使用数学表达式微调SYSINIT的执行顺序。以下的例子示例了一个需要刚好要在内核参数"
-"调整的SYSINIT之前执行的SYSINIT。"
+"注意，<literal>SI_SUB_FOO</literal>和<literal>SI_ORDER_FOO</literal>应当分别"
+"在上面提到的枚举<literal>sysinit_sub_id</literal>和"
+"<literal>sysinit_elem_order</literal>之中。既可以使用已有的枚举项，也可以将自"
+"己的枚举项添加到这两个枚举的定义之中。你可以使用数学表达式微调SYSINIT的执行顺"
+"序。以下的例子示例了一个需要刚好要在内核参数调整的SYSINIT之前执行的SYSINIT。"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:103
