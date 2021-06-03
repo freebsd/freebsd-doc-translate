@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-03-20 17:26-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: 2021-04-13 11:09+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Turkish <https://translate-dev.freebsd.org/projects/"
@@ -18,20 +18,26 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.5.2\n"
 
+#. type: YAML Front Matter: description
+#: documentation/content/en/articles/geom-class/_index.adoc:1
+#, no-wrap
+msgid "A guide to GEOM internals, and writing your own GEOM class"
+msgstr ""
+
 #. type: Title =
 #: documentation/content/en/articles/geom-class/_index.adoc:1
-#: documentation/content/en/articles/geom-class/_index.adoc:10
+#: documentation/content/en/articles/geom-class/_index.adoc:11
 #, no-wrap
 msgid "Writing a GEOM Class"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:24
+#: documentation/content/en/articles/geom-class/_index.adoc:35
 msgid "Abstract"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:27
+#: documentation/content/en/articles/geom-class/_index.adoc:38
 msgid ""
 "This text documents some starting points in developing GEOM classes, and "
 "kernel modules in general.  It is assumed that the reader is familiar with C "
@@ -39,24 +45,24 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:29
+#: documentation/content/en/articles/geom-class/_index.adoc:40
 msgid "'''"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/geom-class/_index.adoc:33
+#: documentation/content/en/articles/geom-class/_index.adoc:44
 #, no-wrap
 msgid "Introduction"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:36
+#: documentation/content/en/articles/geom-class/_index.adoc:47
 #, no-wrap
 msgid "Documentation"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:40
+#: documentation/content/en/articles/geom-class/_index.adoc:51
 msgid ""
 "Documentation on kernel programming is scarce - it is one of few areas where "
 "there is nearly nothing in the way of friendly tutorials, and the phrase "
@@ -66,7 +72,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:42
+#: documentation/content/en/articles/geom-class/_index.adoc:53
 msgid ""
 "The link:{developers-handbook}[FreeBSD Developer's Handbook] - part of the "
 "documentation project, it does not contain anything specific to kernel "
@@ -74,7 +80,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:43
+#: documentation/content/en/articles/geom-class/_index.adoc:54
 msgid ""
 "The link:{arch-handbook}[FreeBSD Architecture Handbook] - also from the "
 "documentation project, contains descriptions of several low-level facilities "
@@ -83,27 +89,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:44
+#: documentation/content/en/articles/geom-class/_index.adoc:55
 msgid ""
 "The Blueprints section of http://www.freebsddiary.org[FreeBSD Diary] web "
 "site - contains several interesting articles on kernel facilities."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:45
+#: documentation/content/en/articles/geom-class/_index.adoc:56
 msgid ""
 "The man pages in section 9 - for important documentation on kernel functions."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:46
+#: documentation/content/en/articles/geom-class/_index.adoc:57
 msgid ""
 "The man:geom[4] man page and http://phk.freebsd.dk/pubs/[PHK's GEOM slides] "
 "- for general introduction of the GEOM subsystem."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:47
+#: documentation/content/en/articles/geom-class/_index.adoc:58
 msgid ""
 "Man pages man:g_bio[9], man:g_event[9], man:g_data[9], man:g_geom[9], man:"
 "g_provider[9], man:g_consumer[9], man:g_access[9] & others linked from "
@@ -111,7 +117,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:48
+#: documentation/content/en/articles/geom-class/_index.adoc:59
 msgid ""
 "The man:style[9] man page - for documentation on the coding-style "
 "conventions which must be followed for any code which is to be committed to "
@@ -119,13 +125,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/geom-class/_index.adoc:50
+#: documentation/content/en/articles/geom-class/_index.adoc:61
 #, no-wrap
 msgid "Preliminaries"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:57
+#: documentation/content/en/articles/geom-class/_index.adoc:68
 msgid ""
 "The best way to do kernel development is to have (at least) two separate "
 "computers.  One of these would contain the development environment and "
@@ -138,7 +144,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:60
+#: documentation/content/en/articles/geom-class/_index.adoc:71
 msgid ""
 "But, since not everybody has two or more computers handy, there are a few "
 "things that can be done to prepare an otherwise \"live\" system for "
@@ -148,20 +154,20 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:62
+#: documentation/content/en/articles/geom-class/_index.adoc:73
 #, no-wrap
 msgid "Modifying a System for Development"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:65
+#: documentation/content/en/articles/geom-class/_index.adoc:76
 msgid ""
 "For any kernel programming a kernel with `INVARIANTS` enabled is a must-"
 "have. So enter these in your kernel configuration file:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:70
+#: documentation/content/en/articles/geom-class/_index.adoc:81
 #, no-wrap
 msgid ""
 "options INVARIANT_SUPPORT\n"
@@ -169,14 +175,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:73
+#: documentation/content/en/articles/geom-class/_index.adoc:84
 msgid ""
 "For more debugging you should also include WITNESS support, which will alert "
 "you of mistakes in locking:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:78
+#: documentation/content/en/articles/geom-class/_index.adoc:89
 #, no-wrap
 msgid ""
 "options WITNESS_SUPPORT\n"
@@ -184,18 +190,18 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:81
+#: documentation/content/en/articles/geom-class/_index.adoc:92
 msgid "For debugging crash dumps, a kernel with debug symbols is needed:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:85
+#: documentation/content/en/articles/geom-class/_index.adoc:96
 #, no-wrap
 msgid "  makeoptions    DEBUG=-g\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:90
+#: documentation/content/en/articles/geom-class/_index.adoc:101
 msgid ""
 "With the usual way of installing the kernel (`make installkernel`) the debug "
 "kernel will not be automatically installed.  It is called [.filename]#kernel."
@@ -204,7 +210,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:93
+#: documentation/content/en/articles/geom-class/_index.adoc:104
 msgid ""
 "Another convenience is enabling the kernel debugger so you can examine a "
 "kernel panic when it happens.  For this, enter the following lines in your "
@@ -212,7 +218,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:99
+#: documentation/content/en/articles/geom-class/_index.adoc:110
 #, no-wrap
 msgid ""
 "options KDB\n"
@@ -221,19 +227,19 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:102
+#: documentation/content/en/articles/geom-class/_index.adoc:113
 msgid ""
 "For this to work you might need to set a sysctl (if it is not on by default):"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:106
+#: documentation/content/en/articles/geom-class/_index.adoc:117
 #, no-wrap
 msgid "  debug.debugger_on_panic=1\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:114
+#: documentation/content/en/articles/geom-class/_index.adoc:125
 msgid ""
 "Kernel panics will happen, so care should be taken with the filesystem "
 "cache.  In particular, having softupdates might mean the latest file version "
@@ -246,7 +252,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:120
+#: documentation/content/en/articles/geom-class/_index.adoc:131
 #, no-wrap
 msgid ""
 "kern.filedelay=5\n"
@@ -255,12 +261,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:123
+#: documentation/content/en/articles/geom-class/_index.adoc:134
 msgid "The numbers represent seconds."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:131
+#: documentation/content/en/articles/geom-class/_index.adoc:142
 msgid ""
 "For debugging kernel panics, kernel core dumps are required.  Since a kernel "
 "panic might make filesystems unusable, this crash dump is first written to a "
@@ -272,7 +278,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:136
+#: documentation/content/en/articles/geom-class/_index.adoc:147
 #, no-wrap
 msgid ""
 "dumpdev=\"/dev/ad0s4b\"\n"
@@ -280,14 +286,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:139
+#: documentation/content/en/articles/geom-class/_index.adoc:150
 msgid ""
 "The `dumpdev` variable specifies the swap partition and `dumpdir` tells the "
 "system where in the filesystem to relocate the core dump on reboot."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:142
+#: documentation/content/en/articles/geom-class/_index.adoc:153
 msgid ""
 "Writing kernel core dumps is slow and takes a long time so if you have lots "
 "of memory (>256M) and lots of panics it could be frustrating to sit and wait "
@@ -297,13 +303,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:146
+#: documentation/content/en/articles/geom-class/_index.adoc:157
 #, no-wrap
 msgid "  hw.physmem=\"256M\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:149
+#: documentation/content/en/articles/geom-class/_index.adoc:160
 msgid ""
 "If the panics are frequent and filesystems large (or you simply do not trust "
 "softupdates+background fsck) it is advisable to turn background fsck off via "
@@ -311,13 +317,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:153
+#: documentation/content/en/articles/geom-class/_index.adoc:164
 #, no-wrap
 msgid "  background_fsck=\"NO\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:158
+#: documentation/content/en/articles/geom-class/_index.adoc:169
 msgid ""
 "This way, the filesystems will always get checked when needed.  Note that "
 "with background fsck, a new panic could happen while it is checking the "
@@ -326,13 +332,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:160
+#: documentation/content/en/articles/geom-class/_index.adoc:171
 #, no-wrap
 msgid "Starting the Project"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:164
+#: documentation/content/en/articles/geom-class/_index.adoc:175
 msgid ""
 "For the purpose of creating a new GEOM class, an empty subdirectory has to "
 "be created under an arbitrary user-accessible directory.  You do not have to "
@@ -340,20 +346,20 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:166
+#: documentation/content/en/articles/geom-class/_index.adoc:177
 #, no-wrap
 msgid "The Makefile"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:169
+#: documentation/content/en/articles/geom-class/_index.adoc:180
 msgid ""
 "It is good practice to create [.filename]#Makefiles# for every nontrivial "
 "coding project, which of course includes kernel modules."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:172
+#: documentation/content/en/articles/geom-class/_index.adoc:183
 msgid ""
 "Creating the [.filename]#Makefile# is simple thanks to an extensive set of "
 "helper routines provided by the system.  In short, here is how a minimal [."
@@ -361,7 +367,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:177
+#: documentation/content/en/articles/geom-class/_index.adoc:188
 #, no-wrap
 msgid ""
 "SRCS=g_journal.c\n"
@@ -369,13 +375,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:179
+#: documentation/content/en/articles/geom-class/_index.adoc:190
 #, no-wrap
 msgid ".include <bsd.kmod.mk>\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:183
+#: documentation/content/en/articles/geom-class/_index.adoc:194
 msgid ""
 "This [.filename]#Makefile# (with changed filenames) will do for any kernel "
 "module, and a GEOM class can reside in just one kernel module.  If more than "
@@ -384,19 +390,19 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/geom-class/_index.adoc:185
+#: documentation/content/en/articles/geom-class/_index.adoc:196
 #, no-wrap
 msgid "On FreeBSD Kernel Programming"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:188
+#: documentation/content/en/articles/geom-class/_index.adoc:199
 #, no-wrap
 msgid "Memory Allocation"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:193
+#: documentation/content/en/articles/geom-class/_index.adoc:204
 msgid ""
 "See man:malloc[9].  Basic memory allocation is only slightly different than "
 "its userland equivalent.  Most notably, `malloc`() and `free`() accept "
@@ -404,27 +410,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:195
+#: documentation/content/en/articles/geom-class/_index.adoc:206
 msgid ""
 "A \"malloc type\" must be declared in the declaration section of a source "
 "file, like this:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:199
+#: documentation/content/en/articles/geom-class/_index.adoc:210
 #, no-wrap
 msgid "  static MALLOC_DEFINE(M_GJOURNAL, \"gjournal data\", \"GEOM_JOURNAL Data\");\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:202
+#: documentation/content/en/articles/geom-class/_index.adoc:213
 msgid ""
 "To use this macro, [.filename]#sys/param.h#, [.filename]#sys/kernel.h# and [."
 "filename]#sys/malloc.h# headers must be included."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:205
+#: documentation/content/en/articles/geom-class/_index.adoc:216
 msgid ""
 "There is another mechanism for allocating memory, the UMA (Universal Memory "
 "Allocator).  See man:uma[9] for details, but it is a special type of "
@@ -433,13 +439,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:207
+#: documentation/content/en/articles/geom-class/_index.adoc:218
 #, no-wrap
 msgid "Lists and Queues"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:214
+#: documentation/content/en/articles/geom-class/_index.adoc:225
 msgid ""
 "See man:queue[3].  There are a LOT of cases when a list of things needs to "
 "be maintained.  Fortunately, this data structure is implemented (in several "
@@ -451,20 +457,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:216
+#: documentation/content/en/articles/geom-class/_index.adoc:227
 msgid ""
 "If data retrieval speed is very important, see man:tree[3] and man:"
 "hashinit[9]."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:218
+#: documentation/content/en/articles/geom-class/_index.adoc:229
 #, no-wrap
 msgid "BIOs"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:222
+#: documentation/content/en/articles/geom-class/_index.adoc:233
 msgid ""
 "Structure `bio` is used for any and all Input/Output operations concerning "
 "GEOM.  It basically contains information about what device ('provider') "
@@ -474,7 +480,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:226
+#: documentation/content/en/articles/geom-class/_index.adoc:237
 msgid ""
 "The important thing here is that ``bio``s are handled asynchronously.  That "
 "means that, in most parts of the code, there is no analogue to userland's "
@@ -484,7 +490,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:230
+#: documentation/content/en/articles/geom-class/_index.adoc:241
 msgid ""
 "The asynchronous programming model (also called \"event-driven\") is "
 "somewhat harder than the much more used imperative one used in userland (at "
@@ -496,19 +502,19 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/geom-class/_index.adoc:232
+#: documentation/content/en/articles/geom-class/_index.adoc:243
 #, no-wrap
 msgid "On GEOM Programming"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:235
+#: documentation/content/en/articles/geom-class/_index.adoc:246
 #, no-wrap
 msgid "Ggate"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:239
+#: documentation/content/en/articles/geom-class/_index.adoc:250
 msgid ""
 "If maximum performance is not needed, a much simpler way of making a data "
 "transformation is to implement it in userland via the ggate (GEOM gate) "
@@ -517,13 +523,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:241
+#: documentation/content/en/articles/geom-class/_index.adoc:252
 #, no-wrap
 msgid "GEOM Class"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:246
+#: documentation/content/en/articles/geom-class/_index.adoc:257
 msgid ""
 "GEOM classes are transformations on the data.  These transformations can be "
 "combined in a tree-like fashion.  Instances of GEOM classes are called "
@@ -531,7 +537,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:248
+#: documentation/content/en/articles/geom-class/_index.adoc:259
 msgid ""
 "Each GEOM class has several \"class methods\" that get called when there is "
 "no geom instance available (or they are simply not bound to a single "
@@ -539,64 +545,64 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:250
+#: documentation/content/en/articles/geom-class/_index.adoc:261
 msgid ""
 "`.init` is called when GEOM becomes aware of a GEOM class (when the kernel "
 "module gets loaded.)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:251
+#: documentation/content/en/articles/geom-class/_index.adoc:262
 msgid ""
 "`.fini` gets called when GEOM abandons the class (when the module gets "
 "unloaded)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:252
+#: documentation/content/en/articles/geom-class/_index.adoc:263
 msgid ""
 "`.taste` is called next, once for each provider the system has available. If "
 "applicable, this function will usually create and start a geom instance."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:253
+#: documentation/content/en/articles/geom-class/_index.adoc:264
 msgid "`.destroy_geom` is called when the geom should be disbanded"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:254
+#: documentation/content/en/articles/geom-class/_index.adoc:265
 msgid ""
 "`.ctlconf` is called when user requests reconfiguration of existing geom"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:256
+#: documentation/content/en/articles/geom-class/_index.adoc:267
 msgid ""
 "Also defined are the GEOM event functions, which will get copied to the geom "
 "instance."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:258
+#: documentation/content/en/articles/geom-class/_index.adoc:269
 msgid ""
 "Field `.geom` in the `g_class` structure is a LIST of geoms instantiated "
 "from the class."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:260
+#: documentation/content/en/articles/geom-class/_index.adoc:271
 msgid "These functions are called from the g_event kernel thread."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:262
+#: documentation/content/en/articles/geom-class/_index.adoc:273
 #, no-wrap
 msgid "Softc"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:268
+#: documentation/content/en/articles/geom-class/_index.adoc:279
 msgid ""
 "The name \"softc\" is a legacy term for \"driver private data\".  The name "
 "most probably comes from the archaic term \"software control block\".  In "
@@ -606,17 +612,17 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:270
+#: documentation/content/en/articles/geom-class/_index.adoc:281
 msgid "`struct g_provider *provider` : The \"provider\" this geom instantiates"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:271
+#: documentation/content/en/articles/geom-class/_index.adoc:282
 msgid "`uint16_t n_disks` : Number of consumer this geom consumes"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:272
+#: documentation/content/en/articles/geom-class/_index.adoc:283
 msgid ""
 "`struct g_consumer \\**disks` : Array of `struct g_consumer*`. (It is not "
 "possible to use just single indirection because struct g_consumer* are "
@@ -624,73 +630,73 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:275
+#: documentation/content/en/articles/geom-class/_index.adoc:286
 msgid ""
 "The `softc` structure contains all the state of geom instance.  Every geom "
 "instance has its own softc."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:277
+#: documentation/content/en/articles/geom-class/_index.adoc:288
 #, fuzzy, no-wrap
 msgid "Metadata"
 msgstr "meta veri"
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:280
+#: documentation/content/en/articles/geom-class/_index.adoc:291
 msgid ""
 "Format of metadata is more-or-less class-dependent, but MUST start with:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:282
+#: documentation/content/en/articles/geom-class/_index.adoc:293
 msgid "16 byte buffer for null-terminated signature (usually the class name)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:283
+#: documentation/content/en/articles/geom-class/_index.adoc:294
 msgid "uint32 version ID"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:285
+#: documentation/content/en/articles/geom-class/_index.adoc:296
 msgid ""
 "It is assumed that geom classes know how to handle metadata with version "
 "ID's lower than theirs."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:287
+#: documentation/content/en/articles/geom-class/_index.adoc:298
 msgid ""
 "Metadata is located in the last sector of the provider (and thus must fit in "
 "it)."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:289
+#: documentation/content/en/articles/geom-class/_index.adoc:300
 msgid ""
 "(All this is implementation-dependent but all existing code works like that, "
 "and it is supported by libraries.)"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:291
+#: documentation/content/en/articles/geom-class/_index.adoc:302
 #, no-wrap
 msgid "Labeling/creating a GEOM"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:294
+#: documentation/content/en/articles/geom-class/_index.adoc:305
 msgid "The sequence of events is:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:296
+#: documentation/content/en/articles/geom-class/_index.adoc:307
 msgid "user calls man:geom[8] utility (or one of its hardlinked friends)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:297
+#: documentation/content/en/articles/geom-class/_index.adoc:308
 msgid ""
 "the utility figures out which geom class it is supposed to handle and "
 "searches for [.filename]#geom_CLASSNAME.so# library (usually in [.filename]#/"
@@ -698,33 +704,33 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:298
+#: documentation/content/en/articles/geom-class/_index.adoc:309
 msgid ""
 "it man:dlopen[3]-s the library, extracts the definitions of command-line "
 "parameters and helper functions."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:300
+#: documentation/content/en/articles/geom-class/_index.adoc:311
 msgid "In the case of creating/labeling a new geom, this is what happens:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:302
+#: documentation/content/en/articles/geom-class/_index.adoc:313
 msgid ""
 "man:geom[8] looks in the command-line argument for the command (usually "
 "`label`), and calls a helper function."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:303
+#: documentation/content/en/articles/geom-class/_index.adoc:314
 msgid ""
 "The helper function checks parameters and gathers metadata, which it "
 "proceeds to write to all concerned providers."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:304
+#: documentation/content/en/articles/geom-class/_index.adoc:315
 msgid ""
 "This \"spoils\" existing geoms (if any) and initializes a new round of "
 "\"tasting\" of the providers. The intended geom class recognizes the "
@@ -732,20 +738,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:306
+#: documentation/content/en/articles/geom-class/_index.adoc:317
 msgid ""
 "(The above sequence of events is implementation-dependent but all existing "
 "code works like that, and it is supported by libraries.)"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:308
+#: documentation/content/en/articles/geom-class/_index.adoc:319
 #, no-wrap
 msgid "GEOM Command Structure"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:312
+#: documentation/content/en/articles/geom-class/_index.adoc:323
 msgid ""
 "The helper [.filename]#geom_CLASSNAME.so# library exports `class_commands` "
 "structure, which is an array of `struct g_command` elements.  Commands are "
@@ -753,45 +759,45 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/geom-class/_index.adoc:316
+#: documentation/content/en/articles/geom-class/_index.adoc:327
 #, no-wrap
 msgid "  verb [-options] geomname [other]\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:319
+#: documentation/content/en/articles/geom-class/_index.adoc:330
 msgid "Common verbs are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:321
+#: documentation/content/en/articles/geom-class/_index.adoc:332
 msgid ""
 "label - to write metadata to devices so they can be recognized at tasting "
 "and brought up in geoms"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:322
+#: documentation/content/en/articles/geom-class/_index.adoc:333
 msgid "destroy - to destroy metadata, so the geoms get destroyed"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:324
+#: documentation/content/en/articles/geom-class/_index.adoc:335
 msgid "Common options are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:326
+#: documentation/content/en/articles/geom-class/_index.adoc:337
 msgid "`-v` : be verbose"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:327
+#: documentation/content/en/articles/geom-class/_index.adoc:338
 msgid "`-f` : force"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:331
+#: documentation/content/en/articles/geom-class/_index.adoc:342
 msgid ""
 "Many actions, such as labeling and destroying metadata can be performed in "
 "userland.  For this, `struct g_command` provides field `gc_func` that can be "
@@ -801,50 +807,50 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:333
+#: documentation/content/en/articles/geom-class/_index.adoc:344
 #, no-wrap
 msgid "Geoms"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:337
+#: documentation/content/en/articles/geom-class/_index.adoc:348
 msgid ""
 "Geoms are instances of GEOM classes.  They have internal data (a softc "
 "structure) and some functions with which they respond to external events."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:339
+#: documentation/content/en/articles/geom-class/_index.adoc:350
 msgid "The event functions are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:341
+#: documentation/content/en/articles/geom-class/_index.adoc:352
 msgid "`.access` : calculates permissions (read/write/exclusive)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:342
+#: documentation/content/en/articles/geom-class/_index.adoc:353
 msgid "`.dumpconf` : returns XML-formatted information about the geom"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:343
+#: documentation/content/en/articles/geom-class/_index.adoc:354
 msgid "`.orphan` : called when some underlying provider gets disconnected"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:344
+#: documentation/content/en/articles/geom-class/_index.adoc:355
 msgid "`.spoiled` : called when some underlying provider gets written to"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:345
+#: documentation/content/en/articles/geom-class/_index.adoc:356
 msgid "`.start` : handles I/O"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:347
+#: documentation/content/en/articles/geom-class/_index.adoc:358
 msgid ""
 "These functions are called from the `g_down` kernel thread and there can be "
 "no sleeping in this context, (see definition of sleeping elsewhere) which "
@@ -852,7 +858,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:349
+#: documentation/content/en/articles/geom-class/_index.adoc:360
 msgid ""
 "Of these, the most important function for doing actual useful work is the `."
 "start`() function, which is called when a BIO request arrives for a provider "
@@ -860,46 +866,46 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:351
+#: documentation/content/en/articles/geom-class/_index.adoc:362
 #, no-wrap
 msgid "GEOM Threads"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:354
+#: documentation/content/en/articles/geom-class/_index.adoc:365
 msgid "There are three kernel threads created and run by the GEOM framework:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:356
+#: documentation/content/en/articles/geom-class/_index.adoc:367
 msgid ""
 "`g_down` : Handles requests coming from high-level entities (such as a "
 "userland request) on the way to physical devices"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:357
+#: documentation/content/en/articles/geom-class/_index.adoc:368
 msgid ""
 "`g_up` : Handles responses from device drivers to requests made by higher-"
 "level entities"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:358
+#: documentation/content/en/articles/geom-class/_index.adoc:369
 msgid ""
 "`g_event` : Handles all other cases: creation of geom instances, access "
 "counting, \"spoil\" events, etc."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:360
+#: documentation/content/en/articles/geom-class/_index.adoc:371
 msgid ""
 "When a user process issues \"read data X at offset Y of a file\" request, "
 "this is what happens:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:362
+#: documentation/content/en/articles/geom-class/_index.adoc:373
 msgid ""
 "The filesystem converts the request into a struct bio instance and passes it "
 "to the GEOM subsystem. It knows what geom instance should handle it because "
@@ -907,14 +913,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:363
+#: documentation/content/en/articles/geom-class/_index.adoc:374
 msgid ""
 "The request ends up as a call to the `.start`() function made on the g_down "
 "thread and reaches the top-level geom instance."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:364
+#: documentation/content/en/articles/geom-class/_index.adoc:375
 msgid ""
 "This top-level geom instance (for example the partition slicer) determines "
 "that the request should be routed to a lower-level instance (for example the "
@@ -924,7 +930,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:365
+#: documentation/content/en/articles/geom-class/_index.adoc:376
 msgid ""
 "The disk driver gets the bio request also as a call to `.start`() on the "
 "`g_down` thread. It talks to hardware, gets the data back, and calls "
@@ -932,7 +938,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:366
+#: documentation/content/en/articles/geom-class/_index.adoc:377
 msgid ""
 "Now, the notification of bio completion \"bubbles up\" in the `g_up` thread. "
 "First the partition slicer gets `.done`() called in the `g_up` thread, it "
@@ -941,12 +947,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:367
+#: documentation/content/en/articles/geom-class/_index.adoc:378
 msgid "The filesystem gets the data and transfers it to userland."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:369
+#: documentation/content/en/articles/geom-class/_index.adoc:380
 msgid ""
 "See man:g_bio[9] man page for information how the data is passed back and "
 "forth in the `bio` structure (note in particular the `bio_parent` and "
@@ -954,7 +960,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:372
+#: documentation/content/en/articles/geom-class/_index.adoc:383
 msgid ""
 "One important feature is: __THERE CAN BE NO SLEEPING IN G_UP AND G_DOWN "
 "THREADS__.  This means that none of the following things can be done in "
@@ -962,34 +968,34 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:374
+#: documentation/content/en/articles/geom-class/_index.adoc:385
 msgid "Calls to `msleep`() and `tsleep`(), obviously."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:375
+#: documentation/content/en/articles/geom-class/_index.adoc:386
 msgid ""
 "Calls to `g_write_data`() and `g_read_data`(), because these sleep between "
 "passing the data to consumers and returning."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:376
+#: documentation/content/en/articles/geom-class/_index.adoc:387
 msgid "Waiting for I/O."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:377
+#: documentation/content/en/articles/geom-class/_index.adoc:388
 msgid "Calls to man:malloc[9] and `uma_zalloc`() with `M_WAITOK` flag set"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:378
+#: documentation/content/en/articles/geom-class/_index.adoc:389
 msgid "sx and other sleepable locks"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:382
+#: documentation/content/en/articles/geom-class/_index.adoc:393
 msgid ""
 "This restriction is here to stop GEOM code clogging the I/O request path, "
 "since sleeping is usually not time-bound and there can be no guarantees on "
@@ -1000,13 +1006,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/geom-class/_index.adoc:384
+#: documentation/content/en/articles/geom-class/_index.adoc:395
 #, no-wrap
 msgid "Kernel Threads for Use in GEOM Code"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:387
+#: documentation/content/en/articles/geom-class/_index.adoc:398
 msgid ""
 "Kernel threads are created with man:kthread_create[9] function, and they are "
 "sort of similar to userland threads in behavior, only they cannot return to "
@@ -1014,7 +1020,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:390
+#: documentation/content/en/articles/geom-class/_index.adoc:401
 msgid ""
 "In GEOM code, the usual use of threads is to offload processing of requests "
 "from `g_down` thread (the `.start`() function).  These threads look like "
@@ -1025,7 +1031,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:395
+#: documentation/content/en/articles/geom-class/_index.adoc:406
 msgid ""
 "The main benefit of using a thread to handle I/O requests is that it can "
 "sleep when needed.  Now, this sounds good, but should be carefully thought "
@@ -1036,7 +1042,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:399
+#: documentation/content/en/articles/geom-class/_index.adoc:410
 msgid ""
 "The other benefit of having a event-handler thread like that is to serialize "
 "all the requests and responses coming from different geom threads into one "
@@ -1045,7 +1051,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/geom-class/_index.adoc:402
+#: documentation/content/en/articles/geom-class/_index.adoc:413
 msgid ""
 "Mutexes in FreeBSD kernel (see man:mutex[9]) have one distinction from their "
 "more common userland cousins - the code cannot sleep while holding a "
