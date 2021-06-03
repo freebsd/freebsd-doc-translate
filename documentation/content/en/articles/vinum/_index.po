@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-05-22 14:48-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,6 +15,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#. type: YAML Front Matter: description
+#: documentation/content/en/articles/vinum/_index.adoc:1
+#, no-wrap
+msgid "The vinum Volume Manager in FreeBSD"
+msgstr ""
 
 #. type: Title =
 #: documentation/content/en/articles/vinum/_index.adoc:1
@@ -52,8 +58,8 @@ msgid ""
 "In addition to supporting various cards and controllers for hardware "
 "Redundant Array of Independent Disks RAID systems, the base FreeBSD system "
 "includes the [.filename]#vinum# volume manager, a block device driver that "
-"implements virtual disk drives and addresses these three problems.  "
-"[.filename]#vinum# provides more flexibility, performance, and reliability "
+"implements virtual disk drives and addresses these three problems.  [."
+"filename]#vinum# provides more flexibility, performance, and reliability "
 "than traditional disk storage and implements `RAID`-0, `RAID`-1, and "
 "`RAID`-5 models, both individually and in combination."
 msgstr ""
@@ -71,10 +77,10 @@ msgid ""
 "Starting with FreeBSD 5, [.filename]#vinum# has been rewritten in order to "
 "fit into the link:{handbook}#geom[GEOM architecture], while retaining the "
 "original ideas, terminology, and on-disk metadata.  This rewrite is called "
-"_gvinum_ (for _GEOM vinum_).  While this chapter uses the term "
-"[.filename]#vinum#, any command invocations should be performed with "
-"`gvinum`.  The name of the kernel module has changed from the original "
-"[.filename]#vinum.ko# to [.filename]#geom_vinum.ko#, and all device nodes "
+"_gvinum_ (for _GEOM vinum_).  While this chapter uses the term [."
+"filename]#vinum#, any command invocations should be performed with "
+"`gvinum`.  The name of the kernel module has changed from the original [."
+"filename]#vinum.ko# to [.filename]#geom_vinum.ko#, and all device nodes "
 "reside under [.filename]#/dev/gvinum# instead of [.filename]#/dev/vinum#.  "
 "As of FreeBSD 6, the original [.filename]#vinum# implementation is no longer "
 "available in the code base."
@@ -131,9 +137,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:82
 msgid ""
-"The traditional and obvious solution to this bottleneck is \"more "
-"spindles\": rather than using one large disk, use several smaller disks with "
-"the same aggregate storage space.  Each disk is capable of positioning and "
+"The traditional and obvious solution to this bottleneck is \"more spindles"
+"\": rather than using one large disk, use several smaller disks with the "
+"same aggregate storage space.  Each disk is capable of positioning and "
 "transferring independently, so the effective throughput increases by a "
 "factor close to the number of disks used."
 msgstr ""
@@ -181,10 +187,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:103
 msgid ""
-"An alternative mapping is to divide the address space into smaller, "
-"equal-sized components and store them sequentially on different devices.  "
-"For example, the first 256 sectors may be stored on the first disk, the next "
-"256 sectors on the next disk and so on.  After filling the last disk, the "
+"An alternative mapping is to divide the address space into smaller, equal-"
+"sized components and store them sequentially on different devices.  For "
+"example, the first 256 sectors may be stored on the first disk, the next 256 "
+"sectors on the next disk and so on.  After filling the last disk, the "
 "process repeats until the disks are full.  This mapping is called _striping_ "
 "or RAID-0."
 msgstr ""
@@ -260,14 +266,14 @@ msgstr ""
 #: documentation/content/en/articles/vinum/_index.adoc:133
 msgid ""
 "An alternative solution is _parity_, implemented in `RAID` levels 2, 3, 4 "
-"and 5.  Of these, `RAID-5` is the most interesting.  As implemented in "
-"[.filename]#vinum#, it is a variant on a striped organization which "
-"dedicates one block of each stripe to parity one of the other blocks.  As "
-"implemented by [.filename]#vinum#, a `RAID-5` plex is similar to a striped "
-"plex, except that it implements `RAID-5` by including a parity block in each "
-"stripe.  As required by `RAID-5`, the location of this parity block changes "
-"from one stripe to the next.  The numbers in the data blocks indicate the "
-"relative block numbers."
+"and 5.  Of these, `RAID-5` is the most interesting.  As implemented in [."
+"filename]#vinum#, it is a variant on a striped organization which dedicates "
+"one block of each stripe to parity one of the other blocks.  As implemented "
+"by [.filename]#vinum#, a `RAID-5` plex is similar to a striped plex, except "
+"that it implements `RAID-5` by including a parity block in each stripe.  As "
+"required by `RAID-5`, the location of this parity block changes from one "
+"stripe to the next.  The numbers in the data blocks indicate the relative "
+"block numbers."
 msgstr ""
 
 #. type: Block title
@@ -303,8 +309,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:146
 msgid ""
-"In order to address these problems, [.filename]#vinum# implements a "
-"four-level hierarchy of objects:"
+"In order to address these problems, [.filename]#vinum# implements a four-"
+"level hierarchy of objects:"
 msgstr ""
 
 #. type: Plain text
@@ -330,8 +336,8 @@ msgid ""
 "Since [.filename]#vinum# exists within the UNIX(R) disk storage framework, "
 "it would be possible to use UNIX(R) partitions as the building block for "
 "multi-disk plexes. In fact, this turns out to be too inflexible as UNIX(R) "
-"disks can have only a limited number of partitions. Instead, "
-"[.filename]#vinum# subdivides a single UNIX(R) partition, the _drive_, into "
+"disks can have only a limited number of partitions. Instead, [."
+"filename]#vinum# subdivides a single UNIX(R) partition, the _drive_, into "
 "contiguous areas called _subdisks_, which are used as building blocks for "
 "plexes."
 msgstr ""
@@ -339,11 +345,11 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:151
 msgid ""
-"Subdisks reside on [.filename]#vinum#_drives_, currently UNIX(R) "
-"partitions. [.filename]#vinum# drives can contain any number of "
-"subdisks. With the exception of a small area at the beginning of the drive, "
-"which is used for storing configuration and state information, the entire "
-"drive is available for data storage."
+"Subdisks reside on [.filename]#vinum#_drives_, currently UNIX(R) partitions. "
+"[.filename]#vinum# drives can contain any number of subdisks. With the "
+"exception of a small area at the beginning of the drive, which is used for "
+"storing configuration and state information, the entire drive is available "
+"for data storage."
 msgstr ""
 
 #. type: Plain text
@@ -362,8 +368,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:158
 msgid ""
-"Plexes can include multiple subdisks spread over all drives in the "
-"[.filename]#vinum# configuration.  As a result, the size of an individual "
+"Plexes can include multiple subdisks spread over all drives in the [."
+"filename]#vinum# configuration.  As a result, the size of an individual "
 "drive does not limit the size of a plex or a volume."
 msgstr ""
 
@@ -388,8 +394,7 @@ msgid ""
 "parts of the representation to be physically missing, either by design (by "
 "not defining a subdisk for parts of the plex) or by accident (as a result of "
 "the failure of a drive).  As long as at least one plex can provide the data "
-"for the complete address range of the volume, the volume is fully "
-"functional."
+"for the complete address range of the volume, the volume is fully functional."
 msgstr ""
 
 #. type: Title ===
@@ -408,13 +413,13 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:173
 msgid ""
-"A _concatenated plex_ uses the address space of each subdisk in "
-"turn. Concatenated plexes are the most flexible as they can contain any "
-"number of subdisks, and the subdisks may be of different length. The plex "
-"may be extended by adding additional subdisks. They require less CPU time "
-"than striped plexes, though the difference in CPU overhead is not "
-"measurable. On the other hand, they are most susceptible to hot spots, where "
-"one disk is very active and others are idle."
+"A _concatenated plex_ uses the address space of each subdisk in turn. "
+"Concatenated plexes are the most flexible as they can contain any number of "
+"subdisks, and the subdisks may be of different length. The plex may be "
+"extended by adding additional subdisks. They require less CPU time than "
+"striped plexes, though the difference in CPU overhead is not measurable. On "
+"the other hand, they are most susceptible to hot spots, where one disk is "
+"very active and others are idle."
 msgstr ""
 
 #. type: Plain text
@@ -456,8 +461,7 @@ msgid ""
 "|1\n"
 "|yes\n"
 "|no\n"
-"|Large data storage with maximum placement flexibility and moderate "
-"performance\n"
+"|Large data storage with maximum placement flexibility and moderate performance\n"
 "\n"
 "|striped\n"
 "|2\n"
@@ -477,11 +481,11 @@ msgstr ""
 msgid ""
 "[.filename]#vinum# maintains a _configuration database_ which describes the "
 "objects known to an individual system.  Initially, the user creates the "
-"configuration database from one or more configuration files using "
-"man:gvinum[8].  [.filename]#vinum# stores a copy of its configuration "
-"database on each disk _device_ under its control.  This database is updated "
-"on each state change, so that a restart accurately restores the state of "
-"each [.filename]#vinum# object."
+"configuration database from one or more configuration files using man:"
+"gvinum[8].  [.filename]#vinum# stores a copy of its configuration database "
+"on each disk _device_ under its control.  This database is updated on each "
+"state change, so that a restart accurately restores the state of each [."
+"filename]#vinum# object."
 msgstr ""
 
 #. type: Title ===
@@ -533,9 +537,9 @@ msgstr ""
 msgid ""
 "The _plex_ line defines a plex. The only required parameter is the "
 "organization, in this case _concat_. No name is necessary as the system "
-"automatically generates a name from the volume name by adding the suffix "
-"_.px_, where _x_ is the number of the plex in the volume. Thus this plex "
-"will be called _myvol.p0_."
+"automatically generates a name from the volume name by adding the suffix _."
+"px_, where _x_ is the number of the plex in the volume. Thus this plex will "
+"be called _myvol.p0_."
 msgstr ""
 
 #. type: Plain text
@@ -550,7 +554,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:229
-msgid "After processing this file, man:gvinum[8] produces the following output:"
+msgid ""
+"After processing this file, man:gvinum[8] produces the following output:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -568,33 +573,25 @@ msgstr ""
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:241
 #, no-wrap
-msgid ""
-"  D a                     State: up       Device /dev/da3h      Avail: "
-"2061/2573 MB (80%)\n"
+msgid "  D a                     State: up       Device /dev/da3h      Avail: 2061/2573 MB (80%)\n"
 msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:243
 #, no-wrap
-msgid ""
-"  V myvol                 State: up       Plexes:       1 Size:      512 "
-"MB\n"
+msgid "  V myvol                 State: up       Plexes:       1 Size:      512 MB\n"
 msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:245
 #, no-wrap
-msgid ""
-"  P myvol.p0            C State: up       Subdisks:     1 Size:      512 "
-"MB\n"
+msgid "  P myvol.p0            C State: up       Subdisks:     1 Size:      512 MB\n"
 msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:247
 #, no-wrap
-msgid ""
-"  S myvol.p0.s0           State: up       PO:        0  B Size:      512 "
-"MB\n"
+msgid "  S myvol.p0.s0           State: up       PO:        0  B Size:      512 MB\n"
 msgstr ""
 
 #. type: Plain text
@@ -685,44 +682,34 @@ msgstr ""
 #: documentation/content/en/articles/vinum/_index.adoc:293
 #, no-wrap
 msgid ""
-"\tD a                     State: up       Device /dev/da3h       Avail: "
-"1549/2573 MB (60%)\n"
-"\tD b                     State: up       Device /dev/da4h       Avail: "
-"2061/2573 MB (80%)\n"
+"\tD a                     State: up       Device /dev/da3h       Avail: 1549/2573 MB (60%)\n"
+"\tD b                     State: up       Device /dev/da4h       Avail: 2061/2573 MB (80%)\n"
 msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:296
 #, no-wrap
 msgid ""
-"    V myvol                 State: up       Plexes:       1 Size:        512 "
-"MB\n"
-"    V mirror                State: up       Plexes:       2 Size:        512 "
-"MB\n"
+"    V myvol                 State: up       Plexes:       1 Size:        512 MB\n"
+"    V mirror                State: up       Plexes:       2 Size:        512 MB\n"
 msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:300
 #, no-wrap
 msgid ""
-"    P myvol.p0            C State: up       Subdisks:     1 Size:        512 "
-"MB\n"
-"    P mirror.p0           C State: up       Subdisks:     1 Size:        512 "
-"MB\n"
-"    P mirror.p1           C State: initializing     Subdisks:     1 Size:        "
-"512 MB\n"
+"    P myvol.p0            C State: up       Subdisks:     1 Size:        512 MB\n"
+"    P mirror.p0           C State: up       Subdisks:     1 Size:        512 MB\n"
+"    P mirror.p1           C State: initializing     Subdisks:     1 Size:        512 MB\n"
 msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:304
 #, no-wrap
 msgid ""
-"    S myvol.p0.s0           State: up       PO:        0  B Size:        512 "
-"MB\n"
-"\tS mirror.p0.s0          State: up       PO:        0  B Size:        512 "
-"MB\n"
-"\tS mirror.p1.s0          State: empty    PO:        0  B Size:        512 "
-"MB\n"
+"    S myvol.p0.s0           State: up       PO:        0  B Size:        512 MB\n"
+"\tS mirror.p0.s0          State: up       PO:        0  B Size:        512 MB\n"
+"\tS mirror.p1.s0          State: empty    PO:        0  B Size:        512 MB\n"
 msgstr ""
 
 #. type: Plain text
@@ -805,60 +792,42 @@ msgstr ""
 #: documentation/content/en/articles/vinum/_index.adoc:348
 #, no-wrap
 msgid ""
-"    D a                     State: up       Device /dev/da3h        Avail: "
-"1421/2573 MB (55%)\n"
-"    D b                     State: up       Device /dev/da4h        Avail: "
-"1933/2573 MB (75%)\n"
-"    D c                     State: up       Device /dev/da5h        Avail: "
-"2445/2573 MB (95%)\n"
-"    D d                     State: up       Device /dev/da6h        Avail: "
-"2445/2573 MB (95%)\n"
+"    D a                     State: up       Device /dev/da3h        Avail: 1421/2573 MB (55%)\n"
+"    D b                     State: up       Device /dev/da4h        Avail: 1933/2573 MB (75%)\n"
+"    D c                     State: up       Device /dev/da5h        Avail: 2445/2573 MB (95%)\n"
+"    D d                     State: up       Device /dev/da6h        Avail: 2445/2573 MB (95%)\n"
 msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:352
 #, no-wrap
 msgid ""
-"    V myvol                 State: up       Plexes:       1 Size:        512 "
-"MB\n"
-"    V mirror                State: up       Plexes:       2 Size:        512 "
-"MB\n"
-"    V striped               State: up       Plexes:       1 Size:        512 "
-"MB\n"
+"    V myvol                 State: up       Plexes:       1 Size:        512 MB\n"
+"    V mirror                State: up       Plexes:       2 Size:        512 MB\n"
+"    V striped               State: up       Plexes:       1 Size:        512 MB\n"
 msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:357
 #, no-wrap
 msgid ""
-"    P myvol.p0            C State: up       Subdisks:     1 Size:        512 "
-"MB\n"
-"    P mirror.p0           C State: up       Subdisks:     1 Size:        512 "
-"MB\n"
-"    P mirror.p1           C State: initializing     Subdisks:     1 Size:        "
-"512 MB\n"
-"    P striped.p1            State: up       Subdisks:     1 Size:        512 "
-"MB\n"
+"    P myvol.p0            C State: up       Subdisks:     1 Size:        512 MB\n"
+"    P mirror.p0           C State: up       Subdisks:     1 Size:        512 MB\n"
+"    P mirror.p1           C State: initializing     Subdisks:     1 Size:        512 MB\n"
+"    P striped.p1            State: up       Subdisks:     1 Size:        512 MB\n"
 msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:365
 #, no-wrap
 msgid ""
-"    S myvol.p0.s0           State: up       PO:        0  B Size:        512 "
-"MB\n"
-"    S mirror.p0.s0          State: up       PO:        0  B Size:        512 "
-"MB\n"
-"    S mirror.p1.s0          State: empty    PO:        0  B Size:        512 "
-"MB\n"
-"    S striped.p0.s0         State: up       PO:        0  B Size:        128 "
-"MB\n"
-"    S striped.p0.s1         State: up       PO:      512 kB Size:        128 "
-"MB\n"
-"    S striped.p0.s2         State: up       PO:     1024 kB Size:        128 "
-"MB\n"
-"    S striped.p0.s3         State: up       PO:     1536 kB Size:        128 "
-"MB\n"
+"    S myvol.p0.s0           State: up       PO:        0  B Size:        512 MB\n"
+"    S mirror.p0.s0          State: up       PO:        0  B Size:        512 MB\n"
+"    S mirror.p1.s0          State: empty    PO:        0  B Size:        512 MB\n"
+"    S striped.p0.s0         State: up       PO:        0  B Size:        128 MB\n"
+"    S striped.p0.s1         State: up       PO:      512 kB Size:        128 MB\n"
+"    S striped.p0.s2         State: up       PO:     1024 kB Size:        128 MB\n"
+"    S striped.p0.s3         State: up       PO:     1536 kB Size:        128 MB\n"
 msgstr ""
 
 #. type: Block title
@@ -876,8 +845,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:373
 msgid ""
-"This volume is represented in <<vinum-striped-vol, A Striped "
-"[.filename]#vinum# Volume>>.  The darkness of the stripes indicates the "
+"This volume is represented in <<vinum-striped-vol, A Striped [."
+"filename]#vinum# Volume>>.  The darkness of the stripes indicates the "
 "position within the plex address space, where the lightest stripes come "
 "first and the darkest last."
 msgstr ""
@@ -969,19 +938,19 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:416
 msgid ""
-"[.filename]#vinum# objects are assigned device nodes in the hierarchy "
-"[.filename]#/dev/gvinum#.  The configuration shown above would cause "
-"[.filename]#vinum# to create the following device nodes:"
+"[.filename]#vinum# objects are assigned device nodes in the hierarchy [."
+"filename]#/dev/gvinum#.  The configuration shown above would cause [."
+"filename]#vinum# to create the following device nodes:"
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:418
 msgid ""
-"Device entries for each volume. These are the main devices used by "
-"[.filename]#vinum#. The configuration above would include the devices "
-"[.filename]#/dev/gvinum/myvol#, [.filename]#/dev/gvinum/mirror#, "
-"[.filename]#/dev/gvinum/striped#, [.filename]#/dev/gvinum/raid5# and "
-"[.filename]#/dev/gvinum/raid10#."
+"Device entries for each volume. These are the main devices used by [."
+"filename]#vinum#. The configuration above would include the devices [."
+"filename]#/dev/gvinum/myvol#, [.filename]#/dev/gvinum/mirror#, [.filename]#/"
+"dev/gvinum/striped#, [.filename]#/dev/gvinum/raid5# and [.filename]#/dev/"
+"gvinum/raid10#."
 msgstr ""
 
 #. type: Plain text
@@ -992,9 +961,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:420
 msgid ""
-"The directories [.filename]#/dev/gvinum/plex#, and "
-"[.filename]#/dev/gvinum/sd#, which contain device nodes for each plex and "
-"for each subdisk, respectively."
+"The directories [.filename]#/dev/gvinum/plex#, and [.filename]#/dev/gvinum/"
+"sd#, which contain device nodes for each plex and for each subdisk, "
+"respectively."
 msgstr ""
 
 #. type: Plain text
@@ -1079,13 +1048,13 @@ msgid ""
 "thus do not contain a partition table.  This has required modification to "
 "some disk utilities, notably man:newfs[8], so that it does not try to "
 "interpret the last letter of a [.filename]#vinum# volume name as a partition "
-"identifier.  For example, a disk drive may have a name like "
-"[.filename]#/dev/ad0a# or [.filename]#/dev/da2h#.  These names represent the "
-"first partition ([.filename]#a#) on the first (0) IDE disk ([.filename]#ad#) "
-"and the eighth partition ([.filename]#h#) on the third (2) SCSI disk "
-"([.filename]#da#) respectively.  By contrast, a [.filename]#vinum# volume "
-"might be called [.filename]#/dev/gvinum/concat#, which has no relationship "
-"with a partition name."
+"identifier.  For example, a disk drive may have a name like [.filename]#/dev/"
+"ad0a# or [.filename]#/dev/da2h#.  These names represent the first partition "
+"([.filename]#a#) on the first (0) IDE disk ([.filename]#ad#) and the eighth "
+"partition ([.filename]#h#) on the third (2) SCSI disk ([.filename]#da#) "
+"respectively.  By contrast, a [.filename]#vinum# volume might be called [."
+"filename]#/dev/gvinum/concat#, which has no relationship with a partition "
+"name."
 msgstr ""
 
 #. type: Plain text
@@ -1142,32 +1111,19 @@ msgid ""
 "plex name myvol.p1 state up org concat vol myvol\n"
 "plex name myvol.p2 state init org striped 512b vol myvol\n"
 "plex name bigraid.p0 state initializing org raid5 512b vol bigraid\n"
-"sd name myvol.p0.s0 drive a plex myvol.p0 state up len 1048576b driveoffset "
-"265b plexoffset 0b\n"
-"sd name myvol.p0.s1 drive b plex myvol.p0 state up len 1048576b driveoffset "
-"265b plexoffset 1048576b\n"
-"sd name myvol.p1.s0 drive c plex myvol.p1 state up len 1048576b driveoffset "
-"265b plexoffset 0b\n"
-"sd name myvol.p1.s1 drive d plex myvol.p1 state up len 1048576b driveoffset "
-"265b plexoffset 1048576b\n"
-"sd name myvol.p2.s0 drive a plex myvol.p2 state init len 524288b driveoffset "
-"1048841b plexoffset 0b\n"
-"sd name myvol.p2.s1 drive b plex myvol.p2 state init len 524288b driveoffset "
-"1048841b plexoffset 524288b\n"
-"sd name myvol.p2.s2 drive c plex myvol.p2 state init len 524288b driveoffset "
-"1048841b plexoffset 1048576b\n"
-"sd name myvol.p2.s3 drive d plex myvol.p2 state init len 524288b driveoffset "
-"1048841b plexoffset 1572864b\n"
-"sd name bigraid.p0.s0 drive a plex bigraid.p0 state initializing len "
-"4194304b driveoff set 1573129b plexoffset 0b\n"
-"sd name bigraid.p0.s1 drive b plex bigraid.p0 state initializing len "
-"4194304b driveoff set 1573129b plexoffset 4194304b\n"
-"sd name bigraid.p0.s2 drive c plex bigraid.p0 state initializing len "
-"4194304b driveoff set 1573129b plexoffset 8388608b\n"
-"sd name bigraid.p0.s3 drive d plex bigraid.p0 state initializing len "
-"4194304b driveoff set 1573129b plexoffset 12582912b\n"
-"sd name bigraid.p0.s4 drive e plex bigraid.p0 state initializing len "
-"4194304b driveoff set 1573129b plexoffset 16777216b\n"
+"sd name myvol.p0.s0 drive a plex myvol.p0 state up len 1048576b driveoffset 265b plexoffset 0b\n"
+"sd name myvol.p0.s1 drive b plex myvol.p0 state up len 1048576b driveoffset 265b plexoffset 1048576b\n"
+"sd name myvol.p1.s0 drive c plex myvol.p1 state up len 1048576b driveoffset 265b plexoffset 0b\n"
+"sd name myvol.p1.s1 drive d plex myvol.p1 state up len 1048576b driveoffset 265b plexoffset 1048576b\n"
+"sd name myvol.p2.s0 drive a plex myvol.p2 state init len 524288b driveoffset 1048841b plexoffset 0b\n"
+"sd name myvol.p2.s1 drive b plex myvol.p2 state init len 524288b driveoffset 1048841b plexoffset 524288b\n"
+"sd name myvol.p2.s2 drive c plex myvol.p2 state init len 524288b driveoffset 1048841b plexoffset 1048576b\n"
+"sd name myvol.p2.s3 drive d plex myvol.p2 state init len 524288b driveoffset 1048841b plexoffset 1572864b\n"
+"sd name bigraid.p0.s0 drive a plex bigraid.p0 state initializing len 4194304b driveoff set 1573129b plexoffset 0b\n"
+"sd name bigraid.p0.s1 drive b plex bigraid.p0 state initializing len 4194304b driveoff set 1573129b plexoffset 4194304b\n"
+"sd name bigraid.p0.s2 drive c plex bigraid.p0 state initializing len 4194304b driveoff set 1573129b plexoffset 8388608b\n"
+"sd name bigraid.p0.s3 drive d plex bigraid.p0 state initializing len 4194304b driveoff set 1573129b plexoffset 12582912b\n"
+"sd name bigraid.p0.s4 drive e plex bigraid.p0 state initializing len 4194304b driveoff set 1573129b plexoffset 16777216b\n"
 msgstr ""
 
 #. type: Plain text
@@ -1256,10 +1212,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:546
 msgid ""
-"[.filename]#vinum# must be available early in the system boot as "
-"man:loader[8] must be able to load the vinum kernel module before starting "
-"the kernel.  This can be accomplished by putting this line in "
-"[.filename]#/boot/loader.conf#:"
+"[.filename]#vinum# must be available early in the system boot as man:"
+"loader[8] must be able to load the vinum kernel module before starting the "
+"kernel.  This can be accomplished by putting this line in [.filename]#/boot/"
+"loader.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -1300,8 +1256,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:562
 msgid ""
-"The root volume must not contain more than one concatenated subdisk per "
-"plex."
+"The root volume must not contain more than one concatenated subdisk per plex."
 msgstr ""
 
 #. type: Plain text
@@ -1363,20 +1318,20 @@ msgstr ""
 #: documentation/content/en/articles/vinum/_index.adoc:590
 msgid ""
 "  _devname_ must be either the name of the disk, like [.filename]#da0# for "
-"disks without a slice table, or the name of the slice, like "
-"[.filename]#ad0s1#."
+"disks without a slice table, or the name of the slice, like [."
+"filename]#ad0s1#."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:593
 msgid ""
-"  If there is already an `a` partition on the device from a "
-"pre-[.filename]#vinum# root file system, it should be renamed to something "
-"else so that it remains accessible (just in case), but will no longer be "
-"used by default to bootstrap the system.  A currently mounted root file "
-"system cannot be renamed, so this must be executed either when being booted "
-"from a \"Fixit\" media, or in a two-step process where, in a mirror, the "
-"disk that is not been currently booted is manipulated first."
+"  If there is already an `a` partition on the device from a pre-[."
+"filename]#vinum# root file system, it should be renamed to something else so "
+"that it remains accessible (just in case), but will no longer be used by "
+"default to bootstrap the system.  A currently mounted root file system "
+"cannot be renamed, so this must be executed either when being booted from a "
+"\"Fixit\" media, or in a two-step process where, in a mirror, the disk that "
+"is not been currently booted is manipulated first."
 msgstr ""
 
 #. type: Plain text
@@ -1394,8 +1349,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:602
 msgid ""
-"  That way, a new `a` partition will be established that overlaps the "
-"[.filename]#vinum# partition on this device.  `bsdlabel` will only allow for "
+"  That way, a new `a` partition will be established that overlaps the [."
+"filename]#vinum# partition on this device.  `bsdlabel` will only allow for "
 "this overlap if the [.filename]#vinum# partition has properly been marked "
 "using the `vinum` fstype."
 msgstr ""
@@ -1420,9 +1375,8 @@ msgid ""
 "It should be remembered that all files containing control information must "
 "be relative to the root file system in the [.filename]#vinum# volume which, "
 "when setting up a new [.filename]#vinum# root volume, might not match the "
-"root file system that is currently active.  So in particular, "
-"[.filename]#/etc/fstab# and [.filename]#/boot/loader.conf# need to be taken "
-"care of."
+"root file system that is currently active.  So in particular, [.filename]#/"
+"etc/fstab# and [.filename]#/boot/loader.conf# need to be taken care of."
 msgstr ""
 
 #. type: delimited block = 4
@@ -1480,11 +1434,11 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:645
 msgid ""
-"The values to note are `135680` for the offset, relative to partition "
-"[.filename]#/dev/da0h#.  This translates to 265 512-byte disk blocks in "
-"`bsdlabel`'s terms.  Likewise, the size of this root volume is 245760 "
-"512-byte blocks.  [.filename]#/dev/da1h#, containing the second replica of "
-"this root volume, has a symmetric setup."
+"The values to note are `135680` for the offset, relative to partition [."
+"filename]#/dev/da0h#.  This translates to 265 512-byte disk blocks in "
+"`bsdlabel`'s terms.  Likewise, the size of this root volume is 245760 512-"
+"byte blocks.  [.filename]#/dev/da1h#, containing the second replica of this "
+"root volume, has a symmetric setup."
 msgstr ""
 
 #. type: Plain text
@@ -1500,10 +1454,8 @@ msgid ""
 "8 partitions:\n"
 "#        size   offset    fstype   [fsize bsize bps/cpg]\n"
 "  a:   245760      281    4.2BSD     2048 16384     0  # (Cyl.    0*- 15*)\n"
-"  c: 71771688        0    unused        0     0        # (Cyl.    0 - "
-"4467*)\n"
-"  h: 71771672       16     vinum                       # (Cyl.    0*- "
-"4467*)\n"
+"  c: 71771688        0    unused        0     0        # (Cyl.    0 - 4467*)\n"
+"  h: 71771672       16     vinum                       # (Cyl.    0*- 4467*)\n"
 msgstr ""
 
 #. type: Plain text
@@ -1562,29 +1514,29 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:677
 msgid ""
-"When ready, the boot process can be continued by typing `boot -as` which "
-"`-as` requests the kernel to ask for the root file system to mount (`-a`) "
-"and make the boot process stop in single-user mode (`-s`), where the root "
-"file system is mounted read-only.  That way, even if only one plex of a "
-"multi-plex volume has been mounted, no data inconsistency between plexes is "
-"being risked."
+"When ready, the boot process can be continued by typing `boot -as` which `-"
+"as` requests the kernel to ask for the root file system to mount (`-a`) and "
+"make the boot process stop in single-user mode (`-s`), where the root file "
+"system is mounted read-only.  That way, even if only one plex of a multi-"
+"plex volume has been mounted, no data inconsistency between plexes is being "
+"risked."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:683
 msgid ""
 "At the prompt asking for a root file system to mount, any device that "
-"contains a valid root file system can be entered.  If "
-"[.filename]#/etc/fstab# is set up correctly, the default should be something "
-"like `ufs:/dev/gvinum/root`.  A typical alternate choice would be something "
-"like `ufs:da0d` which could be a hypothetical partition containing the "
-"pre-[.filename]#vinum# root file system.  Care should be taken if one of the "
-"alias `a` partitions is entered here, that it actually references the "
-"subdisks of the [.filename]#vinum# root device, because in a mirrored setup, "
-"this would only mount one piece of a mirrored root device.  If this file "
-"system is to be mounted read-write later on, it is necessary to remove the "
-"other plex(es) of the [.filename]#vinum# root volume since these plexes "
-"would otherwise carry inconsistent data."
+"contains a valid root file system can be entered.  If [.filename]#/etc/"
+"fstab# is set up correctly, the default should be something like `ufs:/dev/"
+"gvinum/root`.  A typical alternate choice would be something like `ufs:da0d` "
+"which could be a hypothetical partition containing the pre-[."
+"filename]#vinum# root file system.  Care should be taken if one of the alias "
+"`a` partitions is entered here, that it actually references the subdisks of "
+"the [.filename]#vinum# root device, because in a mirrored setup, this would "
+"only mount one piece of a mirrored root device.  If this file system is to "
+"be mounted read-write later on, it is necessary to remove the other plex(es) "
+"of the [.filename]#vinum# root volume since these plexes would otherwise "
+"carry inconsistent data."
 msgstr ""
 
 #. type: Title ====
@@ -1614,12 +1566,12 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:697
 msgid ""
-"This situation will happen if the bootstrap had been destroyed by the "
-"[.filename]#vinum# installation.  Unfortunately, [.filename]#vinum# "
+"This situation will happen if the bootstrap had been destroyed by the [."
+"filename]#vinum# installation.  Unfortunately, [.filename]#vinum# "
 "accidentally leaves only 4 KB at the beginning of its partition free before "
 "starting to write its [.filename]#vinum# header information.  However, the "
-"stage one and two bootstraps plus the bsdlabel require 8 KB.  So if a "
-"[.filename]#vinum# partition was started at offset 0 within a slice or disk "
+"stage one and two bootstraps plus the bsdlabel require 8 KB.  So if a [."
+"filename]#vinum# partition was started at offset 0 within a slice or disk "
 "that was meant to be bootable, the [.filename]#vinum# setup will trash the "
 "bootstrap."
 msgstr ""

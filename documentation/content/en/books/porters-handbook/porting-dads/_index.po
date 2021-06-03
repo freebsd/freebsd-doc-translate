@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-05-22 14:48-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,6 +15,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#. type: YAML Front Matter: description
+#: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:1
+#, no-wrap
+msgid "A list of common dos and don'ts that are encountered during the FreeBSD porting process"
+msgstr ""
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:1
@@ -40,10 +46,10 @@ msgid ""
 "Here is a list of common dos and don'ts that are encountered during the "
 "porting process. Check the port against this list, but also check ports in "
 "the https://bugs.FreeBSD.org/search/[PR database] that others have "
-"submitted. Submit any comments on ports as described in "
-"link:{contributing}#CONTRIB-GENERAL[Bug Reports and General "
-"Commentary]. Checking ports in the PR database will both make it faster for "
-"us to commit them, and prove that you know what you are doing."
+"submitted. Submit any comments on ports as described in link:{contributing}"
+"#CONTRIB-GENERAL[Bug Reports and General Commentary]. Checking ports in the "
+"PR database will both make it faster for us to commit them, and prove that "
+"you know what you are doing."
 msgstr ""
 
 #. type: Title ==
@@ -56,11 +62,11 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:45
 msgid ""
 "Do not write anything to files outside `WRKDIR`. `WRKDIR` is the only place "
-"that is guaranteed to be writable during the port build (see "
-"link:{handbook}#PORTS-CD[ installing ports from a CDROM] for an example of "
-"building ports from a read-only tree). The [.filename]##pkg-*## files can be "
-"modified by crossref:pkg-files[pkg-names,redefining a variable] rather than "
-"overwriting the file."
+"that is guaranteed to be writable during the port build (see link:{handbook}"
+"#PORTS-CD[ installing ports from a CDROM] for an example of building ports "
+"from a read-only tree). The [.filename]##pkg-*## files can be modified by "
+"crossref:pkg-files[pkg-names,redefining a variable] rather than overwriting "
+"the file."
 msgstr ""
 
 #. type: Title ==
@@ -70,21 +76,13 @@ msgid "`WRKDIRPREFIX`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:50
-msgid ""
-"Make sure the port honors `WRKDIRPREFIX`. Most ports do not have to worry "
-"about this. In particular, when referring to a `WRKDIR` of another port, "
-"note that the correct location is "
-"[.filename]#WRKDIRPREFIXPORTSDIR/subdir/name/work# not "
-"[.filename]#PORTSDIR/subdir/name/work# or "
-"[.filename]#.CURDIR/../../subdir/name/work# or some such."
-msgstr ""
-
-#. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:52
 msgid ""
-"Also, if defining `WRKDIR`, make sure to prepend `${WRKDIRPREFIX}${.CURDIR}` "
-"in the front."
+"Make sure the port honors `WRKDIRPREFIX`.  Most ports do not have to worry "
+"about this.  In particular, when referring to a `WRKDIR` of another port, "
+"note that the correct location is [.filename]#${WRKDIRPREFIX}${PORTSDIR}/"
+"subdir/name/work# not [.filename]#${PORTSDIR}/subdir/name/work# or [."
+"filename]#${.CURDIR}/../../subdir/name/work# or some such."
 msgstr ""
 
 #. type: Title ==
@@ -99,9 +97,8 @@ msgid ""
 "Some code needs modifications or conditional compilation based upon what "
 "version of FreeBSD Unix it is running under. The preferred way to tell "
 "FreeBSD versions apart are the `{freebsd-version}` and `{freebsd}` macros "
-"defined in "
-"https://cgit.freebsd.org/src/tree/sys/sys/param.h[sys/param.h]. If this file "
-"is not included add the code,"
+"defined in https://cgit.freebsd.org/src/tree/sys/sys/param.h[sys/param.h]. "
+"If this file is not included add the code,"
 msgstr ""
 
 #. type: delimited block . 4
@@ -136,8 +133,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:77
 msgid ""
-"A complete list of `{freebsd-version}` values is available in "
-"crossref:versions[versions,__FreeBSD_version Values]."
+"A complete list of `{freebsd-version}` values is available in crossref:"
+"versions[versions,__FreeBSD_version Values]."
 msgstr ""
 
 #. type: Title ==
@@ -158,9 +155,8 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:86
 msgid ""
-"Include either the "
-"[.filename]#bsd.port.pre.mk#/[.filename]#bsd.port.post.mk# pair or "
-"[.filename]#bsd.port.mk# only; do not mix these two usages."
+"Include either the [.filename]#bsd.port.pre.mk#/[.filename]#bsd.port.post."
+"mk# pair or [.filename]#bsd.port.mk# only; do not mix these two usages."
 msgstr ""
 
 #. type: Plain text
@@ -190,37 +186,33 @@ msgid ""
 "|The architecture as returned by `uname -m` (for example, `i386`)\n"
 "\n"
 "|`OPSYS`\n"
-"|The operating system type, as returned by `uname -s` (for example, "
-"`FreeBSD`)\n"
+"|The operating system type, as returned by `uname -s` (for example, `FreeBSD`)\n"
 "\n"
 "|`OSREL`\n"
-"|The release version of the operating system (for example, `2.1.5` or "
-"`2.2.7`)\n"
+"|The release version of the operating system (for example, `2.1.5` or `2.2.7`)\n"
 "\n"
 "|`OSVERSION`\n"
-"|The numeric version of the operating system; the same as "
-"crossref:versions[versions,`{freebsd-version}`].\n"
+"|The numeric version of the operating system; the same as crossref:versions[versions,`{freebsd-version}`].\n"
 "\n"
 "|`LOCALBASE`\n"
 "|The base of the \"local\" tree (for example, `/usr/local`)\n"
 "\n"
 "|`PREFIX`\n"
-"|Where the port installs itself (see crossref:testing[porting-prefix,more on "
-"`PREFIX`]).\n"
+"|Where the port installs itself (see crossref:testing[porting-prefix,more on `PREFIX`]).\n"
 msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:120
 msgid ""
-"When `MASTERDIR` is needed, always define it before including "
-"[.filename]#bsd.port.pre.mk#."
+"When `MASTERDIR` is needed, always define it before including [."
+"filename]#bsd.port.pre.mk#."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:123
 msgid ""
-"Here are some examples of things that can be added after "
-"[.filename]#bsd.port.pre.mk#:"
+"Here are some examples of things that can be added after [.filename]#bsd."
+"port.pre.mk#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -264,9 +256,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:146
 msgid ""
-"The `exec` statement replaces the shell process with the specified "
-"program. If `exec` is omitted, the shell process remains in memory while the "
-"program is executing, and needlessly consumes system resources."
+"The `exec` statement replaces the shell process with the specified program. "
+"If `exec` is omitted, the shell process remains in memory while the program "
+"is executing, and needlessly consumes system resources."
 msgstr ""
 
 #. type: Title ==
@@ -282,8 +274,8 @@ msgid ""
 "manner. Making it a couple of lines shorter or more readable is always "
 "better. Examples include using a make `.if` construct instead of a shell "
 "`if` construct, not redefining `do-extract` if redefining `EXTRACT*` is "
-"enough, and using `GNU_CONFIGURE` instead of `CONFIGURE_ARGS += "
-"--prefix=${PREFIX}`."
+"enough, and using `GNU_CONFIGURE` instead of `CONFIGURE_ARGS += --prefix="
+"${PREFIX}`."
 msgstr ""
 
 #. type: Plain text
@@ -357,10 +349,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:186
 msgid ""
-"Both `CC` and `CXX` can be defined on FreeBSD systems in "
-"[.filename]#/etc/make.conf#. The first example defines a value if it was not "
-"previously set in [.filename]#/etc/make.conf#, preserving any system-wide "
-"definitions. The second example clobbers anything previously defined."
+"Both `CC` and `CXX` can be defined on FreeBSD systems in [.filename]#/etc/"
+"make.conf#. The first example defines a value if it was not previously set "
+"in [.filename]#/etc/make.conf#, preserving any system-wide definitions. The "
+"second example clobbers anything previously defined."
 msgstr ""
 
 #. type: Title ==
@@ -382,15 +374,15 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:193
 msgid ""
-"If it does not, please add `NO_PACKAGE=ignores cflags` to the "
-"[.filename]#Makefile#."
+"If it does not, please add `NO_PACKAGE=ignores cflags` to the [."
+"filename]#Makefile#."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:195
 msgid ""
-"Here is an example of a [.filename]#Makefile# respecting `CFLAGS`. Note the "
-"`+=`:"
+"Here is an example of a [.filename]#Makefile# respecting `CFLAGS`. Note the `"
+"+=`:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -414,9 +406,8 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:209
 msgid ""
 "`CFLAGS` is defined on FreeBSD systems in [.filename]#/etc/make.conf#. The "
-"first example appends additional flags to `CFLAGS`, preserving any "
-"system-wide definitions. The second example clobbers anything previously "
-"defined."
+"first example appends additional flags to `CFLAGS`, preserving any system-"
+"wide definitions. The second example clobbers anything previously defined."
 msgstr ""
 
 #. type: Plain text
@@ -544,10 +535,9 @@ msgid ""
 "variables will be the reason that is shown to users for why the port refuses "
 "to install itself. Please use the correct make variable. Each variable "
 "conveys radically different meanings, both to users and to automated systems "
-"that depend on [.filename]##Makefile##s, such as "
-"crossref:keeping-up[build-cluster,the ports build cluster], "
-"crossref:keeping-up[freshports,FreshPorts], and "
-"crossref:keeping-up[portsmon,portsmon]."
+"that depend on [.filename]##Makefile##s, such as crossref:keeping-up[build-"
+"cluster,the ports build cluster], crossref:keeping-up[freshports,"
+"FreshPorts], and crossref:keeping-up[portsmon,portsmon]."
 msgstr ""
 
 #. type: Title ===
@@ -623,10 +613,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:286
 msgid ""
-"`IGNORE` is reserved for ports that must not be built for some other "
-"reason. Use it for ports where the problem is believed to be structural. The "
-"build cluster will not, under any circumstances, build ports marked as "
-"`IGNORE`. For instance, use `IGNORE` when a port:"
+"`IGNORE` is reserved for ports that must not be built for some other reason. "
+"Use it for ports where the problem is believed to be structural. The build "
+"cluster will not, under any circumstances, build ports marked as `IGNORE`. "
+"For instance, use `IGNORE` when a port:"
 msgstr ""
 
 #. type: Plain text
@@ -736,8 +726,8 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:339
 msgid ""
 "The values are shown in the form `TARGET`/`TARGET_ARCH`. The ports read-only "
-"makevar `ARCH` is set based on the value of `TARGET_ARCH`. Port "
-"[.filename]##Makefile##s should test the value of this Makevar."
+"makevar `ARCH` is set based on the value of `TARGET_ARCH`. Port [."
+"filename]##Makefile##s should test the value of this Makevar."
 msgstr ""
 
 #. type: Title ===
@@ -801,11 +791,11 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:369
 msgid ""
-"If a port fetches i386 binaries and installs them, set "
-"`IA32_BINARY_PORT`. If this variable is set, [.filename]#/usr/lib32# must be "
-"present for IA32 versions of libraries and the kernel must support IA32 "
-"compatibility. If one of these two dependencies is not satisfied, `IGNORE` "
-"will be set automatically."
+"If a port fetches i386 binaries and installs them, set `IA32_BINARY_PORT`. "
+"If this variable is set, [.filename]#/usr/lib32# must be present for IA32 "
+"versions of libraries and the kernel must support IA32 compatibility. If one "
+"of these two dependencies is not satisfied, `IGNORE` will be set "
+"automatically."
 msgstr ""
 
 #. type: Title ===
@@ -865,9 +855,8 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:387
 msgid ""
 "There is no set policy on how much notice to give. Current practice seems to "
-"be one month for security-related issues and two months for build "
-"issues. This also gives any interested committers a little time to fix the "
-"problems."
+"be one month for security-related issues and two months for build issues. "
+"This also gives any interested committers a little time to fix the problems."
 msgstr ""
 
 #. type: Title ==
@@ -892,10 +881,9 @@ msgid ""
 "It is a common mistake to use `.error` for this purpose. The problem with "
 "this is that many automated tools that work with the ports tree will fail in "
 "this situation. The most common occurrence of this is seen when trying to "
-"build [.filename]#/usr/ports/INDEX# (see "
-"crossref:testing[make-describe,Running `make describe`]). However, even more "
-"trivial commands such as `make maintainer` also fail in this scenario. This "
-"is not acceptable."
+"build [.filename]#/usr/ports/INDEX# (see crossref:testing[make-describe,"
+"Running `make describe`]). However, even more trivial commands such as `make "
+"maintainer` also fail in this scenario. This is not acceptable."
 msgstr ""
 
 #. type: Block title
@@ -964,8 +952,8 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:427
 msgid ""
 "Put the old distfile aside, download the new one, unpack them and compare "
-"the content with man:diff[1]. If there is nothing suspicious, update "
-"[.filename]#distinfo#."
+"the content with man:diff[1]. If there is nothing suspicious, update [."
+"filename]#distinfo#."
 msgstr ""
 
 #. type: Plain text
@@ -998,8 +986,8 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:441
 msgid ""
 "Do not use [.filename]#/proc# if there are any other ways of getting the "
-"information. For example, `setprogname(argv[0])` in `main()` and then "
-"man:getprogname[3] to know the executable name."
+"information. For example, `setprogname(argv[0])` in `main()` and then man:"
+"getprogname[3] to know the executable name."
 msgstr ""
 
 #. type: delimited block = 4
@@ -1062,16 +1050,16 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:457
 msgid ""
-"A list of common bashisms is available "
-"https://wiki.ubuntu.com/DashAsBinSh[here]."
+"A list of common bashisms is available https://wiki.ubuntu.com/"
+"DashAsBinSh[here]."
 msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:459
 msgid ""
-"Check that headers are included in the POSIX or man page recommended "
-"way. For example, [.filename]#sys/types.h# is often forgotten, which is not "
-"as much of a problem for Linux(R) as it is for FreeBSD."
+"Check that headers are included in the POSIX or man page recommended way. "
+"For example, [.filename]#sys/types.h# is often forgotten, which is not as "
+"much of a problem for Linux(R) as it is for FreeBSD."
 msgstr ""
 
 #. type: Title ==

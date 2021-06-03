@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-05-22 14:48-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,6 +15,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#. type: YAML Front Matter: description
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:1
+#, no-wrap
+msgid "Description about creating a FreeBSD Port when the program need some modifications"
+msgstr ""
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:1
@@ -53,8 +59,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:42
 msgid ""
-"But do not worry, not many people understand exactly how "
-"[.filename]#bsd.port.mk# is working... _:-)_"
+"But do not worry, not many people understand exactly how [.filename]#bsd."
+"port.mk# is working... _:-)_"
 msgstr ""
 
 #. type: Plain text
@@ -75,8 +81,7 @@ msgstr ""
 msgid ""
 "The `extract` target is run. It looks for the port's distribution file "
 "(typically a compressed tarball) in `DISTDIR` and unpacks it into a "
-"temporary subdirectory specified by `WRKDIR` (defaults to "
-"[.filename]#work#)."
+"temporary subdirectory specified by `WRKDIR` (defaults to [.filename]#work#)."
 msgstr ""
 
 #. type: Plain text
@@ -90,7 +95,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:48
-msgid "The `configure` target is run. This can do any one of many different things."
+msgid ""
+"The `configure` target is run. This can do any one of many different things."
 msgstr ""
 
 #. type: Plain text
@@ -125,8 +131,8 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:54
 msgid ""
 "The `package` target is run. This creates a package using the files from the "
-"temporary directory created during the `stage` target and the port's "
-"[.filename]#pkg-plist#."
+"temporary directory created during the `stage` target and the port's [."
+"filename]#pkg-plist#."
 msgstr ""
 
 #. type: Plain text
@@ -139,21 +145,21 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:57
 msgid ""
-"The above are the default actions. In addition, define targets "
-"`pre-_something_` or `post-_something_`, or put scripts with those names, in "
-"the [.filename]#scripts# subdirectory, and they will be run before or after "
-"the default actions are done."
+"The above are the default actions. In addition, define targets `pre-"
+"_something_` or `post-_something_`, or put scripts with those names, in the "
+"[.filename]#scripts# subdirectory, and they will be run before or after the "
+"default actions are done."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:59
 msgid ""
-"For example, if there is a `post-extract` target defined in the "
-"[.filename]#Makefile#, and a file [.filename]#pre-build# in the "
-"[.filename]#scripts# subdirectory, the `post-extract` target will be called "
+"For example, if there is a `post-extract` target defined in the [."
+"filename]#Makefile#, and a file [.filename]#pre-build# in the [."
+"filename]#scripts# subdirectory, the `post-extract` target will be called "
 "after the regular extraction actions, and [.filename]#pre-build# will be "
-"executed before the default build rules are done. It is recommended to use "
-"[.filename]#Makefile# targets if the actions are simple enough, because it "
+"executed before the default build rules are done. It is recommended to use [."
+"filename]#Makefile# targets if the actions are simple enough, because it "
 "will be easier for someone to figure out what kind of non-default action the "
 "port requires."
 msgstr ""
@@ -161,8 +167,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:61
 msgid ""
-"The default actions are done by the `do-_something_` targets from "
-"[.filename]#bsd.port.mk#. For example, the commands to extract a port are in "
+"The default actions are done by the `do-_something_` targets from [."
+"filename]#bsd.port.mk#. For example, the commands to extract a port are in "
 "the target `do-extract`. If the default target does not do the job right, "
 "redefine the `do-_something_` target in the [.filename]#Makefile#."
 msgstr ""
@@ -195,22 +201,22 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:73
 msgid ""
-"Get the original sources (normally) as a compressed tarball "
-"([.filename]#foo.tar.gz# or [.filename]#foo.tar.bz2#) and copy it into "
-"`DISTDIR`. Always use _mainstream_ sources when and where possible."
+"Get the original sources (normally) as a compressed tarball ([.filename]#foo."
+"tar.gz# or [.filename]#foo.tar.bz2#) and copy it into `DISTDIR`. Always use "
+"_mainstream_ sources when and where possible."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:75
 msgid ""
 "Set the variable `MASTER_SITES` to reflect where the original tarball "
-"resides. Shorthand definitions exist for most mainstream sites in "
-"[.filename]#bsd.sites.mk#. Please use these sites-and the associated "
+"resides. Shorthand definitions exist for most mainstream sites in [."
+"filename]#bsd.sites.mk#. Please use these sites-and the associated "
 "definitions-if at all possible, to help avoid the problem of having the same "
 "information repeated over again many times in the source base. As these "
 "sites tend to change over time, this becomes a maintenance nightmare for "
-"everyone involved. See "
-"crossref:makefiles[makefile-master_sites,`MASTER_SITES`] for details."
+"everyone involved. See crossref:makefiles[makefile-master_sites,"
+"`MASTER_SITES`] for details."
 msgstr ""
 
 #. type: Plain text
@@ -225,12 +231,11 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:79
 msgid ""
 "If a convenient and reliable place to put the distfile cannot be found, we "
-"can \"house\" it ourselves on `ftp.FreeBSD.org`; however, this is the "
-"least-preferred solution. The distfile must be placed into "
-"[.filename]#~/public_distfiles/# of someone's `freefall` account. Ask the "
-"person who commits the port to do this. This person will also set "
-"`MASTER_SITES` to `LOCAL/_username_` where `_username_` is their FreeBSD "
-"cluster login."
+"can \"house\" it ourselves on `ftp.FreeBSD.org`; however, this is the least-"
+"preferred solution. The distfile must be placed into [.filename]#~/"
+"public_distfiles/# of someone's `freefall` account. Ask the person who "
+"commits the port to do this. This person will also set `MASTER_SITES` to "
+"`LOCAL/_username_` where `_username_` is their FreeBSD cluster login."
 msgstr ""
 
 #. type: Plain text
@@ -253,8 +258,8 @@ msgid ""
 "If the port requires additional patches that are available on the Internet, "
 "fetch them too and put them in `DISTDIR`. Do not worry if they come from a "
 "site other than where the main source tarball comes, we have a way to handle "
-"these situations (see the description of "
-"crossref:makefiles[porting-patchfiles,PATCHFILES] below)."
+"these situations (see the description of crossref:makefiles[porting-"
+"patchfiles,PATCHFILES] below)."
 msgstr ""
 
 #. type: Title ==
@@ -371,8 +376,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:122
 msgid ""
 "A patch may modify multiple files if the changes are related and the patch "
-"is named appropriately. For example, "
-"[.filename]#patch-add-missing-stdlib.h#."
+"is named appropriately. For example, [.filename]#patch-add-missing-stdlib.h#."
 msgstr ""
 
 #. type: Plain text
@@ -389,10 +393,10 @@ msgid ""
 "common in the Open Source world for projects to share large amounts of a "
 "code base, but obey different style and indenting rules. When taking a "
 "working piece of functionality from one project to fix similar areas in "
-"another, please be careful: the resulting patch may be full of "
-"non-functional changes. It not only increases the size of the ports "
-"repository but makes it hard to find out what exactly caused the problem and "
-"what was changed at all."
+"another, please be careful: the resulting patch may be full of non-"
+"functional changes. It not only increases the size of the ports repository "
+"but makes it hard to find out what exactly caused the problem and what was "
+"changed at all."
 msgstr ""
 
 #. type: Plain text
@@ -420,18 +424,18 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:138
 msgid ""
 "Patches are saved into files named [.filename]#patch-*# where * indicates "
-"the pathname of the file that is patched, such as "
-"[.filename]#patch-Imakefile# or [.filename]#patch-src-config.h#.  Patches "
-"with file names which do not start with [.filename]#patch-# will not be "
-"applied automatically."
+"the pathname of the file that is patched, such as [.filename]#patch-"
+"Imakefile# or [.filename]#patch-src-config.h#.  Patches with file names "
+"which do not start with [.filename]#patch-# will not be applied "
+"automatically."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:140
 msgid ""
 "After the file has been modified, man:diff[1] is used to record the "
-"differences between the original and the modified version. `-u` causes "
-"man:diff[1] to produce \"unified\" diffs, the preferred form."
+"differences between the original and the modified version. `-u` causes man:"
+"diff[1] to produce \"unified\" diffs, the preferred form."
 msgstr ""
 
 #. type: delimited block . 4
@@ -443,8 +447,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:147
 msgid ""
-"When generating patches for new, added files, `-N` is used to tell "
-"man:diff[1] to treat the non-existent original file as if it existed but was "
+"When generating patches for new, added files, `-N` is used to tell man:"
+"diff[1] to treat the non-existent original file as if it existed but was "
 "empty:"
 msgstr ""
 
@@ -459,13 +463,13 @@ msgstr ""
 msgid ""
 "Using the recurse (`-r`) option to man:diff[1] to generate patches is fine, "
 "but please look at the resulting patches to make sure there is no "
-"unnecessary junk in there. In particular, diffs between two backup files, "
-"[.filename]##Makefile##s when the port uses `Imake` or GNU `configure`, "
-"etc., are unnecessary and have to be deleted. If it was necessary to edit "
-"[.filename]#configure.in# and run `autoconf` to regenerate `configure`, do "
-"not take the diffs of `configure` (it often grows to a few thousand "
-"lines!). Instead, define `USES=autoreconf` and take the diffs of "
-"[.filename]#configure.in#."
+"unnecessary junk in there. In particular, diffs between two backup files, [."
+"filename]##Makefile##s when the port uses `Imake` or GNU `configure`, etc., "
+"are unnecessary and have to be deleted. If it was necessary to edit [."
+"filename]#configure.in# and run `autoconf` to regenerate `configure`, do not "
+"take the diffs of `configure` (it often grows to a few thousand lines!). "
+"Instead, define `USES=autoreconf` and take the diffs of [."
+"filename]#configure.in#."
 msgstr ""
 
 #. type: Title ===
@@ -477,8 +481,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:159
 msgid ""
-"Simple replacements can be performed directly from the port "
-"[.filename]#Makefile# using the in-place mode of man:sed[1]. This is useful "
+"Simple replacements can be performed directly from the port [."
+"filename]#Makefile# using the in-place mode of man:sed[1]. This is useful "
 "when changes use the value of a variable:"
 msgstr ""
 
@@ -587,8 +591,8 @@ msgid ""
 "or when a particular option is enabled or disabled. Conditional patches are "
 "specified by placing the full paths to the patch files in `EXTRA_PATCHES`.  "
 "Conditional patch file names usually start with [.filename]#extra-# although "
-"this is not necessary.  However, their file names _must not_ start with "
-"[.filename]#patch-#.  If they do, they are applied unconditionally by the "
+"this is not necessary.  However, their file names _must not_ start with [."
+"filename]#patch-#.  If they do, they are applied unconditionally by the "
 "framework which is undesired for conditional patches."
 msgstr ""
 
@@ -631,9 +635,9 @@ msgstr ""
 msgid ""
 "When an crossref:makefiles[makefile-options,option] requires a patch, use "
 "``opt_EXTRA_PATCHES`` and ``opt_EXTRA_PATCHES_OFF`` to make the patch "
-"conditional on the `opt` option. See "
-"crossref:makefiles[options-variables,Generic Variables Replacement, "
-"`OPT_VARIABLE` and `OPT_VARIABLE_OFF`] for more information."
+"conditional on the `opt` option. See crossref:makefiles[options-variables,"
+"Generic Variables Replacement, `OPT_VARIABLE` and `OPT_VARIABLE_OFF`] for "
+"more information."
 msgstr ""
 
 #. type: delimited block . 4
@@ -708,8 +712,8 @@ msgid ""
 "Include any additional customization commands in the [.filename]#configure# "
 "script and save it in the [.filename]#scripts# subdirectory. As mentioned "
 "above, it is also possible do this with [.filename]#Makefile# targets and/or "
-"scripts with the name [.filename]#pre-configure# or "
-"[.filename]#post-configure#."
+"scripts with the name [.filename]#pre-configure# or [.filename]#post-"
+"configure#."
 msgstr ""
 
 #. type: Title ==

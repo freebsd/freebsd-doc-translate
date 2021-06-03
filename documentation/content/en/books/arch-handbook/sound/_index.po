@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-05-22 14:48-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,6 +15,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#. type: YAML Front Matter: description
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:1
+#, no-wrap
+msgid "FreeBSD Sound Subsystem"
+msgstr ""
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:1
@@ -61,13 +67,13 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:43
 msgid ""
-"Common code for processing sound data (format conversions, virtual "
-"channels)."
+"Common code for processing sound data (format conversions, virtual channels)."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:44
-msgid "A uniform software interface to hardware-specific audio interface modules."
+msgid ""
+"A uniform software interface to hardware-specific audio interface modules."
 msgstr ""
 
 #. type: Plain text
@@ -106,9 +112,8 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:53
 msgid ""
 "As an alternative, or in addition to starting from a working example, you "
-"can find a commented driver template at "
-"https://people.FreeBSD.org/~cg/template.c[ "
-"https://people.FreeBSD.org/~cg/template.c]"
+"can find a commented driver template at https://people.FreeBSD.org/~cg/"
+"template.c[ https://people.FreeBSD.org/~cg/template.c]"
 msgstr ""
 
 #. type: Title ==
@@ -121,17 +126,17 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:58
 msgid ""
 "All the relevant code lives in [.filename]#/usr/src/sys/dev/sound/#, except "
-"for the public ioctl interface definitions, found in "
-"[.filename]#/usr/src/sys/sys/soundcard.h#"
+"for the public ioctl interface definitions, found in [.filename]#/usr/src/"
+"sys/sys/soundcard.h#"
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:60
 msgid ""
 "Under [.filename]#/usr/src/sys/dev/sound/#, the [.filename]#pcm/# directory "
-"holds the central code, while the [.filename]#pci/#, [.filename]#isa/# and "
-"[.filename]#usb/# directories have the drivers for PCI and ISA boards, and "
-"for USB audio devices."
+"holds the central code, while the [.filename]#pci/#, [.filename]#isa/# and [."
+"filename]#usb/# directories have the drivers for PCI and ISA boards, and for "
+"USB audio devices."
 msgstr ""
 
 #. type: Title ==
@@ -145,8 +150,7 @@ msgstr ""
 msgid ""
 "Sound drivers probe and attach in almost the same way as any hardware driver "
 "module. You might want to look at the crossref:isa-driver[isa-driver,ISA] or "
-"crossref:pci[pci,PCI] specific sections of the handbook for more "
-"information."
+"crossref:pci[pci,PCI] specific sections of the handbook for more information."
 msgstr ""
 
 #. type: Plain text
@@ -177,8 +181,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "          DRIVER_MODULE(snd_xxxpci, pci, xxx_driver, pcm_devclass, 0, 0);\n"
-"          MODULE_DEPEND(snd_xxxpci, snd_pcm, PCM_MINVER, "
-"PCM_PREFVER,PCM_MAXVER);\n"
+"          MODULE_DEPEND(snd_xxxpci, snd_pcm, PCM_MINVER, PCM_PREFVER,PCM_MAXVER);\n"
 msgstr ""
 
 #. type: Plain text
@@ -232,10 +235,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:91
 msgid ""
-"Use a `device_identify()` method (example: "
-"[.filename]#sound/isa/es1888.c#). The `device_identify()` method probes for "
-"the hardware at known addresses and, if it finds a supported device, creates "
-"a new pcm device which is then passed to probe/attach."
+"Use a `device_identify()` method (example: [.filename]#sound/isa/es1888.c#). "
+"The `device_identify()` method probes for the hardware at known addresses "
+"and, if it finds a supported device, creates a new pcm device which is then "
+"passed to probe/attach."
 msgstr ""
 
 #. type: Plain text
@@ -278,8 +281,8 @@ msgstr ""
 msgid ""
 "The _AC97_ interface is a very small hardware access (register read/write) "
 "interface, implemented by drivers for hardware with an AC97 codec. In this "
-"case, the actual MIXER interface is provided by the shared AC97 code in "
-"[.filename]#pcm#."
+"case, the actual MIXER interface is provided by the shared AC97 code in [."
+"filename]#pcm#."
 msgstr ""
 
 #. type: Title ===
@@ -314,8 +317,8 @@ msgstr ""
 msgid ""
 "The second parameter is a pointer to the private channel data structure, "
 "except for `channel_init()` which has a pointer to the private device "
-"structure (and returns the channel pointer for further use by "
-"[.filename]#pcm#)."
+"structure (and returns the channel pointer for further use by [."
+"filename]#pcm#)."
 msgstr ""
 
 #. type: Title ====
@@ -413,11 +416,10 @@ msgid ""
 "<.> `b` is the address for the channel `struct snd_dbuf`. It should be "
 "initialized in the function by calling `sndbuf_alloc()`. The buffer size to "
 "use is normally a small multiple of the 'typical' unit transfer size for "
-"your device.`c` is the [.filename]#pcm# channel control structure "
-"pointer. This is an opaque object. The function should store it in the local "
-"channel structure, to be used in later calls to [.filename]#pcm# (ie: "
-"`chn_intr(c)`).`dir` indicates the channel direction (`PCMDIR_PLAY` or "
-"`PCMDIR_REC`)."
+"your device.`c` is the [.filename]#pcm# channel control structure pointer. "
+"This is an opaque object. The function should store it in the local channel "
+"structure, to be used in later calls to [.filename]#pcm# (ie: `chn_intr(c)`)."
+"`dir` indicates the channel direction (`PCMDIR_PLAY` or `PCMDIR_REC`)."
 msgstr ""
 
 #. type: Plain text
@@ -446,8 +448,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "          static int\n"
-"          xxxchannel_setformat(kobj_t obj, void *data, u_int32_t format) "
-"<.>\n"
+"          xxxchannel_setformat(kobj_t obj, void *data, u_int32_t format) <.>\n"
 "          {\n"
 "              struct xxx_chinfo *ch = data;\n"
 "               ...\n"
@@ -457,7 +458,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:166
-msgid "<.> `format` is specified as an `AFMT_XXX value` ([.filename]#soundcard.h#)."
+msgid ""
+"<.> `format` is specified as an `AFMT_XXX value` ([.filename]#soundcard.h#)."
 msgstr ""
 
 #. type: Title ====
@@ -515,8 +517,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "          static int\n"
-"          xxxchannel_setblocksize(kobj_t obj, void *data, u_int32_t "
-"blocksize)\n"
+"          xxxchannel_setblocksize(kobj_t obj, void *data, u_int32_t blocksize)\n"
 "          {\n"
 "              struct xxx_chinfo *ch = data;\n"
 "                ...\n"
@@ -560,7 +561,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:218
-msgid "<.> `go` defines the action for the current call. The possible values are:"
+msgid ""
+"<.> `go` defines the action for the current call. The possible values are:"
 msgstr ""
 
 #. type: delimited block = 4
@@ -580,9 +582,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:227
 msgid ""
-"`xxxchannel_getptr()` returns the current offset in the transfer "
-"buffer. This will typically be called by `chn_intr()`, and this is how "
-"[.filename]#pcm# knows where it can transfer new data."
+"`xxxchannel_getptr()` returns the current offset in the transfer buffer. "
+"This will typically be called by `chn_intr()`, and this is how [."
+"filename]#pcm# knows where it can transfer new data."
 msgstr ""
 
 #. type: Title ====

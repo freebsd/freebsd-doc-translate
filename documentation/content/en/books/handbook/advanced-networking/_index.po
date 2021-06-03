@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-05-22 14:48-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,6 +15,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#. type: YAML Front Matter: description
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1
+#, no-wrap
+msgid "Advanced networking in FreeBSD:  basics of gateways and routes, CARP, how to configure multiple VLANs on FreeBSD, etc"
+msgstr ""
 
 #. type: YAML Front Matter: part
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1
@@ -115,15 +121,15 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:68
 msgid ""
-"Know how to configure and install a new FreeBSD kernel "
-"(crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel])."
+"Know how to configure and install a new FreeBSD kernel (crossref:"
+"kernelconfig[kernelconfig,Configuring the FreeBSD Kernel])."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:69
 msgid ""
-"Know how to install additional third-party software "
-"(crossref:ports[ports,Installing Applications: Packages and Ports])."
+"Know how to install additional third-party software (crossref:ports[ports,"
+"Installing Applications: Packages and Ports])."
 msgstr ""
 
 #. type: Title ==
@@ -140,10 +146,10 @@ msgid ""
 "\"destination\" and a \"gateway\". The route indicates that when trying to "
 "get to the specified destination, send the packets through the specified "
 "gateway. There are three types of destinations: individual hosts, subnets, "
-"and \"default\". The \"default route\" is used if no other routes "
-"apply. There are also three types of gateways: individual hosts, interfaces, "
-"also called links, and Ethernet hardware (MAC) addresses. Known routes are "
-"stored in a routing table."
+"and \"default\". The \"default route\" is used if no other routes apply. "
+"There are also three types of gateways: individual hosts, interfaces, also "
+"called links, and Ethernet hardware (MAC) addresses. Known routes are stored "
+"in a routing table."
 msgstr ""
 
 #. type: Plain text
@@ -178,12 +184,10 @@ msgstr ""
 #, no-wrap
 msgid ""
 "Internet:\n"
-"Destination      Gateway            Flags     Refs     Use     Netif "
-"Expire\n"
+"Destination      Gateway            Flags     Refs     Use     Netif Expire\n"
 "default          outside-gw         UGS        37      418       em0\n"
 "localhost        localhost          UH          0      181       lo0\n"
-"test0            0:e0:b5:36:cf:4f   UHLW        5    63288       re0     "
-"77\n"
+"test0            0:e0:b5:36:cf:4f   UHLW        5    63288       re0     77\n"
 "10.20.30.255     link#1             UHLW        1     2421\n"
 "example.com      link#1             UC          0        0\n"
 "host1            0:e0:a8:37:8:1e    UHLW        3     4601       lo0\n"
@@ -257,8 +261,8 @@ msgstr ""
 msgid ""
 "The addresses beginning with `0:e0:` are MAC addresses. FreeBSD will "
 "automatically identify any hosts, `test0` in the example, on the local "
-"Ethernet and add a route for that host over the Ethernet interface, "
-"[.filename]#re0#. This type of route has a timeout, seen in the `Expire` "
+"Ethernet and add a route for that host over the Ethernet interface, [."
+"filename]#re0#. This type of route has a timeout, seen in the `Expire` "
 "column, which is used if the host does not respond in a specific amount of "
 "time. When this happens, the route to this host will be automatically "
 "deleted. These hosts are identified using the Routing Information Protocol "
@@ -306,11 +310,11 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:124
 msgid ""
-"The two `host2` lines represent aliases which were created using "
-"man:ifconfig[8]. The `=>` symbol after the [.filename]#lo0# interface says "
-"that an alias has been set in addition to the loopback address. Such routes "
-"only show up on the host that supports the alias and all other hosts on the "
-"local network will have a `link#1` line for such routes."
+"The two `host2` lines represent aliases which were created using man:"
+"ifconfig[8]. The `=>` symbol after the [.filename]#lo0# interface says that "
+"an alias has been set in addition to the loopback address. Such routes only "
+"show up on the host that supports the alias and all other hosts on the local "
+"network will have a `link#1` line for such routes."
 msgstr ""
 
 #. type: Labeled list
@@ -327,8 +331,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:129
 msgid ""
-"Various attributes of each route can be seen in the `Flags` "
-"column. <<routeflags>> summarizes some of these flags and their meanings:"
+"Various attributes of each route can be seen in the `Flags` column. "
+"<<routeflags>> summarizes some of these flags and their meanings:"
 msgstr ""
 
 #. type: Block title
@@ -351,19 +355,16 @@ msgid ""
 "|The route destination is a single host.\n"
 "\n"
 "|G\n"
-"|Send anything for this destination on to this gateway, which will figure "
-"out from there where to send it.\n"
+"|Send anything for this destination on to this gateway, which will figure out from there where to send it.\n"
 "\n"
 "|S\n"
 "|This route was statically configured.\n"
 "\n"
 "|C\n"
-"|Clones a new route based upon this route for machines to connect to. This "
-"type of route is normally used for local networks.\n"
+"|Clones a new route based upon this route for machines to connect to. This type of route is normally used for local networks.\n"
 "\n"
 "|W\n"
-"|The route was auto-configured based upon a local area network (clone) "
-"route.\n"
+"|The route was auto-configured based upon a local area network (clone) route.\n"
 "\n"
 "|L\n"
 "|Route involves references to Ethernet (link) hardware.\n"
@@ -372,9 +373,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:160
 msgid ""
-"On a FreeBSD system, the default route can defined in "
-"[.filename]#/etc/rc.conf# by specifying the IP address of the default "
-"gateway:"
+"On a FreeBSD system, the default route can defined in [.filename]#/etc/rc."
+"conf# by specifying the IP address of the default gateway:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -398,8 +398,8 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:174
 msgid ""
 "Note that manually added routes will not survive a reboot. For more "
-"information on manual manipulation of network routing tables, refer to "
-"man:route[8]."
+"information on manual manipulation of network routing tables, refer to man:"
+"route[8]."
 msgstr ""
 
 #. type: Title ===
@@ -425,24 +425,21 @@ msgid ""
 "In order for the system to forward packets between interfaces, FreeBSD must "
 "be configured as a router. Internet standards and good engineering practice "
 "prevent the FreeBSD Project from enabling this feature by default, but it "
-"can be configured to start at boot by adding this line to "
-"[.filename]#/etc/rc.conf#:"
+"can be configured to start at boot by adding this line to [.filename]#/etc/"
+"rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:185
 #, no-wrap
-msgid ""
-"gateway_enable=\"YES\"          # Set to YES if this host will be a "
-"gateway\n"
+msgid "gateway_enable=\"YES\"          # Set to YES if this host will be a gateway\n"
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:188
 msgid ""
-"To enable routing now, set the man:sysctl[8] variable "
-"`net.inet.ip.forwarding` to `1`. To stop routing, reset this variable to "
-"`0`."
+"To enable routing now, set the man:sysctl[8] variable `net.inet.ip."
+"forwarding` to `1`. To stop routing, reset this variable to `0`."
 msgstr ""
 
 #. type: Plain text
@@ -450,9 +447,9 @@ msgstr ""
 msgid ""
 "The routing table of a router needs additional routes so it knows how to "
 "reach other networks. Routes can be either added manually using static "
-"routes or routes can be automatically learned using a routing "
-"protocol. Static routes are appropriate for small networks and this section "
-"describes how to add a static routing entry for a small network."
+"routes or routes can be automatically learned using a routing protocol. "
+"Static routes are appropriate for small networks and this section describes "
+"how to add a static routing entry for a small network."
 msgstr ""
 
 #. type: delimited block = 4
@@ -505,8 +502,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "Internet:\n"
-"Destination        Gateway            Flags    Refs      Use  Netif  "
-"Expire\n"
+"Destination        Gateway            Flags    Refs      Use  Netif  Expire\n"
 "default            10.0.0.1           UGS         0    49378    xl0\n"
 "127.0.0.1          127.0.0.1          UH          0        6    lo0\n"
 "10.0.0.0/24        link#1             UC          0        0    xl0\n"
@@ -602,8 +598,8 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:252
 msgid ""
 "It is the task of the service provider to advertise to the backbone sites "
-"that they are the point of connection, and thus the path inward, for a "
-"site. This is known as route propagation."
+"that they are the point of connection, and thus the path inward, for a site. "
+"This is known as route propagation."
 msgstr ""
 
 #. type: Plain text
@@ -633,10 +629,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:261
 msgid ""
-"FreeBSD natively supports both multicast applications and multicast "
-"routing. Multicast applications do not require any special configuration in "
-"order to run on FreeBSD. Support for multicast routing requires that the "
-"following option be compiled into a custom kernel:"
+"FreeBSD natively supports both multicast applications and multicast routing. "
+"Multicast applications do not require any special configuration in order to "
+"run on FreeBSD. Support for multicast routing requires that the following "
+"option be compiled into a custom kernel:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -648,13 +644,12 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:268
 msgid ""
-"The multicast routing daemon, mrouted can be installed using the "
-"package:net/mrouted[] package or port. This daemon implements the DVMRP "
-"multicast routing protocol and is configured by editing "
-"[.filename]#/usr/local/etc/mrouted.conf# in order to set up the tunnels and "
-"DVMRP. The installation of mrouted also installs map-mbone and mrinfo, as "
-"well as their associated man pages. Refer to these for configuration "
-"examples."
+"The multicast routing daemon, mrouted can be installed using the package:net/"
+"mrouted[] package or port. This daemon implements the DVMRP multicast "
+"routing protocol and is configured by editing [.filename]#/usr/local/etc/"
+"mrouted.conf# in order to set up the tunnels and DVMRP. The installation of "
+"mrouted also installs map-mbone and mrinfo, as well as their associated man "
+"pages. Refer to these for configuration examples."
 msgstr ""
 
 #. type: delimited block = 4
@@ -720,22 +715,21 @@ msgid ""
 "variety of security mechanisms. The original 802.11 specifications defined a "
 "simple security protocol called WEP. This protocol uses a fixed pre-shared "
 "key and the RC4 cryptographic cipher to encode data transmitted on a "
-"network. Stations must all agree on the fixed key in order to "
-"communicate. This scheme was shown to be easily broken and is now rarely "
-"used except to discourage transient users from joining networks. Current "
-"security practice is given by the IEEE(R) 802.11i specification that defines "
-"new cryptographic ciphers and an additional protocol to authenticate "
-"stations to an access point and exchange keys for data "
-"communication. Cryptographic keys are periodically refreshed and there are "
-"mechanisms for detecting and countering intrusion attempts. Another security "
-"protocol specification commonly used in wireless networks is termed WPA, "
-"which was a precursor to 802.11i. WPA specifies a subset of the requirements "
-"found in 802.11i and is designed for implementation on legacy "
-"hardware. Specifically, WPA requires only the TKIP cipher that is derived "
-"from the original WEP cipher. 802.11i permits use of TKIP but also requires "
-"support for a stronger cipher, AES-CCM, for encrypting data. The AES cipher "
-"was not required in WPA because it was deemed too computationally costly to "
-"be implemented on legacy hardware."
+"network. Stations must all agree on the fixed key in order to communicate. "
+"This scheme was shown to be easily broken and is now rarely used except to "
+"discourage transient users from joining networks. Current security practice "
+"is given by the IEEE(R) 802.11i specification that defines new cryptographic "
+"ciphers and an additional protocol to authenticate stations to an access "
+"point and exchange keys for data communication. Cryptographic keys are "
+"periodically refreshed and there are mechanisms for detecting and countering "
+"intrusion attempts. Another security protocol specification commonly used in "
+"wireless networks is termed WPA, which was a precursor to 802.11i. WPA "
+"specifies a subset of the requirements found in 802.11i and is designed for "
+"implementation on legacy hardware. Specifically, WPA requires only the TKIP "
+"cipher that is derived from the original WEP cipher. 802.11i permits use of "
+"TKIP but also requires support for a stronger cipher, AES-CCM, for "
+"encrypting data. The AES cipher was not required in WPA because it was "
+"deemed too computationally costly to be implemented on legacy hardware."
 msgstr ""
 
 #. type: Plain text
@@ -746,9 +740,9 @@ msgid ""
 "(VoIP), in an 802.11 network. Like 802.11i, 802.11e also has a precursor "
 "specification termed WME (later renamed WMM) that has been defined by an "
 "industry group as a subset of 802.11e that can be deployed now to enable "
-"multimedia applications while waiting for the final ratification of "
-"802.11e. The most important thing to know about 802.11e and WME/WMM is that "
-"it enables prioritized traffic over a wireless network through Quality of "
+"multimedia applications while waiting for the final ratification of 802.11e. "
+"The most important thing to know about 802.11e and WME/WMM is that it "
+"enables prioritized traffic over a wireless network through Quality of "
 "Service (QoS) protocols and enhanced media access protocols. Proper "
 "implementation of these protocols enables high speed bursting of data and "
 "prioritized traffic flow."
@@ -757,8 +751,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:290
 msgid ""
-"FreeBSD supports networks that operate using 802.11a, 802.11b, and "
-"802.11g. The WPA and 802.11i security protocols are likewise supported (in "
+"FreeBSD supports networks that operate using 802.11a, 802.11b, and 802.11g. "
+"The WPA and 802.11i security protocols are likewise supported (in "
 "conjunction with any of 11a, 11b, and 11g) and QoS and traffic "
 "prioritization required by the WME/WMM protocols are supported for a limited "
 "set of wireless devices."
@@ -842,8 +836,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:326
 msgid ""
-"Add entries to [.filename]#/etc/rc.conf# to configure the network on "
-"startup:"
+"Add entries to [.filename]#/etc/rc.conf# to configure the network on startup:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -905,13 +898,13 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:355
 msgid ""
-"The Atheros driver is split up into three separate pieces: the driver "
-"(man:ath[4]), the hardware support layer that handles chip-specific "
-"functions (man:ath_hal[4]), and an algorithm for selecting the rate for "
-"transmitting frames. When this support is loaded as kernel modules, any "
-"dependencies are automatically handled. To load support for a different type "
-"of wireless device, specify the module for that device. This example is for "
-"devices based on the Intersil Prism parts (man:wi[4]) driver:"
+"The Atheros driver is split up into three separate pieces: the driver (man:"
+"ath[4]), the hardware support layer that handles chip-specific functions "
+"(man:ath_hal[4]), and an algorithm for selecting the rate for transmitting "
+"frames. When this support is loaded as kernel modules, any dependencies are "
+"automatically handled. To load support for a different type of wireless "
+"device, specify the module for that device. This example is for devices "
+"based on the Intersil Prism parts (man:wi[4]) driver:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -926,11 +919,11 @@ msgid ""
 "The examples in this section use an man:ath[4] device and the device name in "
 "the examples must be changed according to the configuration. A list of "
 "available wireless drivers and supported adapters can be found in the "
-"FreeBSD Hardware Notes, available on the "
-"https://www.FreeBSD.org/releases/[Release Information] page of the FreeBSD "
-"website. If a native FreeBSD driver for the wireless device does not exist, "
-"it may be possible to use the Windows(R) driver with the help of the "
-"crossref:config[config-network-ndis,NDIS] driver wrapper."
+"FreeBSD Hardware Notes, available on the https://www.FreeBSD.org/releases/"
+"[Release Information] page of the FreeBSD website. If a native FreeBSD "
+"driver for the wireless device does not exist, it may be possible to use the "
+"Windows(R) driver with the help of the crossref:config[config-network-ndis,"
+"NDIS] driver wrapper."
 msgstr ""
 
 #. type: Plain text
@@ -939,12 +932,12 @@ msgid ""
 "In addition, the modules that implement cryptographic support for the "
 "security protocols to use must be loaded. These are intended to be "
 "dynamically loaded on demand by the man:wlan[4] module, but for now they "
-"must be manually configured. The following modules are available: "
-"man:wlan_wep[4], man:wlan_ccmp[4], and man:wlan_tkip[4]. The "
-"man:wlan_ccmp[4] and man:wlan_tkip[4] drivers are only needed when using the "
-"WPA or 802.11i security protocols. If the network does not use encryption, "
-"man:wlan_wep[4] support is not needed. To load these modules at boot time, "
-"add the following lines to [.filename]#/boot/loader.conf#:"
+"must be manually configured. The following modules are available: man:"
+"wlan_wep[4], man:wlan_ccmp[4], and man:wlan_tkip[4]. The man:wlan_ccmp[4] "
+"and man:wlan_tkip[4] drivers are only needed when using the WPA or 802.11i "
+"security protocols. If the network does not use encryption, man:wlan_wep[4] "
+"support is not needed. To load these modules at boot time, add the following "
+"lines to [.filename]#/boot/loader.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -960,8 +953,8 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:376
 msgid ""
 "Once this information has been added to [.filename]#/boot/loader.conf#, "
-"reboot the FreeBSD box. Alternately, load the modules by hand using "
-"man:kldload[8]."
+"reboot the FreeBSD box. Alternately, load the modules by hand using man:"
+"kldload[8]."
 msgstr ""
 
 #. type: delimited block = 4
@@ -1005,8 +998,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:404
 #, no-wrap
 msgid ""
-"ath0: <Atheros 5212> mem 0x88000000-0x8800ffff irq 11 at device 0.0 on "
-"cardbus1\n"
+"ath0: <Atheros 5212> mem 0x88000000-0x8800ffff irq 11 at device 0.0 on cardbus1\n"
 "ath0: [ITHREAD]\n"
 "ath0: AR2413 mac 7.9 RF2413 phy 4.5\n"
 msgstr ""
@@ -1028,8 +1020,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:411
 msgid ""
-"The available region definitions can be found in "
-"[.filename]#/etc/regdomain.xml#. To set the data at runtime, use `ifconfig`:"
+"The available region definitions can be found in [.filename]#/etc/regdomain."
+"xml#. To set the data at runtime, use `ifconfig`:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -1127,25 +1119,19 @@ msgid ""
 "| Meaning\n"
 "\n"
 "|`E`\n"
-"|Extended Service Set (ESS). Indicates that the station is part of an "
-"infrastructure network rather than an IBSS/ad-hoc network.\n"
+"|Extended Service Set (ESS). Indicates that the station is part of an infrastructure network rather than an IBSS/ad-hoc network.\n"
 "\n"
 "|`I`\n"
-"|IBSS/ad-hoc network. Indicates that the station is part of an ad-hoc "
-"network rather than an ESS network.\n"
+"|IBSS/ad-hoc network. Indicates that the station is part of an ad-hoc network rather than an ESS network.\n"
 "\n"
 "|`P`\n"
-"|Privacy. Encryption is required for all data frames exchanged within the "
-"BSS using cryptographic means such as WEP, TKIP or AES-CCMP.\n"
+"|Privacy. Encryption is required for all data frames exchanged within the BSS using cryptographic means such as WEP, TKIP or AES-CCMP.\n"
 "\n"
 "|`S`\n"
-"|Short Preamble. Indicates that the network is using short preambles, "
-"defined in 802.11b High Rate/DSSS PHY, and utilizes a 56 bit sync field "
-"rather than the 128 bit field used in long preamble mode.\n"
+"|Short Preamble. Indicates that the network is using short preambles, defined in 802.11b High Rate/DSSS PHY, and utilizes a 56 bit sync field rather than the 128 bit field used in long preamble mode.\n"
 "\n"
 "|`s`\n"
-"|Short slot time. Indicates that the 802.11g network is using a short slot "
-"time because there are no legacy (802.11b) stations present.\n"
+"|Short slot time. Indicates that the 802.11g network is using a short slot time because there are no legacy (802.11b) stations present.\n"
 msgstr ""
 
 #. type: Plain text
@@ -1267,9 +1253,9 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:522
 msgid ""
 "This example will force the card to operate in 802.11g, which is defined "
-"only for 2.4GHz frequencies so any 5GHz channels will not be "
-"considered. This can also be achieved with the `channel` parameter, which "
-"locks operation to one specific frequency, and the `chanlist` parameter, to "
+"only for 2.4GHz frequencies so any 5GHz channels will not be considered. "
+"This can also be achieved with the `channel` parameter, which locks "
+"operation to one specific frequency, and the `chanlist` parameter, to "
 "specify a list of channels for scanning. More information about these "
 "parameters can be found in man:ifconfig[8]."
 msgstr ""
@@ -1287,8 +1273,8 @@ msgid ""
 "scheme, open authentication, allows any station to join the network and "
 "communicate. This is the authentication to use for test purposes the first "
 "time a wireless network is setup. Other schemes require cryptographic "
-"handshakes to be completed before data traffic can flow, either using "
-"pre-shared keys or secrets, or more complex schemes that involve backend "
+"handshakes to be completed before data traffic can flow, either using pre-"
+"shared keys or secrets, or more complex schemes that involve backend "
 "services such as RADIUS. Open authentication is the default setting. The "
 "next most common setup is WPA-PSK, also known as WPA Personal, which is "
 "described in <<network-wireless-wpa-wpa-psk>>."
@@ -1298,9 +1284,9 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:530
 msgid ""
 "If using an Apple(R) AirPort(R) Extreme base station for an access point, "
-"shared-key authentication together with a WEP key needs to be "
-"configured. This can be configured in [.filename]#/etc/rc.conf# or by using "
-"man:wpa_supplicant[8]. For a single AirPort(R) base station, access can be "
+"shared-key authentication together with a WEP key needs to be configured. "
+"This can be configured in [.filename]#/etc/rc.conf# or by using man:"
+"wpa_supplicant[8]. For a single AirPort(R) base station, access can be "
 "configured with:"
 msgstr ""
 
@@ -1309,8 +1295,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "wlans_ath0=\"wlan0\"\n"
-"ifconfig_wlan0=\"authmode shared wepmode on weptxkey 1 wepkey 01234567 "
-"DHCP\"\n"
+"ifconfig_wlan0=\"authmode shared wepmode on weptxkey 1 wepkey 01234567 DHCP\"\n"
 msgstr ""
 
 #. type: Plain text
@@ -1333,9 +1318,8 @@ msgstr ""
 msgid ""
 "Once an access point is selected and the authentication parameters are set, "
 "an IP address must be obtained in order to communicate. Most of the time, "
-"the IP address is obtained via DHCP. To achieve that, edit "
-"[.filename]#/etc/rc.conf# and add `DHCP` to the configuration for the "
-"device:"
+"the IP address is obtained via DHCP. To achieve that, edit [.filename]#/etc/"
+"rc.conf# and add `DHCP` to the configuration for the device:"
 msgstr ""
 
 #. type: Plain text
@@ -1399,8 +1383,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "wlans_ath0=\"wlan0\"\n"
-"ifconfig_wlan0=\"inet 192.168.1.100 netmask 255.255.255.0 ssid "
-"your_ssid_here\"\n"
+"ifconfig_wlan0=\"inet 192.168.1.100 netmask 255.255.255.0 ssid your_ssid_here\"\n"
 msgstr ""
 
 #. type: Title =====
@@ -1433,10 +1416,10 @@ msgid ""
 "commonly done using one of two techniques: by 802.1X and a backend "
 "authentication service such as RADIUS, or by a minimal handshake between the "
 "station and the access point using a pre-shared secret. The former is "
-"commonly termed WPA Enterprise and the latter is known as WPA "
-"Personal. Since most people will not set up a RADIUS backend server for "
-"their wireless network, WPA-PSK is by far the most commonly encountered "
-"configuration for WPA."
+"commonly termed WPA Enterprise and the latter is known as WPA Personal. "
+"Since most people will not set up a RADIUS backend server for their wireless "
+"network, WPA-PSK is by far the most commonly encountered configuration for "
+"WPA."
 msgstr ""
 
 #. type: Plain text
@@ -1444,9 +1427,9 @@ msgstr ""
 msgid ""
 "The control of the wireless connection and the key negotiation or "
 "authentication with a server is done using man:wpa_supplicant[8]. This "
-"program requires a configuration file, "
-"[.filename]#/etc/wpa_supplicant.conf#, to run. More information regarding "
-"this file can be found in man:wpa_supplicant.conf[5]."
+"program requires a configuration file, [.filename]#/etc/wpa_supplicant."
+"conf#, to run. More information regarding this file can be found in man:"
+"wpa_supplicant.conf[5]."
 msgstr ""
 
 #. type: Plain text
@@ -1459,9 +1442,9 @@ msgstr ""
 msgid ""
 "WPA-PSK, also known as WPA Personal, is based on a pre-shared key (PSK) "
 "which is generated from a given password and used as the master key in the "
-"wireless network. This means every wireless user will share the same "
-"key. WPA-PSK is intended for small networks where the use of an "
-"authentication server is not possible or desired."
+"wireless network. This means every wireless user will share the same key. "
+"WPA-PSK is intended for small networks where the use of an authentication "
+"server is not possible or desired."
 msgstr ""
 
 #. type: delimited block = 4
@@ -1540,8 +1523,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:648
 msgid ""
-"Or, try to configure the interface manually using the information in "
-"[.filename]#/etc/wpa_supplicant.conf#:"
+"Or, try to configure the interface manually using the information in [."
+"filename]#/etc/wpa_supplicant.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -1549,12 +1532,10 @@ msgstr ""
 #, no-wrap
 msgid ""
 "# wpa_supplicant -i wlan0 -c /etc/wpa_supplicant.conf\n"
-"Trying to associate with 00:11:95:c3:0d:ac (SSID='freebsdap' freq=2412 "
-"MHz)\n"
+"Trying to associate with 00:11:95:c3:0d:ac (SSID='freebsdap' freq=2412 MHz)\n"
 "Associated with 00:11:95:c3:0d:ac\n"
 "WPA: Key negotiation completed with 00:11:95:c3:0d:ac [PTK=CCMP GTK=CCMP]\n"
-"CTRL-EVENT-CONNECTED - Connection to 00:11:95:c3:0d:ac completed (auth) "
-"[id=0 id_str=]\n"
+"CTRL-EVENT-CONNECTED - Connection to 00:11:95:c3:0d:ac completed (auth) [id=0 id_str=]\n"
 msgstr ""
 
 #. type: Plain text
@@ -1588,16 +1569,16 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:682
 msgid ""
-"If [.filename]#/etc/rc.conf# has an `ifconfig_wlan0=\"DHCP\"` entry, "
-"man:dhclient[8] will be launched automatically after man:wpa_supplicant[8] "
+"If [.filename]#/etc/rc.conf# has an `ifconfig_wlan0=\"DHCP\"` entry, man:"
+"dhclient[8] will be launched automatically after man:wpa_supplicant[8] "
 "associates with the access point."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:685
 msgid ""
-"If DHCP is not possible or desired, set a static IP address after "
-"man:wpa_supplicant[8] has authenticated the station:"
+"If DHCP is not possible or desired, set a static IP address after man:"
+"wpa_supplicant[8] has authenticated the station:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -1641,10 +1622,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:714
 msgid ""
-"The second way to use WPA is with an 802.1X backend authentication "
-"server. In this case, WPA is called WPA Enterprise to differentiate it from "
-"the less secure WPA Personal. Authentication in WPA Enterprise is based on "
-"the Extensible Authentication Protocol (EAP)."
+"The second way to use WPA is with an 802.1X backend authentication server. "
+"In this case, WPA is called WPA Enterprise to differentiate it from the less "
+"secure WPA Personal. Authentication in WPA Enterprise is based on the "
+"Extensible Authentication Protocol (EAP)."
 msgstr ""
 
 #. type: Plain text
@@ -1672,8 +1653,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:720
 msgid ""
-"As previously, the configuration is done via "
-"[.filename]#/etc/wpa_supplicant.conf#:"
+"As previously, the configuration is done via [.filename]#/etc/wpa_supplicant."
+"conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -1701,13 +1682,12 @@ msgid ""
 "refers to the key management protocol to use. In this example, it is WPA "
 "using EAP authentication.  <.> This field indicates the EAP method for the "
 "connection.  <.> The `identity` field contains the identity string for EAP.  "
-"<.> The `ca_cert` field indicates the pathname of the CA certificate "
-"file. This file is needed to verify the server certificate.  <.> The "
-"`client_cert` line gives the pathname to the client certificate file. This "
-"certificate is unique to each wireless client of the network.  <.> The "
-"`private_key` field is the pathname to the client certificate private key "
-"file.  <.> The `private_key_passwd` field contains the passphrase for the "
-"private key."
+"<.> The `ca_cert` field indicates the pathname of the CA certificate file. "
+"This file is needed to verify the server certificate.  <.> The `client_cert` "
+"line gives the pathname to the client certificate file. This certificate is "
+"unique to each wireless client of the network.  <.> The `private_key` field "
+"is the pathname to the client certificate private key file.  <.> The "
+"`private_key_passwd` field contains the passphrase for the private key."
 msgstr ""
 
 #. type: Plain text
@@ -1746,8 +1726,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:777
 msgid ""
-"It is also possible to bring up the interface manually using "
-"man:wpa_supplicant[8] and man:ifconfig[8]."
+"It is also possible to bring up the interface manually using man:"
+"wpa_supplicant[8] and man:ifconfig[8]."
 msgstr ""
 
 #. type: Plain text
@@ -1768,8 +1748,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:784
 msgid ""
-"The required configuration can be added to "
-"[.filename]#/etc/wpa_supplicant.conf#:"
+"The required configuration can be added to [.filename]#/etc/wpa_supplicant."
+"conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -1917,9 +1897,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:907
 msgid ""
-"Wired Equivalent Privacy (WEP) is part of the original 802.11 "
-"standard. There is no authentication mechanism, only a weak form of access "
-"control which is easily cracked."
+"Wired Equivalent Privacy (WEP) is part of the original 802.11 standard. "
+"There is no authentication mechanism, only a weak form of access control "
+"which is easily cracked."
 msgstr ""
 
 #. type: Plain text
@@ -1939,18 +1919,18 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:918
 msgid ""
-"The `weptxkey` specifies which WEP key will be used in the "
-"transmission. This example uses the third key. This must match the setting "
-"on the access point. When unsure which key is used by the access point, try "
-"`1` (the first key) for this value."
+"The `weptxkey` specifies which WEP key will be used in the transmission. "
+"This example uses the third key. This must match the setting on the access "
+"point. When unsure which key is used by the access point, try `1` (the first "
+"key) for this value."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:919
 msgid ""
-"The `wepkey` selects one of the WEP keys. It should be in the format "
-"_index:key_. Key `1` is used by default; the index only needs to be set when "
-"using a key other than the first key."
+"The `wepkey` selects one of the WEP keys. It should be in the format _index:"
+"key_. Key `1` is used by default; the index only needs to be set when using "
+"a key other than the first key."
 msgstr ""
 
 #. type: delimited block = 4
@@ -2025,8 +2005,7 @@ msgid ""
 "# ifconfig wlan0 create wlandev ath0 wlanmode adhoc\n"
 "# ifconfig wlan0 inet 192.168.0.1 netmask 255.255.255.0 ssid freebsdap\n"
 "# ifconfig wlan0\n"
-"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
-"1500\n"
+"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
 "\t  ether 00:11:95:c3:0d:ac\n"
 "\t  inet 192.168.0.1 netmask 0xffffff00 broadcast 192.168.0.255\n"
 "\t  media: IEEE 802.11 Wireless Ethernet autoselect mode 11g <adhoc>\n"
@@ -2038,7 +2017,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:970
-msgid "The `adhoc` parameter indicates that the interface is running in IBSS mode."
+msgid ""
+"The `adhoc` parameter indicates that the interface is running in IBSS mode."
 msgstr ""
 
 #. type: Plain text
@@ -2069,8 +2049,7 @@ msgstr ""
 msgid ""
 "# ifconfig wlan0 inet 192.168.0.2 netmask 255.255.255.0 ssid freebsdap\n"
 "# ifconfig wlan0\n"
-"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
-"1500\n"
+"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
 "\t  ether 00:11:95:d5:43:62\n"
 "\t  inet 192.168.0.2 netmask 0xffffff00 broadcast 192.168.0.255\n"
 "\t  media: IEEE 802.11 Wireless Ethernet autoselect mode 11g <adhoc>\n"
@@ -2105,8 +2084,8 @@ msgstr ""
 msgid ""
 "Before configuring a FreeBSD machine as an AP, the kernel must be configured "
 "with the appropriate networking support for the wireless card as well as the "
-"security protocols being used. For more details, see "
-"<<network-wireless-basic>>."
+"security protocols being used. For more details, see <<network-wireless-"
+"basic>>."
 msgstr ""
 
 #. type: delimited block = 4
@@ -2159,8 +2138,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1034
 msgid ""
-"then regenerated with the correct option before setting the other "
-"parameters:"
+"then regenerated with the correct option before setting the other parameters:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -2168,8 +2146,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "# ifconfig wlan0 create wlandev ath0 wlanmode hostap\n"
-"# ifconfig wlan0 inet 192.168.0.1 netmask 255.255.255.0 ssid freebsdap mode "
-"11g channel 1\n"
+"# ifconfig wlan0 inet 192.168.0.1 netmask 255.255.255.0 ssid freebsdap mode 11g channel 1\n"
 msgstr ""
 
 #. type: Plain text
@@ -2184,8 +2161,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "# ifconfig wlan0\n"
-"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
-"1500\n"
+"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
 "\t  ether 00:11:95:c3:0d:ac\n"
 "\t  inet 192.168.0.1 netmask 0xffffff00 broadcast 192.168.0.255\n"
 "\t  media: IEEE 802.11 Wireless Ethernet autoselect mode 11g <hostap>\n"
@@ -2215,8 +2191,7 @@ msgstr ""
 msgid ""
 "wlans_ath0=\"wlan0\"\n"
 "create_args_wlan0=\"wlanmode hostap\"\n"
-"ifconfig_wlan0=\"inet 192.168.0.1 netmask 255.255.255.0 ssid freebsdap mode "
-"11g channel 1\"\n"
+"ifconfig_wlan0=\"inet 192.168.0.1 netmask 255.255.255.0 ssid freebsdap mode 11g channel 1\"\n"
 msgstr ""
 
 #. type: Title ====
@@ -2261,8 +2236,7 @@ msgstr ""
 msgid ""
 "# ifconfig wlan0 inet 192.168.0.2 netmask 255.255.255.0 ssid freebsdap\n"
 "# ifconfig wlan0\n"
-"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
-"1500\n"
+"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
 "\t  ether 00:11:95:d5:43:62\n"
 "\t  inet 192.168.0.2 netmask 0xffffff00 broadcast 192.168.0.255\n"
 "\t  media: IEEE 802.11 Wireless Ethernet OFDM/54Mbps mode 11g\n"
@@ -2283,8 +2257,8 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1102
 msgid ""
 "This section focuses on setting up a FreeBSD access point using the WPA2 "
-"security protocol. More details regarding WPA and the configuration of "
-"WPA-based wireless clients can be found in <<network-wireless-wpa>>."
+"security protocol. More details regarding WPA and the configuration of WPA-"
+"based wireless clients can be found in <<network-wireless-wpa>>."
 msgstr ""
 
 #. type: Plain text
@@ -2384,8 +2358,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "# ifconfig wlan0\n"
-"wlan0: flags=8943<UP,BROADCAST,RUNNING,PROMISC,SIMPLEX,MULTICAST> metric 0 "
-"mtu 1500\n"
+"wlan0: flags=8943<UP,BROADCAST,RUNNING,PROMISC,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
 "\tether 04:f0:21:16:8e:10\n"
 "\tinet6 fe80::6f0:21ff:fe16:8e10%wlan0 prefixlen 64 scopeid 0x9\n"
 "\tnd6 options=21<PERFORMNUD,AUTO_LINKLOCAL>\n"
@@ -2402,9 +2375,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1168
 msgid ""
-"Once the AP is running, the clients can associate with it. See "
-"<<network-wireless-wpa>> for more details. It is possible to see the "
-"stations associated with the AP using `ifconfig _wlan0_ list sta`."
+"Once the AP is running, the clients can associate with it. See <<network-"
+"wireless-wpa>> for more details. It is possible to see the stations "
+"associated with the AP using `ifconfig _wlan0_ list sta`."
 msgstr ""
 
 #. type: Title ====
@@ -2441,22 +2414,23 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1183
 msgid ""
-"The `weptxkey` indicates which WEP key will be used in the "
-"transmission. This example uses the third key as key numbering starts with "
-"`1`. This parameter must be specified in order to encrypt the data."
+"The `weptxkey` indicates which WEP key will be used in the transmission. "
+"This example uses the third key as key numbering starts with `1`. This "
+"parameter must be specified in order to encrypt the data."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1184
 msgid ""
-"The `wepkey` sets the selected WEP key. It should be in the format "
-"_index:key_. If the index is not given, key `1` is set. The index needs to "
-"be set when using keys other than the first key."
+"The `wepkey` sets the selected WEP key. It should be in the format _index:"
+"key_. If the index is not given, key `1` is set. The index needs to be set "
+"when using keys other than the first key."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1186
-msgid "Use man:ifconfig[8] to see the status of the [.filename]#wlan0# interface:"
+msgid ""
+"Use man:ifconfig[8] to see the status of the [.filename]#wlan0# interface:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -2464,8 +2438,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "# ifconfig wlan0\n"
-"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
-"1500\n"
+"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
 "\t  ether 00:11:95:c3:0d:ac\n"
 "\t  inet 192.168.0.1 netmask 0xffffff00 broadcast 192.168.0.255\n"
 "\t  media: IEEE 802.11 Wireless Ethernet autoselect mode 11g <hostap>\n"
@@ -2594,8 +2567,8 @@ msgid ""
 "found in [.filename]#/usr/src/tools/tools/net80211#, will dump this "
 "information. These statistics should display all errors identified by the "
 "802.11 layer. However, some errors are identified in the device drivers that "
-"lie below the 802.11 layer so they may not show up. To diagnose "
-"device-specific problems, refer to the drivers' documentation."
+"lie below the 802.11 layer so they may not show up. To diagnose device-"
+"specific problems, refer to the drivers' documentation."
 msgstr ""
 
 #. type: Plain text
@@ -2660,8 +2633,8 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1262
 msgid ""
 "To make this change permanent and load the driver as a module at boot time, "
-"place the appropriate line of the following in "
-"[.filename]#/boot/loader.conf#:"
+"place the appropriate line of the following in [.filename]#/boot/loader."
+"conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -2707,12 +2680,11 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1280
 msgid ""
 "The Bluetooth stack in FreeBSD is implemented using the man:netgraph[4] "
-"framework. A broad variety of Bluetooth USB dongles is supported by "
-"man:ng_ubt[4]. Broadcom BCM2033 based Bluetooth devices are supported by the "
-"man:ubtbcmfw[4] and man:ng_ubt[4] drivers. The 3Com Bluetooth PC Card "
-"3CRWB60-A is supported by the man:ng_bt3c[4] driver. Serial and UART based "
-"Bluetooth devices are supported by man:sio[4], man:ng_h4[4], and "
-"man:hcseriald[8]."
+"framework. A broad variety of Bluetooth USB dongles is supported by man:"
+"ng_ubt[4]. Broadcom BCM2033 based Bluetooth devices are supported by the man:"
+"ubtbcmfw[4] and man:ng_ubt[4] drivers. The 3Com Bluetooth PC Card 3CRWB60-A "
+"is supported by the man:ng_bt3c[4] driver. Serial and UART based Bluetooth "
+"devices are supported by man:sio[4], man:ng_h4[4], and man:hcseriald[8]."
 msgstr ""
 
 #. type: Plain text
@@ -2837,8 +2809,7 @@ msgid ""
 "communication with a device and it is possible to assign a human readable "
 "name to a `BD_ADDR`. Information regarding the known Bluetooth hosts is "
 "contained in [.filename]#/etc/bluetooth/hosts#. The following example shows "
-"how to obtain the human readable name that was assigned to the remote "
-"device:"
+"how to obtain the human readable name that was assigned to the remote device:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -2861,10 +2832,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1355
 msgid ""
-"Remote devices can be assigned aliases in "
-"[.filename]#/etc/bluetooth/hosts#. More information about "
-"[.filename]#/etc/bluetooth/hosts# file might be found in "
-"man:bluetooth.hosts[5]."
+"Remote devices can be assigned aliases in [.filename]#/etc/bluetooth/hosts#. "
+"More information about [.filename]#/etc/bluetooth/hosts# file might be found "
+"in man:bluetooth.hosts[5]."
 msgstr ""
 
 #. type: Plain text
@@ -2885,8 +2855,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1364
 msgid ""
-"`create_connection` accepts `BT_ADDR` as well as host aliases in "
-"[.filename]#/etc/bluetooth/hosts#."
+"`create_connection` accepts `BT_ADDR` as well as host aliases in [."
+"filename]#/etc/bluetooth/hosts#."
 msgstr ""
 
 #. type: Plain text
@@ -2954,9 +2924,9 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1390
 msgid ""
 "The man:hcsecd[8] daemon is responsible for handling Bluetooth "
-"authentication requests. The default configuration file is "
-"[.filename]#/etc/bluetooth/hcsecd.conf#. An example section for a cellular "
-"phone with the PIN code set to `1234` is shown below:"
+"authentication requests. The default configuration file is [.filename]#/etc/"
+"bluetooth/hcsecd.conf#. An example section for a cellular phone with the PIN "
+"code set to `1234` is shown below:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -2975,11 +2945,11 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1402
 msgid ""
 "The only limitation on PIN codes is length. Some devices, such as Bluetooth "
-"headsets, may have a fixed PIN code built in. The `-d` switch forces "
-"man:hcsecd[8] to stay in the foreground, so it is easy to see what is "
-"happening. Set the remote device to receive pairing and initiate the "
-"Bluetooth connection to the remote device. The remote device should indicate "
-"that pairing was accepted and request the PIN code. Enter the same PIN code "
+"headsets, may have a fixed PIN code built in. The `-d` switch forces man:"
+"hcsecd[8] to stay in the foreground, so it is easy to see what is happening. "
+"Set the remote device to receive pairing and initiate the Bluetooth "
+"connection to the remote device. The remote device should indicate that "
+"pairing was accepted and request the PIN code. Enter the same PIN code "
 "listed in [.filename]#hcsecd.conf#. Now the computer and the remote device "
 "are paired. Alternatively, pairing can be initiated on the remote device."
 msgstr ""
@@ -3006,18 +2976,12 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1420
 #, no-wrap
 msgid ""
-"hcsecd[16484]: Got Link_Key_Request event from 'ubt0hci', remote bdaddr "
-"0:80:37:29:19:a4\n"
-"hcsecd[16484]: Found matching entry, remote bdaddr 0:80:37:29:19:a4, name "
-"'Pav's T39', link key doesn't exist\n"
-"hcsecd[16484]: Sending Link_Key_Negative_Reply to 'ubt0hci' for remote "
-"bdaddr 0:80:37:29:19:a4\n"
-"hcsecd[16484]: Got PIN_Code_Request event from 'ubt0hci', remote bdaddr "
-"0:80:37:29:19:a4\n"
-"hcsecd[16484]: Found matching entry, remote bdaddr 0:80:37:29:19:a4, name "
-"'Pav's T39', PIN code exists\n"
-"hcsecd[16484]: Sending PIN_Code_Reply to 'ubt0hci' for remote bdaddr "
-"0:80:37:29:19:a4\n"
+"hcsecd[16484]: Got Link_Key_Request event from 'ubt0hci', remote bdaddr 0:80:37:29:19:a4\n"
+"hcsecd[16484]: Found matching entry, remote bdaddr 0:80:37:29:19:a4, name 'Pav's T39', link key doesn't exist\n"
+"hcsecd[16484]: Sending Link_Key_Negative_Reply to 'ubt0hci' for remote bdaddr 0:80:37:29:19:a4\n"
+"hcsecd[16484]: Got PIN_Code_Request event from 'ubt0hci', remote bdaddr 0:80:37:29:19:a4\n"
+"hcsecd[16484]: Found matching entry, remote bdaddr 0:80:37:29:19:a4, name 'Pav's T39', PIN code exists\n"
+"hcsecd[16484]: Sending PIN_Code_Reply to 'ubt0hci' for remote bdaddr 0:80:37:29:19:a4\n"
 msgstr ""
 
 #. type: Title ===
@@ -3046,11 +3010,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1429
 msgid ""
-"In FreeBSD, these profiles are implemented with man:ppp[8] and the "
-"man:rfcomm_pppd[8] wrapper which converts a Bluetooth connection into "
-"something PPP can use. Before a profile can be used, a new PPP label must be "
-"created in [.filename]#/etc/ppp/ppp.conf#. Consult man:rfcomm_pppd[8] for "
-"examples."
+"In FreeBSD, these profiles are implemented with man:ppp[8] and the man:"
+"rfcomm_pppd[8] wrapper which converts a Bluetooth connection into something "
+"PPP can use. Before a profile can be used, a new PPP label must be created "
+"in [.filename]#/etc/ppp/ppp.conf#. Consult man:rfcomm_pppd[8] for examples."
 msgstr ""
 
 #. type: Plain text
@@ -3071,20 +3034,19 @@ msgstr ""
 msgid ""
 "The actual channel number will be obtained from the remote device using the "
 "SDP protocol. It is possible to specify the RFCOMM channel by hand, and in "
-"this case man:rfcomm_pppd[8] will not perform the SDP query. Use "
-"man:sdpcontrol[8] to find out the RFCOMM channel on the remote device."
+"this case man:rfcomm_pppd[8] will not perform the SDP query. Use man:"
+"sdpcontrol[8] to find out the RFCOMM channel on the remote device."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1440
 msgid ""
 "In order to provide network access with the PPPLAN service, man:sdpd[8] must "
-"be running and a new entry for LAN clients must be created in "
-"[.filename]#/etc/ppp/ppp.conf#. Consult man:rfcomm_pppd[8] for "
-"examples. Finally, start the RFCOMMPPP server on a valid RFCOMM channel "
-"number. The RFCOMMPPP server will automatically register the Bluetooth LAN "
-"service with the local SDP daemon. The example below shows how to start the "
-"RFCOMMPPP server."
+"be running and a new entry for LAN clients must be created in [.filename]#/"
+"etc/ppp/ppp.conf#. Consult man:rfcomm_pppd[8] for examples. Finally, start "
+"the RFCOMMPPP server on a valid RFCOMM channel number. The RFCOMMPPP server "
+"will automatically register the Bluetooth LAN service with the local SDP "
+"daemon. The example below shows how to start the RFCOMMPPP server."
 msgstr ""
 
 #. type: delimited block . 4
@@ -3115,10 +3077,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1453
 msgid ""
-"The Logical Link Control and Adaptation Protocol (L2CAP) provides "
-"connection-oriented and connectionless data services to upper layer "
-"protocols. L2CAP permits higher level protocols and applications to transmit "
-"and receive L2CAP data packets up to 64 kilobytes in length."
+"The Logical Link Control and Adaptation Protocol (L2CAP) provides connection-"
+"oriented and connectionless data services to upper layer protocols. L2CAP "
+"permits higher level protocols and applications to transmit and receive "
+"L2CAP data packets up to 64 kilobytes in length."
 msgstr ""
 
 #. type: Plain text
@@ -3137,16 +3099,16 @@ msgstr ""
 msgid ""
 "In FreeBSD, a netgraph L2CAP node is created for each Bluetooth device. This "
 "node is normally connected to the downstream Bluetooth HCI node and upstream "
-"Bluetooth socket nodes. The default name for the L2CAP node is "
-"\"devicel2cap\". For more details refer to man:ng_l2cap[4]."
+"Bluetooth socket nodes. The default name for the L2CAP node is \"devicel2cap"
+"\". For more details refer to man:ng_l2cap[4]."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1459
 msgid ""
-"A useful command is man:l2ping[8], which can be used to ping other "
-"devices. Some Bluetooth implementations might not return all of the data "
-"sent to them, so `0 bytes` in the following example is normal."
+"A useful command is man:l2ping[8], which can be used to ping other devices. "
+"Some Bluetooth implementations might not return all of the data sent to "
+"them, so `0 bytes` in the following example is normal."
 msgstr ""
 
 #. type: delimited block . 4
@@ -3185,9 +3147,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1484
 msgid ""
-"Another diagnostic tool is man:btsockstat[1]. It is similar to "
-"man:netstat[1], but for Bluetooth network-related data structures. The "
-"example below shows the same logical connection as man:l2control[8] above."
+"Another diagnostic tool is man:btsockstat[1]. It is similar to man:"
+"netstat[1], but for Bluetooth network-related data structures. The example "
+"below shows the same logical connection as man:l2control[8] above."
 msgstr ""
 
 #. type: delimited block . 4
@@ -3196,10 +3158,8 @@ msgstr ""
 msgid ""
 "% btsockstat\n"
 "Active L2CAP sockets\n"
-"PCB      Recv-Q Send-Q Local address/PSM       Foreign address   CID   "
-"State\n"
-"c2afe900      0      0 00:02:72:00:d4:1a/3     00:07:e0:00:0b:ca 66    "
-"OPEN\n"
+"PCB      Recv-Q Send-Q Local address/PSM       Foreign address   CID   State\n"
+"c2afe900      0      0 00:02:72:00:d4:1a/3     00:07:e0:00:0b:ca 66    OPEN\n"
 "Active RFCOMM sessions\n"
 "L2PCB    PCB      Flag MTU   Out-Q DLCs State\n"
 "c2afe900 c2b53380 1    127   0     Yes  OPEN\n"
@@ -3238,10 +3198,10 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1506
 msgid ""
 "RFCOMM is only concerned with the connection between the devices in the "
-"direct connect case, or between the device and a modem in the network "
-"case. RFCOMM can support other configurations, such as modules that "
-"communicate via Bluetooth wireless technology on one side and provide a "
-"wired interface on the other side."
+"direct connect case, or between the device and a modem in the network case. "
+"RFCOMM can support other configurations, such as modules that communicate "
+"via Bluetooth wireless technology on one side and provide a wired interface "
+"on the other side."
 msgstr ""
 
 #. type: Plain text
@@ -3286,16 +3246,15 @@ msgid ""
 "Normally, a SDP client searches for services based on some desired "
 "characteristics of the services. However, there are times when it is "
 "desirable to discover which types of services are described by an SDP "
-"server's service records without any prior information about the "
-"services. This process of looking for any offered services is called "
-"_browsing_."
+"server's service records without any prior information about the services. "
+"This process of looking for any offered services is called _browsing_."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1518
 msgid ""
-"The Bluetooth SDP server, man:sdpd[8], and command line client, "
-"man:sdpcontrol[8], are included in the standard FreeBSD installation. The "
+"The Bluetooth SDP server, man:sdpd[8], and command line client, man:"
+"sdpcontrol[8], are included in the standard FreeBSD installation. The "
 "following example shows how to perform a SDP browse query."
 msgstr ""
 
@@ -3340,12 +3299,12 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1546
 msgid ""
-"Note that each service has a list of attributes, such as the RFCOMM "
-"channel. Depending on the service, the user might need to make note of some "
-"of the attributes. Some Bluetooth implementations do not support service "
-"browsing and may return an empty list. In this case, it is possible to "
-"search for the specific service. The example below shows how to search for "
-"the OBEX Object Push (OPUSH) service:"
+"Note that each service has a list of attributes, such as the RFCOMM channel. "
+"Depending on the service, the user might need to make note of some of the "
+"attributes. Some Bluetooth implementations do not support service browsing "
+"and may return an empty list. In this case, it is possible to search for the "
+"specific service. The example below shows how to search for the OBEX Object "
+"Push (OPUSH) service:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -3357,9 +3316,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1553
 msgid ""
-"Offering services on FreeBSD to Bluetooth clients is done with the "
-"man:sdpd[8] server. The following line can be added to "
-"[.filename]#/etc/rc.conf#:"
+"Offering services on FreeBSD to Bluetooth clients is done with the man:"
+"sdpd[8] server. The following line can be added to [.filename]#/etc/rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -3430,8 +3388,8 @@ msgid ""
 "The OBEX client is used to push and/or pull objects from the OBEX server. An "
 "example object is a business card or an appointment. The OBEX client can "
 "obtain the RFCOMM channel number from the remote device via SDP. This can be "
-"done by specifying the service name instead of the RFCOMM channel "
-"number. Supported service names are: `IrMC`, `FTRN`, and `OPUSH`. It is also "
+"done by specifying the service name instead of the RFCOMM channel number. "
+"Supported service names are: `IrMC`, `FTRN`, and `OPUSH`. It is also "
 "possible to specify the RFCOMM channel as a number. Below is an example of "
 "an OBEX session where the device information object is pulled from the "
 "cellular phone, and a new object, the business card, is pushed into the "
@@ -3574,8 +3532,7 @@ msgid ""
 "network interfaces. It forwards traffic between networks only when the "
 "source and destination MAC addresses are on different networks. In many "
 "respects, a bridge is like an Ethernet switch with very few ports. A FreeBSD "
-"system with multiple network interfaces can be configured to act as a "
-"bridge."
+"system with multiple network interfaces can be configured to act as a bridge."
 msgstr ""
 
 #. type: Plain text
@@ -3592,11 +3549,11 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1651
 msgid ""
-"The basic operation of a bridge is to join two or more network "
-"segments. There are many reasons to use a host-based bridge instead of "
-"networking equipment, such as cabling constraints or firewalling. A bridge "
-"can also connect a wireless interface running in hostap mode to a wired "
-"network and act as an access point."
+"The basic operation of a bridge is to join two or more network segments. "
+"There are many reasons to use a host-based bridge instead of networking "
+"equipment, such as cabling constraints or firewalling. A bridge can also "
+"connect a wireless interface running in hostap mode to a wired network and "
+"act as an access point."
 msgstr ""
 
 #. type: Labeled list
@@ -3615,11 +3572,11 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1656
 msgid ""
-"An example is a small company that is connected via DSL or ISDN to an "
-"ISP. There are thirteen public IP addresses from the ISP and ten computers "
-"on the network. In this situation, using a router-based firewall is "
-"difficult because of subnetting issues. A bridge-based firewall can be "
-"configured without any IP addressing issues."
+"An example is a small company that is connected via DSL or ISDN to an ISP. "
+"There are thirteen public IP addresses from the ISP and ten computers on the "
+"network. In this situation, using a router-based firewall is difficult "
+"because of subnetting issues. A bridge-based firewall can be configured "
+"without any IP addressing issues."
 msgstr ""
 
 #. type: Labeled list
@@ -3647,8 +3604,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1662
 msgid ""
 "Two Ethernet networks can be joined across an IP link by bridging the "
-"networks to an EtherIP tunnel or a man:tap[4] based solution such as "
-"OpenVPN."
+"networks to an EtherIP tunnel or a man:tap[4] based solution such as OpenVPN."
 msgstr ""
 
 #. type: Labeled list
@@ -3676,8 +3632,8 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1671
 msgid ""
 "Packet filtering can be used with any firewall package that hooks into the "
-"man:pfil[9] framework. The bridge can be used as a traffic shaper with "
-"man:altq[4] or man:dummynet[4]."
+"man:pfil[9] framework. The bridge can be used as a traffic shaper with man:"
+"altq[4] or man:dummynet[4]."
 msgstr ""
 
 #. type: Title ===
@@ -3746,9 +3702,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1703
 msgid ""
-"The bridge can now forward Ethernet frames between [.filename]#fxp0# and "
-"[.filename]#fxp1#. Add the following lines to [.filename]#/etc/rc.conf# so "
-"the bridge is created at startup:"
+"The bridge can now forward Ethernet frames between [.filename]#fxp0# and [."
+"filename]#fxp1#. Add the following lines to [.filename]#/etc/rc.conf# so the "
+"bridge is created at startup:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -3765,8 +3721,8 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1713
 msgid ""
 "If the bridge host needs an IP address, set it on the bridge interface, not "
-"on the member interfaces. The address can be set statically or via "
-"DHCP. This example sets a static IP address:"
+"on the member interfaces. The address can be set statically or via DHCP. "
+"This example sets a static IP address:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -3779,8 +3735,8 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1720
 msgid ""
 "It is also possible to assign an IPv6 address to a bridge interface. To make "
-"the changes permanent, add the addressing information to "
-"[.filename]#/etc/rc.conf#."
+"the changes permanent, add the addressing information to [.filename]#/etc/rc."
+"conf#."
 msgstr ""
 
 #. type: delimited block = 4
@@ -3840,8 +3796,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "# ifconfig bridge0 stp fxp0 stp fxp1\n"
-"bridge0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
-"1500\n"
+"bridge0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
 "        ether d6:cf:d5:a0:94:6d\n"
 "        id 00:01:02:4b:d4:50 priority 32768 hellotime 2 fwddelay 15\n"
 "        maxage 20 holdcnt 6 proto rstp maxaddr 100 timeout 1200\n"
@@ -3871,8 +3826,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1769
 #, no-wrap
 msgid ""
-"bridge0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
-"1500\n"
+"bridge0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
 "        ether 96:3d:4b:f1:79:7a\n"
 "        id 00:13:d4:9a:06:7a priority 32768 hellotime 2 fwddelay 15\n"
 "        maxage 20 holdcnt 6 proto rstp maxaddr 100 timeout 1200\n"
@@ -3933,13 +3887,12 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1782
 msgid ""
-"A span port transmits a copy of every Ethernet frame received by the "
-"bridge. The number of span ports configured on a bridge is unlimited, but if "
-"an interface is designated as a span port, it cannot also be used as a "
-"regular bridge port. This is most useful for snooping a bridged network "
-"passively on another host connected to one of the span ports of the "
-"bridge. For example, to send a copy of all frames out the interface named "
-"[.filename]#fxp4#:"
+"A span port transmits a copy of every Ethernet frame received by the bridge. "
+"The number of span ports configured on a bridge is unlimited, but if an "
+"interface is designated as a span port, it cannot also be used as a regular "
+"bridge port. This is most useful for snooping a bridged network passively on "
+"another host connected to one of the span ports of the bridge. For example, "
+"to send a copy of all frames out the interface named [.filename]#fxp4#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -3958,21 +3911,21 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1790
 msgid ""
 "If a bridge member interface is marked as sticky, dynamically learned "
-"address entries are treated as static entries in the forwarding "
-"cache. Sticky entries are never aged out of the cache or replaced, even if "
-"the address is seen on a different interface. This gives the benefit of "
-"static address entries without the need to pre-populate the forwarding "
-"table. Clients learned on a particular segment of the bridge cannot roam to "
-"another segment."
+"address entries are treated as static entries in the forwarding cache. "
+"Sticky entries are never aged out of the cache or replaced, even if the "
+"address is seen on a different interface. This gives the benefit of static "
+"address entries without the need to pre-populate the forwarding table. "
+"Clients learned on a particular segment of the bridge cannot roam to another "
+"segment."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1792
 msgid ""
 "An example of using sticky addresses is to combine the bridge with VLANs in "
-"order to isolate customer networks without wasting IP address "
-"space. Consider that `CustomerA` is on `vlan100`, `CustomerB` is on "
-"`vlan101`, and the bridge has the address `192.168.0.1`:"
+"order to isolate customer networks without wasting IP address space. "
+"Consider that `CustomerA` is on `vlan100`, `CustomerB` is on `vlan101`, and "
+"the bridge has the address `192.168.0.1`:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -3986,9 +3939,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1800
 msgid ""
-"In this example, both clients see `192.168.0.1` as their default "
-"gateway. Since the bridge cache is sticky, one host cannot spoof the MAC "
-"address of the other customer in order to intercept their traffic."
+"In this example, both clients see `192.168.0.1` as their default gateway. "
+"Since the bridge cache is sticky, one host cannot spoof the MAC address of "
+"the other customer in order to intercept their traffic."
 msgstr ""
 
 #. type: Plain text
@@ -4039,9 +3992,8 @@ msgid ""
 "after man:bpf[4] processing and are not processed or forwarded further. This "
 "can be used to multiplex the input of two or more interfaces into a single "
 "man:bpf[4] stream. This is useful for reconstructing the traffic for network "
-"taps that transmit the RX/TX signals out through two separate "
-"interfaces. For example, to read the input from four network interfaces as "
-"one stream:"
+"taps that transmit the RX/TX signals out through two separate interfaces. "
+"For example, to read the input from four network interfaces as one stream:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -4070,8 +4022,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1832
 msgid ""
-"To enable monitoring on the bridge, uncomment this line in "
-"[.filename]#/etc/snmpd.config# by removing the beginning `#` symbol:"
+"To enable monitoring on the bridge, uncomment this line in [.filename]#/etc/"
+"snmpd.config# by removing the beginning `#` symbol:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -4085,8 +4037,8 @@ msgstr ""
 msgid ""
 "Other configuration settings, such as community names and access lists, may "
 "need to be modified in this file. See man:bsnmpd[1] and man:snmp_bridge[3] "
-"for more information. Once these edits are saved, add this line to "
-"[.filename]#/etc/rc.conf#:"
+"for more information. Once these edits are saved, add this line to [."
+"filename]#/etc/rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -4109,12 +4061,11 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1853
 msgid ""
-"The following examples use the Net-SNMP software "
-"(package:net-mgmt/net-snmp[]) to query a bridge from a client system. The "
-"package:net-mgmt/bsnmptools[] port can also be used. From the SNMP client "
-"which is running Net-SNMP, add the following lines to "
-"[.filename]#$HOME/.snmp/snmp.conf# in order to import the bridge MIB "
-"definitions:"
+"The following examples use the Net-SNMP software (package:net-mgmt/net-"
+"snmp[]) to query a bridge from a client system. The package:net-mgmt/"
+"bsnmptools[] port can also be used. From the SNMP client which is running "
+"Net-SNMP, add the following lines to [.filename]#$HOME/.snmp/snmp.conf# in "
+"order to import the bridge MIB definitions:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -4137,19 +4088,16 @@ msgid ""
 "% snmpwalk -v 2c -c public bridge1.example.com mib-2.dot1dBridge\n"
 "BRIDGE-MIB::dot1dBaseBridgeAddress.0 = STRING: 66:fb:9b:6e:5c:44\n"
 "BRIDGE-MIB::dot1dBaseNumPorts.0 = INTEGER: 1 ports\n"
-"BRIDGE-MIB::dot1dStpTimeSinceTopologyChange.0 = Timeticks: (189959) "
-"0:31:39.59 centi-seconds\n"
+"BRIDGE-MIB::dot1dStpTimeSinceTopologyChange.0 = Timeticks: (189959) 0:31:39.59 centi-seconds\n"
 "BRIDGE-MIB::dot1dStpTopChanges.0 = Counter32: 2\n"
 "BRIDGE-MIB::dot1dStpDesignatedRoot.0 = Hex-STRING: 80 00 00 01 02 4B D4 50\n"
 "...\n"
 "BRIDGE-MIB::dot1dStpPortState.3 = INTEGER: forwarding(5)\n"
 "BRIDGE-MIB::dot1dStpPortEnable.3 = INTEGER: enabled(1)\n"
 "BRIDGE-MIB::dot1dStpPortPathCost.3 = INTEGER: 200000\n"
-"BRIDGE-MIB::dot1dStpPortDesignatedRoot.3 = Hex-STRING: 80 00 00 01 02 4B D4 "
-"50\n"
+"BRIDGE-MIB::dot1dStpPortDesignatedRoot.3 = Hex-STRING: 80 00 00 01 02 4B D4 50\n"
 "BRIDGE-MIB::dot1dStpPortDesignatedCost.3 = INTEGER: 0\n"
-"BRIDGE-MIB::dot1dStpPortDesignatedBridge.3 = Hex-STRING: 80 00 00 01 02 4B "
-"D4 50\n"
+"BRIDGE-MIB::dot1dStpPortDesignatedBridge.3 = Hex-STRING: 80 00 00 01 02 4B D4 50\n"
 "BRIDGE-MIB::dot1dStpPortDesignatedPort.3 = Hex-STRING: 03 80\n"
 "BRIDGE-MIB::dot1dStpPortForwardTransitions.3 = Counter32: 1\n"
 "RSTP-MIB::dot1dStpVersion.0 = INTEGER: rstp(2)\n"
@@ -4160,9 +4108,8 @@ msgstr ""
 msgid ""
 "The `dot1dStpTopChanges.0` value is two, indicating that the STP bridge "
 "topology has changed twice. A topology change means that one or more links "
-"in the network have changed or failed and a new tree has been "
-"calculated. The `dot1dStpTimeSinceTopologyChange.0` value will show when "
-"this happened."
+"in the network have changed or failed and a new tree has been calculated. "
+"The `dot1dStpTimeSinceTopologyChange.0` value will show when this happened."
 msgstr ""
 
 #. type: Plain text
@@ -4180,23 +4127,17 @@ msgid ""
 "enterprises.fokus.begemot.begemotBridge\n"
 "BEGEMOT-BRIDGE-MIB::begemotBridgeBaseName.\"bridge0\" = STRING: bridge0\n"
 "BEGEMOT-BRIDGE-MIB::begemotBridgeBaseName.\"bridge2\" = STRING: bridge2\n"
-"BEGEMOT-BRIDGE-MIB::begemotBridgeBaseAddress.\"bridge0\" = STRING: "
-"e:ce:3b:5a:9e:13\n"
-"BEGEMOT-BRIDGE-MIB::begemotBridgeBaseAddress.\"bridge2\" = STRING: "
-"12:5e:4d:74:d:fc\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeBaseAddress.\"bridge0\" = STRING: e:ce:3b:5a:9e:13\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeBaseAddress.\"bridge2\" = STRING: 12:5e:4d:74:d:fc\n"
 "BEGEMOT-BRIDGE-MIB::begemotBridgeBaseNumPorts.\"bridge0\" = INTEGER: 1\n"
 "BEGEMOT-BRIDGE-MIB::begemotBridgeBaseNumPorts.\"bridge2\" = INTEGER: 1\n"
 "...\n"
-"BEGEMOT-BRIDGE-MIB::begemotBridgeStpTimeSinceTopologyChange.\"bridge0\" = "
-"Timeticks: (116927) 0:19:29.27 centi-seconds\n"
-"BEGEMOT-BRIDGE-MIB::begemotBridgeStpTimeSinceTopologyChange.\"bridge2\" = "
-"Timeticks: (82773) 0:13:47.73 centi-seconds\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeStpTimeSinceTopologyChange.\"bridge0\" = Timeticks: (116927) 0:19:29.27 centi-seconds\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeStpTimeSinceTopologyChange.\"bridge2\" = Timeticks: (82773) 0:13:47.73 centi-seconds\n"
 "BEGEMOT-BRIDGE-MIB::begemotBridgeStpTopChanges.\"bridge0\" = Counter32: 1\n"
 "BEGEMOT-BRIDGE-MIB::begemotBridgeStpTopChanges.\"bridge2\" = Counter32: 1\n"
-"BEGEMOT-BRIDGE-MIB::begemotBridgeStpDesignatedRoot.\"bridge0\" = Hex-STRING: "
-"80 00 00 40 95 30 5E 31\n"
-"BEGEMOT-BRIDGE-MIB::begemotBridgeStpDesignatedRoot.\"bridge2\" = Hex-STRING: "
-"80 00 00 50 8B B8 C6 A9\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeStpDesignatedRoot.\"bridge0\" = Hex-STRING: 80 00 00 40 95 30 5E 31\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeStpDesignatedRoot.\"bridge2\" = Hex-STRING: 80 00 00 50 8B B8 C6 A9\n"
 msgstr ""
 
 #. type: Plain text
@@ -4237,8 +4178,8 @@ msgstr ""
 msgid ""
 "The aggregation protocols supported by the lagg interface determine which "
 "ports are used for outgoing traffic and whether or not a specific port "
-"accepts incoming traffic. The following protocols are supported by "
-"man:lagg[4]:"
+"accepts incoming traffic. The following protocols are supported by man:"
+"lagg[4]:"
 msgstr ""
 
 #. type: Labeled list
@@ -4284,11 +4225,11 @@ msgstr ""
 msgid ""
 "The IEEE(R) 802.3ad Link Aggregation Control Protocol (LACP) negotiates a "
 "set of aggregable links with the peer into one or more Link Aggregated "
-"Groups (LAGs). Each LAG is composed of ports of the same speed, set to "
-"full-duplex operation, and traffic is balanced across the ports in the LAG "
-"with the greatest total speed. Typically, there is only one LAG which "
-"contains all the ports. In the event of changes in physical connectivity, "
-"LACP will quickly converge to a new configuration."
+"Groups (LAGs). Each LAG is composed of ports of the same speed, set to full-"
+"duplex operation, and traffic is balanced across the ports in the LAG with "
+"the greatest total speed. Typically, there is only one LAG which contains "
+"all the ports. In the event of changes in physical connectivity, LACP will "
+"quickly converge to a new configuration."
 msgstr ""
 
 #. type: Plain text
@@ -4297,8 +4238,7 @@ msgid ""
 "LACP balances outgoing traffic across the active ports based on hashed "
 "protocol header information and accepts incoming traffic from any active "
 "port. The hash includes the Ethernet source and destination address and, if "
-"available, the VLAN tag, and the IPv4 or IPv6 source and destination "
-"address."
+"available, the VLAN tag, and the IPv4 or IPv6 source and destination address."
 msgstr ""
 
 #. type: Labeled list
@@ -4405,8 +4345,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "# ifconfig lagg0\n"
-"lagg0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
-"1500\n"
+"lagg0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
 "        options=8<VLAN_MTU>\n"
 "        ether 00:05:5d:71:8d:b8\n"
 "        inet 10.0.0.3 netmask 0xffffff00 broadcast 10.0.0.255\n"
@@ -4470,8 +4409,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2009
 msgid ""
-"To retain this configuration across reboots, add the following entries to "
-"[.filename]#/etc/rc.conf# on the FreeBSD system:"
+"To retain this configuration across reboots, add the following entries to [."
+"filename]#/etc/rc.conf# on the FreeBSD system:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -4508,8 +4447,7 @@ msgid ""
 "# ifconfig fxp0 up\n"
 "# ifconfig fxp1 up\n"
 "# ifconfig lagg0 create\n"
-"# ifconfig lagg0 up laggproto failover laggport fxp0 laggport fxp1 "
-"10.0.0.15/24\n"
+"# ifconfig lagg0 up laggproto failover laggport fxp0 laggport fxp1 10.0.0.15/24\n"
 msgstr ""
 
 #. type: Plain text
@@ -4523,8 +4461,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "# ifconfig lagg0\n"
-"lagg0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
-"1500\n"
+"lagg0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
 "        options=8<VLAN_MTU>\n"
 "        ether 00:05:5d:71:8d:b8\n"
 "        inet 10.0.0.15 netmask 0xffffff00 broadcast 10.0.0.255\n"
@@ -4547,8 +4484,8 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2054
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2149
 msgid ""
-"To retain this configuration across reboots, add the following entries to "
-"[.filename]#/etc/rc.conf#:"
+"To retain this configuration across reboots, add the following entries to [."
+"filename]#/etc/rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -4558,8 +4495,7 @@ msgid ""
 "ifconfig_fxp0=\"up\"\n"
 "ifconfig_fxp1=\"up\"\n"
 "cloned_interfaces=\"lagg0\"\n"
-"ifconfig_lagg0=\"laggproto failover laggport fxp0 laggport fxp1 "
-"10.0.0.15/24\"\n"
+"ifconfig_lagg0=\"laggproto failover laggport fxp0 laggport fxp1 10.0.0.15/24\"\n"
 msgstr ""
 
 #. type: Block title
@@ -4603,8 +4539,8 @@ msgid ""
 "adding `*driver_load=\"YES\"*` to that file and rebooting. Another, better "
 "way is to load the driver in [.filename]#/etc/rc.conf# by adding it to "
 "`kld_list` (see man:rc.conf[5] for details) in that file and rebooting. This "
-"is needed because otherwise the driver is not loaded yet at the time the "
-"man:lagg[4] interface is set up."
+"is needed because otherwise the driver is not loaded yet at the time the man:"
+"lagg[4] interface is set up."
 msgstr ""
 
 #. type: Plain text
@@ -4613,8 +4549,8 @@ msgid ""
 "In this example, the Ethernet interface, _re0_, is the master and the "
 "wireless interface, _wlan0_, is the failover. The _wlan0_ interface was "
 "created from the _ath0_ physical wireless interface, and the Ethernet "
-"interface will be configured with the MAC address of the wireless "
-"interface. First, determine the MAC address of the wireless interface:"
+"interface will be configured with the MAC address of the wireless interface. "
+"First, determine the MAC address of the wireless interface:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -4622,12 +4558,10 @@ msgstr ""
 #, no-wrap
 msgid ""
 "# ifconfig wlan0\n"
-"wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
-"1500\n"
+"wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
 "\tether b8:ee:65:5b:32:59\n"
 "\tgroups: wlan\n"
-"\tssid Bbox-A3BD2403 channel 6 (2437 MHz 11g ht/20) bssid "
-"00:37:b7:56:4b:60\n"
+"\tssid Bbox-A3BD2403 channel 6 (2437 MHz 11g ht/20) bssid 00:37:b7:56:4b:60\n"
 "\tregdomain ETSI country FR indoor ecm authmode WPA2/802.11i privacy ON\n"
 "\tdeftxkey UNDEF AES-CCM 2:128-bit txpower 30 bmiss 7 scanvalid 60\n"
 "\tprotmode CTS ampdulimit 64k ampdudensity 8 shortgi -stbctx stbcrx\n"
@@ -4685,8 +4619,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "# ifconfig lagg0\n"
-"lagg0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
-"1500\n"
+"lagg0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
 "        options=8<VLAN_MTU>\n"
 "        ether b8:ee:65:5b:32:59\n"
 "        laggproto failover lagghash l2,l3,l4\n"
@@ -4768,10 +4701,10 @@ msgid ""
 "When a computer PXE boots, it receives information over DHCP about where to "
 "obtain the initial boot loader file. After the host computer receives this "
 "information, it downloads the boot loader via TFTP and then executes the "
-"boot loader. In FreeBSD, the boot loader file is "
-"[.filename]#/boot/pxeboot#. After [.filename]#/boot/pxeboot# executes, the "
-"FreeBSD kernel is loaded and the rest of the FreeBSD bootup sequence "
-"proceeds, as described in crossref:boot[boot,The FreeBSD Booting Process]."
+"boot loader. In FreeBSD, the boot loader file is [.filename]#/boot/pxeboot#. "
+"After [.filename]#/boot/pxeboot# executes, the FreeBSD kernel is loaded and "
+"the rest of the FreeBSD bootup sequence proceeds, as described in crossref:"
+"boot[boot,The FreeBSD Booting Process]."
 msgstr ""
 
 #. type: delimited block = 4
@@ -4798,12 +4731,12 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2187
 msgid ""
-"The steps shown in this section configure the built-in NFS and TFTP "
-"servers. The next section demonstrates how to install and configure the DHCP "
-"server. In this example, the directory which will contain the files used by "
-"PXE users is [.filename]#/b/tftpboot/FreeBSD/install#. It is important that "
-"this directory exists and that the same directory name is set in both "
-"[.filename]#/etc/inetd.conf# and [.filename]#/usr/local/etc/dhcpd.conf#."
+"The steps shown in this section configure the built-in NFS and TFTP servers. "
+"The next section demonstrates how to install and configure the DHCP server. "
+"In this example, the directory which will contain the files used by PXE "
+"users is [.filename]#/b/tftpboot/FreeBSD/install#. It is important that this "
+"directory exists and that the same directory name is set in both [."
+"filename]#/etc/inetd.conf# and [.filename]#/usr/local/etc/dhcpd.conf#."
 msgstr ""
 
 #. type: Plain text
@@ -4843,8 +4776,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2210
 msgid ""
-"Export the diskless root directory via NFS by adding the following to "
-"[.filename]#/etc/exports#:"
+"Export the diskless root directory via NFS by adding the following to [."
+"filename]#/etc/exports#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -4867,8 +4800,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2224
 msgid ""
-"Enable man:inetd[8] by adding the following line to "
-"[.filename]#/etc/rc.conf#:"
+"Enable man:inetd[8] by adding the following line to [.filename]#/etc/rc."
+"conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -4914,8 +4847,8 @@ msgid ""
 "Install the base system into [.filename]#${NFSROOTDIR}#, either by "
 "decompressing the official archives or by rebuilding the FreeBSD kernel and "
 "userland (refer to crossref:cutting-edge[makeworld,“Updating FreeBSD from "
-"Source”] for more detailed instructions, but do not forget to add "
-"`DESTDIR=_${NFSROOTDIR}_` when running the `make installkernel` and `make "
+"Source”] for more detailed instructions, but do not forget to add `DESTDIR=_"
+"${NFSROOTDIR}_` when running the `make installkernel` and `make "
 "installworld` commands."
 msgstr ""
 
@@ -4946,10 +4879,8 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2265
 #, no-wrap
 msgid ""
-"# Device                                         Mountpoint    FSType   "
-"Options  Dump Pass\n"
-"myhost.example.com:/b/tftpboot/FreeBSD/install       /         nfs      ro        "
-"0    0\n"
+"# Device                                         Mountpoint    FSType   Options  Dump Pass\n"
+"myhost.example.com:/b/tftpboot/FreeBSD/install       /         nfs      ro        0    0\n"
 msgstr ""
 
 #. type: Plain text
@@ -4987,8 +4918,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2278
 msgid ""
-"Perform any other needed customizations of the PXE environment in "
-"[.filename]#${NFSROOTDIR}#. These customizations could include things like "
+"Perform any other needed customizations of the PXE environment in [."
+"filename]#${NFSROOTDIR}#. These customizations could include things like "
 "installing packages or editing the password file with man:vipw[8]."
 msgstr ""
 
@@ -4996,10 +4927,9 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2280
 msgid ""
 "When booting from an NFS root volume, [.filename]#/etc/rc# detects the NFS "
-"boot and runs [.filename]#/etc/rc.initdiskless#. In this case, "
-"[.filename]#/etc# and [.filename]#/var# need to be memory backed file "
-"systems so that these directories are writable but the NFS root directory is "
-"read-only:"
+"boot and runs [.filename]#/etc/rc.initdiskless#. In this case, [.filename]#/"
+"etc# and [.filename]#/var# need to be memory backed file systems so that "
+"these directories are writable but the NFS root directory is read-only:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -5015,16 +4945,16 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2290
 msgid ""
-"When the system boots, memory file systems for [.filename]#/etc# and "
-"[.filename]#/var# will be created and mounted and the contents of the "
-"[.filename]#cpio.gz# files will be copied into them. By default, these file "
+"When the system boots, memory file systems for [.filename]#/etc# and [."
+"filename]#/var# will be created and mounted and the contents of the [."
+"filename]#cpio.gz# files will be copied into them. By default, these file "
 "systems have a maximum capacity of 5 megabytes. If your archives do not fit, "
 "which is usually the case for [.filename]#/var# when binary packages have "
 "been installed, request a larger size by putting the number of 512 byte "
-"sectors needed (e.g., 5 megabytes is 10240 sectors) in "
-"[.filename]#${NFSROOTDIR}/conf/base/etc/md_size# and "
-"[.filename]#${NFSROOTDIR}/conf/base/var/md_size# files for [.filename]#/etc# "
-"and [.filename]#/var# file systems respectively."
+"sectors needed (e.g., 5 megabytes is 10240 sectors) in [.filename]#"
+"${NFSROOTDIR}/conf/base/etc/md_size# and [.filename]#${NFSROOTDIR}/conf/base/"
+"var/md_size# files for [.filename]#/etc# and [.filename]#/var# file systems "
+"respectively."
 msgstr ""
 
 #. type: Title ===
@@ -5050,9 +4980,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2299
 msgid ""
-"Once installed, edit the configuration file, "
-"[.filename]#/usr/local/etc/dhcpd.conf#. Configure the `next-server`, "
-"`filename`, and `root-path` settings as seen in this example:"
+"Once installed, edit the configuration file, [.filename]#/usr/local/etc/"
+"dhcpd.conf#. Configure the `next-server`, `filename`, and `root-path` "
+"settings as seen in this example:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -5198,7 +5128,8 @@ msgstr ""
 
 #. type: delimited block * 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2360
-msgid "The client sends a TFTP request to next-server, asking to retrieve filename."
+msgid ""
+"The client sends a TFTP request to next-server, asking to retrieve filename."
 msgstr ""
 
 #. type: delimited block * 4
@@ -5210,15 +5141,15 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2364
 msgid ""
 "The client executes filename, which is pxeboot(8), which then loads the "
-"kernel. When the kernel executes, the root file system specified by "
-"root-path is mounted over NFS."
+"kernel. When the kernel executes, the root file system specified by root-"
+"path is mounted over NFS."
 msgstr ""
 
 #. type: delimited block * 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2366
 msgid ""
-"On the TFTP server, read [.filename]#/var/log/xferlog# to ensure that "
-"[.filename]#pxeboot# is being retrieved from the correct location. To test "
+"On the TFTP server, read [.filename]#/var/log/xferlog# to ensure that [."
+"filename]#pxeboot# is being retrieved from the correct location. To test "
 "this example configuration:"
 msgstr ""
 
@@ -5260,9 +5191,8 @@ msgstr ""
 #. type: delimited block * 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2387
 msgid ""
-"IPv6 is the new version of the well known IP protocol, also known as "
-"IPv4. IPv6 provides several advantages over IPv4 as well as many new "
-"features:"
+"IPv6 is the new version of the well known IP protocol, also known as IPv4. "
+"IPv6 provides several advantages over IPv4 as well as many new features:"
 msgstr ""
 
 #. type: delimited block * 4
@@ -5285,7 +5215,8 @@ msgstr ""
 
 #. type: delimited block * 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2392
-msgid "Address autoconfiguration (http://www.ietf.org/rfc/rfc2462.txt[RFC2462])."
+msgid ""
+"Address autoconfiguration (http://www.ietf.org/rfc/rfc2462.txt[RFC2462])."
 msgstr ""
 
 #. type: delimited block * 4
@@ -5378,9 +5309,9 @@ msgstr ""
 #. type: delimited block * 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2414
 msgid ""
-"When reading an IPv6 address, the canonical form is represented as "
-"`x:x:x:x:x:x:x:x`, where each `x` represents a 16 bit hex value. An example "
-"is `FEBC:A574:382B:23C1:AA49:4592:4EFE:9982`."
+"When reading an IPv6 address, the canonical form is represented as `x:x:x:x:"
+"x:x:x:x`, where each `x` represents a 16 bit hex value. An example is `FEBC:"
+"A574:382B:23C1:AA49:4592:4EFE:9982`."
 msgstr ""
 
 #. type: delimited block * 4
@@ -5427,9 +5358,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2437
 msgid ""
-"In this example, the [.filename]#rl0# interface is using "
-"`fe80::200:21ff:fe03:8e1%rl0`, an auto-configured link-local address which "
-"was automatically generated from the MAC address."
+"In this example, the [.filename]#rl0# interface is using `fe80::200:21ff:"
+"fe03:8e1%rl0`, an auto-configured link-local address which was automatically "
+"generated from the MAC address."
 msgstr ""
 
 #. type: Plain text
@@ -5472,8 +5403,7 @@ msgid ""
 "|`::ff:xx:xx:xx:xx`\n"
 "|96 bits\n"
 "|IPv4 mapped IPv6 address\n"
-"|The lower 32 bits are the IPv4 address for hosts which do not support "
-"IPv6.\n"
+"|The lower 32 bits are the IPv4 address for hosts which do not support IPv6.\n"
 "\n"
 "|`fe80::/10`\n"
 "|10 bits\n"
@@ -5483,8 +5413,7 @@ msgid ""
 "|`fc00::/7`\n"
 "|7 bits\n"
 "|unique-local\n"
-"|Unique local addresses are intended for local communication and are only "
-"routable within a set of cooperating sites.\n"
+"|Unique local addresses are intended for local communication and are only routable within a set of cooperating sites.\n"
 "\n"
 "|`ff00::`\n"
 "|8 bits\n"
@@ -5494,15 +5423,14 @@ msgid ""
 "|``2000::-3fff::``\n"
 "|3 bits\n"
 "|global unicast\n"
-"|All global unicast addresses are assigned from this pool. The first 3 bits "
-"are `001`.\n"
+"|All global unicast addresses are assigned from this pool. The first 3 bits are `001`.\n"
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2490
 msgid ""
-"For further information on the structure of IPv6 addresses, refer to "
-"http://www.ietf.org/rfc/rfc3513.txt[RFC3513]."
+"For further information on the structure of IPv6 addresses, refer to http://"
+"www.ietf.org/rfc/rfc3513.txt[RFC3513]."
 msgstr ""
 
 #. type: Title ===
@@ -5514,8 +5442,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2494
 msgid ""
-"To configure a FreeBSD system as an IPv6 client, add these two lines to "
-"[.filename]#rc.conf#:"
+"To configure a FreeBSD system as an IPv6 client, add these two lines to [."
+"filename]#rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -5544,9 +5472,7 @@ msgstr ""
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2508
 #, no-wrap
-msgid ""
-"ifconfig_rl0_ipv6=\"inet6 2001:db8:4672:6565:2026:5043:2d42:5344 prefixlen "
-"64\"\n"
+msgid "ifconfig_rl0_ipv6=\"inet6 2001:db8:4672:6565:2026:5043:2d42:5344 prefixlen 64\"\n"
 msgstr ""
 
 #. type: Plain text
@@ -5581,13 +5507,14 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2523
 msgid ""
-"http://www.tunnelbroker.net[Hurricane Electric] offers tunnels with "
-"end-points all around the globe."
+"http://www.tunnelbroker.net[Hurricane Electric] offers tunnels with end-"
+"points all around the globe."
 msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2527
-msgid "Install the package:net/freenet6[] package or port for a dial-up connection."
+msgid ""
+"Install the package:net/freenet6[] package or port for a dial-up connection."
 msgstr ""
 
 #. type: Plain text
@@ -5681,7 +5608,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2571
-msgid "To enable man:rtadvd[8], add the following to [.filename]#/etc/rc.conf#:"
+msgid ""
+"To enable man:rtadvd[8], add the following to [.filename]#/etc/rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -5721,8 +5649,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2593
 msgid ""
-"Replace [.filename]#rl0# with the interface to be used and "
-"`2001:db8:1f11:246::` with the prefix of the allocation."
+"Replace [.filename]#rl0# with the interface to be used and `2001:"
+"db8:1f11:246::` with the prefix of the allocation."
 msgstr ""
 
 #. type: Plain text
@@ -5836,8 +5764,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2626
 msgid ""
-"Enable boot-time support for CARP by adding an entry for the "
-"[.filename]#carp.ko# kernel module in [.filename]#/boot/loader.conf#:"
+"Enable boot-time support for CARP by adding an entry for the [."
+"filename]#carp.ko# kernel module in [.filename]#/boot/loader.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -5927,10 +5855,8 @@ msgstr ""
 msgid ""
 "hostname=\"hostc.example.org\"\n"
 "ifconfig_em0=\"inet 192.168.1.5 netmask 255.255.255.0\"\n"
-"ifconfig_em0_alias0=\"inet vhid 1 advskew 100 pass testpass alias "
-"192.168.1.50/32\"\n"
-"ifconfig_em0_alias1=\"inet vhid 2 advskew 100 pass testpass alias "
-"192.168.1.51/32\"\n"
+"ifconfig_em0_alias0=\"inet vhid 1 advskew 100 pass testpass alias 192.168.1.50/32\"\n"
+"ifconfig_em0_alias1=\"inet vhid 2 advskew 100 pass testpass alias 192.168.1.51/32\"\n"
 msgstr ""
 
 #. type: Plain text
@@ -6112,8 +6038,8 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2777
 msgid ""
-"When configuring a VLAN, a couple pieces of information must be "
-"known. First, which network interface? Second, what is the VLAN tag?"
+"When configuring a VLAN, a couple pieces of information must be known. "
+"First, which network interface? Second, what is the VLAN tag?"
 msgstr ""
 
 #. type: delimited block = 4
@@ -6140,9 +6066,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2791
 msgid ""
-"To configure VLANs at boot time, [.filename]#/etc/rc.conf# must be "
-"updated. To duplicate the configuration above, the following will need to be "
-"added:"
+"To configure VLANs at boot time, [.filename]#/etc/rc.conf# must be updated. "
+"To duplicate the configuration above, the following will need to be added:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -6167,8 +6092,8 @@ msgid ""
 "It is useful to assign a symbolic name to an interface so that when the "
 "associated hardware is changed, only a few configuration variables need to "
 "be updated. For example, security cameras need to be run over VLAN 1 on "
-"`em0`. Later, if the `em0` card is replaced with a card that uses the "
-"man:ixgb[4] driver, all references to `em0.1` will not have to change to "
+"`em0`. Later, if the `em0` card is replaced with a card that uses the man:"
+"ixgb[4] driver, all references to `em0.1` will not have to change to "
 "`ixgb0.1`."
 msgstr ""
 
@@ -6183,9 +6108,7 @@ msgstr ""
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2807
 #, no-wrap
-msgid ""
-"# ifconfig em0.5 create vlan 5 vlandev em0 name cameras inet "
-"192.168.20.20/24\n"
+msgid "# ifconfig em0.5 create vlan 5 vlandev em0 name cameras inet 192.168.20.20/24\n"
 msgstr ""
 
 #. type: Plain text
@@ -6196,16 +6119,14 @@ msgstr ""
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2814
 #, no-wrap
-msgid ""
-"# ifconfig video.5 create vlan 5 vlandev video name cameras inet "
-"192.168.20.20/24\n"
+msgid "# ifconfig video.5 create vlan 5 vlandev video name cameras inet 192.168.20.20/24\n"
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2817
 msgid ""
-"To apply the changes at boot time, add the following lines to "
-"[.filename]#/etc/rc.conf#:"
+"To apply the changes at boot time, add the following lines to [.filename]#/"
+"etc/rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
