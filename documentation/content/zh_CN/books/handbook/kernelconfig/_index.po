@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-02-21 18:55-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: 2021-06-03 00:07+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Chinese (Simplified) <https://translate-dev.freebsd.org/"
@@ -17,6 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.6.2\n"
+
+#. type: YAML Front Matter: description
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:1
+#, no-wrap
+msgid "This chapter covers how to configure the FreeBSD Kernel. When to build a custom kernel, how to take a hardware inventory, how to customize a kernel configuration file, etc"
+msgstr ""
 
 #. type: YAML Front Matter: part
 #: documentation/content/en/books/handbook/kernelconfig/_index.adoc:1
@@ -31,88 +37,91 @@ msgid "Chapter 8. Configuring the FreeBSD Kernel"
 msgstr ""
 
 #. type: Title =
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:9
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:11
 #, no-wrap
 msgid "Configuring the FreeBSD Kernel"
 msgstr "配置 FreeBSD 内核"
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:45
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:47
 #, no-wrap
 msgid "Synopsis"
 msgstr "简介"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:48
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:50
 msgid ""
 "The kernel is the core of the FreeBSD operating system. It is responsible "
 "for managing memory, enforcing security controls, networking, disk access, "
 "and much more. While much of FreeBSD is dynamically configurable, it is "
 "still occasionally necessary to configure and compile a custom kernel."
 msgstr ""
-"内核（Kernel）是FreeBSD操作系统最重要的部份之一。它负责內存管理、安全控管、网络、硬盘存取等等。尽管目前FreeBSD大多可以用动态设定，但有"
-"时仍需要设定并编译自定义的核心。"
+"内核（Kernel）是FreeBSD操作系统最重要的部份之一。它负责內存管理、安全控管、网"
+"络、硬盘存取等等。尽管目前FreeBSD大多可以用动态设定，但有时仍需要设定并编译自"
+"定义的核心。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:50
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:52
 msgid "After reading this chapter, you will know:"
 msgstr "读完本章节，你将会知道："
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:52
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:54
 msgid "When to build a custom kernel."
 msgstr "何时需要编译自定义核心。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:53
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:55
 msgid "How to take a hardware inventory."
 msgstr "如何取得硬件信息。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:54
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:56
 msgid "How to customize a kernel configuration file."
 msgstr "如何量身订做核心配置文件。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:55
-msgid "How to use the kernel configuration file to create and build a new kernel."
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:57
+msgid ""
+"How to use the kernel configuration file to create and build a new kernel."
 msgstr "如何使用核心配置文件来建立并编译新的核心。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:56
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:58
 msgid "How to install the new kernel."
 msgstr "如何安装新的核心。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:57
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:59
 msgid "How to troubleshoot if things go wrong."
 msgstr "发生错误时如何排除问题。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:59
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:61
 msgid ""
 "All of the commands listed in the examples in this chapter should be "
 "executed as `root`."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:61
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:63
 #, no-wrap
 msgid "Why Build a Custom Kernel?"
 msgstr "为何要编译自定义的核心？"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:64
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:66
 msgid ""
 "Traditionally, FreeBSD used a monolithic kernel. The kernel was one large "
 "program, supported a fixed list of devices, and in order to change the "
 "kernel's behavior, one had to compile and then reboot into a new kernel."
 msgstr ""
-"早期的FreeBSD的核心（Kernel）被戏称为“巨石”。因为当时的核心是一个非常大的程序，且只支持固定的硬件装置，如果您想改变核心的设定，就必须编译一"
-"个新核心并重启，才能使用。"
+"早期的FreeBSD的核心（Kernel）被戏称为“巨石”。因为当时的核心是一个非常大的程"
+"序，且只支持固定的硬件装置，如果您想改变核心的设定，就必须编译一个新核心并重"
+"启，才能使用。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:66
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:68
 msgid ""
 "Today, most of the functionality in the FreeBSD kernel is contained in "
 "modules which can be dynamically loaded and unloaded from the kernel as "
@@ -120,74 +129,83 @@ msgid ""
 "hardware and for new functionality to be brought into the kernel. This is "
 "known as a modular kernel."
 msgstr ""
-"现今，大多数在FreeBSD核心的功能已采用模块（Module）的方式包装，并可依需求动态从核心加载或卸载。这使得执行中的核心能够快速调节新硬件环境并在核"
-"心开启新的功能，这就是所谓模块化核心（Modular Kernel）。"
-
-#. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:68
-msgid ""
-"Occasionally, it is still necessary to perform static kernel "
-"configuration. Sometimes the needed functionality is so tied to the kernel "
-"that it can not be made dynamically loadable. Some security environments "
-"prevent the loading and unloading of kernel modules and require that only "
-"needed functionality is statically compiled into the kernel."
-msgstr ""
-"尽管如此，还是有一些功能因使用到静态的核心设定须要编译，因为这些功能与核心紧密结合，无法将做成可动态加载的模块。且部份强调安全性的环境会尽量避免加载与卸载"
-"核心模块，且只要将需要的功能静态的编译到核心当中。"
+"现今，大多数在FreeBSD核心的功能已采用模块（Module）的方式包装，并可依需求动态"
+"从核心加载或卸载。这使得执行中的核心能够快速调节新硬件环境并在核心开启新的功"
+"能，这就是所谓模块化核心（Modular Kernel）。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/kernelconfig/_index.adoc:70
-#, fuzzy
 msgid ""
-"Building a custom kernel is often a rite of passage for advanced BSD "
-"users. This process, while time consuming, can provide benefits to the "
-"FreeBSD system. Unlike the [.filename]#GENERIC# kernel, which must support a "
-"wide range of hardware, a custom kernel can be stripped down to only provide "
-"support for that computer's hardware. This has a number of benefits, such "
-"as:"
+"Occasionally, it is still necessary to perform static kernel configuration. "
+"Sometimes the needed functionality is so tied to the kernel that it can not "
+"be made dynamically loadable. Some security environments prevent the loading "
+"and unloading of kernel modules and require that only needed functionality "
+"is statically compiled into the kernel."
 msgstr ""
-"编译自定义的核心几乎是每位进阶的BSD使用者所必须经历的过程。尽管这项工作可能比较耗时，但在FreeBSD的使用上会有许多好处。跟必须支持大多数各式硬件的"
-"<filename>GENERIC</filename>核心相比的话，自定义的核心可以更『体贴』，只支持『自己硬件』的部分就好。自定义核心有许多项优点，如"
-"："
+"尽管如此，还是有一些功能因使用到静态的核心设定须要编译，因为这些功能与核心紧"
+"密结合，无法将做成可动态加载的模块。且部份强调安全性的环境会尽量避免加载与卸"
+"载核心模块，且只要将需要的功能静态的编译到核心当中。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/kernelconfig/_index.adoc:72
-msgid ""
-"Faster boot time. Since the kernel will only probe the hardware on the "
-"system, the time it takes the system to boot can decrease."
-msgstr "加速开机，因为自定义的核心只需要侦测您系统上存在的硬件，所以让启动所花的过程更流畅快速。"
-
-#. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:73
 #, fuzzy
 msgid ""
-"Lower memory usage. A custom kernel often uses less memory than the "
-"[.filename]#GENERIC# kernel by omitting unused features and device "
-"drivers. This is important because the kernel code remains resident in "
-"physical memory at all times, preventing that memory from being used by "
-"applications. For this reason, a custom kernel is useful on a system with a "
-"small amount of RAM."
+"Building a custom kernel is often a rite of passage for advanced BSD users. "
+"This process, while time consuming, can provide benefits to the FreeBSD "
+"system. Unlike the [.filename]#GENERIC# kernel, which must support a wide "
+"range of hardware, a custom kernel can be stripped down to only provide "
+"support for that computer's hardware. This has a number of benefits, such as:"
 msgstr ""
-"减少內存使用，自定义的核心通常会比<filename>GENERIC</filename>核心使用更少的內存，这很重要，因为核心必须一直存放在实体记忆体内"
-"，会让其他应用程序无法使用。因此，自定义核心对于记忆体较小的系统来说，发挥很大的作用。"
+"编译自定义的核心几乎是每位进阶的BSD使用者所必须经历的过程。尽管这项工作可能比"
+"较耗时，但在FreeBSD的使用上会有许多好处。跟必须支持大多数各式硬件的"
+"<filename>GENERIC</filename>核心相比的话，自定义的核心可以更『体贴』，只支持"
+"『自己硬件』的部分就好。自定义核心有许多项优点，如："
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/kernelconfig/_index.adoc:74
+msgid ""
+"Faster boot time. Since the kernel will only probe the hardware on the "
+"system, the time it takes the system to boot can decrease."
+msgstr ""
+"加速开机，因为自定义的核心只需要侦测您系统上存在的硬件，所以让启动所花的过程"
+"更流畅快速。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:75
+#, fuzzy
+msgid ""
+"Lower memory usage. A custom kernel often uses less memory than the [."
+"filename]#GENERIC# kernel by omitting unused features and device drivers. "
+"This is important because the kernel code remains resident in physical "
+"memory at all times, preventing that memory from being used by applications. "
+"For this reason, a custom kernel is useful on a system with a small amount "
+"of RAM."
+msgstr ""
+"减少內存使用，自定义的核心通常会比<filename>GENERIC</filename>核心使用更少的"
+"內存，这很重要，因为核心必须一直存放在实体记忆体内，会让其他应用程序无法使"
+"用。因此，自定义核心对于记忆体较小的系统来说，发挥很大的作用。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:76
 #, fuzzy
 msgid ""
 "Additional hardware support. A custom kernel can add support for devices "
 "which are not present in the [.filename]#GENERIC# kernel."
-msgstr "支持额外的硬件，自定义的核心可以增加一些<filename>GENERIC</filename>核心没有提供的硬件支持。"
-
-#. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:76
-msgid ""
-"Before building a custom kernel, consider the reason for doing so. If there "
-"is a need for specific hardware support, it may already exist as a module."
-msgstr "在编译自定义核心之前，请思考要这么做的原因，若是因为需要特定硬件的支持，很可能已有既有的模块可以使用。"
+msgstr ""
+"支持额外的硬件，自定义的核心可以增加一些<filename>GENERIC</filename>核心没有"
+"提供的硬件支持。"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/kernelconfig/_index.adoc:78
+msgid ""
+"Before building a custom kernel, consider the reason for doing so. If there "
+"is a need for specific hardware support, it may already exist as a module."
+msgstr ""
+"在编译自定义核心之前，请思考要这么做的原因，若是因为需要特定硬件的支持，很可"
+"能已有既有的模块可以使用。"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:80
 msgid ""
 "Kernel modules exist in [.filename]#/boot/kernel# and may be dynamically "
 "loaded into the running kernel using man:kldload[8]. Most kernel drivers "
@@ -196,7 +214,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:83
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:85
 #, no-wrap
 msgid ""
 "Alternatively, to load the driver as a module at boot time, place the\n"
@@ -204,34 +222,36 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:85
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:87
 #, no-wrap
 msgid "    if_ath_load=\"YES\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:88
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:90
 msgid ""
 "Adding `if_ath_load=\"YES\"` to [.filename]#/boot/loader.conf# will load "
 "this module dynamically at boot time."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:90
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:92
 #, fuzzy
 msgid ""
-"In some cases, there is no associated module in "
-"[.filename]#/boot/kernel#. This is mostly true for certain subsystems."
-msgstr "部份情况在<filename>/boot/kernel</filename>会没有相关的模块，这对于某些子系统大多是真的。"
+"In some cases, there is no associated module in [.filename]#/boot/kernel#. "
+"This is mostly true for certain subsystems."
+msgstr ""
+"部份情况在<filename>/boot/kernel</filename>会没有相关的模块，这对于某些子系统"
+"大多是真的。"
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:92
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:94
 #, no-wrap
 msgid "Finding the System Hardware"
 msgstr "侦测系统硬件"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:95
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:97
 msgid ""
 "Before editing the kernel configuration file, it is recommended to perform "
 "an inventory of the machine's hardware. On a dual-boot system, the inventory "
@@ -240,14 +260,14 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:99
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:101
 msgid ""
 "Some versions of Microsoft(R) Windows(R) have a System icon which can be "
 "used to access Device Manager."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:102
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:104
 msgid ""
 "If FreeBSD is the only installed operating system, use man:dmesg[8] to "
 "determine the hardware that was found and listed during the boot probe. Most "
@@ -257,7 +277,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:109
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:111
 #, no-wrap
 msgid ""
 "psm0: <PS/2 Mouse> irq 12 on atkbdc0\n"
@@ -267,33 +287,32 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:112
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:114
 msgid ""
 "Since this hardware exists, this driver should not be removed from a custom "
 "kernel configuration file."
 msgstr "因为该硬件存在，此驱动程序便不应该从自定义核心配置文件中移除。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:114
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:116
 msgid ""
 "If the output of `dmesg` does not display the results of the boot probe "
 "output, instead read the contents of [.filename]#/var/run/dmesg.boot#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:116
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:118
 msgid ""
 "Another tool for finding hardware is man:pciconf[8], which provides more "
 "verbose output. For example:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:125
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:127
 #, no-wrap
 msgid ""
 "% pciconf -lv\n"
-"ath0@pci0:3:0:0:        class=0x020000 card=0x058a1014 chip=0x1014168c "
-"rev=0x01 hdr=0x00\n"
+"ath0@pci0:3:0:0:        class=0x020000 card=0x058a1014 chip=0x1014168c rev=0x01 hdr=0x00\n"
 "    vendor     = 'Atheros Communications Inc.'\n"
 "    device     = 'AR5212 Atheros AR5212 802.11abg wireless'\n"
 "    class      = network\n"
@@ -301,15 +320,17 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:128
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:130
 #, fuzzy
 msgid ""
 "This output shows that the [.filename]#ath# driver located a wireless "
 "Ethernet device."
-msgstr "以上输出信息说明<filename>ath</filename>驱动程序已经找到一个无线以太网络装置。"
+msgstr ""
+"以上输出信息说明<filename>ath</filename>驱动程序已经找到一个无线以太网络装"
+"置。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:130
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:132
 msgid ""
 "The `-k` flag of man:man[1] can be used to provide useful information. For "
 "example, it can be used to display a list of manual pages which contain a "
@@ -317,7 +338,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:136
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:138
 #, no-wrap
 msgid ""
 "# man -k Atheros\n"
@@ -326,28 +347,31 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:139
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:141
 msgid ""
 "Once the hardware inventory list is created, refer to it to ensure that "
 "drivers for installed hardware are not removed as the custom kernel "
 "configuration is edited."
-msgstr "准备好硬件清单之后，参考该清单来确认已安装的硬件驱动程序在编辑自定义核心设定时没有被移除。"
+msgstr ""
+"准备好硬件清单之后，参考该清单来确认已安装的硬件驱动程序在编辑自定义核心设定"
+"时没有被移除。"
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:141
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:143
 #, no-wrap
 msgid "The Configuration File"
 msgstr "配置文件"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:144
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:146
 msgid ""
 "In order to create a custom kernel configuration file and build a custom "
 "kernel, the full FreeBSD source tree must first be installed."
-msgstr "为了要建立自定义核心配置文件并编译自定义核心，必须先安装完整的FreeBSD源码树。"
+msgstr ""
+"为了要建立自定义核心配置文件并编译自定义核心，必须先安装完整的FreeBSD源码树。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:146
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:148
 msgid ""
 "If [.filename]#/usr/src/# does not exist or it is empty, source has not been "
 "installed. Source can be installed using Subversion and the instructions in "
@@ -355,44 +379,46 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:148
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:150
 #, fuzzy
 msgid ""
-"Once source is installed, review the contents of "
-"[.filename]#/usr/src/sys#. This directory contains a number of "
-"subdirectories, including those which represent the following supported "
-"architectures: [.filename]#amd64#, [.filename]#i386#, [.filename]#powerpc#, "
-"and [.filename]#sparc64#. Everything inside a particular architecture's "
-"directory deals with that architecture only and the rest of the code is "
-"machine independent code common to all platforms. Each supported "
-"architecture has a [.filename]#conf# subdirectory which contains the "
-"[.filename]#GENERIC# kernel configuration file for that architecture."
+"Once source is installed, review the contents of [.filename]#/usr/src/sys#. "
+"This directory contains a number of subdirectories, including those which "
+"represent the following supported architectures: [.filename]#amd64#, [."
+"filename]#i386#, [.filename]#powerpc#, and [.filename]#sparc64#. Everything "
+"inside a particular architecture's directory deals with that architecture "
+"only and the rest of the code is machine independent code common to all "
+"platforms. Each supported architecture has a [.filename]#conf# subdirectory "
+"which contains the [.filename]#GENERIC# kernel configuration file for that "
+"architecture."
 msgstr ""
-"安装源代码后，请查看<filename>/usr/src/"
-"sys</filename>的内容。此目录包含许多子目录，包括那些表示以下受支持的体系结构的子目录：<filename>amd64</"
-"filename>, <filename>i386</filename>, <filename>powerpc</filename>, 和 <filena"
-"me>sparc64</filename>。特定体系结构目录中的所有内容仅处理该体系结构，代码的其余部分是所有平台共有的独立于机器的代码。每个受支持的体系"
-"结构都有一个<filename>conf</filename>子目录，其中包含该体系结构的<filename>GENERIC</filename>内核配置"
-"文件。"
+"安装源代码后，请查看<filename>/usr/src/sys</filename>的内容。此目录包含许多子"
+"目录，包括那些表示以下受支持的体系结构的子目录：<filename>amd64</filename>, "
+"<filename>i386</filename>, <filename>powerpc</filename>, 和 "
+"<filename>sparc64</filename>。特定体系结构目录中的所有内容仅处理该体系结构，"
+"代码的其余部分是所有平台共有的独立于机器的代码。每个受支持的体系结构都有一个"
+"<filename>conf</filename>子目录，其中包含该体系结构的<filename>GENERIC</"
+"filename>内核配置文件。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:150
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:152
 #, fuzzy
 msgid ""
 "Do not make edits to [.filename]#GENERIC#. Instead, copy the file to a "
 "different name and make edits to the copy. The convention is to use a name "
 "with all capital letters. When maintaining multiple FreeBSD machines with "
 "different hardware, it is a good idea to name it after the machine's "
-"hostname. This example creates a copy, named [.filename]#MYKERNEL#, of the "
-"[.filename]#GENERIC# configuration file for the `amd64` architecture:"
+"hostname. This example creates a copy, named [.filename]#MYKERNEL#, of the [."
+"filename]#GENERIC# configuration file for the `amd64` architecture:"
 msgstr ""
-"请不要直接对<filename>GENERIC</filename>文件做编辑。复制该文件为另一个名称，并对复制出来的文件做编辑，习惯上文件名会全部使用大"
-"写字元。当维护多台安装不同的硬件的FreeBSD机器时，将文件名后方加上机器的主机名称（Host name）是个不错的方法。以下示例使用<literal>"
-"amd64</literal>构架的<filename>GENERIC</filename>配置文件建立了一个复本名称为<filename>MYKERNE"
-"L</filename>："
+"请不要直接对<filename>GENERIC</filename>文件做编辑。复制该文件为另一个名称，"
+"并对复制出来的文件做编辑，习惯上文件名会全部使用大写字元。当维护多台安装不同"
+"的硬件的FreeBSD机器时，将文件名后方加上机器的主机名称（Host name）是个不错的"
+"方法。以下示例使用<literal>amd64</literal>构架的<filename>GENERIC</filename>"
+"配置文件建立了一个复本名称为<filename>MYKERNEL</filename>："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:155
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:157
 #, no-wrap
 msgid ""
 "# cd /usr/src/sys/amd64/conf\n"
@@ -400,15 +426,15 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:158
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:160
 msgid ""
-"[.filename]#MYKERNEL# can now be customized with any `ASCII` text "
-"editor. The default editor is vi, though an easier editor for beginners, "
-"called ee, is also installed with FreeBSD."
+"[.filename]#MYKERNEL# can now be customized with any `ASCII` text editor. "
+"The default editor is vi, though an easier editor for beginners, called ee, "
+"is also installed with FreeBSD."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:160
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:162
 #, fuzzy
 msgid ""
 "The format of the kernel configuration file is simple. Each line contains a "
@@ -418,12 +444,14 @@ msgid ""
 "of the line representing that device or subsystem. Do not add or remove a "
 "`#` for any line that you do not understand."
 msgstr ""
-"核心配置文件的格式很简单，每一行会含有代表装置（Device）或子系统（Subsystem）的关键字、参数以及简短的说明。任何在<literal>#</l"
-"iteral>符号之后的文字会被当做注释并且略过。要移除核心对某个装置或子系统的支持，仅需要在代表该装置或子系统的行前加上<literal>#</lite"
-"ral>符号。请不要在您还不了解用途的行前加上或移除<literal>#</literal>符号。"
+"核心配置文件的格式很简单，每一行会含有代表装置（Device）或子系统（Subsystem）"
+"的关键字、参数以及简短的说明。任何在<literal>#</literal>符号之后的文字会被当"
+"做注释并且略过。要移除核心对某个装置或子系统的支持，仅需要在代表该装置或子系"
+"统的行前加上<literal>#</literal>符号。请不要在您还不了解用途的行前加上或移除"
+"<literal>#</literal>符号。"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:165
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:167
 msgid ""
 "It is easy to remove support for a device or option and end up with a broken "
 "kernel. For example, if the man:ata[4] driver is removed from the kernel "
@@ -432,36 +460,40 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:168
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:170
 #, fuzzy
 msgid ""
 "In addition to the brief descriptions provided in this file, additional "
 "descriptions are contained in [.filename]#NOTES#, which can be found in the "
 "same directory as [.filename]#GENERIC# for that architecture. For "
-"architecture independent options, refer to "
-"[.filename]#/usr/src/sys/conf/NOTES#."
+"architecture independent options, refer to [.filename]#/usr/src/sys/conf/"
+"NOTES#."
 msgstr ""
-"除了在配置文件中提供的简短说明之外，尚有其他的说明在<filename>NOTES</filename>文件中，可在与该构架<filename>GENER"
-"IC</filename>相同的目录底下找到。要查看所有构架通用的选项，请参考<filename>/ usr/src/sys/conf/"
-"NOTES</filename>。"
+"除了在配置文件中提供的简短说明之外，尚有其他的说明在<filename>NOTES</"
+"filename>文件中，可在与该构架<filename>GENERIC</filename>相同的目录底下找到。"
+"要查看所有构架通用的选项，请参考<filename>/ usr/src/sys/conf/NOTES</"
+"filename>。"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:173
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:175
 #, fuzzy
 msgid ""
 "When finished customizing the kernel configuration file, save a backup copy "
 "to a location outside of [.filename]#/usr/src#."
-msgstr "当完成自定义的核心配置文件，请备份到<filename>/usr/src</filename>位置之外。"
+msgstr ""
+"当完成自定义的核心配置文件，请备份到<filename>/usr/src</filename>位置之外。"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:175
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:177
 msgid ""
 "Alternately, keep the kernel configuration file elsewhere and create a "
 "symbolic link to the file:"
-msgstr "或者，将核心配置文件放在其他地方，然后建立一个符号连接（Symbolic link）至该文件："
+msgstr ""
+"或者，将核心配置文件放在其他地方，然后建立一个符号连接（Symbolic link）至该文"
+"件："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:182
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:184
 #, no-wrap
 msgid ""
 "# cd /usr/src/sys/amd64/conf\n"
@@ -471,7 +503,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:187
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:189
 #, fuzzy
 msgid ""
 "An `include` directive is available for use in configuration files. This "
@@ -481,12 +513,13 @@ msgid ""
 "delta to be maintained with respect to [.filename]#GENERIC#, as seen in this "
 "example:"
 msgstr ""
-"配置文件中可以使用<literal>include</literal>指令（Directive）。该指令可以引用其他配置文件到目前的配置文件，这让只需根据"
-"现有文件设定做些微调整时更简单。若只有少量的额外选项或驱动程序需要设定，该指令可引用<filename>GENERIC</filename>并设定额外增加"
-"的选项，如示例所示："
+"配置文件中可以使用<literal>include</literal>指令（Directive）。该指令可以引用"
+"其他配置文件到目前的配置文件，这让只需根据现有文件设定做些微调整时更简单。若"
+"只有少量的额外选项或驱动程序需要设定，该指令可引用<filename>GENERIC</"
+"filename>并设定额外增加的选项，如示例所示："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:192
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:194
 #, no-wrap
 msgid ""
 "include GENERIC\n"
@@ -494,7 +527,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:197
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:199
 #, no-wrap
 msgid ""
 "options         IPFIREWALL\n"
@@ -504,7 +537,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:200
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:202
 msgid ""
 "Using this method, the local configuration file expresses local differences "
 "from a [.filename]#GENERIC# kernel. As upgrades are performed, new features "
@@ -515,173 +548,175 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:204
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:206
 msgid ""
 "To build a file which contains all available options, run the following "
 "command as `root`:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:208
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:210
 #, no-wrap
 msgid "# cd /usr/src/sys/arch/conf && make LINT\n"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:213
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:215
 #, no-wrap
 msgid "Building and Installing a Custom Kernel"
 msgstr "编译与安装自定义核心"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:216
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:218
 msgid ""
 "Once the edits to the custom configuration file have been saved, the source "
 "code for the kernel can be compiled using the following steps:"
 msgstr "完成自定义配置文件的编辑并储存之后，便可依据以下步骤编译核心的源码："
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:219
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:221
 #, no-wrap
 msgid "*Procedure: Building a Kernel*\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:220
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:222
 #, fuzzy, no-wrap
 msgid "Change to this directory:\n"
 msgstr "切换至此目录：\n"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:224
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:226
 #, no-wrap
 msgid "# cd /usr/src\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:227
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:229
 msgid ""
 "Compile the new kernel by specifying the name of the custom kernel "
 "configuration file:"
 msgstr "指定自定义核心配置文件的名称来编译新的核心："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:231
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:233
 #, no-wrap
 msgid "# make buildkernel KERNCONF=MYKERNEL\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:234
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:236
 #, fuzzy
 msgid ""
 "Install the new kernel associated with the specified kernel configuration "
-"file. This command will copy the new kernel to "
-"[.filename]#/boot/kernel/kernel# and save the old kernel to "
-"[.filename]#/boot/kernel.old/kernel#:"
+"file. This command will copy the new kernel to [.filename]#/boot/kernel/"
+"kernel# and save the old kernel to [.filename]#/boot/kernel.old/kernel#:"
 msgstr ""
-"安装使用指定核心配置文件所编译的新核心。此指令将会复制新核心到<filename>/boot/kernel/"
-"kernel</filename>并将旧核心备份到<filename>/boot/kernel.old/kernel</filename>："
+"安装使用指定核心配置文件所编译的新核心。此指令将会复制新核心到<filename>/"
+"boot/kernel/kernel</filename>并将旧核心备份到<filename>/boot/kernel.old/"
+"kernel</filename>："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:238
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:240
 #, no-wrap
 msgid "# make installkernel KERNCONF=MYKERNEL\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:241
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:243
 msgid ""
 "Shutdown the system and reboot into the new kernel. If something goes wrong, "
 "refer to <<kernelconfig-noboot, The kernel does not boot>>."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:243
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:245
 #, fuzzy
 msgid ""
 "By default, when a custom kernel is compiled, all kernel modules are "
-"rebuilt. To update a kernel faster or to build only custom modules, edit "
-"[.filename]#/etc/make.conf# before starting to build the kernel."
+"rebuilt. To update a kernel faster or to build only custom modules, edit [."
+"filename]#/etc/make.conf# before starting to build the kernel."
 msgstr ""
-"预设在自定义核心编译完成后，所有核心模块也同被重新编译。要快速更新核心或只编译自定义的模块，需在开始编译之前先编辑<filename>/etc/make."
-"conf</filename>。"
+"预设在自定义核心编译完成后，所有核心模块也同被重新编译。要快速更新核心或只编"
+"译自定义的模块，需在开始编译之前先编辑<filename>/etc/make.conf</filename>。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:245
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:247
 msgid ""
 "For example, this variable specifies the list of modules to build instead of "
 "using the default of building all modules:"
 msgstr "例如，使用以下变数可指定要编译的模块清单来替代预设编译所有模块的设定："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:249
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:251
 #, fuzzy, no-wrap
 msgid "MODULES_OVERRIDE = linux acpi\n"
 msgstr "MODULES_OVERRIDE = linux acpi\n"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:252
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:254
 msgid ""
 "Alternately, this variable lists which modules to exclude from the build "
 "process:"
 msgstr "或者，可使用以下变数来从编译程序中排除要编译的模块："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:256
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:258
 #, fuzzy, no-wrap
 msgid "WITHOUT_MODULES = linux acpi sound\n"
 msgstr "WITHOUT_MODULES = linux acpi sound\n"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:259
-msgid "Additional variables are available. Refer to man:make.conf[5] for details."
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:261
+msgid ""
+"Additional variables are available. Refer to man:make.conf[5] for details."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:261
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:263
 #, no-wrap
 msgid "If Something Goes Wrong"
 msgstr "如果发生错误"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:264
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:266
 msgid ""
 "There are four categories of trouble that can occur when building a custom "
 "kernel:"
 msgstr "当编译自定义核心时可能发生以下四种类型的问题："
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:265
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:267
 #, no-wrap
 msgid "`config` fails"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:267
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:269
 #, fuzzy
 msgid ""
 "If `config` fails, it will print the line number that is incorrect. As an "
 "example, for the following message, make sure that line 17 is typed "
 "correctly by comparing it to [.filename]#GENERIC# or [.filename]#NOTES#:"
 msgstr ""
-"若<command>config</command>失败，会列出不正确的行号。使用以下信息为例子，需要与<filename>GENERIC</filena"
-"me>或<filename>NOTES</filename>比对来确认第17行输入的内容正确："
+"若<command>config</command>失败，会列出不正确的行号。使用以下信息为例子，需要"
+"与<filename>GENERIC</filename>或<filename>NOTES</filename>比对来确认第17行输"
+"入的内容正确："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:271
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:273
 #, fuzzy, no-wrap
 msgid "config: line 17: syntax error\n"
 msgstr "config: line 17: syntax error\n"
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:273
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:275
 #, no-wrap
 msgid "`make` fails"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:275
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:277
 msgid ""
 "If `make` fails, it is usually due to an error in the kernel configuration "
 "file which is not severe enough for `config` to catch. Review the "
@@ -690,13 +725,13 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:276
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:278
 #, no-wrap
 msgid "The kernel does not boot"
 msgstr "无法使用核心开机"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:278
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:280
 msgid ""
 "If the new kernel does not boot or fails to recognize devices, do not panic! "
 "Fortunately, FreeBSD has an excellent mechanism for recovering from "
@@ -708,32 +743,34 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:280
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:282
 msgid ""
 "After booting with a good kernel, check over the configuration file and try "
 "to build it again. One helpful resource is [.filename]#/var/log/messages# "
-"which records the kernel messages from every successful boot. Also, "
-"man:dmesg[8] will print the kernel messages from the current boot."
+"which records the kernel messages from every successful boot. Also, man:"
+"dmesg[8] will print the kernel messages from the current boot."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:284
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:286
 #, fuzzy
 msgid ""
-"When troubleshooting a kernel, make sure to keep a copy of "
-"[.filename]#GENERIC#, or some other kernel that is known to work, as a "
+"When troubleshooting a kernel, make sure to keep a copy of [."
+"filename]#GENERIC#, or some other kernel that is known to work, as a "
 "different name that will not get erased on the next build. This is important "
 "because every time a new kernel is installed, [.filename]#kernel.old# is "
 "overwritten with the last installed kernel, which may or may not be "
 "bootable. As soon as possible, move the working kernel by renaming the "
 "directory containing the good kernel:"
 msgstr ""
-"在排除核心问题时，请确定留有<filename>GENERIC</filename>的复本，或者其他已知可以运作的核心，并使用不同的名称来确保下次编译时不"
-"会被删除，这很重要，因此每当新的核心被安装之后，<filename>kernel."
-"old</filename>都会被最后安装的核心复写，有可能会无法开机。尽快，透过重新命名将可运作的核心目录移动到目前运作的核心目录："
+"在排除核心问题时，请确定留有<filename>GENERIC</filename>的复本，或者其他已知"
+"可以运作的核心，并使用不同的名称来确保下次编译时不会被删除，这很重要，因此每"
+"当新的核心被安装之后，<filename>kernel.old</filename>都会被最后安装的核心复"
+"写，有可能会无法开机。尽快，透过重新命名将可运作的核心目录移动到目前运作的核"
+"心目录："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:289
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:291
 #, no-wrap
 msgid ""
 "# mv /boot/kernel /boot/kernel.bad\n"
@@ -741,20 +778,19 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:293
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:295
 #, no-wrap
 msgid "The kernel works, but man:ps[1] does not"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:294
+#: documentation/content/en/books/handbook/kernelconfig/_index.adoc:296
 msgid ""
 "If the kernel version differs from the one that the system utilities have "
 "been built with, for example, a kernel built from -CURRENT sources is "
 "installed on a -RELEASE system, many system status commands like man:ps[1] "
-"and man:vmstat[8] will not work. To fix this, "
-"crossref:cutting-edge[makeworld,recompile and install a world] built with "
-"the same version of the source tree as the kernel. It is never a good idea "
-"to use a different version of the kernel than the rest of the operating "
-"system."
+"and man:vmstat[8] will not work. To fix this, crossref:cutting-"
+"edge[makeworld,recompile and install a world] built with the same version of "
+"the source tree as the kernel. It is never a good idea to use a different "
+"version of the kernel than the rest of the operating system."
 msgstr ""
