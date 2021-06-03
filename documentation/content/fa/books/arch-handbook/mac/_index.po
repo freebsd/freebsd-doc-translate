@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-05-22 14:48-0300\n"
+"POT-Creation-Date: 2021-06-03 17:02-0300\n"
 "PO-Revision-Date: 2021-06-03 20:22+0000\n"
 "Last-Translator: Parsa Samet <qps@irbug.org>\n"
 "Language-Team: Persian <https://translate-dev.freebsd.org/projects/"
@@ -17,16 +17,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.6.2\n"
 
+#. type: Title =
+#: documentation/content/en/books/arch-handbook/mac/_index.adoc:1
+#: documentation/content/en/books/arch-handbook/mac/_index.adoc:15
+#, no-wrap
+msgid "The TrustedBSD MAC Framework"
+msgstr ""
+
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1
 #, no-wrap
 msgid "Chapter 6. The TrustedBSD MAC Framework"
-msgstr ""
-
-#. type: Title =
-#: documentation/content/en/books/arch-handbook/mac/_index.adoc:15
-#, no-wrap
-msgid "The TrustedBSD MAC Framework"
 msgstr ""
 
 #. type: Title ==
@@ -126,8 +127,8 @@ msgid ""
 "policies may be implemented as kernel modules and linked to the kernel; if "
 "multiple policy modules are present, their results will be composed. The MAC "
 "Framework provides a variety of access control infrastructure services to "
-"assist policy writers, including support for transient and persistent "
-"policy-agnostic object security labels. This support is currently considered "
+"assist policy writers, including support for transient and persistent policy-"
+"agnostic object security labels. This support is currently considered "
 "experimental."
 msgstr ""
 
@@ -288,9 +289,9 @@ msgid ""
 "compiled into the kernel, several counters will be maintained tracking label "
 "allocation. It is generally advisable that per-subsystem enforcement "
 "controls not be used to control policy behavior in production environments, "
-"as they broadly impact the operation of all active policies. Instead, "
-"per-policy controls should be preferred, as they provide greater granularity "
-"and greater operational consistency for policy modules."
+"as they broadly impact the operation of all active policies. Instead, per-"
+"policy controls should be preferred, as they provide greater granularity and "
+"greater operational consistency for policy modules."
 msgstr ""
 
 #. type: Plain text
@@ -333,10 +334,10 @@ msgid ""
 "including avoiding the full cost of incrementing and decrementing if the "
 "list is empty or contains only static entries (policies that are loaded "
 "before the system starts, and cannot be unloaded). A compile-time option is "
-"also provided which prevents any change in the set of loaded policies at "
-"run-time, which eliminates the mutex locking costs associated with "
-"supporting dynamically loaded and unloaded policies as synchronization is no "
-"longer required."
+"also provided which prevents any change in the set of loaded policies at run-"
+"time, which eliminates the mutex locking costs associated with supporting "
+"dynamically loaded and unloaded policies as synchronization is no longer "
+"required."
 msgstr ""
 
 #. type: Plain text
@@ -595,12 +596,14 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:167
-msgid "The following MAC-related system calls are present in the FreeBSD kernel:"
+msgid ""
+"The following MAC-related system calls are present in the FreeBSD kernel:"
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:169
-msgid "`mac_get_proc()` may be used to retrieve the label of the current process."
+msgid ""
+"`mac_get_proc()` may be used to retrieve the label of the current process."
 msgstr ""
 
 #. type: Plain text
@@ -750,7 +753,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:195
-msgid "Declaration of policy identity, module entry points, and policy properties."
+msgid ""
+"Declaration of policy identity, module entry points, and policy properties."
 msgstr ""
 
 #. type: Title ===
@@ -763,10 +767,9 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:200
 msgid ""
 "Modules may be declared using the `MAC_POLICY_SET()` macro, which names the "
-"policy, provides a reference to the MAC entry point vector, provides "
-"load-time flags determining how the policy framework should handle the "
-"policy, and optionally requests the allocation of label state by the "
-"framework."
+"policy, provides a reference to the MAC entry point vector, provides load-"
+"time flags determining how the policy framework should handle the policy, "
+"and optionally requests the allocation of label state by the framework."
 msgstr ""
 
 #. type: delimited block . 4
@@ -981,8 +984,7 @@ msgid ""
 "Policy load event. The policy list mutex is held, so sleep operations cannot "
 "be performed, and calls out to other kernel subsystems must be made with "
 "caution. If potentially sleeping memory allocations are required during "
-"policy initialization, they should be made using a separate module "
-"SYSINIT()."
+"policy initialization, they should be made using a separate module SYSINIT()."
 msgstr ""
 
 #. type: Title ====
@@ -1101,15 +1103,15 @@ msgid ""
 "otherwise. This is required for policies that have floating process labels, "
 "as it is not always possible to acquire the process lock at arbitrary points "
 "in the stack during system call processing; process labels might represent "
-"traditional authentication data, process history information, or other "
-"data. To employ this mechanism, intended changes to the process credential "
-"label may be stored in the `p_label` protected by a per-policy spin lock, "
-"and then set the per-thread `TDF_ASTPENDING` flag and per-process "
-"`PS_MACPENDM` flag to schedule a call to the userret entry point. From this "
-"entry point, the policy may create a replacement credential with less "
-"concern about the locking context. Policy writers are cautioned that event "
-"ordering relating to scheduling an AST and the AST being performed may be "
-"complex and interlaced in multithreaded applications."
+"traditional authentication data, process history information, or other data. "
+"To employ this mechanism, intended changes to the process credential label "
+"may be stored in the `p_label` protected by a per-policy spin lock, and then "
+"set the per-thread `TDF_ASTPENDING` flag and per-process `PS_MACPENDM` flag "
+"to schedule a call to the userret entry point. From this entry point, the "
+"policy may create a replacement credential with less concern about the "
+"locking context. Policy writers are cautioned that event ordering relating "
+"to scheduling an AST and the AST being performed may be complex and "
+"interlaced in multithreaded applications."
 msgstr ""
 
 #. type: Title ===
@@ -1150,8 +1152,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:388
 msgid ""
-"Initialize the label on a newly instantiated bpfdesc (BPF "
-"descriptor). Sleeping is permitted."
+"Initialize the label on a newly instantiated bpfdesc (BPF descriptor). "
+"Sleeping is permitted."
 msgstr ""
 
 #. type: Title ====
@@ -1268,14 +1270,13 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:486
 msgid ""
-"Initialize the label on a newly instantiated IP fragment reassembly "
-"queue. The `flag` field may be one of M_WAITOK and M_NOWAIT, and should be "
-"employed to avoid performing a sleeping man:malloc[9] during this "
-"initialization call. IP fragment reassembly queue allocation frequently "
-"occurs in performance sensitive environments, and the implementation should "
-"be careful to avoid sleeping or long-lived operations. This entry point is "
-"permitted to fail resulting in the failure to allocate the IP fragment "
-"reassembly queue."
+"Initialize the label on a newly instantiated IP fragment reassembly queue. "
+"The `flag` field may be one of M_WAITOK and M_NOWAIT, and should be employed "
+"to avoid performing a sleeping man:malloc[9] during this initialization "
+"call. IP fragment reassembly queue allocation frequently occurs in "
+"performance sensitive environments, and the implementation should be careful "
+"to avoid sleeping or long-lived operations. This entry point is permitted to "
+"fail resulting in the failure to allocate the IP fragment reassembly queue."
 msgstr ""
 
 #. type: Title ====
@@ -1314,13 +1315,13 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:515
 msgid ""
-"Initialize the label on a newly instantiated mbuf packet header "
-"(`mbuf`). The `flag` field may be one of M_WAITOK and M_NOWAIT, and should "
-"be employed to avoid performing a sleeping man:malloc[9] during this "
-"initialization call. Mbuf allocation frequently occurs in performance "
-"sensitive environments, and the implementation should be careful to avoid "
-"sleeping or long-lived operations. This entry point is permitted to fail "
-"resulting in the failure to allocate the mbuf header."
+"Initialize the label on a newly instantiated mbuf packet header (`mbuf`). "
+"The `flag` field may be one of M_WAITOK and M_NOWAIT, and should be employed "
+"to avoid performing a sleeping man:malloc[9] during this initialization "
+"call. Mbuf allocation frequently occurs in performance sensitive "
+"environments, and the implementation should be careful to avoid sleeping or "
+"long-lived operations. This entry point is permitted to fail resulting in "
+"the failure to allocate the mbuf header."
 msgstr ""
 
 #. type: Title ====
@@ -1392,7 +1393,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:567
-msgid "Initialize the label on a newly mounted file system. Sleeping is permitted"
+msgid ""
+"Initialize the label on a newly mounted file system. Sleeping is permitted"
 msgstr ""
 
 #. type: Title ====
@@ -1424,7 +1426,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:590
-msgid "Initialize a label for a newly instantiated pipe. Sleeping is permitted."
+msgid ""
+"Initialize a label for a newly instantiated pipe. Sleeping is permitted."
 msgstr ""
 
 #. type: Title ====
@@ -1510,8 +1513,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:671
 msgid ""
-"Initialize the label for a newly instantiated process. Sleeping is "
-"permitted."
+"Initialize the label for a newly instantiated process. Sleeping is permitted."
 msgstr ""
 
 #. type: Title ====
@@ -1530,7 +1532,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:694
-msgid "Initialize the label on a newly instantiated vnode. Sleeping is permitted."
+msgid ""
+"Initialize the label on a newly instantiated vnode. Sleeping is permitted."
 msgstr ""
 
 #. type: Title ====
@@ -2609,9 +2612,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1740
 msgid ""
-"Fill out the label on a devfs_dirent being created for the passed "
-"device. This call will be made when the device file system is mounted, "
-"regenerated, or a new device is made available."
+"Fill out the label on a devfs_dirent being created for the passed device. "
+"This call will be made when the device file system is mounted, regenerated, "
+"or a new device is made available."
 msgstr ""
 
 #. type: Title =====
@@ -2658,10 +2661,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1777
 msgid ""
-"Fill out the label on a devfs_dirent being created for the passed "
-"directory. This call will be made when the device file system is mounted, "
-"regenerated, or a new device requiring a specific directory hierarchy is "
-"made available."
+"Fill out the label on a devfs_dirent being created for the passed directory. "
+"This call will be made when the device file system is mounted, regenerated, "
+"or a new device requiring a specific directory hierarchy is made available."
 msgstr ""
 
 #. type: Title =====
@@ -3110,9 +3112,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:2131
 msgid ""
-"Set the label on a newly created mbuf header from the passed socket "
-"label. This call is made when a new datagram or message is generated by the "
-"socket and stored in the passed mbuf."
+"Set the label on a newly created mbuf header from the passed socket label. "
+"This call is made when a new datagram or message is generated by the socket "
+"and stored in the passed mbuf."
 msgstr ""
 
 #. type: Title =====
@@ -3161,8 +3163,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:2166
 msgid ""
-"Set the label on a newly created pipe from the passed subject "
-"credential. This call is made when a new pipe is created."
+"Set the label on a newly created pipe from the passed subject credential. "
+"This call is made when a new pipe is created."
 msgstr ""
 
 #. type: Title =====
@@ -3207,8 +3209,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:2201
 msgid ""
-"Set the label on a newly created socket from the passed subject "
-"credential. This call is made when a socket is created."
+"Set the label on a newly created socket from the passed subject credential. "
+"This call is made when a socket is created."
 msgstr ""
 
 #. type: Title =====
@@ -3259,8 +3261,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:2242
 msgid ""
-"Label a socket, `newsocket`, newly man:accept[2]ed, based on the "
-"man:listen[2] socket, `oldsocket`."
+"Label a socket, `newsocket`, newly man:accept[2]ed, based on the man:"
+"listen[2] socket, `oldsocket`."
 msgstr ""
 
 #. type: Title =====
@@ -3559,9 +3561,8 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:2473
 msgid ""
 "Set the label on a newly created interface. This call may be made when a new "
-"physical interface becomes available to the system, or when a "
-"pseudo-interface is instantiated during the boot or as a result of a user "
-"action."
+"physical interface becomes available to the system, or when a pseudo-"
+"interface is instantiated during the boot or as a result of a user action."
 msgstr ""
 
 #. type: Title =====
@@ -4425,8 +4426,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:3132
 msgid ""
-"Create the subject credential of process 1, the parent of all user "
-"processes."
+"Create the subject credential of process 1, the parent of all user processes."
 msgstr ""
 
 #. type: Title =====
@@ -4569,9 +4569,9 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:3229
 msgid ""
 "Determine whether the MAC framework should permit datagrams from the passed "
-"interface to be delivered to the buffers of the passed BPF "
-"descriptor. Return (0) for success, or an `errno` value for failure "
-"Suggested failure: EACCES for label mismatches, EPERM for lack of privilege."
+"interface to be delivered to the buffers of the passed BPF descriptor. "
+"Return (0) for success, or an `errno` value for failure Suggested failure: "
+"EACCES for label mismatches, EPERM for lack of privilege."
 msgstr ""
 
 #. type: Title ====
@@ -4783,7 +4783,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:3420
-msgid "Determine whether the subject should be allowed to unload a kernel module."
+msgid ""
+"Determine whether the subject should be allowed to unload a kernel module."
 msgstr ""
 
 #. type: Title ====
@@ -4840,8 +4841,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:3467
 msgid ""
-"Determine whether the subject should be allowed to make the specified "
-"man:ioctl[2] call."
+"Determine whether the subject should be allowed to make the specified man:"
+"ioctl[2] call."
 msgstr ""
 
 #. type: Title ====
@@ -5487,8 +5488,8 @@ msgid ""
 "failure. Suggested failure: EACCES for label mismatches or EPERM for lack of "
 "privilege. This call may be made in a number of situations, including during "
 "invocations of man:statfs[2] and related calls, as well as to determine what "
-"file systems to exclude from listings of file systems, such as when "
-"man:getfsstat[2] is invoked."
+"file systems to exclude from listings of file systems, such as when man:"
+"getfsstat[2] is invoked."
 msgstr ""
 
 #. type: Title ====
@@ -5527,12 +5528,12 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:4076
 msgid ""
-"Determine whether the subject credential can debug the passed "
-"process. Return 0 for success, or an `errno` value for failure. Suggested "
-"failure: EACCES for label mismatch, EPERM for lack of privilege, or ESRCH to "
-"hide visibility of the target. This call may be made in a number of "
-"situations, including use of the man:ptrace[2] and man:ktrace[2] APIs, as "
-"well as for some types of procfs operations."
+"Determine whether the subject credential can debug the passed process. "
+"Return 0 for success, or an `errno` value for failure. Suggested failure: "
+"EACCES for label mismatch, EPERM for lack of privilege, or ESRCH to hide "
+"visibility of the target. This call may be made in a number of situations, "
+"including use of the man:ptrace[2] and man:ktrace[2] APIs, as well as for "
+"some types of procfs operations."
 msgstr ""
 
 #. type: Title ====
@@ -5740,11 +5741,11 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:4234
 msgid ""
 "Determine whether the subject credential can create a vnode with the passed "
-"parent directory, passed name information, and passed attribute "
-"information. Return 0 for success, or an `errno` value for "
-"failure. Suggested failure: EACCES for label mismatch, or EPERM for lack of "
-"privilege. This call may be made in a number of situations, including as a "
-"result of calls to man:open[2] with O_CREAT, man:mkfifo[2], and others."
+"parent directory, passed name information, and passed attribute information. "
+"Return 0 for success, or an `errno` value for failure. Suggested failure: "
+"EACCES for label mismatch, or EPERM for lack of privilege. This call may be "
+"made in a number of situations, including as a result of calls to man:"
+"open[2] with O_CREAT, man:mkfifo[2], and others."
 msgstr ""
 
 #. type: Title ====
@@ -5811,8 +5812,8 @@ msgid ""
 "parent directory and passed name information. Return 0 for success, or an "
 "`errno` value for failure. Suggested failure: EACCES for label mismatch, or "
 "EPERM for lack of privilege. This call may be made in a number of "
-"situations, including as a result of calls to man:unlink[2] and "
-"man:rmdir[2]. Policies implementing this entry point should also implement "
+"situations, including as a result of calls to man:unlink[2] and man:"
+"rmdir[2]. Policies implementing this entry point should also implement "
 "`mpo_check_rename_to` to authorize deletion of objects as a result of being "
 "the target of a rename."
 msgstr ""
@@ -5913,9 +5914,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:4363
 msgid ""
-"Determine whether the subject credential can execute the passed "
-"vnode. Determination of execute privilege is made separately from decisions "
-"about any transitioning event. Return 0 for success, or an `errno` value for "
+"Determine whether the subject credential can execute the passed vnode. "
+"Determination of execute privilege is made separately from decisions about "
+"any transitioning event. Return 0 for success, or an `errno` value for "
 "failure. Suggested failure: EACCES for label mismatch, or EPERM for lack of "
 "privilege."
 msgstr ""
@@ -6463,9 +6464,9 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:4817
 msgid ""
-"Determine whether the subject credential can listen on the passed "
-"socket. Return 0 for success, or an `errno` value for failure. Suggested "
-"failure: EACCES for label mismatch, or EPERM for lack of privilege."
+"Determine whether the subject credential can listen on the passed socket. "
+"Return 0 for success, or an `errno` value for failure. Suggested failure: "
+"EACCES for label mismatch, or EPERM for lack of privilege."
 msgstr ""
 
 #. type: Title ====
@@ -6849,9 +6850,8 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:5145
 msgid ""
 "Determine whether the subject credential can set the passed flags on the "
-"passed vnode. Return 0 for success, or an `errno` value for "
-"failure. Suggested failure: EACCES for label mismatch, or EPERM for lack of "
-"privilege."
+"passed vnode. Return 0 for success, or an `errno` value for failure. "
+"Suggested failure: EACCES for label mismatch, or EPERM for lack of privilege."
 msgstr ""
 
 #. type: Title ====
@@ -6903,9 +6903,8 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:5186
 msgid ""
 "Determine whether the subject credential can set the passed mode on the "
-"passed vnode. Return 0 for success, or an `errno` value for "
-"failure. Suggested failure: EACCES for label mismatch, or EPERM for lack of "
-"privilege."
+"passed vnode. Return 0 for success, or an `errno` value for failure. "
+"Suggested failure: EACCES for label mismatch, or EPERM for lack of privilege."
 msgstr ""
 
 #. type: Title ====
@@ -7119,9 +7118,9 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:5346
 msgid ""
 "Determine whether the subject credential can deliver the passed signal to "
-"the passed process. Return 0 for success, or an `errno` value for "
-"failure. Suggested failure: EACCES for label mismatch, EPERM for lack of "
-"privilege, or ESRCH to limit visibility."
+"the passed process. Return 0 for success, or an `errno` value for failure. "
+"Suggested failure: EACCES for label mismatch, EPERM for lack of privilege, "
+"or ESRCH to limit visibility."
 msgstr ""
 
 #. type: Title ====
@@ -7269,8 +7268,8 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:5477
 msgid ""
 "Determine whether the socket may receive the datagram stored in the passed "
-"mbuf header. Return 0 for success, or an `errno` value for "
-"failure. Suggested failures: EACCES for label mismatch, or EPERM for lack of "
+"mbuf header. Return 0 for success, or an `errno` value for failure. "
+"Suggested failures: EACCES for label mismatch, or EPERM for lack of "
 "privilege."
 msgstr ""
 
@@ -7311,10 +7310,10 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:5512
 msgid ""
 "Determine whether the subject credential cred can \"see\" the passed socket "
-"(`socket`) using system monitoring functions, such as those employed by "
-"man:netstat[8] and man:sockstat[1]. Return 0 for success, or an `errno` "
-"value for failure. Suggested failure: EACCES for label mismatches, EPERM for "
-"lack of privilege, or ESRCH to hide visibility."
+"(`socket`) using system monitoring functions, such as those employed by man:"
+"netstat[8] and man:sockstat[1]. Return 0 for success, or an `errno` value "
+"for failure. Suggested failure: EACCES for label mismatches, EPERM for lack "
+"of privilege, or ESRCH to hide visibility."
 msgstr ""
 
 #. type: Title ====
@@ -7483,8 +7482,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:5657
 msgid ""
-"Determine whether the subject should be allowed to add `vp` as a swap "
-"device."
+"Determine whether the subject should be allowed to add `vp` as a swap device."
 msgstr ""
 
 #. type: Title ====
@@ -7559,8 +7557,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:5722
 msgid ""
-"Determine whether the subject should be allowed to make the specified "
-"man:sysctl[3] transaction."
+"Determine whether the subject should be allowed to make the specified man:"
+"sysctl[3] transaction."
 msgstr ""
 
 #. type: Title ===
@@ -7609,14 +7607,14 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:5737
 msgid ""
 "The TrustedBSD MAC Framework provides a number of library and system calls "
-"permitting applications to manage MAC labels on objects using a "
-"policy-agnostic interface. This permits applications to manipulate labels "
-"for a variety of policies without being written to support specific "
-"policies. These interfaces are used by general-purpose tools such as "
-"man:ifconfig[8], man:ls[1] and man:ps[1] to view labels on network "
-"interfaces, files, and processes. The APIs also support MAC management tools "
-"including man:getfmac[8], man:getpmac[8], man:setfmac[8], man:setfsmac[8], "
-"and man:setpmac[8]. The MAC APIs are documented in man:mac[3]."
+"permitting applications to manage MAC labels on objects using a policy-"
+"agnostic interface. This permits applications to manipulate labels for a "
+"variety of policies without being written to support specific policies. "
+"These interfaces are used by general-purpose tools such as man:ifconfig[8], "
+"man:ls[1] and man:ps[1] to view labels on network interfaces, files, and "
+"processes. The APIs also support MAC management tools including man:"
+"getfmac[8], man:getpmac[8], man:setfmac[8], man:setfsmac[8], and man:"
+"setpmac[8]. The MAC APIs are documented in man:mac[3]."
 msgstr ""
 
 #. type: Plain text
@@ -7627,18 +7625,17 @@ msgid ""
 "form based on C strings appropriate for storage in configuration files, "
 "display to the user, or input from the user. Each MAC label contains a "
 "number of elements, each consisting of a name and value pair. Policy modules "
-"in the kernel bind to specific names and interpret the values in "
-"policy-specific ways. In the externalized string form, labels are "
-"represented by a comma-delimited list of name and value pairs separated by "
-"the `/` character. Labels may be directly converted to and from text using "
-"provided APIs; when retrieving labels from the kernel, internalized label "
-"storage must first be prepared for the desired label element set. Typically, "
-"this is done in one of two ways: using man:mac_prepare[3] and an arbitrary "
-"list of desired label elements, or one of the variants of the call that "
-"loads a default element set from the man:mac.conf[5] configuration "
-"file. Per-object defaults permit application writers to usefully display "
-"labels associated with objects without being aware of the policies present "
-"in the system."
+"in the kernel bind to specific names and interpret the values in policy-"
+"specific ways. In the externalized string form, labels are represented by a "
+"comma-delimited list of name and value pairs separated by the `/` character. "
+"Labels may be directly converted to and from text using provided APIs; when "
+"retrieving labels from the kernel, internalized label storage must first be "
+"prepared for the desired label element set. Typically, this is done in one "
+"of two ways: using man:mac_prepare[3] and an arbitrary list of desired label "
+"elements, or one of the variants of the call that loads a default element "
+"set from the man:mac.conf[5] configuration file. Per-object defaults permit "
+"application writers to usefully display labels associated with objects "
+"without being aware of the policies present in the system."
 msgstr ""
 
 #. type: delimited block = 4
@@ -7660,10 +7657,10 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:5749
 msgid ""
 "The standard user context management interface, man:setusercontext[3], has "
-"been modified to retrieve MAC labels associated with a user's class from "
-"man:login.conf[5]. These labels are then set along with other user context "
-"when either `LOGIN_SETALL` is specified, or when `LOGIN_SETMAC` is "
-"explicitly specified."
+"been modified to retrieve MAC labels associated with a user's class from man:"
+"login.conf[5]. These labels are then set along with other user context when "
+"either `LOGIN_SETALL` is specified, or when `LOGIN_SETMAC` is explicitly "
+"specified."
 msgstr ""
 
 #. type: delimited block = 4
