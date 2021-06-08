@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-06-03 17:02-0300\n"
+"POT-Creation-Date: 2021-06-08 07:32-0300\n"
 "PO-Revision-Date: 2021-05-30 10:54+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
@@ -43,79 +43,79 @@ msgid "Obtaining a Kernel Crash Dump"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:42
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:44
 msgid ""
 "When running a development kernel (e.g., FreeBSD-CURRENT), such as a kernel "
 "under extreme conditions (e.g., very high load averages, tens of thousands "
 "of connections, exceedingly high number of concurrent users, hundreds of man:"
 "jail[8]s, etc.), or using a new feature or device driver on FreeBSD-STABLE "
-"(e.g., PAE), sometimes a kernel will panic. In the event that it does, this "
+"(e.g., PAE), sometimes a kernel will panic.  In the event that it does, this "
 "chapter will demonstrate how to extract useful information out of a crash."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:44
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:49
 msgid ""
-"A system reboot is inevitable once a kernel panics. Once a system is "
+"A system reboot is inevitable once a kernel panics.  Once a system is "
 "rebooted, the contents of a system's physical memory (RAM) is lost, as well "
-"as any bits that are on the swap device before the panic. To preserve the "
+"as any bits that are on the swap device before the panic.  To preserve the "
 "bits in physical memory, the kernel makes use of the swap device as a "
 "temporary place to store the bits that are in RAM across a reboot after a "
-"crash. In doing this, when FreeBSD boots after a crash, a kernel image can "
+"crash.  In doing this, when FreeBSD boots after a crash, a kernel image can "
 "now be extracted and debugging can take place."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:48
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:55
 msgid ""
 "A swap device that has been configured as a dump device still acts as a swap "
-"device. Dumps to non-swap devices (such as tapes or CDRWs, for example) are "
-"not supported at this time. A \"swap device\" is synonymous with a \"swap "
+"device.  Dumps to non-swap devices (such as tapes or CDRWs, for example) are "
+"not supported at this time.  A \"swap device\" is synonymous with a \"swap "
 "partition.\""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:51
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:58
 msgid "Several types of kernel crash dumps are available:"
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:52
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:59
 #, no-wrap
 msgid "Full memory dumps"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:54
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:61
 msgid "Hold the complete contents of physical memory."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:55
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:62
 #, no-wrap
 msgid "Minidumps"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:57
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:64
 msgid "Hold only memory pages in use by the kernel (FreeBSD 6.2 and higher)."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:58
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:65
 #, no-wrap
 msgid "Textdumps"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:60
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:67
 msgid ""
 "Hold captured, scripted, or interactive debugger output (FreeBSD 7.1 and "
 "higher)."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:62
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:69
 msgid ""
 "Minidumps are the default dump type as of FreeBSD 7.0, and in most cases "
 "will capture all necessary information present in a full memory dump, as "
@@ -123,43 +123,43 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:64
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:71
 #, no-wrap
 msgid "Configuring the Dump Device"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:67
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:79
 msgid ""
 "Before the kernel will dump the contents of its physical memory to a dump "
-"device, a dump device must be configured. A dump device is specified by "
+"device, a dump device must be configured.  A dump device is specified by "
 "using the man:dumpon[8] command to tell the kernel where to save kernel "
-"crash dumps. The man:dumpon[8] program must be called after the swap "
-"partition has been configured with man:swapon[8]. This is normally handled "
+"crash dumps.  The man:dumpon[8] program must be called after the swap "
+"partition has been configured with man:swapon[8].  This is normally handled "
 "by setting the `dumpdev` variable in man:rc.conf[5] to the path of the swap "
 "device (the recommended way to extract a kernel dump) or `AUTO` to use the "
-"first configured swap device. The default for `dumpdev` is `AUTO` in HEAD, "
+"first configured swap device.  The default for `dumpdev` is `AUTO` in HEAD, "
 "and changed to `NO` on RELENG_* branches (except for RELENG_7, which was "
-"left set to `AUTO`). On FreeBSD 9.0-RELEASE and later versions, bsdinstall "
+"left set to `AUTO`).  On FreeBSD 9.0-RELEASE and later versions, bsdinstall "
 "will ask whether crash dumps should be enabled on the target system during "
 "the install process."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:72
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:83
 msgid ""
 "Check [.filename]#/etc/fstab# or man:swapinfo[8] for a list of swap devices."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:77
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:88
 msgid ""
 "Make sure the `dumpdir` specified in man:rc.conf[5] exists before a kernel "
 "crash!"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:82
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:93
 #, no-wrap
 msgid ""
 "# mkdir /var/crash\n"
@@ -167,54 +167,55 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:85
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:96
 msgid ""
 "Also, remember that the contents of [.filename]#/var/crash# is sensitive and "
 "very likely contains confidential information such as passwords."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:88
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:99
 #, no-wrap
 msgid "Extracting a Kernel Dump"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:91
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:105
 msgid ""
 "Once a dump has been written to a dump device, the dump must be extracted "
-"before the swap device is mounted. To extract a dump from a dump device, use "
-"the man:savecore[8] program. If `dumpdev` has been set in man:rc.conf[5], "
-"man:savecore[8] will be called automatically on the first multi-user boot "
-"after the crash and before the swap device is mounted. The location of the "
-"extracted core is placed in the man:rc.conf[5] value `dumpdir`, by default [."
-"filename]#/var/crash# and will be named [.filename]#vmcore.0#."
+"before the swap device is mounted.  To extract a dump from a dump device, "
+"use the man:savecore[8] program.  If `dumpdev` has been set in man:rc."
+"conf[5], man:savecore[8] will be called automatically on the first multi-"
+"user boot after the crash and before the swap device is mounted.  The "
+"location of the extracted core is placed in the man:rc.conf[5] value "
+"`dumpdir`, by default [.filename]#/var/crash# and will be named [."
+"filename]#vmcore.0#."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:93
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:109
 msgid ""
 "In the event that there is already a file called [.filename]#vmcore.0# in [."
 "filename]#/var/crash# (or whatever `dumpdir` is set to), the kernel will "
 "increment the trailing number for every crash to avoid overwriting an "
-"existing [.filename]#vmcore# (e.g., [.filename]#vmcore.1#). man:savecore[8] "
+"existing [.filename]#vmcore# (e.g., [.filename]#vmcore.1#).  man:savecore[8] "
 "will always create a symbolic link to named [.filename]#vmcore.last# in [."
-"filename]#/var/crash# after a dump is saved. This symbolic link can be used "
+"filename]#/var/crash# after a dump is saved.  This symbolic link can be used "
 "to locate the name of the most recent dump."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:95
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:113
 msgid ""
 "The man:crashinfo[8] utility generates a text file containing a summary of "
-"information from a full memory dump or minidump. If `dumpdev` has been set "
+"information from a full memory dump or minidump.  If `dumpdev` has been set "
 "in man:rc.conf[5], man:crashinfo[8] will be invoked automatically after man:"
-"savecore[8]. The output is saved to a file in `dumpdir` named [."
+"savecore[8].  The output is saved to a file in `dumpdir` named [."
 "filename]#core.txt.N#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:100
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:118
 msgid ""
 "If you are testing a new kernel but need to boot a different one in order to "
 "get your system up and running again, boot it only into single user mode "
@@ -222,7 +223,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:107
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:125
 #, no-wrap
 msgid ""
 "# fsck -p\n"
@@ -232,32 +233,32 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:110
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:130
 msgid ""
 "This instructs man:savecore[8] to extract a kernel dump from [.filename]#/"
-"dev/ad0s1b# and place the contents in [.filename]#/var/crash#. Do not forget "
-"to make sure the destination directory [.filename]#/var/crash# has enough "
-"space for the dump. Also, do not forget to specify the correct path to your "
-"swap device as it is likely different than [.filename]#/dev/ad0s1b#!"
+"dev/ad0s1b# and place the contents in [.filename]#/var/crash#.  Do not "
+"forget to make sure the destination directory [.filename]#/var/crash# has "
+"enough space for the dump.  Also, do not forget to specify the correct path "
+"to your swap device as it is likely different than [.filename]#/dev/ad0s1b#!"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:112
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:132
 #, no-wrap
 msgid "Testing Kernel Dump Configuration"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:115
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:137
 msgid ""
-"The kernel includes a man:sysctl[8] node that requests a kernel panic. This "
+"The kernel includes a man:sysctl[8] node that requests a kernel panic.  This "
 "can be used to verify that your system is properly configured to save kernel "
-"crash dumps. You may wish to remount existing file systems as read-only in "
+"crash dumps.  You may wish to remount existing file systems as read-only in "
 "single user mode before triggering the crash to avoid data loss."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:125
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:147
 #, no-wrap
 msgid ""
 "# shutdown now\n"
@@ -270,89 +271,89 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:128
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:150
 msgid ""
 "After rebooting, your system should save a dump in [.filename]#/var/crash# "
 "along with a matching summary from man:crashinfo[8]."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:130
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:152
 #, no-wrap
 msgid "Debugging a Kernel Crash Dump with `kgdb`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:135
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:159
 msgid ""
-"This section covers man:kgdb[1]. The latest version is included in the "
-"package:devel/gdb[]. An older version is also present in FreeBSD 11 and "
+"This section covers man:kgdb[1].  The latest version is included in the "
+"package:devel/gdb[].  An older version is also present in FreeBSD 11 and "
 "earlier."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:138
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:162
 msgid ""
 "To enter into the debugger and begin getting information from the dump, "
 "start kgdb:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:142
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:166
 #, no-wrap
 msgid "# kgdb -n N\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:145
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:170
 msgid ""
-"Where _N_ is the suffix of the [.filename]#vmcore.N# to examine. To open the "
-"most recent dump use:"
+"Where _N_ is the suffix of the [.filename]#vmcore.N# to examine.  To open "
+"the most recent dump use:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:149
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:174
 #, no-wrap
 msgid "# kgdb -n last\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:152
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:178
 msgid ""
 "Normally, man:kgdb[1] should be able to locate the kernel running at the "
-"time the dump was generated. If it is not able to locate the correct kernel, "
-"pass the pathname of the kernel and dump as two arguments to kgdb:"
+"time the dump was generated.  If it is not able to locate the correct "
+"kernel, pass the pathname of the kernel and dump as two arguments to kgdb:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:156
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:182
 #, no-wrap
 msgid "# kgdb /boot/kernel/kernel /var/crash/vmcore.0\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:159
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:185
 msgid ""
 "You can debug the crash dump using the kernel sources just like you can for "
 "any other program."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:161
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:192
 msgid ""
 "This dump is from a 5.2-BETA kernel and the crash comes from deep within the "
-"kernel. The output below has been modified to include line numbers on the "
-"left. This first trace inspects the instruction pointer and obtains a back "
-"trace. The address that is used on line 41 for the `list` command is the "
-"instruction pointer and can be found on line 17. Most developers will "
+"kernel.  The output below has been modified to include line numbers on the "
+"left.  This first trace inspects the instruction pointer and obtains a back "
+"trace.  The address that is used on line 41 for the `list` command is the "
+"instruction pointer and can be found on line 17.  Most developers will "
 "request having at least this information sent to them if you are unable to "
-"debug the problem yourself. If, however, you do solve the problem, make sure "
-"that your patch winds its way into the source tree via a problem report, "
-"mailing lists, or by being able to commit it!"
+"debug the problem yourself.  If, however, you do solve the problem, make "
+"sure that your patch winds its way into the source tree via a problem "
+"report, mailing lists, or by being able to commit it!"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:254
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:285
 #, fuzzy, no-wrap
 msgid ""
 " 1:# cd /usr/obj/usr/src/sys/KERNCONF\n"
@@ -538,7 +539,7 @@ msgstr ""
 "90:<prompt>(kgdb)</prompt> <userinput>quit</userinput>\n"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:260
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:291
 msgid ""
 "If your system is crashing regularly and you are running out of disk space, "
 "deleting old [.filename]#vmcore# files in [.filename]#/var/crash# could save "
@@ -546,174 +547,174 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:263
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:294
 #, no-wrap
 msgid "On-Line Kernel Debugging Using DDB"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:266
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:298
 msgid ""
 "While `kgdb` as an off-line debugger provides a very high level of user "
-"interface, there are some things it cannot do. The most important ones being "
-"breakpointing and single-stepping kernel code."
+"interface, there are some things it cannot do.  The most important ones "
+"being breakpointing and single-stepping kernel code."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:268
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:302
 msgid ""
 "If you need to do low-level debugging on your kernel, there is an on-line "
-"debugger available called DDB. It allows setting of breakpoints, single-"
-"stepping kernel functions, examining and changing kernel variables, etc. "
+"debugger available called DDB.  It allows setting of breakpoints, single-"
+"stepping kernel functions, examining and changing kernel variables, etc.  "
 "However, it cannot access kernel source files, and only has access to the "
 "global and static symbols, not to the full debug information like `kgdb` "
 "does."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:270
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:304
 msgid "To configure your kernel to include DDB, add the options"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:273
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:307
 #, fuzzy, no-wrap
 msgid "options KDB\n"
 msgstr "options KDB\n"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:278
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:312
 #, fuzzy, no-wrap
 msgid "options DDB\n"
 msgstr "options DDB\n"
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:281
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:316
 msgid ""
-"to your config file, and rebuild. (See link:{handbook}/[The FreeBSD "
+"to your config file, and rebuild.  (See link:{handbook}/[The FreeBSD "
 "Handbook] for details on configuring the FreeBSD kernel)."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:283
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:322
 msgid ""
-"Once your DDB kernel is running, there are several ways to enter DDB. The "
-"first, and earliest way is to use the boot flag `-d`. The kernel will start "
-"up in debug mode and enter DDB prior to any device probing. Hence you can "
-"even debug the device probe/attach functions. To use this, exit the loader's "
-"boot menu and enter `boot -d` at the loader prompt."
+"Once your DDB kernel is running, there are several ways to enter DDB.  The "
+"first, and earliest way is to use the boot flag `-d`.  The kernel will start "
+"up in debug mode and enter DDB prior to any device probing.  Hence you can "
+"even debug the device probe/attach functions.  To use this, exit the "
+"loader's boot menu and enter `boot -d` at the loader prompt."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:285
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:326
 msgid ""
-"The second scenario is to drop to the debugger once the system has booted. "
-"There are two simple ways to accomplish this. If you would like to break to "
+"The second scenario is to drop to the debugger once the system has booted.  "
+"There are two simple ways to accomplish this.  If you would like to break to "
 "the debugger from the command prompt, simply type the command:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:289
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:330
 #, no-wrap
 msgid "# sysctl debug.kdb.enter=1\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:292
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:337
 msgid ""
 "Alternatively, if you are at the system console, you may use a hot-key on "
-"the keyboard. The default break-to-debugger sequence is kbd:[Ctrl+Alt+ESC]. "
-"For syscons, this sequence can be remapped and some of the distributed maps "
-"out there do this, so check to make sure you know the right sequence to use. "
-"There is an option available for serial consoles that allows the use of a "
-"serial line BREAK on the console line to enter DDB (`options "
-"BREAK_TO_DEBUGGER` in the kernel config file). It is not the default since "
-"there are a lot of serial adapters around that gratuitously generate a BREAK "
-"condition, for example when pulling the cable."
+"the keyboard.  The default break-to-debugger sequence is kbd:[Ctrl+Alt"
+"+ESC].  For syscons, this sequence can be remapped and some of the "
+"distributed maps out there do this, so check to make sure you know the right "
+"sequence to use.  There is an option available for serial consoles that "
+"allows the use of a serial line BREAK on the console line to enter DDB "
+"(`options BREAK_TO_DEBUGGER` in the kernel config file).  It is not the "
+"default since there are a lot of serial adapters around that gratuitously "
+"generate a BREAK condition, for example when pulling the cable."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:294
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:340
 msgid ""
 "The third way is that any panic condition will branch to DDB if the kernel "
-"is configured to use it. For this reason, it is not wise to configure a "
+"is configured to use it.  For this reason, it is not wise to configure a "
 "kernel with DDB for a machine running unattended."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:296
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:342
 msgid "To obtain the unattended functionality, add:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:300
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:346
 #, fuzzy, no-wrap
 msgid "options\tKDB_UNATTENDED\n"
 msgstr "options\tKDB_UNATTENDED\n"
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:303
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:349
 msgid "to the kernel configuration file and rebuild/reinstall."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:305
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:352
 msgid ""
-"The DDB commands roughly resemble some `gdb` commands. The first thing you "
+"The DDB commands roughly resemble some `gdb` commands.  The first thing you "
 "probably need to do is to set a breakpoint:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:309
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:356
 #, no-wrap
 msgid " break function-name address\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:312
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:361
 msgid ""
 "Numbers are taken hexadecimal by default, but to make them distinct from "
 "symbol names; hexadecimal numbers starting with the letters `a-f` need to be "
-"preceded with `0x` (this is optional for other numbers). Simple expressions "
+"preceded with `0x` (this is optional for other numbers).  Simple expressions "
 "are allowed, for example: `function-name + 0x103`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:314
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:363
 msgid "To exit the debugger and continue execution, type:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:318
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:367
 #, no-wrap
 msgid " continue\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:321
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:370
 msgid "To get a stack trace of the current thread, use:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:325
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:374
 #, no-wrap
 msgid " trace\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:328
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:377
 msgid ""
 "To get a stack trace of an arbitrary thread, specify a process ID or thread "
 "ID as a second argument to `trace`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:330
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:379
 msgid "If you want to remove a breakpoint, use"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:335
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:384
 #, no-wrap
 msgid ""
 " del\n"
@@ -721,68 +722,68 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:338
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:388
 msgid ""
 "The first form will be accepted immediately after a breakpoint hit, and "
-"deletes the current breakpoint. The second form can remove any breakpoint, "
+"deletes the current breakpoint.  The second form can remove any breakpoint, "
 "but you need to specify the exact address; this can be obtained from:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:342
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:392
 #, no-wrap
 msgid " show b\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:345
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:395
 msgid "or:"
 msgstr "ou:"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:349
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:399
 #, no-wrap
 msgid " show break\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:352
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:402
 msgid "To single-step the kernel, try:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:356
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:406
 #, no-wrap
 msgid " s\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:359
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:409
 msgid ""
 "This will step into functions, but you can make DDB trace them until the "
 "matching return statement is reached by:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:363
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:413
 #, no-wrap
 msgid " n\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:368
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:419
 msgid ""
 "This is different from ``gdb``'s `next` statement; it is like ``gdb``'s "
-"`finish`. Pressing kbd:[n] more than once will cause a continue."
+"`finish`.  Pressing kbd:[n] more than once will cause a continue."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:371
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:422
 msgid "To examine data from memory, use (for example):"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:378
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:429
 #, no-wrap
 msgid ""
 " x/wx 0xf0133fe0,40\n"
@@ -792,44 +793,44 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:381
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:434
 msgid ""
 "for word/halfword/byte access, and hexadecimal/decimal/character/ string "
-"display. The number after the comma is the object count. To display the next "
-"0x10 items, simply use:"
+"display.  The number after the comma is the object count.  To display the "
+"next 0x10 items, simply use:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:385
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:438
 #, no-wrap
 msgid " x ,10\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:388
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:441
 msgid "Similarly, use"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:392
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:445
 #, no-wrap
 msgid " x/ia foofunc,10\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:395
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:448
 msgid ""
 "to disassemble the first 0x10 instructions of `foofunc`, and display them "
 "along with their offset from the beginning of `foofunc`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:397
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:450
 msgid "To modify memory, use the write command:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:402
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:455
 #, no-wrap
 msgid ""
 " w/b termbuf 0xa 0xb 0\n"
@@ -837,7 +838,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:405
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:459
 msgid ""
 "The command modifier (`b`/`h`/`w`) specifies the size of the data to be "
 "written, the first following expression is the address to write to and the "
@@ -845,153 +846,153 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:407
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:461
 msgid "If you need to know the current registers, use:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:411
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:465
 #, no-wrap
 msgid " show reg\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:414
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:468
 msgid "Alternatively, you can display a single register value by e.g."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:418
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:472
 #, no-wrap
 msgid " p $eax\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:421
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:475
 msgid "and modify it by:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:425
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:479
 #, no-wrap
 msgid " set $eax new-value\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:428
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:482
 msgid "Should you need to call some kernel functions from DDB, simply say:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:432
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:486
 #, no-wrap
 msgid " call func(arg1, arg2, ...)\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:435
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:489
 msgid "The return value will be printed."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:437
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:491
 msgid "For a man:ps[1] style summary of all running processes, use:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:441
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:495
 #, no-wrap
 msgid " ps\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:444
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:500
 msgid ""
-"Now you have examined why your kernel failed, and you wish to reboot. "
+"Now you have examined why your kernel failed, and you wish to reboot.  "
 "Remember that, depending on the severity of previous malfunctioning, not all "
-"parts of the kernel might still be working as expected. Perform one of the "
+"parts of the kernel might still be working as expected.  Perform one of the "
 "following actions to shut down and reboot your system:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:448
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:504
 #, no-wrap
 msgid " panic\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:451
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:507
 msgid ""
 "This will cause your kernel to dump core and reboot, so you can later "
 "analyze the core on a higher level with man:kgdb[1]."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:455
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:511
 #, no-wrap
 msgid " call boot(0)\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:458
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:515
 msgid ""
 "Might be a good way to cleanly shut down the running system, `sync()` all "
-"disks, and finally, in some cases, reboot. As long as the disk and "
+"disks, and finally, in some cases, reboot.  As long as the disk and "
 "filesystem interfaces of the kernel are not damaged, this could be a good "
 "way for an almost clean shutdown."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:462
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:519
 #, no-wrap
 msgid " reset\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:465
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:522
 msgid ""
 "This is the final way out of disaster and almost the same as hitting the Big "
 "Red Button."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:467
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:524
 msgid "If you need a short command summary, simply type:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:471
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:528
 #, no-wrap
 msgid " help\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:474
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:532
 msgid ""
 "It is highly recommended to have a printed copy of the man:ddb[4] manual "
-"page ready for a debugging session. Remember that it is hard to read the on-"
+"page ready for a debugging session.  Remember that it is hard to read the on-"
 "line manual while single-stepping the kernel."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:476
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:534
 #, no-wrap
 msgid "On-Line Kernel Debugging Using Remote GDB"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:479
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:537
 msgid ""
 "This feature has been supported since FreeBSD 2.2, and it is actually a very "
 "neat one."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:481
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:543
 msgid ""
-"GDB has already supported _remote debugging_ for a long time. This is done "
-"using a very simple protocol along a serial line. Unlike the other methods "
-"described above, you will need two machines for doing this. One is the host "
+"GDB has already supported _remote debugging_ for a long time.  This is done "
+"using a very simple protocol along a serial line.  Unlike the other methods "
+"described above, you will need two machines for doing this.  One is the host "
 "providing the debugging environment, including all the sources, and a copy "
 "of the kernel binary with all the symbols in it, and the other one is the "
 "target machine that simply runs a similar copy of the very same kernel (but "
@@ -999,23 +1000,23 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:483
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:552
 msgid ""
 "You should configure the kernel in question with `config -g` if building the "
-"\"traditional\" way. If building the \"new\" way, make sure that "
-"`makeoptions DEBUG=-g` is in the configuration. In both cases, include `DDB` "
-"in the configuration, and compile it as usual. This gives a large binary, "
-"due to the debugging information. Copy this kernel to the target machine, "
-"strip the debugging symbols off with `strip -x`, and boot it using the `-d` "
-"boot option. Connect the serial line of the target machine that has \"flags "
-"080\" set on its uart device to any serial line of the debugging host. See "
-"man:uart[4] for information on how to set the flags on an uart device. Now, "
-"on the debugging machine, go to the compile directory of the target kernel, "
-"and start `gdb`:"
+"\"traditional\" way.  If building the \"new\" way, make sure that "
+"`makeoptions DEBUG=-g` is in the configuration.  In both cases, include "
+"`DDB` in the configuration, and compile it as usual.  This gives a large "
+"binary, due to the debugging information.  Copy this kernel to the target "
+"machine, strip the debugging symbols off with `strip -x`, and boot it using "
+"the `-d` boot option.  Connect the serial line of the target machine that "
+"has \"flags 080\" set on its uart device to any serial line of the debugging "
+"host.  See man:uart[4] for information on how to set the flags on an uart "
+"device.  Now, on the debugging machine, go to the compile directory of the "
+"target kernel, and start `gdb`:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:493
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:562
 #, no-wrap
 msgid ""
 "% kgdb kernel\n"
@@ -1028,27 +1029,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:496
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:565
 msgid ""
 "Initialize the remote debugging session (assuming the first serial port is "
 "being used) by:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:500
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:569
 #, no-wrap
 msgid "(kgdb) target remote /dev/cuau0\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:503
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:572
 msgid ""
 "Now, on the target host (the one that entered DDB right before even starting "
 "the device probe), type:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:509
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:578
 #, no-wrap
 msgid ""
 "Debugger(\"Boot flags requested debugger\")\n"
@@ -1057,26 +1058,26 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:512
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:581
 msgid "DDB will respond with:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:516
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:585
 #, fuzzy, no-wrap
 msgid "Next trap will enter GDB remote protocol mode\n"
 msgstr "A próxima trap entrará no modo de protocolo remoto do GDB\n"
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:519
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:590
 msgid ""
 "Every time you type `gdb`, the mode will be toggled between remote GDB and "
-"local DDB. In order to force a next trap immediately, simply type `s` "
-"(step). Your hosting GDB will now gain control over the target kernel:"
+"local DDB In order to force a next trap immediately, simply type `s` "
+"(step).  Your hosting GDB will now gain control over the target kernel:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:526
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:597
 #, no-wrap
 msgid ""
 "Remote debugging using /dev/cuau0\n"
@@ -1086,7 +1087,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:529
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:601
 msgid ""
 "You can use this session almost as any other GDB session, including full "
 "access to the source, running it in gud-mode inside an Emacs window (which "
@@ -1094,46 +1095,47 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:531
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:603
 #, no-wrap
 msgid "Debugging a Console Driver"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:534
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:609
 msgid ""
 "Since you need a console driver to run DDB on, things are more complicated "
-"if the console driver itself is failing. You might remember the use of a "
+"if the console driver itself is failing.  You might remember the use of a "
 "serial console (either with modified boot blocks, or by specifying `-h` at "
 "the `Boot:` prompt), and hook up a standard terminal onto your first serial "
-"port. DDB works on any configured console driver, including a serial console."
+"port.  DDB works on any configured console driver, including a serial "
+"console."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:536
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:611
 #, no-wrap
 msgid "Debugging Deadlocks"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:539
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:616
 msgid ""
 "You may experience so called deadlocks, a situation where a system stops "
-"doing useful work. To provide a helpful bug report in this situation, use "
-"man:ddb[4] as described in the previous section. Include the output of `ps` "
+"doing useful work.  To provide a helpful bug report in this situation, use "
+"man:ddb[4] as described in the previous section.  Include the output of `ps` "
 "and `trace` for suspected processes in the report."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:541
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:620
 msgid ""
-"If possible, consider doing further investigation. The recipe below is "
-"especially useful if you suspect that a deadlock occurs in the VFS layer. "
+"If possible, consider doing further investigation.  The recipe below is "
+"especially useful if you suspect that a deadlock occurs in the VFS layer.  "
 "Add these options to the kernel configuration file."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:552
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:631
 #, fuzzy, no-wrap
 msgid ""
 "makeoptions \tDEBUG=-g\n"
@@ -1155,7 +1157,7 @@ msgstr ""
 "options \tDIAGNOSTIC\n"
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:555
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:634
 msgid ""
 "When a deadlock occurs, in addition to the output of the `ps` command, "
 "provide information from the `show pcpu`, `show allpcpu`, `show locks`, "
@@ -1163,71 +1165,71 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:557
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:636
 msgid ""
 "To obtain meaningful backtraces for threaded processes, use `thread thread-"
 "id` to switch to the thread stack, and do a backtrace with `where`."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:559
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:638
 #, no-wrap
 msgid "Kernel debugging with Dcons"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:562
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:644
 msgid ""
 "man:dcons[4] is a very simple console driver that is not directly connected "
-"with any physical devices. It just reads and writes characters from and to a "
-"buffer in a kernel or loader. Due to its simple nature, it is very useful "
-"for kernel debugging, especially with a FireWire(R) device. Currently, "
+"with any physical devices.  It just reads and writes characters from and to "
+"a buffer in a kernel or loader.  Due to its simple nature, it is very useful "
+"for kernel debugging, especially with a FireWire(R) device.  Currently, "
 "FreeBSD provides two ways to interact with the buffer from outside of the "
 "kernel using man:dconschat[8]."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:563
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:645
 #, no-wrap
 msgid "Dcons over FireWire(R)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:566
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:653
 msgid ""
 "Most FireWire(R) (IEEE1394) host controllers are based on the OHCI "
-"specification that supports physical access to the host memory. This means "
+"specification that supports physical access to the host memory.  This means "
 "that once the host controller is initialized, we can access the host memory "
-"without the help of software (kernel). We can exploit this facility for "
-"interaction with man:dcons[4]. man:dcons[4] provides similar functionality "
-"as a serial console. It emulates two serial ports, one for the console and "
-"DDB, the other for GDB. Since remote memory access is fully handled by the "
+"without the help of software (kernel).  We can exploit this facility for "
+"interaction with man:dcons[4].  man:dcons[4] provides similar functionality "
+"as a serial console.  It emulates two serial ports, one for the console and "
+"DDB, the other for GDB.  Since remote memory access is fully handled by the "
 "hardware, the man:dcons[4] buffer is accessible even when the system crashes."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:568
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:656
 msgid ""
-"FireWire(R) devices are not limited to those integrated into motherboards. "
+"FireWire(R) devices are not limited to those integrated into motherboards.  "
 "PCI cards exist for desktops, and a cardbus interface can be purchased for "
 "laptops."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:569
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:657
 #, no-wrap
 msgid "Enabling FireWire(R) and Dcons support on the target machine"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:572
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:660
 msgid ""
 "To enable FireWire(R) and Dcons support in the kernel of the _target "
 "machine_:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:574
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:662
 msgid ""
 "Make sure your kernel supports `dcons`, `dcons_crom` and `firewire`. `Dcons` "
 "should be statically linked with the kernel. For `dcons_crom` and "
@@ -1235,71 +1237,71 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:575
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:663
 msgid ""
 "Make sure physical DMA is enabled. You may need to add `hw.firewire."
 "phydma_enable=1` to [.filename]#/boot/loader.conf#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:576
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:664
 msgid "Add options for debugging."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:577
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:665
 msgid ""
 "Add `dcons_gdb=1` in [.filename]#/boot/loader.conf# if you use GDB over "
 "FireWire(R)."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:578
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:666
 msgid "Enable `dcons` in [.filename]#/etc/ttys#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:579
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:667
 msgid ""
 "Optionally, to force `dcons` to be the high-level console, add `hw.firewire."
 "dcons_crom.force_console=1` to [.filename]#loader.conf#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:581
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:669
 msgid ""
 "To enable FireWire(R) and Dcons support in man:loader[8] on i386 or amd64:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:583
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:671
 msgid ""
 "Add `LOADER_FIREWIRE_SUPPORT=YES` in [.filename]#/etc/make.conf# and rebuild "
 "man:loader[8]:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:587
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:675
 #, no-wrap
 msgid "# cd /sys/boot/i386 && make clean && make && make install\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:590
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:678
 msgid ""
 "To enable man:dcons[4] as an active low-level console, add `boot_multicons="
 "\"YES\"` to [.filename]#/boot/loader.conf#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:592
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:681
 msgid ""
-"Here are a few configuration examples. A sample kernel configuration file "
+"Here are a few configuration examples.  A sample kernel configuration file "
 "would contain:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:601
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:690
 #, fuzzy, no-wrap
 msgid ""
 "device dcons\n"
@@ -1317,12 +1319,12 @@ msgstr ""
 "options ALT_BREAK_TO_DEBUGGER\n"
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:604
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:693
 msgid "And a sample [.filename]#/boot/loader.conf# would contain:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:612
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:701
 #, fuzzy, no-wrap
 msgid ""
 "dcons_crom_load=\"YES\"\n"
@@ -1338,24 +1340,24 @@ msgstr ""
 "hw.firewire.dcons_crom.force_console=1\n"
 
 #. type: Title ====
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:614
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:703
 #, no-wrap
 msgid "Enabling FireWire(R) and Dcons support on the host machine"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:617
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:706
 msgid "To enable FireWire(R) support in the kernel on the _host machine_:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:621
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:710
 #, no-wrap
 msgid "# kldload firewire\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:624
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:713
 msgid ""
 "Find out the EUI64 (the unique 64 bit identifier) of the FireWire(R) host "
 "controller, and use man:fwcontrol[8] or `dmesg` to find the EUI64 of the "
@@ -1363,24 +1365,24 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:626
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:715
 msgid "Run man:dconschat[8], with:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:630
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:719
 #, no-wrap
 msgid "# dconschat -e \\# -br -G 12345 -t 00-11-22-33-44-55-66-77\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:633
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:722
 msgid ""
 "The following key combinations can be used once man:dconschat[8] is running:"
 msgstr ""
 
 #. type: Table
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:649
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:738
 #, no-wrap
 msgid ""
 "|kbd:[~+.]\n"
@@ -1397,37 +1399,37 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:652
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:741
 msgid ""
 "Attach remote GDB by starting man:kgdb[1] with a remote debugging session:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:656
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:745
 #, no-wrap
 msgid " kgdb -r :12345 kernel\n"
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:658
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:747
 #, no-wrap
 msgid "Some general tips"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:661
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:750
 msgid "Here are some general tips:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:663
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:752
 msgid ""
 "To take full advantage of the speed of FireWire(R), disable other slow "
 "console drivers:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:668
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:757
 #, no-wrap
 msgid ""
 "# conscontrol delete ttyd0\t     # serial console\n"
@@ -1435,14 +1437,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:671
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:760
 msgid ""
 "There exists a GDB mode for man:emacs[1]; this is what you will need to add "
 "to your [.filename]#.emacs#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:678
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:767
 #, no-wrap
 msgid ""
 "(setq gud-gdba-command-name \"kgdb -a -a -a -r :12345\")\n"
@@ -1452,12 +1454,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:681
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:770
 msgid "And for DDD ([.filename]#devel/ddd#):"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:688
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:777
 #, fuzzy, no-wrap
 msgid ""
 "# remote serial protocol\n"
@@ -1471,60 +1473,60 @@ msgstr ""
 "LANG=C ddd --debugger kgdb kernel /dev/fwmem0.2\n"
 
 #. type: Title ===
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:690
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:779
 #, no-wrap
 msgid "Dcons with KVM"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:693
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:783
 msgid ""
 "We can directly read the man:dcons[4] buffer via [.filename]#/dev/mem# for "
-"live systems, and in the core dump for crashed systems. These give you "
+"live systems, and in the core dump for crashed systems.  These give you "
 "similar output to `dmesg -a`, but the man:dcons[4] buffer includes more "
 "information."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:694
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:784
 #, no-wrap
 msgid "Using Dcons with KVM"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:697
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:787
 msgid "To use man:dcons[4] with KVM:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:699
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:789
 msgid "Dump a man:dcons[4] buffer of a live system:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:703
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:793
 #, no-wrap
 msgid "# dconschat -1\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:706
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:796
 msgid "Dump a man:dcons[4] buffer of a crash dump:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:710
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:800
 #, no-wrap
 msgid "# dconschat -1 -M vmcore.XX\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:713
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:803
 msgid "Live core debugging can be done via:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:718
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:808
 #, no-wrap
 msgid ""
 "# fwcontrol -m target_eui64\n"
@@ -1532,20 +1534,20 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:721
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:811
 #, no-wrap
 msgid "Glossary of Kernel Options for Debugging"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:724
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:814
 msgid ""
 "This section provides a brief glossary of compile-time kernel options used "
 "for debugging:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:726
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:816
 msgid ""
 "`options KDB`: compiles in the kernel debugger framework. Required for "
 "`options DDB` and `options GDB`. Little or no performance overhead. By "
@@ -1554,7 +1556,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:727
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:817
 msgid ""
 "`options KDB_UNATTENDED`: change the default value of the `debug."
 "debugger_on_panic` sysctl to 0, which controls whether the debugger is "
@@ -1567,7 +1569,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:728
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:818
 msgid ""
 "`options KDB_TRACE`: change the default value of the `debug.trace_on_panic` "
 "sysctl to 1, which controls whether the debugger automatically prints a "
@@ -1577,7 +1579,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:729
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:819
 msgid ""
 "`options DDB`: compile in support for the console debugger, DDB. This "
 "interactive debugger runs on whatever the active low-level console of the "
@@ -1592,7 +1594,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:730
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:820
 msgid ""
 "`options GDB`: compile in support for the remote debugger, GDB, which can "
 "operate over serial cable or firewire. When the debugger is entered, GDB may "
@@ -1608,7 +1610,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:731
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:821
 msgid ""
 "`options BREAK_TO_DEBUGGER`, `options ALT_BREAK_TO_DEBUGGER`: allow a break "
 "signal or alternative signal on the console to enter the debugger. If the "
@@ -1619,7 +1621,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:732
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:822
 msgid ""
 "`options INVARIANTS`: compile into the kernel a large number of run-time "
 "assertion checks and tests, which constantly test the integrity of kernel "
@@ -1633,7 +1635,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:733
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:823
 msgid ""
 "`options INVARIANT_SUPPORT`: many of the tests present in `options "
 "INVARIANTS` require modified data structures or additional kernel symbols to "
@@ -1641,7 +1643,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:734
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:824
 msgid ""
 "`options WITNESS`: this option enables run-time lock order tracking and "
 "verification, and is an invaluable tool for deadlock diagnosis. WITNESS "
@@ -1656,7 +1658,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:735
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:825
 msgid ""
 "`options WITNESS_SKIPSPIN`: disable run-time checking of spinlock lock order "
 "with WITNESS. As spin locks are acquired most frequently in the scheduler, "
@@ -1665,7 +1667,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:736
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:826
 msgid ""
 "`options WITNESS_KDB`: change the default value of the `debug.witness.kdb` "
 "sysctl to 1, which causes WITNESS to enter the debugger when a lock order "
@@ -1674,7 +1676,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:737
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:827
 msgid ""
 "`options SOCKBUF_DEBUG`: perform extensive run-time consistency checking on "
 "socket buffers, which can be useful for debugging both socket bugs and race "
@@ -1684,7 +1686,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:738
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:828
 msgid ""
 "`options DEBUG_VFS_LOCKS`: track lock acquisition points for lockmgr/vnode "
 "locks, expanding the amount of information displayed by `show lockedvnods` "
@@ -1692,7 +1694,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:739
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:829
 msgid ""
 "`options DEBUG_MEMGUARD`: a replacement for the man:malloc[9] kernel memory "
 "allocator that uses the VM system to detect reads or writes from allocated "
@@ -1702,7 +1704,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:739
+#: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:829
 msgid ""
 "`options DIAGNOSTIC`: enable additional, more expensive diagnostic tests "
 "along the lines of `options INVARIANTS`."
