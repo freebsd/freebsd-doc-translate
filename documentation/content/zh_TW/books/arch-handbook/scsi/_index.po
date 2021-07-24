@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-06-08 07:31-0300\n"
+"POT-Creation-Date: 2021-07-24 11:38-0300\n"
 "PO-Revision-Date: 2021-06-03 00:07+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Chinese (Traditional) <https://translate-dev.freebsd.org/"
@@ -38,110 +38,117 @@ msgid "Synopsis"
 msgstr "概述"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:38
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:39
 msgid ""
 "This document assumes that the reader has a general understanding of device "
-"drivers in FreeBSD and of the SCSI protocol. Much of the information in this "
-"document was extracted from the drivers:"
+"drivers in FreeBSD and of the SCSI protocol.  Much of the information in "
+"this document was extracted from the drivers:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:40
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:41
 msgid ""
 "ncr ([.filename]#/sys/pci/ncr.c#) by Wolfgang Stanglmeier and Stefan Esser"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:41
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:42
 msgid "sym ([.filename]#/sys/dev/sym/sym_hipd.c#) by Gerard Roudier"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:42
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:43
 msgid "aic7xxx ([.filename]#/sys/dev/aic7xxx/aic7xxx.c#) by Justin T. Gibbs"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:44
-msgid ""
-"and from the CAM code itself (by Justin T. Gibbs, see [.filename]#/sys/cam/"
-"*#). When some solution looked the most logical and was essentially verbatim "
-"extracted from the code by Justin T. Gibbs, I marked it as \"recommended\"."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:46
 msgid ""
-"The document is illustrated with examples in pseudo-code. Although sometimes "
-"the examples have many details and look like real code, it is still pseudo-"
-"code. It was written to demonstrate the concepts in an understandable way. "
-"For a real driver other approaches may be more modular and efficient. It "
-"also abstracts from the hardware details, as well as issues that would cloud "
-"the demonstrated concepts or that are supposed to be described in the other "
-"chapters of the developers handbook. Such details are commonly shown as "
-"calls to functions with descriptive names, comments or pseudo-statements. "
-"Fortunately real life full-size examples with all the details can be found "
-"in the real drivers."
+"and from the CAM code itself (by Justin T. Gibbs, see [.filename]#/sys/cam/"
+"*#).  When some solution looked the most logical and was essentially "
+"verbatim extracted from the code by Justin T. Gibbs, I marked it as "
+"\"recommended\"."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:54
+msgid ""
+"The document is illustrated with examples in pseudo-code.  Although "
+"sometimes the examples have many details and look like real code, it is "
+"still pseudo-code.  It was written to demonstrate the concepts in an "
+"understandable way.  For a real driver other approaches may be more modular "
+"and efficient.  It also abstracts from the hardware details, as well as "
+"issues that would cloud the demonstrated concepts or that are supposed to be "
+"described in the other chapters of the developers handbook.  Such details "
+"are commonly shown as calls to functions with descriptive names, comments or "
+"pseudo-statements.  Fortunately real life full-size examples with all the "
+"details can be found in the real drivers."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:48
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:56
 #, no-wrap
 msgid "General Architecture"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:51
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:62
 msgid ""
-"CAM stands for Common Access Method. It is a generic way to address the I/O "
-"buses in a SCSI-like way. This allows a separation of the generic device "
+"CAM stands for Common Access Method.  It is a generic way to address the I/O "
+"buses in a SCSI-like way.  This allows a separation of the generic device "
 "drivers from the drivers controlling the I/O bus: for example the disk "
 "driver becomes able to control disks on both SCSI, IDE, and/or any other bus "
 "so the disk driver portion does not have to be rewritten (or copied and "
-"modified) for every new I/O bus. Thus the two most important active entities "
-"are:"
+"modified) for every new I/O bus.  Thus the two most important active "
+"entities are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:53
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:64
 msgid ""
 "_Peripheral Modules_ - a driver for peripheral devices (disk, tape, CD-ROM, "
 "etc.)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:54
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:65
 msgid ""
 "_SCSI Interface Modules_ (SIM) - a Host Bus Adapter drivers for connecting "
 "to an I/O bus such as SCSI or IDE."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:56
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:68
 msgid ""
 "A peripheral driver receives requests from the OS, converts them to a "
 "sequence of SCSI commands and passes these SCSI commands to a SCSI Interface "
-"Module. The SCSI Interface Module is responsible for passing these commands "
+"Module.  The SCSI Interface Module is responsible for passing these commands "
 "to the actual hardware (or if the actual hardware is not SCSI but, for "
 "example, IDE then also converting the SCSI commands to the native commands "
 "of the hardware)."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:58
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:70
 msgid ""
 "As we are interested in writing a SCSI adapter driver here, from this point "
 "on we will consider everything from the SIM standpoint."
 msgstr ""
 
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:71
+#, no-wrap
+msgid "Globals and Boilerplate"
+msgstr ""
+
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:60
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:74
 msgid ""
 "A typical SIM driver needs to include the following CAM-related header files:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:69
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:83
 #, no-wrap
 msgid ""
 "#include <cam/cam.h>\n"
@@ -152,91 +159,97 @@ msgid ""
 "#include <cam/scsi/scsi_all.h>\n"
 msgstr ""
 
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:85
+#, no-wrap
+msgid "Device configuration: xxx_attach"
+msgstr ""
+
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:72
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:90
 msgid ""
 "The first thing each SIM driver must do is register itself with the CAM "
-"subsystem. This is done during the driver's `xxx_attach()` function (here "
-"and further xxx_ is used to denote the unique driver name prefix). The "
+"subsystem.  This is done during the driver's `xxx_attach()` function (here "
+"and further xxx_ is used to denote the unique driver name prefix).  The "
 "`xxx_attach()` function itself is called by the system bus auto-"
 "configuration code which we do not describe here."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:74
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:92
 msgid ""
 "This is achieved in multiple steps: first it is necessary to allocate the "
 "queue of requests associated with this SIM:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:78
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:96
 #, no-wrap
 msgid "    struct cam_devq *devq;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:82
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:100
 #, no-wrap
 msgid ""
-"    if(( devq = cam_simq_alloc(SIZE) )==NULL) {\n"
+"    if ((devq = cam_simq_alloc(SIZE)) == NULL) {\n"
 "        error; /* some code to handle the error */\n"
 "    }\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:85
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:105
 msgid ""
 "Here `SIZE` is the size of the queue to be allocated, maximal number of "
-"requests it could contain. It is the number of requests that the SIM driver "
-"can handle in parallel on one SCSI card. Commonly it can be calculated as:"
+"requests it could contain.  It is the number of requests that the SIM driver "
+"can handle in parallel on one SCSI card.  Commonly it can be calculated as:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:89
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:109
 #, no-wrap
 msgid "SIZE = NUMBER_OF_SUPPORTED_TARGETS * MAX_SIMULTANEOUS_COMMANDS_PER_TARGET\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:92
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:112
 msgid "Next we create a descriptor of our SIM:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:96
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:116
 #, no-wrap
 msgid "    struct cam_sim *sim;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:103
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:123
 #, no-wrap
 msgid ""
-"    if(( sim = cam_sim_alloc(action_func, poll_func, driver_name,\n"
+"    if ((sim = cam_sim_alloc(action_func, poll_func, driver_name,\n"
 "            softc, unit, mtx, max_dev_transactions,\n"
-"            max_tagged_dev_transactions, devq) )==NULL) {\n"
+"            max_tagged_dev_transactions, devq)) == NULL) {\n"
 "        cam_simq_free(devq);\n"
 "        error; /* some code to handle the error */\n"
 "    }\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:106
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:126
 msgid ""
 "Note that if we are not able to create a SIM descriptor we free the `devq` "
 "also because we can do nothing else with it and we want to conserve memory."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:108
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:128
 msgid ""
 "If a SCSI card has multiple SCSI buses on it then each bus requires its own "
 "`cam_sim` structure."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:110
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:131
 msgid ""
 "An interesting question is what to do if a SCSI card has more than one SCSI "
 "bus, do we need one `devq` structure per card or per SCSI bus? The answer "
@@ -245,160 +258,155 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:112
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:133
 msgid "The arguments are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:114
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:135
 msgid "`action_func` - pointer to the driver's `xxx_action` function."
 msgstr ""
 
-#. type: delimited block - 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:120
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:139
 #, no-wrap
-msgid ""
-"static void\n"
-"\t\txxx_action\n"
-"\t       ();\n"
+msgid "static void xxx_action(struct cam_sim *, union ccb *);\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:122
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:141
 msgid "`poll_func` - pointer to the driver's `xxx_poll()`"
 msgstr ""
 
-#. type: delimited block - 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:128
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:145
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1003
 #, no-wrap
-msgid ""
-"static void\n"
-"\t\txxx_poll\n"
-"\t       ();\n"
+msgid "static void xxx_poll(struct cam_sim *);\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:130
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:147
 msgid ""
 "driver_name - the name of the actual driver, such as \"ncr\" or \"wds\"."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:131
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:149
 msgid ""
-"`softc` - pointer to the driver's internal descriptor for this SCSI card. "
+"`softc` - pointer to the driver's internal descriptor for this SCSI card.  "
 "This pointer will be used by the driver in future to get private data."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:132
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:150
 msgid ""
 "unit - the controller unit number, for example for controller \"mps0\" this "
 "number will be 0"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:133
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:154
 msgid ""
-"mtx - Lock associated with this SIM. For SIMs that don't know about locking, "
-"pass in Giant. For SIMs that do, pass in the lock used to guard this SIM's "
-"data structures. This lock will be held when xxx_action and xxx_poll are "
-"called."
+"mtx - Lock associated with this SIM.  For SIMs that don't know about "
+"locking, pass in Giant.  For SIMs that do, pass in the lock used to guard "
+"this SIM's data structures.  This lock will be held when xxx_action and "
+"xxx_poll are called."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:134
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:157
 msgid ""
 "max_dev_transactions - maximal number of simultaneous transactions per SCSI "
-"target in the non-tagged mode. This value will be almost universally equal "
-"to 1, with possible exceptions only for the non-SCSI cards. Also the drivers "
-"that hope to take advantage by preparing one transaction while another one "
-"is executed may set it to 2 but this does not seem to be worth the "
-"complexity."
+"target in the non-tagged mode.  This value will be almost universally equal "
+"to 1, with possible exceptions only for the non-SCSI cards.  Also the "
+"drivers that hope to take advantage by preparing one transaction while "
+"another one is executed may set it to 2 but this does not seem to be worth "
+"the complexity."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:135
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:162
 msgid ""
-"max_tagged_dev_transactions - the same thing, but in the tagged mode. Tags "
+"max_tagged_dev_transactions - the same thing, but in the tagged mode.  Tags "
 "are the SCSI way to initiate multiple transactions on a device: each "
 "transaction is assigned a unique tag and the transaction is sent to the "
-"device. When the device completes some transaction it sends back the result "
+"device.  When the device completes some transaction it sends back the result "
 "together with the tag so that the SCSI adapter (and the driver) can tell "
-"which transaction was completed. This argument is also known as the maximal "
-"tag depth. It depends on the abilities of the SCSI adapter."
+"which transaction was completed.  This argument is also known as the maximal "
+"tag depth.  It depends on the abilities of the SCSI adapter."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:137
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:164
 msgid "Finally we register the SCSI buses associated with our SCSI adapter:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:144
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:171
 #, no-wrap
 msgid ""
-"    if(xpt_bus_register(sim, softc, bus_number) != CAM_SUCCESS) {\n"
+"    if (xpt_bus_register(sim, softc, bus_number) != CAM_SUCCESS) {\n"
 "        cam_sim_free(sim, /*free_devq*/ TRUE);\n"
 "        error; /* some code to handle the error */\n"
 "    }\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:147
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:175
 msgid ""
 "If there is one `devq` structure per SCSI bus (i.e., we consider a card with "
 "multiple buses as multiple cards with one bus each) then the bus number will "
 "always be 0, otherwise each bus on the SCSI card should be get a distinct "
-"number. Each bus needs its own separate structure cam_sim."
+"number.  Each bus needs its own separate structure cam_sim."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:149
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:178
 msgid ""
-"After that our controller is completely hooked to the CAM system. The value "
+"After that our controller is completely hooked to the CAM system.  The value "
 "of `devq` can be discarded now: sim will be passed as an argument in all "
 "further calls from CAM and devq can be derived from it."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:151
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:182
 msgid ""
-"CAM provides the framework for such asynchronous events. Some events "
+"CAM provides the framework for such asynchronous events.  Some events "
 "originate from the lower levels (the SIM drivers), some events originate "
 "from the peripheral drivers, some events originate from the CAM subsystem "
-"itself. Any driver can register callbacks for some types of the asynchronous "
-"events, so that it would be notified if these events occur."
+"itself.  Any driver can register callbacks for some types of the "
+"asynchronous events, so that it would be notified if these events occur."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:153
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:190
 msgid ""
-"A typical example of such an event is a device reset. Each transaction and "
-"event identifies the devices to which it applies by the means of \"path\". "
+"A typical example of such an event is a device reset.  Each transaction and "
+"event identifies the devices to which it applies by the means of \"path\".  "
 "The target-specific events normally occur during a transaction with this "
-"device. So the path from that transaction may be re-used to report this "
+"device.  So the path from that transaction may be re-used to report this "
 "event (this is safe because the event path is copied in the event reporting "
-"routine but not deallocated nor passed anywhere further). Also it is safe to "
-"allocate paths dynamically at any time including the interrupt routines, "
+"routine but not deallocated nor passed anywhere further).  Also it is safe "
+"to allocate paths dynamically at any time including the interrupt routines, "
 "although that incurs certain overhead, and a possible problem with this "
-"approach is that there may be no free memory at that time. For a bus reset "
-"event we need to define a wildcard path including all devices on the bus. So "
-"we can create the path for the future bus reset events in advance and avoid "
-"problems with the future memory shortage:"
+"approach is that there may be no free memory at that time.  For a bus reset "
+"event we need to define a wildcard path including all devices on the bus.  "
+"So we can create the path for the future bus reset events in advance and "
+"avoid problems with the future memory shortage:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:157
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:194
 #, no-wrap
 msgid "    struct cam_path *path;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:165
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:202
 #, no-wrap
 msgid ""
-"    if(xpt_create_path(&path, /*periph*/NULL,\n"
+"    if (xpt_create_path(&path, /*periph*/NULL,\n"
 "                cam_sim_path(sim), CAM_TARGET_WILDCARD,\n"
 "                CAM_LUN_WILDCARD) != CAM_REQ_CMP) {\n"
 "        xpt_bus_deregister(cam_sim_path(sim));\n"
@@ -408,7 +416,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:168
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:205
 #, no-wrap
 msgid ""
 "    softc->wpath = path;\n"
@@ -416,71 +424,71 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:171
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:208
 msgid "As you can see the path includes:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:173
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:210
 msgid "ID of the peripheral driver (NULL here because we have none)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:174
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:211
 msgid "ID of the SIM driver (`cam_sim_path(sim)`)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:175
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:212
 msgid ""
 "SCSI target number of the device (CAM_TARGET_WILDCARD means \"all devices\")"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:176
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:213
 msgid "SCSI LUN number of the subdevice (CAM_LUN_WILDCARD means \"all LUNs\")"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:178
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:215
 msgid ""
 "If the driver can not allocate this path it will not be able to work "
 "normally, so in that case we dismantle that SCSI bus."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:180
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:218
 msgid ""
-"And we save the path pointer in the `softc` structure for future use. After "
+"And we save the path pointer in the `softc` structure for future use.  After "
 "that we save the value of sim (or we can also discard it on the exit from "
 "`xxx_probe()` if we wish)."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:182
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:221
 msgid ""
-"That is all for a minimalistic initialization. To do things right there is "
+"That is all for a minimalistic initialization.  To do things right there is "
 "one more issue left."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:184
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:226
 msgid ""
 "For a SIM driver there is one particularly interesting event: when a target "
-"device is considered lost. In this case resetting the SCSI negotiations with "
-"this device may be a good idea. So we register a callback for this event "
-"with CAM. The request is passed to CAM by requesting CAM action on a CAM "
-"control block for this type of request:"
+"device is considered lost.  In this case resetting the SCSI negotiations "
+"with this device may be a good idea.  So we register a callback for this "
+"event with CAM.  The request is passed to CAM by requesting CAM action on a "
+"CAM control block for this type of request:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:188
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:230
 #, no-wrap
 msgid "    struct ccb_setasync csa;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:195
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:237
 #, no-wrap
 msgid ""
 "    xpt_setup_ccb(&csa.ccb_h, path, /*priority*/5);\n"
@@ -491,90 +499,86 @@ msgid ""
 "    xpt_action((union ccb *)&csa);\n"
 msgstr ""
 
-#. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:198
-msgid ""
-"Now we take a look at the `xxx_action()` and `xxx_poll()` driver entry "
-"points."
-msgstr ""
-
-#. type: delimited block - 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:204
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:239
 #, no-wrap
-msgid ""
-"static void\n"
-"\t    xxx_action\n"
-"\t   ();\n"
+msgid "Processing CAM messages: xxx_action"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:244
+#, no-wrap
+msgid "static void xxx_action(struct cam_sim *sim, union ccb *ccb);\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:207
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:251
 msgid ""
-"Do some action on request of the CAM subsystem. Sim describes the SIM for "
-"the request, CCB is the request itself. CCB stands for \"CAM Control Block"
-"\". It is a union of many specific instances, each describing arguments for "
-"some type of transactions. All of these instances share the CCB header where "
-"the common part of arguments is stored."
+"Do some action on request of the CAM subsystem.  Sim describes the SIM for "
+"the request, CCB is the request itself.  CCB stands for \"CAM Control Block"
+"\".  It is a union of many specific instances, each describing arguments for "
+"some type of transactions.  All of these instances share the CCB header "
+"where the common part of arguments is stored."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:209
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:254
 msgid ""
 "CAM supports the SCSI controllers working in both initiator (\"normal\") "
-"mode and target (simulating a SCSI device) mode. Here we only consider the "
+"mode and target (simulating a SCSI device) mode.  Here we only consider the "
 "part relevant to the initiator mode."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:211
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:256
 msgid ""
 "There are a few function and macros (in other words, methods) defined to "
 "access the public data in the struct sim:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:213
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:258
 msgid "`cam_sim_path(sim)` - the path ID (see above)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:214
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:259
 msgid "`cam_sim_name(sim)` - the name of the sim"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:215
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:260
 msgid ""
 "`cam_sim_softc(sim)` - the pointer to the softc (driver private data) "
 "structure"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:216
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:261
 msgid "`cam_sim_unit(sim)` - the unit number"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:217
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:262
 msgid "`cam_sim_bus(sim)` - the bus ID"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:219
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:264
 msgid ""
 "To identify the device, `xxx_action()` can get the unit number and pointer "
 "to its structure softc using these functions."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:221
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:267
 msgid ""
-"The type of request is stored in `ccb->ccb_h.func_code`. So generally "
+"The type of request is stored in `ccb->ccb_h.func_code`.  So generally "
 "`xxx_action()` consists of a big switch:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:228
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:274
 #, no-wrap
 msgid ""
 "    struct xxx_softc *softc = (struct xxx_softc *) cam_sim_softc(sim);\n"
@@ -584,10 +588,10 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:237
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:283
 #, no-wrap
 msgid ""
-"    switch(ccb_h->func_code) {\n"
+"    switch (ccb_h->func_code) {\n"
 "    case ...:\n"
 "        ...\n"
 "    default:\n"
@@ -598,7 +602,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:240
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:286
 msgid ""
 "As can be seen from the default case (if an unknown command was received) "
 "the return code of the command is set into `ccb->ccb_h.status` and the "
@@ -606,120 +610,121 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:242
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:289
 msgid ""
 "`xpt_done()` does not have to be called from `xxx_action()`: For example an "
 "I/O request may be enqueued inside the SIM driver and/or its SCSI "
-"controller. Then when the device would post an interrupt signaling that the "
+"controller.  Then when the device would post an interrupt signaling that the "
 "processing of this request is complete `xpt_done()` may be called from the "
 "interrupt handling routine."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:244
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:297
 msgid ""
 "Actually, the CCB status is not only assigned as a return code but a CCB has "
-"some status all the time. Before CCB is passed to the `xxx_action()` routine "
-"it gets the status CCB_REQ_INPROG meaning that it is in progress. There are "
-"a surprising number of status values defined in [.filename]#/sys/cam/cam.h# "
-"which should be able to represent the status of a request in great detail. "
-"More interesting yet, the status is in fact a \"bitwise or\" of an "
-"enumerated status value (the lower 6 bits) and possible additional flag-like "
-"bits (the upper bits). The enumerated values will be discussed later in more "
-"detail. The summary of them can be found in the Errors Summary section. The "
-"possible status flags are:"
+"some status all the time.  Before CCB is passed to the `xxx_action()` "
+"routine it gets the status CCB_REQ_INPROG meaning that it is in progress.  "
+"There are a surprising number of status values defined in [.filename]#/sys/"
+"cam/cam.h# which should be able to represent the status of a request in "
+"great detail.  More interesting yet, the status is in fact a \"bitwise or\" "
+"of an enumerated status value (the lower 6 bits) and possible additional "
+"flag-like bits (the upper bits).  The enumerated values will be discussed "
+"later in more detail.  The summary of them can be found in the Errors "
+"Summary section.  The possible status flags are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:246
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:300
 msgid ""
 "_CAM_DEV_QFRZN_ - if the SIM driver gets a serious error (for example, the "
 "device does not respond to the selection or breaks the SCSI protocol) when "
 "processing a CCB it should freeze the request queue by calling "
 "`xpt_freeze_simq()`, return the other enqueued but not processed yet CCBs "
 "for this device back to the CAM queue, then set this flag for the "
-"troublesome CCB and call `xpt_done()`. This flag causes the CAM subsystem to "
-"unfreeze the queue after it handles the error."
+"troublesome CCB and call `xpt_done()`.  This flag causes the CAM subsystem "
+"to unfreeze the queue after it handles the error."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:247
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:302
 msgid ""
 "_CAM_AUTOSNS_VALID_ - if the device returned an error condition and the flag "
 "CAM_DIS_AUTOSENSE is not set in CCB the SIM driver must execute the REQUEST "
 "SENSE command automatically to extract the sense (extended error "
-"information) data from the device. If this attempt was successful the sense "
+"information) data from the device.  If this attempt was successful the sense "
 "data should be saved in the CCB and this flag set."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:248
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:305
 msgid ""
 "_CAM_RELEASE_SIMQ_ - like CAM_DEV_QFRZN but used in case there is some "
-"problem (or resource shortage) with the SCSI controller itself. Then all the "
-"future requests to the controller should be stopped by `xpt_freeze_simq()`. "
-"The controller queue will be restarted after the SIM driver overcomes the "
-"shortage and informs CAM by returning some CCB with this flag set."
+"problem (or resource shortage) with the SCSI controller itself.  Then all "
+"the future requests to the controller should be stopped by "
+"`xpt_freeze_simq()`.  The controller queue will be restarted after the SIM "
+"driver overcomes the shortage and informs CAM by returning some CCB with "
+"this flag set."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:249
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:307
 msgid ""
 "_CAM_SIM_QUEUED_ - when SIM puts a CCB into its request queue this flag "
 "should be set (and removed when this CCB gets dequeued before being returned "
-"back to CAM). This flag is not used anywhere in the CAM code now, so its "
+"back to CAM).  This flag is not used anywhere in the CAM code now, so its "
 "purpose is purely diagnostic."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:250
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:308
 msgid "_CAM_QOS_VALID_ - The QOS data is now valid."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:252
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:311
 msgid ""
 "The function `xxx_action()` is not allowed to sleep, so all the "
 "synchronization for resource access must be done using SIM or device queue "
-"freezing. Besides the aforementioned flags the CAM subsystem provides "
+"freezing.  Besides the aforementioned flags the CAM subsystem provides "
 "functions `xpt_release_simq()` and `xpt_release_devq()` to unfreeze the "
 "queues directly, without passing a CCB to CAM."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:254
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:313
 msgid "The CCB header contains the following fields:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:256
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:315
 msgid "_path_ - path ID for the request"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:257
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:316
 msgid "_target_id_ - target device ID for the request"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:258
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:317
 msgid "_target_lun_ - LUN ID of the target device"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:259
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:318
 msgid "_timeout_ - timeout interval for this command, in milliseconds"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:260
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:319
 msgid ""
 "_timeout_ch_ - a convenience place for the SIM driver to store the timeout "
 "handle (the CAM subsystem itself does not make any assumptions about it)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:261
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:320
 msgid ""
 "_flags_ - various bits of information about the request spriv_ptr0, "
 "spriv_ptr1 - fields reserved for private use by the SIM driver (such as "
@@ -732,14 +737,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:263
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:322
 msgid ""
 "The recommended way of using the SIM private fields of CCB is to define some "
 "meaningful names for them and use these meaningful names in the driver, like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:268
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:327
 #, no-wrap
 msgid ""
 "#define ccb_some_meaningful_name    sim_priv.entries[0].bytes\n"
@@ -747,56 +752,57 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:271
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:330
 msgid "The most common initiator mode requests are:"
 msgstr ""
 
-#. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:273
+#. type: Title ===
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:331
+#, no-wrap
 msgid "_XPT_SCSI_IO_ - execute an I/O transaction"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:275
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:335
 msgid ""
 "The instance \"struct ccb_scsiio csio\" of the union ccb is used to transfer "
-"the arguments. They are:"
+"the arguments.  They are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:277
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:337
 msgid "_cdb_io_ - pointer to the SCSI command buffer or the buffer itself"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:278
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:338
 msgid "_cdb_len_ - SCSI command length"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:279
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:339
 msgid ""
 "_data_ptr_ - pointer to the data buffer (gets a bit complicated if scatter/"
 "gather is used)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:280
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:340
 msgid "_dxfer_len_ - length of the data to transfer"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:281
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:341
 msgid "_sglist_cnt_ - counter of the scatter/gather segments"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:282
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:342
 msgid "_scsi_status_ - place to return the SCSI status"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:283
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:343
 msgid ""
 "_sense_data_ - buffer for the SCSI sense information if the command returns "
 "an error (the SIM driver is supposed to run the REQUEST SENSE command "
@@ -804,30 +810,35 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:284
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:344
 msgid ""
 "_sense_len_ - the length of that buffer (if it happens to be higher than "
-"size of sense_data the SIM driver must silently assume the smaller value) "
-"resid, sense_resid - if the transfer of data or SCSI sense returned an error "
-"these are the returned counters of the residual (not transferred) data. They "
-"do not seem to be especially meaningful, so in a case when they are "
-"difficult to compute (say, counting bytes in the SCSI controller's FIFO "
-"buffer) an approximate value will do as well. For a successfully completed "
+"size of sense_data the SIM driver must silently assume the smaller value)"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:347
+msgid ""
+"_resid_, _sense_resid_ - if the transfer of data or SCSI sense returned an "
+"error these are the returned counters of the residual (not transferred) "
+"data.  They do not seem to be especially meaningful, so in a case when they "
+"are difficult to compute (say, counting bytes in the SCSI controller's FIFO "
+"buffer) an approximate value will do as well.  For a successfully completed "
 "transfer they must be set to zero."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:285
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:348
 msgid "_tag_action_ - the kind of tag to use:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:287
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:349
 msgid "CAM_TAG_ACTION_NONE - do not use tags for this transaction"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:288
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:350
 msgid ""
 "MSG_SIMPLE_Q_TAG, MSG_HEAD_OF_Q_TAG, MSG_ORDERED_Q_TAG - value equal to the "
 "appropriate tag message (see /sys/cam/scsi/scsi_message.h); this gives only "
@@ -835,25 +846,25 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:290
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:352
 msgid "The general logic of handling this request is the following:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:292
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:354
 msgid ""
 "The first thing to do is to check for possible races, to make sure that the "
 "command did not get aborted when it was sitting in the queue:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:296
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:358
 #, no-wrap
 msgid "    struct ccb_scsiio *csio = &ccb->csio;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:301
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:363
 #, no-wrap
 msgid ""
 "    if ((ccb_h->status & CAM_STATUS_MASK) != CAM_REQ_INPROG) {\n"
@@ -863,21 +874,21 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:304
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:366
 msgid "Also we check that the device is supported at all by our controller:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:318
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:380
 #, no-wrap
 msgid ""
-"    if(ccb_h->target_id > OUR_MAX_SUPPORTED_TARGET_ID\n"
+"    if (ccb_h->target_id > OUR_MAX_SUPPORTED_TARGET_ID\n"
 "    || cch_h->target_id == OUR_SCSI_CONTROLLERS_OWN_ID) {\n"
 "        ccb_h->status = CAM_TID_INVALID;\n"
 "        xpt_done(ccb);\n"
 "        return;\n"
 "    }\n"
-"    if(ccb_h->target_lun > OUR_MAX_SUPPORTED_LUN) {\n"
+"    if (ccb_h->target_lun > OUR_MAX_SUPPORTED_LUN) {\n"
 "        ccb_h->status = CAM_LUN_INVALID;\n"
 "        xpt_done(ccb);\n"
 "        return;\n"
@@ -885,28 +896,28 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:321
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:386
 msgid ""
 "Then allocate whatever data structures (such as card-dependent hardware "
-"control block) we need to process this request. If we can not then freeze "
+"control block) we need to process this request.  If we can not then freeze "
 "the SIM queue and remember that we have a pending operation, return the CCB "
-"back and ask CAM to re-queue it. Later when the resources become available "
+"back and ask CAM to re-queue it.  Later when the resources become available "
 "the SIM queue must be unfrozen by returning a ccb with the "
-"`CAM_SIMQ_RELEASE` bit set in its status. Otherwise, if all went well, link "
+"`CAM_SIMQ_RELEASE` bit set in its status.  Otherwise, if all went well, link "
 "the CCB with the hardware control block (HCB) and mark it as queued."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:325
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:390
 #, no-wrap
 msgid "    struct xxx_hcb *hcb = allocate_hcb(softc, unit, bus);\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:333
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:398
 #, no-wrap
 msgid ""
-"    if(hcb == NULL) {\n"
+"    if (hcb == NULL) {\n"
 "        softc->flags |= RESOURCE_SHORTAGE;\n"
 "        xpt_freeze_simq(sim, /*count*/1);\n"
 "        ccb_h->status = CAM_REQUEUE_REQ;\n"
@@ -916,7 +927,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:336
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:401
 #, no-wrap
 msgid ""
 "    hcb->ccb = ccb; ccb_h->ccb_hcb = (void *)hcb;\n"
@@ -924,54 +935,54 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:339
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:406
 msgid ""
-"Extract the target data from CCB into the hardware control block. Check if "
+"Extract the target data from CCB into the hardware control block.  Check if "
 "we are asked to assign a tag and if yes then generate an unique tag and "
-"build the SCSI tag messages. The SIM driver is also responsible for "
+"build the SCSI tag messages.  The SIM driver is also responsible for "
 "negotiations with the devices to set the maximal mutually supported bus "
 "width, synchronous rate and offset."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:348
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:415
 #, no-wrap
 msgid ""
 "    hcb->target = ccb_h->target_id; hcb->lun = ccb_h->target_lun;\n"
 "    generate_identify_message(hcb);\n"
-"    if( ccb_h->tag_action != CAM_TAG_ACTION_NONE )\n"
+"    if (ccb_h->tag_action != CAM_TAG_ACTION_NONE)\n"
 "        generate_unique_tag_message(hcb, ccb_h->tag_action);\n"
-"    if( !target_negotiated(hcb) )\n"
+"    if (!target_negotiated(hcb))\n"
 "        generate_negotiation_messages(hcb);\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:351
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:421
 msgid ""
-"Then set up the SCSI command. The command storage may be specified in the "
-"CCB in many interesting ways, specified by the CCB flags. The command buffer "
-"can be contained in CCB or pointed to, in the latter case the pointer may be "
-"physical or virtual. Since the hardware commonly needs physical address we "
-"always convert the address to the physical one, typically using the busdma "
-"API."
+"Then set up the SCSI command.  The command storage may be specified in the "
+"CCB in many interesting ways, specified by the CCB flags.  The command "
+"buffer can be contained in CCB or pointed to, in the latter case the pointer "
+"may be physical or virtual.  Since the hardware commonly needs physical "
+"address we always convert the address to the physical one, typically using "
+"the busdma API."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:353
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:424
 msgid ""
 "In case if a physical address is requested it is OK to return the CCB with "
-"the status `CAM_REQ_INVALID`, the current drivers do that. If necessary a "
+"the status `CAM_REQ_INVALID`, the current drivers do that.  If necessary a "
 "physical address can be also converted or mapped back to a virtual address "
 "but with big pain, so we do not do that."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:370
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:441
 #, no-wrap
 msgid ""
-"    if(ccb_h->flags & CAM_CDB_POINTER) {\n"
+"    if (ccb_h->flags & CAM_CDB_POINTER) {\n"
 "        /* CDB is a pointer */\n"
-"        if(!(ccb_h->flags & CAM_CDB_PHYS)) {\n"
+"        if (!(ccb_h->flags & CAM_CDB_PHYS)) {\n"
 "            /* CDB pointer is virtual */\n"
 "            hcb->cmd = vtobus(csio->cdb_io.cdb_ptr);\n"
 "        } else {\n"
@@ -986,22 +997,22 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:373
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:447
 msgid ""
-"Now it is time to set up the data. Again, the data storage may be specified "
-"in the CCB in many interesting ways, specified by the CCB flags. First we "
-"get the direction of the data transfer. The simplest case is if there is no "
+"Now it is time to set up the data.  Again, the data storage may be specified "
+"in the CCB in many interesting ways, specified by the CCB flags.  First we "
+"get the direction of the data transfer.  The simplest case is if there is no "
 "data to transfer:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:377
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:451
 #, no-wrap
 msgid "    int dir = (ccb_h->flags & CAM_DIR_MASK);\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:380
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:454
 #, no-wrap
 msgid ""
 "    if (dir == CAM_DIR_NONE)\n"
@@ -1009,42 +1020,42 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:383
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:465
 msgid ""
 "Then we check if the data is in one chunk or in a scatter-gather list, and "
-"the addresses are physical or virtual. The SCSI controller may be able to "
-"handle only a limited number of chunks of limited length. If the request "
-"hits this limitation we return an error. We use a special function to return "
-"the CCB to handle in one place the HCB resource shortages. The functions to "
-"add chunks are driver-dependent, and here we leave them without detailed "
-"implementation. See description of the SCSI command (CDB) handling for the "
-"details on the address-translation issues. If some variation is too "
+"the addresses are physical or virtual.  The SCSI controller may be able to "
+"handle only a limited number of chunks of limited length.  If the request "
+"hits this limitation we return an error.  We use a special function to "
+"return the CCB to handle in one place the HCB resource shortages.  The "
+"functions to add chunks are driver-dependent, and here we leave them without "
+"detailed implementation.  See description of the SCSI command (CDB) handling "
+"for the details on the address-translation issues.  If some variation is too "
 "difficult or impossible to implement with a particular card it is OK to "
-"return the status `CAM_REQ_INVALID`. Actually, it seems like the scatter-"
-"gather ability is not used anywhere in the CAM code now. But at least the "
+"return the status `CAM_REQ_INVALID`.  Actually, it seems like the scatter-"
+"gather ability is not used anywhere in the CAM code now.  But at least the "
 "case for a single non-scattered virtual buffer must be implemented, it is "
 "actively used by CAM."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:387
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:469
 #, no-wrap
 msgid "    int rv;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:389
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:471
 #, no-wrap
 msgid "    initialize_hcb_for_data(hcb);\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:402
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:484
 #, no-wrap
 msgid ""
-"    if((!(ccb_h->flags & CAM_SCATTER_VALID)) {\n"
+"    if ((!(ccb_h->flags & CAM_SCATTER_VALID)) {\n"
 "        /* single buffer */\n"
-"        if(!(ccb_h->flags & CAM_DATA_PHYS)) {\n"
+"        if (!(ccb_h->flags & CAM_DATA_PHYS)) {\n"
 "            rv = add_virtual_chunk(hcb, csio->data_ptr, csio->dxfer_len, dir);\n"
 "            }\n"
 "        } else {\n"
@@ -1057,7 +1068,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:434
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:516
 #, no-wrap
 msgid ""
 "        if ((ccb_h->flags & CAM_SG_LIST_PHYS) != 0) {\n"
@@ -1081,7 +1092,7 @@ msgid ""
 "            }\n"
 "        }\n"
 "    }\n"
-"    if(rv != CAM_REQ_CMP) {\n"
+"    if (rv != CAM_REQ_CMP) {\n"
 "        /* we expect that add_*_chunk() functions return CAM_REQ_CMP\n"
 "         * if they added a chunk successfully, CAM_REQ_TOO_BIG if\n"
 "         * the request is too big (too many bytes or too many chunks),\n"
@@ -1094,22 +1105,22 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:437
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:519
 msgid ""
 "If disconnection is disabled for this CCB we pass this information to the "
 "hcb:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:442
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:524
 #, no-wrap
 msgid ""
-"    if(ccb_h->flags & CAM_DIS_DISCONNECT)\n"
+"    if (ccb_h->flags & CAM_DIS_DISCONNECT)\n"
 "        hcb_disable_disconnect(hcb);\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:445
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:527
 msgid ""
 "If the controller is able to run REQUEST SENSE command all by itself then "
 "the value of the flag CAM_DIS_AUTOSENSE should also be passed to it, to "
@@ -1117,7 +1128,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:447
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:529
 msgid ""
 "The only thing left is to set up the timeout, pass our hcb to the hardware "
 "and return, the rest will be done by the interrupt handler (or timeout "
@@ -1125,7 +1136,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:454
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:536
 #, no-wrap
 msgid ""
 "    ccb_h->timeout_ch = timeout(xxx_timeout, (caddr_t) hcb,\n"
@@ -1135,12 +1146,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:457
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:539
 msgid "And here is a possible implementation of the function returning CCB:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:464
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:546
 #, no-wrap
 msgid ""
 "    static void\n"
@@ -1150,14 +1161,14 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:479
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:561
 #, no-wrap
 msgid ""
 "        ccb->ccb_h.ccb_hcb = 0;\n"
-"        if(hcb != NULL) {\n"
+"        if (hcb != NULL) {\n"
 "            untimeout(xxx_timeout, (caddr_t) hcb, ccb->ccb_h.timeout_ch);\n"
 "            /* we're about to free a hcb, so the shortage has ended */\n"
-"            if(softc->flags & RESOURCE_SHORTAGE)  {\n"
+"            if (softc->flags & RESOURCE_SHORTAGE)  {\n"
 "                softc->flags &= ~RESOURCE_SHORTAGE;\n"
 "                status |= CAM_RELEASE_SIMQ;\n"
 "            }\n"
@@ -1169,64 +1180,65 @@ msgid ""
 "    }\n"
 msgstr ""
 
-#. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:482
-msgid ""
-"_XPT_RESET_DEV_ - send the SCSI \"BUS DEVICE RESET\" message to a device"
+#. type: Title ===
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:563
+#, no-wrap
+msgid "_XPT_RESET_DEV_ - send the SCSI \"BUS DEVICE RESET\" message to a device"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:484
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:568
 msgid ""
 "There is no data transferred in CCB except the header and the most "
-"interesting argument of it is target_id. Depending on the controller "
+"interesting argument of it is target_id.  Depending on the controller "
 "hardware a hardware control block just like for the XPT_SCSI_IO request may "
 "be constructed (see XPT_SCSI_IO request description) and sent to the "
 "controller or the SCSI controller may be immediately programmed to send this "
 "RESET message to the device or this request may be just not supported (and "
-"return the status `CAM_REQ_INVALID`). Also on completion of the request all "
+"return the status `CAM_REQ_INVALID`).  Also on completion of the request all "
 "the disconnected transactions for this target must be aborted (probably in "
 "the interrupt routine)."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:486
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:571
 msgid ""
 "Also all the current negotiations for the target are lost on reset, so they "
-"might be cleaned too. Or they clearing may be deferred, because anyway the "
+"might be cleaned too.  Or they clearing may be deferred, because anyway the "
 "target would request re-negotiation on the next transaction."
 msgstr ""
 
-#. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:487
+#. type: Title ===
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:572
+#, no-wrap
 msgid "_XPT_RESET_BUS_ - send the RESET signal to the SCSI bus"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:489
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:575
 msgid ""
 "No arguments are passed in the CCB, the only interesting argument is the "
 "SCSI bus indicated by the struct sim pointer."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:491
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:577
 msgid ""
 "A minimalistic implementation would forget the SCSI negotiations for all the "
 "devices on the bus and return the status CAM_REQ_CMP."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:493
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:580
 msgid ""
 "The proper implementation would in addition actually reset the SCSI bus "
 "(possible also reset the SCSI controller) and mark all the CCBs being "
 "processed, both those in the hardware queue and those being disconnected, as "
-"done with the status CAM_SCSI_BUS_RESET. Like:"
+"done with the status CAM_SCSI_BUS_RESET.  Like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:500
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:586
 #, no-wrap
 msgid ""
 "    int targ, lun;\n"
@@ -1236,7 +1248,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:506
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:592
 #, no-wrap
 msgid ""
 "    /* The SCSI bus reset may take a long time, in this case its completion\n"
@@ -1247,18 +1259,18 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:512
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:598
 #, no-wrap
 msgid ""
 "    /* drop all enqueued CCBs */\n"
-"    for(h = softc->first_queued_hcb; h != NULL; h = hh) {\n"
+"    for (h = softc->first_queued_hcb; h != NULL; h = hh) {\n"
 "        hh = h->next;\n"
 "        free_hcb_and_ccb_done(h, h->ccb, CAM_SCSI_BUS_RESET);\n"
 "    }\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:518
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:604
 #, no-wrap
 msgid ""
 "    /* the clean values of negotiations to report */\n"
@@ -1269,20 +1281,20 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:522
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:608
 #, no-wrap
 msgid ""
 "    /* drop all disconnected CCBs and clean negotiations  */\n"
-"    for(targ=0; targ <= OUR_MAX_SUPPORTED_TARGET; targ++) {\n"
+"    for (targ=0; targ <= OUR_MAX_SUPPORTED_TARGET; targ++) {\n"
 "        clean_negotiations(softc, targ);\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:530
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:616
 #, no-wrap
 msgid ""
 "        /* report the event if possible */\n"
-"        if(xpt_create_path(&path, /*periph*/NULL,\n"
+"        if (xpt_create_path(&path, /*periph*/NULL,\n"
 "                cam_sim_path(sim), targ,\n"
 "                CAM_LUN_WILDCARD) == CAM_REQ_CMP) {\n"
 "            xpt_async(AC_TRANSFER_NEG, path, &neg);\n"
@@ -1291,11 +1303,11 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:537
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:623
 #, no-wrap
 msgid ""
-"        for(lun=0; lun <= OUR_MAX_SUPPORTED_LUN; lun++)\n"
-"            for(h = softc->first_discon_hcb[targ][lun]; h != NULL; h = hh) {\n"
+"        for (lun=0; lun <= OUR_MAX_SUPPORTED_LUN; lun++)\n"
+"            for (h = softc->first_discon_hcb[targ][lun]; h != NULL; h = hh) {\n"
 "                hh=h->next;\n"
 "                free_hcb_and_ccb_done(h, h->ccb, CAM_SCSI_BUS_RESET);\n"
 "            }\n"
@@ -1303,7 +1315,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:540
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:626
 #, no-wrap
 msgid ""
 "    ccb->ccb_h.status = CAM_REQ_CMP;\n"
@@ -1311,7 +1323,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:544
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:630
 #, no-wrap
 msgid ""
 "    /* report the event */\n"
@@ -1320,47 +1332,48 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:547
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:633
 msgid ""
 "Implementing the SCSI bus reset as a function may be a good idea because it "
 "would be re-used by the timeout function as a last resort if the things go "
 "wrong."
 msgstr ""
 
-#. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:548
+#. type: Title ===
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:634
+#, no-wrap
 msgid "_XPT_ABORT_ - abort the specified CCB"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:550
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:638
 msgid ""
 "The arguments are transferred in the instance \"struct ccb_abort cab\" of "
-"the union ccb. The only argument field in it is:"
+"the union ccb.  The only argument field in it is:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:552
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:640
 msgid "_abort_ccb_ - pointer to the CCB to be aborted"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:554
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:643
 msgid ""
-"If the abort is not supported just return the status CAM_UA_ABORT. This is "
+"If the abort is not supported just return the status CAM_UA_ABORT.  This is "
 "also the easy way to minimally implement this call, return CAM_UA_ABORT in "
 "any case."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:556
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:646
 msgid ""
-"The hard way is to implement this request honestly. First check that abort "
+"The hard way is to implement this request honestly.  First check that abort "
 "applies to a SCSI transaction:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:561
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:651
 #, no-wrap
 msgid ""
 "    struct ccb *abort_ccb;\n"
@@ -1368,10 +1381,10 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:567
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:657
 #, no-wrap
 msgid ""
-"    if(abort_ccb->ccb_h.func_code != XPT_SCSI_IO) {\n"
+"    if (abort_ccb->ccb_h.func_code != XPT_SCSI_IO) {\n"
 "        ccb->ccb_h.status = CAM_UA_ABORT;\n"
 "        xpt_done(ccb);\n"
 "        return;\n"
@@ -1379,35 +1392,35 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:571
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:661
 msgid ""
-"Then it is necessary to find this CCB in our queue. This can be done by "
+"Then it is necessary to find this CCB in our queue.  This can be done by "
 "walking the list of all our hardware control blocks in search for one "
 "associated with this CCB:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:575
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:665
 #, no-wrap
 msgid "    struct xxx_hcb *hcb, *h;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:577
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:667
 #, no-wrap
 msgid "    hcb = NULL;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:588
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:678
 #, no-wrap
 msgid ""
 "    /* We assume that softc->first_hcb is the head of the list of all\n"
 "     * HCBs associated with this bus, including those enqueued for\n"
 "     * processing, being processed by hardware and disconnected ones.\n"
 "     */\n"
-"    for(h = softc->first_hcb; h != NULL; h = h->next) {\n"
-"        if(h->ccb == abort_ccb) {\n"
+"    for (h = softc->first_hcb; h != NULL; h = h->next) {\n"
+"        if (h->ccb == abort_ccb) {\n"
 "            hcb = h;\n"
 "            break;\n"
 "        }\n"
@@ -1415,10 +1428,10 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:595
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:685
 #, no-wrap
 msgid ""
-"    if(hcb == NULL) {\n"
+"    if (hcb == NULL) {\n"
 "        /* no such CCB in our queue */\n"
 "        ccb->ccb_h.status = CAM_PATH_INVALID;\n"
 "        xpt_done(ccb);\n"
@@ -1427,31 +1440,31 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:597
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:687
 #, no-wrap
 msgid "    hcb=found_hcb;\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:600
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:692
 msgid ""
-"Now we look at the current processing status of the HCB. It may be either "
+"Now we look at the current processing status of the HCB.  It may be either "
 "sitting in the queue waiting to be sent to the SCSI bus, being transferred "
 "right now, or disconnected and waiting for the result of the command, or "
-"actually completed by hardware but not yet marked as done by software. To "
+"actually completed by hardware but not yet marked as done by software.  To "
 "make sure that we do not get in any races with hardware we mark the HCB as "
 "being aborted, so that if this HCB is about to be sent to the SCSI bus the "
 "SCSI controller will see this flag and skip it."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:604
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:696
 #, no-wrap
 msgid "    int hstatus;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:609
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:701
 #, no-wrap
 msgid ""
 "    /* shown as a function, in case special action is needed to make\n"
@@ -1461,17 +1474,17 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:611
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:703
 #, no-wrap
 msgid "    abort_again:\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:621
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:713
 #, no-wrap
 msgid ""
 "    hstatus = get_hcb_status(hcb);\n"
-"    switch(hstatus) {\n"
+"    switch (hstatus) {\n"
 "    case HCB_SITTING_IN_QUEUE:\n"
 "        remove_hcb_from_hardware_queue(hcb);\n"
 "        /* FALLTHROUGH */\n"
@@ -1482,22 +1495,22 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:624
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:720
 msgid ""
 "If the CCB is being transferred right now we would like to signal to the "
 "SCSI controller in some hardware-dependent way that we want to abort the "
-"current transfer. The SCSI controller would set the SCSI ATTENTION signal "
-"and when the target responds to it send an ABORT message. We also reset the "
-"timeout to make sure that the target is not sleeping forever. If the command "
-"would not get aborted in some reasonable time like 10 seconds the timeout "
-"routine would go ahead and reset the whole SCSI bus. Since the command will "
-"be aborted in some reasonable time we can just return the abort request now "
-"as successfully completed, and mark the aborted CCB as aborted (but not mark "
-"it as done yet)."
+"current transfer.  The SCSI controller would set the SCSI ATTENTION signal "
+"and when the target responds to it send an ABORT message.  We also reset the "
+"timeout to make sure that the target is not sleeping forever.  If the "
+"command would not get aborted in some reasonable time like 10 seconds the "
+"timeout routine would go ahead and reset the whole SCSI bus.  Since the "
+"command will be aborted in some reasonable time we can just return the abort "
+"request now as successfully completed, and mark the aborted CCB as aborted "
+"(but not mark it as done yet)."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:640
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:736
 #, no-wrap
 msgid ""
 "    case HCB_BEING_TRANSFERRED:\n"
@@ -1508,7 +1521,7 @@ msgid ""
 "        /* ask the controller to abort that HCB, then generate\n"
 "         * an interrupt and stop\n"
 "         */\n"
-"        if(signal_hardware_to_abort_hcb_and_stop(hcb) < 0) {\n"
+"        if (signal_hardware_to_abort_hcb_and_stop(hcb) < 0) {\n"
 "            /* oops, we missed the race with hardware, this transaction\n"
 "             * got off the bus before we aborted it, try again */\n"
 "            goto abort_again;\n"
@@ -1516,21 +1529,21 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:642
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:738
 #, no-wrap
 msgid "        break;\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:645
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:742
 msgid ""
 "If the CCB is in the list of disconnected then set it up as an abort request "
-"and re-queue it at the front of hardware queue. Reset the timeout and report "
-"the abort request to be completed."
+"and re-queue it at the front of hardware queue.  Reset the timeout and "
+"report the abort request to be completed."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:659
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:756
 #, no-wrap
 msgid ""
 "    case HCB_DISCONNECTED:\n"
@@ -1547,26 +1560,26 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:662
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:761
 msgid ""
-"That is all for the ABORT request, although there is one more issue. As the "
+"That is all for the ABORT request, although there is one more issue.  As the "
 "ABORT message cleans all the ongoing transactions on a LUN we have to mark "
-"all the other active transactions on this LUN as aborted. That should be "
+"all the other active transactions on this LUN as aborted.  That should be "
 "done in the interrupt routine, after the transaction gets aborted."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:664
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:765
 msgid ""
 "Implementing the CCB abort as a function may be quite a good idea, this "
-"function can be re-used if an I/O transaction times out. The only difference "
-"would be that the timed out transaction would return the status "
-"CAM_CMD_TIMEOUT for the timed out request. Then the case XPT_ABORT would be "
+"function can be re-used if an I/O transaction times out.  The only "
+"difference would be that the timed out transaction would return the status "
+"CAM_CMD_TIMEOUT for the timed out request.  Then the case XPT_ABORT would be "
 "small, like that:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:670
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:771
 #, no-wrap
 msgid ""
 "    case XPT_ABORT:\n"
@@ -1575,15 +1588,15 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:683
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:784
 #, no-wrap
 msgid ""
-"        if(abort_ccb->ccb_h.func_code != XPT_SCSI_IO) {\n"
+"        if (abort_ccb->ccb_h.func_code != XPT_SCSI_IO) {\n"
 "            ccb->ccb_h.status = CAM_UA_ABORT;\n"
 "            xpt_done(ccb);\n"
 "            return;\n"
 "        }\n"
-"        if(xxx_abort_ccb(abort_ccb, CAM_REQ_ABORTED) < 0)\n"
+"        if (xxx_abort_ccb(abort_ccb, CAM_REQ_ABORTED) < 0)\n"
 "            /* no such CCB in our queue */\n"
 "            ccb->ccb_h.status = CAM_PATH_INVALID;\n"
 "        else\n"
@@ -1592,78 +1605,78 @@ msgid ""
 "        return;\n"
 msgstr ""
 
-#. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:686
-msgid ""
-"_XPT_SET_TRAN_SETTINGS_ - explicitly set values of SCSI transfer settings"
+#. type: Title ===
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:786
+#, no-wrap
+msgid "_XPT_SET_TRAN_SETTINGS_ - explicitly set values of SCSI transfer settings"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:688
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:789
 msgid ""
 "The arguments are transferred in the instance \"struct ccb_trans_setting cts"
 "\" of the union ccb:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:690
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:791
 msgid "_valid_ - a bitmask showing which settings should be updated:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:691
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:792
 msgid "_CCB_TRANS_SYNC_RATE_VALID_ - synchronous transfer rate"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:692
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:793
 msgid "_CCB_TRANS_SYNC_OFFSET_VALID_ - synchronous offset"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:693
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:794
 msgid "_CCB_TRANS_BUS_WIDTH_VALID_ - bus width"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:694
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:795
 msgid "_CCB_TRANS_DISC_VALID_ - set enable/disable disconnection"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:695
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:796
 msgid "_CCB_TRANS_TQ_VALID_ - set enable/disable tagged queuing"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:696
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:798
 msgid ""
 "_flags_ - consists of two parts, binary arguments and identification of sub-"
-"operations. The binary arguments are:"
+"operations.  The binary arguments are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:698
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:799
 msgid "_CCB_TRANS_DISC_ENB_ - enable disconnection"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:699
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:800
 msgid "_CCB_TRANS_TAG_ENB_ - enable tagged queuing"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:701
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:801
 msgid "the sub-operations are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:703
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:802
 msgid "_CCB_TRANS_CURRENT_SETTINGS_ - change the current negotiations"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:704
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:803
 msgid ""
 "_CCB_TRANS_USER_SETTINGS_ - remember the desired user values sync_period, "
 "sync_offset - self-explanatory, if sync_offset==0 then the asynchronous mode "
@@ -1671,66 +1684,66 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:706
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:808
 msgid ""
 "Two sets of negotiated parameters are supported, the user settings and the "
-"current settings. The user settings are not really used much in the SIM "
+"current settings.  The user settings are not really used much in the SIM "
 "drivers, this is mostly just a piece of memory where the upper levels can "
-"store (and later recall) its ideas about the parameters. Setting the user "
-"parameters does not cause re-negotiation of the transfer rates. But when the "
-"SCSI controller does a negotiation it must never set the values higher than "
-"the user parameters, so it is essentially the top boundary."
+"store (and later recall) its ideas about the parameters.  Setting the user "
+"parameters does not cause re-negotiation of the transfer rates.  But when "
+"the SCSI controller does a negotiation it must never set the values higher "
+"than the user parameters, so it is essentially the top boundary."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:708
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:813
 msgid ""
-"The current settings are, as the name says, current. Changing them means "
-"that the parameters must be re-negotiated on the next transfer. Again, these "
-"\"new current settings\" are not supposed to be forced on the device, just "
-"they are used as the initial step of negotiations. Also they must be limited "
-"by actual capabilities of the SCSI controller: for example, if the SCSI "
-"controller has 8-bit bus and the request asks to set 16-bit wide transfers "
-"this parameter must be silently truncated to 8-bit transfers before sending "
-"it to the device."
+"The current settings are, as the name says, current.  Changing them means "
+"that the parameters must be re-negotiated on the next transfer.  Again, "
+"these \"new current settings\" are not supposed to be forced on the device, "
+"just they are used as the initial step of negotiations.  Also they must be "
+"limited by actual capabilities of the SCSI controller: for example, if the "
+"SCSI controller has 8-bit bus and the request asks to set 16-bit wide "
+"transfers this parameter must be silently truncated to 8-bit transfers "
+"before sending it to the device."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:710
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:815
 msgid ""
 "One caveat is that the bus width and synchronous parameters are per target "
 "while the disconnection and tag enabling parameters are per lun."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:712
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:817
 msgid ""
 "The recommended implementation is to keep 3 sets of negotiated (bus width "
 "and synchronous transfer) parameters:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:714
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:819
 msgid "_user_ - the user set, as above"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:715
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:820
 msgid "_current_ - those actually in effect"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:716
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:821
 msgid "_goal_ - those requested by setting of the \"current\" parameters"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:718
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:823
 msgid "The code looks like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:724
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:829
 #, no-wrap
 msgid ""
 "    struct ccb_trans_settings *cts;\n"
@@ -1739,55 +1752,55 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:736
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:841
 #, no-wrap
 msgid ""
 "    cts = &ccb->cts;\n"
 "    targ = ccb_h->target_id;\n"
 "    lun = ccb_h->target_lun;\n"
 "    flags = cts->flags;\n"
-"    if(flags & CCB_TRANS_USER_SETTINGS) {\n"
-"        if(flags & CCB_TRANS_SYNC_RATE_VALID)\n"
+"    if (flags & CCB_TRANS_USER_SETTINGS) {\n"
+"        if (flags & CCB_TRANS_SYNC_RATE_VALID)\n"
 "            softc->user_sync_period[targ] = cts->sync_period;\n"
-"        if(flags & CCB_TRANS_SYNC_OFFSET_VALID)\n"
+"        if (flags & CCB_TRANS_SYNC_OFFSET_VALID)\n"
 "            softc->user_sync_offset[targ] = cts->sync_offset;\n"
-"        if(flags & CCB_TRANS_BUS_WIDTH_VALID)\n"
+"        if (flags & CCB_TRANS_BUS_WIDTH_VALID)\n"
 "            softc->user_bus_width[targ] = cts->bus_width;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:755
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:860
 #, no-wrap
 msgid ""
-"        if(flags & CCB_TRANS_DISC_VALID) {\n"
+"        if (flags & CCB_TRANS_DISC_VALID) {\n"
 "            softc->user_tflags[targ][lun] &= ~CCB_TRANS_DISC_ENB;\n"
 "            softc->user_tflags[targ][lun] |= flags & CCB_TRANS_DISC_ENB;\n"
 "        }\n"
-"        if(flags & CCB_TRANS_TQ_VALID) {\n"
+"        if (flags & CCB_TRANS_TQ_VALID) {\n"
 "            softc->user_tflags[targ][lun] &= ~CCB_TRANS_TQ_ENB;\n"
 "            softc->user_tflags[targ][lun] |= flags & CCB_TRANS_TQ_ENB;\n"
 "        }\n"
 "    }\n"
-"    if(flags & CCB_TRANS_CURRENT_SETTINGS) {\n"
-"        if(flags & CCB_TRANS_SYNC_RATE_VALID)\n"
+"    if (flags & CCB_TRANS_CURRENT_SETTINGS) {\n"
+"        if (flags & CCB_TRANS_SYNC_RATE_VALID)\n"
 "            softc->goal_sync_period[targ] =\n"
 "                max(cts->sync_period, OUR_MIN_SUPPORTED_PERIOD);\n"
-"        if(flags & CCB_TRANS_SYNC_OFFSET_VALID)\n"
+"        if (flags & CCB_TRANS_SYNC_OFFSET_VALID)\n"
 "            softc->goal_sync_offset[targ] =\n"
 "                min(cts->sync_offset, OUR_MAX_SUPPORTED_OFFSET);\n"
-"        if(flags & CCB_TRANS_BUS_WIDTH_VALID)\n"
+"        if (flags & CCB_TRANS_BUS_WIDTH_VALID)\n"
 "            softc->goal_bus_width[targ] = min(cts->bus_width, OUR_BUS_WIDTH);\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:768
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:873
 #, no-wrap
 msgid ""
-"        if(flags & CCB_TRANS_DISC_VALID) {\n"
+"        if (flags & CCB_TRANS_DISC_VALID) {\n"
 "            softc->current_tflags[targ][lun] &= ~CCB_TRANS_DISC_ENB;\n"
 "            softc->current_tflags[targ][lun] |= flags & CCB_TRANS_DISC_ENB;\n"
 "        }\n"
-"        if(flags & CCB_TRANS_TQ_VALID) {\n"
+"        if (flags & CCB_TRANS_TQ_VALID) {\n"
 "            softc->current_tflags[targ][lun] &= ~CCB_TRANS_TQ_ENB;\n"
 "            softc->current_tflags[targ][lun] |= flags & CCB_TRANS_TQ_ENB;\n"
 "        }\n"
@@ -1798,15 +1811,15 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:771
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:877
 msgid ""
 "Then when the next I/O request will be processed it will check if it has to "
-"re-negotiate, for example by calling the function target_negotiated(hcb). It "
-"can be implemented like this:"
+"re-negotiate, for example by calling the function target_negotiated(hcb).  "
+"It can be implemented like this:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:779
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:885
 #, no-wrap
 msgid ""
 "    int\n"
@@ -1817,12 +1830,12 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:787
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:893
 #, no-wrap
 msgid ""
-"        if( softc->current_sync_period[targ] != softc->goal_sync_period[targ]\n"
+"        if (softc->current_sync_period[targ] != softc->goal_sync_period[targ]\n"
 "        || softc->current_sync_offset[targ] != softc->goal_sync_offset[targ]\n"
-"        || softc->current_bus_width[targ] != softc->goal_bus_width[targ] )\n"
+"        || softc->current_bus_width[targ] != softc->goal_bus_width[targ])\n"
 "            return 0; /* FALSE */\n"
 "        else\n"
 "            return 1; /* TRUE */\n"
@@ -1830,80 +1843,82 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:790
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:897
 msgid ""
 "After the values are re-negotiated the resulting values must be assigned to "
 "both current and goal parameters, so for future I/O transactions the current "
 "and goal parameters would be the same and `target_negotiated()` would return "
-"TRUE. When the card is initialized (in `xxx_attach()`) the current "
+"TRUE.  When the card is initialized (in `xxx_attach()`) the current "
 "negotiation values must be initialized to narrow asynchronous mode, the goal "
 "and current values must be initialized to the maximal values supported by "
 "controller."
 msgstr ""
 
-#. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:792
+#. type: Title ===
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:898
+#, no-wrap
 msgid "_XPT_GET_TRAN_SETTINGS_ - get values of SCSI transfer settings"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:794
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:903
 msgid ""
-"This operations is the reverse of XPT_SET_TRAN_SETTINGS. Fill up the CCB "
+"This operations is the reverse of XPT_SET_TRAN_SETTINGS.  Fill up the CCB "
 "instance \"struct ccb_trans_setting cts\" with data as requested by the "
 "flags CCB_TRANS_CURRENT_SETTINGS or CCB_TRANS_USER_SETTINGS (if both are set "
-"then the existing drivers return the current settings). Set all the bits in "
+"then the existing drivers return the current settings).  Set all the bits in "
 "the valid field."
 msgstr ""
 
-#. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:796
+#. type: Title ===
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:904
+#, no-wrap
 msgid "_XPT_CALC_GEOMETRY_ - calculate logical (BIOS) geometry of the disk"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:798
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:907
 msgid ""
 "The arguments are transferred in the instance \"struct ccb_calc_geometry ccg"
 "\" of the union ccb:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:800
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:909
 msgid "_block_size_ - input, block (A.K.A sector) size in bytes"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:801
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:910
 msgid "_volume_size_ - input, volume size in bytes"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:802
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:911
 msgid "_cylinders_ - output, logical cylinders"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:803
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:912
 msgid "_heads_ - output, logical heads"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:804
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:913
 msgid "_secs_per_track_ - output, logical sectors per track"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:806
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:916
 msgid ""
 "If the returned geometry differs much enough from what the SCSI controller "
 "BIOS thinks and a disk on this SCSI controller is used as bootable the "
-"system may not be able to boot. The typical calculation example taken from "
+"system may not be able to boot.  The typical calculation example taken from "
 "the aic7xxx driver is:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:813
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:923
 #, no-wrap
 msgid ""
 "    struct    ccb_calc_geometry *ccg;\n"
@@ -1913,7 +1928,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:818
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:928
 #, no-wrap
 msgid ""
 "    ccg = &ccb->ccg;\n"
@@ -1923,7 +1938,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:831
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:941
 #, no-wrap
 msgid ""
 "    if (size_mb > 1024 && extended) {\n"
@@ -1941,16 +1956,16 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:834
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:946
 msgid ""
 "This gives the general idea, the exact calculation depends on the quirks of "
-"the particular BIOS. If BIOS provides no way set the \"extended translation"
-"\" flag in EEPROM this flag should normally be assumed equal to 1. Other "
+"the particular BIOS.  If BIOS provides no way set the \"extended translation"
+"\" flag in EEPROM this flag should normally be assumed equal to 1.  Other "
 "popular geometries are:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:839
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:951
 #, no-wrap
 msgid ""
 "    128 heads, 63 sectors - Symbios controllers\n"
@@ -1958,7 +1973,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:842
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:954
 msgid ""
 "Some system BIOSes and SCSI BIOSes fight with each other with variable "
 "success, for example a combination of Symbios 875/895 SCSI and Phoenix BIOS "
@@ -1966,228 +1981,219 @@ msgid ""
 "soft reboot."
 msgstr ""
 
-#. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:843
-msgid ""
-"_XPT_PATH_INQ_ - path inquiry, in other words get the SIM driver and SCSI "
-"controller (also known as HBA - Host Bus Adapter) properties"
+#. type: Title ===
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:955
+#, no-wrap
+msgid "_XPT_PATH_INQ_ - path inquiry, in other words get the SIM driver and SCSI controller (also known as HBA - Host Bus Adapter) properties"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:845
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:958
 msgid ""
 "The properties are returned in the instance \"struct ccb_pathinq cpi\" of "
 "the union ccb:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:847
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:960
 msgid "version_num - the SIM driver version number, now all drivers use 1"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:848
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:961
 msgid "hba_inquiry - bitmask of features supported by the controller:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:849
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:962
 msgid "PI_MDP_ABLE - supports MDP message (something from SCSI3?)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:850
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:963
 msgid "PI_WIDE_32 - supports 32 bit wide SCSI"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:851
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:964
 msgid "PI_WIDE_16 - supports 16 bit wide SCSI"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:852
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:965
 msgid "PI_SDTR_ABLE - can negotiate synchronous transfer rate"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:853
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:966
 msgid "PI_LINKED_CDB - supports linked commands"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:854
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:967
 msgid "PI_TAG_ABLE - supports tagged commands"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:855
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:968
 msgid ""
 "PI_SOFT_RST - supports soft reset alternative (hard reset and soft reset are "
 "mutually exclusive within a SCSI bus)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:856
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:969
 msgid "target_sprt - flags for target mode support, 0 if unsupported"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:857
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:970
 msgid "hba_misc - miscellaneous controller features:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:858
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:971
 msgid "PIM_SCANHILO - bus scans from high ID to low ID"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:859
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:972
 msgid "PIM_NOREMOVE - removable devices not included in scan"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:860
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:973
 msgid "PIM_NOINITIATOR - initiator role not supported"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:861
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:974
 msgid "PIM_NOBUSRESET - user has disabled initial BUS RESET"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:862
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:975
 msgid ""
 "hba_eng_cnt - mysterious HBA engine count, something related to compression, "
 "now is always set to 0"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:863
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:976
 msgid "vuhba_flags - vendor-unique flags, unused now"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:864
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:977
 msgid ""
 "max_target - maximal supported target ID (7 for 8-bit bus, 15 for 16-bit "
 "bus, 127 for Fibre Channel)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:865
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:978
 msgid ""
 "max_lun - maximal supported LUN ID (7 for older SCSI controllers, 63 for "
 "newer ones)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:866
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:979
 msgid "async_flags - bitmask of installed Async handler, unused now"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:867
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:980
 msgid "hpath_id - highest Path ID in the subsystem, unused now"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:868
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:981
 msgid "unit_number - the controller unit number, cam_sim_unit(sim)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:869
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:982
 msgid "bus_id - the bus number, cam_sim_bus(sim)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:870
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:983
 msgid "initiator_id - the SCSI ID of the controller itself"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:871
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:984
 msgid ""
 "base_transfer_speed - nominal transfer speed in KB/s for asynchronous narrow "
 "transfers, equals to 3300 for SCSI"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:872
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:985
 msgid ""
 "sim_vid - SIM driver's vendor id, a zero-terminated string of maximal length "
 "SIM_IDLEN including the terminating zero"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:873
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:986
 msgid ""
 "hba_vid - SCSI controller's vendor id, a zero-terminated string of maximal "
 "length HBA_IDLEN including the terminating zero"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:874
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:987
 msgid ""
 "dev_name - device driver name, a zero-terminated string of maximal length "
 "DEV_IDLEN including the terminating zero, equal to cam_sim_name(sim)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:876
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:989
 msgid ""
 "The recommended way of setting the string fields is using strncpy, like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:880
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:993
 #, no-wrap
 msgid "    strncpy(cpi->dev_name, cam_sim_name(sim), DEV_IDLEN);\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:883
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:996
 msgid ""
 "After setting the values set the status to CAM_REQ_CMP and mark the CCB as "
 "done."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:885
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:998
 #, no-wrap
-msgid "Polling"
-msgstr ""
-
-#. type: delimited block - 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:892
-#, no-wrap
-msgid ""
-"static void\n"
-"\t  xxx_poll\n"
-"\t ();\n"
+msgid "Polling xxx_poll"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:895
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1012
 msgid ""
 "The poll function is used to simulate the interrupts when the interrupt "
 "subsystem is not functioning (for example, when the system has crashed and "
-"is creating the system dump). The CAM subsystem sets the proper interrupt "
-"level before calling the poll routine. So all it needs to do is to call the "
+"is creating the system dump).  The CAM subsystem sets the proper interrupt "
+"level before calling the poll routine.  So all it needs to do is to call the "
 "interrupt routine (or the other way around, the poll routine may be doing "
-"the real action and the interrupt routine would just call the poll routine). "
-"Why bother about a separate function then? This has to do with different "
-"calling conventions. The `xxx_poll` routine gets the struct cam_sim pointer "
-"as its argument while the PCI interrupt routine by common convention gets "
-"pointer to the struct `xxx_softc` and the ISA interrupt routine gets just "
-"the device unit number. So the poll routine would normally look as:"
+"the real action and the interrupt routine would just call the poll "
+"routine).  Why bother about a separate function then? This has to do with "
+"different calling conventions.  The `xxx_poll` routine gets the struct "
+"cam_sim pointer as its argument while the PCI interrupt routine by common "
+"convention gets pointer to the struct `xxx_softc` and the ISA interrupt "
+"routine gets just the device unit number.  So the poll routine would "
+"normally look as:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:903
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1020
 #, no-wrap
 msgid ""
 "static void\n"
@@ -2198,12 +2204,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:906
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1023
 msgid "or"
 msgstr "或"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:914
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1031
 #, no-wrap
 msgid ""
 "static void\n"
@@ -2214,20 +2220,20 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:917
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1034
 #, no-wrap
 msgid "Asynchronous Events"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:920
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1037
 msgid ""
 "If an asynchronous event callback has been set up then the callback function "
 "should be defined."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:925
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1042
 #, no-wrap
 msgid ""
 "static void\n"
@@ -2235,32 +2241,32 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:928
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1045
 msgid "callback_arg - the value supplied when registering the callback"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:929
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1046
 msgid "code - identifies the type of event"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:930
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1047
 msgid "path - identifies the devices to which the event applies"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:931
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1048
 msgid "arg - event-specific argument"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:933
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1050
 msgid "Implementation for a single type of event, AC_LOST_DEVICE, looks like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:940
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1057
 #, no-wrap
 msgid ""
 "    struct xxx_softc *softc;\n"
@@ -2270,7 +2276,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:959
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1076
 #, no-wrap
 msgid ""
 "    sim = (struct cam_sim *)callback_arg;\n"
@@ -2278,7 +2284,7 @@ msgid ""
 "    switch (code) {\n"
 "    case AC_LOST_DEVICE:\n"
 "        targ = xpt_path_target_id(path);\n"
-"        if(targ <= OUR_MAX_SUPPORTED_TARGET) {\n"
+"        if (targ <= OUR_MAX_SUPPORTED_TARGET) {\n"
 "            clean_negotiations(softc, targ);\n"
 "            /* send indication to CAM */\n"
 "            neg.bus_width = 8;\n"
@@ -2294,13 +2300,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:962
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1079
 #, no-wrap
 msgid "Interrupts"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:965
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1082
 msgid ""
 "The exact type of the interrupt routine depends on the type of the "
 "peripheral bus (PCI, ISA and so on) to which the SCSI controller is "
@@ -2308,22 +2314,22 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:967
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1089
 msgid ""
-"The interrupt routines of the SIM drivers run at the interrupt level splcam. "
-"So `splcam()` should be used in the driver to synchronize activity between "
-"the interrupt routine and the rest of the driver (for a multiprocessor-aware "
-"driver things get yet more interesting but we ignore this case here). The "
-"pseudo-code in this document happily ignores the problems of "
-"synchronization. The real code must not ignore them. A simple-minded "
-"approach is to set `splcam()` on the entry to the other routines and reset "
-"it on return thus protecting them by one big critical section. To make sure "
-"that the interrupt level will be always restored a wrapper function can be "
-"defined, like:"
+"The interrupt routines of the SIM drivers run at the interrupt level "
+"splcam.  So `splcam()` should be used in the driver to synchronize activity "
+"between the interrupt routine and the rest of the driver (for a "
+"multiprocessor-aware driver things get yet more interesting but we ignore "
+"this case here).  The pseudo-code in this document happily ignores the "
+"problems of synchronization.  The real code must not ignore them.  A simple-"
+"minded approach is to set `splcam()` on the entry to the other routines and "
+"reset it on return thus protecting them by one big critical section.  To "
+"make sure that the interrupt level will be always restored a wrapper "
+"function can be defined, like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:978
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1100
 #, no-wrap
 msgid ""
 "    static void\n"
@@ -2337,7 +2343,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:984
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1106
 #, no-wrap
 msgid ""
 "    static void\n"
@@ -2348,38 +2354,38 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:987
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1110
 msgid ""
 "This approach is simple and robust but the problem with it is that "
 "interrupts may get blocked for a relatively long time and this would "
-"negatively affect the system's performance. On the other hand the functions "
+"negatively affect the system's performance.  On the other hand the functions "
 "of the `spl()` family have rather high overhead, so vast amount of tiny "
 "critical sections may not be good either."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:989
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1113
 msgid ""
 "The conditions handled by the interrupt routine and the details depend very "
-"much on the hardware. We consider the set of \"typical\" conditions."
+"much on the hardware.  We consider the set of \"typical\" conditions."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:991
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1118
 msgid ""
 "First, we check if a SCSI reset was encountered on the bus (probably caused "
-"by another SCSI controller on the same SCSI bus). If so we drop all the "
+"by another SCSI controller on the same SCSI bus).  If so we drop all the "
 "enqueued and disconnected requests, report the events and re-initialize our "
-"SCSI controller. It is important that during this initialization the "
+"SCSI controller.  It is important that during this initialization the "
 "controller will not issue another reset or else two controllers on the same "
-"SCSI bus could ping-pong resets forever. The case of fatal controller error/"
+"SCSI bus could ping-pong resets forever.  The case of fatal controller error/"
 "hang could be handled in the same place, but it will probably need also "
 "sending RESET signal to the SCSI bus to reset the status of the connections "
 "with the SCSI devices."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:997
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1124
 #, no-wrap
 msgid ""
 "    int fatal=0;\n"
@@ -2388,17 +2394,17 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1002
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1129
 #, no-wrap
 msgid ""
-"    if( detected_scsi_reset(softc)\n"
-"    || (fatal = detected_fatal_controller_error(softc)) ) {\n"
+"    if (detected_scsi_reset(softc)\n"
+"    || (fatal = detected_fatal_controller_error(softc))) {\n"
 "        int targ, lun;\n"
 "        struct xxx_hcb *h, *hh;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1008
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1135
 #, no-wrap
 msgid ""
 "        /* drop all enqueued CCBs */\n"
@@ -2409,7 +2415,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1014
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1141
 #, no-wrap
 msgid ""
 "        /* the clean values of negotiations to report */\n"
@@ -2420,20 +2426,20 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1018
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1145
 #, no-wrap
 msgid ""
 "        /* drop all disconnected CCBs and clean negotiations  */\n"
-"        for(targ=0; targ <= OUR_MAX_SUPPORTED_TARGET; targ++) {\n"
+"        for (targ=0; targ <= OUR_MAX_SUPPORTED_TARGET; targ++) {\n"
 "            clean_negotiations(softc, targ);\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1026
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1153
 #, no-wrap
 msgid ""
 "            /* report the event if possible */\n"
-"            if(xpt_create_path(&path, /*periph*/NULL,\n"
+"            if (xpt_create_path(&path, /*periph*/NULL,\n"
 "                    cam_sim_path(sim), targ,\n"
 "                    CAM_LUN_WILDCARD) == CAM_REQ_CMP) {\n"
 "                xpt_async(AC_TRANSFER_NEG, path, &neg);\n"
@@ -2442,13 +2448,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1036
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1163
 #, no-wrap
 msgid ""
-"            for(lun=0; lun <= OUR_MAX_SUPPORTED_LUN; lun++)\n"
-"                for(h = softc->first_discon_hcb[targ][lun]; h != NULL; h = hh) {\n"
+"            for (lun=0; lun <= OUR_MAX_SUPPORTED_LUN; lun++)\n"
+"                for (h = softc->first_discon_hcb[targ][lun]; h != NULL; h = hh) {\n"
 "                    hh=h->next;\n"
-"                    if(fatal)\n"
+"                    if (fatal)\n"
 "                        free_hcb_and_ccb_done(h, h->ccb, CAM_UNREC_HBA_ERROR);\n"
 "                    else\n"
 "                        free_hcb_and_ccb_done(h, h->ccb, CAM_SCSI_BUS_RESET);\n"
@@ -2457,7 +2463,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1039
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1166
 #, no-wrap
 msgid ""
 "        /* report the event */\n"
@@ -2465,7 +2471,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1053
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1180
 #, no-wrap
 msgid ""
 "        /* re-initialization may take a lot of time, in such case\n"
@@ -2473,7 +2479,7 @@ msgid ""
 "         * checked on timeout - but for simplicity we assume here that\n"
 "         * it is really fast\n"
 "         */\n"
-"        if(!fatal) {\n"
+"        if (!fatal) {\n"
 "            reinitialize_controller_without_scsi_reset(softc);\n"
 "        } else {\n"
 "            reinitialize_controller_with_scsi_reset(softc);\n"
@@ -2484,16 +2490,16 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1056
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1185
 msgid ""
 "If interrupt is not caused by a controller-wide condition then probably "
-"something has happened to the current hardware control block. Depending on "
+"something has happened to the current hardware control block.  Depending on "
 "the hardware there may be other non-HCB-related events, we just do not "
-"consider them here. Then we analyze what happened to this HCB:"
+"consider them here.  Then we analyze what happened to this HCB:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1064
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1193
 #, no-wrap
 msgid ""
 "    struct xxx_hcb *hcb, *h, *hh;\n"
@@ -2504,11 +2510,11 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1073
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1202
 #, no-wrap
 msgid ""
 "    hcb = get_current_hcb(softc);\n"
-"    if(hcb == NULL) {\n"
+"    if (hcb == NULL) {\n"
 "        /* either stray interrupt or something went very wrong\n"
 "         * or this is something hardware-dependent\n"
 "         */\n"
@@ -2518,7 +2524,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1076
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1205
 #, no-wrap
 msgid ""
 "    targ = hcb->target;\n"
@@ -2526,33 +2532,33 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1079
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1208
 msgid ""
 "First we check if the HCB has completed and if so we check the returned SCSI "
 "status."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1084
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1213
 #, no-wrap
 msgid ""
-"    if(hcb_status == COMPLETED) {\n"
+"    if (hcb_status == COMPLETED) {\n"
 "        scsi_status = get_completion_status(hcb);\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1087
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1216
 msgid ""
 "Then look if this status is related to the REQUEST SENSE command and if so "
 "handle it in a simple way."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1101
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1230
 #, no-wrap
 msgid ""
-"        if(hcb->flags & DOING_AUTOSENSE) {\n"
-"            if(scsi_status == GOOD) { /* autosense was successful */\n"
+"        if (hcb->flags & DOING_AUTOSENSE) {\n"
+"            if (scsi_status == GOOD) { /* autosense was successful */\n"
 "                hcb->ccb->ccb_h.status |= CAM_AUTOSNS_VALID;\n"
 "                free_hcb_and_ccb_done(hcb, hcb->ccb, CAM_SCSI_STATUS_ERROR);\n"
 "            } else {\n"
@@ -2565,15 +2571,15 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1104
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1234
 msgid ""
-"Else the command itself has completed, pay more attention to details. If "
+"Else the command itself has completed, pay more attention to details.  If "
 "auto-sense is not disabled for this CCB and the command has failed with "
 "sense data then run REQUEST SENSE command to receive that data."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1109
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1239
 #, no-wrap
 msgid ""
 "        hcb->ccb->csio.scsi_status = scsi_status;\n"
@@ -2581,19 +2587,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1126
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1256
 #, no-wrap
 msgid ""
-"        if( (hcb->ccb->ccb_h.flags & CAM_DIS_AUTOSENSE)==0\n"
-"        && ( scsi_status == CHECK_CONDITION\n"
-"                || scsi_status == COMMAND_TERMINATED) ) {\n"
+"        if ((hcb->ccb->ccb_h.flags & CAM_DIS_AUTOSENSE)==0\n"
+"        && (scsi_status == CHECK_CONDITION\n"
+"                || scsi_status == COMMAND_TERMINATED)) {\n"
 "            /* start auto-SENSE */\n"
 "            hcb->flags |= DOING_AUTOSENSE;\n"
 "            setup_autosense_command_in_hcb(hcb);\n"
 "            restart_current_hcb(softc);\n"
 "            return;\n"
 "        }\n"
-"        if(scsi_status == GOOD)\n"
+"        if (scsi_status == GOOD)\n"
 "            free_hcb_and_ccb_done(hcb, hcb->ccb, CAM_REQ_CMP);\n"
 "        else\n"
 "            free_hcb_and_ccb_done(hcb, hcb->ccb, CAM_SCSI_STATUS_ERROR);\n"
@@ -2603,7 +2609,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1129
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1259
 msgid ""
 "One typical thing would be negotiation events: negotiation messages received "
 "from a SCSI target (in answer to our negotiation attempt or by target's "
@@ -2612,10 +2618,10 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1145
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1275
 #, no-wrap
 msgid ""
-"    switch(hcb_status) {\n"
+"    switch (hcb_status) {\n"
 "    case TARGET_REJECTED_WIDE_NEG:\n"
 "        /* revert to 8-bit bus */\n"
 "        softc->current_bus_width[targ] = softc->goal_bus_width[targ] = 8;\n"
@@ -2631,18 +2637,18 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1151
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1281
 #, no-wrap
 msgid ""
 "            wd = get_target_bus_width_request(softc);\n"
-"            if(wd <= softc->goal_bus_width[targ]) {\n"
+"            if (wd <= softc->goal_bus_width[targ]) {\n"
 "                /* answer is acceptable */\n"
 "                softc->current_bus_width[targ] =\n"
 "                softc->goal_bus_width[targ] = neg.bus_width = wd;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1164
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1294
 #, no-wrap
 msgid ""
 "                /* report the event */\n"
@@ -2660,7 +2666,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1168
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1298
 #, no-wrap
 msgid ""
 "            wd = get_target_bus_width_request(softc);\n"
@@ -2669,17 +2675,17 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1173
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1303
 #, no-wrap
 msgid ""
-"            if(wd != softc->current_bus_width[targ]) {\n"
+"            if (wd != softc->current_bus_width[targ]) {\n"
 "                /* the bus width has changed */\n"
 "                softc->current_bus_width[targ] =\n"
 "                softc->goal_bus_width[targ] = neg.bus_width = wd;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1183
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1313
 #, no-wrap
 msgid ""
 "                /* report the event */\n"
@@ -2694,56 +2700,56 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1186
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1317
 msgid ""
 "Then we handle any errors that could have happened during auto-sense in the "
-"same simple-minded way as before. Otherwise we look closer at the details "
+"same simple-minded way as before.  Otherwise we look closer at the details "
 "again."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1191
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1322
 #, no-wrap
 msgid ""
-"    if(hcb->flags & DOING_AUTOSENSE)\n"
+"    if (hcb->flags & DOING_AUTOSENSE)\n"
 "        goto autosense_failed;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1193
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1324
 #, no-wrap
-msgid "    switch(hcb_status) {\n"
+msgid "    switch (hcb_status) {\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1196
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1328
 msgid ""
-"The next event we consider is unexpected disconnect. Which is considered "
+"The next event we consider is unexpected disconnect.  Which is considered "
 "normal after an ABORT or BUS DEVICE RESET message and abnormal in other "
 "cases."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1212
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1344
 #, no-wrap
 msgid ""
 "    case UNEXPECTED_DISCONNECT:\n"
-"        if(requested_abort(hcb)) {\n"
+"        if (requested_abort(hcb)) {\n"
 "            /* abort affects all commands on that target+LUN, so\n"
 "             * mark all disconnected HCBs on that target+LUN as aborted too\n"
 "             */\n"
-"            for(h = softc->first_discon_hcb[hcb->target][hcb->lun];\n"
+"            for (h = softc->first_discon_hcb[hcb->target][hcb->lun];\n"
 "                    h != NULL; h = hh) {\n"
 "                hh=h->next;\n"
 "                free_hcb_and_ccb_done(h, h->ccb, CAM_REQ_ABORTED);\n"
 "            }\n"
 "            ccb_status = CAM_REQ_ABORTED;\n"
-"        } else if(requested_bus_device_reset(hcb)) {\n"
+"        } else if (requested_bus_device_reset(hcb)) {\n"
 "            int lun;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1216
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1348
 #, no-wrap
 msgid ""
 "            /* reset affects all commands on that target, so\n"
@@ -2752,11 +2758,11 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1223
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1355
 #, no-wrap
 msgid ""
-"            for(lun=0; lun <= OUR_MAX_SUPPORTED_LUN; lun++)\n"
-"                for(h = softc->first_discon_hcb[hcb->target][lun];\n"
+"            for (lun=0; lun <= OUR_MAX_SUPPORTED_LUN; lun++)\n"
+"                for (h = softc->first_discon_hcb[hcb->target][lun];\n"
 "                        h != NULL; h = hh) {\n"
 "                    hh=h->next;\n"
 "                    free_hcb_and_ccb_done(h, h->ccb, CAM_SCSI_BUS_RESET);\n"
@@ -2764,7 +2770,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1226
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1358
 #, no-wrap
 msgid ""
 "            /* send event */\n"
@@ -2772,7 +2778,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1237
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1369
 #, no-wrap
 msgid ""
 "            /* this was the CAM_RESET_DEV request itself, it is completed */\n"
@@ -2788,14 +2794,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1240
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1372
 msgid ""
 "If the target refuses to accept tags we notify CAM about that and return "
 "back all commands for this LUN:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1248
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1380
 #, no-wrap
 msgid ""
 "    case TAGS_REJECTED:\n"
@@ -2806,7 +2812,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1254
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1386
 #, no-wrap
 msgid ""
 "        ccb_status = CAM_MSG_REJECT_REC;\n"
@@ -2817,14 +2823,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1257
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1389
 msgid ""
 "Then we check a number of other conditions, with processing basically "
 "limited to setting the CCB status:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1281
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1413
 #, no-wrap
 msgid ""
 "    case SELECTION_TIMEOUT:\n"
@@ -2851,41 +2857,41 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1284
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1416
 msgid ""
 "Then we check if the error was serious enough to freeze the input queue "
 "until it gets proceeded and do so if it is:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1290
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1422
 #, no-wrap
 msgid ""
-"    if(hcb->ccb->ccb_h.status & CAM_DEV_QFRZN) {\n"
+"    if (hcb->ccb->ccb_h.status & CAM_DEV_QFRZN) {\n"
 "        /* freeze the queue */\n"
 "        xpt_freeze_devq(ccb->ccb_h.path, /*count*/1);\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1292
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1424
 #, no-wrap
 msgid "        /* re-queue all commands for this target/LUN back to CAM */\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1295
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1427
 #, no-wrap
 msgid ""
-"        for(h = softc->first_queued_hcb; h != NULL; h = hh) {\n"
+"        for (h = softc->first_queued_hcb; h != NULL; h = hh) {\n"
 "            hh = h->next;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1304
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1436
 #, no-wrap
 msgid ""
-"            if(targ == h->targ\n"
-"            && (lun_to_freeze == CAM_LUN_WILDCARD || lun_to_freeze == h->lun) )\n"
+"            if (targ == h->targ\n"
+"            && (lun_to_freeze == CAM_LUN_WILDCARD || lun_to_freeze == h->lun))\n"
 "                free_hcb_and_ccb_done(h, h->ccb, CAM_REQUEUE_REQ);\n"
 "        }\n"
 "    }\n"
@@ -2895,43 +2901,43 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1307
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1439
 msgid ""
 "This concludes the generic interrupt handling although specific controllers "
 "may require some additions."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1309
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1441
 #, no-wrap
 msgid "Errors Summary"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1312
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1447
 msgid ""
-"When executing an I/O request many things may go wrong. The reason of error "
-"can be reported in the CCB status with great detail. Examples of use are "
-"spread throughout this document. For completeness here is the summary of "
+"When executing an I/O request many things may go wrong.  The reason of error "
+"can be reported in the CCB status with great detail.  Examples of use are "
+"spread throughout this document.  For completeness here is the summary of "
 "recommended responses for the typical error conditions:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1314
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1450
 msgid ""
 "_CAM_RESRC_UNAVAIL_ - some resource is temporarily unavailable and the SIM "
-"driver cannot generate an event when it will become available. An example of "
-"this resource would be some intra-controller hardware resource for which the "
-"controller does not generate an interrupt when it becomes available."
+"driver cannot generate an event when it will become available.  An example "
+"of this resource would be some intra-controller hardware resource for which "
+"the controller does not generate an interrupt when it becomes available."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1315
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1451
 msgid "_CAM_UNCOR_PARITY_ - unrecovered parity error occurred"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1316
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1452
 msgid ""
 "_CAM_DATA_RUN_ERR_ - data overrun or unexpected data phase (going in other "
 "direction than specified in CAM_DIR_MASK) or odd transfer length for wide "
@@ -2939,114 +2945,114 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1317
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1453
 msgid ""
 "_CAM_SEL_TIMEOUT_ - selection timeout occurred (target does not respond)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1318
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1454
 msgid "_CAM_CMD_TIMEOUT_ - command timeout occurred (the timeout function ran)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1319
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1455
 msgid "_CAM_SCSI_STATUS_ERROR_ - the device returned error"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1320
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1456
 msgid ""
 "_CAM_AUTOSENSE_FAIL_ - the device returned error and the REQUEST SENSE "
 "COMMAND failed"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1321
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1457
 msgid "_CAM_MSG_REJECT_REC_ - MESSAGE REJECT message was received"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1322
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1458
 msgid "_CAM_SCSI_BUS_RESET_ - received SCSI bus reset"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1323
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1459
 msgid ""
 "_CAM_REQ_CMP_ERR_ - \"impossible\" SCSI phase occurred or something else as "
 "weird or just a generic error if further detail is not available"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1324
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1460
 msgid "_CAM_UNEXP_BUSFREE_ - unexpected disconnect occurred"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1325
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1461
 msgid "_CAM_BDR_SENT_ - BUS DEVICE RESET message was sent to the target"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1326
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1462
 msgid "_CAM_UNREC_HBA_ERROR_ - unrecoverable Host Bus Adapter Error"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1327
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1463
 msgid "_CAM_REQ_TOO_BIG_ - the request was too large for this controller"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1328
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1467
 msgid ""
 "_CAM_REQUEUE_REQ_ - this request should be re-queued to preserve transaction "
-"ordering. This typically occurs when the SIM recognizes an error that should "
-"freeze the queue and must place other queued requests for the target at the "
-"sim level back into the XPT queue. Typical cases of such errors are "
-"selection timeouts, command timeouts and other like conditions. In such "
+"ordering.  This typically occurs when the SIM recognizes an error that "
+"should freeze the queue and must place other queued requests for the target "
+"at the sim level back into the XPT queue.  Typical cases of such errors are "
+"selection timeouts, command timeouts and other like conditions.  In such "
 "cases the troublesome command returns the status indicating the error, the "
 "and the other commands which have not be sent to the bus yet get re-queued."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1329
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1468
 msgid ""
 "_CAM_LUN_INVALID_ - the LUN ID in the request is not supported by the SCSI "
 "controller"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1330
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1469
 msgid ""
 "_CAM_TID_INVALID_ - the target ID in the request is not supported by the "
 "SCSI controller"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1332
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1471
 #, no-wrap
 msgid "Timeout Handling"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1335
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1479
 msgid ""
 "When the timeout for an HCB expires that request should be aborted, just "
-"like with an XPT_ABORT request. The only difference is that the returned "
+"like with an XPT_ABORT request.  The only difference is that the returned "
 "status of aborted request should be CAM_CMD_TIMEOUT instead of "
 "CAM_REQ_ABORTED (that is why implementation of the abort better be done as a "
-"function). But there is one more possible problem: what if the abort request "
-"itself will get stuck? In this case the SCSI bus should be reset, just like "
-"with an XPT_RESET_BUS request (and the idea about implementing it as a "
-"function called from both places applies here too). Also we should reset the "
-"whole SCSI bus if a device reset request got stuck. So after all the timeout "
-"function would look like:"
+"function).  But there is one more possible problem: what if the abort "
+"request itself will get stuck? In this case the SCSI bus should be reset, "
+"just like with an XPT_RESET_BUS request (and the idea about implementing it "
+"as a function called from both places applies here too).  Also we should "
+"reset the whole SCSI bus if a device reset request got stuck.  So after all "
+"the timeout function would look like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1344
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1488
 #, no-wrap
 msgid ""
 "static void\n"
@@ -3058,7 +3064,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1347
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1491
 #, no-wrap
 msgid ""
 "    softc = hcb->softc;\n"
@@ -3066,11 +3072,10 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1355
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1498
 #, no-wrap
 msgid ""
-"    if(hcb->flags & HCB_BEING_ABORTED\n"
-"    || ccb_h->func_code == XPT_RESET_DEV) {\n"
+"    if (hcb->flags & HCB_BEING_ABORTED || ccb_h->func_code == XPT_RESET_DEV) {\n"
 "        xxx_reset_bus(softc);\n"
 "    } else {\n"
 "        xxx_abort_ccb(hcb->ccb, CAM_CMD_TIMEOUT);\n"
@@ -3079,12 +3084,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1357
+#: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1503
 msgid ""
 "When we abort a request all the other disconnected requests to the same "
-"target/LUN get aborted too. So there appears a question, should we return "
+"target/LUN get aborted too.  So there appears a question, should we return "
 "them with status CAM_REQ_ABORTED or CAM_CMD_TIMEOUT? The current drivers use "
-"CAM_CMD_TIMEOUT. This seems logical because if one request got timed out "
+"CAM_CMD_TIMEOUT.  This seems logical because if one request got timed out "
 "then probably something really bad is happening to the device, so if they "
 "would not be disturbed they would time out by themselves."
 msgstr ""
