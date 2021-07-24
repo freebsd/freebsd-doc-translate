@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-06-08 07:31-0300\n"
+"POT-Creation-Date: 2021-07-24 11:38-0300\n"
 "PO-Revision-Date: 2021-05-30 10:54+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
@@ -779,7 +779,7 @@ msgstr "A máquina agora deve ser reiniciada com o kernel atualizado:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/cutting-edge/_index.adoc:345
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:991
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1035
 #, no-wrap
 msgid "# shutdown -r now\n"
 msgstr ""
@@ -1506,14 +1506,108 @@ msgid ""
 "to the next release."
 msgstr ""
 
-#. type: Title ==
+#. type: Title ===
 #: documentation/content/en/books/handbook/cutting-edge/_index.adoc:600
+#, no-wrap
+msgid "The N-number"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:604
+msgid ""
+"When tracking down bugs it is important to know which versions of the source "
+"code have been used to create the system exhibiting an issue.  FreeBSD "
+"provides version information compiled into the kernel.  man:uname[1] "
+"retrieves this information, for example:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:608
+#, no-wrap
+msgid ""
+"% uname -a\n"
+"FreeBSD 14.0-CURRENT #112 main-n247514-031260d64c18: Tue Jun 22 20:43:19 MDT 2021     fred@machine:/usr/home/fred/obj/usr/home/fred/git/head/amd64.amd64/sys/FRED\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:610
+msgid "Looking at the 4th field, it is made up of several parts:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:613
+#, no-wrap
+msgid "main-n247514-031260d64c18\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:618
+#, no-wrap
+msgid ""
+"main\t\t<.>\n"
+"n247514\t\t<.>\n"
+"031260d64c18\t<.>\n"
+"\t\t<.>\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:626
+msgid ""
+"<.> Git branch name.  Note: comparisons of n-numbers are only valid on "
+"branches published by the project (`main`, `stable/XX` and `releng/XX`).  "
+"Local branches will have n-numbers that will overlap commits of their parent "
+"branch.  <.> The n-number is a linear count of commits back to the start of "
+"the Git repository starting with the Git hash included in the line.  <.> Git "
+"hash of the checked out tree <.> Sometimes a suffix of `-dirty` is present "
+"when the kernel was built in a tree with uncommitted changes.  It is absent "
+"in this example because the FRED kernel was built from a pristine checkout."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:629
+msgid ""
+"The `git rev-list` command is used to find the n-number corresponding to a "
+"Git hash.  For example:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:633
+#, no-wrap
+msgid ""
+"% git rev-list --first-parent --count 031260d64c18 <.>\n"
+"247514 <.>\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:636
+msgid ""
+"<.> git hash to translate (the hash from the above example is reused)  <.> "
+"The n-number."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:642
+msgid ""
+"Usually this number is not all that important.  However, when bug fixes are "
+"committed, this number makes it easy to quickly determine whether the fix is "
+"present in the currently running system.  Developers will often refer to the "
+"hash of the commit (or provide a URL which has that hash), but not the n-"
+"number since the hash is the easily visible identifier for a change while "
+"the n-number is not.  Security advisories and errata notices will also note "
+"an n-number, which can be directly compared against your system.  When you "
+"need to use shallow Git clones, you cannot compare n-numbers reliably as the "
+"`git rev-list` command counts all the revisions in the repository which a "
+"shallow clone omits."
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:644
 #, no-wrap
 msgid "Updating FreeBSD from Source"
 msgstr "Atualizando o FreeBSD a partir do código fonte"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:606
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:650
 #, fuzzy
 msgid ""
 "Updating FreeBSD by compiling from source offers several advantages over "
@@ -1534,13 +1628,13 @@ msgstr ""
 "versão do FreeBSD adaptada as suas necessidades."
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:608
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:652
 #, no-wrap
 msgid "Quick Start"
 msgstr "Quick Start"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:612
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:656
 #, fuzzy
 #| msgid ""
 #| "This is a quick reference for the typical steps used to update FreeBSD by "
@@ -1554,12 +1648,12 @@ msgstr ""
 "descrevem o processo com mais detalhes."
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:616
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:660
 msgid "Update and Build"
 msgstr "Atualizar e Compilar"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:630
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:674
 #, no-wrap
 msgid ""
 "# git pull /usr/src  <.>\n"
@@ -1576,14 +1670,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:633
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:677
 msgid ""
 "<.> Get the latest version of the source. See <<updating-src-obtaining-src>> "
 "for more information on obtaining and updating source."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:635
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:679
 #, fuzzy
 msgid ""
 "<.> Check [.filename]#/usr/src/UPDATING# for any manual steps required "
@@ -1593,63 +1687,63 @@ msgstr ""
 "manuais necessárias antes ou depois de compilar a partir do código fonte."
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:637
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:647
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:681
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:691
 #, fuzzy
 msgid "<.> Go to the source directory."
 msgstr "Vá para o diretório de origem."
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:639
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:683
 #, fuzzy
 msgid "<.> Compile the world, everything except the kernel."
 msgstr "Compile o mundo, tudo exceto o kernel."
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:641
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:685
 msgid ""
 "<.> Compile and install the kernel. This is equivalent to `make buildkernel "
 "installkernel`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:643
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:687
 #, fuzzy
 msgid "<.> Reboot the system to the new kernel."
 msgstr "Reinicialize o sistema com o novo kernel."
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:645
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:689
 msgid ""
 "<.> Update and merge configuraton files in [.filename]#/etc/# required "
 "before installworld."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:649
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:693
 #, fuzzy
 msgid "<.> Install the world."
 msgstr "Instale o mundo."
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:651
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:695
 msgid "<.> Update and merge configuration files in [.filename]#/etc/#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:653
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:697
 #, fuzzy
 msgid "<.> Restart the system to use the newly-built world and kernel."
 msgstr "Reinicie o sistema para usar o mundo e o kernel recém-compilados."
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:656
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:700
 #, no-wrap
 msgid "Preparing for a Source Update"
 msgstr "Preparando-se para uma atualização a partir do código fonte"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:659
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:703
 #, fuzzy
 msgid ""
 "Read [.filename]#/usr/src/UPDATING#. Any manual steps that must be performed "
@@ -1660,13 +1754,13 @@ msgstr ""
 "arquivo."
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:661
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:705
 #, no-wrap
 msgid "Updating the Source"
 msgstr "Atualizando o código fonte"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:666
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:710
 msgid ""
 "FreeBSD source code is located in [.filename]#/usr/src/#.  The preferred "
 "method of updating this source is through the Git version control system.  "
@@ -1674,7 +1768,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:673
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:717
 #, no-wrap
 msgid ""
 "# cd /usr/src\n"
@@ -1684,20 +1778,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:676
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:720
 msgid ""
 "This indicates that [.filename]#/usr/src/# is under version control and can "
 "be updated with man:git[1]:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:681
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:725
 #, no-wrap
 msgid "# git pull /usr/src\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:685
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:729
 #, fuzzy
 msgid ""
 "The update process can take some time if the directory has not been updated "
@@ -1710,13 +1804,13 @@ msgstr ""
 "começar."
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:689
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:733
 #, no-wrap
 msgid "*Obtaining the Source:* +\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:692
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:736
 msgid ""
 "If the output says `fatal: not a git repository`, the files there are "
 "missing or were installed with a different method.  A new checkout of the "
@@ -1724,13 +1818,13 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:694
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:738
 #, no-wrap
 msgid "FreeBSD Versions and Repository Branchs"
 msgstr ""
 
 #. type: Table
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:716
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:760
 #, no-wrap
 msgid ""
 "| uname -r Output\n"
@@ -1755,12 +1849,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:719
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:763
 msgid "Determine which version of FreeBSD is being used with man:uname[1]:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:724
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:768
 #, no-wrap
 msgid ""
 "# uname -r\n"
@@ -1768,7 +1862,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:727
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:771
 msgid ""
 "Based on <<updating-src-obtaining-src-repopath>>, the source used to update "
 "`10.3-RELEASE` has a repository path of `releng/10.3`. That path is used "
@@ -1776,7 +1870,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:732
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:776
 #, no-wrap
 msgid ""
 "# mv /usr/src /usr/src.bak <.>\n"
@@ -1784,7 +1878,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:735
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:779
 #, fuzzy
 msgid ""
 "<.> Move the old directory out of the way. If there are no local "
@@ -1794,7 +1888,7 @@ msgstr ""
 "locais nesse diretório, ele poderá ser excluído."
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:737
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:781
 msgid ""
 "<.> The path from <<updating-src-obtaining-src-repopath>> is added to the "
 "repository URL. The third parameter is the destination directory for the "
@@ -1802,13 +1896,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:740
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:784
 #, no-wrap
 msgid "Building from Source"
 msgstr "Compilando a partir do código-fonte"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:745
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:789
 msgid ""
 "The _world_, or all of the operating system except the kernel, is compiled.  "
 "This is done first to provide up-to-date tools to build the kernel.  Then "
@@ -1816,7 +1910,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:751
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:795
 #, no-wrap
 msgid ""
 "# cd /usr/src\n"
@@ -1825,12 +1919,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:754
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:798
 msgid "The compiled code is written to [.filename]#/usr/obj#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:757
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:801
 #, fuzzy
 #| msgid ""
 #| "These are the basic steps. Additional options to control the build are "
@@ -1843,13 +1937,13 @@ msgstr ""
 "são descritas abaixo."
 
 #. type: Title ====
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:759
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:803
 #, no-wrap
 msgid "Performing a Clean Build"
 msgstr "Executando uma compilação limpa"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:764
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:808
 msgid ""
 "Some versions of the FreeBSD build system leave previously-compiled code in "
 "the temporary object directory, [.filename]#/usr/obj#.  This can speed up "
@@ -1858,19 +1952,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:768
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:812
 #, no-wrap
 msgid "# make cleanworld\n"
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:771
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:815
 #, no-wrap
 msgid "Setting the Number of Jobs"
 msgstr "Definindo o Número de Jobs"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:778
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:822
 #, fuzzy
 msgid ""
 "Increasing the number of build jobs on multi-core processors can improve "
@@ -1891,30 +1985,30 @@ msgstr ""
 "especificado com a opção <option>-j</option>."
 
 #. type: Block title
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:780
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:824
 #, no-wrap
 msgid "Increasing the Number of Build Jobs"
 msgstr "Aumentando o número de jobs de compilação"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:784
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:828
 msgid "Building the world and kernel with four jobs:"
 msgstr "Compilando o mundo e o kernel com quatro jobs:"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:788
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:832
 #, no-wrap
 msgid "# make -j4 buildworld buildkernel\n"
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:793
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:837
 #, no-wrap
 msgid "Building Only the Kernel"
 msgstr "Compilando Apenas o Kernel"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:798
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:842
 msgid ""
 "A `buildworld` must be completed if the source code has changed.  After "
 "that, a `buildkernel` to build a kernel can be run at any time.  To build "
@@ -1922,7 +2016,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:803
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:847
 #, no-wrap
 msgid ""
 "# cd /usr/src\n"
@@ -1930,13 +2024,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:806
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:850
 #, no-wrap
 msgid "Building a Custom Kernel"
 msgstr "Compilando um Kernel Customizado"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:811
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:855
 #, fuzzy
 msgid ""
 "The standard FreeBSD kernel is based on a _kernel config file_ called [."
@@ -1953,7 +2047,7 @@ msgstr ""
 "para atender a uma necessidade específica."
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:813
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:857
 #, fuzzy
 msgid ""
 "For example, someone developing a small embedded computer with severely "
@@ -1965,7 +2059,7 @@ msgstr ""
 "desnecessários ou opções para tornar o kernel um pouco menor."
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:816
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:860
 msgid ""
 "Kernel config files are located in [.filename]#/usr/src/sys/arch/conf/#, "
 "where _arch_ is the output from `uname -m`.  On most computers, that is "
@@ -1974,7 +2068,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:822
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:866
 #, fuzzy
 msgid ""
 "[.filename]#/usr/src# can be deleted or recreated, so it is preferable to "
@@ -1991,7 +2085,7 @@ msgstr ""
 "vinculada novamente ao novo."
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:826
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:870
 #, fuzzy
 msgid ""
 "A custom config file can be created by copying the [.filename]#GENERIC# "
@@ -2004,7 +2098,7 @@ msgstr ""
 "<filename>STORAGESERVER</filename>:"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:832
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:876
 #, no-wrap
 msgid ""
 "# cp /usr/src/sys/amd64/conf/GENERIC /root/STORAGESERVER\n"
@@ -2013,40 +2107,40 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:835
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:879
 msgid ""
 "[.filename]#/root/STORAGESERVER# is then edited, adding or removing devices "
 "or options as shown in man:config[5]."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:837
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:881
 msgid ""
 "The custom kernel is built by setting `KERNCONF` to the kernel config file "
 "on the command line:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:841
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:885
 #, no-wrap
 msgid "# make buildkernel KERNCONF=STORAGESERVER\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:844
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:888
 #, no-wrap
 msgid "Installing the Compiled Code"
 msgstr "Instalando o código compilado"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:847
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:891
 msgid ""
 "After the `buildworld` and `buildkernel` steps have been completed, the new "
 "kernel and world are installed:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:856
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:900
 #, no-wrap
 msgid ""
 "# cd /usr/src\n"
@@ -2058,14 +2152,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:859
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:903
 msgid ""
 "If a custom kernel was built, `KERNCONF` must also be set to use the new "
 "custom kernel:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:868
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:912
 #, no-wrap
 msgid ""
 "# cd /usr/src\n"
@@ -2077,13 +2171,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:871
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:915
 #, no-wrap
 msgid "Completing the Update"
 msgstr "Concluindo a atualização"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:875
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:919
 #, fuzzy
 msgid ""
 "A few final tasks complete the update.  Any modified configuration files are "
@@ -2096,13 +2190,13 @@ msgstr ""
 "seguida, o sistema é reiniciado."
 
 #. type: Title ====
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:877
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:921
 #, no-wrap
 msgid "Merging Configuration Files with man:etcupdate[8]"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:882
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:926
 msgid ""
 "man:etcupdate[8] is a tool for managing updates to files that are not "
 "updated as part of an installworld such as files located in [.filename]#/etc/"
@@ -2113,7 +2207,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:887
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:931
 msgid ""
 "In general, man:etcupdate[8] does not need any specific arguments for its "
 "job.  There is however a handy in between command for sanity checking what "
@@ -2121,31 +2215,31 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:891
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:935
 #, no-wrap
 msgid "# etcupdate diff\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:894
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:938
 msgid "This command allows the user to audit configuration changes."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:897
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:941
 msgid ""
 "If man:etcupdate[8] is not able to merge a file automatically, the merge "
 "conflicts can be resolved with manual interaction by issuing:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:901
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:945
 #, no-wrap
 msgid "# etcupdate resolve\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:907
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:951
 msgid ""
 "When switching from man:mergemaster[8] to man:etcupdate[8], the first run "
 "might merge changes incorrectly generating spurious conflicts.  To prevent "
@@ -2154,35 +2248,35 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:912
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:956
 #, no-wrap
 msgid ""
-"# etcupdate bootstrap <.>\n"
+"# etcupdate extract <.>\n"
 "# etcupdate diff <.>\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:915
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:959
 msgid ""
 "<.> Bootstrap the database of stock [.filename]#/etc# files, for more "
 "information see man:etcupdate[8]."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:917
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:961
 msgid ""
 "<.> Check the diff after bootstrapping. Trim any local changes that are no "
 "longer needed to reduce the chance of conflicts in future updates."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:920
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:964
 #, no-wrap
 msgid "Merging Configuration Files with man:mergemaster[8]"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:925
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:969
 msgid ""
 "man:mergemaster[8] provides a way to merge changes that have been made to "
 "system configuration files with new versions of those files.  man:"
@@ -2192,13 +2286,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:929
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:973
 #, no-wrap
 msgid "# mergemaster -Ui\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:933
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:977
 msgid ""
 "If a file must be manually merged, an interactive display allows the user to "
 "choose which portions of the files are kept.  See man:mergemaster[8] for "
@@ -2206,13 +2300,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:935
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:979
 #, no-wrap
 msgid "Checking for Outdated Files and Libraries"
 msgstr "Verificando Arquivos e Bibliotecas Desatualizados"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:939
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:983
 #, fuzzy
 msgid ""
 "Some obsolete files or directories can remain after an update.  These files "
@@ -2222,24 +2316,24 @@ msgstr ""
 "atualização. Esses arquivos podem ser localizados:"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:943
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:987
 #, no-wrap
 msgid "# make check-old\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:946
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:990
 msgid "and deleted:"
 msgstr "e excluído:"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:950
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:994
 #, no-wrap
 msgid "# make delete-old\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:954
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:998
 #, fuzzy
 msgid "Some obsolete libraries can also remain.  These can be detected with:"
 msgstr ""
@@ -2247,24 +2341,24 @@ msgstr ""
 "detectados com:"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:958
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1002
 #, no-wrap
 msgid "# make check-old-libs\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:961
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1005
 msgid "and deleted with"
 msgstr "e deletado com"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:965
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1009
 #, no-wrap
 msgid "# make delete-old-libs\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:969
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1013
 #, fuzzy
 msgid ""
 "Programs which were still using those old libraries will stop working when "
@@ -2276,7 +2370,7 @@ msgstr ""
 "recompilados ou substituídos após a exclusão das bibliotecas antigas."
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:975
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1019
 msgid ""
 "When all the old files or directories are known to be safe to delete, "
 "pressing kbd:[y] and kbd:[Enter] to delete each file can be avoided by "
@@ -2284,19 +2378,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:979
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1023
 #, no-wrap
 msgid "# make BATCH_DELETE_OLD_FILES=yes delete-old-libs\n"
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:984
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1028
 #, no-wrap
 msgid "Restarting After the Update"
 msgstr "Reiniciando após a atualização"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:987
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1031
 msgid ""
 "The last step after updating is to restart the computer so all the changes "
 "take effect:"
@@ -2305,13 +2399,13 @@ msgstr ""
 "alterações entrem em vigor:"
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:994
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1038
 #, no-wrap
 msgid "Tracking for Multiple Machines"
 msgstr "Atualização de várias máquinas"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1002
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1046
 msgid ""
 "When multiple machines need to track the same source tree, it is a waste of "
 "disk space, network bandwidth, and CPU cycles to have each system download "
@@ -2323,7 +2417,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1007
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1051
 msgid ""
 "First, identify a set of machines which will run the same set of binaries, "
 "known as a _build set_.  Each machine can have a custom kernel, but will run "
@@ -2334,7 +2428,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1011
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1055
 msgid ""
 "Select a machine to be the _test machine_, which will test software updates "
 "before they are put into production.  This _must_ be a machine that can "
@@ -2343,7 +2437,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1014
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1058
 msgid ""
 "All the machines in this build set need to mount [.filename]#/usr/obj# and [."
 "filename]#/usr/src# from the build machine via NFS.  For multiple build "
@@ -2352,7 +2446,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1020
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1064
 msgid ""
 "Ensure that [.filename]#/etc/make.conf# and [.filename]#/etc/src.conf# on "
 "all the machines in the build set agree with the build machine.  That means "
@@ -2365,7 +2459,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1027
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1071
 msgid ""
 "On the build machine, build the kernel and world as described in "
 "<<makeworld>>, but do not install anything on the build machine.  Instead, "
@@ -2377,7 +2471,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1030
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1074
 msgid ""
 "After verifying that everything on the test machine is working properly, use "
 "the same procedure to install the new software on each of the other machines "
@@ -2388,7 +2482,7 @@ msgstr ""
 "uma das outras máquinas no conjunto de compilação."
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1037
+#: documentation/content/en/books/handbook/cutting-edge/_index.adoc:1081
 msgid ""
 "The same methodology can be used for the ports tree.  The first step is to "
 "share [.filename]#/usr/ports# via NFS to all the machines in the build set.  "
