@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-06-08 07:31-0300\n"
+"POT-Creation-Date: 2021-07-24 11:37-0300\n"
 "PO-Revision-Date: 2021-06-16 19:07+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Turkish <https://translate-dev.freebsd.org/projects/"
@@ -4361,9 +4361,8 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2233
 msgid ""
 "HAST provides synchronous block-level replication between two physical "
-"machines: the _primary_, also known as the _master_ node, and the "
-"_secondary_, or _slave_ node.  These two machines together are referred to "
-"as a cluster."
+"machines: the _primary_ nodeand the _secondary_ node.  These two machines "
+"together are referred to as a cluster."
 msgstr ""
 
 #. type: Plain text
@@ -4494,10 +4493,10 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2278
 msgid ""
-"The following example describes how to configure two nodes in master-slave/"
-"primary-secondary operation using HAST to replicate the data between the "
-"two.  The nodes will be called `hasta`, with an IP address of `172.16.0.1`, "
-"and `hastb`, with an IP address of `172.16.0.2`.  Both nodes will have a "
+"The following example describes how to configure two nodes in primary-"
+"secondary operation using HAST to replicate the data between the two.  The "
+"nodes will be called `hasta`, with an IP address of `172.16.0.1`, and "
+"`hastb`, with an IP address of `172.16.0.2`.  Both nodes will have a "
 "dedicated hard drive [.filename]#/dev/ad6# of the same size for HAST "
 "operation.  The HAST pool, sometimes referred to as a resource or the GEOM "
 "provider in [.filename]#/dev/hast/#, will be called `test`."
@@ -4667,7 +4666,7 @@ msgid ""
 "in crossref:advanced-networking[carp,“Common Address Redundancy Protocol "
 "(CARP)”].  In this example, each node will have its own management IP "
 "address and a shared IP address of _172.16.0.254_.  The primary HAST node of "
-"the cluster must be the master CARP node."
+"the cluster must be the primary CARP node."
 msgstr ""
 
 #. type: Plain text
@@ -4706,7 +4705,7 @@ msgid ""
 "\tmatch \"system\" \"IFNET\";\n"
 "\tmatch \"subsystem\" \"carp0\";\n"
 "\tmatch \"type\" \"LINK_UP\";\n"
-"\taction \"/usr/local/sbin/carp-hast-switch master\";\n"
+"\taction \"/usr/local/sbin/carp-hast-switch primary\";\n"
 "};\n"
 msgstr ""
 
@@ -4718,7 +4717,7 @@ msgid ""
 "\tmatch \"system\" \"IFNET\";\n"
 "\tmatch \"subsystem\" \"carp0\";\n"
 "\tmatch \"type\" \"LINK_DOWN\";\n"
-"\taction \"/usr/local/sbin/carp-hast-switch slave\";\n"
+"\taction \"/usr/local/sbin/carp-hast-switch secondary\";\n"
 "};\n"
 msgstr ""
 
@@ -4783,7 +4782,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2435
 #, no-wrap
 msgid ""
-"# delay in mounting HAST resource after becoming master\n"
+"# delay in mounting HAST resource after becoming primary\n"
 "# make your best guess\n"
 "delay=3\n"
 msgstr ""
@@ -4808,7 +4807,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "case \"$1\" in\n"
-"\tmaster)\n"
+"\tprimary)\n"
 "\t\tlogger -p $log -t $name \"Switching to primary provider for ${resources}.\"\n"
 "\t\tsleep ${delay}\n"
 msgstr ""
@@ -4888,7 +4887,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2487
 #, no-wrap
 msgid ""
-"\tslave)\n"
+"\tsecondary)\n"
 "\t\tlogger -p $log -t $name \"Switching to secondary provider for ${resources}.\"\n"
 msgstr ""
 
@@ -4918,7 +4917,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2508
 msgid ""
-"In a nutshell, the script takes these actions when a node becomes master:"
+"In a nutshell, the script takes these actions when a node becomes primary:"
 msgstr ""
 
 #. type: Plain text
