@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-06-08 07:31-0300\n"
+"POT-Creation-Date: 2021-07-24 11:38-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -264,8 +264,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/basics/_index.adoc:139
 msgid ""
-"To disable a virtual console, put a comment symbol (`#`) at the beginning of "
-"the line representing that virtual console.  For example, to reduce the "
+"To disable a virtual console, put a comment symbol (`\\#`) at the beginning "
+"of the line representing that virtual console.  For example, to reduce the "
 "number of available virtual consoles from eight to four, put a `#` in front "
 "of the last four lines representing virtual consoles [.filename]#ttyv5# "
 "through [.filename]#ttyv8#.  _Do not_ comment out the line for the system "
@@ -2307,20 +2307,23 @@ msgid "Disk Device Names"
 msgstr ""
 
 #. type: Table
-#: documentation/content/en/books/handbook/basics/_index.adoc:1265
+#: documentation/content/en/books/handbook/basics/_index.adoc:1262
 #, no-wrap
 msgid ""
 "| Drive Type\n"
 "| Drive Device Name\n"
 "\n"
 "|SATA and IDE hard drives\n"
-"|`ada` or `ad`\n"
+"|`ada`\n"
 "\n"
 "|SCSI hard drives and USB storage devices\n"
 "|`da`\n"
 "\n"
-"|SATA and IDECD-ROM drives\n"
-"|`cd` or `acd`\n"
+"|NVMe storage\n"
+"|`nvd` or `nda`\n"
+"\n"
+"|SATA and IDE CD-ROM drives\n"
+"|`cd`\n"
 "\n"
 "|SCSICD-ROM drives\n"
 "|`cd`\n"
@@ -2328,27 +2331,21 @@ msgid ""
 "|Floppy drives\n"
 "|`fd`\n"
 "\n"
-"|Assorted non-standard CD-ROM drives\n"
-"|`mcd` for Mitsumi CD-ROM and `scd` for Sony CD-ROM devices\n"
-"\n"
 "|SCSI tape drives\n"
 "|`sa`\n"
-"\n"
-"|IDE tape drives\n"
-"|`ast`\n"
 "\n"
 "|RAID drives\n"
 "|Examples include `aacd` for Adaptec(R) AdvancedRAID, `mlxd` and `mlyd` for Mylex(R), `amrd` for AMI MegaRAID(R), `idad` for Compaq Smart RAID, `twed` for 3ware(R) RAID.\n"
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/handbook/basics/_index.adoc:1270
+#: documentation/content/en/books/handbook/basics/_index.adoc:1267
 #, no-wrap
 msgid "Sample Disk, Slice, and Partition Names"
 msgstr ""
 
 #. type: Table
-#: documentation/content/en/books/handbook/basics/_index.adoc:1282
+#: documentation/content/en/books/handbook/basics/_index.adoc:1279
 #, no-wrap
 msgid ""
 "| Name\n"
@@ -2362,13 +2359,13 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/handbook/basics/_index.adoc:1286
+#: documentation/content/en/books/handbook/basics/_index.adoc:1283
 #, no-wrap
 msgid "Conceptual Model of a Disk"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1293
+#: documentation/content/en/books/handbook/basics/_index.adoc:1290
 msgid ""
 "This diagram shows FreeBSD's view of the first SATA disk attached to the "
 "system.  Assume that the disk is 250 GB in size, and contains an 80 GB slice "
@@ -2379,7 +2376,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1297
+#: documentation/content/en/books/handbook/basics/_index.adoc:1294
 msgid ""
 "The four partitions each hold a file system.  Partition `a` is used for the "
 "root file system, `d` for [.filename]#/var/#, `e` for [.filename]#/tmp/#, "
@@ -2388,19 +2385,19 @@ msgid ""
 msgstr ""
 
 #. type: Target for macro image
-#: documentation/content/en/books/handbook/basics/_index.adoc:1298
+#: documentation/content/en/books/handbook/basics/_index.adoc:1295
 #, no-wrap
 msgid "disk-layout.png"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/basics/_index.adoc:1302
+#: documentation/content/en/books/handbook/basics/_index.adoc:1299
 #, no-wrap
 msgid "Mounting and Unmounting File Systems"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1305
+#: documentation/content/en/books/handbook/basics/_index.adoc:1302
 msgid ""
 "The file system is best visualized as a tree, rooted, as it were, at [."
 "filename]#/#. [.filename]#/dev#, [.filename]#/usr#, and the other "
@@ -2409,7 +2406,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1309
+#: documentation/content/en/books/handbook/basics/_index.adoc:1306
 msgid ""
 "There are various reasons to house some of these directories on separate "
 "file systems.  [.filename]#/var# contains the directories [.filename]#log/#, "
@@ -2419,7 +2416,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1311
+#: documentation/content/en/books/handbook/basics/_index.adoc:1308
 msgid ""
 "Another common reason to contain certain directory trees on other file "
 "systems is if they are to be housed on separate physical disks, or are "
@@ -2429,13 +2426,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/basics/_index.adoc:1313
+#: documentation/content/en/books/handbook/basics/_index.adoc:1310
 #, no-wrap
 msgid "The [.filename]#fstab# File"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1317
+#: documentation/content/en/books/handbook/basics/_index.adoc:1314
 msgid ""
 "During the boot process (crossref:boot[boot,The FreeBSD Booting Process]), "
 "file systems listed in [.filename]#/etc/fstab# are automatically mounted "
@@ -2444,54 +2441,54 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1321
+#: documentation/content/en/books/handbook/basics/_index.adoc:1318
 #, no-wrap
 msgid "device       /mount-point fstype     options      dumpfreq     passno\n"
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1323
+#: documentation/content/en/books/handbook/basics/_index.adoc:1320
 #, no-wrap
 msgid "`device`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1325
+#: documentation/content/en/books/handbook/basics/_index.adoc:1322
 msgid "An existing device name as explained in <<disks-naming>>."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1326
+#: documentation/content/en/books/handbook/basics/_index.adoc:1323
 #, no-wrap
 msgid "`mount-point`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1328
+#: documentation/content/en/books/handbook/basics/_index.adoc:1325
 msgid "An existing directory on which to mount the file system."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1329
+#: documentation/content/en/books/handbook/basics/_index.adoc:1326
 #, no-wrap
 msgid "`fstype`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1332
+#: documentation/content/en/books/handbook/basics/_index.adoc:1329
 msgid ""
 "The file system type to pass to man:mount[8].  The default FreeBSD file "
 "system is `ufs`."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1333
+#: documentation/content/en/books/handbook/basics/_index.adoc:1330
 #, no-wrap
 msgid "`options`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1337
+#: documentation/content/en/books/handbook/basics/_index.adoc:1334
 msgid ""
 "Either `rw` for read-write file systems, or `ro` for read-only file systems, "
 "followed by any other options that may be needed.  A common option is "
@@ -2500,26 +2497,26 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1338
+#: documentation/content/en/books/handbook/basics/_index.adoc:1335
 #, no-wrap
 msgid "`dumpfreq`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1341
+#: documentation/content/en/books/handbook/basics/_index.adoc:1338
 msgid ""
 "Used by man:dump[8] to determine which file systems require dumping.  If the "
 "field is missing, a value of zero is assumed."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1342
+#: documentation/content/en/books/handbook/basics/_index.adoc:1339
 #, no-wrap
 msgid "`passno`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1348
+#: documentation/content/en/books/handbook/basics/_index.adoc:1345
 msgid ""
 "Determines the order in which file systems should be checked.  File systems "
 "that should be skipped should have their `passno` set to zero.  The root "
@@ -2530,52 +2527,52 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1350
+#: documentation/content/en/books/handbook/basics/_index.adoc:1347
 msgid ""
 "Refer to man:fstab[5] for more information on the format of [.filename]#/etc/"
 "fstab# and its options."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/basics/_index.adoc:1352
+#: documentation/content/en/books/handbook/basics/_index.adoc:1349
 #, no-wrap
 msgid "Using man:mount[8]"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1356
+#: documentation/content/en/books/handbook/basics/_index.adoc:1353
 msgid ""
 "File systems are mounted using man:mount[8].  The most basic syntax is as "
 "follows:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1362
+#: documentation/content/en/books/handbook/basics/_index.adoc:1359
 #, no-wrap
 msgid "# mount device mountpoint\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1366
+#: documentation/content/en/books/handbook/basics/_index.adoc:1363
 msgid ""
 "This command provides many options which are described in man:mount[8], The "
 "most commonly used options include:"
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/handbook/basics/_index.adoc:1367
+#: documentation/content/en/books/handbook/basics/_index.adoc:1364
 #, no-wrap
 msgid "Mount Options"
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1368
+#: documentation/content/en/books/handbook/basics/_index.adoc:1365
 #, no-wrap
 msgid "`-a`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1370
+#: documentation/content/en/books/handbook/basics/_index.adoc:1367
 msgid ""
 "Mount all the file systems listed in [.filename]#/etc/fstab#, except those "
 "marked as \"noauto\", excluded by the `-t` flag, or those that are already "
@@ -2583,13 +2580,13 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1371
+#: documentation/content/en/books/handbook/basics/_index.adoc:1368
 #, no-wrap
 msgid "`-d`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1374
+#: documentation/content/en/books/handbook/basics/_index.adoc:1371
 msgid ""
 "Do everything except for the actual mount system call.  This option is "
 "useful in conjunction with the `-v` flag to determine what man:mount[8] is "
@@ -2597,13 +2594,13 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1375
+#: documentation/content/en/books/handbook/basics/_index.adoc:1372
 #, no-wrap
 msgid "`-f`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1377
+#: documentation/content/en/books/handbook/basics/_index.adoc:1374
 msgid ""
 "Force the mount of an unclean file system (dangerous), or the revocation of "
 "write access when downgrading a file system's mount status from read-write "
@@ -2611,95 +2608,95 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1378
+#: documentation/content/en/books/handbook/basics/_index.adoc:1375
 #, no-wrap
 msgid "`-r`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1381
+#: documentation/content/en/books/handbook/basics/_index.adoc:1378
 msgid "Mount the file system read-only.  This is identical to using `-o ro`."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1382
+#: documentation/content/en/books/handbook/basics/_index.adoc:1379
 #, no-wrap
 msgid "``-t _fstype_``"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1385
+#: documentation/content/en/books/handbook/basics/_index.adoc:1382
 msgid ""
 "Mount the specified file system type or mount only file systems of the given "
 "type, if `-a` is included.  \"ufs\" is the default file system type."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1386
+#: documentation/content/en/books/handbook/basics/_index.adoc:1383
 #, no-wrap
 msgid "`-u`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1388
+#: documentation/content/en/books/handbook/basics/_index.adoc:1385
 msgid "Update mount options on the file system."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1389
+#: documentation/content/en/books/handbook/basics/_index.adoc:1386
 #, no-wrap
 msgid "`-v`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1391
+#: documentation/content/en/books/handbook/basics/_index.adoc:1388
 msgid "Be verbose."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1392
+#: documentation/content/en/books/handbook/basics/_index.adoc:1389
 #, no-wrap
 msgid "`-w`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1394
+#: documentation/content/en/books/handbook/basics/_index.adoc:1391
 msgid "Mount the file system read-write."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1396
+#: documentation/content/en/books/handbook/basics/_index.adoc:1393
 msgid "The following options can be passed to `-o` as a comma-separated list:"
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/basics/_index.adoc:1397
+#: documentation/content/en/books/handbook/basics/_index.adoc:1394
 #, no-wrap
 msgid "nosuid"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1400
+#: documentation/content/en/books/handbook/basics/_index.adoc:1397
 msgid ""
 "Do not interpret setuid or setgid flags on the file system.  This is also a "
 "useful security option."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/basics/_index.adoc:1402
+#: documentation/content/en/books/handbook/basics/_index.adoc:1399
 #, no-wrap
 msgid "Using man:umount[8]"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1406
+#: documentation/content/en/books/handbook/basics/_index.adoc:1403
 msgid ""
 "To unmount a file system use man:umount[8].  This command takes one "
 "parameter which can be a mountpoint, device name, `-a` or `-A`."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1409
+#: documentation/content/en/books/handbook/basics/_index.adoc:1406
 msgid ""
 "All forms take `-f` to force unmounting, and `-v` for verbosity.  Be warned "
 "that `-f` is not generally a good idea as it might crash the computer or "
@@ -2707,7 +2704,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1412
+#: documentation/content/en/books/handbook/basics/_index.adoc:1409
 msgid ""
 "To unmount all mounted file systems, or just the file system types listed "
 "after `-t`, use `-a` or `-A`.  Note that `-A` does not attempt to unmount "
@@ -2715,13 +2712,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/basics/_index.adoc:1414
+#: documentation/content/en/books/handbook/basics/_index.adoc:1411
 #, no-wrap
 msgid "Processes and Daemons"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1419
+#: documentation/content/en/books/handbook/basics/_index.adoc:1416
 msgid ""
 "FreeBSD is a multi-tasking operating system.  Each program running at any "
 "one time is called a _process_.  Every running command starts at least one "
@@ -2730,7 +2727,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1425
+#: documentation/content/en/books/handbook/basics/_index.adoc:1422
 msgid ""
 "Each process is uniquely identified by a number called a _process ID_ "
 "(PID).  Similar to files, each process has one owner and group, and the "
@@ -2743,7 +2740,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1432
+#: documentation/content/en/books/handbook/basics/_index.adoc:1429
 msgid ""
 "Some programs are not designed to be run with continuous user input and "
 "disconnect from the terminal at the first opportunity.  For example, a web "
@@ -2756,7 +2753,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1438
+#: documentation/content/en/books/handbook/basics/_index.adoc:1435
 msgid ""
 "There is a convention to name programs that normally run as daemons with a "
 "trailing \"d\".  For example, BIND is the Berkeley Internet Name Domain, but "
@@ -2767,13 +2764,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/basics/_index.adoc:1439
+#: documentation/content/en/books/handbook/basics/_index.adoc:1436
 #, no-wrap
 msgid "Viewing Processes"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1444
+#: documentation/content/en/books/handbook/basics/_index.adoc:1441
 msgid ""
 "To see the processes running on the system, use man:ps[1] or man:top[1].  To "
 "display a static list of the currently running processes, their PIDs, how "
@@ -2784,14 +2781,14 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1447
+#: documentation/content/en/books/handbook/basics/_index.adoc:1444
 msgid ""
 "By default, man:ps[1] only shows the commands that are running and owned by "
 "the user.  For example:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1454
+#: documentation/content/en/books/handbook/basics/_index.adoc:1451
 #, no-wrap
 msgid ""
 "% ps\n"
@@ -2801,7 +2798,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1464
+#: documentation/content/en/books/handbook/basics/_index.adoc:1461
 msgid ""
 "The output from man:ps[1] is organized into a number of columns.  The `PID` "
 "column displays the process ID.  PIDs are assigned starting at 1, go up to "
@@ -2815,7 +2812,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1467
+#: documentation/content/en/books/handbook/basics/_index.adoc:1464
 msgid ""
 "A number of different options are available to change the information that "
 "is displayed.  One of the most useful sets is `auxww`, where `a` displays "
@@ -2827,12 +2824,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1469
+#: documentation/content/en/books/handbook/basics/_index.adoc:1466
 msgid "The output from man:top[1] is similar:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1479
+#: documentation/content/en/books/handbook/basics/_index.adoc:1476
 #, no-wrap
 msgid ""
 "% top\n"
@@ -2845,7 +2842,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1492
+#: documentation/content/en/books/handbook/basics/_index.adoc:1489
 #, no-wrap
 msgid ""
 "  PID USERNAME    THR PRI NICE   SIZE    RES STATE   C   TIME   WCPU COMMAND\n"
@@ -2863,7 +2860,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1498
+#: documentation/content/en/books/handbook/basics/_index.adoc:1495
 msgid ""
 "The output is split into two sections.  The header (the first five or six "
 "lines) shows the PID of the last process to run, the system load averages "
@@ -2876,7 +2873,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1503
+#: documentation/content/en/books/handbook/basics/_index.adoc:1500
 msgid ""
 "Below the header is a series of columns containing similar information to "
 "the output from man:ps[1], such as the PID, username, amount of CPU time, "
@@ -2888,20 +2885,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1506
+#: documentation/content/en/books/handbook/basics/_index.adoc:1503
 msgid ""
 "man:top[1] automatically updates the display every two seconds.  A different "
 "interval can be specified with `-s`."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/basics/_index.adoc:1508
+#: documentation/content/en/books/handbook/basics/_index.adoc:1505
 #, no-wrap
 msgid "Killing Processes"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1514
+#: documentation/content/en/books/handbook/basics/_index.adoc:1511
 msgid ""
 "One way to communicate with any running process or daemon is to send a "
 "_signal_ using man:kill[1].  There are a number of different signals; some "
@@ -2913,7 +2910,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1518
+#: documentation/content/en/books/handbook/basics/_index.adoc:1515
 msgid ""
 "The operating system can also send a signal to a process.  If an application "
 "is badly written and tries to access memory that it is not supposed to, "
@@ -2924,7 +2921,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1522
+#: documentation/content/en/books/handbook/basics/_index.adoc:1519
 msgid ""
 "Two signals can be used to stop a process: `SIGTERM` and `SIGKILL`.  "
 "`SIGTERM` is the polite way to kill a process as the process can read the "
@@ -2934,7 +2931,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1525
+#: documentation/content/en/books/handbook/basics/_index.adoc:1522
 msgid ""
 "`SIGKILL` cannot be ignored by a process.  Sending a `SIGKILL` to a process "
 "will usually stop that process there and then. footnote:[There are a few "
@@ -2946,7 +2943,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1528
+#: documentation/content/en/books/handbook/basics/_index.adoc:1525
 msgid ""
 "Other commonly used signals are `SIGHUP`, `SIGUSR1`, and `SIGUSR2`.  Since "
 "these are general purpose signals, different applications will respond "
@@ -2954,7 +2951,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1533
+#: documentation/content/en/books/handbook/basics/_index.adoc:1530
 msgid ""
 "For example, after changing a web server's configuration file, the web "
 "server needs to be told to re-read its configuration.  Restarting `httpd` "
@@ -2965,13 +2962,13 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/handbook/basics/_index.adoc:1536
+#: documentation/content/en/books/handbook/basics/_index.adoc:1533
 #, no-wrap
 msgid "Procedure: Sending a Signal to a Process"
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1540
+#: documentation/content/en/books/handbook/basics/_index.adoc:1537
 msgid ""
 "This example shows how to send a signal to man:inetd[8].  The man:inetd[8] "
 "configuration file is [.filename]#/etc/inetd.conf#, and man:inetd[8] will re-"
@@ -2979,14 +2976,14 @@ msgid ""
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1542
+#: documentation/content/en/books/handbook/basics/_index.adoc:1539
 msgid ""
 "Find the PID of the process to send the signal to using man:pgrep[1]. In "
 "this example, the PID for man:inetd[8] is 198:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1547
+#: documentation/content/en/books/handbook/basics/_index.adoc:1544
 #, no-wrap
 msgid ""
 "% pgrep -l inetd\n"
@@ -2994,14 +2991,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1550
+#: documentation/content/en/books/handbook/basics/_index.adoc:1547
 msgid ""
 "Use man:kill[1] to send the signal. As man:inetd[8] is owned by `root`, use "
 "man:su[1] to become `root` first."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1556
+#: documentation/content/en/books/handbook/basics/_index.adoc:1553
 #, no-wrap
 msgid ""
 "% su\n"
@@ -3010,7 +3007,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1561
+#: documentation/content/en/books/handbook/basics/_index.adoc:1558
 msgid ""
 "Like most UNIX(R) commands, man:kill[1] will not print any output if it is "
 "successful.  If a signal is sent to a process not owned by that user, the "
@@ -3021,13 +3018,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1565
+#: documentation/content/en/books/handbook/basics/_index.adoc:1562
 #, no-wrap
 msgid "*Why Use `/bin/kill`?:* +\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1569
+#: documentation/content/en/books/handbook/basics/_index.adoc:1566
 msgid ""
 "Many shells provide `kill` as a built in command, meaning that the shell "
 "will send the signal directly, rather than running [.filename]#/bin/kill#.  "
@@ -3037,14 +3034,14 @@ msgid ""
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1573
+#: documentation/content/en/books/handbook/basics/_index.adoc:1570
 msgid ""
 "When sending other signals, substitute `TERM` or `KILL` with the name of the "
 "signal."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1580
+#: documentation/content/en/books/handbook/basics/_index.adoc:1577
 msgid ""
 "Killing a random process on the system is a bad idea.  In particular, man:"
 "init[8], PID 1, is special.  Running `/bin/kill -s KILL 1` is a quick, and "
@@ -3053,13 +3050,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/basics/_index.adoc:1583
+#: documentation/content/en/books/handbook/basics/_index.adoc:1580
 #, no-wrap
 msgid "Shells"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1590
+#: documentation/content/en/books/handbook/basics/_index.adoc:1587
 msgid ""
 "A _shell_ provides a command line interface for interacting with the "
 "operating system.  A shell receives commands from the input channel and "
@@ -3072,7 +3069,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1595
+#: documentation/content/en/books/handbook/basics/_index.adoc:1592
 msgid ""
 "The shell that is used is really a matter of taste.  A C programmer might "
 "feel more comfortable with a C-like shell such as man:tcsh[1].  A Linux(R) "
@@ -3082,7 +3079,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1600
+#: documentation/content/en/books/handbook/basics/_index.adoc:1597
 msgid ""
 "One common shell feature is filename completion.  After a user types the "
 "first few letters of a command or filename and presses kbd:[Tab], the shell "
@@ -3092,7 +3089,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1606
+#: documentation/content/en/books/handbook/basics/_index.adoc:1603
 msgid ""
 "But the shell only shows `rm foo`.  It was unable to complete the filename "
 "because both [.filename]#foobar# and [.filename]#football# start with "
@@ -3103,7 +3100,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1612
+#: documentation/content/en/books/handbook/basics/_index.adoc:1609
 msgid ""
 "Another feature of the shell is the use of environment variables.  "
 "Environment variables are a variable/key pair stored in the shell's "
@@ -3114,13 +3111,13 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/handbook/basics/_index.adoc:1614
+#: documentation/content/en/books/handbook/basics/_index.adoc:1611
 #, no-wrap
 msgid "Common Environment Variables"
 msgstr ""
 
 #. type: Table
-#: documentation/content/en/books/handbook/basics/_index.adoc:1652
+#: documentation/content/en/books/handbook/basics/_index.adoc:1649
 #, no-wrap
 msgid ""
 "| Variable\n"
@@ -3161,7 +3158,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1658
+#: documentation/content/en/books/handbook/basics/_index.adoc:1655
 msgid ""
 "How to set an environment variable differs between shells.  In man:tcsh[1] "
 "and man:csh[1], use `setenv` to set environment variables.  In man:sh[1] and "
@@ -3171,24 +3168,24 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1662
+#: documentation/content/en/books/handbook/basics/_index.adoc:1659
 #, no-wrap
 msgid "% setenv EDITOR /usr/local/bin/emacs\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1665
+#: documentation/content/en/books/handbook/basics/_index.adoc:1662
 msgid "The equivalent command for `bash` would be:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1669
+#: documentation/content/en/books/handbook/basics/_index.adoc:1666
 #, no-wrap
 msgid "% export EDITOR=\"/usr/local/bin/emacs\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1673
+#: documentation/content/en/books/handbook/basics/_index.adoc:1670
 msgid ""
 "To expand an environment variable in order to see its current setting, type "
 "a `$` character in front of its name on the command line.  For example, "
@@ -3196,7 +3193,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1678
+#: documentation/content/en/books/handbook/basics/_index.adoc:1675
 msgid ""
 "Shells treat special characters, known as meta-characters, as special "
 "representations of data.  The most common meta-character is `\\*`, which "
@@ -3207,7 +3204,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1681
+#: documentation/content/en/books/handbook/basics/_index.adoc:1678
 msgid ""
 "To prevent the shell from interpreting a special character, escape it from "
 "the shell by starting it with a backslash (`\\`).  For example, `echo $TERM` "
@@ -3216,13 +3213,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/basics/_index.adoc:1683
+#: documentation/content/en/books/handbook/basics/_index.adoc:1680
 #, no-wrap
 msgid "Changing the Shell"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1688
+#: documentation/content/en/books/handbook/basics/_index.adoc:1685
 msgid ""
 "The easiest way to permanently change the default shell is to use `chsh`.  "
 "Running this command will open the editor that is configured in the `EDITOR` "
@@ -3231,20 +3228,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1691
+#: documentation/content/en/books/handbook/basics/_index.adoc:1688
 msgid ""
 "Alternately, use `chsh -s` which will set the specified shell without "
 "opening an editor.  For example, to change the shell to `bash`:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1695
+#: documentation/content/en/books/handbook/basics/_index.adoc:1692
 #, no-wrap
 msgid "% chsh -s /usr/local/bin/bash\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1702
+#: documentation/content/en/books/handbook/basics/_index.adoc:1699
 msgid ""
 "The new shell _must_ be present in [.filename]#/etc/shells#.  If the shell "
 "was installed from the FreeBSD Ports Collection as described in crossref:"
@@ -3254,24 +3251,24 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1706
+#: documentation/content/en/books/handbook/basics/_index.adoc:1703
 #, no-wrap
 msgid "# echo /usr/local/bin/bash >> /etc/shells\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1709
+#: documentation/content/en/books/handbook/basics/_index.adoc:1706
 msgid "Then, rerun man:chsh[1]."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/basics/_index.adoc:1711
+#: documentation/content/en/books/handbook/basics/_index.adoc:1708
 #, no-wrap
 msgid "Advanced Shell Techniques"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1715
+#: documentation/content/en/books/handbook/basics/_index.adoc:1712
 msgid ""
 "The UNIX(R) shell is not just a command interpreter, it acts as a powerful "
 "tool which allows users to execute commands, redirect their output, redirect "
@@ -3281,7 +3278,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1718
+#: documentation/content/en/books/handbook/basics/_index.adoc:1715
 msgid ""
 "Shell redirection is the action of sending the output or the input of a "
 "command into another command or into a file.  To capture the output of the "
@@ -3289,13 +3286,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1722
+#: documentation/content/en/books/handbook/basics/_index.adoc:1719
 #, no-wrap
 msgid "% ls > directory_listing.txt\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1727
+#: documentation/content/en/books/handbook/basics/_index.adoc:1724
 msgid ""
 "The directory contents will now be listed in [.filename]#directory_listing."
 "txt#.  Some commands can be used to read input, such as man:sort[1].  To "
@@ -3303,13 +3300,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1731
+#: documentation/content/en/books/handbook/basics/_index.adoc:1728
 #, no-wrap
 msgid "% sort < directory_listing.txt\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1735
+#: documentation/content/en/books/handbook/basics/_index.adoc:1732
 msgid ""
 "The input will be sorted and placed on the screen.  To redirect that input "
 "into another file, one could redirect the output of man:sort[1] by mixing "
@@ -3317,13 +3314,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1739
+#: documentation/content/en/books/handbook/basics/_index.adoc:1736
 #, no-wrap
 msgid "% sort < directory_listing.txt > sorted.txt\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1747
+#: documentation/content/en/books/handbook/basics/_index.adoc:1744
 msgid ""
 "In all of the previous examples, the commands are performing redirection "
 "using file descriptors.  Every UNIX(R) system has file descriptors, which "
@@ -3336,7 +3333,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1750
+#: documentation/content/en/books/handbook/basics/_index.adoc:1747
 msgid ""
 "Through the use of these descriptors, the shell allows output and input to "
 "be passed around through various commands and redirected to or from a file.  "
@@ -3344,7 +3341,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1753
+#: documentation/content/en/books/handbook/basics/_index.adoc:1750
 msgid ""
 "The UNIX(R) pipe operator, \"|\" allows the output of one command to be "
 "directly passed or directed to another program.  Basically, a pipe allows "
@@ -3353,13 +3350,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1757
+#: documentation/content/en/books/handbook/basics/_index.adoc:1754
 #, no-wrap
 msgid "% cat directory_listing.txt | sort | less\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1761
+#: documentation/content/en/books/handbook/basics/_index.adoc:1758
 msgid ""
 "In that example, the contents of [.filename]#directory_listing.txt# will be "
 "sorted and the output passed to man:less[1].  This allows the user to scroll "
@@ -3368,13 +3365,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/basics/_index.adoc:1763
+#: documentation/content/en/books/handbook/basics/_index.adoc:1760
 #, no-wrap
 msgid "Text Editors"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1767
+#: documentation/content/en/books/handbook/basics/_index.adoc:1764
 msgid ""
 "Most FreeBSD configuration is done by editing text files, so it is a good "
 "idea to become familiar with a text editor.  FreeBSD comes with a few as "
@@ -3382,7 +3379,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1774
+#: documentation/content/en/books/handbook/basics/_index.adoc:1771
 msgid ""
 "A simple editor to learn is man:ee[1], which stands for easy editor.  To "
 "start this editor, type `ee _filename_` where _filename_ is the name of the "
@@ -3395,7 +3392,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1779
+#: documentation/content/en/books/handbook/basics/_index.adoc:1776
 msgid ""
 "FreeBSD also comes with more powerful text editors, such as man:vi[1], as "
 "part of the base system.  Other editors, like package:editors/emacs[] and "
@@ -3406,7 +3403,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1782
+#: documentation/content/en/books/handbook/basics/_index.adoc:1779
 msgid ""
 "Many applications which modify files or require typed input will "
 "automatically open a text editor.  To change the default editor, set the "
@@ -3414,13 +3411,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/basics/_index.adoc:1784
+#: documentation/content/en/books/handbook/basics/_index.adoc:1781
 #, no-wrap
 msgid "Devices and Device Nodes"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1789
+#: documentation/content/en/books/handbook/basics/_index.adoc:1786
 msgid ""
 "A device is a term used mostly for hardware-related activities in a system, "
 "including disks, printers, graphics cards, and keyboards.  When FreeBSD "
@@ -3429,27 +3426,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1792
+#: documentation/content/en/books/handbook/basics/_index.adoc:1789
 msgid ""
 "Each device has a device name and number.  For example, [.filename]#ada0# is "
 "the first SATA hard drive, while [.filename]#kbd0# represents the keyboard."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1794
+#: documentation/content/en/books/handbook/basics/_index.adoc:1791
 msgid ""
 "Most devices in FreeBSD must be accessed through special files called device "
 "nodes, which are located in [.filename]#/dev#."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/basics/_index.adoc:1796
+#: documentation/content/en/books/handbook/basics/_index.adoc:1793
 #, no-wrap
 msgid "Manual Pages"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1801
+#: documentation/content/en/books/handbook/basics/_index.adoc:1798
 msgid ""
 "The most comprehensive documentation on FreeBSD is in the form of manual "
 "pages.  Nearly every program on the system comes with a short reference "
@@ -3458,78 +3455,78 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1805
+#: documentation/content/en/books/handbook/basics/_index.adoc:1802
 #, no-wrap
 msgid "% man command\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1809
+#: documentation/content/en/books/handbook/basics/_index.adoc:1806
 msgid ""
 "where _command_ is the name of the command to learn about.  For example, to "
 "learn more about man:ls[1], type:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1813
+#: documentation/content/en/books/handbook/basics/_index.adoc:1810
 #, no-wrap
 msgid "% man ls\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1817
+#: documentation/content/en/books/handbook/basics/_index.adoc:1814
 msgid ""
 "Manual pages are divided into sections which represent the type of topic.  "
 "In FreeBSD, the following sections are available:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1819
+#: documentation/content/en/books/handbook/basics/_index.adoc:1816
 msgid "User commands."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1820
+#: documentation/content/en/books/handbook/basics/_index.adoc:1817
 msgid "System calls and error numbers."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1821
+#: documentation/content/en/books/handbook/basics/_index.adoc:1818
 msgid "Functions in the C libraries."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1822
+#: documentation/content/en/books/handbook/basics/_index.adoc:1819
 msgid "Device drivers."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1823
+#: documentation/content/en/books/handbook/basics/_index.adoc:1820
 msgid "File formats."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1824
+#: documentation/content/en/books/handbook/basics/_index.adoc:1821
 msgid "Games and other diversions."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1825
+#: documentation/content/en/books/handbook/basics/_index.adoc:1822
 msgid "Miscellaneous information."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1826
+#: documentation/content/en/books/handbook/basics/_index.adoc:1823
 msgid "System maintenance and operation commands."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1827
+#: documentation/content/en/books/handbook/basics/_index.adoc:1824
 msgid "System kernel interfaces."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1831
+#: documentation/content/en/books/handbook/basics/_index.adoc:1828
 msgid ""
 "In some cases, the same topic may appear in more than one section of the "
 "online manual.  For example, there is a `chmod` user command and a `chmod()` "
@@ -3538,13 +3535,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1835
+#: documentation/content/en/books/handbook/basics/_index.adoc:1832
 #, no-wrap
 msgid "% man 1 chmod\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1839
+#: documentation/content/en/books/handbook/basics/_index.adoc:1836
 msgid ""
 "This will display the manual page for the user command man:chmod[1].  "
 "References to a particular section of the online manual are traditionally "
@@ -3553,34 +3550,34 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1841
+#: documentation/content/en/books/handbook/basics/_index.adoc:1838
 msgid ""
 "If the name of the manual page is unknown, use `man -k` to search for "
 "keywords in the manual page descriptions:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1845
+#: documentation/content/en/books/handbook/basics/_index.adoc:1842
 #, no-wrap
 msgid "% man -k mail\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1849
+#: documentation/content/en/books/handbook/basics/_index.adoc:1846
 msgid ""
 "This command displays a list of commands that have the keyword \"mail\" in "
 "their descriptions.  This is equivalent to using man:apropos[1]."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1851
+#: documentation/content/en/books/handbook/basics/_index.adoc:1848
 msgid ""
 "To read the descriptions for all of the commands in [.filename]#/usr/sbin#, "
 "type:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1856
+#: documentation/content/en/books/handbook/basics/_index.adoc:1853
 #, no-wrap
 msgid ""
 "% cd /usr/sbin\n"
@@ -3588,12 +3585,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1859
+#: documentation/content/en/books/handbook/basics/_index.adoc:1856
 msgid "or"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1864
+#: documentation/content/en/books/handbook/basics/_index.adoc:1861
 #, no-wrap
 msgid ""
 "% cd /usr/sbin\n"
@@ -3601,13 +3598,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/basics/_index.adoc:1867
+#: documentation/content/en/books/handbook/basics/_index.adoc:1864
 #, no-wrap
 msgid "GNU Info Files"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1872
+#: documentation/content/en/books/handbook/basics/_index.adoc:1869
 msgid ""
 "FreeBSD includes several applications and utilities produced by the Free "
 "Software Foundation (FSF).  In addition to manual pages, these programs may "
@@ -3617,18 +3614,18 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1874
+#: documentation/content/en/books/handbook/basics/_index.adoc:1871
 msgid "To use man:info[1], type:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/basics/_index.adoc:1878
+#: documentation/content/en/books/handbook/basics/_index.adoc:1875
 #, no-wrap
 msgid "% info\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/basics/_index.adoc:1881
+#: documentation/content/en/books/handbook/basics/_index.adoc:1878
 msgid ""
 "For a brief introduction, type `h`.  For a quick command reference, type `?`."
 msgstr ""
