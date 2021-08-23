@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-06-08 07:31-0300\n"
+"POT-Creation-Date: 2021-08-23 14:29-0300\n"
 "PO-Revision-Date: 2021-04-05 22:56+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Norwegian Bokmål <https://translate-dev.freebsd.org/projects/"
@@ -4212,26 +4212,25 @@ msgstr ""
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2260
 #, no-wrap
-msgid "fec / loadbalance"
+msgid "loadbalance"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2264
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2263
 msgid ""
-"Cisco(R) Fast EtherChannel(R) (FEC) is found on older Cisco(R) switches.  It "
-"provides a static setup and does not negotiate aggregation with the peer or "
-"exchange frames to monitor the link.  If the switch supports LACP, that "
-"should be used instead."
+"This provides a static setup and does not negotiate aggregation with the "
+"peer or exchange frames to monitor the link.  If the switch supports LACP, "
+"that should be used instead."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2265
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2264
 #, no-wrap
 msgid "lacp"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2270
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2269
 msgid ""
 "The IEEE(R) 802.3ad Link Aggregation Control Protocol (LACP) negotiates a "
 "set of aggregable links with the peer into one or more Link Aggregated "
@@ -4243,7 +4242,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2273
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2272
 msgid ""
 "LACP balances outgoing traffic across the active ports based on hashed "
 "protocol header information and accepts incoming traffic from any active "
@@ -4252,27 +4251,40 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2274
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2273
 #, no-wrap
 msgid "roundrobin"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2277
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2276
 msgid ""
 "This mode distributes outgoing traffic using a round-robin scheduler through "
 "all active ports and accepts incoming traffic from any active port.  Since "
 "this mode violates Ethernet frame ordering, it should be used with caution."
 msgstr ""
 
+#. type: Labeled list
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2277
+#, no-wrap
+msgid "broadcast"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2279
+msgid ""
+"This mode sends outgoing traffic to all ports configured on the lagg "
+"interface, and receives frames on any port."
+msgstr ""
+
 #. type: Title ===
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2278
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2280
 #, no-wrap
 msgid "Configuration Examples"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2282
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2284
 msgid ""
 "This section demonstrates how to configure a Cisco(R) switch and a FreeBSD "
 "system for LACP load balancing.  It then shows how to configure two Ethernet "
@@ -4281,13 +4293,13 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2284
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2286
 #, no-wrap
 msgid "LACP Aggregation with a Cisco(R) Switch"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2290
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2292
 msgid ""
 "This example connects two man:fxp[4] Ethernet interfaces on a FreeBSD "
 "machine to the first two Ethernet ports on a Cisco(R) switch as a single "
@@ -4298,7 +4310,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2293
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2295
 msgid ""
 "Frame ordering is mandatory on Ethernet links and any traffic between two "
 "stations always flows over the same physical link, limiting the maximum "
@@ -4308,14 +4320,14 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2295
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2297
 msgid ""
 "On the Cisco(R) switch, add the _FastEthernet0/1_ and _FastEthernet0/2_ "
 "interfaces to channel group _1_:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2305
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2307
 #, no-wrap
 msgid ""
 "interface FastEthernet0/1\n"
@@ -4328,7 +4340,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2308
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2310
 msgid ""
 "On the FreeBSD system, create the man:lagg[4] interface using the physical "
 "interfaces _fxp0_ and _fxp1_ and bring the interfaces up with an IP address "
@@ -4336,7 +4348,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2315
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2317
 #, no-wrap
 msgid ""
 "# ifconfig fxp0 up\n"
@@ -4346,12 +4358,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2318
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2320
 msgid "Next, verify the status of the virtual interface:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2331
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2333
 #, no-wrap
 msgid ""
 "# ifconfig lagg0\n"
@@ -4367,7 +4379,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2336
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2338
 msgid ""
 "Ports marked as `ACTIVE` are part of the LAG that has been negotiated with "
 "the remote switch.  Traffic will be transmitted and received through these "
@@ -4375,12 +4387,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2338
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2340
 msgid "To see the port status on the Cisco(R) switch:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2345
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2347
 #, no-wrap
 msgid ""
 "switch# show lacp neighbor\n"
@@ -4390,19 +4402,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2347
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2349
 #, no-wrap
 msgid "Channel group 1 neighbors\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2349
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2351
 #, no-wrap
 msgid "Partner's information:\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2354
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2356
 #, no-wrap
 msgid ""
 "                  LACP port                        Oper    Port     Port\n"
@@ -4412,19 +4424,19 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2357
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2359
 msgid "For more detail, type `show lacp neighbor detail`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2359
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2361
 msgid ""
 "To retain this configuration across reboots, add the following entries to [."
 "filename]#/etc/rc.conf# on the FreeBSD system:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2366
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2368
 #, no-wrap
 msgid ""
 "ifconfig_fxp0=\"up\"\n"
@@ -4434,13 +4446,13 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2371
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2373
 #, no-wrap
 msgid "Failover Mode"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2378
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2380
 msgid ""
 "Failover mode can be used to switch over to a secondary interface if the "
 "link is lost on the master interface.  To configure failover, make sure that "
@@ -4451,7 +4463,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2385
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2387
 #, no-wrap
 msgid ""
 "# ifconfig fxp0 up\n"
@@ -4461,13 +4473,13 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2388
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2489
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2390
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2491
 msgid "The virtual interface should look something like this:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2401
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2403
 #, no-wrap
 msgid ""
 "# ifconfig lagg0\n"
@@ -4483,7 +4495,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2406
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2408
 msgid ""
 "Traffic will be transmitted and received on _fxp0_.  If the link is lost on "
 "_fxp0_, _fxp1_ will become the active link.  If the link is restored on the "
@@ -4491,15 +4503,15 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2408
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2512
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2410
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2514
 msgid ""
 "To retain this configuration across reboots, add the following entries to [."
 "filename]#/etc/rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2415
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2417
 #, no-wrap
 msgid ""
 "ifconfig_fxp0=\"up\"\n"
@@ -4509,13 +4521,13 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2420
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2422
 #, no-wrap
 msgid "Failover Mode Between Ethernet and Wireless Interfaces"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2426
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2428
 msgid ""
 "For laptop users, it is usually desirable to configure the wireless device "
 "as a secondary which is only used when the Ethernet connection is not "
@@ -4525,14 +4537,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2428
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2430
 msgid ""
 "This is achieved by overriding the Ethernet interface's MAC address with "
 "that of the wireless interface."
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2434
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2436
 msgid ""
 "In theory, either the Ethernet or wireless MAC address can be changed to "
 "match the other.  However, some popular wireless interfaces lack support for "
@@ -4541,7 +4553,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2441
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2443
 msgid ""
 "If the driver for the wireless interface is not loaded in the `GENERIC` or "
 "custom kernel, and the computer is running FreeBSD {rel121-current}, load "
@@ -4554,17 +4566,30 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2446
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2449
 msgid ""
 "In this example, the Ethernet interface, _re0_, is the master and the "
 "wireless interface, _wlan0_, is the failover.  The _wlan0_ interface was "
 "created from the _ath0_ physical wireless interface, and the Ethernet "
 "interface will be configured with the MAC address of the wireless "
-"interface.  First, determine the MAC address of the wireless interface:"
+"interface.  First, bring the wireless interface up (replacing _FR_ with your "
+"own 2-letter country code), but do not set an IP address.  Replace _wlan0_ "
+"to match the system's wireless interface name:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2461
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2453
+#, no-wrap
+msgid "# ifconfig wlan0 create wlandev ath0 country FR ssid my_router up\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2456
+msgid "Now you can determine the MAC address of the wireless interface:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2471
 #, no-wrap
 msgid ""
 "# ifconfig wlan0\n"
@@ -4582,41 +4607,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2466
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2475
 msgid ""
-"Replace _wlan0_ to match the system's wireless interface name.  The `ether` "
-"line will contain the MAC address of the specified interface.  Now, change "
-"the MAC address of the Ethernet interface:"
+"The `ether` line will contain the MAC address of the specified interface.  "
+"Now, change the MAC address of the Ethernet interface to match:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2470
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2479
 #, no-wrap
 msgid "# ifconfig re0 ether b8:ee:65:5b:32:59\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2473
-msgid ""
-"Bring the wireless interface up (replacing _FR_ with your own 2-letter "
-"country code), but do not set an IP address:"
-msgstr ""
-
-#. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2477
-#, no-wrap
-msgid "# ifconfig wlan0 create wlandev ath0 country FR ssid my_router up\n"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2480
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2482
 msgid ""
 "Make sure the _re0_ interface is up, then create the man:lagg[4] interface "
 "with _re0_ as master with failover to _wlan0_:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2486
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2488
 #, no-wrap
 msgid ""
 "# ifconfig re0 up\n"
@@ -4625,7 +4636,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2502
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2504
 #, no-wrap
 msgid ""
 "# ifconfig lagg0\n"
@@ -4641,18 +4652,18 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2505
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2507
 msgid "Then, start the DHCP client to obtain an IP address:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2509
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2511
 #, no-wrap
 msgid "# dhclient lagg0\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2521
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2523
 #, no-wrap
 msgid ""
 "ifconfig_re0=\"ether b8:ee:65:5b:32:59\"\n"
@@ -4664,13 +4675,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2526
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2528
 #, no-wrap
 msgid "Diskless Operation with PXE"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2532
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2534
 msgid ""
 "The Intel(R) Preboot eXecution Environment (PXE) allows an operating system "
 "to boot over the network.  For example, a FreeBSD system can boot over the "
@@ -4681,7 +4692,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2534
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2536
 msgid ""
 "In order to provide the files needed for an operating system to boot over "
 "the network, a PXE setup also requires properly configured DHCP, TFTP, and "
@@ -4689,24 +4700,24 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2536
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2538
 msgid ""
 "Initial parameters, such as an IP address, executable boot filename and "
 "location, server name, and root path are obtained from the DHCP server."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2537
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2539
 msgid "The operating system loader file is booted using TFTP."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2538
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2540
 msgid "The file systems are loaded using NFS."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2543
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2545
 msgid ""
 "When a computer PXE boots, it receives information over DHCP about where to "
 "obtain the initial boot loader file.  After the host computer receives this "
@@ -4718,7 +4729,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2546
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2548
 msgid ""
 "This section describes how to configure these services on a FreeBSD system "
 "so that other systems can PXE boot into FreeBSD.  Refer to man:diskless[8] "
@@ -4726,20 +4737,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2551
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2553
 msgid ""
 "As described, the system providing these services is insecure.  It should "
 "live in a protected area of a network and be untrusted by other hosts."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2554
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2556
 #, no-wrap
 msgid "Setting Up the PXE Environment"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2560
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2562
 msgid ""
 "The steps shown in this section configure the built-in NFS and TFTP "
 "servers.  The next section demonstrates how to install and configure the "
@@ -4751,7 +4762,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2565
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2567
 msgid ""
 "The command examples below assume use of the man:sh[1] shell.  man:csh[1] "
 "and man:tcsh[1] users will need to start a man:sh[1] shell or adapt the "
@@ -4759,14 +4770,14 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2569
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2571
 msgid ""
 "Create the root directory which will contain a FreeBSD installation to be "
 "NFS mounted:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2574
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2576
 #, no-wrap
 msgid ""
 "# export NFSROOTDIR=/b/tftpboot/FreeBSD/install\n"
@@ -4774,86 +4785,86 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2577
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2579
 msgid "Enable the NFS server by adding this line to [.filename]#/etc/rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2581
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2583
 #, no-wrap
 msgid "nfs_server_enable=\"YES\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2584
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2586
 msgid ""
 "Export the diskless root directory via NFS by adding the following to [."
 "filename]#/etc/exports#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2588
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2590
 #, no-wrap
 msgid "/b -ro -alldirs -maproot=root\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2591
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2593
 msgid "Start the NFS server:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2595
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2597
 #, no-wrap
 msgid "# service nfsd start\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2598
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2600
 msgid ""
 "Enable man:inetd[8] by adding the following line to [.filename]#/etc/rc."
 "conf#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2602
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2604
 #, no-wrap
 msgid "inetd_enable=\"YES\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2605
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2607
 msgid ""
 "Uncomment the following line in [.filename]#/etc/inetd.conf# by making sure "
 "it does not start with a `#` symbol:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2609
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2611
 #, no-wrap
 msgid "tftp dgram udp wait root /usr/libexec/tftpd tftpd -l -s /b/tftpboot\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2615
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2617
 msgid ""
 "Some PXE versions require the TCP version of TFTP.  In this case, uncomment "
 "the second `tftp` line which contains `stream tcp`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2618
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2620
 msgid "Start man:inetd[8]:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2622
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2624
 #, no-wrap
 msgid "# service inetd start\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2625
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2627
 msgid ""
 "Install the base system into [.filename]#${NFSROOTDIR}#, either by "
 "decompressing the official archives or by rebuilding the FreeBSD kernel and "
@@ -4864,14 +4875,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2626
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2628
 msgid ""
 "Test that the TFTP server works and can download the boot loader which will "
 "be obtained via PXE:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2632
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2634
 #, no-wrap
 msgid ""
 "# tftp localhost\n"
@@ -4880,14 +4891,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2635
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2637
 msgid ""
 "Edit [.filename]#${NFSROOTDIR}/etc/fstab# and create an entry to mount the "
 "root file system over NFS:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2640
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2642
 #, no-wrap
 msgid ""
 "# Device                                         Mountpoint    FSType   Options  Dump Pass\n"
@@ -4895,7 +4906,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2644
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2646
 msgid ""
 "Replace _myhost.example.com_ with the hostname or IP address of the NFS "
 "server.  In this example, the root file system is mounted read-only in order "
@@ -4904,14 +4915,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2645
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2647
 msgid ""
 "Set the root password in the PXE environment for client machines which are "
 "PXE booting :"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2650
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2652
 #, no-wrap
 msgid ""
 "# chroot ${NFSROOTDIR}\n"
@@ -4919,7 +4930,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2653
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2655
 msgid ""
 "If needed, enable man:ssh[1] root logins for client machines which are PXE "
 "booting by editing [.filename]#${NFSROOTDIR}/etc/ssh/sshd_config# and "
@@ -4927,7 +4938,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2654
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2656
 msgid ""
 "Perform any other needed customizations of the PXE environment in [."
 "filename]#${NFSROOTDIR}#. These customizations could include things like "
@@ -4935,7 +4946,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2657
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2659
 msgid ""
 "When booting from an NFS root volume, [.filename]#/etc/rc# detects the NFS "
 "boot and runs [.filename]#/etc/rc.initdiskless#.  In this case, [.filename]#/"
@@ -4944,7 +4955,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2664
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2666
 #, no-wrap
 msgid ""
 "# chroot ${NFSROOTDIR}\n"
@@ -4954,7 +4965,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2669
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2671
 msgid ""
 "When the system boots, memory file systems for [.filename]#/etc# and [."
 "filename]#/var# will be created and mounted and the contents of the [."
@@ -4969,27 +4980,27 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2671
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2673
 #, no-wrap
 msgid "Configuring the DHCP Server"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2674
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2676
 msgid ""
 "The DHCP server does not need to be the same machine as the TFTP and NFS "
 "server, but it needs to be accessible in the network."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2676
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2678
 msgid ""
 "DHCP is not part of the FreeBSD base system but can be installed using the "
 "package:net/isc-dhcp43-server[] port or package."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2679
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2681
 msgid ""
 "Once installed, edit the configuration file, [.filename]#/usr/local/etc/"
 "dhcpd.conf#.  Configure the `next-server`, `filename`, and `root-path` "
@@ -4997,7 +5008,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2689
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2691
 #, no-wrap
 msgid ""
 "subnet 192.168.0.0 netmask 255.255.255.0 {\n"
@@ -5010,7 +5021,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2692
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2694
 #, no-wrap
 msgid ""
 "   # IP address of TFTP server\n"
@@ -5018,7 +5029,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2695
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2697
 #, no-wrap
 msgid ""
 "   # path of boot loader obtained via tftp\n"
@@ -5026,7 +5037,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2698
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2700
 #, no-wrap
 msgid ""
 "   # pxeboot boot loader will try to NFS mount this directory for root FS\n"
@@ -5034,20 +5045,20 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2700
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2702
 #, no-wrap
 msgid "}\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2703
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2705
 msgid ""
 "The `next-server` directive is used to specify the IP address of the TFTP "
 "server."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2706
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2708
 msgid ""
 "The `filename` directive defines the path to [.filename]#/boot/pxeboot#.  A "
 "relative filename is used, meaning that [.filename]#/b/tftpboot# is not "
@@ -5055,42 +5066,42 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2708
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2710
 msgid "The `root-path` option defines the path to the NFS root file system."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2710
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2712
 msgid ""
 "Once the edits are saved, enable DHCP at boot time by adding the following "
 "line to [.filename]#/etc/rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2714
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2716
 #, no-wrap
 msgid "dhcpd_enable=\"YES\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2717
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2719
 msgid "Then start the DHCP service:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2721
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2723
 #, no-wrap
 msgid "# service isc-dhcpd start\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2723
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2725
 #, no-wrap
 msgid "Debugging PXE Problems"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2727
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2729
 msgid ""
 "Once all of the services are configured and started, PXE clients should be "
 "able to automatically load FreeBSD over the network.  If a particular client "
@@ -5099,14 +5110,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2729
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2731
 msgid ""
 "This section describes some troubleshooting tips for isolating the source of "
 "the configuration problem should no clients be able to PXE boot."
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2733
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2735
 msgid ""
 "Use the package:net/wireshark[] package or port to debug the network traffic "
 "involved during the PXE booting process, which is illustrated in the diagram "
@@ -5114,42 +5125,42 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2734
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2736
 #, no-wrap
 msgid "PXE Booting Process with NFS Root Mount"
 msgstr ""
 
 #. type: Target for macro image
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2735
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2737
 #, no-wrap
 msgid "pxe-nfs.png"
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2738
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2740
 msgid "Client broadcasts a DHCPDISCOVER message."
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2740
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2742
 msgid ""
 "The DHCP server responds with the IP address, next-server, filename, and "
 "root-path values."
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2742
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2744
 msgid ""
 "The client sends a TFTP request to next-server, asking to retrieve filename."
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2744
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2746
 msgid "The TFTP server responds and sends filename to client."
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2746
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2748
 msgid ""
 "The client executes filename, which is pxeboot(8), which then loads the "
 "kernel. When the kernel executes, the root file system specified by root-"
@@ -5157,7 +5168,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2748
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2750
 msgid ""
 "On the TFTP server, read [.filename]#/var/log/xferlog# to ensure that [."
 "filename]#pxeboot# is being retrieved from the correct location. To test "
@@ -5165,7 +5176,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2754
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2756
 #, no-wrap
 msgid ""
 "# tftp 192.168.0.1\n"
@@ -5174,40 +5185,40 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2757
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2759
 msgid ""
 "The `BUGS` sections in man:tftpd[8] and man:tftp[1] document some "
 "limitations with TFTP."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2758
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2760
 msgid ""
 "Make sure that the root file system can be mounted via NFS. To test this "
 "example configuration:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2762
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2764
 #, no-wrap
 msgid "# mount -t nfs 192.168.0.1:/b/tftpboot/FreeBSD/install /mnt\n"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2766
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2768
 #, no-wrap
 msgid "IPv6"
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2770
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2772
 msgid ""
 "IPv6 is the new version of the well known IP protocol, also known as IPv4.  "
 "IPv6 provides several advantages over IPv4 as well as many new features:"
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2772
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2774
 msgid ""
 "Its 128-bit address space allows for "
 "340,282,366,920,938,463,463,374,607,431,768,211,456 addresses. This "
@@ -5215,7 +5226,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2773
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2775
 msgid ""
 "Routers only store network aggregation addresses in their routing tables, "
 "thus reducing the average space of a routing table to 8192 entries. This "
@@ -5225,38 +5236,38 @@ msgid ""
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2775
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2777
 msgid ""
 "Address autoconfiguration (http://www.ietf.org/rfc/rfc2462.txt[RFC2462])."
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2776
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2778
 msgid "Mandatory multicast addresses."
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2777
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2779
 msgid "Built-in IPsec (IP security)."
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2778
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2780
 msgid "Simplified header structure."
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2779
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2781
 msgid "Support for mobile IP."
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2780
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2782
 msgid "IPv6-to-IPv4 transition mechanisms."
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2783
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2785
 msgid ""
 "FreeBSD includes the http://www.kame.net/[http://www.kame.net/] IPv6 "
 "reference implementation and comes with everything needed to use IPv6.  This "
@@ -5264,37 +5275,37 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2784
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2786
 #, no-wrap
 msgid "Background on IPv6 Addresses"
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2787
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2789
 msgid "There are three different types of IPv6 addresses:"
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2788
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2790
 #, no-wrap
 msgid "Unicast"
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2790
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2792
 msgid ""
 "A packet sent to a unicast address arrives at the interface belonging to the "
 "address."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2791
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2793
 #, no-wrap
 msgid "Anycast"
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2795
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2797
 msgid ""
 "These addresses are syntactically indistinguishable from unicast addresses "
 "but they address a group of interfaces.  The packet destined for an anycast "
@@ -5303,13 +5314,13 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2796
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2798
 #, no-wrap
 msgid "Multicast"
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2800
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2802
 msgid ""
 "These addresses identify a group of interfaces.  A packet destined for a "
 "multicast address will arrive at all interfaces belonging to the multicast "
@@ -5318,7 +5329,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2803
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2805
 msgid ""
 "When reading an IPv6 address, the canonical form is represented as `x:x:x:x:"
 "x:x:x:x`, where each `x` represents a 16 bit hex value.  An example is `FEBC:"
@@ -5326,7 +5337,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2808
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2810
 msgid ""
 "Often, an address will have long substrings of all zeros.  A `::` (double "
 "colon) can be used to replace one substring per address.  Also, up to three "
@@ -5335,7 +5346,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2811
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2813
 msgid ""
 "A third form is to write the last 32 bits using the well known IPv4 "
 "notation.  For example, `2002::10.0.0.1` corresponds to the hexadecimal "
@@ -5344,18 +5355,18 @@ msgid ""
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2813
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2815
 msgid "To view a FreeBSD system's IPv6 address, use man:ifconfig[8]:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2817
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2819
 #, no-wrap
 msgid "# ifconfig\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2827
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2829
 #, no-wrap
 msgid ""
 "rl0: flags=8943<UP,BROADCAST,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500\n"
@@ -5367,7 +5378,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2830
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2832
 msgid ""
 "In this example, the [.filename]#rl0# interface is using `fe80::200:21ff:"
 "fe03:8e1%rl0`, an auto-configured link-local address which was automatically "
@@ -5375,20 +5386,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2833
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2835
 msgid ""
 "Some IPv6 addresses are reserved.  A summary of these reserved addresses is "
 "seen in <<reservedip6>>:"
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2835
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2837
 #, no-wrap
 msgid "Reserved IPv6 Addresses"
 msgstr ""
 
 #. type: Table
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2882
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2884
 #, no-wrap
 msgid ""
 "| IPv6 address\n"
@@ -5438,27 +5449,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2885
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2887
 msgid ""
 "For further information on the structure of IPv6 addresses, refer to http://"
 "www.ietf.org/rfc/rfc3513.txt[RFC3513]."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2886
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2888
 #, no-wrap
 msgid "Configuring IPv6"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2889
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2891
 msgid ""
 "To configure a FreeBSD system as an IPv6 client, add these two lines to [."
 "filename]#rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2894
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2896
 #, no-wrap
 msgid ""
 "ifconfig_rl0_ipv6=\"inet6 accept_rtadv\"\n"
@@ -5466,7 +5477,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2898
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2900
 msgid ""
 "The first line enables the specified interface to receive router "
 "advertisement messages.  The second line enables the router solicitation "
@@ -5474,62 +5485,62 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2900
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2902
 msgid ""
 "If the interface needs a statically assigned IPv6 address, add an entry to "
 "specify the static address and associated prefix length:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2904
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2906
 #, no-wrap
 msgid "ifconfig_rl0_ipv6=\"inet6 2001:db8:4672:6565:2026:5043:2d42:5344 prefixlen 64\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2907
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2909
 msgid "To assign a default router, specify its address:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2911
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2913
 #, no-wrap
 msgid "ipv6_defaultrouter=\"2001:db8:4672:6565::1\"\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2913
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2915
 #, no-wrap
 msgid "Connecting to a Provider"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2916
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2918
 msgid ""
 "In order to connect to other IPv6 networks, one must have a provider or a "
 "tunnel that supports IPv6:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2918
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2920
 msgid "Contact an Internet Service Provider to see if they offer IPv6."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2919
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2921
 msgid ""
 "http://www.tunnelbroker.net[Hurricane Electric] offers tunnels with end-"
 "points all around the globe."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2923
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2925
 msgid ""
 "Install the package:net/freenet6[] package or port for a dial-up connection."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2926
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2928
 msgid ""
 "This section demonstrates how to take the directions from a tunnel provider "
 "and convert them into [.filename]#/etc/rc.conf# settings that will persist "
@@ -5537,20 +5548,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2928
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2930
 msgid ""
 "The first [.filename]#/etc/rc.conf# entry creates the generic tunneling "
 "interface [.filename]#gif0#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2932
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2934
 #, no-wrap
 msgid "cloned_interfaces=\"gif0\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2936
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2938
 msgid ""
 "Next, configure that interface with the IPv4 addresses of the local and "
 "remote endpoints.  Replace `_MY_IPv4_ADDR_` and `_REMOTE_IPv4_ADDR_` with "
@@ -5558,13 +5569,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2940
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2942
 #, no-wrap
 msgid "create_args_gif0=\"tunnel MY_IPv4_ADDR REMOTE_IPv4_ADDR\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2943
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2945
 msgid ""
 "To apply the IPv6 address that has been assigned for use as the IPv6 tunnel "
 "endpoint, add this line, replacing `_MY_ASSIGNED_IPv6_TUNNEL_ENDPOINT_ADDR_` "
@@ -5572,13 +5583,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2947
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2949
 #, no-wrap
 msgid "ifconfig_gif0_ipv6=\"inet6 MY_ASSIGNED_IPv6_TUNNEL_ENDPOINT_ADDR\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2951
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2953
 msgid ""
 "Then, set the default route for the other side of the IPv6 tunnel.  Replace "
 "`_MY_IPv6_REMOTE_TUNNEL_ENDPOINT_ADDR_` with the default gateway address "
@@ -5586,71 +5597,71 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2955
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2957
 #, no-wrap
 msgid "ipv6_defaultrouter=\"MY_IPv6_REMOTE_TUNNEL_ENDPOINT_ADDR\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2958
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2960
 msgid ""
 "If the FreeBSD system will route IPv6 packets between the rest of the "
 "network and the world, enable the gateway using this line:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2962
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2964
 #, no-wrap
 msgid "ipv6_gateway_enable=\"YES\"\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2964
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2966
 #, no-wrap
 msgid "Router Advertisement and Host Auto Configuration"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2967
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2969
 msgid ""
 "This section demonstrates how to setup man:rtadvd[8] to advertise the IPv6 "
 "default route."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2969
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2971
 msgid ""
 "To enable man:rtadvd[8], add the following to [.filename]#/etc/rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2973
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2975
 #, no-wrap
 msgid "rtadvd_enable=\"YES\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2977
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2979
 msgid ""
 "It is important to specify the interface on which to do IPv6 router "
 "advertisement.  For example, to tell man:rtadvd[8] to use [.filename]#rl0#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2981
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2983
 #, no-wrap
 msgid "rtadvd_interfaces=\"rl0\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2984
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2986
 msgid ""
 "Next, create the configuration file, [.filename]#/etc/rtadvd.conf# as seen "
 "in this example:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2989
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2991
 #, no-wrap
 msgid ""
 "rl0:\\\n"
@@ -5658,27 +5669,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2992
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2994
 msgid ""
 "Replace [.filename]#rl0# with the interface to be used and `2001:"
 "db8:1f11:246::` with the prefix of the allocation."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2995
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2997
 msgid ""
 "For a dedicated `/64` subnet, nothing else needs to be changed.  Otherwise, "
 "change the `prefixlen#` to the correct value."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2996
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2998
 #, no-wrap
 msgid "IPv6 and IPv6 Address Mapping"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3001
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3003
 msgid ""
 "When IPv6 is enabled on a server, there may be a need to enable IPv4 mapped "
 "IPv6 address communication.  This compatibility option allows for IPv4 "
@@ -5687,7 +5698,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3006
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3008
 msgid ""
 "This option may not be required in most cases and is available only for "
 "compatibility.  This option will allow IPv6-only applications to work with "
@@ -5697,26 +5708,26 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3010
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3012
 #, no-wrap
 msgid "ipv6_ipv4mapping=\"YES\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3013
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3015
 msgid ""
 "Reviewing the information in RFC 3493, section 3.6 and 3.7 as well as RFC "
 "4038 section 4.2 may be useful to some administrators."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3015
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3017
 #, no-wrap
 msgid "Common Address Redundancy Protocol (CARP)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3019
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3021
 msgid ""
 "The Common Address Redundancy Protocol (CARP) allows multiple hosts to share "
 "the same IP address and Virtual Host ID (VHID) in order to provide _high "
@@ -5726,7 +5737,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3023
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3025
 msgid ""
 "In addition to the shared IP address, each host has its own IP address for "
 "management and configuration.  All of the machines that share an IP address "
@@ -5735,7 +5746,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3026
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3028
 msgid ""
 "High availability using CARP is built into FreeBSD, though the steps to "
 "configure it vary slightly depending upon the FreeBSD version.  This section "
@@ -5744,7 +5755,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3029
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3031
 msgid ""
 "This example configures failover support with three hosts, all with unique "
 "IP addresses, but providing the same web content.  It has two different "
@@ -5753,7 +5764,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3036
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3038
 msgid ""
 "These machines are load balanced with a Round Robin DNS configuration.  The "
 "master and backup machines are configured identically except for their "
@@ -5767,40 +5778,40 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3038
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3040
 #, no-wrap
 msgid "Using CARP on FreeBSD 10 and Later"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3041
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3043
 msgid ""
 "Enable boot-time support for CARP by adding an entry for the [."
 "filename]#carp.ko# kernel module in [.filename]#/boot/loader.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3045
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3047
 #, no-wrap
 msgid "carp_load=\"YES\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3048
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3129
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3050
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3131
 msgid "To load the module now without rebooting:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3052
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3133
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3054
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3135
 #, no-wrap
 msgid "# kldload carp\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3055
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3136
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3057
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3138
 msgid ""
 "For users who prefer to use a custom kernel, include the following line in "
 "the custom kernel configuration file and compile the kernel as described in "
@@ -5808,14 +5819,14 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3059
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3140
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3061
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3142
 #, no-wrap
 msgid "device\tcarp\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3062
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3064
 msgid ""
 "The hostname, management IP address and subnet mask, shared IP address, and "
 "VHID are all set by adding entries to [.filename]#/etc/rc.conf#. This "
@@ -5823,7 +5834,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3068
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3070
 #, no-wrap
 msgid ""
 "hostname=\"hosta.example.org\"\n"
@@ -5832,7 +5843,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3073
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3075
 msgid ""
 "The next set of entries are for `hostb.example.org`.  Since it represents a "
 "second master, it uses a different shared IP address and VHID.  However, the "
@@ -5841,7 +5852,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3079
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3081
 #, no-wrap
 msgid ""
 "hostname=\"hostb.example.org\"\n"
@@ -5850,7 +5861,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3084
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3086
 msgid ""
 "The third machine, `hostc.example.org`, is configured to handle failover "
 "from either master.  This machine is configured with two CARPVHIDs, one to "
@@ -5861,7 +5872,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3091
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3093
 #, no-wrap
 msgid ""
 "hostname=\"hostc.example.org\"\n"
@@ -5871,7 +5882,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3095
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3097
 msgid ""
 "Having two CARPVHIDs configured means that `hostc.example.org` will notice "
 "if either of the master servers becomes unavailable.  If a master fails to "
@@ -5880,7 +5891,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3102
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3104
 msgid ""
 "If the original master server becomes available again, `hostc.example.org` "
 "will not release the virtual IP address back to it automatically.  For this "
@@ -5891,21 +5902,21 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3106
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3108
 #, no-wrap
 msgid "# ifconfig em0 vhid 1 state backup\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3112
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3198
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3114
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3200
 msgid ""
 "Once the configuration is complete, either restart networking or reboot each "
 "system.  High availability is now enabled."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3115
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3117
 msgid ""
 "CARP functionality can be controlled via several man:sysctl[8] variables "
 "documented in the man:carp[4] manual pages.  Other actions can be triggered "
@@ -5913,13 +5924,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3117
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3119
 #, no-wrap
 msgid "Using CARP on FreeBSD 9 and Earlier"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3120
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3122
 msgid ""
 "The configuration for these versions of FreeBSD is similar to the one "
 "described in the previous section, except that a CARP device must first be "
@@ -5927,31 +5938,31 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3122
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3124
 msgid ""
 "Enable boot-time support for CARP by loading the [.filename]#if_carp.ko# "
 "kernel module in [.filename]#/boot/loader.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3126
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3128
 #, no-wrap
 msgid "if_carp_load=\"YES\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3143
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3145
 msgid "Next, on each host, create a CARP device:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3147
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3149
 #, no-wrap
 msgid "# ifconfig carp0 create\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3152
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3154
 msgid ""
 "Set the hostname, management IP address, the shared IP address, and VHID by "
 "adding the required lines to [.filename]#/etc/rc.conf#.  Since a virtual "
@@ -5960,7 +5971,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3159
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3161
 #, no-wrap
 msgid ""
 "hostname=\"hosta.example.org\"\n"
@@ -5970,12 +5981,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3162
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3164
 msgid "On `hostb.example.org`:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3169
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3171
 #, no-wrap
 msgid ""
 "hostname=\"hostb.example.org\"\n"
@@ -5985,14 +5996,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3172
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3174
 msgid ""
 "The third machine, `hostc.example.org`, is configured to handle failover "
 "from either of the master hosts:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3180
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3182
 #, no-wrap
 msgid ""
 "hostname=\"hostc.example.org\"\n"
@@ -6003,7 +6014,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3187
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3189
 msgid ""
 "Preemption is disabled in the [.filename]#GENERIC# FreeBSD kernel.  If "
 "preemption has been enabled with a custom kernel, `hostc.example.org` may "
@@ -6013,26 +6024,26 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3191
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3193
 #, no-wrap
 msgid "# ifconfig carp0 down && ifconfig carp0 up\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3194
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3196
 msgid ""
 "This should be done on the [.filename]#carp# interface which corresponds to "
 "the correct host."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3200
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3202
 #, no-wrap
 msgid "VLANs"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3204
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3206
 msgid ""
 "VLANs are a way of virtually dividing up a network into many different "
 "subnetworks, also referred to as segmenting.  Each segment will have its own "
@@ -6040,34 +6051,34 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3207
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3209
 msgid ""
 "On FreeBSD, VLANs must be supported by the network card driver.  To see "
 "which drivers support vlans, refer to the man:vlan[4] manual page."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3210
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3212
 msgid ""
 "When configuring a VLAN, a couple pieces of information must be known.  "
 "First, which network interface? Second, what is the VLAN tag?"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3212
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3214
 msgid ""
 "To configure VLANs at run time, with a NIC of `em0` and a VLAN tag of `5` "
 "the command would look like this:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3216
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3218
 #, no-wrap
 msgid "# ifconfig em0.5 create vlan 5 vlandev em0 inet 192.168.20.20/24\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3221
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3223
 msgid ""
 "See how the interface name includes the NIC driver name and the VLAN tag, "
 "separated by a period? This is a best practice to make maintaining the VLAN "
@@ -6075,14 +6086,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3225
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3227
 msgid ""
 "To configure VLANs at boot time, [.filename]#/etc/rc.conf# must be updated.  "
 "To duplicate the configuration above, the following will need to be added:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3230
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3232
 #, no-wrap
 msgid ""
 "vlans_em0=\"5\"\n"
@@ -6090,7 +6101,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3233
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3235
 msgid ""
 "Additional VLANs may be added, by simply adding the tag to the `vlans_em0` "
 "field and adding an additional line configuring the network on that VLAN "
@@ -6098,7 +6109,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3237
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3239
 msgid ""
 "It is useful to assign a symbolic name to an interface so that when the "
 "associated hardware is changed, only a few configuration variables need to "
@@ -6109,7 +6120,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3239
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3241
 msgid ""
 "To configure VLAN `5`, on the NIC `em0`, assign the interface name "
 "`cameras`, and assign the interface an IP address of `_192.168.20.20_` with "
@@ -6117,31 +6128,31 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3243
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3245
 #, no-wrap
 msgid "# ifconfig em0.5 create vlan 5 vlandev em0 name cameras inet 192.168.20.20/24\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3246
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3248
 msgid "For an interface named `video`, use the following:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3250
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3252
 #, no-wrap
 msgid "# ifconfig video.5 create vlan 5 vlandev video name cameras inet 192.168.20.20/24\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3253
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3255
 msgid ""
 "To apply the changes at boot time, add the following lines to [.filename]#/"
 "etc/rc.conf#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3259
+#: documentation/content/en/books/handbook/advanced-networking/_index.adoc:3261
 #, no-wrap
 msgid ""
 "vlans_video=\"cameras\"\n"
