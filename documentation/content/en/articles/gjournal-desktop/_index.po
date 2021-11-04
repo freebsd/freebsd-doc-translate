@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-05-22 14:49-0300\n"
+"POT-Creation-Date: 2021-11-04 20:26-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,12 +24,20 @@ msgid "Implementing UFS Journaling on a Desktop PC"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:53
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:31
+msgid ""
+"include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
+"{{% lang %}}/teams.adoc[] include::shared/{{% lang %}}/mailing-lists.adoc[] "
+"include::shared/{{% lang %}}/urls.adoc[]"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:44
 msgid "Abstract"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:59
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:50
 msgid ""
 "A journaling file system uses a log to record all transactions that take "
 "place in the file system, and preserves its integrity in the event of a "
@@ -45,18 +53,18 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:61
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:52
 msgid "'''"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:65
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:56
 #, no-wrap
 msgid "Introduction"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:70
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:61
 msgid ""
 "While professional servers are usually well protected from unforeseen "
 "shutdowns, the typical desktop is at the mercy of power failures, accidental "
@@ -68,7 +76,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:72
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:63
 msgid ""
 "The new journaling capability provided by GEOM can greatly assist in such "
 "scenarios, by virtually eliminating the time required for file system "
@@ -77,7 +85,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:76
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:67
 msgid ""
 "This article describes a procedure for implementing UFS journaling on a "
 "typical desktop PC scenario (one hard disk used for both operating system "
@@ -87,75 +95,75 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:78
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:69
 msgid "After reading this article, you will know:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:80
-msgid "How to reserve space for journaling during a new installation of FreeBSD."
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:71
+msgid ""
+"How to reserve space for journaling during a new installation of FreeBSD."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:81
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:72
 msgid ""
 "How to load and enable the `geom_journal` module (or build support for it in "
 "your custom kernel)."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:82
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:73
 msgid ""
 "How to convert your existing file systems to utilize journaling, and what "
 "options to use in [.filename]#/etc/fstab# to mount them."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:83
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:74
 msgid "How to implement journaling in new (empty) partitions."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:84
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:75
 msgid "How to troubleshoot common problems associated with journaling."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:86
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:77
 msgid "Before reading this article, you should be able to:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:88
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:79
 msgid "Understand basic UNIX(R) and FreeBSD concepts."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:89
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:80
 msgid ""
 "Be familiar with the installation procedure of FreeBSD and the sysinstall "
 "utility."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:95
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:86
 msgid ""
 "The procedure described here is intended for preparing a new installation "
 "where no actual user data is stored on the disk yet.  While it is possible "
 "to modify and extend this procedure for systems already in production, you "
 "should _backup_ all important data before doing so.  Messing around with "
-"disks and partitions at a low level can lead to fatal mistakes and data "
-"loss."
+"disks and partitions at a low level can lead to fatal mistakes and data loss."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:98
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:89
 #, no-wrap
 msgid "Understanding Journaling in FreeBSD"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:102
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:93
 msgid ""
 "The journaling provided by GEOM in FreeBSD 7._X_ is not file system specific "
 "(unlike for example the ext3 file system in Linux(R)) but is functioning at "
@@ -164,7 +172,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:106
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:97
 msgid ""
 "This functionality is provided by loading the [.filename]#geom_journal.ko# "
 "module into the kernel (or building it into a custom kernel) and using the "
@@ -174,7 +182,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:113
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:104
 msgid ""
 "When a file system is journaled, some disk space is needed to keep the "
 "journal itself.  The disk space that holds the actual data is referred to as "
@@ -188,30 +196,29 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:115
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:106
 msgid ""
-"You wish to journal your [.filename]#/usr# file system, stored in "
-"[.filename]#/dev/ad0s1f# (which already contains data)."
+"You wish to journal your [.filename]#/usr# file system, stored in [."
+"filename]#/dev/ad0s1f# (which already contains data)."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:116
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:107
 msgid ""
-"You reserved some free disk space in a partition in "
-"[.filename]#/dev/ad0s1g#."
+"You reserved some free disk space in a partition in [.filename]#/dev/ad0s1g#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:117
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:108
 msgid ""
 "Using `gjournal`, a new [.filename]#/dev/ad0s1f.journal# device is created "
-"where [.filename]#/dev/ad0s1f# is the data provider, and "
-"[.filename]#/dev/ad0s1g# is the journal provider. This new device is then "
-"used for all subsequent file operations."
+"where [.filename]#/dev/ad0s1f# is the data provider, and [.filename]#/dev/"
+"ad0s1g# is the journal provider. This new device is then used for all "
+"subsequent file operations."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:121
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:112
 msgid ""
 "The amount of disk space you need to reserve for the journal provider "
 "depends on the usage load of the file system and not on the size of the data "
@@ -223,7 +230,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:128
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:119
 msgid ""
 "The journal sizes suggested here, are highly unlikely to cause problems in "
 "typical desktop use (such as web browsing, word processing and playback of "
@@ -235,26 +242,26 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:131
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:122
 msgid ""
-"For more information about journaling, please read the manual page of "
-"man:gjournal[8]."
+"For more information about journaling, please read the manual page of man:"
+"gjournal[8]."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:133
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:124
 #, no-wrap
 msgid "Steps During the Installation of FreeBSD"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:135
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:126
 #, no-wrap
 msgid "Reserving Space for Journaling"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:139
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:130
 msgid ""
 "A typical desktop machine usually has one hard disk that stores both the OS "
 "and user data.  Arguably, the default partitioning scheme selected by "
@@ -265,7 +272,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:143
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:134
 msgid ""
 "The default partitioning (the one obtained by pressing kbd:[A] at the "
 "FreeBSD partition editor, called Disklabel) does not leave any unallocated "
@@ -276,56 +283,56 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:146
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:137
 msgid ""
 "In our example, an 80 GB disk is used.  The following screenshot shows the "
 "default partitions created by Disklabel during installation:"
 msgstr ""
 
 #. type: Target for macro image
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:147
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:138
 #, no-wrap
 msgid "disklabel1.png"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:151
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:142
 msgid ""
 "If this is more or less what you need, it is very easy to adjust for "
-"journaling.  Simply use the arrow keys to move the highlight to the "
-"[.filename]#/usr# partition and press kbd:[D] to delete it."
+"journaling.  Simply use the arrow keys to move the highlight to the [."
+"filename]#/usr# partition and press kbd:[D] to delete it."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:155
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:146
 msgid ""
 "Now, move the highlight to the disk name at the top of the screen and press "
 "kbd:[C] to create a new partition for [.filename]#/usr#.  This new partition "
 "should be smaller by 1 GB (if you intend to journal [.filename]#/usr# only), "
-"or 2 GB (if you intend to journal both [.filename]#/usr# and "
-"[.filename]#/var#).  From the pop-up that appears, opt to create a file "
-"system, and type [.filename]#/usr# as the mount point."
+"or 2 GB (if you intend to journal both [.filename]#/usr# and [.filename]#/"
+"var#).  From the pop-up that appears, opt to create a file system, and type "
+"[.filename]#/usr# as the mount point."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:161
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:152
 msgid ""
 "Should you journal the [.filename]#/var# partition? Normally, journaling "
-"makes sense on quite large partitions.  You may decide not to journal "
-"[.filename]#/var#, although doing so on a typical desktop will cause no "
-"harm.  If the file system is lightly used (quite probable for a desktop) you "
-"may wish to allocate less disk space for its journal."
+"makes sense on quite large partitions.  You may decide not to journal [."
+"filename]#/var#, although doing so on a typical desktop will cause no harm.  "
+"If the file system is lightly used (quite probable for a desktop) you may "
+"wish to allocate less disk space for its journal."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:164
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:155
 msgid ""
 "In our example, we journal both [.filename]#/usr# and [.filename]#/var#.  "
 "You may of course adjust the procedure to your own needs."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:170
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:161
 msgid ""
 "To keep things as easy going as possible, we are going to use sysinstall to "
 "create the partitions required for journaling.  However, during "
@@ -337,7 +344,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:174
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:165
 msgid ""
 "To avoid these problems with sysinstall, we are going to create the journal "
 "partitions as swap space.  Swap is never mounted, and sysinstall has no "
@@ -347,7 +354,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:180
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:171
 msgid ""
 "To create the swap, again use the arrow keys to move the highlight to the "
 "top of Disklabel screen, so that the disk name itself is highlighted.  Then "
@@ -359,13 +366,13 @@ msgid ""
 msgstr ""
 
 #. type: Target for macro image
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:181
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:172
 #, no-wrap
 msgid "disklabel2.png"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:186
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:177
 msgid ""
 "When you have completed creating the partitions, we suggest you write down "
 "the partition names, and mount points, so you can easily refer to this "
@@ -375,13 +382,13 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:187
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:178
 #, no-wrap
 msgid "Partitions and Journals"
 msgstr ""
 
 #. type: Table
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:201
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:192
 #, no-wrap
 msgid ""
 "| Partition\n"
@@ -398,7 +405,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:205
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:196
 msgid ""
 "Continue the installation as you would normally do.  We would however "
 "suggest you postpone installation of third party software (packages) until "
@@ -406,40 +413,41 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:207
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:198
 #, no-wrap
 msgid "Booting for the first time"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:212
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:203
 msgid ""
-"Your system will come up normally, but you will need to edit "
-"[.filename]#/etc/fstab# and remove the extra swap partitions you created for "
-"the journals.  Normally, the swap partition you will actually use is the one "
+"Your system will come up normally, but you will need to edit [.filename]#/"
+"etc/fstab# and remove the extra swap partitions you created for the "
+"journals.  Normally, the swap partition you will actually use is the one "
 "with the \"b\" suffix (i.e. ad0s1b in our example).  Remove all other swap "
 "space entries and reboot so that FreeBSD will stop using them."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:214
-msgid "When the system comes up again, we will be ready to configure journaling."
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:205
+msgid ""
+"When the system comes up again, we will be ready to configure journaling."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:216
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:207
 #, no-wrap
 msgid "Setting Up Journaling"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:219
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:210
 #, no-wrap
 msgid "Executing `gjournal`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:223
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:214
 msgid ""
 "Having prepared all the required partitions, it is quite easy to configure "
 "journaling.  We will need to switch to single user mode, so login as `root` "
@@ -447,51 +455,51 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:227
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:445
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:218
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:436
 #, no-wrap
 msgid "# shutdown now\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:231
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:222
 msgid ""
 "Press kbd:[Enter] to get the default shell.  We will need to unmount the "
-"partitions that will be journaled, in our example [.filename]#/usr# and "
-"[.filename]#/var#:"
+"partitions that will be journaled, in our example [.filename]#/usr# and [."
+"filename]#/var#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:235
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:452
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:226
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:443
 #, no-wrap
 msgid "# umount /usr /var\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:238
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:229
 msgid "Load the module required for journaling:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:242
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:417
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:233
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:408
 #, no-wrap
 msgid "# gjournal load\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:247
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:238
 msgid ""
 "Now, use your notes to determine which partition will be used for each "
 "journal.  In our example, [.filename]#/usr# is [.filename]#ad0s1f# and its "
-"journal will be [.filename]#ad0s1g#, while [.filename]#/var# is "
-"[.filename]#ad0s1d# and will be journaled to [.filename]#ad0s1h#.  The "
+"journal will be [.filename]#ad0s1g#, while [.filename]#/var# is [."
+"filename]#ad0s1d# and will be journaled to [.filename]#ad0s1h#.  The "
 "following commands are required:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:253
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:244
 #, no-wrap
 msgid ""
 "# gjournal label ad0s1f ad0s1g\n"
@@ -500,7 +508,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:257
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:248
 #, no-wrap
 msgid ""
 "# gjournal label ad0s1d ad0s1h\n"
@@ -509,7 +517,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:263
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:254
 msgid ""
 "If the last sector of either partition is used, `gjournal` will return an "
 "error.  You will have to run the command using the `-f` flag to force an "
@@ -517,30 +525,29 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:267
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:258
 #, no-wrap
 msgid "# gjournal label -f ad0s1d ad0s1h\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:270
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:261
 msgid ""
 "Since this is a new installation, it is highly unlikely that anything will "
 "be actually overwritten."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:275
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:266
 msgid ""
-"At this point, two new devices are created, namely "
-"[.filename]#ad0s1d.journal# and [.filename]#ad0s1f.journal#.  These "
-"represent the [.filename]#/var# and [.filename]#/usr# partitions we have to "
-"mount.  Before mounting, we must however set the journal flag on them and "
-"clear the Soft Updates flag:"
+"At this point, two new devices are created, namely [.filename]#ad0s1d."
+"journal# and [.filename]#ad0s1f.journal#.  These represent the [.filename]#/"
+"var# and [.filename]#/usr# partitions we have to mount.  Before mounting, we "
+"must however set the journal flag on them and clear the Soft Updates flag:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:281
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:272
 #, no-wrap
 msgid ""
 "# tunefs -J enable -n disable ad0s1d.journal\n"
@@ -549,7 +556,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:285
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:276
 #, no-wrap
 msgid ""
 "# tunefs -J enable -n disable ad0s1f.journal\n"
@@ -558,14 +565,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:288
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:279
 msgid ""
 "Now, mount the new devices manually at their respective places (note that we "
 "can now use the `async` mount option):"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:293
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:284
 #, no-wrap
 msgid ""
 "# mount -o async /dev/ad0s1d.journal /var\n"
@@ -573,14 +580,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:296
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:287
 msgid ""
 "Edit [.filename]#/etc/fstab# and update the entries for [.filename]#/usr# "
 "and [.filename]#/var#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:301
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:292
 #, no-wrap
 msgid ""
 "/dev/ad0s1f.journal     /usr            ufs     rw,async      2       2\n"
@@ -588,27 +595,27 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:306
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:297
 msgid ""
 "Make sure the above entries are correct, or you will have trouble starting "
 "up normally after you reboot!"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:309
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:300
 msgid ""
 "Finally, edit [.filename]#/boot/loader.conf# and add the following line so "
 "the man:gjournal[8] module is loaded at every boot:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:313
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:304
 #, no-wrap
 msgid "geom_journal_load=\"YES\"\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:318
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:309
 msgid ""
 "Congratulations! Your system is now set for journaling.  You can either type "
 "`exit` to return to multi-user mode, or reboot to test your configuration "
@@ -616,7 +623,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:328
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:319
 #, no-wrap
 msgid ""
 "ad0: 76293MB XEC XE800JD-00HBC0 08.02D08 at ata0-master SATA150\n"
@@ -629,31 +636,31 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:331
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:322
 msgid "After an unclean shutdown, the messages will vary slightly, i.e.:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:335
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:326
 #, no-wrap
 msgid "GEOM_JOURNAL: Journal ad0s1d consistent.\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:338
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:329
 msgid ""
 "This usually means that man:gjournal[8] used the information in the journal "
 "provider to return the file system to a consistent state."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:340
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:331
 #, no-wrap
 msgid "Journaling Newly Created Partitions"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:345
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:336
 msgid ""
 "While the above procedure is necessary for journaling partitions that "
 "already contain data, journaling an empty partition is somewhat easier, "
@@ -664,52 +671,53 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:349
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:340
 #, no-wrap
 msgid "# gjournal label ad1s1d\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:355
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:346
 msgid ""
-"The journal size will be 1 GB by default.  You may adjust it by using the "
-"`-s` option.  The value can be given in bytes, or appended by `K`, `M` or "
-"`G` to denote Kilobytes, Megabytes or Gigabytes respectively.  Note that "
+"The journal size will be 1 GB by default.  You may adjust it by using the `-"
+"s` option.  The value can be given in bytes, or appended by `K`, `M` or `G` "
+"to denote Kilobytes, Megabytes or Gigabytes respectively.  Note that "
 "`gjournal` will not allow you to create unsuitably small journal sizes."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:357
-msgid "For example, to create a 2 GB journal, you could use the following command:"
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:348
+msgid ""
+"For example, to create a 2 GB journal, you could use the following command:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:361
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:352
 #, no-wrap
 msgid "# gjournal label -s 2G ad1s1d\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:364
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:355
 msgid ""
 "You can then create a file system on your new partition, and enable "
 "journaling using the `-J` option:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:368
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:359
 #, no-wrap
 msgid "# newfs -J /dev/ad1s1d.journal\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:371
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:362
 #, no-wrap
 msgid "Building Journaling into Your Custom Kernel"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:375
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:366
 msgid ""
 "If you do not wish to load `geom_journal` as a module, you can build its "
 "functions right into your kernel.  Edit your custom kernel configuration "
@@ -717,54 +725,52 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:379
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:370
 #, no-wrap
 msgid "options UFS_GJOURNAL # Note: This is already in GENERIC\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:381
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:372
 #, no-wrap
 msgid "options GEOM_JOURNAL # You will have to add this one\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:384
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:375
 msgid ""
-"Rebuild and reinstall your kernel following the relevant "
-"link:{handbook}#kernelconfig[instructions in the FreeBSD Handbook.]"
+"Rebuild and reinstall your kernel following the relevant extref:{handbook}"
+"[instructions in the FreeBSD Handbook., kernelconfig]"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:386
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:377
 msgid ""
-"Do not forget to remove the relevant \"load\" entry from "
-"[.filename]#/boot/loader.conf# if you have previously used it."
+"Do not forget to remove the relevant \"load\" entry from [.filename]#/boot/"
+"loader.conf# if you have previously used it."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:388
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:379
 #, no-wrap
 msgid "Troubleshooting Journaling"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:391
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:382
 msgid ""
 "The following section covers frequently asked questions regarding problems "
 "related to journaling."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:392
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:383
 #, no-wrap
-msgid ""
-"I am getting kernel panics during periods of high disk activity. How is this "
-"related to journaling?"
+msgid "I am getting kernel panics during periods of high disk activity. How is this related to journaling?"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:398
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:389
 msgid ""
 "The journal probably fills up before it has a chance to get committed "
 "(flushed) to disk.  Keep in mind the size of the journal depends on the "
@@ -774,31 +780,28 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:399
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:390
 #, no-wrap
-msgid ""
-"I made some mistake during configuration, and I cannot boot normally "
-"now. Can this be fixed some way?"
+msgid "I made some mistake during configuration, and I cannot boot normally now. Can this be fixed some way?"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:405
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:396
 msgid ""
-"You either forgot (or misspelled) the entry in "
-"[.filename]#/boot/loader.conf#, or there are errors in your "
-"[.filename]#/etc/fstab# file.  These are usually easy to fix.  Press "
-"kbd:[Enter] to get to the default single user shell.  Then locate the root "
-"of the problem:"
+"You either forgot (or misspelled) the entry in [.filename]#/boot/loader."
+"conf#, or there are errors in your [.filename]#/etc/fstab# file.  These are "
+"usually easy to fix.  Press kbd:[Enter] to get to the default single user "
+"shell.  Then locate the root of the problem:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:409
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:400
 #, no-wrap
 msgid "# cat /boot/loader.conf\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:413
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:404
 msgid ""
 "If the `geom_journal_load` entry is missing or misspelled, the journaled "
 "devices are never created.  Load the module manually, mount all partitions, "
@@ -806,7 +809,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:424
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:415
 #, no-wrap
 msgid ""
 "GEOM_JOURNAL: Journal 2948326772: ad0s1g contains journal.\n"
@@ -818,7 +821,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:428
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:419
 #, no-wrap
 msgid ""
 "# mount -a\n"
@@ -827,24 +830,22 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:433
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:424
 msgid ""
-"If, on the other hand, this entry is correct, have a look at "
-"[.filename]#/etc/fstab#.  You will probably find a misspelled or missing "
-"entry.  In this case, mount all remaining partitions by hand and continue "
-"with the multi-user boot."
+"If, on the other hand, this entry is correct, have a look at [.filename]#/"
+"etc/fstab#.  You will probably find a misspelled or missing entry.  In this "
+"case, mount all remaining partitions by hand and continue with the multi-"
+"user boot."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:434
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:425
 #, no-wrap
-msgid ""
-"Can I remove journaling and return to my standard file system with Soft "
-"Updates?"
+msgid "Can I remove journaling and return to my standard file system with Soft Updates?"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:439
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:430
 msgid ""
 "Sure.  Use the following procedure, which reverses the changes.  The "
 "partitions you created for the journal providers can then be used for other "
@@ -852,33 +853,33 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:441
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:432
 msgid "Login as `root` and switch to single user mode:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:448
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:439
 msgid "Unmount the journaled partitions:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:455
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:446
 msgid "Synchronize the journals:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:459
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:450
 #, no-wrap
 msgid "# gjournal sync\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:462
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:453
 msgid "Stop the journaling providers:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:467
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:458
 #, no-wrap
 msgid ""
 "# gjournal stop ad0s1d.journal\n"
@@ -886,12 +887,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:470
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:461
 msgid "Clear journaling metadata from all the devices used:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:477
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:468
 #, no-wrap
 msgid ""
 "# gjournal clear ad0s1d\n"
@@ -901,12 +902,13 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:480
-msgid "Clear the file system journaling flag, and restore the Soft Updates flag:"
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:471
+msgid ""
+"Clear the file system journaling flag, and restore the Soft Updates flag:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:486
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:477
 #, no-wrap
 msgid ""
 "# tunefs -J disable -n enable ad0s1d\n"
@@ -915,7 +917,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:490
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:481
 #, no-wrap
 msgid ""
 "# tunefs -J disable -n enable ad0s1f\n"
@@ -924,12 +926,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:493
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:484
 msgid "Remount the old devices by hand:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:498
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:489
 #, no-wrap
 msgid ""
 "# mount -o rw /dev/ad0s1d /var\n"
@@ -937,12 +939,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:501
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:492
 msgid "Edit [.filename]#/etc/fstab# and restore it to its original state:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:506
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:497
 #, no-wrap
 msgid ""
 "/dev/ad0s1f     /usr            ufs     rw      2       2\n"
@@ -950,20 +952,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:509
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:500
 msgid ""
 "Finally, edit [.filename]#/boot/loader.conf#, remove the entry that loads "
 "the `geom_journal` module and reboot."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:511
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:502
 #, no-wrap
 msgid "Further Reading"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:515
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:506
 msgid ""
 "Journaling is a fairly new feature of FreeBSD, and as such, it is not very "
 "well documented yet.  You may however find the following additional "
@@ -971,27 +973,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:517
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:508
 msgid ""
-"A link:{handbook}#geom-gjournal[new section on journaling] is now part of "
+"A extref:{handbook}[new section on journaling, geom-gjournal] is now part of "
 "the FreeBSD Handbook."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:518
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:509
 msgid ""
-"https://lists.freebsd.org/pipermail/freebsd-current/2006-June/064043.html[This "
-"post] in {freebsd-current} by man:gjournal[8]'s developer, `{pjd}`."
+"https://lists.freebsd.org/pipermail/freebsd-current/2006-June/064043."
+"html[This post] in {freebsd-current} by man:gjournal[8]'s developer, `{pjd}`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:519
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:510
 msgid ""
-"https://lists.freebsd.org/pipermail/freebsd-questions/2008-April/173501.html[This "
-"post] in {freebsd-questions} by `{ivoras}`."
+"https://lists.freebsd.org/pipermail/freebsd-questions/2008-April/173501."
+"html[This post] in {freebsd-questions} by `{ivoras}`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/gjournal-desktop/_index.adoc:519
+#: documentation/content/en/articles/gjournal-desktop/_index.adoc:510
 msgid "The manual pages of man:gjournal[8] and man:geom[8]."
 msgstr ""

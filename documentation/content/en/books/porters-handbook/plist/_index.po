@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-06-12 16:30-0300\n"
+"POT-Creation-Date: 2021-11-04 20:26-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,14 +29,22 @@ msgstr ""
 msgid "Chapter 8. Advanced pkg-plist Practices"
 msgstr ""
 
-#. type: Title ==
+#. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:35
+msgid ""
+"include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
+"{{% lang %}}/teams.adoc[] include::shared/{{% lang %}}/mailing-lists.adoc[] "
+"include::shared/{{% lang %}}/urls.adoc[]"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:48
 #, no-wrap
 msgid "Changing pkg-plist Based on Make Variables"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:42
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:55
 msgid ""
 "Some ports, particularly the `p5-` ports, need to change their [."
 "filename]#pkg-plist# depending on what options they are configured with (or "
@@ -51,7 +59,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:44
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:57
 msgid ""
 "To make other substitutions, set `PLIST_SUB` with a list of `_VAR=VALUE_` "
 "pairs and instances of `%%_VAR_%%` will be substituted with _VALUE_ in [."
@@ -59,7 +67,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:47
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:60
 msgid ""
 "For instance, if a port installs many files in a version-specific "
 "subdirectory, use a placeholder for the version so that [.filename]#pkg-"
@@ -68,7 +76,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:52
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:65
 #, no-wrap
 msgid ""
 "OCTAVE_VERSION=\t${PORTREVISION}\n"
@@ -76,7 +84,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:56
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:69
 msgid ""
 "in the [.filename]#Makefile# and use `%%OCTAVE_VERSION%%` wherever the "
 "version shows up in [.filename]#pkg-plist#.  When the port is upgraded, it "
@@ -85,7 +93,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:59
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:72
 msgid ""
 "If files are installed conditionally on the options set in the port, the "
 "usual way of handling it is prefixing [.filename]#pkg-plist# lines with a `%"
@@ -96,14 +104,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:61
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:74
 msgid ""
 "For instance, if there are files that are only installed when the `X11` "
 "option is enabled, and [.filename]#Makefile# has:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:66
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:79
 #, no-wrap
 msgid ""
 "OPTIONS_DEFINE=\tX11\n"
@@ -111,20 +119,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:69
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:82
 msgid ""
 "In [.filename]#pkg-plist#, put `%%X11%%` in front of the lines only being "
 "installed when the option is enabled, like this :"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:73
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:86
 #, no-wrap
 msgid "%%X11%%bin/foo-gui\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:78
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:91
 msgid ""
 "This substitution will be done between the `pre-install` and `do-install` "
 "targets, by reading from [.filename]#PLIST# and writing to [."
@@ -135,7 +143,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:84
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:97
 msgid ""
 "Another way of modifying a port's packing list is based on setting the "
 "variables `PLIST_FILES` and `PLIST_DIRS`.  The value of each variable is "
@@ -150,7 +158,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:88
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:101
 msgid ""
 "From time to time, using `OPTIONS_SUB` is not enough.  In those cases, "
 "adding a specific `_TAG_` to `PLIST_SUB` inside the [.filename]#Makefile# "
@@ -160,13 +168,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:92
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:105
 #, no-wrap
 msgid ".include <bsd.port.pre.mk>\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:98
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:111
 #, no-wrap
 msgid ""
 ".if ${PORT_OPTIONS:MX11} && ${ARCH} == \"i386\"\n"
@@ -177,19 +185,19 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:101
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:114
 #, no-wrap
 msgid "Empty Directories"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:104
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:117
 #, no-wrap
 msgid "Cleaning Up Empty Directories"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:110
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:123
 msgid ""
 "When being de-installed, a port has to remove empty directories it created.  "
 "Most of these directories are removed automatically by man:pkg[8], but for "
@@ -200,7 +208,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:116
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:129
 #, no-wrap
 msgid ""
 "[...]\n"
@@ -209,13 +217,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:119
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:132
 #, no-wrap
 msgid "Creating Empty Directories"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:124
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:137
 msgid ""
 "Empty directories created during port installation need special attention.  "
 "They must be present when the package is created.  If they are not created "
@@ -223,7 +231,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:129
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:142
 #, no-wrap
 msgid ""
 "post-install:\n"
@@ -231,25 +239,25 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:133
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:146
 msgid ""
 "Add the directory to [.filename]#pkg-plist# like any other.  For example:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:137
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:150
 #, no-wrap
 msgid "@dir some/directory\n"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:140
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:153
 #, no-wrap
 msgid "Configuration Files"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:144
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:157
 msgid ""
 "If the port installs configuration files to [.filename]#PREFIX/etc# (or "
 "elsewhere) do _not_ list them in [.filename]#pkg-plist#.  That will cause "
@@ -258,7 +266,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:148
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:161
 msgid ""
 "Instead, install sample files with a [.filename]#filename.sample# "
 "extension.  The `@sample` macro automates this, see <<plist-keywords-"
@@ -267,13 +275,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:152
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:165
 #, no-wrap
 msgid "@sample etc/orbit.conf.sample\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:156
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:169
 msgid ""
 "If there is a very good reason not to install a working configuration file "
 "by default, only list the sample filename in [.filename]#pkg-plist#, without "
@@ -283,7 +291,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:161
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:174
 msgid ""
 "When a port installs its configuration in a subdirectory of [.filename]#"
 "${PREFIX}/etc#, use `ETCDIR`, which defaults to `${PREFIX}/etc/${PORTNAME}`, "
@@ -293,7 +301,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:167
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:180
 msgid ""
 "The sample configuration files should always have the [.filename]#.sample# "
 "suffix.  If for some historical reason using the standard suffix is not "
@@ -302,35 +310,35 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:171
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:184
 #, no-wrap
 msgid "@sample etc/orbit.conf-dist etc/orbit.conf\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:174
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:187
 msgid "or"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:178
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:191
 #, no-wrap
 msgid "@sample %%EXAMPLESDIR%%/orbit.conf etc/orbit.conf\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:181
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:194
 msgid "The format is `@sample _sample-file actual-config-file_`."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:184
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:197
 #, no-wrap
 msgid "Dynamic Versus Static Package List"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:188
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:201
 msgid ""
 "A _static package list_ is a package list which is available in the Ports "
 "Collection either as [.filename]#pkg-plist# (with or without variable "
@@ -343,7 +351,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:191
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:204
 msgid ""
 "A _dynamic package list_ is a package list which is generated at the time "
 "the port is compiled based upon the files and directories which are "
@@ -353,7 +361,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:195
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:208
 msgid ""
 "While the use of dynamic package lists is not forbidden, maintainers should "
 "use static package lists wherever possible, as it enables users to man:"
@@ -367,13 +375,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:197
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:210
 #, no-wrap
 msgid "Automated Package List Creation"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:202
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:215
 msgid ""
 "First, make sure the port is almost complete, with only [.filename]#pkg-"
 "plist# missing.  Running `make makeplist` will show an example for [."
@@ -383,7 +391,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:206
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:219
 msgid ""
 "User configuration files should be installed as [.filename]#filename."
 "sample#, as it is described in <<plist-config>>.  [.filename]#info/dir# must "
@@ -394,20 +402,20 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:208
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:221
 #, no-wrap
 msgid "Expanding `PLIST_SUB` with Regular Expressions"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:212
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:225
 msgid ""
 "Strings to be replaced sometimes need to be very specific to avoid undesired "
 "replacements.  This is a common problem with shorter values."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:214
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:227
 msgid ""
 "To address this problem, for each `_PLACEHOLDER_=_value_`, a "
 "`PLACEHOLDER_regex=regex` can be set, with the `_regex_` part matching "
@@ -415,13 +423,13 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:216
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:229
 #, no-wrap
 msgid "Using PLIST_SUB with Regular Expressions"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:224
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:237
 msgid ""
 "Perl ports can install architecture dependent files in a specific tree.  On "
 "FreeBSD to ease porting, this tree is called `mach`.  For example, a port "
@@ -431,7 +439,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:232
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:245
 #, no-wrap
 msgid ""
 "PORTNAME=\tMachine-Build\n"
@@ -442,7 +450,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:235
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:248
 #, no-wrap
 msgid ""
 "MAINTAINER=\tperl@FreeBSD.org\n"
@@ -450,7 +458,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:238
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:251
 #, no-wrap
 msgid ""
 "USES=\t\tperl5\n"
@@ -458,18 +466,18 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:240
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:253
 #, no-wrap
 msgid "PLIST_SUB=\tPERL_ARCH=mach\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:243
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:256
 msgid "The files installed by the port are:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:251
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:264
 #, no-wrap
 msgid ""
 "/usr/local/bin/machine-build\n"
@@ -480,12 +488,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:254
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:267
 msgid "Running `make makeplist` wrongly generates:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:262
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:275
 #, no-wrap
 msgid ""
 "bin/%%PERL_ARCH%%ine-build\n"
@@ -496,12 +504,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:265
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:278
 msgid "Change the `PLIST_SUB` line from the [.filename]#Makefile# to:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:270
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:283
 #, no-wrap
 msgid ""
 "PLIST_SUB=\tPERL_ARCH=mach \\\n"
@@ -509,12 +517,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:273
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:286
 msgid "Now `make makeplist` correctly generates:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:281
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:294
 #, no-wrap
 msgid ""
 "bin/machine-build\n"
@@ -525,13 +533,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:286
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:299
 #, no-wrap
 msgid "Expanding Package List with Keywords"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:292
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:305
 msgid ""
 "All keywords can also take optional arguments in parentheses.  The arguments "
 "are owner, group, and mode.  This argument is used on the file or directory "
@@ -540,39 +548,39 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:296
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:309
 #, no-wrap
 msgid "@sample(games,games,640) etc/config.sample\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:300
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:313
 msgid ""
 "The arguments are optional.  If only the group and mode need to be changed, "
 "use:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:304
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:317
 #, no-wrap
 msgid "@sample(,games,660) etc/config.sample\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:310
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:323
 msgid ""
 "If a keyword is used on an crossref:makefiles[makefile-options,optional] "
 "entry, it must to be added after the helper:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:314
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:327
 #, no-wrap
 msgid "%%FOO%%@sample etc/orbit.conf.sample\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:318
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:331
 msgid ""
 "This is because the options plist helpers are used to comment out the line, "
 "so they need to be put first.  See crossref:makefiles[options_sub,"
@@ -580,13 +588,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:321
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:334
 #, no-wrap
 msgid "`@desktop-file-utils`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:325
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:338
 msgid ""
 "Will run `update-desktop-database -q` after installation and "
 "deinstallation.  _Never_ use directly, add crossref:uses[uses-desktop-file-"
@@ -594,26 +602,26 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:327
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:340
 #, no-wrap
 msgid "`@fc` _directory_"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:330
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:343
 msgid ""
 "Add a `@dir` entry for the directory passed as an argument, and run `fc-"
 "cache -fs` on that directory after installation and deinstallation."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:332
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:345
 #, no-wrap
 msgid "`@fcfontsdir` _directory_"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:337
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:350
 msgid ""
 "Add a `@dir` entry for the directory passed as an argument, and run `fc-"
 "cache -fs`, `mkfontscale` and `mkfontdir` on that directory after "
@@ -625,13 +633,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:339
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:352
 #, no-wrap
 msgid "`@fontsdir` _directory_"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:343
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:356
 msgid ""
 "Add a `@dir` entry for the directory passed as an argument, and run "
 "`mkfontscale` and `mkfontdir` on that directory after installation and "
@@ -641,24 +649,24 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:345
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:358
 #, no-wrap
 msgid "`@glib-schemas`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:348
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:361
 msgid "Runs `glib-compile-schemas` on installation and deinstallation."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:350
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:363
 #, no-wrap
 msgid "`@info` _file_"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:356
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:369
 msgid ""
 "Add the file passed as argument to the plist, and updates the info document "
 "index on installation and deinstallation.  Additionally, it removes the "
@@ -668,39 +676,39 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:358
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:371
 #, no-wrap
 msgid "`@kld` _directory_"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:362
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:375
 msgid ""
 "Runs `kldxref` on the directory on installation and deinstallation.  "
 "Additionally, on deinstallation, it will remove the directory if empty."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:364
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:377
 #, no-wrap
 msgid "`@rmtry` _file_"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:367
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:380
 msgid ""
 "Will remove the file on deinstallation, and not give an error if the file is "
 "not there."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:369
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:382
 #, no-wrap
 msgid "`@sample` _file_ [_file_]"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:373
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:386
 msgid ""
 "This is used to handle installation of configuration files, through example "
 "files bundled with the package.  The \"actual\", non-sample, file is either "
@@ -709,7 +717,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:378
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:391
 msgid ""
 "This does three things. First, add the first file passed as argument, the "
 "sample file, to the plist.  Then, on installation, if the actual file is not "
@@ -719,31 +727,31 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:380
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:393
 #, no-wrap
 msgid "`@shared-mime-info` _directory_"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:383
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:396
 msgid ""
 "Runs `update-mime-database` on the directory on installation and "
 "deinstallation."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:385
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:398
 #, no-wrap
 msgid "`@shell` _file_"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:388
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:401
 msgid "Add the file passed as argument to the plist."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:391
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:404
 msgid ""
 "On installation, add the full path to _file_ to [.filename]#/etc/shells#, "
 "while making sure it is not added twice.  On deinstallation, remove it from "
@@ -751,20 +759,20 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:393
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:406
 #, no-wrap
 msgid "`@terminfo`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:397
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:410
 msgid ""
 "Do not use by itself.  If the port installs [.filename]#*.terminfo# files, "
 "add crossref:uses[uses-terminfo,USES=terminfo] to its [.filename]#Makefile#."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:399
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:412
 msgid ""
 "On installation and deinstallation, if `tic` is present, refresh [.filename]#"
 "${PREFIX}/shared/misc/terminfo.db# from the [.filename]#*.terminfo# files in "
@@ -772,26 +780,26 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:401
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:414
 #, no-wrap
 msgid "Base Keywords"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:404
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:417
 msgid ""
 "There are a few keywords that are hardcoded, and documented in man:pkg-"
 "create[8]. For the sake of completeness, they are also documented here."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:406
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:419
 #, no-wrap
 msgid "`@` [_file_]"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:410
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:423
 msgid ""
 "The empty keyword is a placeholder to use when the file's owner, group, or "
 "mode need to be changed.  For example, to set the group of the file to "
@@ -799,70 +807,70 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:414
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:427
 #, no-wrap
 msgid "@(,games,2755) sbin/daemon\n"
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:417
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:430
 #, no-wrap
 msgid "`@preexec` _command_, `@postexec` _command_, `@preunexec` _command_, `@postunexec` _command_"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:420
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:433
 msgid ""
 "Execute _command_ as part of the package installation or deinstallation "
 "process."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:421
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:434
 #, no-wrap
 msgid "`@preexec` _command_"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:423
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:436
 msgid "Execute _command_ as part of the [.filename]#pre-install# scripts."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:424
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:437
 #, no-wrap
 msgid "`@postexec` _command_"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:426
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:439
 msgid "Execute _command_ as part of the [.filename]#post-install# scripts."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:427
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:440
 #, no-wrap
 msgid "`@preunexec` _command_"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:429
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:442
 msgid "Execute _command_ as part of the [.filename]#pre-deinstall# scripts."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:430
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:443
 #, no-wrap
 msgid "`@postunexec` _command_"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:432
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:445
 msgid "Execute _command_ as part of the [.filename]#post-deinstall# scripts."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:435
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:448
 msgid ""
 "If _command_ contains any of these sequences somewhere in it, they are "
 "expanded inline.  For these examples, assume that `@cwd` is set to [."
@@ -870,39 +878,39 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:436
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:449
 #, no-wrap
 msgid "`%F`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:439
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:452
 msgid ""
 "Expand to the last filename extracted (as specified).  In the example case [."
 "filename]#bin/emacs#."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:440
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:453
 #, no-wrap
 msgid "`%D`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:443
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:456
 msgid ""
 "Expand to the current directory prefix, as set with `@cwd`.  In the example "
 "case [.filename]#/usr/local#."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:444
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:457
 #, no-wrap
 msgid "`%B`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:447
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:460
 msgid ""
 "Expand to the basename of the fully qualified filename, that is, the current "
 "directory prefix plus the last filespec, minus the trailing filename.  In "
@@ -910,20 +918,20 @@ msgid ""
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:448
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:461
 #, no-wrap
 msgid "`%f`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:451
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:464
 msgid ""
 "Expand to the filename part of the fully qualified name, or the converse of `"
 "%B`.  In the example case, [.filename]#emacs#."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:456
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:469
 msgid ""
 "These keywords are here to help you set up the package so that it is as "
 "ready to use as possible.  They _must not_ be abused to start services, stop "
@@ -932,13 +940,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:459
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:472
 #, no-wrap
 msgid "`@mode` _mode_"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:464
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:477
 msgid ""
 "Set default permission for all subsequently extracted files to _mode_.  "
 "Format is the same as that used by man:chmod[1].  Use without an arg to set "
@@ -946,57 +954,57 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:469
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:482
 msgid ""
 "This must be a numeric mode, like `644`, `4755`, or `600`.  It cannot be a "
 "relative mode like `u+s`."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:472
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:485
 #, no-wrap
 msgid "`@owner` _user_"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:476
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:489
 msgid ""
 "Set default ownership for all subsequent files to _user_.  Use without an "
 "argument to set back to default ownership (`root`)."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:478
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:491
 #, no-wrap
 msgid "`@group` _group_"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:482
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:495
 msgid ""
 "Set default group ownership for all subsequent files to _group_.  Use "
 "without an arg to set back to default group ownership (`wheel`)."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:484
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:497
 #, no-wrap
 msgid "`@comment` _string_"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:487
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:500
 msgid "This line is ignored when packing."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:489
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:502
 #, no-wrap
 msgid "`@dir` _directory_"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:495
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:508
 msgid ""
 "Declare directory name. By default, directories created under `PREFIX` by a "
 "package installation are automatically removed.  Use this when an empty "
@@ -1008,26 +1016,26 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:497
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:510
 #, no-wrap
 msgid "`@exec` _command_, `@unexec` _command_ (Deprecated)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:501
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:514
 msgid ""
 "Execute _command_ as part of the installation or deinstallation process.  "
 "Please use <<plist-keywords-base-exec>> instead."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:503
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:516
 #, no-wrap
 msgid "`@dirrm` _directory_ (Deprecated)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:507
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:520
 msgid ""
 "Declare directory name to be deleted at deinstall time.  By default, "
 "directories created under `PREFIX` by a package installation are deleted "
@@ -1035,26 +1043,26 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:509
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:522
 #, no-wrap
 msgid "`@dirrmtry` _directory_ (Deprecated)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:512
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:525
 msgid ""
 "Declare directory name to be removed, as for `@dirrm`, but does not issue a "
 "warning if the directory cannot be removed."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:514
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:527
 #, no-wrap
 msgid "Creating New Keywords"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:519
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:532
 msgid ""
 "Package list files can be extended by keywords that are defined in the [."
 "filename]#${PORTSDIR}/Keywords# directory.  The settings for each keyword "
@@ -1063,51 +1071,51 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:521
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:530
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:534
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:543
 #, no-wrap
 msgid "`attributes`"
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:522
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:543
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:535
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:556
 #, no-wrap
 msgid "`action`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:523
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:536
 msgid "`pre-install`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:524
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:537
 msgid "`post-install`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:525
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:538
 msgid "`pre-deinstall`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:526
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:539
 msgid "`post-deinstall`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:527
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:540
 msgid "`pre-upgrade`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:528
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:541
 msgid "`post-upgrade`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:536
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:549
 msgid ""
 "Changes the owner, group, or mode used by the keyword.  Contains an "
 "associative array where the possible keys are `owner`, `group`, and `mode`.  "
@@ -1116,154 +1124,154 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:540
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:553
 #, no-wrap
 msgid "attributes: { owner: \"games\", group: \"games\", mode: 0555 }\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:546
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:559
 msgid ""
 "Defines what happens to the keyword's parameter. Contains an array where the "
 "possible values are:"
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:547
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:560
 #, no-wrap
 msgid "`setprefix`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:549
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:562
 msgid "Set the prefix for the next plist entries."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:550
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:563
 #, no-wrap
 msgid "`dir`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:552
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:565
 msgid "Register a directory to be created on install and removed on deinstall."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:553
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:566
 #, no-wrap
 msgid "`dirrm`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:556
-msgid "Register a directory to be deleted on deinstall.  Deprecated."
-msgstr ""
-
-#. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:557
-#, no-wrap
-msgid "`dirrmtry`"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:560
-msgid "Register a directory to try and deleted on deinstall.  Deprecated."
-msgstr ""
-
-#. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:561
-#, no-wrap
-msgid "`file`"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:563
-msgid "Register a file."
-msgstr ""
-
-#. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:564
-#, no-wrap
-msgid "`setmode`"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:566
-msgid "Set the mode for the next plist entries."
-msgstr ""
-
-#. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:567
-#, no-wrap
-msgid "`setowner`"
-msgstr ""
-
-#. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:569
-msgid "Set the owner for the next plist entries."
+msgid "Register a directory to be deleted on deinstall.  Deprecated."
 msgstr ""
 
 #. type: Labeled list
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:570
 #, no-wrap
+msgid "`dirrmtry`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:573
+msgid "Register a directory to try and deleted on deinstall.  Deprecated."
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:574
+#, no-wrap
+msgid "`file`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:576
+msgid "Register a file."
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:577
+#, no-wrap
+msgid "`setmode`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:579
+msgid "Set the mode for the next plist entries."
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:580
+#, no-wrap
+msgid "`setowner`"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:582
+msgid "Set the owner for the next plist entries."
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:583
+#, no-wrap
 msgid "`setgroup`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:572
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:585
 msgid "Set the group for the next plist entries."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:573
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:586
 #, no-wrap
 msgid "`comment`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:575
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:588
 msgid "Does not do anything, equivalent to not entering an `action` section."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:576
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:589
 #, no-wrap
 msgid "`ignore_next`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:578
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:591
 msgid "Ignore the next entry in the plist."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:580
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:593
 #, no-wrap
 msgid "`arguments`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:584
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:597
 msgid ""
 "If set to `true`, adds argument handling, splitting the whole line, `%@`, "
 "into numbered arguments, `%1`, `%2`, and so on.  For example, for this line:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:588
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:601
 #, no-wrap
 msgid "@foo some.content other.content\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:591
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:604
 msgid "`%1` and `%2` will contain:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:596
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:609
 #, no-wrap
 msgid ""
 "some.content\n"
@@ -1271,7 +1279,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:601
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:614
 msgid ""
 "It also affects how the <<plist-keywords-action,`action`>> entry works.  "
 "When there is more than one argument, the argument number must be "
@@ -1279,19 +1287,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:605
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:618
 #, no-wrap
 msgid "actions: [file(1)]\n"
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:608
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:621
 #, no-wrap
 msgid "`pre-install`, `post-install`, `pre-deinstall`, `post-deinstall`, `pre-upgrade`, `post-upgrade`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:612
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:625
 msgid ""
 "These keywords contains a man:sh[1] script to be executed before or after "
 "installation, deinstallation, or upgrade of the package.  In addition to the "
@@ -1300,19 +1308,19 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:614
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:627
 #, no-wrap
 msgid "Custom Keyword Examples"
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:617
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:630
 #, no-wrap
 msgid "Example of a `@dirrmtryecho` Keyword"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:622
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:635
 msgid ""
 "This keyword does two things, it adds a `@dirrmtry _directory_` line to the "
 "packing list, and echoes the fact that the directory is removed when "
@@ -1320,7 +1328,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:629
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:642
 #, no-wrap
 msgid ""
 "actions: [dirrmtry]\n"
@@ -1330,13 +1338,13 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:634
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:647
 #, no-wrap
 msgid "Real Life Example, How `@sample` is Implemented"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:640
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:653
 msgid ""
 "This keyword does three things.  It adds the first _filename_ passed as an "
 "argument to `@sample` to the packing list, it adds to the `post-install` "
@@ -1346,7 +1354,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/plist/_index.adoc:685
+#: documentation/content/en/books/porters-handbook/plist/_index.adoc:698
 #, no-wrap
 msgid ""
 "actions: [file(1)]\n"
