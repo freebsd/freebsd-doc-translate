@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-06-03 17:02-0300\n"
+"POT-Creation-Date: 2021-11-04 20:25-0300\n"
 "PO-Revision-Date: 2021-06-03 00:08+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Chinese (Simplified) <https://translate-dev.freebsd.org/"
@@ -37,14 +37,22 @@ msgstr ""
 msgid "Virtual Memory System"
 msgstr "虚拟内存系统"
 
-#. type: Title ==
+#. type: Plain text
 #: documentation/content/en/books/arch-handbook/vm/_index.adoc:35
+msgid ""
+"include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
+"{{% lang %}}/teams.adoc[] include::shared/{{% lang %}}/mailing-lists.adoc[] "
+"include::shared/{{% lang %}}/urls.adoc[]"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:48
 #, no-wrap
 msgid "Management of Physical Memory `vm_page_t`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:38
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:51
 #, fuzzy
 msgid ""
 "Physical memory is managed on a page-by-page basis through the `vm_page_t` "
@@ -56,7 +64,7 @@ msgstr ""
 "若干个页管理队列中的一个里面。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:40
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:53
 msgid ""
 "A page can be in a wired, active, inactive, cache, or free state. Except for "
 "the wired state, the page is typically placed in a doubly link list queue "
@@ -68,7 +76,7 @@ msgstr ""
 "态。在线页不放置在任何队列里。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:42
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:55
 msgid ""
 "FreeBSD implements a more involved paging queue for cached and free pages in "
 "order to implement page coloring. Each of these states involves multiple "
@@ -83,7 +91,7 @@ msgstr ""
 "象。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:44
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:57
 #, fuzzy
 msgid ""
 "Additionally, a page may be held with a reference count or locked with a "
@@ -95,7 +103,7 @@ msgstr ""
 "一状态。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:46
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:59
 msgid ""
 "In general terms, each of the paging queues operates in a LRU fashion. A "
 "page is typically placed in a wired or active state initially. When wired, "
@@ -120,7 +128,7 @@ msgstr ""
 "分配。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:48
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:61
 msgid ""
 "If a process attempts to access a page that does not exist in its page table "
 "but does exist in one of the paging queues (such as the inactive or cache "
@@ -139,7 +147,7 @@ msgstr ""
 "的CPU保护模式开发手册。</para></tip>。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:50
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:63
 msgid ""
 "FreeBSD dynamically tunes its paging queues and attempts to maintain "
 "reasonable ratios of pages in the various queues as well as attempts to "
@@ -163,13 +171,13 @@ msgstr ""
 "何时清理/分配一个页做出决策。"
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:52
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:65
 #, no-wrap
 msgid "The Unified Buffer Cache `vm_object_t`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:55
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:68
 msgid ""
 "FreeBSD implements the idea of a generic \"VM object\". VM objects can be "
 "associated with backing store of various typesunbacked, swap-backed, "
@@ -179,7 +187,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:57
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:70
 #, fuzzy
 msgid ""
 "VM objects can be _shadowed_. That is, they can be stacked on top of each "
@@ -194,7 +202,7 @@ msgstr ""
 "括写入时复制(copy-on-write，用于日志文件系统)，以派生出地址空间。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:59
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:72
 msgid ""
 "It should be noted that a `vm_page_t` can only be associated with one VM "
 "object at a time. The VM object shadowing implements the perceived sharing "
@@ -202,13 +210,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:61
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:74
 #, no-wrap
 msgid "Filesystem I/O `struct buf`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:64
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:77
 msgid ""
 "vnode-backed VM objects, such as file-backed objects, generally need to "
 "maintain their own clean/dirty info independent from the VM system's idea of "
@@ -224,7 +232,7 @@ msgstr ""
 "文件系统要能够将文件或文件元数据的各部分映射到内核虚拟内存(KVM)中以便操作。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:66
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:79
 #, fuzzy
 msgid ""
 "The entities used to manage this are known as filesystem buffers, ``struct "
@@ -247,7 +255,7 @@ msgstr ""
 "操作比对VM真实页(hard)操作更好。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:68
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:81
 #, fuzzy
 msgid ""
 "FreeBSD reserves a limited amount of KVM to hold mappings from struct bufs, "
@@ -266,13 +274,13 @@ msgstr ""
 "问题。"
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:70
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:83
 #, no-wrap
 msgid "Mapping Page Tables `vm_map_t, vm_entry_t`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:73
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:86
 msgid ""
 "FreeBSD separates the physical page table topology from the VM system. All "
 "hard per-process page tables can be reconstructed on the fly and are usually "
@@ -284,7 +292,7 @@ msgstr ""
 "是被永久性预分配的；这些页表不是一次性的。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:75
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:88
 msgid ""
 "FreeBSD associates portions of vm_objects with address ranges in virtual "
 "memory through `vm_map_t` and `vm_entry_t` structures. Page tables are "
@@ -299,13 +307,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:77
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:90
 #, no-wrap
 msgid "KVM Memory Mapping"
 msgstr "KVM存储映射"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:80
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:93
 msgid ""
 "FreeBSD uses KVM to hold various kernel structures. The single largest "
 "entity held in KVM is the filesystem buffer cache. That is, mappings "
@@ -313,7 +321,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:82
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:95
 #, fuzzy
 msgid ""
 "Unlike Linux, FreeBSD does _not_ map all of physical memory into KVM. This "
@@ -330,7 +338,7 @@ msgstr ""
 "是一个争论点。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:84
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:97
 msgid ""
 "KVM is managed through several mechanisms. The main mechanism used to manage "
 "KVM is the _zone allocator_. The zone allocator takes a chunk of KVM and "
@@ -340,13 +348,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:86
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:99
 #, no-wrap
 msgid "Tuning the FreeBSD VM System"
 msgstr "调整FreeBSD的虚拟内存系统"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:89
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:102
 #, fuzzy
 msgid ""
 "A concerted effort has been made to make the FreeBSD kernel dynamically tune "
@@ -363,7 +371,7 @@ msgstr ""
 "sys/i386/conf/LINT</filename>中找到。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:91
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:104
 #, fuzzy
 msgid ""
 "In a large system configuration you may wish to increase `maxusers`. Values "
@@ -379,14 +387,14 @@ msgstr ""
 "资源。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:93
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:106
 msgid ""
 "If your system is going to use the network heavily, you may want to increase "
 "`NMBCLUSTERS`. Typical values range from 1024 to 4096."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:95
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:108
 #, fuzzy
 msgid ""
 "The `NBUF` parameter is also traditionally used to scale the system. This "
@@ -407,7 +415,7 @@ msgstr ""
 "的页处于在线状态。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:97
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:110
 #, fuzzy
 msgid ""
 "By default, FreeBSD kernels are not optimized. You can set debugging and "
@@ -420,7 +428,7 @@ msgstr ""
 "使用<option>-g</option>，除非你能够应付由此产生的大内核(典型的是7MB或更多)。"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:102
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:115
 #, fuzzy, no-wrap
 msgid ""
 "makeoptions      DEBUG=\"-g\"\n"
@@ -430,7 +438,7 @@ msgstr ""
 "makeoptions      COPTFLAGS=\"-O -pipe\"\n"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:105
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:118
 msgid ""
 "Sysctl provides a way to tune kernel parameters at run-time. You typically "
 "do not need to mess with any of the sysctl variables, especially the VM "
@@ -440,7 +448,7 @@ msgstr ""
 "VM相关的那些变量。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:107
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:120
 #, fuzzy
 msgid ""
 "Run time VM and system tuning is relatively straightforward. First, use Soft "
@@ -453,7 +461,7 @@ msgstr ""
 "里有关于如何配置的指示。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:109
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:122
 #, fuzzy
 msgid ""
 "Second, configure sufficient swap. You should have a swap partition "
@@ -474,7 +482,7 @@ msgstr ""
 "crash</filename>必须有足够的空间来承装倾倒。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:110
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:123
 msgid ""
 "NFS-based swap is perfectly acceptable on 4.X or later systems, but you must "
 "be aware that the NFS server will take the brunt of the paging load."

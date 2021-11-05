@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-06-12 16:30-0300\n"
+"POT-Creation-Date: 2021-11-04 20:26-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -34,7 +34,15 @@ msgid "Slow Porting"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:36
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:35
+msgid ""
+"include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
+"{{% lang %}}/teams.adoc[] include::shared/{{% lang %}}/mailing-lists.adoc[] "
+"include::shared/{{% lang %}}/urls.adoc[]"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:49
 msgid ""
 "Okay, so it was not that simple, and the port required some modifications to "
 "get it to work.  In this section, we will explain, step by step, how to "
@@ -42,13 +50,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:38
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:51
 #, no-wrap
 msgid "How Things Work"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:42
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:55
 msgid ""
 "First, this is the sequence of events which occurs when the user first types "
 "`make` in the port's directory.  Having [.filename]#bsd.port.mk# in another "
@@ -56,14 +64,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:44
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:57
 msgid ""
 "But do not worry, not many people understand exactly how [.filename]#bsd."
 "port.mk# is working... _:-)_"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:47
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:60
 msgid ""
 "The `fetch` target is run. The `fetch` target is responsible for making sure "
 "that the tarball exists locally in `DISTDIR`. If `fetch` cannot find the "
@@ -76,7 +84,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:48
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:61
 msgid ""
 "The `extract` target is run. It looks for the port's distribution file "
 "(typically a compressed tarball) in `DISTDIR` and unpacks it into a "
@@ -84,7 +92,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:49
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:62
 msgid ""
 "The `patch` target is run. First, any patches defined in `PATCHFILES` are "
 "applied. Second, if any patch files named [.filename]#patch-*# are found in "
@@ -93,32 +101,32 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:50
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:63
 msgid ""
 "The `configure` target is run. This can do any one of many different things."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:51
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:64
 msgid "If it exists, [.filename]#scripts/configure# is run."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:52
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:65
 msgid ""
 "If `HAS_CONFIGURE` or `GNU_CONFIGURE` is set, [.filename]#WRKSRC/configure# "
 "is run."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:54
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:67
 msgid ""
 "The `build` target is run. This is responsible for descending into the "
 "port's private working directory (`WRKSRC`) and building it."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:55
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:68
 msgid ""
 "The `stage` target is run. This puts the final set of built files into a "
 "temporary directory (`STAGEDIR`, see crossref:special[staging,Staging]). The "
@@ -127,7 +135,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:56
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:69
 msgid ""
 "The `package` target is run. This creates a package using the files from the "
 "temporary directory created during the `stage` target and the port's [."
@@ -135,14 +143,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:57
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:70
 msgid ""
 "The `install` target is run. This installs the package created during the "
 "`package` target into the host system."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:59
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:72
 msgid ""
 "The above are the default actions. In addition, define targets `pre-"
 "_something_` or `post-_something_`, or put scripts with those names, in the "
@@ -151,7 +159,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:65
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:78
 msgid ""
 "For example, if there is a `post-extract` target defined in the [."
 "filename]#Makefile#, and a file [.filename]#pre-build# in the [."
@@ -164,7 +172,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:69
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:82
 msgid ""
 "The default actions are done by the `do-_something_` targets from [."
 "filename]#bsd.port.mk#.  For example, the commands to extract a port are in "
@@ -173,7 +181,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:75
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:88
 msgid ""
 "The \"main\" targets (for example, `extract`, `configure`, etc.) do nothing "
 "more than make sure all the stages up to that one are completed and call the "
@@ -184,7 +192,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:78
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:91
 msgid ""
 "Now that what goes on when the user types `make install` is better "
 "understood, let us go through the recommended steps to create the perfect "
@@ -192,13 +200,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:80
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:93
 #, no-wrap
 msgid "Getting the Original Sources"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:84
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:97
 msgid ""
 "Get the original sources (normally) as a compressed tarball ([.filename]#foo."
 "tar.gz# or [.filename]#foo.tar.bz2#) and copy it into `DISTDIR`.  Always use "
@@ -206,7 +214,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:91
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:104
 msgid ""
 "Set the variable `MASTER_SITES` to reflect where the original tarball "
 "resides.  Shorthand definitions exist for most mainstream sites in [."
@@ -219,7 +227,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:93
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:106
 msgid ""
 "If there is no FTP/HTTP site that is well-connected to the net, or can only "
 "find sites that have irritatingly non-standard formats, put a copy on a "
@@ -227,7 +235,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:97
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:110
 msgid ""
 "If a convenient and reliable place to put the distfile cannot be found, we "
 "can \"house\" it ourselves on `ftp.FreeBSD.org`; however, this is the least-"
@@ -238,7 +246,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:102
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:115
 msgid ""
 "If the port's distfile changes all the time without any kind of version "
 "update by the author, consider putting the distfile on a home page and "
@@ -252,7 +260,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:106
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:119
 msgid ""
 "If the port requires additional patches that are available on the Internet, "
 "fetch them too and put them in `DISTDIR`.  Do not worry if they come from a "
@@ -262,13 +270,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:108
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:121
 #, no-wrap
 msgid "Modifying the Port"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:113
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:126
 msgid ""
 "Unpack a copy of the tarball in a private directory and make whatever "
 "changes are necessary to get the port to compile properly under the current "
@@ -279,7 +287,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:116
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:129
 msgid ""
 "If the port requires significant user interaction/customization to compile "
 "or install, take a look at one of Larry Wall's classic Configure scripts and "
@@ -289,7 +297,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:120
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:133
 msgid ""
 "Unless explicitly stated, patch files, scripts, and other files created and "
 "contributed to the FreeBSD ports collection are assumed to be covered by the "
@@ -297,13 +305,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:123
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:136
 #, no-wrap
 msgid "Patching"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:127
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:140
 msgid ""
 "In the preparation of the port, files that have been added or changed can be "
 "recorded with man:diff[1] for later feeding to man:patch[1].  Doing this "
@@ -312,13 +320,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:131
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:144
 #, no-wrap
 msgid "% cp file file.orig\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:135
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:148
 msgid ""
 "After all changes have been made, `cd` back to the port directory.  Use "
 "`make makepatch` to generate updated patch files in the [.filename]#files# "
@@ -326,7 +334,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:140
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:153
 msgid ""
 "Use `BINARY_ALIAS` to substitute hardcoded commands during the build and "
 "avoid patching build files.  See crossref:makefiles[binary-alias,Use "
@@ -335,13 +343,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:143
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:156
 #, no-wrap
 msgid "General Rules for Patching"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:150
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:163
 msgid ""
 "Patch files are stored in `PATCHDIR`, usually [.filename]#files/#, from "
 "where they will be automatically applied.  All patches must be relative to "
@@ -351,7 +359,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:152
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:165
 msgid ""
 "Avoid having more than one patch modify the same file. For example, having "
 "both [.filename]#patch-foobar.c# and [.filename]#patch-foobar.c2# making "
@@ -360,7 +368,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:153
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:166
 msgid ""
 "When creating names for patch files, replace each underscore (`\\_`) with "
 "two underscores (`\\__`) and each slash (`/`) with one underscore (`_`). For "
@@ -372,21 +380,21 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:154
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:167
 msgid ""
 "A patch may modify multiple files if the changes are related and the patch "
 "is named appropriately. For example, [.filename]#patch-add-missing-stdlib.h#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:155
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:168
 msgid ""
 "Only use characters `[-+.\\_a-zA-Z0-9]` for naming patches. In particular, "
 "__do not use `::` as a path separator,__ use `_` instead."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:160
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:173
 msgid ""
 "Minimize the amount of non-functional whitespace changes in patches.  It is "
 "common in the Open Source world for projects to share large amounts of a "
@@ -399,20 +407,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:162
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:175
 msgid ""
 "If a file must be deleted, do it in the `post-extract` target rather than as "
 "part of the patch."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:164
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:177
 #, no-wrap
 msgid "Manual Patch Generation"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:171
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:184
 msgid ""
 "Manual patch creation is usually not necessary.  Automatic patch generation "
 "as described earlier in this section is the preferred method.  However, "
@@ -420,7 +428,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:176
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:189
 msgid ""
 "Patches are saved into files named [.filename]#patch-*# where * indicates "
 "the pathname of the file that is patched, such as [.filename]#patch-"
@@ -430,7 +438,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:179
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:192
 msgid ""
 "After the file has been modified, man:diff[1] is used to record the "
 "differences between the original and the modified version.  `-u` causes man:"
@@ -438,13 +446,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:183
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:196
 #, no-wrap
 msgid "% diff -u file.orig file > patch-pathname-file\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:186
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:199
 msgid ""
 "When generating patches for new, added files, `-N` is used to tell man:"
 "diff[1] to treat the non-existent original file as if it existed but was "
@@ -452,13 +460,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:190
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:203
 #, no-wrap
 msgid "% diff -u -N newfile.orig newfile > patch-pathname-newfile\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:196
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:209
 msgid ""
 "Using the recurse (`-r`) option to man:diff[1] to generate patches is fine, "
 "but please look at the resulting patches to make sure there is no "
@@ -472,13 +480,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:198
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:211
 #, no-wrap
 msgid "Simple Automatic Replacements"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:202
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:215
 msgid ""
 "Simple replacements can be performed directly from the port [."
 "filename]#Makefile# using the in-place mode of man:sed[1].  This is useful "
@@ -486,7 +494,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:207
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:220
 #, no-wrap
 msgid ""
 "post-patch:\n"
@@ -494,14 +502,14 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:213
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:226
 msgid ""
 "Only use man:sed[1] to replace variable content.  You must use patch files "
 "instead of man:sed[1] to replace static content."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:218
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:231
 msgid ""
 "Quite often, software being ported uses the CR/LF convention in source "
 "files.  This may cause problems with further patching, compiler warnings, or "
@@ -510,18 +518,18 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:222
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:235
 #, no-wrap
 msgid "USES=\tdos2unix\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:225
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:238
 msgid "A list of specific files to convert can be given:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:230
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:243
 #, no-wrap
 msgid ""
 "USES=\tdos2unix\n"
@@ -529,7 +537,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:237
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:250
 msgid ""
 "Use `DOS2UNIX_REGEX` to convert a group of files across subdirectories.  Its "
 "argument is a man:find[1]-compatible regular expression.  More on the format "
@@ -539,7 +547,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:242
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:255
 #, no-wrap
 msgid ""
 "USES=\tdos2unix\n"
@@ -547,14 +555,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:245
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:258
 msgid ""
 "A similar option is `DOS2UNIX_GLOB`, which runs `find` for each element "
 "listed in it."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:250
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:263
 #, no-wrap
 msgid ""
 "USES=\tdos2unix\n"
@@ -562,7 +570,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:254
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:267
 msgid ""
 "The base directory for the conversion can be set.  This is useful when there "
 "are multiple distfiles and several contain files which require line-ending "
@@ -570,7 +578,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:259
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:272
 #, no-wrap
 msgid ""
 "USES=\tdos2unix\n"
@@ -578,13 +586,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:262
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:275
 #, no-wrap
 msgid "Patching Conditionally"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:269
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:282
 msgid ""
 "Some ports need patches that are only applied for specific FreeBSD versions "
 "or when a particular option is enabled or disabled.  Conditional patches are "
@@ -596,19 +604,19 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:271
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:284
 #, no-wrap
 msgid "Applying a Patch for a Specific FreeBSD Version"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:277
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:290
 #, no-wrap
 msgid ".include <bsd.port.options.mk>\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:282
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:295
 #, no-wrap
 msgid ""
 "# Patch in the iconv const qualifier before this\n"
@@ -618,19 +626,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:284
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:297
 #, no-wrap
 msgid ".include <bsd.port.mk>\n"
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:289
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:302
 #, no-wrap
 msgid "Optionally Applying a Patch"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:294
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:307
 msgid ""
 "When an crossref:makefiles[makefile-options,option] requires a patch, use "
 "``opt_EXTRA_PATCHES`` and ``opt_EXTRA_PATCHES_OFF`` to make the patch "
@@ -640,7 +648,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:301
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:314
 #, no-wrap
 msgid ""
 "OPTIONS_DEFINE=\t  FOO BAR\n"
@@ -650,13 +658,13 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:306
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:319
 #, no-wrap
 msgid "Using `EXTRA_PATCHES` With a Directory"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:311
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:324
 msgid ""
 "Sometimes, there are many patches that are needed for a feature, in this "
 "case, it is possible to point `EXTRA_PATCHES` to a directory, and it will "
@@ -664,14 +672,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:314
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:327
 msgid ""
 "Create a subdirectory in [.filename]#${PATCHDIR}#, and move the patches in "
 "it.  For example:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:320
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:333
 #, no-wrap
 msgid ""
 "% ls -l files/foo-patches\n"
@@ -680,12 +688,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:323
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:336
 msgid "Then add this to the [.filename]#Makefile#:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:328
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:341
 #, no-wrap
 msgid ""
 "OPTIONS_DEFINE=\tFOO\n"
@@ -693,20 +701,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:331
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:344
 msgid ""
 "The framework will then use all the files named [.filename]#patch-*# in that "
 "directory."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:334
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:347
 #, no-wrap
 msgid "Configuring"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:338
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:351
 msgid ""
 "Include any additional customization commands in the [.filename]#configure# "
 "script and save it in the [.filename]#scripts# subdirectory.  As mentioned "
@@ -716,13 +724,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:340
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:353
 #, no-wrap
 msgid "Handling User Input"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:347
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:360
 msgid ""
 "If the port requires user input to build, configure, or install, set "
 "`IS_INTERACTIVE` in the [.filename]#Makefile#.  This will allow \"overnight "
@@ -733,7 +741,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:349
+#: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:362
 msgid ""
 "It is also recommended that if there are reasonable default answers to the "
 "questions, `PACKAGE_BUILDING` be used to turn off the interactive script "

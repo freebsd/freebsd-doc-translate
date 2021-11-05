@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-06-08 07:32-0300\n"
+"POT-Creation-Date: 2021-11-04 20:25-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -28,14 +28,22 @@ msgstr ""
 msgid "Chapter 10. ISA Device Drivers"
 msgstr ""
 
-#. type: Title ==
+#. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:35
+msgid ""
+"include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
+"{{% lang %}}/teams.adoc[] include::shared/{{% lang %}}/mailing-lists.adoc[] "
+"include::shared/{{% lang %}}/urls.adoc[]"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:48
 #, no-wrap
 msgid "Synopsis"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:38
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:51
 msgid ""
 "This chapter introduces the issues relevant to writing a driver for an ISA "
 "device. The pseudo-code presented here is rather detailed and reminiscent of "
@@ -46,18 +54,18 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:40
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:53
 #, no-wrap
 msgid "Basic Information"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:43
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:56
 msgid "A typical ISA driver would need the following include files:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:51
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:64
 #, no-wrap
 msgid ""
 "#include <sys/module.h>\n"
@@ -68,7 +76,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:54
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:67
 #, no-wrap
 msgid ""
 "#include <isa/isavar.h>\n"
@@ -76,26 +84,26 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:57
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:70
 msgid "They describe the things specific to the ISA and generic bus subsystem."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:59
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:72
 msgid ""
 "The bus subsystem is implemented in an object-oriented fashion, its main "
 "structures are accessed by associated method functions."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:61
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:74
 msgid ""
 "The list of bus methods implemented by an ISA driver is like one for any "
 "other bus. For a hypothetical driver named \"xxx\" they would be:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:63
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:76
 msgid ""
 "`static void xxx_isa_identify (driver_t *, device_t);` Normally used for bus "
 "drivers, not device drivers. But for ISA devices this method may have "
@@ -104,7 +112,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:64
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:77
 msgid ""
 "`static int xxx_isa_probe (device_t dev);` Probe for a device at a known (or "
 "PnP) location. This routine can also accommodate device-specific auto-"
@@ -112,27 +120,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:65
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:78
 msgid ""
 "`static int xxx_isa_attach (device_t dev);` Attach and initialize device."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:66
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:79
 msgid ""
 "`static int xxx_isa_detach (device_t dev);` Detach device before unloading "
 "the driver module."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:67
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:80
 msgid ""
 "`static int xxx_isa_shutdown (device_t dev);` Execute shutdown of the device "
 "before system shutdown."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:68
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:81
 msgid ""
 "`static int xxx_isa_suspend (device_t dev);` Suspend the device before the "
 "system goes to the power-save state. May also abort transition to the power-"
@@ -140,27 +148,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:69
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:82
 msgid ""
 "`static int xxx_isa_resume (device_t dev);` Resume the device activity after "
 "return from power-save state."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:71
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:84
 msgid ""
 "`xxx_isa_probe()` and `xxx_isa_attach()` are mandatory, the rest of the "
 "routines are optional, depending on the device's needs."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:73
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:86
 msgid ""
 "The driver is linked to the system with the following set of descriptions."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:87
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:100
 #, no-wrap
 msgid ""
 "    /* table of supported bus methods */\n"
@@ -177,7 +185,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:90
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:103
 #, no-wrap
 msgid ""
 "\tDEVMETHOD_END\n"
@@ -185,7 +193,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:96
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:109
 #, no-wrap
 msgid ""
 "    static driver_t xxx_isa_driver = {\n"
@@ -196,13 +204,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:98
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:111
 #, no-wrap
 msgid "    static devclass_t xxx_devclass;\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:101
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:114
 #, no-wrap
 msgid ""
 "    DRIVER_MODULE(xxx, isa, xxx_isa_driver, xxx_devclass,\n"
@@ -210,7 +218,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:104
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:117
 msgid ""
 "Here struct `xxx_softc` is a device-specific structure that contains private "
 "driver data and descriptors for the driver's resources. The bus code "
@@ -218,7 +226,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:106
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:119
 msgid ""
 "If the driver is implemented as a loadable module then `load_function()` is "
 "called to do driver-specific initialization or clean-up when the driver is "
@@ -229,7 +237,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:111
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:124
 #, no-wrap
 msgid ""
 " DRIVER_MODULE(xxx, isa, xxx_isa_driver,\n"
@@ -237,7 +245,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:114
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:127
 msgid ""
 "If the driver is for a device which supports PnP then a table of supported "
 "PnP IDs must be defined. The table consists of a list of PnP IDs supported "
@@ -246,7 +254,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:123
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:136
 #, no-wrap
 msgid ""
 "    static struct isa_pnp_id xxx_pnp_ids[] = {\n"
@@ -258,14 +266,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:126
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:139
 msgid ""
 "If the driver does not support PnP devices it still needs an empty PnP ID "
 "table, like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:132
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:145
 #, no-wrap
 msgid ""
 "    static struct isa_pnp_id xxx_pnp_ids[] = {\n"
@@ -274,13 +282,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:135
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:148
 #, no-wrap
 msgid "`device_t` Pointer"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:138
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:151
 msgid ""
 "`device_t` is the pointer type for the device structure. Here we consider "
 "only the methods interesting from the device driver writer's standpoint. The "
@@ -288,45 +296,45 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:140
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:153
 msgid "`device_t device_get_parent(dev)` Get the parent bus of a device."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:141
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:154
 msgid "`driver_t device_get_driver(dev)` Get pointer to its driver structure."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:142
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:155
 msgid ""
 "`char *device_get_name(dev)` Get the driver name, such as `\"xxx\"` for our "
 "example."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:143
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:156
 msgid ""
 "`int device_get_unit(dev)` Get the unit number (units are numbered from 0 "
 "for the devices associated with each driver)."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:144
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:157
 msgid ""
 "`char *device_get_nameunit(dev)` Get the device name including the unit "
 "number, such as \"xxx0\", \"xxx1\" and so on."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:145
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:158
 msgid ""
 "`char *device_get_desc(dev)` Get the device description. Normally it "
 "describes the exact model of device in human-readable form."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:146
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:159
 msgid ""
 "`device_set_desc(dev, desc)` Set the description. This makes the device "
 "description point to the string desc which may not be deallocated or changed "
@@ -334,7 +342,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:147
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:160
 msgid ""
 "`device_set_desc_copy(dev, desc)` Set the description. The description is "
 "copied into an internal dynamically allocated buffer, so the string desc may "
@@ -342,21 +350,21 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:148
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:161
 msgid ""
 "`void *device_get_softc(dev)` Get pointer to the device descriptor (struct "
 "`xxx_softc`) associated with this device."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:149
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:162
 msgid ""
 "`u_int32_t device_get_flags(dev)` Get the flags specified for the device in "
 "the configuration file."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:151
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:164
 msgid ""
 "A convenience function `device_printf(dev, fmt, ...)` may be used to print "
 "the messages from the device driver. It automatically prepends the unitname "
@@ -364,25 +372,25 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:153
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:166
 msgid ""
 "The device_t methods are implemented in the file [.filename]#kern/bus_subr."
 "c#."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:155
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:168
 #, no-wrap
 msgid "Configuration File and the Order of Identifying and Probing During Auto-Configuration"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:158
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:171
 msgid "The ISA devices are described in the kernel configuration file like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:163
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:176
 #, no-wrap
 msgid ""
 "device xxx0 at isa? port 0x300 irq 10 drq 5\n"
@@ -390,7 +398,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:166
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:179
 msgid ""
 "The values of port, IRQ and so on are converted to the resource values "
 "associated with the device. They are optional, depending on the device's "
@@ -402,7 +410,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:168
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:181
 msgid ""
 "`sensitive` is a resource requesting that this device must be probed before "
 "all non-sensitive devices. It is supported but does not seem to be used in "
@@ -410,7 +418,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:170
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:183
 msgid ""
 "For legacy ISA devices in many cases the drivers are still able to detect "
 "the configuration parameters. But each device to be configured in the system "
@@ -420,19 +428,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:173
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:186
 #, no-wrap
 msgid "device xxx0 at isa?\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:175
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:188
 #, no-wrap
 msgid " then only one device will be configured.\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:177
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:190
 msgid ""
 "But for the devices supporting automatic identification by the means of Plug-"
 "n-Play or some proprietary protocol one configuration line is enough to "
@@ -440,13 +448,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:181
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:194
 #, no-wrap
 msgid "device xxx at isa?\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:184
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:197
 msgid ""
 "If a driver supports both auto-identified and legacy devices and both kinds "
 "are installed at once in one machine then it is enough to describe in the "
@@ -455,12 +463,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:186
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:199
 msgid "When an ISA bus is auto-configured the events happen as follows:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:188
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:201
 msgid ""
 "All the drivers' identify routines (including the PnP identify routine which "
 "identifies all the PnP devices) are called in random order. As they identify "
@@ -471,27 +479,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:190
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:203
 msgid ""
 "The PnP devices are put to sleep using the PnP protocol to prevent them from "
 "being probed as legacy devices."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:192
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:205
 msgid ""
 "The probe routines of non-PnP devices marked as `sensitive` are called. If "
 "probe for a device went successfully, the attach routine is called for it."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:194
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:207
 msgid ""
 "The probe and attach routines of all non-PNP devices are called likewise."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:196
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:209
 msgid ""
 "The PnP devices are brought back from the sleep state and assigned the "
 "resources they request: I/O and memory address ranges, IRQs and DRQs, all of "
@@ -499,7 +507,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:198
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:211
 msgid ""
 "Then for each PnP device the probe routines of all the present ISA drivers "
 "are called. The first one that claims the device gets attached. It is "
@@ -513,14 +521,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:200
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:213
 msgid ""
 "The probe routine returns a positive value (the error code) on error, zero "
 "or negative value on success."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:202
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:215
 msgid ""
 "The negative return values are used when a PnP device supports multiple "
 "interfaces. For example, an older compatibility interface and a newer "
@@ -537,7 +545,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:204
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:217
 msgid ""
 "The device-specific identify routines can also assign not a driver but a "
 "class of drivers to the device. Then all the drivers in the class are probed "
@@ -546,7 +554,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:206
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:219
 msgid ""
 "As the PnP devices are disabled when probing the legacy devices they will "
 "not be attached twice (once as legacy and once as PnP). But in case of "
@@ -556,7 +564,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:208
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:221
 msgid ""
 "Another practical consequence for the auto-identified devices (both PnP and "
 "device-specific) is that the flags can not be passed to them from the kernel "
@@ -566,7 +574,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:210
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:223
 msgid ""
 "Other unusual configurations may be accommodated by accessing the "
 "configuration resources directly with functions of families "
@@ -578,13 +586,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:212
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:225
 #, no-wrap
 msgid "Resources"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:215
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:228
 msgid ""
 "The information that a user enters into the kernel configuration file is "
 "processed and passed to the kernel as configuration resources. This "
@@ -597,7 +605,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:217
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:230
 msgid ""
 "The bus resources are associated with each device. They are identified by "
 "type and number within the type. For the ISA bus the following types are "
@@ -605,28 +613,28 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:219
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:232
 msgid "_SYS_RES_IRQ_ - interrupt number"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:220
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:233
 msgid "_SYS_RES_DRQ_ - ISA DMA channel number"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:221
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:234
 msgid ""
 "_SYS_RES_MEMORY_ - range of device memory mapped into the system memory space"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:222
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:235
 msgid "_SYS_RES_IOPORT_ - range of device I/O registers"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:224
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:237
 msgid ""
 "The enumeration within types starts from 0, so if a device has two memory "
 "regions it would have resources of type `SYS_RES_MEMORY` numbered 0 and 1. "
@@ -638,7 +646,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:231
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:244
 #, no-wrap
 msgid ""
 "          IRQ: 0-1\n"
@@ -648,7 +656,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:234
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:247
 msgid ""
 "All the resources are represented as ranges, with a start value and count. "
 "For IRQ and DRQ resources the count would normally be equal to 1. The values "
@@ -656,27 +664,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:236
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:249
 msgid "Three types of activities can be performed on resources:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:238
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:251
 msgid "set/get"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:239
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:252
 msgid "allocate/release"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:240
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:253
 msgid "activate/deactivate"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:242
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:255
 msgid ""
 "Setting sets the range used by the resource. Allocation reserves the "
 "requested range that no other driver would be able to reserve it (and "
@@ -687,19 +695,19 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:244
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:257
 msgid "The functions to manipulate resources are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:246
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:259
 msgid ""
 "`int bus_set_resource(device_t dev, int type, int rid, u_long start, u_long "
 "count)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:248
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:261
 msgid ""
 "Set a range for a resource. Returns 0 if successful, error code otherwise. "
 "Normally, this function will return an error only if one of `type`, `rid`, "
@@ -707,48 +715,48 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:250
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:263
 msgid "dev - driver's device"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:251
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:264
 msgid "type - type of resource, SYS_RES_*"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:252
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:265
 msgid "rid - resource number (ID) within type"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:253
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:266
 msgid "start, count - resource range"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:255
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:268
 msgid ""
 "`int bus_get_resource(device_t dev, int type, int rid, u_long *startp, "
 "u_long *countp)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:257
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:270
 msgid ""
 "Get the range of resource. Returns 0 if successful, error code if the "
 "resource is not defined yet."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:258
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:271
 msgid ""
 "`u_long bus_get_resource_start(device_t dev, int type, int rid) u_long "
 "bus_get_resource_count (device_t dev, int type, int rid)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:260
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:273
 msgid ""
 "Convenience functions to get only the start or count. Return 0 in case of "
 "error, so if the resource start has 0 among the legitimate values it would "
@@ -757,24 +765,24 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:261
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:274
 msgid "`void bus_delete_resource(device_t dev, int type, int rid)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:263
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:276
 msgid "Delete a resource, make it undefined."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:264
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:277
 msgid ""
 "`struct resource * bus_alloc_resource(device_t dev, int type, int *rid, "
 "u_long start, u_long end, u_long count, u_int flags)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:266
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:279
 msgid ""
 "Allocate a resource as a range of count values not allocated by anyone else, "
 "somewhere between start and end. Alas, alignment is not supported. If the "
@@ -788,25 +796,25 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:268
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:281
 msgid "Flags are a bitmap, the flags interesting for the caller are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:270
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:283
 msgid ""
 "_RF_ACTIVE_ - causes the resource to be automatically activated after "
 "allocation."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:271
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:284
 msgid ""
 "_RF_SHAREABLE_ - resource may be shared at the same time by multiple drivers."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:272
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:285
 msgid ""
 "_RF_TIMESHARE_ - resource may be time-shared by multiple drivers, i.e., "
 "allocated at the same time by many but activated only by one at any given "
@@ -814,28 +822,28 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:273
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:286
 msgid ""
 "Returns 0 on error. The allocated values may be obtained from the returned "
 "handle using methods `rhand_*()`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:274
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:287
 msgid ""
 "`int bus_release_resource(device_t dev, int type, int rid, struct resource "
 "*r)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:275
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:288
 msgid ""
 "Release the resource, r is the handle returned by `bus_alloc_resource()`. "
 "Returns 0 on success, error code otherwise."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:276
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:289
 msgid ""
 "`int bus_activate_resource(device_t dev, int type, int rid, struct resource "
 "*r) int bus_deactivate_resource(device_t dev, int type, int rid, struct "
@@ -843,7 +851,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:277
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:290
 msgid ""
 "Activate or deactivate resource. Return 0 on success, error code otherwise. "
 "If the resource is time-shared and currently activated by another driver "
@@ -851,7 +859,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:278
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:291
 msgid ""
 "`int bus_setup_intr(device_t dev, struct resource *r, int flags, "
 "driver_intr_t *handler, void *arg, void **cookiep) int "
@@ -859,31 +867,31 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:279
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:292
 msgid ""
 "Associate or de-associate the interrupt handler with a device. Return 0 on "
 "success, error code otherwise."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:280
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:293
 msgid "r - the activated resource handler describing the IRQ"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:282
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:295
 msgid "flags - the interrupt priority level, one of:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:284
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:297
 msgid ""
 "`INTR_TYPE_TTY` - terminals and other likewise character-type devices. To "
 "mask them use `spltty()`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:285
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:298
 msgid ""
 "`(INTR_TYPE_TTY | INTR_TYPE_FAST)` - terminal type devices with small input "
 "buffer, critical to the data loss on input (such as the old-fashioned serial "
@@ -891,34 +899,34 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:286
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:299
 msgid ""
 "`INTR_TYPE_BIO` - block-type devices, except those on the CAM controllers. "
 "To mask them use `splbio()`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:287
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:300
 msgid ""
 "`INTR_TYPE_CAM` - CAM (Common Access Method) bus controllers. To mask them "
 "use `splcam()`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:288
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:301
 msgid ""
 "`INTR_TYPE_NET` - network interface controllers. To mask them use `splimp()`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:289
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:302
 msgid ""
 "`INTR_TYPE_MISC` - miscellaneous devices. There is no other way to mask them "
 "than by `splhigh()` which masks all interrupts."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:291
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:304
 msgid ""
 "When an interrupt handler executes all the other interrupts matching its "
 "priority level will be masked. The only exception is the MISC level for "
@@ -927,14 +935,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:293
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:306
 msgid ""
 "_handler_ - pointer to the handler function, the type driver_intr_t is "
 "defined as `void driver_intr_t(void *)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:294
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:307
 msgid ""
 "_arg_ - the argument passed to the handler to identify this particular "
 "device. It is cast from void* to any real type by the handler. The old "
@@ -944,58 +952,58 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:295
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:308
 msgid ""
 "_cookie[p]_ - the value received from `setup()` is used to identify the "
 "handler when passed to `teardown()`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:297
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:310
 msgid ""
 "A number of methods are defined to operate on the resource handlers (struct "
 "resource *). Those of interest to the device driver writers are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:299
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:312
 msgid ""
 "`u_long rman_get_start(r) u_long rman_get_end(r)` Get the start and end of "
 "allocated resource range."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:300
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:313
 msgid ""
 "`void *rman_get_virtual(r)` Get the virtual address of activated memory "
 "resource."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:302
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:315
 #, no-wrap
 msgid "Bus Memory Mapping"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:305
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:318
 msgid ""
 "In many cases data is exchanged between the driver and the device through "
 "the memory. Two variants are possible:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:307
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:320
 msgid "(a) memory is located on the device card"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:309
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:322
 msgid "(b) memory is the main memory of the computer"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:311
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:324
 msgid ""
 "In case (a) the driver always copies the data back and forth between the on-"
 "card memory and the main memory as necessary. To map the on-card memory into "
@@ -1008,7 +1016,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:313
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:326
 msgid ""
 "Most of the ISA cards will have their memory configured for physical "
 "location somewhere in range 640KB-1MB. Some of the ISA cards require larger "
@@ -1022,7 +1030,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:315
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:328
 msgid ""
 "In case (b) just the address of the data is sent to the device, and the "
 "device uses DMA to actually access the data in the main memory. Two "
@@ -1034,7 +1042,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:317
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:330
 msgid ""
 "Two structures are used for DMA memory allocation, `bus_dma_tag_t` and "
 "`bus_dmamap_t`. Tag describes the properties required for the DMA memory. "
@@ -1043,7 +1051,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:319
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:332
 msgid ""
 "Tags are organized into a tree-like hierarchy with inheritance of the "
 "properties. A child tag inherits all the requirements of its parent tag, and "
@@ -1051,7 +1059,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:321
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:334
 msgid ""
 "Normally one top-level tag (with no parent) is created for each device unit. "
 "If multiple memory areas with different requirements are needed for each "
@@ -1060,12 +1068,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:323
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:336
 msgid "The tags can be used to create a map in two ways."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:325
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:338
 msgid ""
 "First, a chunk of contiguous memory conformant with the tag requirements may "
 "be allocated (and later may be freed). This is normally used to allocate "
@@ -1075,7 +1083,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:327
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:340
 msgid ""
 "Second, an arbitrary area of virtual memory may be loaded into a map. Each "
 "page of this memory will be checked for conformance to the map requirement. "
@@ -1091,12 +1099,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:329
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:342
 msgid "The functions working on the DMA memory are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:331
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:344
 msgid ""
 "`int bus_dma_tag_create(bus_dma_tag_t parent, bus_size_t alignment, "
 "bus_size_t boundary, bus_addr_t lowaddr, bus_addr_t highaddr, "
@@ -1105,17 +1113,17 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:333
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:346
 msgid "Create a new tag. Returns 0 on success, the error code otherwise."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:335
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:348
 msgid "_parent_ - parent tag, or NULL to create a top-level tag."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:336
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:349
 msgid ""
 "_alignment_ - required physical alignment of the memory area to be allocated "
 "for this tag. Use value 1 for \"no specific alignment\". Applies only to the "
@@ -1123,7 +1131,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:337
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:350
 msgid ""
 "_boundary_ - physical address boundary that must not be crossed when "
 "allocating the memory. Use value 0 for \"no boundary\". Applies only to the "
@@ -1135,7 +1143,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:338
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:351
 msgid ""
 "_lowaddr, highaddr_ - the names are slightly misleading; these values are "
 "used to limit the permitted range of physical addresses used to allocate the "
@@ -1143,14 +1151,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:340
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:353
 msgid ""
 "For `bus_dmamem_alloc()` all the addresses from 0 to lowaddr-1 are "
 "considered permitted, the higher ones are forbidden."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:341
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:354
 msgid ""
 "For `bus_dmamap_create()` all the addresses outside the inclusive range "
 "[lowaddr; highaddr] are considered accessible. The addresses of pages inside "
@@ -1160,22 +1168,22 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:342
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:355
 msgid "For the ISA devices the normal values (with no filter function) are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:344
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:357
 msgid "lowaddr = BUS_SPACE_MAXADDR_24BIT"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:346
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:359
 msgid "highaddr = BUS_SPACE_MAXADDR"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:348
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:361
 msgid ""
 "_filter, filterarg_ - the filter function and its argument. If NULL is "
 "passed for filter then the whole range [lowaddr, highaddr] is considered "
@@ -1187,7 +1195,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:349
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:362
 msgid ""
 "_maxsize_ - the maximal size of memory (in bytes) that may be allocated "
 "through this tag. In case it is difficult to estimate or could be "
@@ -1196,7 +1204,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:350
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:363
 msgid ""
 "_nsegments_ - maximal number of scatter-gather segments supported by the "
 "device. If unrestricted then the value `BUS_SPACE_UNRESTRICTED` should be "
@@ -1209,26 +1217,26 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:351
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:364
 msgid ""
 "_maxsegsz_ - maximal size of a scatter-gather segment supported by the "
 "device. The maximal value for ISA device would be `BUS_SPACE_MAXSIZE_24BIT`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:352
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:365
 msgid "_flags_ - a bitmap of flags. The only interesting flags are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:354
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:367
 msgid ""
 "_BUS_DMA_ALLOCNOW_ - requests to allocate all the potentially needed bounce "
 "pages when creating the tag."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:355
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:368
 msgid ""
 "_BUS_DMA_ISA_ - mysterious flag used only on Alpha machines. It is not "
 "defined for the i386 machines. Probably it should be used by all the ISA "
@@ -1236,34 +1244,34 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:357
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:370
 msgid "_dmat_ - pointer to the storage for the new tag to be returned."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:359
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:372
 msgid "`int bus_dma_tag_destroy(bus_dma_tag_t dmat)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:361
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:374
 msgid "Destroy a tag. Returns 0 on success, the error code otherwise."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:363
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:376
 msgid "dmat - the tag to be destroyed."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:364
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:377
 msgid ""
 "`int bus_dmamem_alloc(bus_dma_tag_t dmat, void** vaddr, int flags, "
 "bus_dmamap_t *mapp)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:366
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:379
 msgid ""
 "Allocate an area of contiguous memory described by the tag. The size of "
 "memory to be allocated is tag's maxsize. Returns 0 on success, the error "
@@ -1272,27 +1280,27 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:368
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:380
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:388
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:403
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:381
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:393
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:401
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:416
 msgid "_dmat_ - the tag"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:369
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:382
 msgid ""
 "_vaddr_ - pointer to the storage for the kernel virtual address of the "
 "allocated area to be returned."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:370
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:383
 msgid "flags - a bitmap of flags. The only interesting flag is:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:372
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:385
 msgid ""
 "_BUS_DMA_NOWAIT_ - if the memory is not immediately available return the "
 "error. If this flag is not set then the routine is allowed to sleep until "
@@ -1300,18 +1308,18 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:374
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:387
 msgid "_mapp_ - pointer to the storage for the new map to be returned."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:376
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:389
 msgid ""
 "`void bus_dmamem_free(bus_dma_tag_t dmat, void *vaddr, bus_dmamap_t map)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:378
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:391
 msgid ""
 "Free the memory allocated by `bus_dmamem_alloc()`. At present, freeing of "
 "the memory allocated with ISA restrictions is not implemented. Due to this "
@@ -1322,62 +1330,62 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:381
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:394
 msgid "_vaddr_ - the kernel virtual address of the memory"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:382
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:395
 msgid "_map_ - the map of the memory (as returned from `bus_dmamem_alloc()`)"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:384
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:397
 msgid ""
 "`int bus_dmamap_create(bus_dma_tag_t dmat, int flags, bus_dmamap_t *mapp)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:386
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:399
 msgid ""
 "Create a map for the tag, to be used in `bus_dmamap_load()` later. Returns 0 "
 "on success, the error code otherwise."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:389
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:402
 msgid ""
 "_flags_ - theoretically, a bit map of flags. But no flags are defined yet, "
 "so at present it will be always 0."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:390
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:403
 msgid "_mapp_ - pointer to the storage for the new map to be returned"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:392
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:405
 msgid "`int bus_dmamap_destroy(bus_dma_tag_t dmat, bus_dmamap_t map)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:394
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:407
 msgid "Destroy a map. Returns 0 on success, the error code otherwise."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:396
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:409
 msgid "dmat - the tag to which the map is associated"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:397
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:410
 msgid "map - the map to be destroyed"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:399
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:412
 msgid ""
 "`int bus_dmamap_load(bus_dma_tag_t dmat, bus_dmamap_t map, void *buf, "
 "bus_size_t buflen, bus_dmamap_callback_t *callback, void *callback_arg, int "
@@ -1385,7 +1393,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:401
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:414
 msgid ""
 "Load a buffer into the map (the map must be previously created by "
 "`bus_dmamap_create()` or `bus_dmamem_alloc()`). All the pages of the buffer "
@@ -1402,49 +1410,49 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:404
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:417
 msgid "_map_ - the map"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:405
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:418
 msgid "_buf_ - kernel virtual address of the buffer"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:406
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:419
 msgid "_buflen_ - length of the buffer"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:407
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:420
 msgid "_callback_, `callback_arg` - the callback function and its argument"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:409
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:422
 msgid ""
 "The prototype of callback function is: `void callback(void *arg, "
 "bus_dma_segment_t *seg, int nseg, int error)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:411
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:424
 msgid "_arg_ - the same as callback_arg passed to `bus_dmamap_load()`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:412
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:425
 msgid "_seg_ - array of the segment descriptors"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:413
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:426
 msgid "_nseg_ - number of descriptors in array"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:414
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:427
 msgid ""
 "_error_ - indication of the segment number overflow: if it is set to `EFBIG` "
 "then the buffer did not fit into the maximal number of segments permitted by "
@@ -1455,51 +1463,51 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:416
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:429
 msgid "Each entry in the segments array contains the fields:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:418
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:431
 msgid "_ds_addr_ - physical bus address of the segment"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:419
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:432
 msgid "_ds_len_ - length of the segment"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:421
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:434
 msgid "`void bus_dmamap_unload(bus_dma_tag_t dmat, bus_dmamap_t map)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:423
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:436
 msgid "unload the map."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:425
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:432
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:438
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:445
 msgid "_dmat_ - tag"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:426
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:433
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:439
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:446
 msgid "_map_ - loaded map"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:428
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:441
 msgid ""
 "`void bus_dmamap_sync (bus_dma_tag_t dmat, bus_dmamap_t map, "
 "bus_dmasync_op_t op)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:430
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:443
 msgid ""
 "Synchronise a loaded buffer with its bounce pages before and after physical "
 "transfer to or from device. This is the function that does all the necessary "
@@ -1508,32 +1516,32 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:434
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:447
 msgid "_op_ - type of synchronization operation to perform:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:436
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:449
 msgid "`BUS_DMASYNC_PREREAD` - before reading from device into buffer"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:437
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:450
 msgid "`BUS_DMASYNC_POSTREAD` - after reading from device into buffer"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:438
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:451
 msgid "`BUS_DMASYNC_PREWRITE` - before writing the buffer to device"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:439
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:452
 msgid "`BUS_DMASYNC_POSTWRITE` - after writing the buffer to device"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:441
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:454
 msgid ""
 "As of now PREREAD and POSTWRITE are null operations but that may change in "
 "the future, so they must not be ignored in the driver. Synchronization is "
@@ -1541,7 +1549,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:443
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:456
 msgid ""
 "Before calling the callback function from `bus_dmamap_load()` the segment "
 "array is stored in the stack. And it gets pre-allocated for the maximal "
@@ -1558,7 +1566,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:445
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:458
 msgid ""
 "Another practical consequence is that the number of segments may limit the "
 "size of the buffer. If all the pages in the buffer happen to be physically "
@@ -1570,7 +1578,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:447
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:460
 msgid ""
 "If the hardware does not support scatter-gather at all or the driver wants "
 "to support some buffer size even if it is heavily fragmented then the "
@@ -1579,34 +1587,34 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:449
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:462
 msgid ""
 "Below are the typical call sequences when using a map depend on the use of "
 "the map. The characters -> are used to show the flow of time."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:451
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:464
 msgid ""
 "For a buffer which stays practically fixed during all the time between "
 "attachment and detachment of a device:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:453
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:466
 msgid ""
 "bus_dmamem_alloc -> bus_dmamap_load -> ...use buffer... -> -> "
 "bus_dmamap_unload -> bus_dmamem_free"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:455
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:468
 msgid ""
 "For a buffer that changes frequently and is passed from outside the driver:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:464
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:477
 #, no-wrap
 msgid ""
 "          bus_dmamap_create ->\n"
@@ -1619,7 +1627,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:467
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:480
 msgid ""
 "When loading a map created by `bus_dmamem_alloc()` the passed address and "
 "size of the buffer must be the same as used in `bus_dmamem_alloc()`. In this "
@@ -1630,12 +1638,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:469
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:482
 msgid "A typical example would be:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:477
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:490
 #, no-wrap
 msgid ""
 "          static void\n"
@@ -1646,7 +1654,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:488
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:501
 #, no-wrap
 msgid ""
 "          ...\n"
@@ -1662,7 +1670,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:496
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:509
 #, no-wrap
 msgid ""
 "          error=bus_dma_tag_create(parent_tag, alignment,\n"
@@ -1675,7 +1683,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:501
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:514
 #, no-wrap
 msgid ""
 "          error = bus_dmamem_alloc(tag_somedata, &vsomedata, /* flags*/ 0,\n"
@@ -1685,7 +1693,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:505
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:518
 #, no-wrap
 msgid ""
 "          bus_dmamap_load(tag_somedata, map_somedata, (void *)vsomedata,\n"
@@ -1694,7 +1702,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:508
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:521
 msgid ""
 "Looks a bit long and complicated but that is the way to do it. The practical "
 "consequence is: if multiple memory areas are allocated always together it "
@@ -1703,7 +1711,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:510
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:523
 msgid ""
 "When loading an arbitrary buffer into the map created by "
 "`bus_dmamap_create()` special measures must be taken to synchronize with the "
@@ -1711,7 +1719,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:516
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:529
 #, no-wrap
 msgid ""
 "          {\n"
@@ -1720,7 +1728,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:535
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:548
 #, no-wrap
 msgid ""
 "           s = splsoftvm();\n"
@@ -1744,12 +1752,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:538
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:551
 msgid "Two possible approaches for the processing of requests are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:540
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:553
 msgid ""
 "If requests are completed by marking them explicitly as done (such as the "
 "CAM requests) then it would be simpler to put all the further processing "
@@ -1760,7 +1768,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:542
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:555
 msgid ""
 "If requests are completed when the function returns (such as classic read or "
 "write requests on character devices) then a synchronization flag should be "
@@ -1774,13 +1782,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:544
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:557
 #, no-wrap
 msgid "DMA"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:547
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:560
 msgid ""
 "The Direct Memory Access (DMA) is implemented in the ISA bus through the DMA "
 "controller (actually, two of them but that is an irrelevant detail). To make "
@@ -1791,7 +1799,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:549
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:562
 msgid ""
 "The simplest case is for the fairly intelligent devices. Like the bus master "
 "devices on PCI they can generate the bus cycles and memory addresses all by "
@@ -1803,30 +1811,30 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:551
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:564
 msgid "`void isa_dmacascade(int channel_number)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:553
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:566
 msgid ""
 "All the further activity is done by programming the device. When detaching "
 "the driver no DMA-related functions need to be called."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:555
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:568
 msgid ""
 "For the simpler devices things get more complicated. The functions used are:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:557
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:570
 msgid "`int isa_dma_acquire(int chanel_number)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:559
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:572
 msgid ""
 "Reserve a DMA channel. Returns 0 on success or EBUSY if the channel was "
 "already reserved by this or a different driver. Most of the ISA devices are "
@@ -1837,12 +1845,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:560
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:573
 msgid "`int isa_dma_release(int chanel_number)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:562
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:575
 msgid ""
 "Release a previously reserved DMA channel. No transfers must be in progress "
 "when the channel is released (in addition the device must not try to "
@@ -1850,12 +1858,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:563
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:576
 msgid "`void isa_dmainit(int chan, u_int bouncebufsize)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:565
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:578
 msgid ""
 "Allocate a bounce buffer for use with the specified channel. The requested "
 "size of the buffer can not exceed 64KB. This bounce buffer will be "
@@ -1870,22 +1878,22 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:567
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:580
 msgid "_chan_ - channel number"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:568
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:581
 msgid "_bouncebufsize_ - size of the bounce buffer in bytes"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:570
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:583
 msgid "`void isa_dmastart(int flags, caddr_t addr, u_int nbytes, int chan)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:572
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:585
 msgid ""
 "Prepare to start a DMA transfer. This function must be called to set up the "
 "DMA controller before actually starting transfer on the device. It checks "
@@ -1897,24 +1905,24 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:573
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:586
 msgid ""
 "flags - a bitmask determining the type of operation to be done. The "
 "direction bits B_READ and B_WRITE are mutually exclusive."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:575
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:588
 msgid "B_READ - read from the ISA bus into memory"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:576
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:589
 msgid "B_WRITE - write from the memory to the ISA bus"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:577
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:590
 msgid ""
 "B_RAW - if set then the DMA controller will remember the buffer and after "
 "the end of transfer will automatically re-initialize itself to repeat "
@@ -1926,12 +1934,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:579
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:592
 msgid "addr - virtual address of the buffer"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:580
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:593
 msgid ""
 "nbytes - length of the buffer. Must be less or equal to 64KB. Length of 0 is "
 "not allowed: the DMA controller will understand it as 64KB while the kernel "
@@ -1942,17 +1950,17 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:581
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:594
 msgid "chan - channel number"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:582
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:595
 msgid "`void isa_dmadone(int flags, caddr_t addr, int nbytes, int chan)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:584
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:597
 msgid ""
 "Synchronize the memory after device reports that transfer is done. If that "
 "was a read operation with a bounce buffer then the data will be copied from "
@@ -1962,12 +1970,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:585
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:598
 msgid "`int isa_dmastatus(int channel_number)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:587
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:600
 msgid ""
 "Returns the number of bytes left in the current transfer to be transferred. "
 "In case the flag B_READ was set in `isa_dmastart()` the number returned will "
@@ -1979,25 +1987,25 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:588
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:601
 msgid "`int isa_dmastop(int channel_number)`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:590
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:603
 msgid ""
 "Aborts the current transfer and returns the number of bytes left "
 "untransferred."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:592
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:605
 #, no-wrap
 msgid "xxx_isa_probe"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:595
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:608
 msgid ""
 "This function probes if a device is present. If the driver supports auto-"
 "detection of some part of device configuration (such as interrupt vector or "
@@ -2005,7 +2013,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:597
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:610
 msgid ""
 "As for any other bus, if the device cannot be detected or is detected but "
 "failed the self-test or some other problem happened then it returns a "
@@ -2015,7 +2023,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:599
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:612
 msgid ""
 "The negative return values are used when a PnP device supports multiple "
 "interfaces. For example, an older compatibility interface and a newer "
@@ -2030,7 +2038,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:601
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:614
 msgid ""
 "The device descriptor struct xxx_softc is allocated by the system before "
 "calling the probe routine. If the probe routine returns an error the "
@@ -2051,13 +2059,13 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:603
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:616
 msgid ""
 "A typical probe routine starts with getting the device descriptor and unit:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:610
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:623
 #, no-wrap
 msgid ""
 "         struct xxx_softc *sc = device_get_softc(dev);\n"
@@ -2067,7 +2075,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:613
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:626
 #, no-wrap
 msgid ""
 "          sc->dev = dev; /* link it back */\n"
@@ -2075,7 +2083,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:616
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:629
 msgid ""
 "Then check for the PnP devices. The check is carried out by a table "
 "containing the list of PnP IDs supported by this driver and human-readable "
@@ -2083,7 +2091,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:622
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:635
 #, no-wrap
 msgid ""
 "        pnperror=ISA_PNP_PROBE(device_get_parent(dev), dev,\n"
@@ -2091,7 +2099,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:625
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:638
 msgid ""
 "The logic of ISA_PNP_PROBE is the following: If this card (device unit) was "
 "not detected as PnP then ENOENT will be returned. If it was detected as PnP "
@@ -2102,13 +2110,13 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:627
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:640
 msgid ""
 "If a driver supports only PnP devices then the condition would look like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:632
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:645
 #, no-wrap
 msgid ""
 "          if(pnperror != 0)\n"
@@ -2116,7 +2124,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:635
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:648
 msgid ""
 "No special treatment is required for the drivers which do not support PnP "
 "because they pass an empty PnP ID table and will always get ENXIO if called "
@@ -2124,7 +2132,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:637
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:650
 msgid ""
 "The probe routine normally needs at least some minimal set of resources, "
 "such as I/O port number to find the card and probe it. Depending on the "
@@ -2134,7 +2142,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:639
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:652
 msgid ""
 "Typically the minimal information required to get access to the device is "
 "the I/O port number. Then some devices allow to get the rest of information "
@@ -2143,7 +2151,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:644
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:657
 #, no-wrap
 msgid ""
 " sc->port0 = bus_get_resource_start(dev,\n"
@@ -2151,7 +2159,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:647
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:660
 msgid ""
 "The base port address is saved in the structure softc for future use. If it "
 "will be used very often then calling the resource function each time would "
@@ -2161,7 +2169,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:661
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:674
 #, no-wrap
 msgid ""
 "          /* table of all possible base I/O port addresses for this device */\n"
@@ -2177,7 +2185,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:665
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:678
 #, no-wrap
 msgid ""
 "          ...\n"
@@ -2186,7 +2194,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:671
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:684
 #, no-wrap
 msgid ""
 "          port =  bus_get_resource_start(dev, SYS_RES_IOPORT, 0 /*rid*/);\n"
@@ -2197,7 +2205,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:679
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:692
 #, no-wrap
 msgid ""
 "                  /* found it */\n"
@@ -2210,7 +2218,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:684
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:697
 #, no-wrap
 msgid ""
 "          /* we get here only if we need to guess the port */\n"
@@ -2220,7 +2228,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:689
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:702
 #, no-wrap
 msgid ""
 "              /* mark as used - even if we find nothing at this port\n"
@@ -2230,7 +2238,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:696
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:709
 #, no-wrap
 msgid ""
 "              error = xxx_really_probe(dev, xxx_allports[i].port);\n"
@@ -2242,7 +2250,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:699
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:712
 msgid ""
 "Of course, normally the driver's `identify()` routine should be used for "
 "such things. But there may be one valid reason why it may be better to be "
@@ -2254,7 +2262,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:701
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:714
 msgid ""
 "Now, after we got the starting port we need to set the port count (except "
 "for PnP devices) because the kernel does not have this information in the "
@@ -2262,7 +2270,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:709
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:722
 #, no-wrap
 msgid ""
 "         if(pnperror /* only for non-PnP devices */\n"
@@ -2272,14 +2280,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:712
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:725
 msgid ""
 "Finally allocate and activate a piece of port address space (special values "
 "of start and end mean \"use those we set by ``bus_set_resource()``\"):"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:720
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:733
 #, no-wrap
 msgid ""
 "          sc->port0_rid = 0;\n"
@@ -2289,7 +2297,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:723
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:736
 #, no-wrap
 msgid ""
 "          if(sc->port0_r == NULL)\n"
@@ -2297,7 +2305,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:726
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:739
 msgid ""
 "Now having access to the port-mapped registers we can poke the device in "
 "some way and check if it reacts like it is expected to. If it does not then "
@@ -2305,7 +2313,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:728
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:741
 msgid ""
 "Normally drivers do not set up the interrupt handlers until the attach "
 "routine. Instead they do probes in the polling mode using the `DELAY()` "
@@ -2319,14 +2327,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:730
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:743
 msgid ""
 "If the probe routine really wants to check that the interrupts really work "
 "it may configure and probe the interrupts too. But that is not recommended."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:737
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:750
 #, no-wrap
 msgid ""
 "          /* implemented in some very device-specific way */\n"
@@ -2335,7 +2343,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:740
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:753
 msgid ""
 "The function `xxx_probe_ports()` may also set the device description "
 "depending on the exact model of device it discovers. But if there is only "
@@ -2345,7 +2353,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:745
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:758
 #, no-wrap
 msgid ""
 "          if(pnperror)\n"
@@ -2353,7 +2361,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:748
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:761
 msgid ""
 "Then the probe routine should either discover the ranges of all the "
 "resources by reading the device configuration registers or make sure that "
@@ -2364,7 +2372,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:750
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:763
 msgid ""
 "The memory address may be specified in the kernel configuration file or on "
 "some devices it may be pre-configured in non-volatile configuration "
@@ -2375,7 +2383,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:758
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:771
 #, no-wrap
 msgid ""
 "          /* try to find out the config address first */\n"
@@ -2385,7 +2393,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:766
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:779
 #, no-wrap
 msgid ""
 "          if(sc->mem0_p == 0)\n"
@@ -2398,7 +2406,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:778
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:791
 #, no-wrap
 msgid ""
 "          /* just like the port, set the memory size,\n"
@@ -2415,7 +2423,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:787
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:800
 #, no-wrap
 msgid ""
 "              if(sc->mem0_size == 0) {\n"
@@ -2429,7 +2437,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:790
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:803
 #, no-wrap
 msgid ""
 "              if(xxx_set_mem0_size_on_device(sc) < 0)\n"
@@ -2437,7 +2445,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:797
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:810
 #, no-wrap
 msgid ""
 "              if(bus_set_resource(dev, SYS_RES_MEMORY, /*rid*/0,\n"
@@ -2449,18 +2457,18 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:800
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:813
 msgid "Resources for IRQ and DRQ are easy to check by analogy."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:802
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:815
 msgid "If all went well then release all the resources and return success."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:807
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1070
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:820
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1083
 #, no-wrap
 msgid ""
 "          xxx_free_resources(sc);\n"
@@ -2468,7 +2476,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:810
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:823
 msgid ""
 "Finally, handle the troublesome situations. All the resources should be "
 "deallocated before returning. We make use of the fact that before the "
@@ -2477,14 +2485,14 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:814
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1031
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:827
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1044
 #, no-wrap
 msgid "          bad:\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:820
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:833
 #, no-wrap
 msgid ""
 "          xxx_free_resources(sc);\n"
@@ -2495,14 +2503,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:823
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:836
 msgid ""
 "That would be all for the probe routine. Freeing of resources is done from "
 "multiple places, so it is moved to a function which may look like:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:831
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:844
 #, no-wrap
 msgid ""
 "static void\n"
@@ -2513,7 +2521,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:839
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:852
 #, no-wrap
 msgid ""
 "              /* interrupt handler */\n"
@@ -2526,7 +2534,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:854
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:867
 #, no-wrap
 msgid ""
 "              /* all kinds of memory maps we could have allocated */\n"
@@ -2546,13 +2554,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:856
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:869
 #, no-wrap
 msgid "              ... free other maps and tags if we have them ...\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:861
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:874
 #, no-wrap
 msgid ""
 "              if(sc->parent_tag) {\n"
@@ -2562,7 +2570,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:875
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:888
 #, no-wrap
 msgid ""
 "              /* release all the bus resources */\n"
@@ -2581,13 +2589,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:878
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:891
 #, no-wrap
 msgid "xxx_isa_attach"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:881
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:894
 msgid ""
 "The attach routine actually connects the driver to the system if the probe "
 "routine returned success and the system had chosen to attach that driver. If "
@@ -2600,21 +2608,21 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:883
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:896
 msgid ""
 "The attach routine returns 0 if it completed successfully or error code "
 "otherwise."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:885
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:898
 msgid ""
 "The attach routine starts just like the probe routine, with getting some "
 "frequently used data into more accessible variables."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:891
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:904
 #, no-wrap
 msgid ""
 "          struct xxx_softc *sc = device_get_softc(dev);\n"
@@ -2623,7 +2631,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:894
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:907
 msgid ""
 "Then allocate and activate all the necessary resources. As normally the port "
 "range will be released before returning from probe, it has to be allocated "
@@ -2634,7 +2642,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:900
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:913
 #, no-wrap
 msgid ""
 "          sc->port0_rid = 0;\n"
@@ -2643,7 +2651,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:903
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:916
 #, no-wrap
 msgid ""
 "          if(sc->port0_r == NULL)\n"
@@ -2651,7 +2659,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:908
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:921
 #, no-wrap
 msgid ""
 "          /* on-board memory */\n"
@@ -2661,7 +2669,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:911
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:924
 #, no-wrap
 msgid ""
 "          if(sc->mem0_r == NULL)\n"
@@ -2669,7 +2677,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:914
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:927
 #, no-wrap
 msgid ""
 "          /* get its virtual address */\n"
@@ -2677,19 +2685,19 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:917
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:930
 msgid ""
 "The DMA request channel (DRQ) is allocated likewise. To initialize it use "
 "functions of the `isa_dma*()` family. For example:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:919
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:932
 msgid "`isa_dmacascade(sc->drq0);`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:921
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:934
 msgid ""
 "The interrupt request line (IRQ) is a bit special. Besides allocation the "
 "driver's interrupt handler should be associated with it. Historically in the "
@@ -2705,7 +2713,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:928
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:941
 #, no-wrap
 msgid ""
 "          sc->intr_rid = 0;\n"
@@ -2714,7 +2722,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:931
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:944
 #, no-wrap
 msgid ""
 "          if(sc->intr_r == NULL)\n"
@@ -2722,7 +2730,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:940
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:953
 #, no-wrap
 msgid ""
 "          /*\n"
@@ -2736,14 +2744,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:943
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:956
 msgid ""
 "If the device needs to make DMA to the main memory then this memory should "
 "be allocated like described before:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:955
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:968
 #, no-wrap
 msgid ""
 "          error=bus_dma_tag_create(NULL, /*alignment*/ 4,\n"
@@ -2758,7 +2766,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:972
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:985
 #, no-wrap
 msgid ""
 "          /* many things get inherited from the parent tag\n"
@@ -2780,7 +2788,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:977
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:990
 #, no-wrap
 msgid ""
 "          error = bus_dmamem_alloc(sc->data_tag, &sc->data, /* flags*/ 0,\n"
@@ -2790,7 +2798,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:993
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1006
 #, no-wrap
 msgid ""
 "          /* xxx_alloc_callback() just saves the physical address at\n"
@@ -2811,7 +2819,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:996
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1009
 msgid ""
 "After all the necessary resources are allocated the device should be "
 "initialized. The initialization may include testing that all the expected "
@@ -2819,7 +2827,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1001
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1014
 #, no-wrap
 msgid ""
 "          if(xxx_initialize(sc) < 0)\n"
@@ -2827,7 +2835,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1004
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1017
 msgid ""
 "The bus subsystem will automatically print on the console the device "
 "description set by probe. But if the driver wants to print some extra "
@@ -2835,20 +2843,20 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1009
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1022
 #, no-wrap
 msgid "        device_printf(dev, \"has on-card FIFO buffer of %d bytes\\n\", sc->fifosize);\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1012
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1025
 msgid ""
 "If the initialization routine experiences any problems then printing "
 "messages about them before returning error is also recommended."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1014
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1027
 msgid ""
 "The final step of the attach routine is attaching the device to its "
 "functional subsystem in the kernel. The exact way to do it depends on the "
@@ -2857,12 +2865,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1016
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1029
 msgid "If all went well then return success."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1022
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1035
 #, no-wrap
 msgid ""
 "          error = xxx_attach_subsystem(sc);\n"
@@ -2871,13 +2879,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1024
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1037
 #, no-wrap
 msgid "          return 0;\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1027
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1040
 msgid ""
 "Finally, handle the troublesome situations. All the resources should be "
 "deallocated before returning an error. We make use of the fact that before "
@@ -2886,7 +2894,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1037
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1050
 #, no-wrap
 msgid ""
 "          xxx_free_resources(sc);\n"
@@ -2897,18 +2905,18 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1040
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1053
 msgid "That would be all for the attach routine."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1042
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1055
 #, no-wrap
 msgid "xxx_isa_detach"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1045
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1058
 msgid ""
 "If this function is present in the driver and the driver is compiled as a "
 "loadable module then the driver gets the ability to be unloaded. This is an "
@@ -2927,14 +2935,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1047
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1060
 msgid ""
 "The detach routine returns 0 if the driver was successfully detached or the "
 "error code otherwise."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1049
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1062
 msgid ""
 "The logic of detach is a mirror of the attach. The first thing to do is to "
 "detach the driver from its kernel subsystem. If the device is currently open "
@@ -2946,7 +2954,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1054
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1067
 #, no-wrap
 msgid ""
 "          struct xxx_softc *sc = device_get_softc(dev);\n"
@@ -2954,7 +2962,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1058
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1071
 #, no-wrap
 msgid ""
 "          error = xxx_detach_subsystem(sc);\n"
@@ -2963,7 +2971,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1061
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1074
 msgid ""
 "Next the driver may want to reset the hardware to some consistent state. "
 "That includes stopping any ongoing transfers, disabling the DMA channels and "
@@ -2973,23 +2981,23 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1063
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1076
 msgid "`xxx_isa_shutdown(dev);`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1065
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1078
 msgid "And finally release all the resources and return success."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1073
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1086
 #, no-wrap
 msgid "xxx_isa_shutdown"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1076
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1089
 msgid ""
 "This routine is called when the system is about to be shut down. It is "
 "expected to bring the hardware to some consistent state. For most of the ISA "
@@ -3004,13 +3012,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1078
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1091
 #, no-wrap
 msgid "xxx_intr"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1081
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1094
 msgid ""
 "The interrupt handler is called when an interrupt is received which may be "
 "from this particular device. The ISA bus does not support interrupt sharing "
@@ -3021,7 +3029,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1083
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1096
 msgid ""
 "The old convention for the ISA drivers was getting the device unit number as "
 "an argument. This is obsolete, and the new drivers receive whatever argument "
@@ -3031,7 +3039,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1090
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1103
 #, no-wrap
 msgid ""
 "          static void\n"
@@ -3040,7 +3048,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1093
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1106
 msgid ""
 "It runs at the interrupt priority level specified by the interrupt type "
 "parameter of `bus_setup_intr()`. That means that all the other interrupts of "
@@ -3048,12 +3056,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1095
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1108
 msgid "To avoid races it is commonly written as a loop:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1103
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1116
 #, no-wrap
 msgid ""
 "          while(xxx_interrupt_pending(sc)) {\n"
@@ -3063,7 +3071,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1105
+#: documentation/content/en/books/arch-handbook/isa/_index.adoc:1118
 msgid ""
 "The interrupt handler has to acknowledge interrupt to the device only but "
 "not to the interrupt controller, the system takes care of the latter."

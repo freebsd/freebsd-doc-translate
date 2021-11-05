@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-06-03 17:02-0300\n"
+"POT-Creation-Date: 2021-11-04 20:25-0300\n"
 "PO-Revision-Date: 2021-06-03 00:09+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Chinese (Simplified) <https://translate-dev.freebsd.org/"
@@ -31,14 +31,22 @@ msgstr "SMPng 设计文档"
 msgid "Chapter 8. SMPng Design Document"
 msgstr ""
 
-#. type: Title ==
+#. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:35
+msgid ""
+"include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
+"{{% lang %}}/teams.adoc[] include::shared/{{% lang %}}/mailing-lists.adoc[] "
+"include::shared/{{% lang %}}/urls.adoc[]"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:48
 #, no-wrap
 msgid "Introduction"
 msgstr "介绍"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:38
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:51
 msgid ""
 "This document presents the current design and implementation of the SMPng "
 "Architecture. First, the basic primitives and tools are introduced. Next, a "
@@ -57,7 +65,7 @@ msgstr ""
 "产生的重大影响。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:40
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:53
 msgid ""
 "This document is a work-in-progress, and will be updated to reflect on-going "
 "design and implementation activities associated with the SMPng Project. Many "
@@ -70,7 +78,7 @@ msgstr ""
 "更新和建议，请发给文档编辑。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:42
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:55
 #, fuzzy
 msgid ""
 "The goal of SMPng is to allow concurrency in the kernel. The kernel is "
@@ -87,19 +95,19 @@ msgstr ""
 "的 <xref linkend=\"smp-glossary\"/> 一节。"
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:44
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:57
 #, no-wrap
 msgid "Basic Tools and Locking Fundamentals"
 msgstr "基本工具与上锁的基础知识"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:46
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:59
 #, no-wrap
 msgid "Atomic Instructions and Memory Barriers"
 msgstr "原子操作指令和内存栅"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:49
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:62
 msgid ""
 "There are several existing treatments of memory barriers and atomic "
 "instructions, so this section will not include a lot of detail. To put it "
@@ -127,7 +135,7 @@ msgstr ""
 "证，其所更新的数据值， 以及内存栅所要求的任何其它操作， 对第二个 CPU 可见。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:51
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:64
 msgid ""
 "For example, assuming a simple model where data is considered visible when "
 "it is in main memory (or a global cache), when an atomic instruction is "
@@ -140,7 +148,7 @@ msgstr ""
 "取缓存线上的全部写操作，以及内存栅之后的全部未完成操作进行刷写。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:53
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:66
 msgid ""
 "This requires one to take special care when using an item protected by "
 "atomic instructions. For example, in the sleep mutex implementation, we have "
@@ -155,7 +163,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:55
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:68
 msgid ""
 "Finally, atomic instructions only allow one item to be updated or read. If "
 "one needs to atomically update several items, then a lock must be used "
@@ -168,13 +176,13 @@ msgstr ""
 "锁， 而不是两次单独的原子操作了。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:56
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:69
 #, no-wrap
 msgid "Read Locks Versus Write Locks"
 msgstr "读锁与写锁"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:59
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:72
 msgid ""
 "Read locks do not need to be as strong as write locks. Both types of locks "
 "need to ensure that the data they are accessing is not stale. However, only "
@@ -187,7 +195,7 @@ msgstr ""
 "使用不同类型的锁用于读和写操作有许多各自不同的实现方式。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:61
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:74
 msgid ""
 "First, sx locks can be used in this manner by using an exclusive lock when "
 "writing and a shared lock when reading. This method is quite straightforward."
@@ -196,7 +204,7 @@ msgstr ""
 "这种方法十分简单明了。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:63
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:76
 #, fuzzy
 msgid ""
 "A second method is a bit more obscure. You can protect a datum with multiple "
@@ -222,13 +230,13 @@ msgstr ""
 "时，之前检查时的状况依旧有效。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:64
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:77
 #, no-wrap
 msgid "Locking Conditions and Results"
 msgstr "上锁状态和结果"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:67
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:80
 msgid ""
 "If you need a lock to check the state of a variable so that you can take an "
 "action based on the state you read, you can not just hold the lock while "
@@ -243,19 +251,19 @@ msgstr ""
 "上锁状态。"
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:69
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:82
 #, no-wrap
 msgid "General Architecture and Design"
 msgstr "架构与设计概览"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:71
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:84
 #, no-wrap
 msgid "Interrupt Handling"
 msgstr "对中断的处理"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:74
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:87
 msgid ""
 "Following the pattern of several other multi-threaded UNIX(R) kernels, "
 "FreeBSD deals with interrupt handlers by giving them their own thread "
@@ -268,7 +276,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:76
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:89
 msgid ""
 "The interrupt threads currently in FreeBSD are referred to as heavyweight "
 "interrupt threads. They are called this because switching to an interrupt "
@@ -282,7 +290,7 @@ msgstr ""
 "因此中断在打断内核线程之前，必须等待内核线程阻塞或返回用户态之后才能执行。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:78
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:91
 msgid ""
 "To deal with the latency problems, the kernel in FreeBSD has been made "
 "preemptive. Currently, we only preempt a kernel thread when we release a "
@@ -294,7 +302,7 @@ msgstr ""
 "描述的全抢占式调度策略。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:80
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:93
 #, fuzzy
 msgid ""
 "Not all interrupt handlers execute in a thread context. Instead, some "
@@ -314,7 +322,7 @@ msgstr ""
 "mutex。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:82
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:95
 msgid ""
 "Finally, there is one optional optimization that can be added in MD code "
 "called lightweight context switches. Since an interrupt thread executes in a "
@@ -337,7 +345,7 @@ msgstr ""
 "态时将使用自己的上下文，这样一来， 就可以释放被中断的线程了。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:84
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:97
 msgid ""
 "The cons of this optimization are that they are very machine specific and "
 "complex and thus only worth the effort if their is a large performance "
@@ -353,7 +361,7 @@ msgstr ""
 "将进而需要线程修正。 另外， Mike Smith提议采用另一种方式来处理中断线程："
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:86
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:99
 msgid ""
 "Each interrupt handler has two parts: a predicate which runs in primary "
 "interrupt context and a handler which runs in its own thread context."
@@ -362,7 +370,7 @@ msgstr ""
 "在自己的线程上下文中执行的处理程序 (handler)。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:87
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:100
 msgid ""
 "If an interrupt handler has a predicate, then when an interrupt is "
 "triggered, the predicate is run. If the predicate returns true then the "
@@ -375,7 +383,7 @@ msgstr ""
 "度运行线程式处理程序。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:89
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:102
 msgid ""
 "Fitting light weight context switches into this scheme might prove rather "
 "complicated. Since we may want to change to this scheme at some point in the "
@@ -388,19 +396,19 @@ msgstr ""
 "工作，以便进一步完善中断处理架构， 随后再考察轻量级上下文切换是否适用。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:90
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:103
 #, no-wrap
 msgid "Kernel Preemption and Critical Sections"
 msgstr "内核抢占与临界区"
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:92
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:105
 #, no-wrap
 msgid "Kernel Preemption in a Nutshell"
 msgstr "内核抢占简介"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:95
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:108
 msgid ""
 "Kernel preemption is fairly simple. The basic idea is that a CPU should "
 "always be doing the highest priority work available. Well, that is the ideal "
@@ -412,7 +420,7 @@ msgstr ""
 "况下抢占会得不偿失。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:97
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:110
 msgid ""
 "Implementing full kernel preemption is very straightforward: when you "
 "schedule a thread to be executed by putting it on a run queue, you check to "
@@ -424,7 +432,7 @@ msgstr ""
 "执行该线程。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:99
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:112
 #, fuzzy
 msgid ""
 "While locks can protect most data in the case of a preemption, not all of "
@@ -444,13 +452,13 @@ msgstr ""
 "界区来临时禁用抢占。"
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:100
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:113
 #, no-wrap
 msgid "Critical Sections"
 msgstr "临界区"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:103
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:116
 #, fuzzy
 msgid ""
 "The responsibility of the critical section API is to prevent context "
@@ -475,7 +483,7 @@ msgstr ""
 "线程标志。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:105
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:118
 msgid ""
 "In order to minimize latency, preemptions inside of a critical section are "
 "deferred rather than dropped. If a thread that would normally be preempted "
@@ -491,7 +499,7 @@ msgstr ""
 "位， 则当前线程会被抢断，以允许更高优先级的线程开始运行。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:107
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:120
 #, fuzzy
 msgid ""
 "Interrupts pose a problem with regards to spin mutexes. If a low-level "
@@ -521,13 +529,13 @@ msgstr ""
 "式， 则 MD API可能需要改名， 以彰显其为一单独 API 这一事实。"
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:108
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:121
 #, no-wrap
 msgid "Design Tradeoffs"
 msgstr "设计折衷"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:111
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:124
 msgid ""
 "As mentioned earlier, a couple of trade-offs have been made to sacrifice "
 "cases where perfect preemption may not always provide the best performance."
@@ -535,7 +543,7 @@ msgstr ""
 "如前面提到的， 当完全抢占并非总能提供最佳性能时，采取了一些折衷的措施。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:113
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:126
 msgid ""
 "The first trade-off is that the preemption code does not take other CPUs "
 "into account. Suppose we have a two CPU's A and B with the priority of A's "
@@ -558,7 +566,7 @@ msgstr ""
 "因为 CPU B 会去执行优先级为 1 而不是 2 的那个线程。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:115
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:128
 msgid ""
 "The second trade-off limits immediate kernel preemption to real-time "
 "priority kernel threads. In the simple case of preemption defined above, a "
@@ -587,7 +595,7 @@ msgstr ""
 "时， 抢占代码才会立即执行抢断操作。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:117
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:130
 #, fuzzy
 msgid ""
 "Turning on full kernel preemption for all kernel threads has value as a "
@@ -602,13 +610,13 @@ msgstr ""
 "有内核线程的抢占， 这一选项主要用于调试目的。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:118
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:131
 #, no-wrap
 msgid "Thread Migration"
 msgstr "线程迁移"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:121
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:134
 #, fuzzy
 msgid ""
 "Simply put, a thread migrates when it moves from one CPU to another. In a "
@@ -631,7 +639,7 @@ msgstr ""
 "某些代码段禁止迁移，以获得稳定的 CPU 私有数据。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:123
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:136
 msgid ""
 "Critical sections currently prevent migration since they do not allow "
 "context switches. However, this may be too strong of a requirement to "
@@ -645,7 +653,7 @@ msgstr ""
 "供了另一个 API， 用以指示当前进程在被抢断时，不应迁移到另一 CPU。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:125
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:138
 #, fuzzy
 msgid ""
 "This API is known as thread pinning and is provided by the scheduler. The "
@@ -678,13 +686,13 @@ msgstr ""
 "<function>sched_unbind</function>。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:126
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:139
 #, no-wrap
 msgid "Callouts"
 msgstr "调出 (Callout)"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:129
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:142
 #, fuzzy
 msgid ""
 "The `timeout` kernel facility permits kernel services to register functions "
@@ -697,7 +705,7 @@ msgstr ""
 "嘀嗒的数目进行， 并在大约指定的时间回调用户提供的函数。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:131
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:144
 #, fuzzy
 msgid ""
 "The global list of pending timeout events is protected by a global spin "
@@ -726,19 +734,19 @@ msgstr ""
 "录， 如果超过了某一阈值， 则会产生警告。"
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:133
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:146
 #, no-wrap
 msgid "Specific Locking Strategies"
 msgstr "特定数据的锁策略"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:135
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:148
 #, no-wrap
 msgid "Credentials"
 msgstr "凭据（Credentials）"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:138
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:151
 #, fuzzy
 msgid ""
 "`struct ucred` is the kernel's internal credential structure, and is "
@@ -762,7 +770,7 @@ msgstr ""
 "改，因而避免了在使用共享凭据时额外的同步操作。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:140
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:153
 msgid ""
 "Credential structures with a single reference are considered mutable; shared "
 "credential structures must not be modified or a race condition is risked. A "
@@ -773,14 +781,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:142
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:155
 msgid ""
 "The `struct ucred` mutex is a leaf mutex and is implemented via a mutex pool "
 "for performance reasons."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:144
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:157
 msgid ""
 "Usually, credentials are used in a read-only manner for access control "
 "decisions, and in this case `td_ucred` is generally preferred because it "
@@ -791,7 +799,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:146
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:159
 msgid ""
 "If system call invocations will perform access control after an update to "
 "the process credential, the value of `td_ucred` must also be refreshed to "
@@ -803,24 +811,24 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:147
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:160
 #, no-wrap
 msgid "File Descriptors and File Descriptor Tables"
 msgstr "文件描述符和文件描述符表"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:150
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:163
 msgid "Details to follow."
 msgstr "详细内容将在稍后增加。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:151
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:164
 #, no-wrap
 msgid "Jail Structures"
 msgstr "Jail 结构体"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:154
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:167
 msgid ""
 "`struct prison` stores administrative details pertinent to the maintenance "
 "of jails created using the man:jail[2] API. This includes the per-jail "
@@ -835,13 +843,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:155
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:168
 #, no-wrap
 msgid "MAC Framework"
 msgstr "MAC 框架"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:158
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:171
 msgid ""
 "The TrustedBSD MAC Framework maintains data in a variety of kernel objects, "
 "in the form of `struct label`. In general, labels in kernel objects are "
@@ -851,7 +859,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:160
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:173
 #, fuzzy
 msgid ""
 "In addition to labels maintained in standard kernel objects, the MAC "
@@ -876,7 +884,7 @@ msgstr ""
 "用计数为零，以避免在用表时对其进行修改。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:162
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:175
 #, fuzzy
 msgid ""
 "A condition variable, `mac_policy_list_not_busy`, is available to threads "
@@ -897,13 +905,13 @@ msgstr ""
 "情况。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:163
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:176
 #, no-wrap
 msgid "Modules"
 msgstr "模块"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:166
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:179
 #, fuzzy
 msgid ""
 "For the module subsystem there exists a single lock that is used to protect "
@@ -925,13 +933,13 @@ msgstr ""
 "略， 需要仔细阅读<filename>kern/kern_module.c</filename> 的源代码。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:167
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:180
 #, no-wrap
 msgid "Newbus Device Tree"
 msgstr "Newbus 设备树"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:170
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:183
 msgid ""
 "The newbus system will have one sx lock. Readers will hold a shared (read) "
 "lock (man:sx_slock[9]) and writers will hold an exclusive (write) lock (man:"
@@ -944,37 +952,37 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:171
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:184
 #, no-wrap
 msgid "Pipes"
 msgstr "管道"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:174
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:196
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:187
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:209
 msgid "..."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:175
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:188
 #, no-wrap
 msgid "Processes and Threads"
 msgstr "进程和线程"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:178
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:191
 #, fuzzy
 msgid "process hierarchy"
 msgstr "- 进程层次结构"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:180
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:193
 #, fuzzy
 msgid "proc locks, references"
 msgstr "- proc 锁及其参考"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:182
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:195
 #, fuzzy
 msgid ""
 "thread-specific copies of proc entries to freeze during system calls, "
@@ -982,38 +990,38 @@ msgid ""
 msgstr "- 在系统调用过程中线程私有的 proc 项副本，包括 td_ucred"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:184
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:197
 #, fuzzy
 msgid "inter-process operations"
 msgstr "- 进程间操作"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:186
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:199
 #, fuzzy
 msgid "process groups and sessions"
 msgstr "- 进程组和会话"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:187
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:200
 #, no-wrap
 msgid "Scheduler"
 msgstr "调度"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:190
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:203
 msgid ""
 "Lots of references to `sched_lock` and notes pointing at specific primitives "
 "and related magic elsewhere in the document."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:191
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:204
 #, no-wrap
 msgid "Select and Poll"
 msgstr "Select 和 Poll"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:194
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:207
 #, fuzzy
 msgid ""
 "The `select` and `poll` functions permit threads to block waiting on events "
@@ -1024,13 +1032,13 @@ msgstr ""
 "塞并等待文件描述符上的事件 --最常见的情况是文件描述符是否可读或可写。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:197
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:210
 #, no-wrap
 msgid "SIGIO"
 msgstr "SIGIO"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:200
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:213
 msgid ""
 "The SIGIO service permits processes to request the delivery of a SIGIO "
 "signal to its process group when the read/write status of specified file "
@@ -1045,7 +1053,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:202
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:215
 msgid ""
 "One `struct sigio` is allocated for each registered object associated with "
 "any process or process group, and contains back-pointers to the object, "
@@ -1066,13 +1074,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:203
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:216
 #, no-wrap
 msgid "Sysctl"
 msgstr "Sysctl"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:206
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:219
 #, fuzzy
 msgid ""
 "The `sysctl` MIB service is invoked from both within the kernel and from "
@@ -1097,7 +1105,7 @@ msgstr ""
 "语义。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:208
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:221
 #, fuzzy
 msgid ""
 "Need to change the order of operations for sysctl's that update values from "
@@ -1114,7 +1122,7 @@ msgstr ""
 "式可能更规矩一些。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:210
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:223
 #, fuzzy
 msgid ""
 "To allow for the common case, a sysctl could embed a pointer to a mutex in "
@@ -1128,13 +1136,13 @@ msgstr ""
 "mutex 之外的锁策略，可以用 SYSCTL_PROC 节点来完成正确的上锁。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:211
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:224
 #, no-wrap
 msgid "Taskqueue"
 msgstr "任务队列 (Taskqueue)"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:214
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:227
 #, fuzzy
 msgid ""
 "The taskqueue's interface has two basic locks associated with it in order to "
@@ -1157,19 +1165,19 @@ msgstr ""
 "subr_taskqueue.c</filename> 以外的地方用到。"
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:216
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:229
 #, no-wrap
 msgid "Implementation Notes"
 msgstr "实现说明"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:218
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:231
 #, no-wrap
 msgid "Sleep Queues"
 msgstr "休眠队列"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:221
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:234
 msgid ""
 "A sleep queue is a structure that holds the list of threads asleep on a wait "
 "channel. Each thread that is not asleep on a wait channel carries a sleep "
@@ -1183,7 +1191,7 @@ msgstr ""
 "休眠队列则保存在一个散列表中。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:223
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:236
 msgid ""
 "The sleep queue hash table holds sleep queues for wait channels that have at "
 "least one blocked thread. Each entry in the hash table is called a "
@@ -1210,7 +1218,7 @@ msgstr ""
 "其中删除，因此， 线程离开队列时可能会携带与其进入时不同的休眠队列。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:225
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:238
 #, fuzzy
 msgid ""
 "The `sleepq_lock` function locks the spin mutex of the sleep queue chain "
@@ -1227,7 +1235,7 @@ msgstr ""
 "行解锁。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:227
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:240
 #, fuzzy
 msgid ""
 "A thread is added to a sleep queue via the `sleepq_add`. This function "
@@ -1262,7 +1270,7 @@ msgstr ""
 "等待函数在休眠队列上阻塞之前解锁所有用于保护等待通道的interlock。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:229
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:242
 #, fuzzy
 msgid ""
 "A timeout for a sleep is set by invoking `sleepq_set_timeout`. The function "
@@ -1281,7 +1289,7 @@ msgstr ""
 "值则是 0。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:231
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:244
 #, fuzzy
 msgid ""
 "Once a thread has been added to a sleep queue, it blocks using one of the "
@@ -1316,7 +1324,7 @@ msgstr ""
 "调用 <function>sleepq_catch_signals</function>时是否有发现未决信号。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:233
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:246
 #, fuzzy
 msgid ""
 "If the thread is explicitly resumed or is aborted by a signal, then a value "
@@ -1347,7 +1355,7 @@ msgstr ""
 "<function>sleepq_calc_signal_retval</function>。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:235
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:248
 #, fuzzy
 msgid ""
 "Threads asleep on a wait channel are explicitly resumed by the "
@@ -1378,7 +1386,7 @@ msgstr ""
 "<function>sleepq_lock</function> 对休眠队列上锁。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:237
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:250
 #, fuzzy
 msgid ""
 "A sleeping thread may have its sleep interrupted by calling the "
@@ -1398,38 +1406,38 @@ msgstr ""
 "时处于另一等待通道的休眠队列上，则这个函数将什么都不做而直接返回。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:238
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:251
 #, no-wrap
 msgid "Turnstiles"
 msgstr "十字转门 (turnstile)"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:241
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:254
 #, fuzzy
 msgid "Compare/contrast with sleep queues."
 msgstr "- 与休眠队列的比较和不同。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:243
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:256
 #, fuzzy
 msgid "Lookup/wait/release. - Describe TDF_TSNOBLOCK race."
 msgstr ""
 "- 查询/等待/释放 (lookup/wait/release)。- 介绍 TDF_TSNOBLOCK 竞态条件。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:245
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:258
 #, fuzzy
 msgid "Priority propagation."
 msgstr "- 优先级传播。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:246
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:259
 #, no-wrap
 msgid "Details of the Mutex Implementation"
 msgstr "关于 mutex 实现的一些细节"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:249
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:262
 #, fuzzy
 msgid ""
 "Should we require mutexes to be owned for mtx_destroy() since we can not "
@@ -1439,31 +1447,31 @@ msgstr ""
 "对象持有？"
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:250
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:263
 #, no-wrap
 msgid "Spin Mutexes"
 msgstr "自旋 mutex"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:253
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:266
 #, fuzzy
 msgid "Use a critical section..."
 msgstr "- 使用一临界区..."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:254
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:267
 #, no-wrap
 msgid "Sleep Mutexes"
 msgstr "休眠 mutex"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:257
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:270
 #, fuzzy
 msgid "Describe the races with contested mutexes"
 msgstr "- 描述 mutex 冲突时的竞态条件"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:259
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:272
 #, fuzzy
 msgid ""
 "Why it is safe to read mtx_lock of a contested mutex when holding the "
@@ -1471,84 +1479,84 @@ msgid ""
 msgstr "- 为何在持有十字转门链锁时， 可以安全地读冲突 mutex 的 mtx_lock。"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:260
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:273
 #, no-wrap
 msgid "Witness"
 msgstr "Witness"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:263
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:276
 #, fuzzy
 msgid "What does it do"
 msgstr "- 它能做什么"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:265
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:278
 #, fuzzy
 msgid "How does it work"
 msgstr "- 它如何工作"
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:267
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:280
 #, no-wrap
 msgid "Miscellaneous Topics"
 msgstr "其它话题"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:269
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:282
 #, no-wrap
 msgid "Interrupt Source and ICU Abstractions"
 msgstr "中断源和 ICU 抽象"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:272
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:285
 #, fuzzy
 msgid "struct isrc"
 msgstr "- struct isrc"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:274
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:287
 #, fuzzy
 msgid "pic drivers"
 msgstr "- pic 驱动"
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:275
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:288
 #, no-wrap
 msgid "Other Random Questions/Topics"
 msgstr "其它问题/话题"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:278
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:291
 msgid "Should we pass an interlock into `sema_wait`?"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:280
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:293
 #, fuzzy
 msgid "Should we have non-sleepable sx locks?"
 msgstr "- 增加一些关于正确使用引用计数的介绍？"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:282
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:295
 #, fuzzy
 msgid "Add some info about proper use of reference counts."
 msgstr "- 增加一些关于正确使用引用计数的介绍。"
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:287
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:300
 #, no-wrap
 msgid "Glossary"
 msgstr "术语表"
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:290
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:303
 #, no-wrap
 msgid "atomic"
 msgstr "原子"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:292
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:305
 msgid ""
 "An operation is atomic if all of its effects are visible to other CPUs "
 "together when the proper access protocol is followed. In the degenerate case "
@@ -1563,104 +1571,104 @@ msgstr ""
 "为原子操作。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:294
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:307
 msgid "See Also operation."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:295
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:308
 #, no-wrap
 msgid "block"
 msgstr "阻塞块"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:297
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:310
 msgid ""
 "A thread is blocked when it is waiting on a lock, resource, or condition. "
 "Unfortunately this term is a bit overloaded as a result."
 msgstr "线程等待锁、 资源或条件时被阻塞。这一术语也因此被赋予了太多的意涵。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:299
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:336
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:312
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:349
 msgid "See Also sleep."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:300
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:313
 #, no-wrap
 msgid "critical section"
 msgstr "临界区"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:302
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:315
 msgid ""
 "A section of code that is not allowed to be preempted. A critical section is "
 "entered and exited using the man:critical_enter[9] API."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:303
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:316
 #, no-wrap
 msgid "MD"
 msgstr "MD (Machine dependent)"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:305
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:318
 msgid "Machine dependent."
 msgstr "表示与机器/平台有关。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:307
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:320
 msgid "See Also MI."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:308
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:321
 #, no-wrap
 msgid "memory operation"
 msgstr "内存操作"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:310
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:323
 msgid "A memory operation reads and/or writes to a memory location."
 msgstr "内存操作包括读或写内存中的指定位置。"
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:311
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:324
 #, no-wrap
 msgid "MI"
 msgstr "MI （Machine independent）"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:313
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:326
 msgid "Machine independent."
 msgstr "表示与机器/平台无关。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:315
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:328
 msgid "See Also MD."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:316
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:329
 #, no-wrap
 msgid "operation"
 msgstr "操作"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:318
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:331
 msgid "See memory operation."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:319
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:332
 #, no-wrap
 msgid "primary interrupt context"
 msgstr "主中断上下文"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:321
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:334
 msgid ""
 "Primary interrupt context refers to the code that runs when an interrupt "
 "occurs. This code can either run an interrupt handler directly or schedule "
@@ -1671,49 +1679,49 @@ msgstr ""
 "理程序， 或调度一异步终端线程，以便为给定的中断源执行中断处理程序。"
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:322
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:335
 #, no-wrap
 msgid "realtime kernel thread"
 msgstr "实时内核线程"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:324
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:337
 msgid ""
 "A high priority kernel thread. Currently, the only realtime priority kernel "
 "threads are interrupt threads."
 msgstr "一种高优先级的内核线程。 目前，只有中断线程属于实时优先级的内核线程。"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:326
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:339
 msgid "See Also thread."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:327
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:340
 #, no-wrap
 msgid "sleep"
 msgstr "睡眠"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:329
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:342
 msgid ""
 "A thread is asleep when it is blocked on a condition variable or a sleep "
 "queue via msleep or tsleep."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:331
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:344
 msgid "See Also block."
 msgstr ""
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:332
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:345
 #, no-wrap
 msgid "sleepable lock"
 msgstr "可休眠锁"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:334
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:347
 msgid ""
 "A sleepable lock is a lock that can be held by a thread which is asleep. "
 "Lockmgr locks and sx locks are currently the only sleepable locks in "
@@ -1725,13 +1733,13 @@ msgstr ""
 "proctree (进程树)锁将成为不可休眠锁。"
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:337
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:350
 #, no-wrap
 msgid "thread"
 msgstr "线程"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:339
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:352
 msgid ""
 "A kernel thread represented by a struct thread. Threads own locks and hold a "
 "single execution context."
@@ -1739,12 +1747,12 @@ msgstr ""
 "由 struct thread 所表达的内核线程。 线程可以持有锁，并拥有独立的执行上下文。"
 
 #. type: Labeled list
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:340
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:353
 #, no-wrap
 msgid "wait channel"
 msgstr "等待通道"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/smp/_index.adoc:342
+#: documentation/content/en/books/arch-handbook/smp/_index.adoc:355
 msgid "A kernel virtual address that threads may sleep on."
 msgstr "线程可以在其上休眠的内核虚拟地址。"

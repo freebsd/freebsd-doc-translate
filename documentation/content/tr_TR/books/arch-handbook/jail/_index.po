@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-06-08 07:32-0300\n"
+"POT-Creation-Date: 2021-11-04 20:25-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -31,6 +31,14 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:35
 msgid ""
+"include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
+"{{% lang %}}/teams.adoc[] include::shared/{{% lang %}}/mailing-lists.adoc[] "
+"include::shared/{{% lang %}}/urls.adoc[]"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:48
+msgid ""
 "On most UNIX(R) systems, `root` has omnipotent power. This promotes "
 "insecurity. If an attacker gained `root` on a system, he would have every "
 "function at his fingertips. In FreeBSD there are sysctls which dilute the "
@@ -44,24 +52,24 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:37
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:50
 msgid ""
 "Jail is becoming the new security model. People are running potentially "
 "vulnerable servers such as Apache, BIND, and sendmail within jails, so that "
 "if an attacker gains `root` within the jail, it is only an annoyance, and "
 "not a devastation. This article mainly focuses on the internals (source "
-"code) of jail. For information on how to set up a jail see the link:"
-"{handbook}#jails/[handbook entry on jails]."
+"code) of jail. For information on how to set up a jail see the extref:"
+"{handbook}[handbook entry on jails, jails]."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:39
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:52
 #, no-wrap
 msgid "Architecture"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:42
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:55
 msgid ""
 "Jail consists of two realms: the userland program, man:jail[8], and the code "
 "implemented within the kernel: the man:jail[2] system call and associated "
@@ -70,13 +78,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:43
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:56
 #, no-wrap
 msgid "Userland Code"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:46
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:59
 msgid ""
 "The source for the userland jail is located in [.filename]#/usr/src/usr.sbin/"
 "jail#, consisting of one file, [.filename]#jail.c#. The program takes these "
@@ -85,13 +93,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:47
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:60
 #, no-wrap
 msgid "Data Structures"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:50
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:63
 msgid ""
 "In [.filename]#jail.c#, the first thing I would note is the declaration of "
 "an important structure `struct jail j;` which was included from [.filename]#/"
@@ -99,18 +107,18 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:52
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:65
 msgid "The definition of the `jail` structure is:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:56
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:69
 #, no-wrap
 msgid "/usr/include/sys/jail.h:\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:63
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:76
 #, no-wrap
 msgid ""
 "struct jail {\n"
@@ -122,14 +130,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:66
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:79
 msgid ""
 "As you can see, there is an entry for each of the arguments passed to the "
 "man:jail[8] program, and indeed, they are set during its execution."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:80
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:93
 #, no-wrap
 msgid ""
 "/usr/src/usr.sbin/jail/jail.c\n"
@@ -146,13 +154,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:82
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:95
 #, no-wrap
 msgid "Networking"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:85
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:98
 msgid ""
 "One of the arguments passed to the man:jail[8] program is an IP address with "
 "which the jail can be accessed over the network. man:jail[8] translates the "
@@ -161,7 +169,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:94
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:107
 #, no-wrap
 msgid ""
 "/usr/src/usr.sbin/jail/jail.c:\n"
@@ -173,7 +181,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:97
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:110
 msgid ""
 "The man:inet_aton[3] function \"interprets the specified character string as "
 "an Internet address, placing the address into the structure provided.\" The "
@@ -183,13 +191,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:98
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:111
 #, no-wrap
 msgid "Jailing the Process"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:101
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:114
 msgid ""
 "Finally, the userland program jails the process. Jail now becomes an "
 "imprisoned process itself and then executes the command given using man:"
@@ -197,7 +205,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:109
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:122
 #, no-wrap
 msgid ""
 "/usr/src/usr.sbin/jail/jail.c\n"
@@ -208,7 +216,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:112
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:125
 msgid ""
 "As you can see, the `jail()` function is called, and its argument is the "
 "`jail` structure which has been filled with the arguments given to the "
@@ -217,13 +225,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:113
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:126
 #, no-wrap
 msgid "Kernel Space"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:116
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:129
 msgid ""
 "We will now be looking at the file [.filename]#/usr/src/sys/kern/kern_jail."
 "c#. This is the file where the man:jail[2] system call, appropriate sysctls, "
@@ -231,18 +239,18 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:117
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:130
 #, no-wrap
 msgid "Sysctls"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:120
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:133
 msgid "In [.filename]#kern_jail.c#, the following sysctls are defined:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:128
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:141
 #, no-wrap
 msgid ""
 "/usr/src/sys/kern/kern_jail.c:\n"
@@ -253,7 +261,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:133
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:146
 #, no-wrap
 msgid ""
 "int     jail_socket_unixiproute_only = 1;\n"
@@ -263,7 +271,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:138
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:151
 #, no-wrap
 msgid ""
 "int     jail_sysvipc_allowed = 0;\n"
@@ -273,7 +281,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:143
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:156
 #, no-wrap
 msgid ""
 "static int jail_enforce_statfs = 2;\n"
@@ -283,7 +291,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:148
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:161
 #, no-wrap
 msgid ""
 "int    jail_allow_raw_sockets = 0;\n"
@@ -293,7 +301,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:153
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:166
 #, no-wrap
 msgid ""
 "int    jail_chflags_allowed = 0;\n"
@@ -303,7 +311,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:158
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:171
 #, no-wrap
 msgid ""
 "int     jail_mount_allowed = 0;\n"
@@ -313,7 +321,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:161
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:174
 msgid ""
 "Each of these sysctls can be accessed by the user through the man:sysctl[8] "
 "program. Throughout the kernel, these specific sysctls are recognized by "
@@ -322,13 +330,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:162
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:175
 #, no-wrap
 msgid "man:jail[2] System Call"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:165
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:178
 msgid ""
 "Like all system calls, the man:jail[2] system call takes two arguments, "
 "`struct thread *td` and `struct jail_args *uap`. `td` is a pointer to the "
@@ -340,7 +348,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:176
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:189
 #, no-wrap
 msgid ""
 "/usr/src/sys/kern/kern_jail.c:\n"
@@ -354,7 +362,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:179
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:192
 msgid ""
 "Therefore, `uap->jail` can be used to access the `jail` structure which was "
 "passed to the system call. Next, the system call copies the `jail` structure "
@@ -366,7 +374,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:184
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:197
 #, no-wrap
 msgid ""
 "/usr/src/sys/kern/kern_jail.c:\n"
@@ -374,7 +382,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:187
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:200
 msgid ""
 "There is another important structure defined in [.filename]#jail.h#. It is "
 "the `prison` structure. The `prison` structure is used exclusively within "
@@ -382,7 +390,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:205
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:218
 #, no-wrap
 msgid ""
 "/usr/include/sys/jail.h:\n"
@@ -403,14 +411,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:208
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:221
 msgid ""
 "The man:jail[2] system call then allocates memory for a `prison` structure "
 "and copies data between the `jail` and `prison` structure."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:222
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:235
 #, no-wrap
 msgid ""
 "/usr/src/sys/kern/kern_jail.c:\n"
@@ -427,14 +435,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:225
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:238
 msgid ""
 "Next, we will discuss another important system call man:jail_attach[2], "
 "which implements the function to put a process into the jail."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:236
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:249
 #, no-wrap
 msgid ""
 "/usr/src/sys/kern/kern_jail.c:\n"
@@ -448,7 +456,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:239
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:252
 msgid ""
 "This system call makes the changes that can distinguish a jailed process "
 "from those unjailed ones. To understand what man:jail_attach[2] does for us, "
@@ -456,7 +464,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:241
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:254
 msgid ""
 "On FreeBSD, each kernel visible thread is identified by its `thread` "
 "structure, while the processes are described by their `proc` structures. You "
@@ -473,7 +481,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:261
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:274
 #, no-wrap
 msgid ""
 "/usr/include/sys/proc.h:\n"
@@ -496,7 +504,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:264
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:277
 msgid ""
 "In [.filename]#kern_jail.c#, the function `jail()` then calls function "
 "`jail_attach()` with a given `jid`. And `jail_attach()` calls function "
@@ -515,7 +523,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:279
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:292
 #, no-wrap
 msgid ""
 "/usr/src/sys/kern/kern_jail.c\n"
@@ -533,7 +541,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:297
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:310
 #, no-wrap
 msgid ""
 "int\n"
@@ -556,7 +564,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:300
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:313
 msgid ""
 "When a process is forked from its parent process, the man:fork[2] system "
 "call uses `crhold()` to maintain the credential for the newly forked "
@@ -565,7 +573,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:307
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:320
 #, no-wrap
 msgid ""
 "/usr/src/sys/kern/kern_fork.c:\n"
@@ -575,13 +583,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:310
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:323
 #, no-wrap
 msgid "Restrictions"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:313
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:326
 msgid ""
 "Throughout the kernel there are access restrictions relating to jailed "
 "processes. Usually, these restrictions only check whether the process is "
@@ -589,7 +597,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:318
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:331
 #, no-wrap
 msgid ""
 "if (jailed(td->td_ucred))\n"
@@ -597,13 +605,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:320
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:333
 #, no-wrap
 msgid "SysV IPC"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:323
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:336
 msgid ""
 "System V IPC is based on messages. Processes can send each other these "
 "messages which tell them how to act. The functions which deal with messages "
@@ -618,46 +626,46 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:325
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:338
 msgid "[.filename]#/usr/src/sys/kern/sysv_msg.c#:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:327
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:340
 msgid ""
 "`msgget(key, msgflg)`: `msgget` returns (and possibly creates) a message "
 "descriptor that designates a message queue for use in other functions."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:328
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:341
 msgid ""
 "`msgctl(msgid, cmd, buf)`: Using this function, a process can query the "
 "status of a message descriptor."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:329
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:342
 msgid ""
 "`msgsnd(msgid, msgp, msgsz, msgflg)`: `msgsnd` sends a message to a process."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:330
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:343
 msgid ""
 "`msgrcv(msgid, msgp, msgsz, msgtyp, msgflg)`: a process receives messages "
 "using this function"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:332
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:345
 msgid ""
 "In each of the system calls corresponding to these functions, there is this "
 "conditional:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:338
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:351
 #, no-wrap
 msgid ""
 "/usr/src/sys/kern/sysv_msg.c:\n"
@@ -666,7 +674,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:341
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:354
 msgid ""
 "Semaphore system calls allow processes to synchronize execution by doing a "
 "set of operations atomically on a set of semaphores. Basically semaphores "
@@ -677,38 +685,38 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:343
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:356
 msgid "[.filename]#/usr/src/sys/kern/sysv_sem.c#:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:345
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:358
 msgid ""
 "`semctl(semid, semnum, cmd, ...)`: `semctl` does the specified `cmd` on the "
 "semaphore queue indicated by `semid`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:346
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:359
 msgid ""
 "`semget(key, nsems, flag)`: `semget` creates an array of semaphores, "
 "corresponding to `key`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:348
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:361
 msgid "`key and flag take on the same meaning as they do in msgget.`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:349
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:362
 msgid ""
 "`semop(semid, array, nops)`: `semop` performs a group of operations "
 "indicated by `array`, to the set of semaphores identified by `semid`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:351
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:364
 msgid ""
 "System V IPC allows for processes to share memory. Processes can communicate "
 "directly with each other by sharing parts of their virtual address space and "
@@ -718,46 +726,46 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:353
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:366
 msgid "[.filename]#/usr/src/sys/kern/sysv_shm.c#:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:355
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:368
 msgid ""
 "`shmctl(shmid, cmd, buf)`: `shmctl` does various control operations on the "
 "shared memory region identified by `shmid`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:356
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:369
 msgid ""
 "`shmget(key, size, flag)`: `shmget` accesses or creates a shared memory "
 "region of `size` bytes."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:357
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:370
 msgid ""
 "`shmat(shmid, addr, flag)`: `shmat` attaches a shared memory region "
 "identified by `shmid` to the address space of a process."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:358
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:371
 msgid ""
 "`shmdt(addr)`: `shmdt` detaches the shared memory region previously attached "
 "at `addr`."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:359
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:372
 #, no-wrap
 msgid "Sockets"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:362
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:375
 msgid ""
 "Jail treats the man:socket[2] system call and related lower-level socket "
 "functions in a special manner. In order to determine whether a certain "
@@ -768,7 +776,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:380
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:393
 #, no-wrap
 msgid ""
 "/usr/src/sys/kern/uipc_socket.c:\n"
@@ -789,13 +797,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:382
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:395
 #, no-wrap
 msgid "Berkeley Packet Filter"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:385
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:398
 msgid ""
 "The Berkeley Packet Filter provides a raw interface to data link layers in a "
 "protocol independent fashion. BPF is now controlled by the man:devfs[8] "
@@ -803,13 +811,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:386
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:399
 #, no-wrap
 msgid "Protocols"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:389
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:402
 msgid ""
 "There are certain protocols which are very common, such as TCP, UDP, IP and "
 "ICMP. IP and ICMP are on the same level: the network layer 2. There are "
@@ -826,7 +834,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:426
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:439
 #, no-wrap
 msgid ""
 "/usr/src/sys/netinet/in_pcb.c:\n"
@@ -866,7 +874,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:429
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:442
 msgid ""
 "You might be wondering what function `prison_ip()` does. `prison_ip()` is "
 "given three arguments, a pointer to the credential(represented by `cred`), "
@@ -877,7 +885,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:437
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:450
 #, no-wrap
 msgid ""
 "/usr/src/sys/kern/kern_jail.c:\n"
@@ -888,7 +896,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:462
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:475
 #, no-wrap
 msgid ""
 "    if (!jailed(cred))\n"
@@ -918,13 +926,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:464
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:477
 #, no-wrap
 msgid "Filesystem"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:467
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:480
 msgid ""
 "Even `root` users within the jail are not allowed to unset or modify any "
 "file flags, such as immutable, append-only, and undeleteable flags, if the "
@@ -932,7 +940,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/jail/_index.adoc:512
+#: documentation/content/en/books/arch-handbook/jail/_index.adoc:525
 #, no-wrap
 msgid ""
 "/usr/src/sys/ufs/ufs/ufs_vnops.c:\n"
