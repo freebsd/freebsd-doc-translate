@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2021-11-04 20:26-0300\n"
+"POT-Creation-Date: 2022-01-08 11:34-0300\n"
 "PO-Revision-Date: 2021-05-30 21:50+0000\n"
 "Last-Translator: Parsa Samet <qps@irbug.org>\n"
 "Language-Team: Persian <https://translate-dev.freebsd.org/projects/"
@@ -454,7 +454,7 @@ msgstr ""
 #: documentation/content/en/articles/rc-scripting/_index.adoc:332
 #: documentation/content/en/articles/rc-scripting/_index.adoc:389
 #: documentation/content/en/articles/rc-scripting/_index.adoc:621
-#: documentation/content/en/articles/rc-scripting/_index.adoc:729
+#: documentation/content/en/articles/rc-scripting/_index.adoc:752
 #, fuzzy, no-wrap
 msgid "#!/bin/sh\n"
 msgstr "#!/bin/sh\n"
@@ -464,7 +464,7 @@ msgstr "#!/bin/sh\n"
 #: documentation/content/en/articles/rc-scripting/_index.adoc:334
 #: documentation/content/en/articles/rc-scripting/_index.adoc:391
 #: documentation/content/en/articles/rc-scripting/_index.adoc:628
-#: documentation/content/en/articles/rc-scripting/_index.adoc:731
+#: documentation/content/en/articles/rc-scripting/_index.adoc:754
 #, no-wrap
 msgid ". /etc/rc.subr\n"
 msgstr ""
@@ -1312,8 +1312,72 @@ msgid ""
 "filename]#rc.d# keywords and their meanings as follows:"
 msgstr ""
 
+#. type: Labeled list
+#: documentation/content/en/articles/rc-scripting/_index.adoc:688
+#, no-wrap
+msgid "nojail"
+msgstr ""
+
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:690
+msgid ""
+"The service is not for man:jail[8] environment.  The automatic startup and "
+"shutdown procedures will ignore the script if inside a jail."
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/articles/rc-scripting/_index.adoc:691
+#, no-wrap
+msgid "nostart"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/articles/rc-scripting/_index.adoc:694
+msgid ""
+"The service is to be started manually or not started at all.  The automatic "
+"startup procedure will ignore the script.  In conjunction with the [."
+"filename]#shutdown# keyword, this can be used to write scripts that do "
+"something only at system shutdown."
+msgstr ""
+
+#. type: Labeled list
+#: documentation/content/en/articles/rc-scripting/_index.adoc:695
+#, no-wrap
+msgid "shutdown"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/articles/rc-scripting/_index.adoc:696
+msgid ""
+"This keyword is to be listed __explicitly__ if the service needs to be "
+"stopped before system shutdown."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/articles/rc-scripting/_index.adoc:709
+msgid ""
+"When the system is going to shut down, [.filename]#/etc/rc.shutdown# runs.  "
+"It assumes that most [.filename]#rc.d# scripts have nothing to do at that "
+"time.  Therefore [.filename]#/etc/rc.shutdown# selectively invokes [."
+"filename]#rc.d# scripts with the [.filename]#shutdown# keyword, effectively "
+"ignoring the rest of the scripts.  For even faster shutdown, [.filename]#/"
+"etc/rc.shutdown# passes the [.filename]#faststop# command to the scripts it "
+"runs so that they skip preliminary checks, e.g., the pidfile check.  As "
+"dependent services should be stopped before their prerequisites, [."
+"filename]#/etc/rc.shutdown# runs the scripts in reverse dependency order.  "
+"If writing a real [.filename]#rc.d# script, you should consider whether it "
+"is relevant at system shutdown time.  E.g., if your script does its work in "
+"response to the [.filename]#start# command only, then you need not to "
+"include this keyword.  However, if your script manages a service, it is "
+"probably a good idea to stop it before the system proceeds to the final "
+"stage of its shutdown sequence described in man:halt[8].  In particular, a "
+"service should be stopped explicitly if it needs considerable time or "
+"special actions to shut down cleanly.  A typical example of such a service "
+"is a database engine."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/articles/rc-scripting/_index.adoc:713
 msgid ""
 "[[forcedep]]&#10126; To begin with, `force_depend` should be used with much "
 "care.  It is generally better to revise the hierarchy of configuration "
@@ -1321,7 +1385,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:699
+#: documentation/content/en/articles/rc-scripting/_index.adoc:722
 msgid ""
 "If you still cannot do without `force_depend`, the example offers an idiom "
 "of how to invoke it conditionally.  In the example, our `mumbled` daemon "
@@ -1336,13 +1400,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/rc-scripting/_index.adoc:701
+#: documentation/content/en/articles/rc-scripting/_index.adoc:724
 #, no-wrap
 msgid "Giving more flexibility to an rc.d script"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:710
+#: documentation/content/en/articles/rc-scripting/_index.adoc:733
 msgid ""
 "When invoked during startup or shutdown, an [.filename]#rc.d# script is "
 "supposed to act on the entire subsystem it is responsible for.  E.g., [."
@@ -1360,7 +1424,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:713
+#: documentation/content/en/articles/rc-scripting/_index.adoc:736
 msgid ""
 "Fortunately, man:rc.subr[8] allows for passing any number of arguments to "
 "script's methods (within the system limits).  Due to that, the changes in "
@@ -1368,7 +1432,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:718
+#: documentation/content/en/articles/rc-scripting/_index.adoc:741
 msgid ""
 "How can man:rc.subr[8] gain access to the extra command-line arguments.  "
 "Should it just grab them directly? Not by any means.  Firstly, an man:sh[1] "
@@ -1379,7 +1443,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:722
+#: documentation/content/en/articles/rc-scripting/_index.adoc:745
 msgid ""
 "So the approach adopted by man:rc.subr[8] is as follows: `run_rc_command` "
 "passes on all its arguments but the first one to the respective method "
@@ -1390,14 +1454,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:725
+#: documentation/content/en/articles/rc-scripting/_index.adoc:748
 msgid ""
 "To illustrate this opportunity, let us modify the primitive dummy script so "
 "that its messages depend on the additional arguments supplied.  Here we go:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/rc-scripting/_index.adoc:737
+#: documentation/content/en/articles/rc-scripting/_index.adoc:760
 #, no-wrap
 msgid ""
 "name=\"dummy\"\n"
@@ -1408,7 +1472,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/rc-scripting/_index.adoc:746
+#: documentation/content/en/articles/rc-scripting/_index.adoc:769
 #, no-wrap
 msgid ""
 "dummy_start()\n"
@@ -1422,7 +1486,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/rc-scripting/_index.adoc:762
+#: documentation/content/en/articles/rc-scripting/_index.adoc:785
 #, no-wrap
 msgid ""
 "dummy_kiss()\n"
@@ -1443,7 +1507,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/rc-scripting/_index.adoc:765
+#: documentation/content/en/articles/rc-scripting/_index.adoc:788
 #, no-wrap
 msgid ""
 "load_rc_config $name\n"
@@ -1451,12 +1515,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:768
+#: documentation/content/en/articles/rc-scripting/_index.adoc:791
 msgid "What essential changes can we notice in the script?"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:773
+#: documentation/content/en/articles/rc-scripting/_index.adoc:796
 msgid ""
 "&#10122; All arguments you type after `start` can end up as positional "
 "parameters to the respective method.  We can use them in any way according "
@@ -1466,7 +1530,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/rc-scripting/_index.adoc:778
+#: documentation/content/en/articles/rc-scripting/_index.adoc:801
 #, no-wrap
 msgid ""
 "# /etc/rc.d/dummy start\n"
@@ -1474,7 +1538,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/rc-scripting/_index.adoc:781
+#: documentation/content/en/articles/rc-scripting/_index.adoc:804
 #, no-wrap
 msgid ""
 "# /etc/rc.d/dummy start Hello world!\n"
@@ -1482,7 +1546,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:785
+#: documentation/content/en/articles/rc-scripting/_index.adoc:808
 msgid ""
 "&#10123; The same applies to any method our script provides, not only to a "
 "standard one.  We have added a custom method named `kiss`, and it can take "
@@ -1490,7 +1554,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/rc-scripting/_index.adoc:790
+#: documentation/content/en/articles/rc-scripting/_index.adoc:813
 #, no-wrap
 msgid ""
 "# /etc/rc.d/dummy kiss\n"
@@ -1498,7 +1562,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/articles/rc-scripting/_index.adoc:793
+#: documentation/content/en/articles/rc-scripting/_index.adoc:816
 #, no-wrap
 msgid ""
 "# /etc/rc.d/dummy kiss Once I was Etaoin Shrdlu...\n"
@@ -1506,7 +1570,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:796
+#: documentation/content/en/articles/rc-scripting/_index.adoc:819
 msgid ""
 "&#10124; If we want just to pass all extra arguments to any method, we can "
 "merely substitute `\"$@\"` for `\"$1\"` in the last line of our script, "
@@ -1514,7 +1578,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/rc-scripting/_index.adoc:802
+#: documentation/content/en/articles/rc-scripting/_index.adoc:825
 msgid ""
 "An man:sh[1] programmer ought to understand the subtle difference between `"
 "$*` and `$@` as the ways to designate all positional parameters.  For its in-"
@@ -1524,7 +1588,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/articles/rc-scripting/_index.adoc:809
+#: documentation/content/en/articles/rc-scripting/_index.adoc:832
 msgid ""
 "Currently `run_rc_command` may have a bug that prevents it from keeping the "
 "original boundaries between arguments.  That is, arguments with embedded "
@@ -1532,13 +1596,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/articles/rc-scripting/_index.adoc:812
+#: documentation/content/en/articles/rc-scripting/_index.adoc:835
 #, fuzzy, no-wrap
 msgid "Further reading"
 msgstr "مطالعهٔ بیشتر"
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:816
+#: documentation/content/en/articles/rc-scripting/_index.adoc:839
 msgid ""
 "[[lukem]]http://www.mewburn.net/luke/papers/rc.d.pdf[The original article by "
 "Luke Mewburn] offers a general overview of [.filename]#rc.d# and detailed "
@@ -1547,7 +1611,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:819
+#: documentation/content/en/articles/rc-scripting/_index.adoc:842
 msgid ""
 "[[manpages]]The manual pages man:rc[8], man:rc.subr[8], and man:rcorder[8] "
 "document the [.filename]#rc.d# components in great detail.  You cannot fully "
@@ -1556,7 +1620,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/articles/rc-scripting/_index.adoc:823
+#: documentation/content/en/articles/rc-scripting/_index.adoc:846
 msgid ""
 "The major source of working, real-life examples is [.filename]#/etc/rc.d# in "
 "a live system.  Its contents are easy and pleasant to read because most "
