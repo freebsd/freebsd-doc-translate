@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2021-11-04 20:26-0300\n"
-"PO-Revision-Date: 2022-01-10 17:25+0000\n"
+"PO-Revision-Date: 2022-01-13 15:24+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesfreebsd-update-server_index/es/>\n"
@@ -22,6 +22,9 @@ msgstr ""
 #, no-wrap
 msgid "Building your own freebsd-update server allows a system administrator to perform fast updates for a number of machines from a local mirror"
 msgstr ""
+"Construir tu propio servidor para freebsd-update permite al administrador "
+"del sistema realizar actualizaciones rápidas para un determinado número de "
+"máquinas desde un mirror local"
 
 #. type: Title =
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:1
@@ -59,6 +62,15 @@ msgid ""
 "releases or by providing a local mirror that will allow faster updates for a "
 "number of machines."
 msgstr ""
+"Este artículo describe cómo construir un Servidor de FreeBSD Update interno. "
+"El https://svnweb.freebsd.org/base/user/cperciva/freebsd-update-build/"
+"[freebsd-update-server] está escrito por `{cperciva}`, Security Officer "
+"Emérito de FreeBSD. Para los usuarios que consideran adecuado actualizar sus "
+"sistemas contra un servidor de actualizaciones oficial, construir su propio "
+"Servidor de FreeBSD Update podría ayudar a extender su funcionalidad "
+"mediante el soporte de versiones de FreeBSD ajustadas a mano o "
+"proporcionando un mirror local que permitirá actualizaciones más rápidas "
+"para un determinado número de máquinas."
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:51
@@ -77,6 +89,8 @@ msgid ""
 "This article was subsequently printed at https://people.freebsd.org/~jgh/"
 "files/fus/BSD_03_2010_EN.pdf[BSD Magazine]."
 msgstr ""
+"Este artículo fue imprimido posteriormente en https://people.freebsd.org/~"
+"jgh/files/fus/BSD_03_2010_EN.pdf[BSD Magazine]."
 
 #. type: Title ==
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:60
@@ -86,7 +100,6 @@ msgstr "Introducción"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:67
-#, fuzzy
 msgid ""
 "Experienced users or administrators are often responsible for several "
 "machines or environments.  They understand the difficult demands and "
@@ -99,14 +112,13 @@ msgid ""
 msgstr ""
 "Los usuarios experimentados o administradores a menudo son responsables de "
 "múltiples máquinas o entornos. Entienden las complicadas demandas y los "
-"desafíos de mantener una infraestructura de este tipo. Ejecutar un "
-"<application>Servidor de actualizaciones de FreeBSD</application> facilita "
-"la implementación de parches de seguridad y software en las máquinas de "
-"pruebas seleccionadas antes de implementarlos en producción. Esto también "
-"significa que se pueden actualizar varios sistemas desde la red local en "
-"lugar de una conexión a Internet la cual sea potencialmente más lenta. Este "
-"artículo describe los pasos necesarios para crear un <application>servidor "
-"de actualizaciones de FreeBSD</application> propio."
+"desafíos de mantener una infraestructura de este tipo. Ejecutar un Servidor "
+"de actualizaciones de FreeBSD facilita la implementación de parches de "
+"seguridad y software en las máquinas de pruebas seleccionadas antes de "
+"implementarlos en producción. Esto también significa que se pueden "
+"actualizar varios sistemas desde la red local en lugar de una conexión a "
+"Internet la cual sea potencialmente más lenta. Este artículo describe los "
+"pasos necesarios para crear un servidor de actualizaciones de FreeBSD propio."
 
 #. type: Title ==
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:69
@@ -119,6 +131,8 @@ msgstr "Prerequisitos"
 msgid ""
 "To build an internal FreeBSD Update Server some requirements should be met."
 msgstr ""
+"Para construir un Servidor de Actualizaciones de FreeBSD se tienen que "
+"cumplir algunos requisitos."
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:74
@@ -151,6 +165,8 @@ msgstr ""
 msgid ""
 "An man:ssh[1] account on a remote machine to upload distributed updates."
 msgstr ""
+"Una cuneta man:ssh[1] en una máquina remota para subir los parches "
+"distribuidos."
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:82
@@ -160,17 +176,22 @@ msgid ""
 "7.2 consume a total amount of 4 GB, and the webserver space needed to "
 "distribute these updates is 2.6 GB."
 msgstr ""
+"Un servidor web, como extref:{handbook}[Apache, network-apache], con más de "
+"la mitad del espacio requerido para la construcción. Por ejemplo, "
+"construcciones de prueba para 7.1 y 7.2 consumen un total de 4 GB, y el "
+"espacio necesario en el servidor web para distribuir estas actualizaciones "
+"es de 2.6 GB."
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:83
 msgid "Basic knowledge of shell scripting with Bourne shell, man:sh[1]."
-msgstr ""
+msgstr "Conocimiento básico de shell scripting con el shell Bourne, man:sh[1]."
 
 #. type: Title ==
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:85
 #, no-wrap
 msgid "Configuration: Installation & Setup"
-msgstr ""
+msgstr "Configuración: Instalación & Preparación"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:88
@@ -179,32 +200,35 @@ msgid ""
 "build/[freebsd-update-server] software by installing package:devel/"
 "subversion[] and package:security/ca_root_nss[], and execute:"
 msgstr ""
+"Descarga el software https://svnweb.freebsd.org/base/user/cperciva/"
+"freebsd-update-build/[freebsd-update-server] instalando los paquetes package:"
+"devel/subversion[] y package:security/ca_root_nss[] y ejecuta:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:92
 #, no-wrap
 msgid "% svn co https://svn.freebsd.org/base/user/cperciva/freebsd-update-build freebsd-update-server\n"
 msgstr ""
+"% svn co https://svn.freebsd.org/base/user/cperciva/freebsd-update-build "
+"freebsd-update-server\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:96
-#, fuzzy
 msgid ""
 "Update [.filename]#scripts/build.conf# appropriately.  It is sourced during "
 "all build operations."
 msgstr ""
-"Actualice el fichero <filename>scripts/build.conf</filename> apropiadamente. "
-"Se crea durante todas las operaciones de construcción (build)."
+"Actualiza el fichero [.filename]#scripts/build.conf# apropiadamente. Se crea "
+"durante todas las operaciones de construcción (build)."
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:98
-#, fuzzy
 msgid ""
 "Here is the default [.filename]#build.conf#, which should be modified to "
 "suit your environment."
 msgstr ""
-"Aquí está el archivo <filename>build.conf</filename> predeterminado, que "
-"debe ser modificado para adaptarse a su entorno."
+"Aquí está el archivo [.filename]#build.conf# predeterminado, que debe ser "
+"modificado para adaptarse a su entorno."
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:104
@@ -214,6 +238,9 @@ msgid ""
 "# release-specific configuration data is lower down in\n"
 "# the scripts tree.\n"
 msgstr ""
+"# Main configuration file for FreeBSD Update builds.  The\n"
+"# release-specific configuration data is lower down in\n"
+"# the scripts tree.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:107
@@ -222,6 +249,8 @@ msgid ""
 "# Location from which to fetch releases\n"
 "export FTP=ftp://ftp2.freebsd.org/pub/FreeBSD/releases <.>\n"
 msgstr ""
+"# Location from which to fetch releases\n"
+"export FTP=ftp://ftp2.freebsd.org/pub/FreeBSD/releases <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:110
@@ -230,6 +259,8 @@ msgid ""
 "# Host platform\n"
 "export HOSTPLATFORM=`uname -m`\n"
 msgstr ""
+"# Host platform\n"
+"export HOSTPLATFORM=`uname -m`\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:113
@@ -238,6 +269,8 @@ msgid ""
 "# Host name to use inside jails\n"
 "export BUILDHOSTNAME=${HOSTPLATFORM}-builder.daemonology.net <.>\n"
 msgstr ""
+"# Host name to use inside jails\n"
+"export BUILDHOSTNAME=${HOSTPLATFORM}-builder.daemonology.net <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:116
@@ -246,6 +279,8 @@ msgid ""
 "# Location of SSH key\n"
 "export SSHKEY=/root/.ssh/id_dsa <.>\n"
 msgstr ""
+"# Location of SSH key\n"
+"export SSHKEY=/root/.ssh/id_dsa <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:119
@@ -254,6 +289,8 @@ msgid ""
 "# SSH account into which files are uploaded\n"
 "MASTERACCT=builder@wadham.daemonology.net <.>\n"
 msgstr ""
+"# SSH account into which files are uploaded\n"
+"MASTERACCT=builder@wadham.daemonology.net <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:122
@@ -262,6 +299,8 @@ msgid ""
 "# Directory into which files are uploaded\n"
 "MASTERDIR=update-master.freebsd.org <.>\n"
 msgstr ""
+"# Directory into which files are uploaded\n"
+"MASTERDIR=update-master.freebsd.org <.>\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-update-server/_index.adoc:125
