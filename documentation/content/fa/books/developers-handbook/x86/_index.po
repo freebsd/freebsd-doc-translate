@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:20-0300\n"
-"PO-Revision-Date: 2022-02-06 10:26+0000\n"
+"PO-Revision-Date: 2022-02-08 02:24+0000\n"
 "Last-Translator: Parsa Samet <parsasamet@icloud.com>\n"
 "Language-Team: Persian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksdevelopers-handbookx86_index/fa/>\n"
@@ -578,11 +578,14 @@ msgid ""
 "under UNIX(R) systems are the manual pages.  FreeBSD describes its system "
 "calls in section 2, sometimes in section 3."
 msgstr ""
+"مکان رایج جهت جستجو برای اطلاعات پیرامون فراخوان‌های سامانهٔ مختلف تحت "
+"سامانه‌های UNIX(R) صفحات راهنما هستند. FreeBSD فراخوان‌های سامانه‌اش را در "
+"بخش ۲، و گاهی در بخش ۳ توضیح می‌دهد."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:256
 msgid "For example, man:open[2] says:"
-msgstr ""
+msgstr "برای مثال، man:open[2] می‌گوید:"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:260
@@ -591,6 +594,9 @@ msgid ""
 "descriptor.  It returns `-1` on failure, and sets `errno` to indicate the "
 "error."
 msgstr ""
+"اگر موفقیت آمیز بود، `open()` یک عدد صحیح غیرمنفی را به‌عنوان توصیف‌گر "
+"پرونده برمی‌گرداند. در صورت شکست `-1` را بر‌می‌گرداند، و `errno` را تعیین می‌"
+"کند تا خطا را مشخص کند."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:262
@@ -598,16 +604,17 @@ msgid ""
 "The assembly language programmer new to UNIX(R) and FreeBSD will immediately "
 "ask the puzzling question: Where is `errno` and how do I get to it?"
 msgstr ""
+"یک برنامه‌نویس زبان اسمبلی که در UNIX(R) و FreeBSD تازه وارد باشد به‌سرعت "
+"این سوال گیج‌کننده را می‌پرسد: `errno` کجاست و چطور آن را بگیرم؟"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:267
-#, fuzzy
 msgid ""
 "The information presented in the manual pages applies to C programs.  The "
 "assembly language programmer needs additional information."
 msgstr ""
-"اطلاعات ارائه شده در صفحات راهنما در مورد برنامه‌های C صدق می‌کنند. برنامه‌نویس "
-"زبان همگذاری نیازمند به اطلاعات اضافی است."
+"اطلاعات ارائه شده در صفحات راهنما برای برنامه‌های C به کار برده می‌شوند. "
+"برنامه‌نویس زبان اسمبلی به اطلاعات بیشتری نیاز دارد."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:270
@@ -623,6 +630,10 @@ msgid ""
 "first time, is to look for the return value in `EAX`.  If it is not there, "
 "you need further research."
 msgstr ""
+"متأسفانه، بستگی دارد ... برای بیشتر فراخوان‌های سامانه‌ داخل `EAX` قرار دارد،"
+" اما نه برای همه. یک قانون کلی، هنگامی‌که برای اولین بار در حال کار با یک "
+"فراخوان سامانه هستید، به دنبال مقدار بازگشتی در `EAX` باشید. اگر آنجا نباشد، "
+"به جستجوی بیشتری نیاز دارید."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:281
@@ -631,6 +642,9 @@ msgid ""
 "All others I have worked with use `EAX`.  But I have not worked with them "
 "all yet."
 msgstr ""
+"من از یک فراخوان سامانه خبر دارم که مقدار را در `EDX`: `SYS_fork`برمی‌"
+"گرداند. سایر فراخوان‌های سامانه‌ای که باهاشون کار کرده‌ام از `EAX` استفاده "
+"می‌کنند. اما هنوز با همهٔ آنها کار نکرده‌ام."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:286
@@ -638,12 +652,14 @@ msgid ""
 "If you cannot find the answer here or anywhere else, study libc source code "
 "and see how it interfaces with the kernel."
 msgstr ""
+"اگر نمی‌توانید پاسخ را در اینجا یا هرجای دیگر پیدا کنید، کد منبع libc را "
+"مطالعه کنید و نحوهٔ کارکرد رابط‌های آن با هسته را مشاهده کنید."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:289
 #, no-wrap
 msgid "Where Is `errno`?"
-msgstr ""
+msgstr "`errno` کجاست؟"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:292
@@ -657,10 +673,12 @@ msgid ""
 "kernel services directly, the error code is returned in `EAX`, the same "
 "register the proper return value generally ends up in."
 msgstr ""
+"`errno` بخشی از زبان C است، نه هستهٔ UNIX(R). هنگام دسترسی مستقیم به سرویس‌"
+"های هسته، کد خطا در `EAX` برگردانده می‌شود، همان ثباتی که مقدار بازگشتیِ "
+"مناسب معمولاً به آن منتهی می‌شود."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:299
-#, fuzzy
 msgid ""
 "This makes perfect sense. If there is no error, there is no error code.  If "
 "there is an error, there is no return value.  One register can contain "
@@ -682,6 +700,8 @@ msgid ""
 "When using the standard FreeBSD calling convention, the `carry flag` is "
 "cleared upon success, set upon failure."
 msgstr ""
+"در هنگام استفاده از رویهٔ استاندارد فراخوانیِ FreeBSD، در صورتی‌که این امر "
+"موفقیت آمیز باشد `carry flag` پاک می‌شود، و در صورت عدم موفقیت تعیین می‌شود."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:307
@@ -690,6 +710,9 @@ msgid ""
 "negative upon success, and contains the return value.  In case of an error, "
 "the value is negative, i.e., `-errno`."
 msgstr ""
+"هنگام استفاده از حالت شبیه‌ساز Linux، در صورت موفقیت، مقدار علامت دار در "
+"`EAX` غیر منفی است، و شامل مقدار بازگشتی است. در صورت خطا، مقدار آن منفی است،"
+" برای مثال، `-errno`."
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:309
@@ -705,6 +728,10 @@ msgid ""
 "especially with nasm.  I have written assembly language libraries that can "
 "be assembled for such different operating systems as Windows(R) and FreeBSD."
 msgstr ""
+"انتقال‌پذیری به‌طور کلی جزو قدرت‌های زبان اسمبلی نیست. با این حال، نوشتن "
+"برنامه‌های اسمبلی برای بسترهای گوناگون ممکن است، مخصوصاً‌ به‌وسیلهٔ nasm. من "
+"کتابخانه‌های اسمبلی‌ای نوشته‌ام که می‌توان برای سامانه‌های عامل مختلفی مانند "
+"Windows(R) و FreeBSD همگذاری کرد."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:316
@@ -723,6 +750,9 @@ msgid ""
 "perspective): The calling convention, the function numbers, and the way of "
 "returning values."
 msgstr ""
+"برای مثال، FreeBSD یک UNIX(R) است، Linux یک شبه UNIX(R) است. من تنها سه "
+"تفاوت را در میان آنها ذکر کردم (از دیدگاه یک برنامه‌نویس زبان اسمبلی): رویهٔ "
+"فراخوانی، شماره‌های توابع، و نحوهٔ برگرداندن مقدارها."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:322
@@ -732,7 +762,6 @@ msgstr "کار با شماره‌های توابع"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:327
-#, fuzzy
 msgid ""
 "In many cases the function numbers are the same.  However, even when they "
 "are not, the problem is easy to deal with: Instead of using numbers in your "
@@ -745,7 +774,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:335
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "%ifdef\tLINUX\n"
 "%define\tSYS_execve\t11\n"
@@ -771,12 +800,14 @@ msgid ""
 "Both, the calling convention, and the return value (the `errno` problem) can "
 "be resolved with macros:"
 msgstr ""
+"هر دو، رویهٔ فرخوانی، و مقدار بازگشتی (مسئلهٔ `errno`) را می‌توان با ماکروها "
+"برطرف کرد:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:345
 #, no-wrap
 msgid "%ifdef\tLINUX\n"
-msgstr ""
+msgstr "%ifdef\tLINUX\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:349
@@ -786,6 +817,9 @@ msgid ""
 "\tcall\tkernel\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsystem\t0\n"
+"\tcall\tkernel\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:358
@@ -800,6 +834,14 @@ msgid ""
 "\tpush\tedi\n"
 "\tpush\tebp\n"
 msgstr ""
+"align 4\n"
+"kernel:\n"
+"\tpush\tebx\n"
+"\tpush\tecx\n"
+"\tpush\tedx\n"
+"\tpush\tesi\n"
+"\tpush\tedi\n"
+"\tpush\tebp\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:365
@@ -812,6 +854,12 @@ msgid ""
 "\tmov\tebp, [esp+48]\n"
 "\tint\t80h\n"
 msgstr ""
+"\tmov\tebx, [esp+32]\n"
+"\tmov\tecx, [esp+36]\n"
+"\tmov\tedx, [esp+40]\n"
+"\tmov\tesi, [esp+44]\n"
+"\tmov\tebp, [esp+48]\n"
+"\tint\t80h\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:372
@@ -824,6 +872,12 @@ msgid ""
 "\tpop\tecx\n"
 "\tpop\tebx\n"
 msgstr ""
+"\tpop\tebp\n"
+"\tpop\tedi\n"
+"\tpop\tesi\n"
+"\tpop\tedx\n"
+"\tpop\tecx\n"
+"\tpop\tebx\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:377
@@ -834,6 +888,10 @@ msgid ""
 "\tclc\n"
 "\tret\n"
 msgstr ""
+"\tor\teax, eax\n"
+"\tjs\t.errno\n"
+"\tclc\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:382
@@ -844,12 +902,16 @@ msgid ""
 "\tstc\n"
 "\tret\n"
 msgstr ""
+".errno:\n"
+"\tneg\teax\n"
+"\tstc\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:384
 #, no-wrap
 msgid "%else\n"
-msgstr ""
+msgstr "%else\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:388
@@ -859,12 +921,15 @@ msgid ""
 "\tint\t80h\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsystem\t0\n"
+"\tint\t80h\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:390
 #, no-wrap
 msgid "%endif\n"
-msgstr ""
+msgstr "%endif\n"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:393
@@ -874,7 +939,6 @@ msgstr "پرداختن به سایر مسائل انتقال‌پذیری"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:397
-#, fuzzy
 msgid ""
 "The above solutions can handle most cases of writing code portable between "
 "FreeBSD and Linux.  Nevertheless, with some kernel services the differences "
@@ -885,15 +949,14 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:400
-#, fuzzy
 msgid ""
 "In that case, you need to write two different handlers for those particular "
 "system calls, and use conditional assembly.  Luckily, most of your code does "
 "something other than calling the kernel, so usually you will only need a few "
 "such conditional sections in your code."
 msgstr ""
-"در آن صورت، شما باید دو مدیر مختلف برای آن فراخوان‌های سامانهٔ ویژه بنویسید، و "
-"از همگذاریِ شرطی استفاده کنید. خوشبختانه، بیشتر کد شما کاری به غیر از "
+"در آن صورت، شما باید دو مدیر مختلف برای آن فراخوان‌های سامانهٔ ویژه بنویسید، "
+"و از همگذاریِ شرطی استفاده کنید. خوشبختانه، بیشتر کد شما کاری به غیر از "
 "فراخوانی تابع انجام می‌دهد، پس معمولاً تنها به چند بخش‌ شرطی در کدتان نیاز "
 "خواهید داشت."
 
@@ -905,15 +968,15 @@ msgstr "استفاده از کتابخانه"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:406
-#, fuzzy
 msgid ""
 "You can avoid portability issues in your main code altogether by writing a "
 "library of system calls.  Create a separate library for FreeBSD, a different "
 "one for Linux, and yet other libraries for more operating systems."
 msgstr ""
-"می‌توانید با نوشتن کتابخانه برای فراخوان‌های سامانه، از مسائل انتقال‌پذیری در "
-"کد اصلیِ خود به‌طور کلی اجتناب کنید. یک کتابخانهٔ جداگانه برای FreeBSD ایجاد "
-"کنید، یکی برای Linux، و حتی کتابخانه‌های دیگری برای سامانه‌های عامل بیشتر."
+"می‌توانید با نوشتن کتابخانه‌ای از فراخوان‌های سامانه، از مسائل انتقال‌پذیری "
+"در کد اصلی خود به‌طور کلی اجتناب کنید. یک کتابخانهٔ جداگانه برای FreeBSD، "
+"یکی برای Linux، و در عین حال کتابخانه‌های دیگری را برای سایر سامانه‌های عامل "
+"ایجاد کنید."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:411
@@ -924,10 +987,16 @@ msgid ""
 "call number in.  In that case, your FreeBSD library can be very simple, as "
 "many seemingly different functions can be just labels to the same code:"
 msgstr ""
+"در کتابخانهٔ خود، یک تابع جداگانه (یا روش، اگر اصطلاحات سنتی زبان اسمبلی را "
+"ترجیح می‌دهید) برای هر فراخوان سامانه بنویسید. از رویهٔ فراخوانیِ‌ C برای "
+"قبول کردن پارامترها استفاده کنید. اما از `EAX` هم برای قبول کردن شمارهٔ "
+"فراخوان استفاده کنید. در آن صورت، کتابخانهٔ FreeBSD شما می‌تواند بسیار ساده "
+"باشد، همانطور که بسیاری از توابع به‌ظاهر متفاوت می‌توانند برچسبی به همان کد "
+"باشند:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:419
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "sys.open:\n"
 "sys.close:\n"
@@ -943,13 +1012,12 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:423
-#, fuzzy
 msgid ""
 "Your Linux library will require more different functions.  But even here you "
 "can group system calls using the same number of parameters:"
 msgstr ""
-"کتابخانهٔ Linux شما نیازمند دو تابع متفاوت است. اما حتی در اینجا نیز می‌توانید "
-"فراخوان‌های تابع را با استفاده از همان تعداد پارامترها گروه‌بندی کنید:"
+"کتابخانهٔ Linux شما نیازمند دو تابع مختلف است. اما حتی در اینجا نیز می‌"
+"توانید فراخوان‌های تابع را با استفاده از همان تعداد پارامترها گروه‌بندی کنید:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:434
@@ -964,12 +1032,20 @@ msgid ""
 "\tpop\tebx\n"
 "\tjmp\tsys.return\n"
 msgstr ""
+"sys.exit:\n"
+"sys.close:\n"
+"[etc... one-parameter functions]\n"
+"\tpush\tebx\n"
+"\tmov\tebx, [esp+12]\n"
+"\tint\t80h\n"
+"\tpop\tebx\n"
+"\tjmp\tsys.return\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:436
 #, no-wrap
 msgid "...\n"
-msgstr ""
+msgstr "...\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:442
@@ -981,6 +1057,11 @@ msgid ""
 "\tclc\n"
 "\tret\n"
 msgstr ""
+"sys.return:\n"
+"\tor\teax, eax\n"
+"\tjs\tsys.err\n"
+"\tclc\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:447
@@ -991,10 +1072,13 @@ msgid ""
 "\tstc\n"
 "\tret\n"
 msgstr ""
+"sys.err:\n"
+"\tneg\teax\n"
+"\tstc\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:454
-#, fuzzy
 msgid ""
 "The library approach may seem inconvenient at first because it requires you "
 "to produce a separate file your code depends on.  But it has many "
@@ -1008,8 +1092,8 @@ msgstr ""
 "روش کتابخانه ممکن است در ابتدا به‌نظر نامناسب باشد زیرا شما را ملزم به ایجاد "
 "پرونده‌ای جدا می‌كند که کدتان بدان وابسته باشد. اما مزایای بسیاری دارد: برای "
 "مثال، تنها کافیست یکبار بنویسیدش و برای تمام برنامه‌هایتان از آن استفاده "
-"کنید. حتی می‌توانید به سایر برنامه‌نویسان زبان اسمبلی اجازهٔ استفاده از آن را "
-"بدهید، یا شاید از چیزی که شخص دیگری نوشته است استفاده کنید. اما احتمالا ً‌"
+"کنید. حتی می‌توانید به سایر برنامه‌نویسان زبان اسمبلی اجازهٔ استفاده از آن "
+"را بدهید، یا شاید از چیزی که شخص دیگری نوشته است استفاده کنید. اما احتمالا ً‌"
 "بزرگترین مزیت کتابخانه آن است که کد شما امکان پورت شدن به سایر سامانه‌ها را "
 "دارد، حتی توسط سایر برنامه‌نویسان، از طریق نوشتن کتابخانه‌ای جدید بدون ایجاد "
 "هیچ تغییری در کد شما."
