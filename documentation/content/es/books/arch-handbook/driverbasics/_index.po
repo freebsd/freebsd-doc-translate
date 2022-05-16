@@ -2,12 +2,13 @@
 # Copyright (C) YEAR The FreeBSD Project
 # This file is distributed under the same license as the FreeBSD Documentation package.
 # Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021.
+# Rodrigo G. López <rodrigosloop@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:20-0300\n"
-"PO-Revision-Date: 2021-11-11 07:33+0000\n"
-"Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
+"PO-Revision-Date: 2022-05-16 13:19+0000\n"
+"Last-Translator: Rodrigo G. López <rodrigosloop@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookdriverbasics_index/es/>\n"
 "Language: es\n"
@@ -15,20 +16,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8.1\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #. type: Title =
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:1
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:13
 #, no-wrap
 msgid "Writing FreeBSD Device Drivers"
-msgstr ""
+msgstr "Escribiendo Drivers para FreeBSD"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:1
 #, no-wrap
 msgid "Chapter 9. Writing FreeBSD Device Drivers"
-msgstr ""
+msgstr "Capítulo 9. Escribiendo Drivers para FreeBSD"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:51
@@ -49,6 +50,16 @@ msgid ""
 "compiled into the system statically or loaded on demand through the dynamic "
 "kernel linker facility `kld'."
 msgstr ""
+"Este capítulo ofrece una breve introducción sobre la escritura de drivers de "
+"dispositivos para FreeBSD. Un dispositivo, en este contexto, es un término "
+"que se utiliza sobretodo para aquello relacionado con hardware perteneciente "
+"al sistema, como discos, impresoras, o un monitor gráfico con su teclado. Un "
+"driver es el componente de software del sistema operativo que controla un "
+"dispositivo específico. También existen los llamados pseudodispositivos, "
+"donde un driver emula el comportamiento de un dispositivo real en software, "
+"sin utilizar ningún tipo de hardware. Los drivers se pueden compilar en el "
+"sistema estáticamente, o cargarse conforme se necesiten a través del "
+"servicio de enlazado dinámico del kernel, `kld'."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:56
@@ -57,6 +68,10 @@ msgid ""
 "nodes, sometimes also called special files. These files are usually located "
 "under the directory [.filename]#/dev# in the filesystem hierarchy."
 msgstr ""
+"La mayoría de dispositivos en un sistema operativo basado en UNIX(R) se "
+"utilizan a través de nodos de dispositivo, también conocidos como archivos "
+"especiales. Estos archivos se encuentran normalmente bajo el directorio [."
+"filename]#/dev#, en la jerarquía de ficheros."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:58
@@ -64,12 +79,14 @@ msgid ""
 "Device drivers can roughly be broken down into two categories; character and "
 "network device drivers."
 msgstr ""
+"Los drivers se pueden separar ligeramente en dos categorías; drivers para "
+"dispositivos de caracteres y de red."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:60
 #, no-wrap
 msgid "Dynamic Kernel Linker Facility - KLD"
-msgstr ""
+msgstr "Servicio de Enlazado Dinámico del Kernel - KLD"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:63
@@ -79,31 +96,36 @@ msgid ""
 "load their new changes into a running kernel without constantly rebooting to "
 "test changes."
 msgstr ""
+"La interfaz de kld permite que los administradores de sistemas añadan o "
+"eliminen funcionalidad de un sistema en funcionamiento. Esto permite a los "
+"programadores de drivers cargar sus nuevas modificaciones en un kernel en "
+"ejecución, sin tener que estar reiniciando todo el rato para realizar "
+"pruebas."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:65
 msgid "The kld interface is used through:"
-msgstr ""
+msgstr "La interfaz de kld se utiliza a través de:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:67
 msgid "`kldload` - loads a new kernel module"
-msgstr ""
+msgstr "`kldload`- carga un nuevo módulo de kernel"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:68
 msgid "`kldunload` - unloads a kernel module"
-msgstr ""
+msgstr "`kldunload` - desactiva un módulo de kernel"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:69
 msgid "`kldstat` - lists loaded modules"
-msgstr ""
+msgstr "`kldstat` - lista los módulos cargados"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:71
 msgid "Skeleton Layout of a kernel module"
-msgstr ""
+msgstr "Boceto de un módulo de kernel"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:78
@@ -199,6 +221,8 @@ msgstr ""
 msgid ""
 "FreeBSD provides a system makefile to simplify compiling a kernel module."
 msgstr ""
+"FreeBSD proporciona un makefile de sistema para simplificar la compilación "
+"de un módulo de kernel."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:128
@@ -220,18 +244,20 @@ msgid ""
 "Running `make` with this makefile will create a file [.filename]#skeleton."
 "ko# that can be loaded into the kernel by typing:"
 msgstr ""
+"Ejecutar `make` con este makefile creará un archivo [.filename]#skeleton.ko# "
+"que se puede cargar en el kernel escribiendo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:137
 #, no-wrap
 msgid "# kldload -v ./skeleton.ko\n"
-msgstr ""
+msgstr "\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:140
 #, no-wrap
 msgid "Character Devices"
-msgstr ""
+msgstr "Dispositivos de Caracteres"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:143
@@ -240,6 +266,9 @@ msgid ""
 "user process. This is the most common type of device driver and there are "
 "plenty of simple examples in the source tree."
 msgstr ""
+"Un driver para dispositivos de caracteres es uno que intercambia datos "
+"directamente con un proceso de usuario. Este es el tipo de driver más común "
+"y hay un montón de ejemplos sencillos en el árbol de sources."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:145
@@ -247,12 +276,16 @@ msgid ""
 "This simple example pseudo-device remembers whatever values are written to "
 "it and can then echo them back when read."
 msgstr ""
+"Este simple pseudodispositivo de prueba recuerda lo que sea que se le "
+"escribe, y lo repite al leer del mismo."
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:146
 #, no-wrap
 msgid "Example of a Sample Echo Pseudo-Device Driver for FreeBSD 10.X - 12.X"
 msgstr ""
+"Ejemplo de un Driver Pseudodispositivo Echo de Prueba para FreeBSD 10.X - 12."
+"X"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:158
@@ -555,7 +588,7 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:320
 msgid "With this driver loaded try:"
-msgstr ""
+msgstr "Con este driver cargado, prueba:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:328
@@ -567,17 +600,23 @@ msgid ""
 "Test Data\n"
 "Closing device \"echo\".\n"
 msgstr ""
+"# echo -n \"Hola, Prueba\" > /dev/echo\n"
+"# cat /dev/echo\n"
+"Opened device \"echo\" successfully.\n"
+"Hola, Prueba\n"
+"Closing device \"echo\".\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:331
 msgid "Real hardware devices are described in the next chapter."
 msgstr ""
+"En el próximo capítulo se describen los dispositivos de hardware reales."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:333
 #, no-wrap
 msgid "Block Devices (Are Gone)"
-msgstr ""
+msgstr "Dispositivos de Bloques (Han Desaparecido)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:336
@@ -589,6 +628,13 @@ msgid ""
 "operations, depriving the application of the ability to know the exact disk "
 "contents at any one instant in time."
 msgstr ""
+"Puede que otros sistemas UNIX(R) soporten un segundo tipo de dispositivo de "
+"disco, conocidos como dispositivos de bloques. Los dispositivos de bloques "
+"son dispositivos de disco para los que el kernel provee de una caché. Esta "
+"caché hace que los dispositivos de bloques sean casi inutilizables, o por lo "
+"menos de poco fiar. El cacheo reordenará la secuencia de operaciones de "
+"escritura, dejando a la aplicación sin poder conocer el contenido exacto del "
+"disco en cualquier instante."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:338
@@ -599,6 +645,11 @@ msgid ""
 "particular write operation encountered a write error, this further compounds "
 "the consistency problem."
 msgstr ""
+"Esto hace imposible la recuperación de las estructuras de datos en disco ("
+"sistemas de ficheros, bases de datos, etc.) tras una caída. Puesto que las "
+"escrituras pueden demorarse, el kernel no tiene manera de informar a la "
+"aplicación sobre cuál de las operaciones de escritura terminó en error, lo "
+"que contribuye al problema de consistencia."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:340
