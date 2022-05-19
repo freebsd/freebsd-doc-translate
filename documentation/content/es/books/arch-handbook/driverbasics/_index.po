@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR The FreeBSD Project
 # This file is distributed under the same license as the FreeBSD Documentation package.
-# Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021.
+# Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021, 2022.
 # Rodrigo G. López <rodrigosloop@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:20-0300\n"
-"PO-Revision-Date: 2022-05-17 20:19+0000\n"
-"Last-Translator: Rodrigo G. López <rodrigosloop@gmail.com>\n"
+"PO-Revision-Date: 2022-05-19 11:56+0000\n"
+"Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookdriverbasics_index/es/>\n"
 "Language: es\n"
@@ -136,6 +136,10 @@ msgid ""
 " * Inspired by Andrew Reiter's Daemonnews article\n"
 " */\n"
 msgstr ""
+"/*\n"
+" * KLD Skeleton\n"
+" * Inspired by Andrew Reiter's Daemonnews article\n"
+" */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:85
@@ -148,6 +152,12 @@ msgid ""
 "#include <sys/module.h>\n"
 "#include <sys/kernel.h> /* types used in module initialization */\n"
 msgstr ""
+"#include <sys/types.h>\n"
+"#include <sys/systm.h>  /* uprintf */\n"
+"#include <sys/errno.h>\n"
+"#include <sys/param.h>  /* defines used in kernel.h */\n"
+"#include <sys/module.h>\n"
+"#include <sys/kernel.h> /* types used in module initialization */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:89
@@ -157,6 +167,9 @@ msgid ""
 " * Load handler that deals with the loading and unloading of a KLD.\n"
 " */\n"
 msgstr ""
+"/*\n"
+" * Load handler that deals with the loading and unloading of a KLD.\n"
+" */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:94
@@ -167,6 +180,10 @@ msgid ""
 "{\n"
 "  int err = 0;\n"
 msgstr ""
+"static int\n"
+"skel_loader(struct module *m, int what, void *arg)\n"
+"{\n"
+"  int err = 0;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:108
@@ -186,12 +203,27 @@ msgid ""
 "  return(err);\n"
 "}\n"
 msgstr ""
+"  switch (what) {\n"
+"  case MOD_LOAD:                /* kldload */\n"
+"    uprintf(\"Skeleton KLD loaded.\\n"
+"\");\n"
+"    break;\n"
+"  case MOD_UNLOAD:\n"
+"    uprintf(\"Skeleton KLD unloaded.\\n"
+"\");\n"
+"    break;\n"
+"  default:\n"
+"    err = EOPNOTSUPP;\n"
+"    break;\n"
+"  }\n"
+"  return(err);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:110
 #, no-wrap
 msgid "/* Declare this module to the rest of the kernel */\n"
-msgstr ""
+msgstr "/* Declare this module to the rest of the kernel */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:116
@@ -203,18 +235,23 @@ msgid ""
 "  NULL\n"
 "};\n"
 msgstr ""
+"static moduledata_t skel_mod = {\n"
+"  \"skel\",\n"
+"  skel_loader,\n"
+"  NULL\n"
+"};\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:118
 #, no-wrap
 msgid "DECLARE_MODULE(skeleton, skel_mod, SI_SUB_KLD, SI_ORDER_ANY);\n"
-msgstr ""
+msgstr "DECLARE_MODULE(skeleton, skel_mod, SI_SUB_KLD, SI_ORDER_ANY);\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:120
 #, no-wrap
 msgid "Makefile"
-msgstr ""
+msgstr "Makefile"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:123
@@ -231,12 +268,14 @@ msgid ""
 "SRCS=skeleton.c\n"
 "KMOD=skeleton\n"
 msgstr ""
+"SRCS=skeleton.c\n"
+"KMOD=skeleton\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:130
 #, no-wrap
 msgid ".include <bsd.kmod.mk>\n"
-msgstr ""
+msgstr ".include <bsd.kmod.mk>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:133
@@ -251,7 +290,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:137
 #, no-wrap
 msgid "# kldload -v ./skeleton.ko\n"
-msgstr "\n"
+msgstr "# kldload -v ./skeleton.ko\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:140
@@ -299,6 +338,13 @@ msgid ""
 " * Eitan Adler\n"
 " */\n"
 msgstr ""
+"/*\n"
+" * Simple Echo pseudo-device KLD\n"
+" *\n"
+" * Murray Stokely\n"
+" * Søren (Xride) Straarup\n"
+" * Eitan Adler\n"
+" */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:167
@@ -313,16 +359,24 @@ msgid ""
 "#include <sys/uio.h>    /* uio struct */\n"
 "#include <sys/malloc.h>\n"
 msgstr ""
+"#include <sys/types.h>\n"
+"#include <sys/systm.h>  /* uprintf */\n"
+"#include <sys/param.h>  /* defines used in kernel.h */\n"
+"#include <sys/module.h>\n"
+"#include <sys/kernel.h> /* types used in module initialization */\n"
+"#include <sys/conf.h>   /* cdevsw struct */\n"
+"#include <sys/uio.h>    /* uio struct */\n"
+"#include <sys/malloc.h>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:169
 #, no-wrap
 msgid "#define BUFFERSIZE 255\n"
-msgstr ""
+msgstr "#define BUFFERSIZE 255\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:175
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "/* Function prototypes */\n"
 "static d_open_t      echo_open;\n"
@@ -330,6 +384,11 @@ msgid ""
 "static d_read_t      echo_read;\n"
 "static d_write_t     echo_write;\n"
 msgstr ""
+"/* Function prototypes */\n"
+"static d_open_t      echo_open;\n"
+"static d_close_t     echo_close;\n"
+"static d_read_t      echo_read;\n"
+"static d_write_t     echo_write;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:185
@@ -345,6 +404,15 @@ msgid ""
 "\t.d_name = \"echo\",\n"
 "};\n"
 msgstr ""
+"/* Character device entry points */\n"
+"static struct cdevsw echo_cdevsw = {\n"
+"\t.d_version = D_VERSION,\n"
+"\t.d_open = echo_open,\n"
+"\t.d_close = echo_close,\n"
+"\t.d_read = echo_read,\n"
+"\t.d_write = echo_write,\n"
+"\t.d_name = \"echo\",\n"
+"};\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:190
@@ -355,6 +423,10 @@ msgid ""
 "\tint len;\n"
 "};\n"
 msgstr ""
+"struct s_echo {\n"
+"\tchar msg[BUFFERSIZE + 1];\n"
+"\tint len;\n"
+"};\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:194
@@ -364,6 +436,9 @@ msgid ""
 "static struct cdev *echo_dev;\n"
 "static struct s_echo *echomsg;\n"
 msgstr ""
+"/* vars */\n"
+"static struct cdev *echo_dev;\n"
+"static struct s_echo *echomsg;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:197
@@ -372,6 +447,8 @@ msgid ""
 "MALLOC_DECLARE(M_ECHOBUF);\n"
 "MALLOC_DEFINE(M_ECHOBUF, \"echobuffer\", \"buffer for echo module\");\n"
 msgstr ""
+"MALLOC_DECLARE(M_ECHOBUF);\n"
+"MALLOC_DEFINE(M_ECHOBUF, \"echobuffer\", \"buffer for echo module\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:206
@@ -386,6 +463,14 @@ msgid ""
 "{\n"
 "\tint error = 0;\n"
 msgstr ""
+"/*\n"
+" * This function is called by the kld[un]load(2) system calls to\n"
+" * determine what actions to take when a module is loaded or unloaded.\n"
+" */\n"
+"static int\n"
+"echo_loader(struct module *m __unused, int what, void *arg __unused)\n"
+"{\n"
+"\tint error = 0;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:219
@@ -404,6 +489,18 @@ msgid ""
 "\t\tif (error != 0)\n"
 "\t\t\tbreak;\n"
 msgstr ""
+"\tswitch (what) {\n"
+"\tcase MOD_LOAD:                /* kldload */\n"
+"\t\terror = make_dev_p(MAKEDEV_CHECKNAME | MAKEDEV_WAITOK,\n"
+"\t\t    &echo_dev,\n"
+"\t\t    &echo_cdevsw,\n"
+"\t\t    0,\n"
+"\t\t    UID_ROOT,\n"
+"\t\t    GID_WHEEL,\n"
+"\t\t    0600,\n"
+"\t\t    \"echo\");\n"
+"\t\tif (error != 0)\n"
+"\t\t\tbreak;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:235
@@ -425,6 +522,23 @@ msgid ""
 "\treturn (error);\n"
 "}\n"
 msgstr ""
+"\t\techomsg = malloc(sizeof(*echomsg), M_ECHOBUF, M_WAITOK |\n"
+"\t\t    M_ZERO);\n"
+"\t\tprintf(\"Echo device loaded.\\n"
+"\");\n"
+"\t\tbreak;\n"
+"\tcase MOD_UNLOAD:\n"
+"\t\tdestroy_dev(echo_dev);\n"
+"\t\tfree(echomsg, M_ECHOBUF);\n"
+"\t\tprintf(\"Echo device unloaded.\\n"
+"\");\n"
+"\t\tbreak;\n"
+"\tdefault:\n"
+"\t\terror = EOPNOTSUPP;\n"
+"\t\tbreak;\n"
+"\t}\n"
+"\treturn (error);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:241
@@ -436,6 +550,12 @@ msgid ""
 "{\n"
 "\tint error = 0;\n"
 msgstr ""
+"static int\n"
+"echo_open(struct cdev *dev __unused, int oflags __unused, int devtype "
+"__unused,\n"
+"    struct thread *td __unused)\n"
+"{\n"
+"\tint error = 0;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:245
@@ -445,6 +565,10 @@ msgid ""
 "\treturn (error);\n"
 "}\n"
 msgstr ""
+"\tuprintf(\"Opened device \\\"echo\\\" successfully.\\n"
+"\");\n"
+"\treturn (error);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:250
@@ -455,6 +579,11 @@ msgid ""
 "    struct thread *td __unused)\n"
 "{\n"
 msgstr ""
+"static int\n"
+"echo_close(struct cdev *dev __unused, int fflag __unused, int devtype "
+"__unused,\n"
+"    struct thread *td __unused)\n"
+"{\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:254
@@ -464,6 +593,10 @@ msgid ""
 "\treturn (0);\n"
 "}\n"
 msgstr ""
+"\tuprintf(\"Closing device \\\"echo\\\".\\n"
+"\");\n"
+"\treturn (0);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:265
@@ -480,6 +613,16 @@ msgid ""
 "\tsize_t amt;\n"
 "\tint error;\n"
 msgstr ""
+"/*\n"
+" * The read function just takes the buf that was saved via\n"
+" * echo_write() and returns it to userland for accessing.\n"
+" * uio(9)\n"
+" */\n"
+"static int\n"
+"echo_read(struct cdev *dev __unused, struct uio *uio, int ioflag __unused)\n"
+"{\n"
+"\tsize_t amt;\n"
+"\tint error;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:273
@@ -493,6 +636,13 @@ msgid ""
 "\tamt = MIN(uio->uio_resid, uio->uio_offset >= echomsg->len + 1 ? 0 :\n"
 "\t    echomsg->len + 1 - uio->uio_offset);\n"
 msgstr ""
+"\t/*\n"
+"\t * How big is this read operation?  Either as big as the user wants,\n"
+"\t * or as big as the remaining data.  Note that the 'len' does not\n"
+"\t * include the trailing null character.\n"
+"\t */\n"
+"\tamt = MIN(uio->uio_resid, uio->uio_offset >= echomsg->len + 1 ? 0 :\n"
+"\t    echomsg->len + 1 - uio->uio_offset);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:276
@@ -501,6 +651,9 @@ msgid ""
 "\tif ((error = uiomove(echomsg->msg, amt, uio)) != 0)\n"
 "\t\tuprintf(\"uiomove failed!\\n\");\n"
 msgstr ""
+"\tif ((error = uiomove(echomsg->msg, amt, uio)) != 0)\n"
+"\t\tuprintf(\"uiomove failed!\\n"
+"\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:279
@@ -509,6 +662,8 @@ msgid ""
 "\treturn (error);\n"
 "}\n"
 msgstr ""
+"\treturn (error);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:289
@@ -524,6 +679,15 @@ msgid ""
 "\tsize_t amt;\n"
 "\tint error;\n"
 msgstr ""
+"/*\n"
+" * echo_write takes in a character string and saves it\n"
+" * to buf for later accessing.\n"
+" */\n"
+"static int\n"
+"echo_write(struct cdev *dev __unused, struct uio *uio, int ioflag __unused)\n"
+"{\n"
+"\tsize_t amt;\n"
+"\tint error;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:296
@@ -536,6 +700,12 @@ msgid ""
 "\tif (uio->uio_offset != 0 && (uio->uio_offset != echomsg->len))\n"
 "\t\treturn (EINVAL);\n"
 msgstr ""
+"\t/*\n"
+"\t * We either write from the beginning or are appending -- do\n"
+"\t * not allow random access.\n"
+"\t */\n"
+"\tif (uio->uio_offset != 0 && (uio->uio_offset != echomsg->len))\n"
+"\t\treturn (EINVAL);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:300
@@ -545,6 +715,9 @@ msgid ""
 "\tif (uio->uio_offset == 0)\n"
 "\t\techomsg->len = 0;\n"
 msgstr ""
+"\t/* This is a new message, reset length */\n"
+"\tif (uio->uio_offset == 0)\n"
+"\t\techomsg->len = 0;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:303
@@ -553,12 +726,14 @@ msgid ""
 "\t/* Copy the string in from user memory to kernel memory */\n"
 "\tamt = MIN(uio->uio_resid, (BUFFERSIZE - echomsg->len));\n"
 msgstr ""
+"\t/* Copy the string in from user memory to kernel memory */\n"
+"\tamt = MIN(uio->uio_resid, (BUFFERSIZE - echomsg->len));\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:305
 #, no-wrap
 msgid "\terror = uiomove(echomsg->msg + uio->uio_offset, amt, uio);\n"
-msgstr ""
+msgstr "\terror = uiomove(echomsg->msg + uio->uio_offset, amt, uio);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:309
@@ -568,6 +743,9 @@ msgid ""
 "\techomsg->len = uio->uio_offset;\n"
 "\techomsg->msg[echomsg->len] = 0;\n"
 msgstr ""
+"\t/* Now we need to null terminate and record the length */\n"
+"\techomsg->len = uio->uio_offset;\n"
+"\techomsg->msg[echomsg->len] = 0;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:314
@@ -578,12 +756,17 @@ msgid ""
 "\treturn (error);\n"
 "}\n"
 msgstr ""
+"\tif (error != 0)\n"
+"\t\tuprintf(\"Write failed: bad address!\\n"
+"\");\n"
+"\treturn (error);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:316
 #, no-wrap
 msgid "DEV_MODULE(echo, echo_loader, NULL);\n"
-msgstr ""
+msgstr "DEV_MODULE(echo, echo_loader, NULL);\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/driverbasics/_index.adoc:320
