@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:20-0300\n"
-"PO-Revision-Date: 2022-05-20 12:19+0000\n"
+"PO-Revision-Date: 2022-05-23 12:19+0000\n"
 "Last-Translator: Rodrigo G. López <rodrigosloop@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbooknewbus_index/es/>\n"
@@ -84,26 +84,28 @@ msgid ""
 "There used to be days in UNIX(R), and thus FreeBSD, in which there were four "
 "types of devices defined:"
 msgstr ""
+"Hubo un tiempo en UNIX(R), y por tanto en FreeBSD, en el que había cuatro "
+"tipos de dispositivo definidos:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:71
 msgid "block device drivers"
-msgstr ""
+msgstr "drivers para dispositivos de bloque"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:72
 msgid "character device drivers"
-msgstr ""
+msgstr "drivers para dispositivos de caracteres"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:73
 msgid "network device drivers"
-msgstr ""
+msgstr "drivers para dispositivos de red"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:74
 msgid "pseudo-device drivers"
-msgstr ""
+msgstr "drivers para pseudodispositivos"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:76
@@ -115,6 +117,13 @@ msgid ""
 "modified in memory it got synced to disk whenever the system did its "
 "periodical disk flushing, thus optimizing writes."
 msgstr ""
+"Los _dispositivos de bloques_trabajaban mediante el uso de bloques [de datos]"
+" de tamaño fijo. Este tipo de driver dependía de la conocida como _caché de "
+"buffer_, que cacheaba bloques de datos a los que se había accedido en una "
+"parte de memoria dedicada. Esta caché a menudo se basaba en write-behind, lo "
+"que significa que cuando se modificaban datos en memoria, se sincronizaba en "
+"disco cuando el sistema hacía su rutina de volcado, optimizando así la "
+"escritura."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:77
@@ -128,12 +137,14 @@ msgid ""
 "However, in the versions of FreeBSD 4.0 and onward the distinction between "
 "block and character devices became non-existent."
 msgstr ""
+"Sin embargo, desde la versión de FreeBSD 4.0 hacia delante, la distinción "
+"entre dispositivos de bloque y de caracteres desapareció."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:82
 #, no-wrap
 msgid "Overview of Newbus"
-msgstr ""
+msgstr "Resumen de Newbus"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:85
@@ -145,26 +156,33 @@ msgid ""
 "provide a more object-oriented means of interconnecting the various busses "
 "and devices which a host system provides to the _Operating System_."
 msgstr ""
+"_Newbus_ es la implementación de una nueva arquitectura de bus basada en "
+"capas de abstracción, que se introdujo en FreeBSD 3.0, cuando el port Alpha "
+"se importó en el código fuente principal. No fue hasta la versión 4.0 que se "
+"convirtió en el sistema por defecto para utilizarse en drivers. Su objetivo "
+"es proporcionar una manera más orientada a objetos de interconectar los "
+"diferentes buses y dispositivos que una máquina ofrece al _Sistema "
+"Operativo_."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:87
 msgid "Its main features include amongst others:"
-msgstr ""
+msgstr "Sus características principales incluyen, entre otras:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:89
 msgid "dynamic attaching"
-msgstr ""
+msgstr "asociación dinámica"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:90
 msgid "easy modularization of drivers"
-msgstr ""
+msgstr "fácil modularización de drivers"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:91
 msgid "pseudo-busses"
-msgstr ""
+msgstr "pseudobuses"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:93
@@ -172,6 +190,8 @@ msgid ""
 "One of the most prominent changes is the migration from the flat and ad-hoc "
 "system to a device tree layout."
 msgstr ""
+"Uno de los cambios más destacados es la migración de un sistema plano y a "
+"medida, a una estructura de árbol de dispositivos (device tree layout.)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:95
@@ -184,6 +204,13 @@ msgid ""
 "corresponding to the different hardware chipsets, including _lca_, _apecs_, "
 "_cia_ and _tsunami_."
 msgstr ""
+"En el nivel más alto reside el dispositivo _raíz (\"root\")_, del que "
+"cuelgan el resto de dispositivos. Para cada arquitectura, normalmente hay un "
+"único hijo de \"root\", que tiene asociados elementos como _puentes de host "
+"a PCI_ y demás. Para x86, este dispositivo \"root\" es el dispositivo "
+"central o _\"nexus\"_. Para Alpha, cada modelo de Alpha tiene su propio tipo "
+"de dispositivos, los cuales corresponden a los diferentes tipos de chipset, "
+"entre los que se encuentran _lca_, _apecs_, _cia_ y _tsunami_."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:97
@@ -194,6 +221,12 @@ msgid ""
 "called a _\"bus\"_. Examples of common busses in the system are ISA and PCI, "
 "which manage lists of devices attached to ISA and PCI busses respectively."
 msgstr ""
+"Un dispositivo en el contexto de Newbus representa una entidad de hardware "
+"única en el sistema. De hecho, cada dispositivo PCI se representa con un "
+"dispositivo Newbus. Cualquier dispositivo en el sistema puede tener hijos; "
+"un dispositivo con hijos se suele llamar _\"bus\"_. ISA y PCI son ejemplos "
+"de bus comunes en el sistema, los cuales gestionan listas de dispositivos "
+"asociados a buses ISA y PCI respectivamente."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:99
@@ -206,6 +239,14 @@ msgid ""
 "bus tree, allowing common code to be used for both top-level and bridged "
 "busses."
 msgstr ""
+"Una conexión entre diferentes tipos de bus normalmente se representa a "
+"través de un dispositivo _puente (\"bridge\")_, que por lo general tiene un "
+"hijo para el bus asociado. Un ejemplo de esto es un _PCI-to-PCI bridge_ , "
+"que se representa por un dispositivo _[.filename]#pcibN#_ en el bus PCI "
+"parental, y tiene un hijo _[.filename]#pciN#_ para el bus asociado. Esta "
+"estructura simplifica la implementación del árbol del bus PCI, permitiendo "
+"que se reutilice código tanto para un bus directo a un dispositivo, como "
+"para uno al que se accede por medio de un bridge."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:101
@@ -215,6 +256,10 @@ msgid ""
 "basically the nexus is the only part of the Newbus system which knows about "
 "all resources."
 msgstr ""
+"En la arquitectura Newbus, cada dispositivo le pide a su padre que mapee sus "
+"recursos. Entonces el padre le pregunta a su propio padre, hasta que se "
+"llega al nexus. Por lo tanto, el nexus es la única parte del sistema Newbus "
+"que conoce todos los recursos."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:105
@@ -227,6 +272,13 @@ msgid ""
 "request might become memory-mapped at `0xb0000230` on a MIPS box by the PCI "
 "bridge."
 msgstr ""
+"Puede que un dispositivo ISA quiera mapear su puerto de I/O en la dirección "
+"`0x230`, así que le pregunta al padre, en este caso el bus ISA. El bus ISA "
+"le pregunta al PCI-to-ISA bridge, el cual le pregunta al bus PCI, que llega "
+"al host-to-PCI bridge y finalmente al nexus. La belleza de esta transición "
+"hacia arriba es que hay espacio para traducir las peticiones. Por ejemplo, "
+"la petición para el puerto I/O en `0x230` podría terminar mapeándose en la "
+"dirección de memoria `0xb0000230` de una máquina MIPS por el bridge de PCI."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:108
@@ -239,6 +291,14 @@ msgid ""
 "address space is managed by a single entity - nexus for IA-32 and the "
 "relevant chipset driver on Alpha (e.g., CIA or tsunami)."
 msgstr ""
+"La asignación de recursos se puede controlar en cualquier punto del árbol de "
+"dispositivos. Por ejemplo, en muchas plataformas Alpha las interrupciones de "
+"ISA y PCI se gestionan por separado, y las asignaciones de recursos para ISA "
+"se gestionan desde el mismo bus ISA de Alpha. En IA-32, las interrupciones "
+"de ISA y PCI se gestionan desde el nexus. En ambos ports, el espacio para "
+"direcciones de memoria y puertos se gestiona desde una única entidad - el "
+"nexus para IA-32, y el driver del chipset relevante para Alpha (e.g., CIA o "
+"tsunami)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:110
@@ -249,6 +309,12 @@ msgid ""
 "that a single driver can easily use either memory-mapped registers or port-"
 "mapped registers (some hardware supports both)."
 msgstr ""
+"Con el fin de normalizar el acceso a recursos mapeados a memoria y puertos, "
+"Newbus integra las APIs de `bus_space`de NetBSD. Estas ofrecen una única API "
+"para reemplazar inb/outb, y lecturas/escrituras directas de memoria. La "
+"ventaja de esto, es que un único driver puede utilizar registros mapeados a "
+"memoria o registros mapeados a puertos fácilmente (hay hardware que soporta "
+"ambos)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:112
@@ -257,6 +323,9 @@ msgid ""
 "resource is allocated, a driver can retrieve the associated "
 "`bus_space_tag_t` and `bus_space_handle_t` from the resource."
 msgstr ""
+"Este soporte está integrado en el mecanismo de asignación de recursos. "
+"Cuando se asigna un recurso, un driver puede obtener el `bus_space_tag_t` y "
+"`bus_space_handle_t` asociados del recurso."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:114
@@ -265,6 +334,9 @@ msgid ""
 "to this purpose. These are the [.filename]#.m# files that are found under "
 "the [.filename]#src/sys# hierarchy."
 msgstr ""
+"Newbus también permite la definición de métodos de interfaz en archivos "
+"dedicados para este propósito. Los puedes encontrar como archivos terminados "
+"en [.filename]#.m#, bajo el directorio [.filename]#src/sys#."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:116
@@ -276,6 +348,13 @@ msgid ""
 "a number of \"interfaces\". An \"interface\" is simply a group of related "
 "methods which can be implemented by a device."
 msgstr ""
+"El núcleo del sistema Newbus es un modelo extensible de \"programación "
+"basada en objetos\". Cada dispositivo del sistema tiene una tabla de métodos "
+"que soporta. El sistema y otros dispositivos utilizan esos métodos para "
+"controlar el dispositivo y solicitar servicios. Los diferentes métodos que "
+"soporta un dispositivo, se definen por un número de \"interfaces\". Una "
+"\"interfaz\" es simplemente un grupo de métodos relacionados que puede "
+"implementar un dispositivo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:118
@@ -287,6 +366,13 @@ msgid ""
 "with a new method table. This allows dynamic replacement of drivers which "
 "can be useful for driver development."
 msgstr ""
+"En el sistema Newbus, los métodos para un dispositivo los proporcionan la "
+"variedad de drivers que hay en el sistema. Cuando un dispositivo se asocia a "
+"un driver durante la _autoconfiguración_, este utiliza la tabla de métodos "
+"declarada por el driver. Un dispositivo se puede desvincular del driver y "
+"_volver a vincularse_ a otro driver con una nueva tabla de métodos. Esto "
+"permite la sustitución dinámica de drivers, que puede resultar útil para el "
+"desarrollo de drivers."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:120
@@ -296,24 +382,28 @@ msgid ""
 "would be stored in a methods file (which would normally be named [."
 "filename]#foo_if.m#)."
 msgstr ""
+"Las interfaces se describen por medio de un lenguaje de definición de "
+"interfaces, similar al lenguaje que se utiliza para definir operaciones "
+"sobre vnodes para sistemas de ficheros. La interfaz se guardaría en un "
+"archivo de métodos (normalmente llamado [.filename]#foo_if.m#)."
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:121
 #, no-wrap
 msgid "Newbus Methods"
-msgstr ""
+msgstr "Métodos de Newbus"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:127
 #, no-wrap
 msgid "      # Foo subsystem/driver (a comment...)\n"
-msgstr ""
+msgstr "      # Foo subsystem/driver (a comment...)\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:129
 #, no-wrap
 msgid "\t  INTERFACE foo\n"
-msgstr ""
+msgstr "\t  INTERFACE foo\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:133
@@ -323,6 +413,9 @@ msgid ""
 "\t\tdevice_t dev;\n"
 "\t};\n"
 msgstr ""
+"\tMETHOD int doit {\n"
+"\t\tdevice_t dev;\n"
+"\t};\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:136
@@ -331,6 +424,8 @@ msgid ""
 "\t# DEFAULT is the method that will be used, if a method was not\n"
 "\t# provided via: DEVMETHOD()\n"
 msgstr ""
+"\t# DEFAULT is the method that will be used, if a method was not\n"
+"\t# provided via: DEVMETHOD()\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:141
@@ -341,6 +436,10 @@ msgid ""
 "\t\tdriver_t child;\n"
 "\t} DEFAULT doit_generic_to_child;\n"
 msgstr ""
+"\tMETHOD void doit_to_child {\n"
+"\t\tdevice_t dev;\n"
+"\t\tdriver_t child;\n"
+"\t} DEFAULT doit_generic_to_child;\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:145
@@ -348,6 +447,8 @@ msgid ""
 "When this interface is compiled, it generates a header file \"[."
 "filename]#foo_if.h#\" which contains function declarations:"
 msgstr ""
+"Al compilar esta interfaz, se genera un archivo de cabecera \"[."
+"filename]#foo_if.h#\", que contiene la declaración de las funciones:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:150
@@ -356,6 +457,8 @@ msgid ""
 "      int FOO_DOIT(device_t dev);\n"
 "      int FOO_DOIT_TO_CHILD(device_t dev, device_t child);\n"
 msgstr ""
+"      int FOO_DOIT(device_t dev);\n"
+"      int FOO_DOIT_TO_CHILD(device_t dev, device_t child);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:153
@@ -365,6 +468,10 @@ msgid ""
 "functions which look up the location of the relevant functions in the "
 "object's method table and call that function."
 msgstr ""
+"También se crea un archivo fuente \"[.filename]#foo_if.c#\", para acompañar "
+"la cebecera que se ha generado automáticamente; este archivo contiene la "
+"implementación de las funciones que buscan la posición de las funciones "
+"relevantes en la tabla de métodos del objeto, y llaman a esa función."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:155
@@ -375,6 +482,12 @@ msgid ""
 "\"detach\"_ to control detection of hardware and _\"shutdown\"_, _\"suspend"
 "\"_ and _\"resume\"_ for critical event notification."
 msgstr ""
+"El sistema define dos interfaces principales. La primera interfaz "
+"fundamental se denomina _\"device\"_, e incluye métodos relevantes para "
+"todos los dispositivos. Entre los métodos de la interfaz _\"device\"_ se "
+"pueden encontrar _\"probe\"_, _\"attach\"_ y _\"detach\"_, para controlar la "
+"detección de hardware, y _\"shutdown\"_, _\"suspend\"_ y _\"resume\"_ para "
+"la notificación de eventos críticos."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:157
@@ -387,6 +500,13 @@ msgid ""
 "(`_alloc_resource_`, `_activate_resource_`, `_deactivate_resource_`, "
 "`_release_resource_`)."
 msgstr ""
+"La segunda interfaz, más compleja, es _\"bus\"_. Esta interfaz contiene "
+"métodos adecuados para dispositivos que tienen hijos, incluyendo métodos "
+"para acceder a información específica del bus para cada dispositivo "
+"footnote:[man:bus_generic_read_ivar[9] y man:bus_generic_write_ivar[9]], "
+"notificación de eventos (`_child_detached_`, `_driver_added_`) y gestión de "
+"recursos (`_alloc_resource_`, `_activate_resource_`, `_deactivate_resource_`"
+", `_release_resource_`)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:159
@@ -400,6 +520,14 @@ msgid ""
 "child, ...)` can be called using the function `bus_teardown_intr(device_t "
 "child, ...)`."
 msgstr ""
+"Varios métodos en la interfaz del \"bus\" se encargan de dar servicio a "
+"algunos de los hijos del bus dispositivo. Estos métodos normalmente "
+"utilizarían los dos primeros argumentos para especificar el bus que "
+"proporciona el servicio, y el dispositivo hijo que solicita el servicio. "
+"Para simplificar el código, muchos de estos métodos tienen funciones de "
+"acceso que buscan en el padre y llaman al método del padre. Por ejemplo, se "
+"puede llamar al método `BUS_TEARDOWN_INTR(device_t dev, device_t child, ...)`"
+" por medio de la función `bus_teardown_intr(device_t child, ...)`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:161
