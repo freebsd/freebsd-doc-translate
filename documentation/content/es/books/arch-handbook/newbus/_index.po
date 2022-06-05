@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:20-0300\n"
-"PO-Revision-Date: 2022-05-27 22:20+0000\n"
+"PO-Revision-Date: 2022-06-05 10:19+0000\n"
 "Last-Translator: Rodrigo G. López <rodrigosloop@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbooknewbus_index/es/>\n"
@@ -137,8 +137,8 @@ msgid ""
 "However, in the versions of FreeBSD 4.0 and onward the distinction between "
 "block and character devices became non-existent."
 msgstr ""
-"Sin embargo, desde la versión de FreeBSD 4.0 hacia delante, la distinción "
-"entre dispositivos de bloque y de caracteres desapareció."
+"Sin embargo, desde la versión 4.0 de FreeBSD, la distinción entre "
+"dispositivos de bloque y de caracteres desapareció."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:82
@@ -571,6 +571,9 @@ msgid ""
 "architecture resides in this directory. For example, the `i386` "
 "architecture, or the `SPARC64` architecture."
 msgstr ""
+"[.filename]#src/sys/[arch]/[arch]# -El código del kernel para una "
+"arquitectura específica reside en este directorio. Por ejemplo, la "
+"arquitectura `i386`, o la arquitectura `SPARC`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:172
@@ -578,6 +581,8 @@ msgid ""
 "[.filename]#src/sys/dev/[bus]# - device support for a specific `[bus]` "
 "resides in this directory."
 msgstr ""
+"[.filename]#src/sys/dev/[bus]# - El soporte de dispositivos para un `[bus]`"
+"específico reside en este directorio."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:174
@@ -585,6 +590,8 @@ msgid ""
 "[.filename]#src/sys/dev/pci# - PCI bus support code resides in this "
 "directory."
 msgstr ""
+"[.filename]#src/sys/dev/pci# - El código para el bus PCI reside en este "
+"directorio."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:176
@@ -593,18 +600,23 @@ msgid ""
 "directory. The PCI/ISA bus support code used to exist in this directory in "
 "FreeBSD version `4.0`."
 msgstr ""
+"[.filename]#src/sys/[isa|pci]# - Los drivers para dispositivos PCI/ISA "
+"residen en este directorio. El código para los buses PCI/ISA también se "
+"encontraba en este directorio en la versión `4.0` de FreeBSD."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:177
 #, no-wrap
 msgid "Important Structures and Type Definitions"
-msgstr ""
+msgstr "Estructuras y Definiciones de Tipos A Destacar"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:180
 msgid ""
 "`devclass_t` - This is a type definition of a pointer to a `struct devclass`."
 msgstr ""
+"`devclass_t` - Esta es la definición de un tipo que representa un puntero a `"
+"struct devclass`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:182
@@ -612,6 +624,8 @@ msgid ""
 "`device_method_t` - This is the same as `kobj_method_t` (see [.filename]#src/"
 "sys/kobj.h#)."
 msgstr ""
+"`device_method_t` - Esto es lo mismo que `kobj_method_t` (véa [.filename]#"
+"src/sys/kobj.h#)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:184
@@ -620,6 +634,10 @@ msgid ""
 "`device_t` represents a device in the system. It is a kernel object. See [."
 "filename]#src/sys/sys/bus_private.h# for implementation details."
 msgstr ""
+"`device_t` - Esto es la definición de un tipo que representa un puntero a `"
+"struct device`. `device_t` representa un dispositivo en el sistema. Es un "
+"objeto del kernel. Véa [.filename]#src/sys/sys/bus_private.h# para los "
+"detalles de la implementación."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:186
@@ -628,12 +646,15 @@ msgid ""
 "`driver` struct is a class of the `device` kernel object; it also holds data "
 "private to the driver."
 msgstr ""
+"`driver_t` - Esto es la definición de un tipo que representa un puntero a `"
+"struct driver`. La estructura `driver` es una clase del objeto `device` del "
+"kernel; también contiene datos privados para el driver."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:188
 #, no-wrap
 msgid "*_driver_t_ Implementation*\n"
-msgstr ""
+msgstr "*Implementación de _driver_t_*\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:194
@@ -644,6 +665,10 @@ msgid ""
 "\t\tvoid\t*priv;\t\t\t/* driver private data */\n"
 "\t  };\n"
 msgstr ""
+"\t  struct driver {\n"
+"\t\tKOBJ_CLASS_FIELDS;\n"
+"\t\tvoid\t*priv;\t\t\t/* driver private data */\n"
+"\t  };\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:197
@@ -652,12 +677,15 @@ msgid ""
 "contains the possible states of a Newbus device before and after the "
 "autoconfiguration process."
 msgstr ""
+"Un tipo `device_state_t`, que es una enumeración, `device_state`. Contiene "
+"los estados disponibles de un dispositivo Newbus antes y después del proceso "
+"de autoconfiguración."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:199
 #, no-wrap
 msgid "*Device States _device_state_t*\n"
-msgstr ""
+msgstr "*Estados del Dispositivo _device_state_t*\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:210
@@ -673,6 +701,15 @@ msgid ""
 "\t\tDS_BUSY\t\t\t/* device is open */\n"
 "\t  } device_state_t;\n"
 msgstr ""
+"\t  /*\n"
+"\t   * src/sys/sys/bus.h\n"
+"\t   */\n"
+"\t  typedef enum device_state {\n"
+"\t\tDS_NOTPRESENT,\t/* not probed or probe failed */\n"
+"\t\tDS_ALIVE,\t\t/* probe succeeded */\n"
+"\t\tDS_ATTACHED,\t/* attach method called */\n"
+"\t\tDS_BUSY\t\t\t/* device is open */\n"
+"\t  } device_state_t;\n"
 
 #~ msgid ""
 #~ "include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
