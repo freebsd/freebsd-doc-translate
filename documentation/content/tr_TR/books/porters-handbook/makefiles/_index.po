@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2022-02-01 10:28-0300\n"
+"POT-Creation-Date: 2022-07-07 23:23-0300\n"
 "PO-Revision-Date: 2021-06-16 19:08+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Turkish <https://translate-dev.freebsd.org/projects/"
@@ -10879,7 +10879,45 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5004
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5005
+msgid ""
+"Each space-separated item in the `CONFLICTS*` variable values is matched "
+"against packages except the one being built, using shell globbing rules.  "
+"This allows listing all flavors of a port in a conflict list instead of "
+"having to take pains to exclude the flavor being built from that list.  For "
+"example, if git-lite is installed, `CONFLICTS_INSTALL=git git-lite` would "
+"allow to perform:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5008
+#, no-wrap
+msgid "% make -C devel/git FLAVOR=lite all deinstall install\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5011
+msgid ""
+"But the following command would report a conflict, since the package base "
+"name installed is `git-lite`, while `git` would be built, but cannot be "
+"installed in addition to `git-lite`:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5014
+#, no-wrap
+msgid "% make -C devel/git FLAVOR=default all deinstall install\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5017
+msgid ""
+"Without that feature, the Makefile would need one "
+"`_flavor__CONFLICTS_INSTALL` for each flavor, listing every other flavor."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5020
 msgid ""
 "The most common content of one of these variable is the package base of "
 "another port.  The package base is the package name without the appended "
@@ -10887,20 +10925,20 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5006
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5022
 #, no-wrap
 msgid "Basic usage of `CONFLICTS*`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5012
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5028
 msgid ""
 "package:dns/bind99[] cannot be installed if package:dns/bind910[] is present "
 "because they install same files.  First gather the package base to use:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5019
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5035
 #, no-wrap
 msgid ""
 "% make -C dns/bind99 -V PKGBASE\n"
@@ -10910,29 +10948,29 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5022
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5038
 msgid "Then add to the [.filename]#Makefile# of package:dns/bind99[]:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5026
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5042
 #, no-wrap
 msgid "CONFLICTS_INSTALL=\tbind910\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5029
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5045
 msgid "And add to the [.filename]#Makefile# of package:dns/bind910[]:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5033
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5049
 #, no-wrap
 msgid "CONFLICTS_INSTALL=\tbind99\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5040
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5056
 msgid ""
 "Sometimes, only certain versions of another port are incompatible.  When "
 "this is the case, use the full package name including the version.  If "
@@ -10941,27 +10979,27 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5042
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5058
 #, no-wrap
 msgid "Using `CONFLICTS*` With Globs."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5047
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5063
 msgid ""
 "From versions from 2.0 and up-to 2.4.1_2, package:deskutils/gnotime[] used "
 "to install a bundled version of package:databases/qof[]."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5049
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5065
 msgid ""
 "To reflect this past, the [.filename]#Makefile# of package:databases/qof[] "
 "contains:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5055
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5071
 #, no-wrap
 msgid ""
 "CONFLICTS_INSTALL=\tgnotime-2.[0-3]* \\\n"
@@ -10970,7 +11008,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5058
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5074
 msgid ""
 "The first entry match versions `2.0` through `2.3`, the second all the "
 "revisions of `2.4.0`, the third the exact `2.4.1` version, and the last the "
@@ -10978,14 +11016,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5060
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5076
 msgid ""
 "package:deskutils/gnotime[] does not have any conflicts line because its "
 "current version does not conflict with anything else."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5064
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5080
 msgid ""
 "The variable `DISABLE_CONFLICTS` may be temporarily set when making targets "
 "that are not affected by conflicts.  The variable is not to be set in port "
@@ -10993,19 +11031,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5068
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5084
 #, no-wrap
 msgid "% make -DDISABLE_CONFLICTS patch\n"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5071
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5087
 #, no-wrap
 msgid "Installing Files"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5078
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5094
 msgid ""
 "The `install` phase is very important to the end user because it adds files "
 "to their system.  All the additional commands run in the port [."
@@ -11014,13 +11052,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5081
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5097
 #, no-wrap
 msgid "`INSTALL_*` Macros"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5088
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5104
 msgid ""
 "Use the macros provided in [.filename]#bsd.port.mk# to ensure correct modes "
 "of files in the port's `*-install` targets.  Set ownership directly in [."
@@ -11033,24 +11071,24 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5090
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5106
 msgid "`INSTALL_PROGRAM` is a command to install binary executables."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5091
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5107
 msgid "`INSTALL_SCRIPT` is a command to install executable scripts."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5092
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5108
 msgid ""
 "`INSTALL_LIB` is a command to install shared libraries (but not static "
 "libraries)."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5093
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5109
 msgid ""
 "`INSTALL_KLD` is a command to install kernel loadable modules. Some "
 "architectures do not like having the modules stripped, so use this command "
@@ -11058,41 +11096,41 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5094
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5110
 msgid ""
 "`INSTALL_DATA` is a command to install sharable data, including static "
 "libraries."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5095
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5111
 msgid ""
 "`INSTALL_MAN` is a command to install manpages and other documentation (it "
 "does not compress anything)."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5097
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5113
 msgid ""
 "These variables are set to the man:install[1] command with the appropriate "
 "flags for each situation."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5101
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5117
 msgid ""
 "Do not use `INSTALL_LIB` to install static libraries, because stripping them "
 "renders them useless. Use `INSTALL_DATA` instead."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5104
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5120
 #, no-wrap
 msgid "Stripping Binaries and Shared Libraries"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5109
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5125
 msgid ""
 "Installed binaries should be stripped. Do not strip binaries manually unless "
 "absolutely required.  The `INSTALL_PROGRAM` macro installs and strips a "
@@ -11101,7 +11139,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5112
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5128
 msgid ""
 "When a file must be stripped, but neither `INSTALL_PROGRAM` nor "
 "`INSTALL_LIB` macros are desirable, `${STRIP_CMD}` strips the program or "
@@ -11110,7 +11148,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5117
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5133
 #, no-wrap
 msgid ""
 "post-install:\n"
@@ -11118,12 +11156,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5120
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5136
 msgid "When multiple files need to be stripped:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5127
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5143
 #, no-wrap
 msgid ""
 "post-install:\n"
@@ -11133,7 +11171,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5132
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5148
 msgid ""
 "Use man:file[1] on a file to determine if it has been stripped.  Binaries "
 "are reported by man:file[1] as `stripped`, or `not stripped`.  Additionally, "
@@ -11142,12 +11180,12 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5136
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5152
 msgid "When `WITH_DEBUG` is defined, elf files _must not_ be stripped."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5138
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5154
 msgid ""
 "The variables (`STRIP_CMD`, `INSTALL_PROGRAM`, `INSTALL_LIB`, ...) and "
 "crossref:uses[uses,`USES`] provided by the framework handle this "
@@ -11155,7 +11193,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5140
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5156
 msgid ""
 "Some software, add `-s` to their `LDFLAGS`, in this case, either remove `-s` "
 "if `WITH_DEBUG` is set, or remove it unconditionally and use `STRIP_CMD` in "
@@ -11163,13 +11201,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5143
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5159
 #, no-wrap
 msgid "Installing a Whole Tree of Files"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5148
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5164
 msgid ""
 "Sometimes, a large number of files must be installed while preserving their "
 "hierarchical organization.  For example, copying over a whole directory tree "
@@ -11179,7 +11217,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5153
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5169
 msgid ""
 "Two macros exist for this situation.  The advantage of using these macros "
 "instead of `cp` is that they guarantee proper file ownership and permissions "
@@ -11191,7 +11229,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5159
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5175
 #, no-wrap
 msgid ""
 "post-install:\n"
@@ -11200,14 +11238,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5162
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5178
 msgid ""
 "This example will install the contents of the [.filename]#examples# "
 "directory in the vendor distfile to the proper examples location of the port."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5168
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5184
 #, no-wrap
 msgid ""
 "post-install:\n"
@@ -11216,14 +11254,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5171
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5187
 msgid ""
 "And this example will install the data of summer months to the [."
 "filename]#summer# subdirectory of a [.filename]#DATADIR#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5174
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5190
 msgid ""
 "Additional `find` arguments can be passed via the third argument to "
 "`COPYTREE_*` macros.  For example, to install all files from the first "
@@ -11231,7 +11269,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5181
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5197
 #, no-wrap
 msgid ""
 "post-install:\n"
@@ -11241,7 +11279,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5186
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5202
 msgid ""
 "These macros do not add the installed files to [.filename]#pkg-plist#.  They "
 "must be added manually.  For optional documentation (`PORTDOCS`, see "
@@ -11250,13 +11288,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5188
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5204
 #, no-wrap
 msgid "Install Additional Documentation"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5192
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5208
 msgid ""
 "If the software has some documentation other than the standard man and info "
 "pages that is useful for the user, install it under `DOCSDIR`.  This can be "
@@ -11264,7 +11302,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5197
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5213
 msgid ""
 "Create a new directory for the port.  The directory name is `DOCSDIR`.  This "
 "usually equals `PORTNAME`.  However, if the user might want different "
@@ -11273,7 +11311,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5200
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5216
 msgid ""
 "Since only the files listed in [.filename]#pkg-plist# are installed, it is "
 "safe to always install documentation to `STAGEDIR` (see crossref:"
@@ -11282,7 +11320,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5206
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5222
 #, no-wrap
 msgid ""
 "post-install:\n"
@@ -11291,7 +11329,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5210
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5226
 msgid ""
 "On the other hand, if there is a DOCS option in the port, install the "
 "documentation in a `post-install-DOCS-on` target.  These targets are "
@@ -11299,46 +11337,46 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5212
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5228
 msgid ""
 "Here are some handy variables and how they are expanded by default when used "
 "in the [.filename]#Makefile#:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5214
-msgid "`DATADIR` gets expanded to [.filename]#PREFIX/shared/PORTNAME#."
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5230
+msgid "`DATADIR` gets expanded to [.filename]#PREFIX/share/PORTNAME#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5215
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5231
 msgid "`DATADIR_REL` gets expanded to [.filename]#share/PORTNAME#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5216
-msgid "`DOCSDIR` gets expanded to [.filename]#PREFIX/shared/doc/PORTNAME#."
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5232
+msgid "`DOCSDIR` gets expanded to [.filename]#PREFIX/share/doc/PORTNAME#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5217
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5233
 msgid "`DOCSDIR_REL` gets expanded to [.filename]#share/doc/PORTNAME#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5218
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5234
 msgid ""
-"`EXAMPLESDIR` gets expanded to [.filename]#PREFIX/shared/examples/PORTNAME#."
+"`EXAMPLESDIR` gets expanded to [.filename]#PREFIX/share/examples/PORTNAME#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5219
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5235
 msgid ""
 "`EXAMPLESDIR_REL` gets expanded to [.filename]#share/examples/PORTNAME#."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5225
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5241
 msgid ""
 "The `DOCS` option only controls additional documentation installed in "
 "`DOCSDIR`.  It does not apply to standard man pages and info pages.  Things "
@@ -11346,7 +11384,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5231
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5247
 msgid ""
 "These variables are exported to `PLIST_SUB`.  Their values will appear there "
 "as pathnames relative to [.filename]#PREFIX# if possible.  That is, [."
@@ -11356,14 +11394,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5233
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5249
 msgid ""
 "All conditionally installed documentation files and directories are included "
 "in [.filename]#pkg-plist# with the `%%PORTDOCS%%` prefix, for example:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5238
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5254
 #, no-wrap
 msgid ""
 "%%PORTDOCS%%%%DOCSDIR%%/AUTHORS\n"
@@ -11371,7 +11409,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5247
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5263
 msgid ""
 "As an alternative to enumerating the documentation files in [.filename]#pkg-"
 "plist#, a port can set the variable `PORTDOCS` to a list of file names and "
@@ -11388,20 +11426,20 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5251
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5267
 #, no-wrap
 msgid "PORTDOCS=\tREADME.* ChangeLog docs/*\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5256
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5272
 msgid ""
 "The equivalents of `PORTDOCS` for files installed under `DATADIR` and "
 "`EXAMPLESDIR` are `PORTDATA` and `PORTEXAMPLES`, respectively."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5260
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5276
 msgid ""
 "The contents of [.filename]#pkg-message# are displayed upon installation.  "
 "See crossref:pkg-files[porting-message,the section on using [.filename]#pkg-"
@@ -11410,13 +11448,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5263
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5279
 #, no-wrap
 msgid "Subdirectories Under `PREFIX`"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5272
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5288
 msgid ""
 "Try to let the port put things in the right subdirectories of `PREFIX`.  "
 "Some ports lump everything and put it in the subdirectory with the port's "
@@ -11434,33 +11472,33 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5274
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5290
 #, no-wrap
 msgid "Use `BINARY_ALIAS` to Rename Commands Instead of Patching the Build"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5277
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5293
 msgid ""
 "When `BINARY_ALIAS` is defined it will create symlinks of the given commands "
 "in a directory which will be prepended to `PATH`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5279
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5295
 msgid ""
 "Use it to substitute hardcoded commands the build phase relies on without "
 "having to patch any build files."
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5281
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5297
 #, no-wrap
 msgid "Using `BINARY_ALIAS` to Make `gsed` Available as `sed`"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5286
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5302
 msgid ""
 "Some ports expect `sed` to behave like GNU sed and use features that man:"
 "sed[1] does not provide.  GNU sed is available from package:textproc/gsed[] "
@@ -11468,14 +11506,14 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5288
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5304
 msgid ""
 "Use `BINARY_ALIAS` to substitute `sed` with `gsed` for the duration of the "
 "build:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5294
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5310
 #, no-wrap
 msgid ""
 "BUILD_DEPENDS=\tgsed:textproc/gsed\n"
@@ -11484,13 +11522,13 @@ msgid ""
 msgstr ""
 
 #. type: Block title
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5299
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5315
 #, no-wrap
 msgid "Using `BINARY_ALIAS` to Provide Aliases for Hardcoded `python3` Commands"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5304
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5320
 msgid ""
 "A port that has a hardcoded reference to `python3` in its build scripts will "
 "need to have it available in `PATH` at build time.  Use `BINARY_ALIAS` to "
@@ -11498,7 +11536,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5310
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5326
 #, no-wrap
 msgid ""
 "USES=\tpython:3.4+,build\n"
@@ -11507,14 +11545,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5313
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5329
 msgid ""
 "See crossref:special[using-python,Using Python] for more information about "
 "`USES=python`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5320
+#: documentation/content/en/books/porters-handbook/makefiles/_index.adoc:5336
 msgid ""
 "Binary aliases are created after the dependencies provided via "
 "`BUILD_DEPENDS` and `LIB_DEPENDS` are processed and before the `configure` "
