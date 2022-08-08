@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:21-0300\n"
-"PO-Revision-Date: 2022-08-07 18:01+0000\n"
+"PO-Revision-Date: 2022-08-08 11:55+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesipsec-must_index/es/>\n"
@@ -533,7 +533,7 @@ msgstr ""
 #: documentation/content/en/articles/ipsec-must/_index.adoc:227
 #, no-wrap
 msgid "  fptr = fopen(argv[1],\"rb\");\n"
-msgstr ""
+msgstr "  fptr = fopen(argv[1],\"rb\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:232
@@ -544,6 +544,11 @@ msgid ""
 "    exit(-1);\n"
 "  }\n"
 msgstr ""
+"  if (fptr == NULL) {\n"
+"    printf(\"Can't find %s\\n"
+"\", argv[1]);\n"
+"    exit(-1);\n"
+"  }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:236
@@ -553,6 +558,9 @@ msgid ""
 "    table[i] = 0;\n"
 "  }\n"
 msgstr ""
+"  for (i = 0; i < V; i++) {\n"
+"    table[i] = 0;\n"
+"  }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:241
@@ -563,24 +571,32 @@ msgid ""
 "    table[b] = i;\n"
 "  }\n"
 msgstr ""
+"  for (i = 0; i < Q; i++) {\n"
+"    b = fgetc(fptr);\n"
+"    table[b] = i;\n"
+"  }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:243
 #, no-wrap
 msgid "  printf(\"Init done\\n\");\n"
 msgstr ""
+"  printf(\"Init done\\n"
+"\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:245
 #, no-wrap
 msgid "  printf(\"Expected value for L=8 is 7.1836656\\n\");\n"
 msgstr ""
+"  printf(\"Expected value for L=8 is 7.1836656\\n"
+"\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:247
 #, no-wrap
 msgid "  run = 1;\n"
-msgstr ""
+msgstr "  run = 1;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:251
@@ -590,6 +606,9 @@ msgid ""
 "    sum = 0.0;\n"
 "    iproduct = 1;\n"
 msgstr ""
+"  while (run) {\n"
+"    sum = 0.0;\n"
+"    iproduct = 1;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:256
@@ -600,6 +619,10 @@ msgid ""
 "        j = i;\n"
 "        b = fgetc(fptr);\n"
 msgstr ""
+"    if (run)\n"
+"      for (i = Q; run && i < Q + K; i++) {\n"
+"        j = i;\n"
+"        b = fgetc(fptr);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:259
@@ -608,6 +631,8 @@ msgid ""
 "        if (b < 0)\n"
 "          run = 0;\n"
 msgstr ""
+"        if (b < 0)\n"
+"          run = 0;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:263
@@ -617,12 +642,15 @@ msgid ""
 "          if (table[b] > j)\n"
 "            j += K;\n"
 msgstr ""
+"        if (run) {\n"
+"          if (table[b] > j)\n"
+"            j += K;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:265
 #, no-wrap
 msgid "          sum += log((double)(j-table[b]));\n"
-msgstr ""
+msgstr "          sum += log((double)(j-table[b]));\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:269
@@ -632,6 +660,9 @@ msgid ""
 "        }\n"
 "      }\n"
 msgstr ""
+"          table[b] = i;\n"
+"        }\n"
+"      }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:272
@@ -640,6 +671,9 @@ msgid ""
 "    if (!run)\n"
 "      printf(\"Premature end of file; read %d blocks.\\n\", i - Q);\n"
 msgstr ""
+"    if (!run)\n"
+"      printf(\"Premature end of file; read %d blocks.\\n"
+"\", i - Q);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:275
@@ -648,6 +682,8 @@ msgid ""
 "    sum = (sum/((double)(i - Q))) /  log(2.0);\n"
 "    printf(\"%4.4f \", sum);\n"
 msgstr ""
+"    sum = (sum/((double)(i - Q))) /  log(2.0);\n"
+"    printf(\"%4.4f \", sum);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:278
@@ -656,12 +692,16 @@ msgid ""
 "    for (i = 0; i < (int)(sum*8.0 + 0.50); i++)\n"
 "      printf(\"-\");\n"
 msgstr ""
+"    for (i = 0; i < (int)(sum*8.0 + 0.50); i++)\n"
+"      printf(\"-\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:280
 #, no-wrap
 msgid "    printf(\"\\n\");\n"
 msgstr ""
+"    printf(\"\\n"
+"\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ipsec-must/_index.adoc:294
@@ -681,6 +721,19 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+"    /* refill initial table */\n"
+"    if (0) {\n"
+"      for (i = 0; i < Q; i++) {\n"
+"        b = fgetc(fptr);\n"
+"        if (b < 0) {\n"
+"          run = 0;\n"
+"        } else {\n"
+"          table[b] = i;\n"
+"        }\n"
+"      }\n"
+"    }\n"
+"  }\n"
+"}\n"
 
 #~ msgid ""
 #~ "include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
