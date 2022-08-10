@@ -1,12 +1,12 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR The FreeBSD Project
 # This file is distributed under the same license as the FreeBSD Documentation package.
-# Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021.
+# Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:21-0300\n"
-"PO-Revision-Date: 2021-11-11 07:33+0000\n"
+"PO-Revision-Date: 2022-08-10 09:20+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesldap-auth_index/es/>\n"
@@ -15,13 +15,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8.1\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #. type: YAML Front Matter: description
 #: documentation/content/en/articles/ldap-auth/_index.adoc:1
 #, no-wrap
 msgid "Guide for the configuration of an LDAP server for authentication on FreeBSD"
 msgstr ""
+"Guía para la configuración de un servidor de autenticación LDAP en FreeBSD"
 
 #. type: Title =
 #: documentation/content/en/articles/ldap-auth/_index.adoc:1
@@ -37,7 +38,6 @@ msgstr "Resumen"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:48
-#, fuzzy
 msgid ""
 "This document is intended as a guide for the configuration of an LDAP server "
 "(principally an OpenLDAP server) for authentication on FreeBSD.  This is "
@@ -45,10 +45,9 @@ msgid ""
 "example as a replacement for NIS."
 msgstr ""
 "Este documento pretende ser una guía para la configuración de un servidor "
-"LDAP (principalmente un servidor <application>OpenLDAP</application>) para "
-"la autenticación en FreeBSD. Esto es útil para situaciones en las que muchos "
-"servidores necesitan las mismas cuentas de usuario, por ejemplo, como "
-"reemplazo de <application>NIS</application>."
+"LDAP (principalmente un servidor OpenLDAP) para la autenticación en FreeBSD. "
+"Esto es útil para situaciones en las que muchos servidores necesitan las "
+"mismas cuentas de usuario, por ejemplo, como reemplazo de NIS."
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:50
@@ -63,7 +62,6 @@ msgstr "Prólogo"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:58
-#, fuzzy
 msgid ""
 "This document is intended to give the reader enough of an understanding of "
 "LDAP to configure an LDAP server.  This document will attempt to provide an "
@@ -72,9 +70,9 @@ msgid ""
 msgstr ""
 "Este documento está destinado a proporcionar al lector una comprensión "
 "suficiente de LDAP para configurar un servidor LDAP. Este documento "
-"intentará proporcionar una explicación de <package>net/nss_ldap</package> y "
-"<package>security/pam_ldap</package> para usarlos con los servicios de la "
-"máquina del cliente para su uso con el servidor LDAP."
+"intentará proporcionar una explicación de pakcage:net/nss_ldap[] y package:"
+"security/pam_ldap[] para usarlos con los servicios de la máquina del cliente "
+"para su uso con el servidor LDAP."
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:60
@@ -89,7 +87,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:64
-#, fuzzy
 msgid ""
 "This article is not intended to be an exhaustive account of the security, "
 "robustness, or best practice considerations for configuring LDAP or the "
@@ -101,7 +98,7 @@ msgid ""
 msgstr ""
 "Este artículo no pretende ser una explicación exhaustiva de las "
 "consideraciones de seguridad, robustez o mejores prácticas para configurar "
-"LDAP u otros de los servicios que se explicaran aquí. Aunque el autor tiene "
+"LDAP u otros de los servicios que se explican aquí. Aunque el autor tiene "
 "cuidado de hacer todo correctamente, no aborda los problemas de seguridad "
 "más allá del alcance general. Este artículo debe tenerse en cuenta para "
 "sentar las bases teóricas únicamente, y cualquier implementación real debe "
@@ -121,10 +118,14 @@ msgid ""
 "http://www.ietf.org/rfc/rfc4510.txt[RFC4510] and friends.  Essentially it is "
 "a database that expects to be read from more often than it is written to."
 msgstr ""
+"LDAP significa\"\"Lightweight Directory Access Protocol\" (Protocolo Ligero "
+"de Acceso a Directorio) y es un subconjunto del Protocolo de Acceso a "
+"Directorio X.500. Su especificación más reciente se encuentra en http://www."
+"ietf.org/rfc/rfc4510.txt[RFC4510]. En esencia es una base de datos que "
+"espera recibir muchas más consultas que escrituras."
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:75
-#, fuzzy
 msgid ""
 "The LDAP server http://www.openldap.org/[OpenLDAP] will be used in the "
 "examples in this document; while the principles here should be generally "
@@ -133,17 +134,15 @@ msgid ""
 "package:net/openldap24-server[].  Client servers will need the corresponding "
 "package:net/openldap24-client[] libraries."
 msgstr ""
-"En los ejemplos de este documento se utilizará el servidor LDAP <link xlink:"
-"href=\"http://www.openldap.org/\">OpenLDAP</link>; aunque los procedimientos "
-"deberían ser aplicables a los diferentes servidores, la mayor parte de la "
-"administración es específica de <application>OpenLDAP</application>. Hay "
-"varias versiones del servidor en la colección de ports, por ejemplo, "
-"<package>net/openldap24-server</package>. Los clientes necesitarán las "
-"librerias necesarias del paquete <package>net/openldap24-client</package>."
+"En los ejemplos de este documento se utilizará el servidor LDAP http://www."
+"openldap.org/[OpenLDAP]; aunque los procedimientos deberían ser aplicables a "
+"los diferentes servidores, la mayor parte de la administración es específica "
+"de OpenLDAP. Hay varias versiones del servidor en la colección de ports, por "
+"ejemplo, package:net/openldap24-server[]. Los clientes necesitarán las "
+"librerías necesarias del paquete package:net/openldap24-client[]."
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:78
-#, fuzzy
 msgid ""
 "There are (basically) two areas of the LDAP service which need "
 "configuration.  The first is setting up a server to receive connections "
@@ -151,15 +150,15 @@ msgid ""
 "FreeBSD tools know how to interact with it."
 msgstr ""
 "Hay (básicamente) dos áreas del servicio LDAP que necesitan configuración. "
-"El primero es configurar un servidor para recibir conexiones correctamente, "
-"y el segundo es añadir entradas al directorio del servidor para que las "
+"Lo primero es configurar un servidor para recibir conexiones correctamente, "
+"y lo segundo es añadir entradas al directorio del servidor para que las "
 "herramientas de FreeBSD sepan como interactuar con él."
 
 #. type: Title ===
 #: documentation/content/en/articles/ldap-auth/_index.adoc:80
 #, no-wrap
 msgid "Setting Up the Server for Connections"
-msgstr "Configurar el servidor para las conexiones"
+msgstr "Configurar el Servidor para recibir Conexiones"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:86
@@ -167,18 +166,20 @@ msgid ""
 "This section is specific to OpenLDAP.  If you are using another server, you "
 "will need to consult that server's documentation."
 msgstr ""
+"Esta sección es específica de OpenLDAP. Si usas otro servidor, necesitarás "
+"consultar su propia documentación."
 
 #. type: Block title
 #: documentation/content/en/articles/ldap-auth/_index.adoc:89
 #: documentation/content/en/articles/ldap-auth/_index.adoc:94
 #, no-wrap
 msgid "Installing OpenLDAP"
-msgstr ""
+msgstr "Instalando OpenLDAP"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:92
 msgid "First, install OpenLDAP:"
-msgstr ""
+msgstr "Primero, instala OpenLDAP:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:102
@@ -187,6 +188,8 @@ msgid ""
 "# cd /usr/ports/net/openldap24-server\n"
 "# make install clean\n"
 msgstr ""
+"# cd /usr/ports/net/openldap24-server\n"
+"# make install clean\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:107
@@ -194,28 +197,29 @@ msgid ""
 "This installs the `slapd` and `slurpd` binaries, along with the required "
 "OpenLDAP libraries."
 msgstr ""
+"Esto instala los binarios `slapd` y `slurpd`, junto con las librerías "
+"OpenLDAP necesarias."
 
 #. type: Title ====
 #: documentation/content/en/articles/ldap-auth/_index.adoc:109
 #, no-wrap
 msgid "Configuring OpenLDAP"
-msgstr ""
+msgstr "Configurando OpenLDAP"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:112
 msgid "Next we must configure OpenLDAP."
-msgstr ""
+msgstr "Después necesitamos configurar OpenLDAP."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:115
-#, fuzzy
 msgid ""
 "You will want to require encryption in your connections to the LDAP server; "
 "otherwise your users' passwords will be transferred in plain text, which is "
 "considered insecure.  The tools we will be using support two very similar "
 "kinds of encryption, SSL and TLS."
 msgstr ""
-"Es necesario que haga obligatorio el uso de cifrado en sus conexiones al "
+"Es necesario que hagas obligatorio el uso de cifrado en tus conexiones al "
 "servidor LDAP; de lo contrario, las contraseñas de sus usuarios se "
 "transferirán en texto plano, lo que se considera inseguro. Las herramientas "
 "que utilizaremos admiten dos tipos muy similares de encriptación, SSL y TLS."
@@ -228,6 +232,11 @@ msgid ""
 "an SMTP server which supports TLS will listen for connections on port 25, "
 "and an LDAP server will listen on 389."
 msgstr ""
+"TLS significa \"Seguridad en Capa de Transporte\" (Transportation Layer "
+"Security). Los servicios que utilizan TLS suelen conectarse _a los mismos_ "
+"puertos que los servicios que no utilizan TLS; por lo tanto un servidor SMTP "
+"que soporta TLS escuchará conexiones en el puerto 25 y un servidor LDAP "
+"escuchará conexiones en 389."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:121
@@ -236,10 +245,13 @@ msgid ""
 "_not_ listen on the same ports as their non-SSL counterparts.  Thus SMTPS "
 "listens on port 465 (not 25), HTTPS listens on 443, and LDAPS on 636."
 msgstr ""
+"SSL significa \"Capa de Sockets Seguros\" (Secure Sockets Layer) y los "
+"servicios que implementan SSL _no_ escuchan en los mismos puertos que sus "
+"equivalentes sin SSL. Por lo tanto SMTPS escucha en el puerto 465 (no en el "
+"25), HTTPS escucha en el 443 y LDAPS en el 636."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:125
-#, fuzzy
 msgid ""
 "The reason SSL uses a different port than TLS is because a TLS connection "
 "begins as plain text, and switches to encrypted traffic after the `STARTTLS` "
@@ -248,13 +260,14 @@ msgid ""
 msgstr ""
 "La razón por la que SSL utiliza un puerto diferente a TLS es porque una "
 "conexión TLS empieza como texto plano y cambia al tráfico cifrado después de "
-"la directiva <literal>STARTTLS</literal>. Las conexiones SSL se cifran desde "
-"el principio. Aparte de eso, no hay diferencias sustanciales entre ambos."
+"la directiva `STARTTLS`. Las conexiones SSL se cifran desde el principio. "
+"Aparte de eso, no hay diferencias sustanciales entre ambos."
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:129
 msgid "We will adjust OpenLDAP to use TLS, as SSL is considered deprecated."
 msgstr ""
+"Ajustaremos OpenLDAP para que utilice TLS ya que SSL se considera obsoleto."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:132
@@ -262,12 +275,14 @@ msgid ""
 "Once OpenLDAP is installed via ports, the following configuration parameters "
 "in [.filename]#/usr/local/etc/openldap/slapd.conf# will enable TLS:"
 msgstr ""
+"Una vez que hemos instalado OpenLDA, los siguientes parámetros en [."
+"filename]#/usr/local/etc/openldap/slapd.conf# habilitarán el uso de TLS:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:136
 #, no-wrap
 msgid "security ssf=128\n"
-msgstr ""
+msgstr "security ssf=128\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:140
@@ -277,6 +292,9 @@ msgid ""
 "TLSCertificateKeyFile /path/to/your/cert.key\n"
 "TLSCACertificateFile /path/to/your/cacert.crt\n"
 msgstr ""
+"TLSCertificateFile /path/to/your/cert.crt\n"
+"TLSCertificateKeyFile /path/to/your/cert.key\n"
+"TLSCACertificateFile /path/to/your/cacert.crt\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:144
@@ -286,6 +304,11 @@ msgid ""
 "on the security needs of your site, but rarely you need to weaken it, as "
 "most LDAP client libraries support strong encryption."
 msgstr ""
+"En este caso, `ssf=128` indica a OpenLDAP que solicite una encriptación de "
+"128 bits para todas las conexiones, tanto para búsquedas como para "
+"actualizaciones. Este parámetro se podría configurar según las necesidades "
+"de seguridad de tu sitio web, pero es raro que necesites rebajarlo ya que la "
+"mayoría de las librerías cliente de LDAP soportan encriptación fuerte."
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:147
@@ -295,12 +318,16 @@ msgid ""
 "server.  If you simply want a server that runs, you can create a self-signed "
 "certificate with OpenSSL:"
 msgstr ""
+"Los ficheros The [.filename]#cert.crt#, [.filename]#cert.key#, y [."
+"filename]#cacert.crt# son necesarios para que los clientes te autentiquen _a "
+"ti_ como el servidor LDAP válido. Si sólo quieres ejecutar un servidor, "
+"puedes crear un certificado auto firmado con OpenSSL:"
 
 #. type: Block title
 #: documentation/content/en/articles/ldap-auth/_index.adoc:149
 #, no-wrap
 msgid "Generating an RSA Key"
-msgstr "Generar una clave RSA"
+msgstr "Generar una Clave RSA"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:160
@@ -312,12 +339,17 @@ msgid ""
 "...++++++\n"
 "e is 65537 (0x10001)\n"
 msgstr ""
+"% openssl genrsa -out cert.key 1024\n"
+"Generating RSA private key, 1024 bit long modulus\n"
+"....................++++++\n"
+"...++++++\n"
+"e is 65537 (0x10001)\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:162
 #, no-wrap
 msgid "% openssl req -new -key cert.key -out cert.csr\n"
-msgstr ""
+msgstr "% openssl req -new -key cert.key -out cert.csr\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:171
@@ -329,6 +361,13 @@ msgid ""
 "this value will cause clients to fail when making connections.  This can the "
 "cause of great frustration, so ensure that you follow these steps closely."
 msgstr ""
+"En este punto se te deberían preguntar algunos valores. Podrías introducir "
+"los valores que quisieras; sin embargo, es importante que el valor de "
+"\"Common Name\" sea el nombre de dominio del servidor LDAP completamente "
+"cualificado. En nuestro caso, y en los ejemplos, el servidor es "
+"_server.example.org_. Establecer este valor incorrectamente hará que los "
+"clientes no puedan conectar. Esto puede causar una gran frustración así que "
+"asegúrate de que sigues estos pasos con cuidado."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:173
@@ -350,6 +389,10 @@ msgid ""
 "subject=/C=AU/ST=Some-State/O=Internet Widgits Pty Ltd\n"
 "Getting Private key\n"
 msgstr ""
+"% openssl x509 -req -in cert.csr -days 365 -signkey cert.key -out cert.crt\n"
+"Signature ok\n"
+"subject=/C=AU/ST=Some-State/O=Internet Widgits Pty Ltd\n"
+"Getting Private key\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:191
@@ -360,15 +403,21 @@ msgid ""
 "OpenLDAP servers (for replication via `slurpd`) you will want to see <<ssl-"
 "ca>> to generate a CA key and use it to sign individual server certificates."
 msgstr ""
+"Esto creará un certificado auto firmado que puede ser usado para las "
+"directivas en [.filename]#slapd.conf#, donde [.filename]#cert.crt# y [."
+"filename]#cacert.crt son el mismo fichero. Se vas a utilizar muchos "
+"servidores OpenLDA (para replicación vía `slurpd`) querrás echar un vistazo "
+"a <<ssl-ca>> para generar una clave CA y usarla para firmar los certificados "
+"de servidor individuales."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:193
 msgid "Once this is done, put the following in [.filename]#/etc/rc.conf#:"
-msgstr ""
+msgstr "Una vez hecho esto, escribe lo siguiente en [.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:197
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "slapd_enable=\"YES\"\n"
 msgstr "slapd_enable=\"YES\"\n"
 
@@ -378,6 +427,8 @@ msgid ""
 "Then run `/usr/local/etc/rc.d/slapd start`.  This should start OpenLDAP.  "
 "Confirm that it is listening on 389 with"
 msgstr ""
+"Después ejecuta `/usr/local/etc/rc.d/slapd start`. Esto debería arrancar "
+"OpenLDAP. Confirma que está escuchando en el puerto 389 con"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:207
@@ -386,12 +437,14 @@ msgid ""
 "% sockstat -4 -p 389\n"
 "ldap     slapd      3261  7  tcp4   *:389                 *:*\n"
 msgstr ""
+"% sockstat -4 -p 389\n"
+"ldap     slapd      3261  7  tcp4   *:389                 *:*\n"
 
 #. type: Title ====
 #: documentation/content/en/articles/ldap-auth/_index.adoc:210
 #, no-wrap
 msgid "Configuring the Client"
-msgstr "Configurar el cliente"
+msgstr "Configurar el Cliente"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:214
@@ -401,6 +454,10 @@ msgid ""
 "that is all package:security/pam_ldap[] and package:net/nss_ldap[] support, "
 "at least for the moment."
 msgstr ""
+"Instala el port package:net/openldap24-client[] para obtener las librerías "
+"de OpenLDAP. Las máquinas cliente siempre tendrán las librerías de OpenLDAP "
+"pues que eso es lo único que soportan package:security/pam_ldap[] y package:"
+"net/nss_ldap[], al menos por el momento."
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:217
@@ -408,10 +465,13 @@ msgid ""
 "The configuration file for the OpenLDAP libraries is [.filename]#/usr/local/"
 "etc/openldap/ldap.conf#.  Edit this file to contain the following values:"
 msgstr ""
+"El fichero de configuración para las librerías de OpenLDAP es [.filename]#/"
+"usr/local/etc/openldap/ldap.conf#. Edita este fichero para que contenga los "
+"siguientes valores:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:224
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "base dc=example,dc=org\n"
 "uri ldap://server.example.org/\n"
@@ -425,13 +485,12 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:229
-#, fuzzy
 msgid ""
 "It is important that your clients have access to [.filename]#cacert.crt#, "
 "otherwise they will not be able to connect."
 msgstr ""
-"Es importante que sus clientes tengan acceso a <filename>cacert.crt</"
-"filename>, de lo contrario no podrán conectarse."
+"Es importante que tus clientes tengan acceso a .filename]#cacert.crt#, de lo "
+"contrario no podrán conectarse."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:236
@@ -440,6 +499,10 @@ msgid ""
 "which is for the OpenLDAP libraries and defines how to talk to the server.  "
 "The second is [.filename]#/usr/local/etc/ldap.conf#, and is for pam_ldap."
 msgstr ""
+"Hay dos ficheros que se llaman  [.filename]#ldap.conf#. El primero es este "
+"fichero, que es para las librerías OpenLDAP y define cómo hablar con el "
+"servidor. El segundo es [.filename]#/usr/local/etc/ldap.conf# y es para "
+"pam_ldap."
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:241
@@ -450,6 +513,11 @@ msgid ""
 "openssl[1]'s `s_client` and `s_server` to ensure you have them configured "
 "and signed properly."
 msgstr ""
+"En este punto deberías ser capaz de ejecutar `ldapsearch -Z` en la maquina "
+"cliente; `-Z` significa \"usa TLS\". Si encuentras un error, entonces algo "
+"está mal configurado; seguramente sean tus certificados. Utiliza los "
+"comandos `s_client` y `s_server` de man:openssl[1] para asegurarte de que "
+"están correctamente configurados y firmados."
 
 #. type: Title ===
 #: documentation/content/en/articles/ldap-auth/_index.adoc:243
@@ -459,7 +527,6 @@ msgstr "Entradas en la base de datos"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:248
-#, fuzzy
 msgid ""
 "Authentication against an LDAP directory is generally accomplished by "
 "attempting to bind to the directory as the connecting user.  This is done by "
@@ -470,11 +537,10 @@ msgid ""
 msgstr ""
 "La autenticación en un directorio LDAP se logra generalmente al intentar "
 "vincularse al directorio como el usuario que se conecta. Esto se realiza "
-"mediante el establecimiento de un enlace <quote>simple</quote> en el "
-"directorio con el nombre de usuario proporcionado. Si hay uan entrada con el "
-"<literal>uid</literal> igual al nombre de usuario y el atributo "
-"<literal>userPassword</literal> de la entrada coincide con la contraseña "
-"proporcionada, el enlace tiene éxito."
+"mediante el establecimiento de un enlace \"simple\" en el directorio con el "
+"nombre de usuario proporcionado. Si hay una entrada con el `uid` igual al "
+"nombre de usuario y el atributo `userPassword` de la entrada coincide con la "
+"contraseña proporcionada, el enlace tiene éxito."
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:250
