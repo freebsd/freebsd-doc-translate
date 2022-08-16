@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2022-08-14 17:20+0000\n"
+"PO-Revision-Date: 2022-08-16 22:20+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articleslinux-emulation_index/es/>\n"
@@ -154,12 +154,18 @@ msgid ""
 "like what a PID is, what a thread is, etc.  In the third subsection we talk "
 "about how UNIX(R) on UNIX(R) emulation could be done in general."
 msgstr ""
+"En esta sección vamos a describir cada sistema operativo en cuestión. Cómo "
+"manejan las llamadas al sistemas, trapframes, etc., todo lo que sea bajo "
+"nivel. También describimos la manera en la que entienden primitivas comunes "
+"de UNIX(R) como qué es un PID, qué es un hilo, etc. En la tercera subsección "
+"hablamos acerca de cómo se podría hacer emulación UNIX(R) sobre UNIX(R) de "
+"forma general."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:82
 #, no-wrap
 msgid "What is UNIX(R)"
-msgstr ""
+msgstr "Qué es UNIX(R)"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:94
@@ -180,6 +186,22 @@ msgid ""
 "more migrated to the aforementioned systems.  Let us summarize typical "
 "UNIX(R) characteristics."
 msgstr ""
+"UNIX(R) es un sistema operativo con una larga historia que ha influenciado a "
+"casi todos los sistemas operativos que se utilizan actualmente. Comenzando "
+"en 1960, su desarrollo continúa en la actualidad (aunque en diferentes "
+"proyectos). El desarrollo de UNIX(R) pronto se dividió en dos ramas "
+"principales: las familias BSD y System III/V. Ambas se influenciaron "
+"mutuamente haciendo crecer el estándar UNIX(R). Entre las contribuciones que "
+"se originaron en BSD podemos nombrar la memoria virtual, las redes TCP/IP, "
+"FFs, y muchos otros. La rama System V contribuyó las primitivas SysV de "
+"comunicación entre procesos, el copy-on-write, etc. UNIX(R) en sí mismo ya "
+"no existe pero sus ideas se han usado en muchos otros sistemas operativos "
+"por todo el mundo formando así los llamados sistemas operativos tipo UNIX(R)"
+". Actualmente los más influyentes son Linux(R), Solaris, y posiblemente ("
+"hasta cierto punto) FreeBSD. Hay derivados de UNIX(R) internos en algunas "
+"compañías  (AIX, HP-UX etc.) pero estos han sido migrados cada vez más a los "
+"sistemas mencionados anteriormente. Resumamos las características típicas de "
+"UNIX(R)."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:96
@@ -200,6 +222,14 @@ msgid ""
 "and low-level details take place.  The kernel provides a standard unified "
 "UNIX(R) API to the user space.  The most important ones are covered below."
 msgstr ""
+"Cada programa en ejecución constituye un proceso que representa el estado de "
+"la computación. Un proceso en ejecución se divide entre espacio del kernel y "
+"espacio de usuario. Algunas operaciones sólo se pueden hacer en espacio del "
+"kernel (tratar con hardware etc.), pero el proceso debería pasar la mayoría "
+"de su vida en espacio de usuario. El kernel es donde tienen lugar la gestión "
+"de los procesos, hardware y los detalles de bajo nivel. El kernel "
+"proporciona un API UNIX(R) estándar y unificado al espacio de usuario. Las "
+"más importantes se tratan abajo."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:106
@@ -219,6 +249,16 @@ msgid ""
 "passed from the user-space to the kernel-space in various ways "
 "(implementation dependant).  Syscalls are synchronous."
 msgstr ""
+"El API común de UNIX(R) define llamadas al sistema como forma de ejecutar "
+"desde espacio de usuario comandos en el kernel. La implementación más "
+"habitual es utilizar una interrupción o una instrucción especializada (como "
+"las instrucciones `SYSENTER`/`SYSCALL` en ia32). Las llamadas al sistema se "
+"definen mediante un número. Por ejemplo en FreeBSD, la llamada al sistema "
+"número 85 es la llamada al sistema de man:swapon[2] y la llamada al sistema "
+"número 132 es man:mkfifo[2]. Algunas llamadas al sistema necesitan "
+"parámetros, que son pasados desde espacio de usuario a espacio de kernel de "
+"varias formas (dependiendo de la implementación). Las llamadas al sistema "
+"son síncronas."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:118
