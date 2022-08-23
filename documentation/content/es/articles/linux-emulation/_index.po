@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2022-08-22 06:03+0000\n"
+"PO-Revision-Date: 2022-08-23 06:10+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articleslinux-emulation_index/es/>\n"
@@ -60,18 +60,18 @@ msgid ""
 "emulation the default emulation layer in FreeBSD."
 msgstr ""
 "Esta tesis doctoral trata sobre cómo actualizar la capa de emulación de "
-"Linux(R) (también llamada _Linuxolator_). La tarea consistía en actualizar "
+"Linux(R) (también llamada _Linuxulator_). La tarea consistía en actualizar "
 "dicha capa para alcanzar en funcionalidad a Linux(R) 2.6. Como "
 "implementación de referencia se escogió el kernel Linux(R) 2.6.16. El "
 "concepto se basa ligeramente en la implementación de NetBSD. La mayoría del "
-"trabajo se realizó en el verano de 2006 como para del programa de "
+"trabajo se realizó en el verano de 2006 como parte del programa de "
 "estudiantes Google Summer of Code. El foco se situó en añadir soporte para "
 "_NPTL_ (la nueva librería de hilos POSIX(R)) a la capa de emulación, "
 "incluyento _TLS_ (almacenamiento local para hilos), _futexes_ (mutex rápidos "
 "en espacio de usuario), _PID mangling_ y otras cosas menores. En el proceso "
 "se identificaron y arreglaron muchos problemas menores. Mi trabajo se "
-"integró en el repositorio fuente principal de FreeBSD y será ofrecido en la "
-"próxima versión 7.0R. Los miembros del equipo de desarrollo de emulación "
+"integró en el repositorio fuente principal de FreeBSD y estará disponible en "
+"la próxima versión 7.0R. Los miembros del equipo de desarrollo de emulación "
 "estamos trabajando para que la emulación de Linux(R) 2.6 sea la capa de "
 "emulación por defecto en FreeBSD."
 
@@ -109,11 +109,11 @@ msgstr ""
 "número de usuarios, comunidad de desarrolladores entusiasta y abierta y el "
 "apoyo de grandes corporaciones. FreeBSD se suele utilizar en máquinas de "
 "tipo servidor que realizan duras tareas intensivas de red con menos uso en "
-"máquinas de tipo escritorio para usuarios ordinarios. Mientras que Linux(R) "
+"máquinas de tipo escritorio para usuarios ordinarios. Aunque que Linux(R) "
 "tiene el mismo uso en servidores, es mucho más usado por usuarios en sus "
 "casas. Esto lleva a una situación en la que hay muchos programas sólo "
-"disponibles en forma binario que están disponibles para Linux(R) y que no "
-"tienen soporte para FreeBSD."
+"disponibles en forma binaria para Linux(R) y que no tienen soporte para "
+"FreeBSD."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:69
@@ -135,7 +135,7 @@ msgid ""
 "part of this project."
 msgstr ""
 "En el verano de 2006 Google Inc. patrocinó un proyecto enfocado en extender "
-"la capa de emulación Linux(R) (el llamado Linuxolator) en FreeBSD para "
+"la capa de emulación Linux(R) (el llamado Linuxulator) en FreeBSD para "
 "incluir las capacidades de Linux(R) 2.6. Esta tesis se escribió como parte "
 "de este proyecto."
 
@@ -155,7 +155,7 @@ msgid ""
 "about how UNIX(R) on UNIX(R) emulation could be done in general."
 msgstr ""
 "En esta sección vamos a describir cada sistema operativo en cuestión. Cómo "
-"manejan las llamadas al sistemas, trapframes, etc., todo lo que sea bajo "
+"manejan las llamadas al sistema, trapframes, etc., todo lo que sea bajo "
 "nivel. También describimos la manera en la que entienden primitivas comunes "
 "de UNIX(R) como qué es un PID, qué es un hilo, etc. En la tercera subsección "
 "hablamos acerca de cómo se podría hacer emulación UNIX(R) sobre UNIX(R) de "
@@ -193,7 +193,7 @@ msgstr ""
 "principales: las familias BSD y System III/V. Ambas se influenciaron "
 "mutuamente haciendo crecer el estándar UNIX(R). Entre las contribuciones que "
 "se originaron en BSD podemos nombrar la memoria virtual, las redes TCP/IP, "
-"FFs, y muchos otros. La rama System V contribuyó las primitivas SysV de "
+"FFS, y muchos otros. La rama System V aportó las primitivas SysV de "
 "comunicación entre procesos, el copy-on-write, etc. UNIX(R) en sí mismo ya "
 "no existe pero sus ideas se han usado en muchos otros sistemas operativos "
 "por todo el mundo formando así los llamados sistemas operativos tipo UNIX(R)"
@@ -224,11 +224,11 @@ msgid ""
 msgstr ""
 "Cada programa en ejecución constituye un proceso que representa el estado de "
 "la computación. Un proceso en ejecución se divide entre espacio del kernel y "
-"espacio de usuario. Algunas operaciones sólo se pueden hacer en espacio del "
+"espacio de usuario. Algunas operaciones sólo se pueden hacer en espacio de "
 "kernel (tratar con hardware etc.), pero el proceso debería pasar la mayoría "
 "de su vida en espacio de usuario. El kernel es donde tienen lugar la gestión "
 "de los procesos, hardware y los detalles de bajo nivel. El kernel "
-"proporciona un API UNIX(R) estándar y unificado al espacio de usuario. Las "
+"proporciona al espacio de usuario un API UNIX(R) estándar y unificado. Las "
 "más importantes se tratan abajo."
 
 #. type: Title ====
@@ -250,7 +250,7 @@ msgid ""
 "(implementation dependant).  Syscalls are synchronous."
 msgstr ""
 "El API común de UNIX(R) define llamadas al sistema como forma de ejecutar "
-"desde espacio de usuario comandos en el kernel. La implementación más "
+"comandos en el kernel desde espacio de usuario. La implementación más "
 "habitual es utilizar una interrupción o una instrucción especializada (como "
 "las instrucciones `SYSENTER`/`SYSCALL` en ia32). Las llamadas al sistema se "
 "definen mediante un número. Por ejemplo en FreeBSD, la llamada al sistema "
@@ -268,10 +268,10 @@ msgid ""
 "A trap can be transparent for a process (page fault) or can result in a "
 "reaction like sending a _signal_ (division by zero)."
 msgstr ""
-"Otra forma posible de comunicarse es mediante un _trap_. Las trampas ocurren "
-"de forma asíncrona después de que ocurra algún evento (división por cero, "
-"fallo de página, etc.). Una trampa puede ser transparente para un proceso ("
-"error de página) o puede resultar en una reacción como enviar una _señal_ ("
+"Otra forma posible de comunicarse es mediante un _trap_. Los traps (trampas) "
+"ocurren de forma asíncrona después de que ocurra algún evento (división por "
+"cero, fallo de página, etc.). Un trap puede ser transparente para un proceso "
+"(error de página) o puede resultar en una reacción como enviar una _señal_ ("
 "división por cero)."
 
 #. type: Title ====
@@ -299,7 +299,7 @@ msgstr ""
 #: documentation/content/en/articles/linux-emulation/_index.adoc:127
 #, no-wrap
 msgid "Process management"
-msgstr "Gestión de proceso"
+msgstr "Gestión de procesos"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:137
@@ -351,7 +351,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:147
 msgid "1:1 threading"
-msgstr "Roscado 1: 1"
+msgstr "Hilos 1: 1"
 
 #. type: Bullet: '- '
 #: documentation/content/en/articles/linux-emulation/_index.adoc:149
@@ -380,7 +380,7 @@ msgstr "puede utilizar varias CPU"
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:154
 msgid "1:N threading"
-msgstr "1: N roscado"
+msgstr "Hilos 1: N"
 
 #. type: Bullet: '+  '
 #: documentation/content/en/articles/linux-emulation/_index.adoc:156
@@ -422,7 +422,7 @@ msgid ""
 msgstr ""
 "El proyecto FreeBSD es uno de los sistemas operativos open source más "
 "antiguos que están actualmente disponibles para uso diario. Es un "
-"descendiente directo del UNIX(R) genuino así que podría afirmar que es un "
+"descendiente directo del UNIX(R) genuino así que se podría afirmar que es un "
 "UNIX(R) verdadero aunque asuntos con las licencias no permiten hacerlo. El "
 "inicio del proyecto data de principios de los 90 cuando un grupo de usuarios "
 "de BSD parchearon el sistema operativo 386BSD. Basado en este conjunto de "
@@ -441,7 +441,7 @@ msgid ""
 "operating systems.  As of December 2006 and 7-CURRENT development, the "
 "following emulation functionalities are supported:"
 msgstr ""
-"FreeBSD es un sisstema operativo moderno basado en UNIX(R) con todas las "
+"FreeBSD es un sistema operativo moderno basado en UNIX(R) con todas las "
 "características de UNIX(R). Multitarea preemptiva, capacidades multiusuario, "
 "redes TCP/IP, protección de memoria, soporte para multiprocesamiento "
 "simétrico, memoria virtual con cache de buffer y VM fusionadas, todo está "
@@ -493,8 +493,8 @@ msgid ""
 "these days."
 msgstr ""
 "Las emulaciones activamente en desarrollo son la capa de Linux(R) y las "
-"varias capas de FreeBSD sobre FreeBSD. Otras no están soportadas para "
-"funcionar correctamente o no son utilizables actualmente."
+"capas de FreeBSD sobre FreeBSD. Otras no están soportadas para funcionar "
+"correctamente o no son utilizables actualmente."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:195
@@ -583,7 +583,7 @@ msgid ""
 "copied in structure of parameters."
 msgstr ""
 "Cuando un proceso realiza una interrupción `0x80`, se invoca el manejador de "
-"trap de llamada al sistema `int0x80` (definido en  [.filename]#sys/i386/i386/"
+"trap de llamada al sistema `int0x80` (definido en [.filename]#sys/i386/i386/"
 "exception.s#), el cual prepara los argumentos (es decir, los copia a la pila)"
 " para llamar a una función C man:syscall[2] (definida en [.filename]#sys/"
 "i386/i386/trap.c#) que procesa el marco de trap pasado. El procesamiento "
@@ -594,8 +594,9 @@ msgstr ""
 "de retorno (casos especiales para los errores `ERESTART` y `EJUSTRETURN`). "
 "Por último se planifica un `userret()`, cambiando el proceso de nuevo a "
 "espacio de usuario. Los parámetros para la llamada al sistema real se pasan "
-"con la forma `struct thread *td`, `struct syscall args *`argumentos donde el "
-"segundo parámetro es un puntero a la estructura de parámetros copiada."
+"con la forma de los argumentos `struct thread *td`, `struct syscall args *` "
+"donde el segundo parámetro es un puntero a la estructura de parámetros "
+"copiada."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:217
@@ -620,7 +621,7 @@ msgstr ""
 "Siempre que ocurre un trap, se llama a un manejador en ensamblador. Se elige "
 "entre todos los traps, aquellas con registros empujados a la pila o traps de "
 "llamadas dependiendo del tipo de trap. Este controlador prepara argumentos "
-"para una llamada a una función C `trap()`(definida en[.filename]#sys/i386/"
+"para una llamada a una función C `trap()` (definida en[.filename]#sys/i386/"
 "i386/trap.c#), que luego procesa el trap ocurrido. Después del "
 "procesamiento, puede enviar una señal al proceso y / o salir al espacio de "
 "usuario usando `userret()`."
@@ -724,7 +725,7 @@ msgstr ""
 "espacio de usuario se asignan a N hilos del núcleo, lo que ahorra recursos y "
 "mantiene la capacidad de explotar el paralelismo de multiprocesador. Se "
 "puede obtener más información sobre la implementación en la página del "
-"manual o en [1]. La biblioteca 1: 1 mapea directamente un hilo de espacio de "
+"manual o en [1]. La biblioteca 1:1 mapea directamente un hilo de espacio de "
 "usuario a un hilo del kernel, lo que simplifica enormemente el esquema. "
 "Ninguno de estos diseños implementa un mecanismo de equidad (se implementó "
 "un mecanismo de este tipo, pero se eliminó recientemente porque causaba una "
@@ -947,7 +948,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:329
 msgid "Implemented clone flags are:"
-msgstr "Las banderas de clonación implementadas son:"
+msgstr "Las banderas de clonado implementadas son:"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:331
@@ -987,7 +988,9 @@ msgstr "`CLONE_NEWNS` - nuevo espacio de nombres"
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:338
 msgid "`CLONE_SYSVSEM` - share SysV undo structures"
-msgstr "`CLONE_SYSVSEM` - comparte estructuras para deshacer de SysV"
+msgstr ""
+"`CLONE_SYSVSEM` - comparte estructuras para deshacer operaciones en "
+"semáforos de SysV"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:339
@@ -1149,13 +1152,13 @@ msgid ""
 msgstr ""
 "Según una definición de diccionario, la emulación es la capacidad de un "
 "programa o dispositivo para imitar otro programa o dispositivo. Esto se "
-"logra proporcionando la misma reacción a un estímulo dado que el objeto "
-"emulado. En la práctica, en el mundo del software hay principalmente tres "
-"tipos de emulación: un programa utilizado para emular una máquina (QEMU, "
-"varios emuladores de consola de juegos, etc.), emulación de software de una "
-"instalación de hardware (emuladores OpenGL, emulación de unidades de punto "
-"flotante, etc.) y emulación del sistema operativo (ya sea en el núcleo del "
-"sistema operativo o como un programa de espacio de usuario)."
+"logra proporcionando la misma reacción a un estímulo dado que la que produce "
+"el objeto emulado. En la práctica, en el mundo del software hay "
+"principalmente tres tipos de emulación: un programa utilizado para emular "
+"una máquina (QEMU, varios emuladores de consola de juegos, etc.), emulación "
+"de software de una instalación de hardware (emuladores OpenGL, emulación de "
+"unidades de punto flotante, etc.) y emulación del sistema operativo (ya sea "
+"en el núcleo del sistema operativo o como un programa de espacio de usuario)."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:395
@@ -1261,8 +1264,8 @@ msgstr ""
 "Ninguna emulación es perfecta y las emulaciones tienden a carecer de algunas "
 "partes, pero esto no suele causar inconvenientes graves. Imagina un emulador "
 "de consola de juegos que emula todo menos la salida de música. No hay duda "
-"de que los juegos son jugables y se puede usar el emulador. Puede que no sea "
-"tan cómodo como la consola de juegos original, pero es un compromiso "
+"de que los juegos se pueden jugar y se puede usar el emulador. Puede que no "
+"sea tan cómodo como la consola de juegos original, pero es un compromiso "
 "aceptable entre precio y comodidad."
 
 #. type: Plain text
@@ -1399,7 +1402,7 @@ msgstr ""
 #: documentation/content/en/articles/linux-emulation/_index.adoc:456
 #, no-wrap
 msgid "Locking primitives"
-msgstr "Bloqueo de primitivos"
+msgstr "Primitivas de bloqueo"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:459
@@ -1434,12 +1437,12 @@ msgstr "operaciones atómicas y barreras de memoria"
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:466
 msgid "locks"
-msgstr "Cerraduras"
+msgstr "Locks"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:467
 msgid "scheduling barriers"
-msgstr "barreras de programación"
+msgstr "barreras de planificación"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:470
@@ -1488,7 +1491,7 @@ msgstr ""
 "operaciones atómicas pueden garantizar la atomicidad solo en tipos de datos "
 "pequeños (en el orden de magnitud del tipo de datos `.long.` de arquitectura "
 "C), por lo que rara vez se debe usar directamente en el código de nivel "
-"final, si no solo para operaciones muy simples (como la configuración de "
+"final, sino solo para operaciones muy simples (como la configuración de "
 "flags en un mapa de bits, por ejemplo). De hecho, es bastante simple y común "
 "escribir una semántica incorrecta basada solo en operaciones atómicas ("
 "generalmente llamadas \"sin bloqueo\"). El kernel de FreeBSD ofrece una "
@@ -1497,7 +1500,7 @@ msgstr ""
 "un orden específico con respecto a otros accesos a la memoria. Por ejemplo, "
 "si necesitamos que ocurra una operación atómica justo después de que se "
 "completen todas las demás escrituras pendientes (en términos de "
-"instrucciones que reordenan las actividades de búfer), necesitamos usar "
+"instrucciones que reordenan las actividades de buffer), necesitamos usar "
 "explícitamente una barrera de memoria junto con esta operación atómica. Por "
 "lo tanto, es sencillo entender por qué las barreras de memoria juegan un "
 "papel clave para la construcción de bloqueos de alto nivel (como refcounts, "
@@ -1510,7 +1513,7 @@ msgstr ""
 #: documentation/content/en/articles/linux-emulation/_index.adoc:485
 #, no-wrap
 msgid "Refcounts"
-msgstr "Recuentos"
+msgstr "Contadores de referencias"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:491
@@ -1538,7 +1541,7 @@ msgstr ""
 #: documentation/content/en/articles/linux-emulation/_index.adoc:493
 #, no-wrap
 msgid "Locks"
-msgstr "Cerraduras"
+msgstr "Locks"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:498
@@ -1580,7 +1583,7 @@ msgstr "los números no son casuales"
 #: documentation/content/en/articles/linux-emulation/_index.adoc:509
 #, no-wrap
 msgid "Spinning locks"
-msgstr "Cerraduras giratorias"
+msgstr "Spin locks"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:515
@@ -1668,16 +1671,16 @@ msgid ""
 msgstr ""
 "El orden utilizado para adquirir locks es muy importante, no solo por la "
 "posibilidad de interbloqueo debido a las inversiones de orden de lock, sino "
-"incluso porque la adquisición de cerraduras debe seguir reglas específicas "
-"vinculadas a la naturaleza de las cerraduras. Si echas un vistazo a la tabla "
-"de arriba, la regla práctica es que si un hilo tiene un lock de nivel n ("
-"donde el nivel es el número listado cerca del tipo de lock) no está "
-"permitido adquirir un lock de niveles superiores , ya que esto rompería la "
-"semántica especificada para una ruta. Por ejemplo, si un hilo tiene un lock "
-"de bloque (nivel 2), se le permite adquirir un spin lock (nivel 1) pero no "
-"un sleep lock (nivel 3), ya que los locks de bloque están destinados a "
-"proteger rutas más pequeñas que el bloqueo de suspensión (sin embargo, estas "
-"reglas no se refieren a operaciones atómicas o barreras de programación)."
+"incluso porque la adquisición de locks debe seguir reglas específicas "
+"vinculadas a la naturaleza de los locks. Si echas un vistazo a la tabla de "
+"arriba, la regla práctica es que si un hilo tiene un lock de nivel n (donde "
+"el nivel es el número listado cerca del tipo de lock) no está permitido "
+"adquirir un lock de niveles superiores , ya que esto rompería la semántica "
+"especificada para una ruta. Por ejemplo, si un hilo tiene un lock de bloque ("
+"nivel 2), se le permite adquirir un spin lock (nivel 1) pero no un sleep "
+"lock (nivel 3), ya que los locks de bloque están destinados a proteger rutas "
+"más pequeñas que el bloqueo de suspensión (sin embargo, estas reglas no se "
+"refieren a operaciones atómicas o barreras de programación)."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:535
@@ -1741,8 +1744,8 @@ msgid ""
 "and lockmgrs."
 msgstr ""
 "Entre estos bloqueos, solo los mutex, sxlocks, rwlocks y lockmgrs están "
-"destinados a manejar la recursividad, pero actualmente la recursividad solo "
-"es compatible con mutexes y lockmgrs."
+"pensados para manejar recursividad, pero actualmente la recursividad solo es "
+"compatible con mutexes y lockmgrs."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:549
@@ -1819,7 +1822,7 @@ msgstr ""
 "A menudo, para hacer frente a la preemptividad, lo más sencillo es "
 "desactivarla por completo. Una sección crítica define un fragmento de código "
 "(delimitado por el par de funciones man:critical_enter[9] y "
-"man:critical_exit[9], donde se garantiza que la preemptividad no ocurrirá ("
+"man:critical_exit[9], donde se garantiza que la preemptividad no ocurrirá "
 "hasta que el código protegido se ejecute por completo). Esto a menudo puede "
 "reemplazar un lock de manera efectiva, pero debe usarse con cuidado para no "
 "perder toda la ventaja que brinda la preemptividad."
@@ -1870,12 +1873,11 @@ msgstr ""
 "`sched_bind` es una API que se utiliza para vincular un hilo a una CPU en "
 "particular durante todo el tiempo que ejecuta el código, hasta que no lo "
 "desvincula la llamada a la función `sched_unbind`. Esta función tiene un "
-"papel clave en situaciones en las que no puede confiar en el estado actual "
-"de las CPU (por ejemplo, en las primeras etapas del arranque), ya que desea "
-"evitar que tu hilo migre a CPUs inactivas. Ya que `sched_bin` y "
-"`sched_unbind` manipulan las estructuras internas del planificador, es "
-"necesario que estén dentro de la adquisición/liberación `sched_lock` cuando "
-"se usa."
+"papel clave en situaciones en las que no puedes confiar en el estado actual "
+"de las CPU (por ejemplo, en las primeras etapas del arranque), ya que deseas "
+"evitar que tu hilo migre a CPUs inactivas. Como `sched_bin` y `sched_unbind` "
+"manipulan las estructuras internas del planificador, es necesario que estén "
+"dentro de la adquisición/liberación `sched_lock` cuando se usan."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:586
@@ -2237,11 +2239,11 @@ msgstr ""
 "tipo de llamada al sistema. Es una de `STD`, `OBSOL`, `NOPROTO` o `UNIMPL`. "
 "`STD` es una llamada al sistema estándar con un prototipo e implementación "
 "completas. `OBSOL` es una llamada obsoleta que define sólo el prototipo. "
-"`NOPROTO`significa que la llamada al sistema está implementada en otro sitio "
-"así que no hay que añadir el prefijo del ABI, etc. `UNIMPL` significa que la "
-"llamada al sistema será sustituida por la llamada `nosys`(una llamada al "
-"sistema que tan sólo muestra un mensaje diciendo que la llamada no está "
-"implementada y que devuelve `ENOSYS`)."
+"`NOPROTO` significa que la llamada al sistema está implementada en otro "
+"sitio así que no hay que añadir el prefijo del ABI, etc. `UNIMPL` significa "
+"que la llamada al sistema será sustituida por la llamada `nosys` (una "
+"llamada al sistema que tan sólo muestra un mensaje diciendo que la llamada "
+"no está implementada y que devuelve `ENOSYS`)."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:708
@@ -2251,7 +2253,7 @@ msgid ""
 "filename]#linux_sysent.c#.  The [.filename]#linux_syscall.h# contains "
 "definitions of syscall names and their numerical value, e.g.:"
 msgstr ""
-"A partir de [.filename]#syscalls.master# un script genera tres ficheros>  [."
+"A partir de [.filename]#syscalls.master# un script genera tres ficheros: [."
 "filename]#linux_syscall.h#, [.filename]#linux_proto.h# y [."
 "filename]#linux_sysent.c#. [.filename]#linux_syscall.h# contiene las "
 "definiciones de los nombres de las llamadas al sistema y sus valores "
@@ -2379,7 +2381,7 @@ msgid ""
 msgstr ""
 "El manejo de señales se hace normalmente en el kernel de FreeBSD para todas "
 "las compatibilidades binarias con una llamada a la capa compat-dependiente. "
-"La capa de compatibilidad Linux(R) define la rutina `linux_sendsig`con este "
+"La capa de compatibilidad Linux(R) define la rutina `linux_sendsig` con este "
 "propósito."
 
 #. type: Title ====
@@ -2660,15 +2662,15 @@ msgid ""
 msgstr ""
 "Esta sección trata acerca de la parte del Linuxulator que es independiente "
 "de la arquitectura. Cubre la infraestructura de emulación necesaria para "
-"Linux(R) 2.6, la implementación ()en i386 del almacenamiento local para "
-"hilos (TLS) y futexes. Después hablamos brevemente acerca de algunas "
-"llamadas al sistema."
+"Linux(R) 2.6, la implementación en i386 del almacenamiento local para hilos "
+"(TLS) y futexes. Después hablamos brevemente acerca de algunas llamadas al "
+"sistema."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:849
 #, no-wrap
 msgid "Description of NPTL"
-msgstr "Descripción de NPTEL"
+msgstr "Descripción de NPTL"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:857
@@ -2748,7 +2750,7 @@ msgstr ""
 #: documentation/content/en/articles/linux-emulation/_index.adoc:874
 #, no-wrap
 msgid "Runtime determining of 2.6 emulation"
-msgstr "Determinación del tiempo de ejecución de la emulación 2.6"
+msgstr "Determinación del entorno de ejecución de la emulación 2.6"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:883
@@ -2840,9 +2842,9 @@ msgid ""
 "process looks like:"
 msgstr ""
 "En FreeBSD emulamos hilos NPTL con procesos FreeBSD ordinarios que comparten "
-"espacio VM, etc. y la gimnasia PID simplemente se imita en la estructura "
-"específica de emulación adjunta al proceso. La estructura adjunta al proceso "
-"se ve así:"
+"espacio VM, etc. y la gimnasia que se hace con el PID simplemente se imita "
+"en la estructura específica de emulación adjunta al proceso. La estructura "
+"adjunta al proceso se ve así:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:908
@@ -2899,7 +2901,7 @@ msgid ""
 msgstr ""
 "El PID se utiliza para identificar el proceso de FreeBSD que contiene esta "
 "estructura. Los campos `child_se_tid` y `child_clear_tid` se usan para hacer "
-"un copyout the la dirección del TID cuando un proceso sale y es creado. El "
+"un copyout de la dirección del TID cuando un proceso sale y es creado. El "
 "puntero `shared` apunta a una estructura compartida entre los hilos. La "
 "variable `pdeath_signal` identifica la señal de morir del padre y el punto "
 "`threads` se utiliza para enlazar esta estructura a la lista de hilos. La "
@@ -2976,7 +2978,7 @@ msgstr ""
 #: documentation/content/en/articles/linux-emulation/_index.adoc:955
 #, no-wrap
 msgid "PID mangling"
-msgstr "Destrucción de PID"
+msgstr "Ajuste de PID"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:962
@@ -3014,7 +3016,7 @@ msgstr ""
 #: documentation/content/en/articles/linux-emulation/_index.adoc:968
 #, no-wrap
 msgid "Clone syscall"
-msgstr "Clonar syscall"
+msgstr "Llamada al sistema clone"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:972
@@ -3058,9 +3060,9 @@ msgstr ""
 "crear procesos compartiendo varias cosas de forma independiente, por ejemplo "
 "dos procesos pueden compartir descriptores de ficheros pero no VM, etc. El "
 "último byte del parámetro `flags` es la señal de salida del proceso recién "
-"creado. El parámetro `stack`si no es `NULL` indica dónde está la pila del "
+"creado. El parámetro `stack` si no es `NULL` indica dónde está la pila del "
 "hilo y si es `NULL` se supone que debemos hacer un copy-on-write de la pila "
-"del proceso llamante (es decir hacer lo que hace la rutina man:fork[2] "
+"del proceso que llama (es decir hacer lo que hace la rutina man:fork[2] "
 "normal). El parámetro `parent_tidptr` se usa como dirección para copiar "
 "hacia afuera el PID del proceso (es decir, el id del hilo) una vez que el "
 "proceso está suficientemente instanciado pero todavía no es ejecutable. El "
@@ -3135,7 +3137,7 @@ msgstr ""
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1006
 #, no-wrap
 msgid "Locking"
-msgstr "Cierre"
+msgstr "Bloqueos"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1012
@@ -3167,7 +3169,7 @@ msgstr "TLS"
 msgid "This section deals with TLS also known as thread local storage."
 msgstr ""
 "Esta sección trata sobre TLS, también conocido como almacenamiento local de "
-"subprocesos."
+"hilos."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1019
@@ -3286,7 +3288,7 @@ msgid ""
 msgstr ""
 "Esto cargará el contenido del registro `%edx` en la ubicación de memoria "
 "0x1244. Algunos registros de segmento tienen un uso especial, por ejemplo "
-"`%cs` se utiliza para el segmento de código y `%ss`se utiliza para el "
+"`%cs` se utiliza para el segmento de código y `%ss` se utiliza para el "
 "segmento de pila pero `%fs` y `%gs` generalmente no se utilizan. Los "
 "segmentos se almacenan en una tabla GDT global o en una tabla LDT local. Se "
 "accede a LDT a través de una entrada en el GDT. El LDT puede almacenar más "
@@ -3458,14 +3460,14 @@ msgstr ""
 "variables de condición para señalar un cambio de estado. Es interesante "
 "notar que la API de hilos de POSIX(R) carece de soporte para semáforos. Esas "
 "implementaciones de rutinas de sincronización dependen en gran medida del "
-"tipo de soporte de hilos que tenemos. En el modelo puro 1: M (espacio de "
+"tipo de soporte de hilos que tenemos. En el modelo puro 1:M (espacio de "
 "usuario), la implementación se puede realizar únicamente en el espacio de "
 "usuario y, por lo tanto, es muy rápida (las variables de condición "
 "probablemente terminarán implementándose mediante señales, es decir, no tan "
-"rápido) y simple. En el modelo 1: 1, la situación también es bastante clara: "
+"rápido) y simple. En el modelo 1:1, la situación también es bastante clara: "
 "los hilos deben sincronizarse utilizando las primitivas del kernel (lo cual "
 "es muy lento porque se debe realizar una llamada al sistema). El escenario "
-"mixto M: N simplemente combina el primer y segundo enfoque o se basa "
+"mixto M:N simplemente combina el primer y segundo enfoque o se basa "
 "únicamente en el kernel. La sincronización de hilos es una parte vital de la "
 "programación habilitada para hilos y su rendimiento puede afectar mucho al "
 "programa resultante. Pruebas de rendimiento recientes en el sistema "
@@ -3526,7 +3528,7 @@ msgid ""
 "1:1 threading forces us to perform two syscalls for those mutex calls, which "
 "is very slow."
 msgstr ""
-"El subproceso 1: 1 nos obliga a realizar dos llamadas al sistema para esas "
+"El modelo 1:1 nos obliga a realizar dos llamadas al sistema para esas "
 "llamadas mutex, lo cual es muy lento."
 
 #. type: Plain text
@@ -3701,7 +3703,7 @@ msgid ""
 "`uaddr` and if the atomic operation returned a positive number it wakes up "
 "`val2` threads on futex at `uaddr2`."
 msgstr ""
-"Esta operación realiza una operación atómica en `vale3` (que contiene otro "
+"Esta operación realiza una operación atómica en `val3` (que contiene otro "
 "valor codificado) y `uaddr`. Después despierta `val` hilos en el futex de la "
 "dirección `uaddr` y si la operación atómica devolvió un número positivo "
 "despierta `val2` hilos en el futex de la dirección `uaddr2`."
@@ -3761,7 +3763,7 @@ msgid ""
 "The `futex` structure looks like:"
 msgstr ""
 "La emulación de futex en FreeBSD ha sido importada de NetBSD y después "
-"extendida por nosotros. Se encuentra en los ficheros `linux_futex.c` y and [."
+"extendida por nosotros. Se encuentra en los ficheros `linux_futex.c` y [."
 "filename]#linux_futex.h#. La estructura `futex` tiene este aspecto:"
 
 #. type: delimited block . 4
@@ -3866,10 +3868,10 @@ msgstr ""
 "Cuando un futex encola un hilo para que duerma crea una estructura "
 "`working_proc` y la pone en la lista dentro de la estructura del futext, "
 "después simplemente llama a man:tsleep[9] para suspender el hilo. El tiempo "
-"de suspensión puede finalizar por time out. Después de volver the "
-"man:tsleep[9] (el hilo ha sido despertado o ha ocurrido un time out) se "
-"quita la estructura `working_proc` de la lista y se destruye. Todo esto se "
-"hace en la función `futex_sleep`. Si se nos despertó con `futex_wak` tenemos "
+"de suspensión puede finalizar por timeout. Después de volver the "
+"man:tsleep[9] (el hilo ha sido despertado o ha ocurrido un timeout) se quita "
+"la estructura `working_proc` de la lista y se destruye. Todo esto se hace en "
+"la función `futex_sleep`. Si se nos despertó con `futex_wak` tenemos "
 "`wp_new_futex` establecido de forma que lo utilizamos para dormir. De este "
 "modo el reencolado en realidad se hace en esta función."
 
@@ -3894,9 +3896,9 @@ msgstr ""
 "Despertar a un hilo que está durmiendo en un futex se hace con la función "
 "`futex_wake`. En esta función lo primero que hacemos es imitar el extraño "
 "comportamiento de Linux(R), donde despierta N hilos para todas las "
-"operaciones, la únca excepción es que las operaciones REQUEUE se hacen en  N+"
+"operaciones, la únca excepción es que las operaciones REQUEUE se hacen en N+"
 "1 hilos. Pero normalmente esto no supone ninguna diferencia ya que estamos "
-"despertando todos los hilos. Lo sieguiente en la función es el bucle en el "
+"despertando todos los hilos. Lo siguiente en la función es el bucle en el "
 "que despertamos n hilos, después comprobamos si hay algún futex nuevo para "
 "reencolar. Si es así, reencolamos un máximo de n2 hilos en el nuevo futex. "
 "Esto coopera con `futex_sleep`."
@@ -3918,7 +3920,7 @@ msgid ""
 msgstr ""
 "La operación `FUTEX_WAKE_OP` is bastante complicada. Primero obtenemos dos "
 "futex en las direcciones `uaddr` y `uaddr2` después realizamos una operación "
-"atómica usando `val3` y `uaddr2`. Después se despierta a `vale` hilos que "
+"atómica usando `val3` y `uaddr2`. Después se despierta a `val` hilos que "
 "estuvieran durmiendo y si se cumple la condición de la operación atómica "
 "despertamos `val2` (es decir `timeout`) hilos durmientes en el segundo futex."
 
@@ -4001,7 +4003,7 @@ msgstr ""
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1304
 #, no-wrap
 msgid "*at family of syscalls"
-msgstr "*en familia de llamadas al sistema"
+msgstr "Familia de llamadas al sistema *at"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1313
@@ -4023,8 +4025,8 @@ msgstr ""
 "llamada al sistema. Cuando el parámetro `filename` es absoluto `dirfd` es "
 "ignorado pero cuando la ruta al fichero es relativa, entra en juego. El "
 "parámetro `dirfd` es un directorio relativo al cual se comprueba la ruta "
-"relativa. El parámetro `dirfd`es un descriptor de fichero de algún "
-"directorio o `AT_FDCWD`. Por ejemplo la llamada al sistema `openat`podría "
+"relativa. El parámetro `dirfd` es un descriptor de fichero de algún "
+"directorio o `AT_FDCWD`. Por ejemplo la llamada al sistema `openat` podría "
 "ser así:"
 
 #. type: delimited block . 4
@@ -4063,13 +4065,13 @@ msgid ""
 msgstr ""
 "Esta infraestructura es necesaria para evitar condiciones de carrera cuando "
 "se abren ficheros fuera del directorio de trabajo actual. Imagina un proceso "
-"que consisten en dos hilos, hilo A e hilo B. El hilo A realiza `open(./tmp/"
+"que consiste en dos hilos, hilo A e hilo B. El hilo A realiza `open(./tmp/"
 "foo/bah., flags, mode)` y antes de volver es desalojado y se ejecuta el hilo "
 "B. El hilo B no se preocupa por las necesidades del hilo A y renombra o "
-"elimina [.filename]#/tmp/foo/#. Teneos una condición de carrera. Para eviar "
-"esto podemos abrir [.filename]#/tmp/foo# y utilizarlo como `dirfd` en la "
-"llamada al sistema `openat`. Esto permite al usuario implementar directorios "
-"de trabajo por hilo."
+"elimina [.filename]#/tmp/foo/#. Tenemos una condición de carrera. Para "
+"evitar esto podemos abrir [.filename]#/tmp/foo# y utilizarlo como `dirfd` en "
+"la llamada al sistema `openat`. Esto permite al usuario implementar "
+"directorios de trabajo por hilo."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1334
@@ -4116,8 +4118,8 @@ msgstr ""
 "`nameidata`, que especifica el punto de comienzo de la búsqueda de la ruta "
 "en lugar de utilizar el directorio de trabajo cada vez. La resolución de "
 "`dirfd` a vnode a partir del número de descriptor de fichero se hace en las "
-"llamadas al sistema *at nativas. Cuando `dirfd`es `AT_FDCWD` la entrada `dvp`"
-" en la estructura `nameidata` es `NULL` pero cuando `dirfd` otro número "
+"llamadas al sistema *at nativas. Cuando `dirfd` es `AT_FDCWD` la entrada "
+"`dvp` en la estructura `nameidata` es `NULL` pero cuando `dirfd` otro número "
 "obtenemos el fichero para este descriptor de fichero, comprobamos si el "
 "fichero es válido y si tiene un vnode asociado lo obtenemos. Después "
 "comprobamos que el vnode sea un directorio. En la rutina man:namei[9] real "
@@ -4177,7 +4179,7 @@ msgid ""
 "plan is to port those from NetBSD.  The trend is to use Linux(R) ioctls even "
 "in the native FreeBSD drivers because of the easy porting of applications."
 msgstr ""
-"La interfaz ioctl es bastante frágil debido a su generalidad. Tenemos que "
+"La interfaz ioctl es bastante frágil debido a su genericidad. Tenemos que "
 "tener en cuenta que los dispositivos difieren entre Linux(R) y FreeBSD, por "
 "lo que se debe tener cuidado para que la emulación de ioctl funcione "
 "correctamente. El manejo de ioctl se implementa en `linux_ioctl.c`, donde se "
@@ -4304,7 +4306,7 @@ msgid ""
 "and possibly implement the `epoll` and `inotify` facilities."
 msgstr ""
 "El trabajo futuro debe centrarse en solucionar los problemas restantes con "
-"futexes, implementar el resto de la familia de llamadas al sistema * at, "
+"futexes, implementar el resto de la familia de llamadas al sistema *at, "
 "arreglar el envío de señales y posiblemente implementar `epoll` y `inotify`."
 
 #. type: Plain text
@@ -4417,7 +4419,7 @@ msgstr ""
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1432
 #, no-wrap
 msgid "Literatures"
-msgstr "Literaturas"
+msgstr "Bibliografía"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1435
