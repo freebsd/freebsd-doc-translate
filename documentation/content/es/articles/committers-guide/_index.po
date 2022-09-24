@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2022-09-21 09:20+0000\n"
+"PO-Revision-Date: 2022-09-24 16:20+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlescommitters-guide_index/es/>\n"
@@ -5684,6 +5684,7 @@ msgstr ""
 #, no-wrap
 msgid "Ooops! I did a `git pull` and it created a merge commit, what do I do?"
 msgstr ""
+"¡Ooops! He hecho un `git pull` y he creado un commit tipo merge, ¿qué hago?"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2079
@@ -5692,12 +5693,17 @@ msgid ""
 "**Q:** I was on autopilot and did a `git pull` for my development tree and that created a merge commit on the mainline.\n"
 "How do I recover?\n"
 msgstr ""
+"**Q:** Estaba con el piloto automático y he hecho `git pull` desde mi árbol "
+"de desarrollo y eso ha creado un commit tipo merge en la línea principal.\n"
+"¿Cómo lo recupero?\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2081
 #, no-wrap
 msgid "**A:** This can happen when you invoke the pull with your development branch checked out.\n"
 msgstr ""
+"**A:** Esto puede pasar cuando invocas el pull con un checkout de tu rama de "
+"desarrollo.\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2084
@@ -5705,6 +5711,9 @@ msgid ""
 "Right after the pull, you will have the new merge commit checked out.  Git "
 "supports a `HEAD^#` syntax to examine the parents of a merge commit:"
 msgstr ""
+"Justo después del pull, tendrás en el checkout el nuevo commit tipo merge. "
+"Git soporta la sintaxis `HEAD^#` para examinar los padres de un commit tipo "
+"merge:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2089
@@ -5713,6 +5722,8 @@ msgid ""
 "git log --oneline HEAD^1   # Look at the first parent's commits\n"
 "git log --oneline HEAD^2   # Look at the second parent's commits\n"
 msgstr ""
+"git log --oneline HEAD^1   # Look at the first parent's commits\n"
+"git log --oneline HEAD^2   # Look at the second parent's commits\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2093
@@ -5720,18 +5731,21 @@ msgid ""
 "From those logs, you can easily identify which commit is your development "
 "work.  Then you simply reset your branch to the corresponding `HEAD^#`:"
 msgstr ""
+"A partir de esos logs, puedes identificar fácilmente qué commit es tu "
+"trabajo de desarrollo. Después simplemente restaura tu rama al `HEAD^#` "
+"correspondiente:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2097
 #, no-wrap
 msgid "git reset --hard HEAD^2\n"
-msgstr ""
+msgstr "git reset --hard HEAD^2\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2100
 #, no-wrap
 msgid "**Q:** But I also need to fix my `main` branch. How do I do that?\n"
-msgstr ""
+msgstr "**Q:** Pero también necesito arreglar mi rama `main`. ¿Cómo lo hago?\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2103
@@ -5740,12 +5754,16 @@ msgid ""
 "**A:** Git keeps track of the remote repository branches in a `freebsd/` namespace.\n"
 "To fix your `main` branch, just make it point to the remote's `main`:\n"
 msgstr ""
+"**A:** Git controla las ramas del repositorio remoto en el espacio de "
+"nombres `freebsd/`.\n"
+"Para arreglar tu rama `main`, simplemente ponla apuntando al `main` de tu "
+"remoto:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2107
 #, no-wrap
 msgid "git branch -f main freebsd/main\n"
-msgstr ""
+msgstr "git branch -f main freebsd/main\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2112
@@ -5755,12 +5773,16 @@ msgid ""
 "works because you're just moving a label.  There's no metadata about the "
 "branch that needs to be preserved due to this."
 msgstr ""
+"No hay nada mágico en las ramas de Git: tan sólo son etiquetas en un grafo "
+"que se mueven automáticamente hacia adelante cuando se hacen commits. Así "
+"que lo de arriba funciona porque tan sólo estamos moviendo una etiqueta. "
+"Debido a ello, no hay metadatos de la rama que se necesiten preservar."
 
 #. type: Title =====
 #: documentation/content/en/articles/committers-guide/_index.adoc:2113
 #, no-wrap
 msgid "Mixing and matching branches"
-msgstr ""
+msgstr "Mezclando y combinando ramas"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2117
@@ -5769,12 +5791,15 @@ msgid ""
 "**Q:** So I have two branches `worker` and `async` that I'd like to combine into one branch called `feature`\n"
 "while maintaining the commits in both.\n"
 msgstr ""
+"**Q:** Digamos que tengo dos ramas `worker` y `async` que me gustaría "
+"combinar en una rama llamada `feature`\n"
+"a la vez que mantengo los commits de ambas.\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2119
 #, no-wrap
 msgid "**A:** This is a job for cherry pick.\n"
-msgstr ""
+msgstr "**A:** Esto es trabajo para cherry pick.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2125
@@ -5784,6 +5809,9 @@ msgid ""
 "% git checkout -b feature\t# create a new branch\n"
 "% git cherry-pick main..async\t# bring in the changes\n"
 msgstr ""
+"% git checkout worker\n"
+"% git checkout -b feature\t# create a new branch\n"
+"% git cherry-pick main..async\t# bring in the changes\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2130
@@ -5791,12 +5819,17 @@ msgid ""
 "You now have a new branch called `feature`.  This branch combines commits "
 "from both branches.  You can further curate it with `git rebase`."
 msgstr ""
+"Ahora tienes una nueva rama llamada `feature`. Esta rama combina commits de "
+"ambas ramas. Puedes filtrar más utilizando `git rebase`."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2132
 #, no-wrap
 msgid "**Q:** I have a branch called `driver` and I'd like to break it up into `kernel` and `userland` so I can evolve them separately and commit each branch as it becomes ready.\n"
 msgstr ""
+"**Q:** Tengo una rama llamada `driver` y me gustaría partirla en `kernel` y "
+"`userland` de forma que pueda hacerlas evolucionar por separado y hacer "
+"commit en cada rama cuando estén listas.\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2135
@@ -5805,6 +5838,9 @@ msgid ""
 "**A:** This takes a little bit of prep work, but `git rebase` will do the heavy\n"
 "lifting here.\n"
 msgstr ""
+"**A:** Esto necesita un poco de trabajo preparatorio, pero `git rebase` "
+"hará\n"
+"todo el trabajo duro.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2141
@@ -5814,6 +5850,9 @@ msgid ""
 "% git checkout -b kernel\t# Create kernel branch\n"
 "% git checkout -b userland\t# Create userland branch\n"
 msgstr ""
+"% git checkout driver\t\t# Checkout the driver\n"
+"% git checkout -b kernel\t# Create kernel branch\n"
+"% git checkout -b userland\t# Create userland branch\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2146
@@ -5822,12 +5861,15 @@ msgid ""
 "commits.  We'll assume first that all the commits in `driver` go into either "
 "the `kernel` or the `userland` branch, but not both."
 msgstr ""
+"Ahora tienes dos ramas idénticas. Es momento de separar los commits. "
+"Asumiremos inicialmente que todos los commits de `driver` van en las ramas "
+"`kernel` o en `userland` pero no en ambas."
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2150
 #, no-wrap
 msgid "% git rebase -i main kernel\n"
-msgstr ""
+msgstr "% git rebase -i main kernel\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2153
@@ -5837,17 +5879,21 @@ msgid ""
 "worse, you can throw this all away and start over with the `driver` branch "
 "since you've not yet moved it)."
 msgstr ""
+"y simplemente incluye los cambios que quieres (con una línea 'p' o 'pick') y "
+"borra los commits que no quieres (da miedo, pero si sucede lo peor, puedes "
+"tirar todo esto a la basura y empezar de nuevo con la rama `driver` ya que "
+"todavía no la has movido)."
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2157
 #, no-wrap
 msgid "% git rebase -i main userland\n"
-msgstr ""
+msgstr "% git rebase -i main userland\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2160
 msgid "and do the same thing you did with the `kernel` branch."
-msgstr ""
+msgstr "y haz lo mismo que hiciste con la rama `kernel`."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2163
@@ -5856,6 +5902,9 @@ msgid ""
 "**Q:** Oh great! I followed the above and forgot a commit in the `kernel` branch.\n"
 "How do I recover?\n"
 msgstr ""
+"**Q:** ¡Oh, genial! Seguí las instrucciones de arriba y me olvidé de hacer "
+"commit en la rama `kernel`.\n"
+"¿Cómo lo arreglo?\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2166
@@ -5864,6 +5913,9 @@ msgid ""
 "**A:** You can use the `driver` branch to find the hash of the commit is missing and\n"
 "cherry pick it.\n"
 msgstr ""
+"**A:** Puedes usar la rama `driver` para encontrar el hash del commit que "
+"falta y\n"
+"seleccionarlo con cherry pick.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2172
@@ -5873,6 +5925,9 @@ msgid ""
 "% git log driver\n"
 "% git cherry-pick $HASH\n"
 msgstr ""
+"% git checkout kernel\n"
+"% git log driver\n"
+"% git cherry-pick $HASH\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2178
@@ -5883,6 +5938,11 @@ msgid ""
 "In fact, I have several.\n"
 "Your rebase method to select sounds tricky.\n"
 msgstr ""
+"**Q:** OK. Tengo la misma situación que arriba, pero mis commits están todos "
+"mezclados.\n"
+"Necesito que partes de un commit vayan a una rama y el resto a otra.\n"
+"De hecho, tengo varias.\n"
+"Tu método basado en rebase suena complicado.\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2181
@@ -5891,6 +5951,9 @@ msgid ""
 "**A:** In this situation, you'd be better off to curate the original branch to separate\n"
 "out the commits, and then use the above method to split the branch.\n"
 msgstr ""
+"**A:** En esta situación, lo mejor sería filtrar la rama original para "
+"separar los commits\n"
+"y luego usar el método descrito arriba para separar las ramas.\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2186
@@ -5901,12 +5964,17 @@ msgid ""
 "need to do is to back up one commit while leaving the changes uncommitted in "
 "the tree:"
 msgstr ""
+"Asumamos que sólo hay un commit con un árbol limpio. Puedes usar `git rebase`"
+" con una línea `edit` o puedes usarlo con el commit en el extremo (tip). Los "
+"pasos son los mismos de cualquiera de las dos formas. Lo primero que tenemos "
+"que hacer es echar atrás un commit mientras dejamos los cambios en el árbol "
+"sin hacer commit:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2190
 #, no-wrap
 msgid "% git reset HEAD^\n"
-msgstr ""
+msgstr "% git reset HEAD^\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2193
@@ -5914,6 +5982,8 @@ msgid ""
 "Note: Do not, repeat do not, add `--hard` here since that also removes the "
 "changes from your tree."
 msgstr ""
+"Nota: No añadas, repito no añadas `--hard` aquí porque esto también elimina "
+"los cambios de tu árbol."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2197
@@ -5924,6 +5994,12 @@ msgid ""
 "lose the commit message when you do the reset, so if you need it for some "
 "reason, you should save a copy (though `git log $HASH` can recover it)."
 msgstr ""
+"Ahora, si tienes suerte, el cambio que necesita partirse cae completamente "
+"en las líneas del fichero. En ese caso puedes hacer el `git add` habitual "
+"para los ficheros de cada grupo y luego hacer `git commit`. Nota: cuando "
+"hagas esto, perderás el mensaje de commit al hacer el reset, así que si lo "
+"necesitas por algún motivo, deberías guardar una copia (aunque `git log "
+"$HASH` puede recuperarlo)."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2200
@@ -5931,12 +6007,14 @@ msgid ""
 "If you are not lucky, you'll need to split apart files.  There's another "
 "tool to do that which you can apply one file at a time."
 msgstr ""
+"Si no tienes suerte, tendrás que partir ficheros. Hay otra herramienta para "
+"hacer eso que puedes aplicar en cada fichero."
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2204
 #, no-wrap
 msgid "git add -i foo/bar.c\n"
-msgstr ""
+msgstr "git add -i foo/bar.c\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2210
@@ -5947,30 +6025,38 @@ msgid ""
 "over multiple files (though I find it easier to do one file at a time and "
 "use the `git rebase -i` to fold the related commits together)."
 msgstr ""
+"iterará por los diffs, preguntándote a cada paso si quieres incluir o "
+"excluir un trozo del cambio. Cuando hayas terminado, haz `git commit` y "
+"tendrás lo que quede en tu árbol. Puedes ejecutarlo varias veces también o "
+"incluso en varios ficheros (aunque encuentro más fácil hacerlo en un fichero "
+"cada vez y después utilizar `git rebase -i` para agrupar juntos commits que "
+"están relacionados)."
 
 #. type: Title ====
 #: documentation/content/en/articles/committers-guide/_index.adoc:2211
 #, no-wrap
 msgid "Cloning and Mirroring"
-msgstr ""
+msgstr "Clonar y Duplicar (crear un mirror)"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2214
 #, no-wrap
 msgid "**Q:** I'd like to mirror the entire Git repository, how do I do that?\n"
 msgstr ""
+"**Q:** Me gustaría crear un mirror de todo el repositorio Git, ¿cómo lo hago?"
+"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2216
 #, no-wrap
 msgid "**A:** If all you want to do is mirror, then\n"
-msgstr ""
+msgstr "**A:** Si todo lo que quieres es un mirror, entonces\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2220
 #, no-wrap
 msgid "% git clone --mirror $URL\n"
-msgstr ""
+msgstr "% git clone --mirror $URL\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2224
@@ -5978,6 +6064,8 @@ msgid ""
 "will do the trick.  However, there are two disadvantages to this if you want "
 "to use it for anything other than a mirror you'll reclone."
 msgstr ""
+"hará lo que quieres. Sin embargo, hay dos desventajas si quieres utilizar "
+"esto para algo más que hacer un mirror del cual crearás un clon."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2228
@@ -5986,6 +6074,10 @@ msgid ""
 "checked out worktree.  This is great for mirroring, but terrible for day to "
 "day work.  There's a number of ways around this with 'git worktree':"
 msgstr ""
+"Primero, esto es un 'repositorio desnudo' que tiene la base de datos del "
+"repositorio, pero no tiene ningún worktree. Esto es genial para crear un "
+"mirror, pero es terrible para el trabajo del día a día. Hay maneras de "
+"solventar esto con 'git worktree':"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2236
@@ -5997,6 +6089,11 @@ msgid ""
 "% git worktree add ../quarterly branches/2020Q4\n"
 "% cd ../ports\n"
 msgstr ""
+"% git clone --mirror https://git.freebsd.org/ports.git ports.git\n"
+"% cd ports.git\n"
+"% git worktree add ../ports main\n"
+"% git worktree add ../quarterly branches/2020Q4\n"
+"% cd ../ports\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2239
@@ -6004,6 +6101,8 @@ msgid ""
 "But if you aren't using your mirror for further local clones, then it's a "
 "poor match."
 msgstr ""
+"Pero si no estás usando tu mirror para hacer más clones locales, entonces "
+"esta es una alternativa algo pobre."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2242
@@ -6013,12 +6112,17 @@ msgid ""
 "upstream.  This means that you'll lose changes if you are committing to this "
 "repository on anything other than private project branches."
 msgstr ""
+"La segunda desventaja es que Git normalmente sobrescribe las refs (nombres "
+"de ramas, etiquetas, etc) del repositorio remoto de forma que tus refs "
+"locales pueden evolucionar de forma independiente. Esto significa que "
+"perderás los cambios si haces commit a este repositorio en cualquier sitio "
+"que no sean ramas de proyectos privados."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2244
 #, no-wrap
 msgid "**Q:** So what can I do instead?\n"
-msgstr ""
+msgstr "**Q:** ¿Qué puedo hacer entonces?\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2247
@@ -6027,17 +6131,20 @@ msgid ""
 "**A:** Well, you can stuff all of the upstream repository's refs into a private namespace in your local repository.\n"
 "Git clones everything via a 'refspec' and the default refspec is:\n"
 msgstr ""
+"**A:** Puedes agrupar todas las refs del repositorio remoto en un espacio de "
+"nombres privado en tu repositorio local.\n"
+"Git clona todo mediante un 'refspec' y el refspec por defecto es:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2251
 #, no-wrap
 msgid "        fetch = +refs/heads/*:refs/remotes/freebsd/*\n"
-msgstr ""
+msgstr "        fetch = +refs/heads/*:refs/remotes/freebsd/*\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2254
 msgid "which says just fetch the branch refs."
-msgstr ""
+msgstr "que le dice que se traiga las refs de la rama."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2258
@@ -6046,12 +6153,15 @@ msgid ""
 "those, you can add explicit refspecs for each ref namespace, or you can "
 "fetch everything.  To setup your repository to do that:"
 msgstr ""
+"Sin embargo, el repositorio de FreeBSD tiene otras cosas. Para verlas, "
+"puedes añadir refspects de forma explícita para cada espacio de nombres o "
+"puedes traértelo todo. Para configurar tu repositorio para que haga eso:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2262
 #, no-wrap
 msgid "git config --add remote.freebsd.fetch '+refs/*:refs/freebsd/*'\n"
-msgstr ""
+msgstr "git config --add remote.freebsd.fetch '+refs/*:refs/freebsd/*'\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2266
@@ -6061,6 +6171,10 @@ msgid ""
 "all the unconverted vendor branches and the number of refs associated with "
 "them is quite large."
 msgstr ""
+"que pondrá todo el repositorio remoto en tu espacio de nombres 'refs/freebsd/"
+"' de tu repositorio local. Por favor, date cuenta de que esto también se "
+"trae ramas externas sin convertir y el número de refs que tienen asociadas "
+"es bastante grande."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2268
@@ -6068,24 +6182,26 @@ msgid ""
 "You'll need to refer to these 'refs' with their full name because they "
 "aren't in and of Git's regular namespaces."
 msgstr ""
+"Necesitarás hacer referencia a estas 'refs' con su nombre completo porque no "
+"son espacios de nombres regulares de Git."
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2272
 #, no-wrap
 msgid "git log refs/freebsd/vendor/zlib/1.2.10\n"
-msgstr ""
+msgstr "git log refs/freebsd/vendor/zlib/1.2.10\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2275
 msgid ""
 "would look at the log for the vendor branch for zlib starting at 1.2.10."
-msgstr ""
+msgstr "mostraría el log de la rama externa para zlib comenzando en 1.2.10."
 
 #. type: Title ===
 #: documentation/content/en/articles/committers-guide/_index.adoc:2276
 #, no-wrap
 msgid "Collaborating with others"
-msgstr ""
+msgstr "Colaborando con otros"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2280
@@ -6098,6 +6214,13 @@ msgid ""
 "such as a hosted GitLab or GitHub, in order to share changes in a user-"
 "generated branch."
 msgstr ""
+"Una de las claves para un buen desarrollo de software en un proyecto tan "
+"grande como FreeBSD es la habilidad para colaborar con otros antes de que "
+"empujes tus cambios al árbol. Los repositorios Git del proyecto FreeBSD "
+"todavía no permiten la creación de ramas de usuario que puedan ser empujadas "
+"al repositorio y por lo tanto si quieres compartir tus cambios con otros "
+"debes usar otro mecanismo como GitLab o GitHub, para compartir los cambios "
+"en una rama generada por el usuario."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2282
@@ -6105,6 +6228,8 @@ msgid ""
 "The following instructions show how to set up a user-generated branch, based "
 "on the FreeBSD main branch, and push it to GitHub."
 msgstr ""
+"Las siguientes instrucciones muestran cómo preparar una rama de usuario, "
+"basada en la rama principal de FreeBSD y cómo empujarla a GitHub."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2284
@@ -6112,6 +6237,8 @@ msgid ""
 "Before you begin, make sure that your local Git repo is up to date and has "
 "the correct origins set <<keeping_current,as shown above.>>"
 msgstr ""
+"Antes de empezar, asegúrate de que tu repo local de Git está actualizado y "
+"tiene los orígenes correctos <<keeping_current,como se muestra arriba.>>"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2291
@@ -6119,6 +6246,8 @@ msgid ""
 "```` % git remote -v freebsd https://git.freebsd.org/src.git (fetch)  "
 "freebsd ssh://git@gitrepo.freebsd.org/src.git (push)  ````"
 msgstr ""
+"```` % git remote -v freebsd https://git.freebsd.org/src.git (fetch)  "
+"freebsd ssh://git@gitrepo.freebsd.org/src.git (push)  ````"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2294
@@ -6128,11 +6257,15 @@ msgid ""
 "getting-started-with-github/fork-a-repo[guidelines].  The destination of the "
 "fork should be your own, personal, GitHub account (gvnn3 in my case)."
 msgstr ""
+"El primer paso es crear un fork de https://github.com/freebsd/freebsd-"
+"src[FreeBSD] en GitHub siguiendo estas https://docs.github.com/en/github/"
+"getting-started-with-github/fork-a-repo[instrucciones]. El destino del fork "
+"debería ser tu propia cuenta personal de GitHub (en mi caso gvnn3)."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2296
 msgid "Now add a remote on your local system that points to your fork:"
-msgstr ""
+msgstr "Ahora añade un remoto a tu sistema local que apunte a tu fork:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2304
@@ -6145,6 +6278,12 @@ msgid ""
 "freebsd\thttps://git.freebsd.org/src.git (fetch)\n"
 "freebsd\tssh://git@gitrepo.freebsd.org/src.git (push)\n"
 msgstr ""
+"% git remote add github git@github.com:gvnn3/freebsd-src.git\n"
+"% git remote -v\n"
+"github\tgit@github.com:gvnn3/freebsd-src.git (fetch)\n"
+"github\tgit@github.com:gvnn3/freebsd-src.git (push)\n"
+"freebsd\thttps://git.freebsd.org/src.git (fetch)\n"
+"freebsd\tssh://git@gitrepo.freebsd.org/src.git (push)\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2306
@@ -6152,12 +6291,14 @@ msgid ""
 "With this in place you can create a branch <<keeping_a_local_branch,as shown "
 "above.>>"
 msgstr ""
+"Una vez hecho esto puedes crear una rama <<keeping_a_local_branch,como se "
+"muestra arriba.>>"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2310
 #, no-wrap
 msgid "% git checkout -b gnn-pr2001-fix\n"
-msgstr ""
+msgstr "% git checkout -b gnn-pr2001-fix\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2314
@@ -6168,6 +6309,11 @@ msgid ""
 "upstream, as Git will tell you the first time you try to push to your +github"
 "+ remote:"
 msgstr ""
+"Haz las modificaciones que quieras en tu rama. Compila, prueba y una vez que "
+"estés listo para colaborar con otros es momento de empujar tus cambios a la "
+"rama. Antes de que puedas hacerlo, deberás establecer el upstream apropiado, "
+"ya que Git te lo pedirá la primera vez que intentes empujar a tu remoto en "
+"+github+:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2320
@@ -6177,17 +6323,22 @@ msgid ""
 "fatal: The current branch gnn-pr2001-fix has no upstream branch.\n"
 "To push the current branch and set the remote as upstream, use\n"
 msgstr ""
+"% git push github\n"
+"fatal: The current branch gnn-pr2001-fix has no upstream branch.\n"
+"To push the current branch and set the remote as upstream, use\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2322
 #, no-wrap
 msgid "    git push --set-upstream github gnn-pr2001-fix\n"
-msgstr ""
+msgstr "    git push --set-upstream github gnn-pr2001-fix\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2325
 msgid "Setting the push as +git+ advises allows it to succeed:"
 msgstr ""
+"Establecer el push como +git+ recomienda hace que se pueda completar con "
+"éxito:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2343
@@ -6209,11 +6360,30 @@ msgid ""
 " * [new branch]                gnn-feature -> gnn-feature\n"
 "Branch 'gnn-feature' set up to track remote branch 'gnn-feature' from 'github'.\n"
 msgstr ""
+"% git push --set-upstream github gnn-feature\n"
+"Enumerating objects: 20486, done.\n"
+"Counting objects: 100% (20486/20486), done.\n"
+"Delta compression using up to 8 threads\n"
+"Compressing objects: 100% (12202/12202), done.\n"
+"Writing objects: 100% (20180/20180), 56.25 MiB | 13.15 MiB/s, done.\n"
+"Total 20180 (delta 11316), reused 12972 (delta 7770), pack-reused 0\n"
+"remote: Resolving deltas: 100% (11316/11316), completed with 247 local "
+"objects.\n"
+"remote:\n"
+"remote: Create a pull request for 'gnn-feature' on GitHub by visiting:\n"
+"remote:      https://github.com/gvnn3/freebsd-src/pull/new/gnn-feature\n"
+"remote:\n"
+"To github.com:gvnn3/freebsd-src.git\n"
+" * [new branch]                gnn-feature -> gnn-feature\n"
+"Branch 'gnn-feature' set up to track remote branch 'gnn-feature' from "
+"'github'.\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2346
 msgid "Subsequent changes to the same branch will push correctly by default:"
 msgstr ""
+"Los siguientes cambios en la rama se podrán empujar correctamente con el "
+"comando por defecto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2359
@@ -6230,6 +6400,16 @@ msgid ""
 "To github.com:gvnn3/freebsd-src.git\n"
 "   9e5243d7b659..cf6aeb8d7dda  gnn-feature -> gnn-feature\n"
 msgstr ""
+"% git push\n"
+"Enumerating objects: 4, done.\n"
+"Counting objects: 100% (4/4), done.\n"
+"Delta compression using up to 8 threads\n"
+"Compressing objects: 100% (2/2), done.\n"
+"Writing objects: 100% (3/3), 314 bytes | 1024 bytes/s, done.\n"
+"Total 3 (delta 1), reused 1 (delta 0), pack-reused 0\n"
+"remote: Resolving deltas: 100% (1/1), completed with 1 local object.\n"
+"To github.com:gvnn3/freebsd-src.git\n"
+"   9e5243d7b659..cf6aeb8d7dda  gnn-feature -> gnn-feature\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2363
@@ -6237,12 +6417,14 @@ msgid ""
 "At this point your work is now in your branch on +GitHub+ and you can share "
 "the link with other collaborators."
 msgstr ""
+"En este momento tu trabajo está en tu rama de +GitHub+ y puedes compartir el "
+"enlace con otros colaboradores."
 
 #. type: Title ===
 #: documentation/content/en/articles/committers-guide/_index.adoc:2365
 #, no-wrap
 msgid "Landing a github pull request"
-msgstr ""
+msgstr "Traer al proyecto una pull request de github"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2370
@@ -6256,6 +6438,14 @@ msgid ""
 "requests from others, one should take extra care to examine all the changes "
 "to ensure they are exactly as represented."
 msgstr ""
+"Esta sección documenta cómo traerse una pull request de GitHub que se ha "
+"hecho contra los mirros de Git de FreeBSD en GitHub. Aunque en este momento "
+"esta no es una forma oficial de enviar parches, a veces buenos arreglos "
+"vienen de esta forma y es más fácil cogerlos del árbol de un committer que "
+"hacerles que lo empujen al árbol de FreeBSD desde ahí. Se pueden usar pasos "
+"similares para traerse ramas de otros repositorios. Cuando se hace commit de "
+"pull requests de otros, se debe tener especial cuidado en examinar todos los "
+"cambios para asegurar que son exactamente lo que representan."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2373
@@ -6264,6 +6454,9 @@ msgid ""
 "the correct origins set <<keeping_current,as shown above.>> In addition, "
 "make sure to have the following origins:"
 msgstr ""
+"Antes de empezar, asegúrate de que tu repo local de Git está actualizado y "
+"de que tiene el origen correctamente establecido <<keeping_current,como se "
+"muestra arriba.>>. Además, asegúrate de tener los siguientes orígenes:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2380
@@ -6275,6 +6468,11 @@ msgid ""
 "github https://github.com/freebsd/freebsd-src (fetch)\n"
 "github https://github.com/freebsd/freebsd-src (fetch)\n"
 msgstr ""
+"% git remote -v\n"
+"freebsd https://git.freebsd.org/src.git (fetch)\n"
+"freebsd ssh://git@gitrepo.freebsd.org/src.git (push)\n"
+"github https://github.com/freebsd/freebsd-src (fetch)\n"
+"github https://github.com/freebsd/freebsd-src (fetch)\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2395
@@ -6302,6 +6500,30 @@ msgid ""
 "should be taken to ensure the change does what it is supposed to, and that "
 "no malicious code is present."
 msgstr ""
+"Muchas veces las pull requests son sencillas: peticiones que contienen un "
+"sólo commit. En este caso, se puede utilizar una aproximación directa, "
+"aunque la aproximación de la sección anterior también funciona. Aquí se crea "
+"una rama, se selecciona el cambio con cherry pick, se ajusta el mensaje de "
+"commit y se hacen controles de calidad antes de empujar el cambio. En este "
+"ejemplo se usa la rama `staging` pero podría utilizarse cualquier nombre. "
+"Esta técnica funciona para cualquier número de commits que haya en la pull "
+"request, especialmente cuando el cambio se puede aplicar limpiamente al "
+"árbol de FreeBSD. Sin embargo, cuando hay varios commits, especialmente "
+"cuando se necesitan pequeños ajustes, `git rebase -i ` funciona mejor que `"
+"git cherry-pick`. Brevemente, estos comandos crean una rama; seleccionan los "
+"cambios de la rama del pull request; los prueban; ajustan los mensajes de "
+"commit; y lo mergean de vuelta a `main` haciendo un fast forward. El número "
+"de PR abajo es `$PR`. Cuando se ajusta el mensaje, añade `Pull Request: "
+"https://github.com/freebsd-src/pull/$PR`. Todas las pull requests enviadas "
+"al repositorio de FreeBSD deberían ser revisadas por al menos una persona. "
+"No es necesario que sea la persona que hace el commit, pero en ese caso la "
+"persona que lo hace debería confiar en la competencia de los otros revisores "
+"para revisar el commit. Los committers que hacen revisión de código de una "
+"pull request antes de empujarla al repo deberían añadir una línea `Reviewed "
+"by:` al commit, porque en este caso no es implícito. Añade también a la "
+"línea `Reviewed by:` a cualquiera que revise y apruebe el commit en github. "
+"Como siempre, se debe poner cuidado para asegurar que el código hace lo que "
+"se supone que hace y que no hay código malicioso."
 
 #. type: delimited block = 6
 #: documentation/content/en/articles/committers-guide/_index.adoc:2399
@@ -6309,12 +6531,15 @@ msgid ""
 "In addition, please check to make sure that the pull request author name is "
 "not anonymous.  Github's web editing interface generates names like:"
 msgstr ""
+"Además, por favor asegúrate de que el nombre del autor de la pull request no "
+"es anónimo. El interfaz web del editor de Github genera nombres como:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2402
 #, no-wrap
 msgid "Author:     github-user <38923459+github-user@users.noreply.github.com>\n"
 msgstr ""
+"Author:     github-user <38923459+github-user@users.noreply.github.com>\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2405
@@ -6323,6 +6548,9 @@ msgid ""
 "made.  Extra care should be taken to ensure no style issue or malicious code "
 "is introduced."
 msgstr ""
+"Se debería hacer una solicitud educada al autor para que proporcione un "
+"nombre mejor y/o un email. Se debería poner cuidado para asegurar de que no "
+"hay problemas de estilo ni se introduce código malicioso."
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2418
@@ -6338,6 +6566,16 @@ msgid ""
 "<test again if needed>\n"
 "% git push freebsd --push-option=confirm-author\n"
 msgstr ""
+"% git fetch github pull/$PR/head:staging\n"
+"% git rebase -i main staging\t# to move the staging branch forward, adjust "
+"commit message here\n"
+"<do testing here, as needed>\n"
+"% git checkout main\n"
+"% git pull --ff-only\t\t# to get the latest if time has passed\n"
+"% git checkout main\n"
+"% git merge --ff-only staging\n"
+"<test again if needed>\n"
+"% git push freebsd --push-option=confirm-author\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2423
@@ -6345,16 +6583,18 @@ msgid ""
 "For complicated pull requests that have multiple commits with conflicts, "
 "follow the following outline."
 msgstr ""
+"Para pull requests complicadas que tienen varios commits con conflictos, "
+"sigue el siguiente esquema."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2425
 msgid "checkout the pull request `git checkout github/pull/XXX`"
-msgstr ""
+msgstr "haz un checkout de la pull request `git checkout github/pull/XXX`"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2426
 msgid "create a branch to rebase `git checkout -b staging`"
-msgstr ""
+msgstr "crea una rama para rebasar `git checkout -b staging`"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2427
@@ -6362,26 +6602,27 @@ msgid ""
 "rebase the `staging` branch to the latest `main` with `git rebase -i main "
 "staging`"
 msgstr ""
+"rebasa la rama `staging` al último `main` con `git rebase -i main staging`"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2428
 msgid "resolve conflicts and do whatever testing is needed"
-msgstr ""
+msgstr "resuelve los conflictos y haz las pruebas que sean necesarias"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2429
 msgid "fast forward the `staging` branch into `main` as above"
-msgstr ""
+msgstr "haz fast forward de la rama `staging` a `main` como arriba"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2430
 msgid "final sanity check of changes to make sure all is well"
-msgstr ""
+msgstr "comprobaciones finales de los cambios para asegurar que todo está bien"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2431
 msgid "push to FreeBSD's Git repository."
-msgstr ""
+msgstr "empuja el repositorio Git de FreeBSD."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2433
@@ -6389,6 +6630,8 @@ msgid ""
 "This will also work when bringing branches developed elsewhere into the "
 "local tree for committing."
 msgstr ""
+"Esto también funciona cuando te traes ramas desarrolladas en otro sitio al "
+"árbol local para luego hacer commit."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2436
@@ -6397,17 +6640,21 @@ msgid ""
 "It is worth noting that if your `github` origin uses `https://`, the only "
 "step you'll need a GitHub account for is closing the pull request."
 msgstr ""
+"Una vez que hayas terminado con la pull request, ciérrala usando el interfaz "
+"web de GitHub. Merece la pena mencionar que si tu origen `github` utiliza "
+"`https://`, el único paso para el que necesitas una cuenta de GitHub es para "
+"cerrar la pull request."
 
 #. type: Title ==
 #: documentation/content/en/articles/committers-guide/_index.adoc:2438
 #, no-wrap
 msgid "Version Control History"
-msgstr ""
+msgstr "Histórico del Control de Versiones"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2441
 msgid "The project has moved to <<git-primer,git>>."
-msgstr ""
+msgstr "El proyecto se ha movido a <<git-primer,git>>."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2447
@@ -6418,6 +6665,11 @@ msgid ""
 "commit is __r368820__.  The first real git commit hash is "
 "__5ef5f51d2bef80b0ede9b10ad5b0e9440b60518c__."
 msgstr ""
+"El repositorio fuente de FreeBSD pasó de CVS a Subversion el 31 de Mayo de "
+"2008. El primer commit real de SVN es __r179447__. El repositorio fuente "
+"cambió de Subversion a Git el 23 de Diciembre de 2020. El último commit real "
+"de svn es __r368820__. El hash del primer commit real en git es "
+"__5ef5f51d2bef80b0ede9b10ad5b0e9440b60518c__."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2453
@@ -6428,6 +6680,11 @@ msgid ""
 "SVN commit is __r54737__.  The first real git commit hash is "
 "__3be01a475855e7511ad755b2defd2e0da5d58bbe__."
 msgstr ""
+"El repositorio `doc/www` de FreeBSD cambió de CVS a Subversion  el 19 de "
+"Mayo de 2012. El primer commit real de SVN es __r38821__. El repositorio de "
+"documentación cambió de Subversion a Git el 8 de Diciembre de 2020. El "
+"último commit de SVN es __r54737__. El has del primer commit real de git es "
+"__3be01a475855e7511ad755b2defd2e0da5d58bbe__."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2459
@@ -6438,6 +6695,11 @@ msgid ""
 "__r569609__ The first real git commit hash is "
 "__ed8d3eda309dd863fb66e04bccaa513eee255cbf__."
 msgstr ""
+"El repositorio de `ports` de FreeBSD cambió de CVS a Subversion el 14 de "
+"Julio de 2012. El primer commit real de SVN es __r300894__. El repositorio "
+"de ports cambió de Subversion a Git el 6 de Abril de 2021. El último commit "
+"de SVN es __r569609__. El hash del primer commit de git es "
+"__ed8d3eda309dd863fb66e04bccaa513eee255cbf__."
 
 #. type: Title ==
 #: documentation/content/en/articles/committers-guide/_index.adoc:2461
@@ -6447,14 +6709,13 @@ msgstr "Configuración, Convenciones y Tradiciones"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2466
-#, fuzzy
 msgid ""
 "There are a number of things to do as a new developer.  The first set of "
 "steps is specific to committers only.  These steps must be done by a mentor "
 "for those who are not committers."
 msgstr ""
 "Hay una serie de cosas que hacer como nuevo desarrollador. La primera serie "
-"de pasos es específica para los committers solamente. Estos pasos deben ser "
+"de pasos es específica solamente para los committers. Estos pasos deben ser "
 "realizados por un mentor para aquellos que no son committers."
 
 #. type: Title ===
@@ -6481,25 +6742,22 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2474
-#, fuzzy
 msgid ""
 "All [.filename]#src# commits go to FreeBSD-CURRENT first before being merged "
 "to FreeBSD-STABLE. The FreeBSD-STABLE branch must maintain ABI and API "
 "compatibility with earlier versions of that branch. Do not merge changes "
 "that break this compatibility."
 msgstr ""
-"Todas las confirmaciones  <filename>src</filename> van primero a FreeBSD-"
-"CURRENT antes de ser fusionadas con FreeBSD-STABLE. La rama FreeBSD-STABLE "
-"debe mantener la compatibilidad <acronym>ABI</acronym> y <acronym>API</"
-"acronym> con versiones anteriores de esa rama. No fusione los cambios que "
-"rompan esta compatibilidad."
+"Todos los commits de [.filename]#src# van primero a FreeBSD-CURRENT antes de "
+"llevarse a FreeBSD-STABLE. La rama FreeBSD-STABLE debe mantener la "
+"compatibilidad de ABI y API con versiones anteriores de esa rama. No lleves "
+"cambios que rompan esta compatibilidad."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2479
-#, fuzzy, no-wrap
-#| msgid "For New Committers"
+#, no-wrap
 msgid "*Steps for New Committers*\n"
-msgstr "Para los Nuevos Committers"
+msgstr "Pasos para los Nuevos Committers\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2481
@@ -6514,6 +6772,11 @@ msgid ""
 "# build to fail. This is a relatively easy task, but remains a good first "
 "test of version control skills."
 msgstr ""
+"[.filename]#doc/shared/authors.adoc# - Añade una entidad de autor. Los pasos "
+"posteriores dependen de esta entidad y saltarse este paso provocará el fallo "
+"de construcción de[.filename]#doc/#. Esta es una tarea relativamente "
+"sencilla, pero sigue siendo un buen primer test para probar las habilidades "
+"con el control de versiones."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2484
@@ -6527,6 +6790,10 @@ msgid ""
 "then appear in the \"Developers\" section of the extref:{contributors}"
 "[Contributors List, staff-committers]. Entries are sorted by last name."
 msgstr ""
+"[.filename]#doc/shared/contrib-committers.adoc# - Añade una entrada, que "
+"luego aparecerá en la sección \"Developers\" de la extref:{contributors}["
+"Lista de Colaboradores, staff-committers]. Las entradas están ordenadas por "
+"apellido."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2488
@@ -6534,6 +6801,8 @@ msgid ""
 "[.filename]#doc/shared/contrib-additional.adoc# - _Remove_ the entry. "
 "Entries are sorted by first name."
 msgstr ""
+"[.filename]#doc/shared/contrib-additional.adoc# - _Elimina_ la entrada. Las "
+"entradas están ordenadas por nombre."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2489
@@ -6548,11 +6817,15 @@ msgid ""
 "date from the commit bit approval email from mailto:core@FreeBSD."
 "org[core@FreeBSD.org]."
 msgstr ""
+"[.filename]#doc/website/data/en/news/news.toml# - Añade una entrada. Busca "
+"otras entradas que anuncian nuevos committers y sigue el mismo formato. Usa "
+"la fecha del email de aprobación del commit bit enviado por "
+"mailto:core@FreeBSD.org[core@FreeBSD.org]."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2492
 msgid "Add a PGP Key"
-msgstr ""
+msgstr "Añade una Clave PGP"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2494
@@ -6561,6 +6834,9 @@ msgid ""
 "addkey.sh#) to make this easier. See the https://cgit.freebsd.org/doc/plain/"
 "documentation/static/pgpkeys/README[README] file for more information."
 msgstr ""
+"`{des}`ha escrito un shell script ([.filename]#doc/documentation/tools/addkey"
+".sh#) para hacerlo más fácil Lee el fichero https://cgit.freebsd.org/doc/"
+"plain/documentation/static/pgpkeys/README[README] para más información."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2496
@@ -6568,6 +6844,8 @@ msgid ""
 "Use [.filename]#doc/documentation/tools/checkkey.sh# to verify that keys "
 "meet minimal best-practices standards."
 msgstr ""
+"Utiliza [.filename]#doc/documentation/tools/checkkey.sh# para verificar que "
+"las claves cumplen con un mínimo de los estándares de buenas prácticas."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2498
@@ -6588,6 +6866,12 @@ msgid ""
 "`FreeBSD.org` users is available for download from link:https://docs.FreeBSD."
 "org/pgpkeys/pgpkeys.txt[https://docs.FreeBSD.org/pgpkeys/pgpkeys.txt]."
 msgstr ""
+"Es muy importante tener una clave PGP/GnuPG actual en el repositorio. La "
+"clave podría ser requerida para una identificación positiva de un committer. "
+"Por ejemplo, los `{admins}` podrían necesitarla para recuperar una cuenta. "
+"Se puede descargar un almacén completo de claves de usuarios de `FreeBSD.org`"
+" desde link:https://docs.FreeBSD.org/pgpkeys/pgpkeys.txt[https://docs.FreeBSD"
+".org/pgpkeys/pgpkeys.txt]."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2504
@@ -6601,6 +6885,9 @@ msgid ""
 "the current committers section, where _repository_ is `doc`, `ports`, or "
 "`src`, depending on the commit privileges granted."
 msgstr ""
+"[.filename]#src/share/misc/committers-<repository>.dot# - Añade una entrada "
+"a la sección actual de committers, donde _repository_ es `doc`, `ports`, o "
+"`src`, dependiendo de los privilegios de commit concedidos."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2508
@@ -6614,7 +6901,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2509
 msgid "Generate a Kerberos Password"
-msgstr ""
+msgstr "Genera una Contraseña de Kerberos"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2511
@@ -6622,6 +6909,8 @@ msgid ""
 "See <<kerberos-ldap>> to generate or set a Kerberos for use with other "
 "FreeBSD services like the bug tracking database."
 msgstr ""
+"Lee <<kerberos-ldap>> para generar o configurar Kerberos para usarlo con "
+"otros servicios de FreeBSD como la base de datos de seguimiento de problemas."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2512
@@ -6637,6 +6926,12 @@ msgid ""
 "obtain one. Contact mailto:wiki-admin@FreeBSD.org[wiki-admin@FreeBSD.org] if "
 "you need help with your Wiki account."
 msgstr ""
+"Cuenta de https://wiki.freebsd.org[FreeBSD Wiki] - Una cuenta en la wiki "
+"permite compartir proyectos e ideas. Aquellos que todavía no tienen una "
+"cuenta pueden seguir las instrucciones en la https://wiki.freebsd.org/"
+"AboutWiki[Página AboutWiki] para obtener una. Contacta con mailto:wiki-"
+"admin@FreeBSD.org[wiki-admin@FreeBSD.org] si necesitas ayuda con tu cuenta "
+"de la Wiki."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2515
@@ -6651,6 +6946,10 @@ msgid ""
 "freebsd.org/IRC/Nicknames[IRC Nicks], and https://wiki.freebsd.org/Community/"
 "Dogs[Dogs of FreeBSD] pages."
 msgstr ""
+"Información de la Wiki - Después de conseguir acceso a la wiki, algunas "
+"personas añaden entradas a las páginas https://wiki.freebsd.org/HowWeGotHere["
+"Cómo llegamos aquí], https://wiki.freebsd.org/IRC/Nicknames[Nicks de IRC], y "
+"https://wiki.freebsd.org/Community/Dogs[Perros de FreeBSD]."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2518
@@ -6659,17 +6958,16 @@ msgstr "Opcional: Actualizar Puertos con Información Personal"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2520
-#, fuzzy
 msgid ""
 "[.filename]#ports/astro/xearth/files/freebsd.committers.markers# and [."
 "filename]#src/usr.bin/calendar/calendars/calendar.freebsd# - Some people add "
 "entries for themselves to these files to show where they are located or the "
 "date of their birthday."
 msgstr ""
-"<filename>ports/astro/xearth/files/freebsd.committers.markers</filename> y "
-"<filename>src/usr.bin/calendar/calendars/calendar.freebsd</filename>  - "
-"Algunas personas añaden entradas para sí mismas a estos archivos para "
-"mostrar dónde se encuentran o la fecha de su cumpleaños."
+"[.filename]#ports/astro/xearth/files/freebsd.committers.markers# y [."
+"filename]#src/usr.bin/calendar/calendars/calendar.freebsd#  - Algunas "
+"personas añaden entradas para sí mismas a estos archivos para mostrar dónde "
+"se encuentran o la fecha de su cumpleaños."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2521
@@ -6683,6 +6981,9 @@ msgid ""
 "commits-src-all} might wish to unsubscribe to avoid receiving duplicate "
 "copies of commit messages and followups."
 msgstr ""
+"Los suscritos a {dev-commits-doc-all}, {dev-commits-ports-all} o {dev-"
+"commits-src-all} podrían querer darse de baja para evitar recibir copias "
+"duplicadas de mensajes de commit y conversaciones."
 
 #. type: Title ===
 #: documentation/content/en/articles/committers-guide/_index.adoc:2526
@@ -6699,6 +7000,11 @@ msgid ""
 "what you plan to be working on as a developer in FreeBSD, and who will be "
 "your mentor. Email this to the {developers-name} and you will be on your way!"
 msgstr ""
+"Preséntate a los otros desarrolladores, de lo contrario nadie tendrá ni idea "
+"de quién eres o en qué trabajas. La presentación no necesita ser una "
+"biografía completa, simplemente escribe un párrafo o dos acerca de quién "
+"eres, en qué planeas trabajar como desarrollador en FreeBSD y quién será tu "
+"mentor. Envía esto por email a {developers-name} ¡y ya estarás en marcha!"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2533
@@ -6712,6 +7018,14 @@ msgid ""
 "without warning if space needs to be freed, so forward it or save it "
 "elsewhere."
 msgstr ""
+"Inicia sesión en `freefall.FreeBSD.org` y crea un fichero [.filename]#/var/"
+"forward/user# (donde _user_ es tu nombre de usuario) que contenga la "
+"dirección de e-mail donde quieres que se reenvíe el correo dirigido a "
+"_yourusername_@FreeBSD.org. Esto incluye todos los mensajes de commit así "
+"como otro correo dirigido a {committers-name} y {developers-name}. Buzones "
+"de entrada grandes que ocupen mucho de forma permanente e `freefall` podrían "
+"ser truncados sin previo aviso si se necesita liberar espacio, de forma que "
+"reenvíalo o sálvalo en otra parte."
 
 #. type: delimited block = 6
 #: documentation/content/en/articles/committers-guide/_index.adoc:2537
@@ -6719,6 +7033,8 @@ msgid ""
 "If your e-mail system uses SPF with strict rules, you should exclude `mx2."
 "FreeBSD.org` from SPF checks."
 msgstr ""
+"Si tu sistema de e-mail usa SPF con reglas estrictas, deberías excluir `mx2."
+"FreeBSD.org` de las comprobaciones de SPF."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2540
@@ -6731,6 +7047,14 @@ msgid ""
 "email. To have these checks turned off for your email, create a file named [."
 "filename]#~/.spam_lover# on `freefall.FreeBSD.org`."
 msgstr ""
+"Debido a la enorme carga que supone lidiar con el SPAM en los servidores "
+"centrales de correo que hacen el procesamiento de las listas de correo, el "
+"servidor frontal realiza algunas comprobaciones básicas y eliminará algunos "
+"mensajes basados en esas comprobaciones. Por el momento la única "
+"comprobación es la información adecuada de DNS para el host que se conecta. "
+"Algunas personas culpan a estas comprobaciones de rebotar email válidos. "
+"Para desactivar estos chequeos en tu email, crea un fichero llamado [."
+"filename]#~/.spam_lover# en `freefall.FreeBSD.org`."
 
 #. type: delimited block = 6
 #: documentation/content/en/articles/committers-guide/_index.adoc:2544
@@ -6761,7 +7085,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2555
 msgid "Point your mail client at `smtp.FreeBSD.org:587`."
-msgstr ""
+msgstr "Apunta tu cliente de correo a `smtp.FreeBSD.org:587`."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2556
@@ -6772,6 +7096,8 @@ msgstr "Activa STARTTLS."
 #: documentation/content/en/articles/committers-guide/_index.adoc:2557
 msgid "Ensure your `From:` address is set to `_yourusername_@FreeBSD.org`."
 msgstr ""
+"Asegúrate de que tu dirección `From:` está establecida a "
+"`_tunombredeusuario_@FreeBSD.org`."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2558
@@ -6780,11 +7106,15 @@ msgid ""
 "(see <<kerberos-ldap>>). The `_yourusername_/mail` principal is preferred, "
 "as it is only valid for authenticating to mail resources."
 msgstr ""
+"Para autenticación, puedes utilizar tu nombre de usuario y contraseña del "
+"FreeBSD de Kerberos (consulta <<kerberos-ldap>>). Se prefiere el `"
+"_tunombredeusuario_/mail` principal, ya que sólo es válido para autenticar "
+"contra recursos de correo."
 
 #. type: delimited block = 6
 #: documentation/content/en/articles/committers-guide/_index.adoc:2562
 msgid "Do not include `@FreeBSD.org` when entering in your username."
-msgstr ""
+msgstr "No incluyas `@FreeBSD.org` cuando introduzcas tu nombre de usuario."
 
 #. type: Block title
 #: documentation/content/en/articles/committers-guide/_index.adoc:2564
@@ -6798,6 +7128,8 @@ msgid ""
 "Will only accept mail from `_yourusername_@FreeBSD.org`. If you are "
 "authenticated as one user, you are not permitted to send mail from another."
 msgstr ""
+"Sólo aceptará correo de `_tunombredeusuario_@FreeBSD.org`. Si estás "
+"autenticado como un usuario, no se te permite enviar correo desde otro."
 
 #. type: delimited block = 6
 #: documentation/content/en/articles/committers-guide/_index.adoc:2569
@@ -6805,6 +7137,8 @@ msgid ""
 "A header will be appended with the SASL username: (`Authenticated sender: "
 "_username_`)."
 msgstr ""
+"Se añadirá un encabezado con el usuario SASL: (`Authenticated sender: "
+"_nombredeusuario_`)."
 
 #. type: delimited block = 6
 #: documentation/content/en/articles/committers-guide/_index.adoc:2570
@@ -6826,12 +7160,14 @@ msgid ""
 "It is also possible to use a local MTA to forward locally sent emails to the "
 "FreeBSD.org SMTP servers."
 msgstr ""
+"También es posible utilizar un MTA local para reenviar emails enviados "
+"localmente a los servidores SMTP de FreeBSD.org."
 
 #. type: Block title
 #: documentation/content/en/articles/committers-guide/_index.adoc:2579
 #, no-wrap
 msgid "Using Postfix"
-msgstr ""
+msgstr "Usar Postfix"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2584
@@ -6840,10 +7176,13 @@ msgid ""
 "org` should be forwarded to the FreeBSD.org servers, add this to your [."
 "filename]#main.cf#:"
 msgstr ""
+"Para decirle a una instancia local de Postfix que se debería reenviar a los "
+"sevidores FreeBSD.ORG cualquier cosa que venga de "
+"`_tunombredeusuario_@FreeBSD.org`, añade esto a tu [.filename]#main.cf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2592
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "sender_dependent_relayhost_maps = hash:/usr/local/etc/postfix/relayhost_maps\n"
 "smtp_sasl_auth_enable = yes\n"
@@ -6851,7 +7190,8 @@ msgid ""
 "smtp_sasl_password_maps = hash:/usr/local/etc/postfix/sasl_passwd\n"
 "smtp_use_tls = yes\n"
 msgstr ""
-"sender_dependent_relayhost_maps = hash:/usr/local/etc/postfix/relayhost_maps\n"
+"sender_dependent_relayhost_maps = hash:/usr/local/etc/postfix/"
+"relayhost_maps\n"
 "smtp_sasl_auth_enable = yes\n"
 "smtp_sasl_security_options = noanonymous\n"
 "smtp_sasl_password_maps = hash:/usr/local/etc/postfix/sasl_passwd\n"
@@ -6859,51 +7199,48 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2595
-#, fuzzy
 msgid ""
 "Create [.filename]#/usr/local/etc/postfix/relayhost_maps# with the following "
 "content:"
 msgstr ""
-"Crear <filename>/usr/local/etc/postfix/relayhost_maps</filename> con el "
-"siguiente contenido:"
+"Crea [.filename]#/usr/local/etc/postfix/relayhost_maps# con el siguiente "
+"contenido:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2599
 #, no-wrap
 msgid "yourusername@FreeBSD.org  [smtp.freebsd.org]:587\n"
-msgstr ""
+msgstr "tunombredeusuario@FreeBSD.org  [smtp.freebsd.org]:587\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2602
-#, fuzzy
 msgid ""
 "Create [.filename]#/usr/local/etc/postfix/sasl_passwd# with the following "
 "content:"
 msgstr ""
-"Crear <filename>/usr/local/etc/postfix/sasl_passwd</filename> con el "
-"siguiente contenido:"
+"Crea [.filename]#/usr/local/etc/postfix/sasl_passwd# con el siguiente "
+"contenido:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2606
 #, no-wrap
 msgid "[smtp.freebsd.org]:587          yourusername:yourpassword\n"
-msgstr ""
+msgstr "[smtp.freebsd.org]:587          tunombredeusuario:tucontraseña\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2609
-#, fuzzy
 msgid ""
 "If the email server is used by other people, you may want to prevent them "
 "from sending e-mails from your address. To achieve this, add this to your [."
 "filename]#main.cf#:"
 msgstr ""
 "Si otras personas utilizan el servidor de correo electrónico, es posible que "
-"desee evitar que envíen correos electrónicos desde su dirección. Para lograr "
-"esto, agregue esto a su <filename>main.cf</filename>:"
+"quieras evitar que envíen correos electrónicos desde tu dirección. Para "
+"lograr esto, agrega esto a tu [.filename]#main.cf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2614
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "smtpd_sender_login_maps = hash:/usr/local/etc/postfix/sender_login_maps\n"
 "smtpd_sender_restrictions = reject_known_sender_login_mismatch\n"
@@ -6913,19 +7250,18 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2617
-#, fuzzy
 msgid ""
 "Create [.filename]#/usr/local/etc/postfix/sender_login_maps# with the "
 "following content:"
 msgstr ""
-"Crear <filename>/usr/local/etc/postfix/sender_login_maps</filename> con el "
-"siguiente contenido:"
+"Creaa [.filename]#/usr/local/etc/postfix/sender_login_maps# con el siguiente "
+"contenido:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2621
 #, no-wrap
 msgid "yourusername@FreeBSD.org yourlocalusername\n"
-msgstr ""
+msgstr "tunombredeusuario@FreeBSD.org tunombredeusuariolocal\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2624
@@ -6933,12 +7269,14 @@ msgid ""
 "Where _yourlocalusername_ is the SASL username used to connect to the local "
 "instance of Postfix."
 msgstr ""
+"Donde _tunombredeusuario_local es el nombre de usuario SASL utilizado para "
+"conectar a la instancia local de Postfix."
 
 #. type: Block title
 #: documentation/content/en/articles/committers-guide/_index.adoc:2627
 #, no-wrap
 msgid "Using OpenSMTPD"
-msgstr ""
+msgstr "Usar OpenSMTPD"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2632
@@ -6947,6 +7285,9 @@ msgid ""
 "`_yourusername_@FreeBSD.org` should be forwarded to the FreeBSD.org servers, "
 "add this to your [.filename]#smtpd.conf#:"
 msgstr ""
+"Para decirle a una instancia local de OpenSMTPD que se debería reenviar a "
+"los sevidores FreeBSD.ORG cualquier cosa que venga de "
+"`_tunombredeusuario_@FreeBSD.org`, añade esto a tu [.filename]#smtpd.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2637
@@ -6955,6 +7296,10 @@ msgid ""
 "action \"freebsd\" relay host smtp+tls://freebsd@smtp.freebsd.org:587 auth <secrets>\n"
 "match from any auth yourlocalusername mail-from \"_yourusername_@freebsd.org\" for any action \"freebsd\"\n"
 msgstr ""
+"action \"freebsd\" relay host smtp+tls://freebsd@smtp.freebsd.org:587 auth "
+"<secrets>\n"
+"match from any auth tunombredeusuariolocal mail-from \"_tunombredeusuario_"
+"@freebsd.org\" for any action \"freebsd\"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2640
@@ -6962,27 +7307,27 @@ msgid ""
 "Where _yourlocalusername_ is the SASL username used to connect to the local "
 "instance of OpenSMTPD."
 msgstr ""
+"Donde _tunombredeusuario_local es el nombre de usuario SASL utilizado para "
+"conectar a la instancia local de OpenSMTPD."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2642
-#, fuzzy
 msgid ""
 "Create [.filename]#/usr/local/etc/mail/secrets# with the following content:"
 msgstr ""
-"Crear <filename>/usr/local/etc/postfix/relayhost_maps</filename> con el "
-"siguiente contenido:"
+"Crea [.filename]#/usr/local/etc/mail/secrets# con el siguiente contenido:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2646
 #, no-wrap
 msgid "freebsd\tyourusername:yourpassword\n"
-msgstr ""
+msgstr "freebsd\ttunombredeusuario:tucontraseña\n"
 
 #. type: Block title
 #: documentation/content/en/articles/committers-guide/_index.adoc:2650
 #, no-wrap
 msgid "Using Exim"
-msgstr ""
+msgstr "Usar Exim"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2656
@@ -6991,6 +7336,9 @@ msgid ""
 "To direct a local Exim instance to forward all mail from `_example_@FreeBSD.org`\n"
 " to FreeBSD.org servers, add this to Exim [.filename]#configuration#:\n"
 msgstr ""
+"Para decirle a una instancia local de Exim que se debería reenviar a los "
+"sevidores FreeBSD.ORG cualquier cosa que venga de `_example_@FreeBSD.org`\n"
+"añade esto a tu [.filename]#configuration# de Exim:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2665
@@ -7003,6 +7351,13 @@ msgid ""
 "   transport = freebsd_smtp\n"
 "   route_data = ${lookup {${lc:$sender_address}} lsearch {/usr/local/etc/exim/freebsd_send}}\n"
 msgstr ""
+"Routers section: (at the top of the list):\n"
+"freebsd_send:\n"
+"   driver = manualroute\n"
+"   domains = !+local_domains\n"
+"   transport = freebsd_smtp\n"
+"   route_data = ${lookup {${lc:$sender_address}} lsearch {/usr/local/etc/"
+"exim/freebsd_send}}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2677
@@ -7020,6 +7375,20 @@ msgid ""
 "  dnssec_request_domains = *\n"
 "  hosts_require_auth = smtp.freebsd.org\n"
 msgstr ""
+"Transport Section:\n"
+"freebsd_smtp:\n"
+"        driver = smtp\n"
+"  tls_certificate=<local certificate>\n"
+"  tls_privatekey=<local certificate private key>\n"
+"  tls_require_ciphers = EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA3"
+"84:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH+AESGCM:EECDH:"
+"EDH+AESGCM:EDH+aRSA:HIGH:!MEDIUM:!LOW:!aNULL:!eNULL:!LOW:!RC4:!MD5:!EXP:!PSK:"
+"!SRP:!DSS\n"
+"  dkim_domain = <local DKIM domain>\n"
+"  dkim_selector = <local DKIM selector>\n"
+"  dkim_private_key= <local DKIM private key>\n"
+"  dnssec_request_domains = *\n"
+"  hosts_require_auth = smtp.freebsd.org\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2683
@@ -7031,22 +7400,26 @@ msgid ""
 "  public_name = PLAIN\n"
 "  client_send = ^example/mail^examplePassword\n"
 msgstr ""
+"Authenticators:\n"
+"fixed_plain:\n"
+"  driver = plaintext\n"
+"  public_name = PLAIN\n"
+"  client_send = ^example/mail^examplePassword\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2686
-#, fuzzy
 msgid ""
 "Create [.filename]#/usr/local/etc/exim/freebsd_send# with the following "
 "content:"
 msgstr ""
-"Crear <filename>/usr/local/etc/postfix/relayhost_maps</filename> con el "
-"siguiente contenido:"
+"Crea [.filename]#/usr/local/etc/exim/freebsd_send# con el siguiente "
+"contenido:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2690
 #, no-wrap
 msgid "example@freebsd.org:smtp.freebsd.org::587\n"
-msgstr ""
+msgstr "example@freebsd.org:smtp.freebsd.org::587\n"
 
 #. type: Title ===
 #: documentation/content/en/articles/committers-guide/_index.adoc:2695
@@ -7056,7 +7429,6 @@ msgstr "Mentores"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2700
-#, fuzzy
 msgid ""
 "All new developers have a mentor assigned to them for the first few months.  "
 "A mentor is responsible for teaching the mentee the rules and conventions of "
@@ -7065,26 +7437,24 @@ msgid ""
 "initial period."
 msgstr ""
 "Todos los nuevos desarrolladores tienen un mentor asignado durante los "
-"primeros meses. Un mentor es responsable de enseñar a los alumnos las reglas "
-"y convenciones del proyecto y de guiar sus primeros pasos en la comunidad de "
-"desarrolladores. El mentor también es personalmente responsable de las "
-"acciones de los aprendices durante este período inicial."
+"primeros meses. Un mentor es responsable de enseñar a los aprendices las "
+"reglas y convenciones del proyecto y de guiar sus primeros pasos en la "
+"comunidad de desarrolladores. El mentor también es personalmente responsable "
+"de las acciones de los aprendices durante este período inicial."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2703
-#, fuzzy
 msgid ""
 "For committers: do not commit anything without first getting mentor "
 "approval.  Document that approval with an `Approved by:` line in the commit "
 "message."
 msgstr ""
-"Para los committers: no envíen nada sin obtener primero la aprobación del "
-"mentor. Documente esa aprobación con una línea <literal>Aprobado por:</"
-"literal> en el mensaje de confirmación."
+"Para los committers: no envíes nada sin obtener primero la aprobación del "
+"mentor. Documenta esa aprobación con una línea `Approved by:` en el mensaje "
+"de commit."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2707
-#, fuzzy
 msgid ""
 "When the mentor decides that a mentee has learned the ropes and is ready to "
 "commit on their own, the mentor announces it with a commit to [."
@@ -7093,9 +7463,10 @@ msgid ""
 "be found in <<admin-branch>>."
 msgstr ""
 "Cuando el mentor decide que un aprendiz ha aprendido las reglas y está listo "
-"para hacer envíos por su cuenta, el mentor lo anuncia con un envío de "
-"<filename>conf/mentors</filename>. Este archivo está en la rama "
-"<filename>svnadmin</filename> de cada repositorio:."
+"para hacer envíos por su cuenta, el mentor lo anuncia con un commit en[."
+"filename]#mentors#.. Este archivo está en la rama huérfana [.filename]#admin#"
+" de cada repositorio. Se puede encontrar información detallada sobre cómo "
+"acceder a estas ramas en <<admin-branch>>."
 
 #. type: Title ==
 #: documentation/content/en/articles/committers-guide/_index.adoc:2709
@@ -7112,6 +7483,11 @@ msgid ""
 "review policies, but these guidelines generally apply to commits requiring "
 "review:"
 msgstr ""
+"La revisión de código es una forma de incrementar la calidad del software. "
+"Las siguientes guías aplican a los commits a la rama `head`(-CURREN) del "
+"repositorio `src`. Otras ramas y los árboles `ports` y `docs` tienen sus "
+"propias políticas, pero estas directrices aplican generalmente a commits que "
+"necesitan revisión:"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2716
@@ -7128,6 +7504,8 @@ msgid ""
 "Reviews may be conducted by email, in Bugzilla, in Phabricator, or by "
 "another mechanism. Where possible, reviews should be public."
 msgstr ""
+"Las revisiones se pueden hacer por corre, en Bugzilla, en Phabricator, o por "
+"otro mecanismo. Cuando sea posible, las revisiones deberían ser públicas."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2718
@@ -7140,7 +7518,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2719
-#, fuzzy
 msgid ""
 "Code review can be an iterative process, which continues until the patch is "
 "ready to be committed. Specifically, once a patch is sent out for review, it "
@@ -7148,11 +7525,11 @@ msgid ""
 "it is explicit, this can take whatever form makes sense for the review "
 "method."
 msgstr ""
-"La revisión del código puede ser un proceso iterativo, que continúa hasta "
-"que el parche está listo para ser comprometido. Específicamente, una vez que "
-"se envía un parche para su revisión, debe recibir una <quote>looks good</"
-"quote> antes de que se comprometa. Siempre que sea explícito, esto puede "
-"tomar cualquier forma que tenga sentido para el método de revisión."
+"La revisión de código puede ser un proceso iterativo, que continúa hasta que "
+"el parche está listo para ser comprometido. Específicamente, una vez que se "
+"envía un parche para su revisión, debes recibir un \"looks good\" explícito "
+"antes de hacer commit. Siempre que sea explícito, esto puede tomar cualquier "
+"forma que tenga sentido para el método de revisión."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2720
@@ -7225,7 +7602,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2734
-#, fuzzy
 msgid ""
 "Developers should participate in code reviews as both reviewers and "
 "reviewees.  If someone is kind enough to review your code, you should return "
@@ -7243,7 +7619,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2737
-#, fuzzy
 msgid ""
 "In some cases, no subject-matter expert may be available.  In those cases, a "
 "review by an experienced developer is sufficient when coupled with "
@@ -7272,7 +7647,7 @@ msgstr ""
 #: documentation/content/en/articles/committers-guide/_index.adoc:2743
 #, no-wrap
 msgid "Why are commit messages important?"
-msgstr ""
+msgstr "¿Por qué son importantes los mensajes de commit?"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2747
@@ -7283,6 +7658,11 @@ msgid ""
 "significant effort writing it? Does it really matter if you write simply "
 "fixed a bug?"
 msgstr ""
+"Cuando haces commit en Git, Subversion, o cualquier otro sistema de control "
+"de versiones (VCS), se te pide un texto que describa el cambio -- un mensaje "
+"de commit. ¿Cómo de importante es este mensaje? ¿Deberías dedicar un "
+"esfuerto significativo escribiéndolo? ¿Realmente importa si escribes "
+"simplemente \"arregla un bug\"?"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2750
@@ -7291,6 +7671,9 @@ msgid ""
 "time.  Commit messages are a very important method of communicating with "
 "other developers, in the present and for the future."
 msgstr ""
+"La mayoría de los proyectos tienen más de un desarrollador y duran un tiempo "
+"determinado. Los mensajes de commit son un método muy importante de "
+"comunicación con otros desarrolladores, en el presente y para el futuro."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2753
@@ -7300,16 +7683,20 @@ msgid ""
 "has learned how valuable good commit messages are; sometimes these are hard-"
 "learned lessons."
 msgstr ""
+"FreeBSD tiene cientos de desarrolladores activos y cientos de miles de "
+"commits a lo largo de décadas de historia. Durante ese tiempo la comunidad "
+"de desarrolladores ha aprendido cómo de valiosos son los buenos mensajes de "
+"commit; a veces se ha tenido que aprender a la fuerza."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2755
 msgid "Commit messages serve at least three purposes:"
-msgstr ""
+msgstr "Los mensajes de commit sirven al menos tres propósitos:"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2757
 msgid "Communicating with other developers"
-msgstr ""
+msgstr "Comunicarse con otros desarrolladores"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2762
@@ -7322,11 +7709,19 @@ msgid ""
 "review in more detail, or may have their own projects underway that would "
 "benefit from interaction."
 msgstr ""
+"Los commits en FreeBSD generan emails en varias listas de correo. Estos "
+"incluyen el mensaje de commit junto con una copia del propio parche. Los "
+"mensajes de commit también se visualizan a través de comandos como git log. "
+"Esto sirve para que otros desarrolladores sean conscientes de los cambios "
+"que se están produciendo; que otro desarrollador podría querer probar el "
+"cambio, podría tener un interés en el asunto en cuestión y querrá revisarlo "
+"en más detalle, o que podría tener sus propios proyectos en curso que se "
+"beneficiarían de una posible interacción entre ambos."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2764
 msgid "Making Changes Discoverable"
-msgstr ""
+msgstr "Haciendo Cambios que se pueden Descubrir"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2768
