@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-07-07 23:23-0300\n"
-"PO-Revision-Date: 2022-11-11 19:20+0000\n"
+"PO-Revision-Date: 2022-11-16 16:21+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesrc-scripting_index/es/>\n"
@@ -464,16 +464,20 @@ msgid ""
 "that man:sh[1] has an opportunity to learn the functions.  The preferred "
 "style is to source [.filename]#/etc/rc.subr# first of all."
 msgstr ""
+"Un script [.filename]#rc.d# debe incluir [.filename]#/etc/rc.subr# ("
+"utilizando \"`.`\") _antes_ de llamar a funciones de man:rc.subr[8] de forma "
+"que man:sh[1] tenga una oportunidad para saber acerca de las funciones. El "
+"estilo preferido es hacer \"source\" de [.filename]#/etc/rc.subr# antes de "
+"nada."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:180
-#, fuzzy
 msgid ""
 "Some useful functions related to networking are provided by another include "
 "file, [.filename]#/etc/network.subr#."
 msgstr ""
-"Algunas funciones útiles relacionadas con las redes son proporcionadas por "
-"otro archivo de inclusión, <filename>/etc/network.subr</filename>."
+"Algunas funciones útiles relacionadas con redes son proporcionadas por otro "
+"archivo de inclusión, [.filename]#/etc/network.subr#."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:185
@@ -482,10 +486,13 @@ msgid ""
 "script.  It is required by man:rc.subr[8].  That is, each [.filename]#rc.d# "
 "script _must_ set `name` before it calls man:rc.subr[8] functions."
 msgstr ""
+"&#10124; [[name-var]] La variable obligatoria `name` especifica el nombre de "
+"nuestro script. Es un requisito de man:rc.subr[8]. Es decir, cada script [."
+"filename]#rc.d# _debe establecer_ `name` antes de llamar a las funciones de "
+"man:rc.subr[8]."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:189
-#, fuzzy
 msgid ""
 "Now it is the right time to choose a unique name for our script once and for "
 "all.  We will use it in a number of places while developing the script.  For "
@@ -493,7 +500,8 @@ msgid ""
 msgstr ""
 "Ahora es el momento adecuado para elegir un nombre único para nuestro script "
 "de una vez por todas. Lo usaremos en varios lugares mientras desarrollamos "
-"el guión. Para empezar, démosle también el mismo nombre al archivo de script."
+"el script. Para empezar, démosle también el mismo nombre al archivo del "
+"script."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:196
@@ -506,6 +514,15 @@ msgid ""
 "the value by man:sh[1].  A programmer should be able to tell the language "
 "syntax from style conventions and use both of them wisely."
 msgstr ""
+"El estilo actual de los scripts [.filename]#rc.d# es englobar los valores "
+"asignados a variables entre comillas dobles. Ten en cuenta que esto es sólo "
+"una cuestión de estilo y que podría no ser aplicable siempre. Puedes omitir "
+"las comillas de forma segura alrededor de palabras sencillas que no "
+"contengan metacaracteres de man:sh[1], mientras que en ciertos casos "
+"necesitarás comillas simples para evitar cualquier interpretación del valor "
+"por parte de man:sh[1]. Un programador debería ser capaz de distinguir la "
+"sintaxis del lenguaje de las convenciones de estilo y aplicar ambas de forma "
+"apropiada."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:202
@@ -518,17 +535,24 @@ msgid ""
 "specified on the script's command line.  We will see later how man:rc."
 "subr[8] provides default methods for the standard arguments."
 msgstr ""
+"&#10125; La idea principal detrás de man:rc.subr[8] es que un script [."
+"filename]#rc.d# proporciona manejadores, o métodos, para que los invoque "
+"man:rc.subr[8]. En particular, `start`, `stop`, y otros argumentos pasados a "
+"un script [.filename]#rc.d# se manejan de esta forma. Un método es una "
+"expresión man:sh[1] que se almacena en una variable llamada `argument_cmd`, "
+"donde _argument_ corresponde a lo que se puede especificar en la línea de "
+"comando del script. Luego veremos cómo man:rc.subr[8] proporciona métodos "
+"por defecto para los argumentos estándar."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:207
-#, fuzzy
 msgid ""
 "To make the code in [.filename]#rc.d# more uniform, it is common to use `"
 "${name}` wherever appropriate.  Thus a number of lines can be just copied "
 "from one script to another."
 msgstr ""
 "Para hacer el código en [.filename]#rc.d# más uniforme, es común usar "
-"<envar>${name}</envar> donde sea apropiado. Por tanto, se pueden copiar "
+"`${name}` donde sea apropiado. Por tanto, es posible simplemente copiar "
 "varias líneas de un script a otro."
 
 #. type: Plain text
@@ -538,6 +562,10 @@ msgid ""
 "for the standard arguments.  Consequently, we must override a standard "
 "method with a no-op man:sh[1] expression if we want it to do nothing."
 msgstr ""
+"&#10126; Deberíamos tener en cuenta que man:rc.subr[8] proporciona métodos "
+"por defecto para los argumentos estándar. Consecuentemente, debemos "
+"sobrescribir un método con una expresión no-op de man:sh[1] si no queremos "
+"que haga nada."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:214
@@ -545,6 +573,8 @@ msgid ""
 "&#10127; The body of a sophisticated method can be implemented as a "
 "function.  It is a good idea to make the function name meaningful."
 msgstr ""
+"&#10127; El cuerpo de un método sofisticado se puede implementar como una "
+"función. Es una buena idea que el nombre de la función tenga un significado."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:218
@@ -553,6 +583,10 @@ msgid ""
 "functions defined in our script so they never clash with the functions from "
 "man:rc.subr[8] or another common include file."
 msgstr ""
+"Se recomienda encarecidamente añadir el prefijo `${name}` a los nombres de "
+"todas las funciones definidas en nuestro script de forma que nunca "
+"colisionen con funciones de man:rc.subr[8] o cualquier otro fichero que se "
+"incluya de forma habitual."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:222
@@ -562,6 +596,10 @@ msgid ""
 "conf[5] because there can be man:rc.conf[5] variables controlling man:rc."
 "subr[8] itself."
 msgstr ""
+"&#10128; Esta llamada a man:rc.subr[8] carga las variables de man:rc.conf[5]"
+". Nuestro script no las utiliza todavía, pero aún así se recomienda cargar "
+"man:rc.conf[5] porque puede haber variables de man:rc.conf[5] controlando al "
+"propio man:rc.subr[8]."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:225
@@ -570,6 +608,9 @@ msgid ""
 "It invokes the man:rc.subr[8] machinery to perform the requested action "
 "using the variables and methods our script has provided."
 msgstr ""
+"&#10129; Normalmente este es el último comando en un script [.filename]#rc.d#"
+". Invoca la maquinaria de man:rc.subr[8] para realizar la acción solicitada "
+"utilizando las variables y métodos que ha proporcionado nuestro script."
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:227
@@ -590,6 +631,16 @@ msgid ""
 "mandatory [.filename]#rc.d# script can have configuration variables.  We "
 "will do both things in the same script though:"
 msgstr ""
+"Ahora añadamos algunos controles a nuestro script de prueba. Como sabes, los "
+"scripts [.filename]#rc.d# están controlados por man:rc.conf[5]. "
+"Afortunadamente, man:rc.subr[8] nos oculta todas las complicaciones. El "
+"siguiente script usa man:rc.conf[5] mediante man:rc.subr[8] para ver en "
+"primer lugar si está habilitado, y para obtener un mensaje que mostrar en el "
+"momento del arranque. Estas dos tareas son de hecho independientes. En un "
+"lado, un script [.filename]#rc.d# puede simplemente soportar la activación y "
+"desactivación de su servicio. Por otro lado, un script [.filename]#rc.d# "
+"obligatorio puede tener las variables de configuración. Sin embargo, "
+"nosotros haremos ambas cosas en el mismo script:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:241
@@ -609,7 +660,7 @@ msgstr "#!/bin/sh\n"
 #: documentation/content/en/articles/rc-scripting/_index.adoc:754
 #, no-wrap
 msgid ". /etc/rc.subr\n"
-msgstr ""
+msgstr ". /etc/rc.subr\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:246
@@ -618,6 +669,8 @@ msgid ""
 "name=dummy\n"
 "rcvar=dummy_enable <.>\n"
 msgstr ""
+"name=dummy\n"
+"rcvar=dummy_enable <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:249
@@ -626,6 +679,8 @@ msgid ""
 "start_cmd=\"${name}_start\"\n"
 "stop_cmd=\":\"\n"
 msgstr ""
+"start_cmd=\"${name}_start\"\n"
+"stop_cmd=\":\"\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:253
@@ -635,6 +690,9 @@ msgid ""
 ": ${dummy_enable:=no} <.>\n"
 ": ${dummy_msg=\"Nothing started.\"} <.>\n"
 msgstr ""
+"load_rc_config $name <.>\n"
+": ${dummy_enable:=no} <.>\n"
+": ${dummy_msg=\"Nothing started.\"} <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:258
@@ -645,12 +703,16 @@ msgid ""
 "\techo \"$dummy_msg\" <.>\n"
 "}\n"
 msgstr ""
+"dummy_start()\n"
+"{\n"
+"\techo \"$dummy_msg\" <.>\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:260
 #, no-wrap
 msgid "run_rc_command \"$1\"\n"
-msgstr ""
+msgstr "run_rc_command \"$1\"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:263
@@ -662,6 +724,7 @@ msgstr "¿Qué cambió en este ejemplo?"
 msgid ""
 "&#10122; The variable `rcvar` specifies the name of the ON/OFF knob variable."
 msgstr ""
+"&#10122; La variable `rcvar` especifica el nombre de la variable ON/OFF."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:267
@@ -669,6 +732,8 @@ msgid ""
 "&#10123; Now `load_rc_config` is invoked earlier in the script, before any "
 "man:rc.conf[5] variables are accessed."
 msgstr ""
+"&#10123; Ahora `load_rc_config` es invocado pronto en el script, antes de "
+"que se accede a alguna variable de man:rc.conf[5]."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:273
@@ -681,6 +746,13 @@ msgid ""
 "method functions are to be called by `run_rc_command`, which is invoked "
 "_after_ `load_rc_config`."
 msgstr ""
+"Cuando examines scripts [.filename]#rc.d#, ten en cuenta que man:sh[1] "
+"retrasa la evaluación de expresiones en una función hasta que ésta es "
+"invocada. Por lo tanto, no es un error invocar `load_rc_config`tan tarde "
+"como justo antes de `run_rc_command` y aún así acceder a variables de man:rc."
+"conf[5] desde los métodos exportados a `run_rc_command`. Esto es porque los "
+"métodos se llaman desde `run_rc_command`, que es invocado _después_ de "
+"`load_rc_config`."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:279
@@ -692,6 +764,13 @@ msgid ""
 "Otherwise it is your script that should provide a default setting for the "
 "knob.  The canonical approach to the latter case is shown in the example."
 msgstr ""
+"&#10124; Se emitirá un aviso desde `run_rc_command` si `rcvar` está "
+"establecida, pero la variable en sí no lo está. Si tu script [.filename]#rc."
+"d# es para el sistema base, deberías añadir un valor por defecto para la "
+"viariable en [.filename]#/etc/defaults/rc.conf# y documentarlo en man:rc."
+"conf[5]. De lo contrario tu script debería proporcionar un valor por defecto "
+"para la variable. La aproximación canónica para el último caso se muestra en "
+"el ejemplo."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:286
