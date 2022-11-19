@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-07-07 23:23-0300\n"
-"PO-Revision-Date: 2022-11-16 16:21+0000\n"
+"PO-Revision-Date: 2022-11-19 11:21+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesrc-scripting_index/es/>\n"
@@ -783,12 +783,19 @@ msgid ""
 "`OFF`.  The following command will run the `start` method in spite of the "
 "setting:"
 msgstr ""
+"Puedes hacer que man:rc.subr[8] actúe como si la variable estuviera a `ON`, "
+"independientemente de su estado actual, poniendo como prefijo del argumento "
+"del script `one` o `force`, como en `onestart` o `forcestop`. Ten en cuenta "
+"sin embargo que `force` tiene otros efectos peligrosos que mencionaremos "
+"abajo, mientras que `one` simplemente tiene preferencia sobre la variable ON/"
+"OFF. Por ejemplo, asume que `dummy_enable` es `OFF`. El siguiente comando "
+"ejecutará el método `start` a pesar de esa configuración:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:290
 #, no-wrap
 msgid "# /etc/rc.d/dummy onestart\n"
-msgstr ""
+msgstr "# /etc/rc.d/dummy onestart\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:297
@@ -798,6 +805,10 @@ msgid ""
 "`dummy_msg`.  This is a trivial example of how man:rc.conf[5] variables can "
 "control an [.filename]#rc.d# script."
 msgstr ""
+"&#10125; Ahora el mensaje que se mostrará en el arranque ya no está "
+"inmutable en el script. Se especifica en una variable de man:rc.conf[5] "
+"llamada `dummy_msg`. Este es un ejemplo trivial de cómo un script de [."
+"filename]#rc.d# puede ser controlado por variables de man:rc.conf[5]."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:302
@@ -806,6 +817,9 @@ msgid ""
 "_must_ have the same prefix: `${name}_`.  For example: `dummy_mode`, "
 "`dummy_state_file`, and so on."
 msgstr ""
+"Los nombres de todas las variables man:rc.conf[5] usadas en exclusiva por "
+"nuestro script _deben tener_ el mismo prefijo: `${name}_`. Por ejemplo: "
+"`dummy_mode`, `dummy_state_file`, y así sucesivamente."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:307
@@ -815,6 +829,10 @@ msgid ""
 "script will save us from possible collisions with the man:rc.subr[8] "
 "namespace."
 msgstr ""
+"Aunque es posible utilizar internamente un nombre más corto, por ejemplo "
+"simplemente `msg`, añadir el prefijo único `${name}_` a todos los nombres "
+"globales introducidos por nuestro script nos evitará posibles colisiones en "
+"el espacio de nombres de man:rc.subr[8]."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:310
@@ -825,6 +843,11 @@ msgid ""
 "filename]#rc.d# scripts for ports should provide the defaults as shown in "
 "the example."
 msgstr ""
+"Como normal, los scripts [.filename]#rc.d# del sistema base no necesitan "
+"proporcionar valores por defecto para sus variables en man:rc.conf[5] porque "
+"estos deberían establecerse en cambio en [.filename]#/etc/defaults/rc.conf#. "
+"Por otro lado, los scripts [.filename]#rc.d# para ports deberían "
+"proporcionar los valores por defecto como se muestra en el ejemplo."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:314
@@ -833,10 +856,14 @@ msgid ""
 "emit a variable message.  Use of a shell function is overkill here, since it "
 "only runs a single command; an equally valid alternative is:"
 msgstr ""
+"&#10126; Aquí utilizamos `dummy_msg` en realidad para controlar nuestro "
+"script, es decir, para emitir un mensaje variable. Utilizar una función de "
+"shell para esto es demasiado ya que sólo ejecuta un comando. Una alternativa "
+"igualmente válida es:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:318
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "start_cmd=\"echo \\\"$dummy_msg\\\"\"\n"
 msgstr "start_cmd=\"echo \\\"$dummy_msg\\\"\"\n"
 
