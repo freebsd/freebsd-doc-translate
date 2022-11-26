@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-07-07 23:23-0300\n"
-"PO-Revision-Date: 2022-11-24 16:21+0000\n"
+"PO-Revision-Date: 2022-11-26 13:21+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesrc-scripting_index/es/>\n"
@@ -1013,12 +1013,21 @@ msgid ""
 "`${name}_program` is discouraged because using it together with `command` "
 "became an idiom of [.filename]#rc.d# scripting."
 msgstr ""
+"Por supuesto, man:sh[1] te permitirá establecer `${name}_program` desde "
+"man:rc.conf[5] o incluso desde el propio script si `command` no está "
+"establecido. En ese caso, las propiedades especiales de `${name}_program` se "
+"pierden y se convierte en una variable ordinaria que tu script puede usar "
+"para sus propios fines. Sin embargo, el uso aislado de `${name}_program` "
+"está desaconsejado porque usarlo junto con `command` se ha convertido en "
+"algo idiomático en los scripts de [.filename]#rc.d#."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:378
 msgid ""
 "For more detailed information on default methods, refer to man:rc.subr[8]."
 msgstr ""
+"Para una información más detallada acerca de los métodos por defecto, "
+"consulta man:rc.subr[8]."
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:380
@@ -1028,7 +1037,6 @@ msgstr "Inicio y cierre de un demonio avanzado"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:385
-#, fuzzy
 msgid ""
 "Let us add some meat onto the bones of the previous script and make it more "
 "complex and featureful.  The default methods can do a good job for us, but "
@@ -1036,9 +1044,9 @@ msgid ""
 "the default methods to our needs."
 msgstr ""
 "Agreguemos un poco de carne a los huesos del guión anterior y hagámoslo más "
-"complejo y característico. Los métodos predeterminados pueden hacer un buen "
-"trabajo para nosotros, pero es posible que necesitemos algunos de sus "
-"aspectos ajustados. Ahora aprenderemos cómo ajustar los métodos "
+"complejo y más rico en características. Los métodos predeterminados pueden "
+"hacer un buen trabajo por nosotros, pero es posible que necesitemos ajustar "
+"algunos de sus aspectos. Ahora aprenderemos cómo ajustar los métodos "
 "predeterminados a nuestras necesidades."
 
 #. type: delimited block . 4
@@ -1048,24 +1056,27 @@ msgid ""
 "command=\"/usr/sbin/${name}\"\n"
 "command_args=\"mock arguments > /dev/null 2>&1\" <.>\n"
 msgstr ""
+"command=\"/usr/sbin/${name}\"\n"
+"command_args=\"mock arguments > /dev/null 2>&1\" <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:399
 #, no-wrap
 msgid "pidfile=\"/var/run/${name}.pid\" <.>\n"
-msgstr ""
+msgstr "pidfile=\"/var/run/${name}.pid\" <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:401
 #, no-wrap
 msgid "required_files=\"/etc/${name}.conf /usr/share/misc/${name}.rules\" <.>\n"
 msgstr ""
+"required_files=\"/etc/${name}.conf /usr/share/misc/${name}.rules\" <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:403
 #, no-wrap
 msgid "sig_reload=\"USR1\" <.>\n"
-msgstr ""
+msgstr "sig_reload=\"USR1\" <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:406
@@ -1074,12 +1085,14 @@ msgid ""
 "start_precmd=\"${name}_prestart\" <.>\n"
 "stop_postcmd=\"echo Bye-bye\" <.>\n"
 msgstr ""
+"start_precmd=\"${name}_prestart\" <.>\n"
+"stop_postcmd=\"echo Bye-bye\" <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:408
 #, no-wrap
 msgid "extra_commands=\"reload plugh xyzzy\" <.>\n"
-msgstr ""
+msgstr "extra_commands=\"reload plugh xyzzy\" <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:411
@@ -1088,10 +1101,12 @@ msgid ""
 "plugh_cmd=\"mumbled_plugh\" <.>\n"
 "xyzzy_cmd=\"echo 'Nothing happens.'\"\n"
 msgstr ""
+"plugh_cmd=\"mumbled_plugh\" <.>\n"
+"xyzzy_cmd=\"echo 'Nothing happens.'\"\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:432
-#, no-wrap
+#, fuzzy, no-wrap
 msgid ""
 "mumbled_prestart()\n"
 "{\n"
@@ -1114,6 +1129,26 @@ msgid ""
 "\treturn 0\n"
 "}\n"
 msgstr ""
+"mumbled_prestart()\n"
+"{\n"
+"\tif checkyesno mumbled_smart; then <.>\n"
+"\t\trc_flags=\"-o smart ${rc_flags}\" <.>\n"
+"\tfi\n"
+"\tcase \"$mumbled_mode\" in\n"
+"\tfoo)\n"
+"\t\trc_flags=\"-frotz ${rc_flags}\"\n"
+"\t\t;;\n"
+"\tbar)\n"
+"\t\trc_flags=\"-baz ${rc_flags}\"\n"
+"\t\t;;\n"
+"\t*)\n"
+"\t\twarn \"Invalid value for mumbled_mode\" <.>\n"
+"\t\treturn 1 <.>\n"
+"\t\t;;\n"
+"\tesac\n"
+"\trun_rc_command xyzzy <.>\n"
+"\treturn 0\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:437
@@ -1124,6 +1159,10 @@ msgid ""
 "\techo 'A hollow voice says \"plugh\".'\n"
 "}\n"
 msgstr ""
+"mumbled_plugh() <.>\n"
+"{\n"
+"\techo 'A hollow voice says \"plugh\".'\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:445
