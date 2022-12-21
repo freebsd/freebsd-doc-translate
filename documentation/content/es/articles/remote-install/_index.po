@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:21-0300\n"
-"PO-Revision-Date: 2022-12-18 17:21+0000\n"
+"PO-Revision-Date: 2022-12-21 12:21+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesremote-install_index/es/>\n"
@@ -421,6 +421,9 @@ msgid ""
 "it is required to extract the FreeBSD distribution files from the "
 "distribution archives located on the ISO image:"
 msgstr ""
+"Puesto que las versiones recientes de FreeBSD no contienen los conjuntos de "
+"distribución regulares, es necesario extraer los ficheros de la distribución "
+"desde los archivos que se encuentran en la imagen ISO:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/remote-install/_index.adoc:178
@@ -430,17 +433,20 @@ msgid ""
 "# tar -xvf /cdrom/usr/freebsd-dist/base.txz -C DIST\n"
 "# tar -xvf /cdrom/usr/freebsd-dist/kernel.txz -C DIST\n"
 msgstr ""
+"# mkdir DIST\n"
+"# tar -xvf /cdrom/usr/freebsd-dist/base.txz -C DIST\n"
+"# tar -xvf /cdrom/usr/freebsd-dist/kernel.txz -C DIST\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:181
 msgid "Next, build the bootable mfsBSD image:"
-msgstr ""
+msgstr "Desués, construye la imagen arrancable de mfsBSD:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/remote-install/_index.adoc:185
 #, no-wrap
 msgid "# make BASE=DIST\n"
-msgstr ""
+msgstr "# make BASE=DIST\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/remote-install/_index.adoc:190
@@ -448,12 +454,14 @@ msgid ""
 "The above `make` has to be run from the top level of the mfsBSD directory "
 "tree, for example [.filename]#~/mfsbsd-2.1/#."
 msgstr ""
+"El `make` anterior se tiene que ejecutar desde el directorio raíz del árbol "
+"de directorios de mfsBSD, por ejemplo [.filename]#~/mfsbsd-2.1/#."
 
 #. type: Title ===
 #: documentation/content/en/articles/remote-install/_index.adoc:192
 #, no-wrap
 msgid "Booting mfsBSD"
-msgstr ""
+msgstr "Arrancando mfsBSD"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:196
@@ -462,12 +470,15 @@ msgid ""
 "running a live rescue system or pre-installed Linux(R) distribution.  The "
 "most suitable tool for this task is scp:"
 msgstr ""
+"Ahora que la imagen mfsBSD está lista, se debe subir al sistema remoto "
+"ejecutando un sistema de rescate o una distribución de Linux(R) pre-"
+"instalada. La mejor herramienta para esta tarea es scp:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/remote-install/_index.adoc:200
 #, no-wrap
 msgid "# scp disk.img root@192.168.0.2:.\n"
-msgstr ""
+msgstr "# scp disk.img root@192.168.0.2:.\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:204
@@ -476,12 +487,16 @@ msgid ""
 "device of the given machine.  This may be accomplished using this example "
 "providing that [.filename]#sda# is the first bootable disk device:"
 msgstr ""
+"Para arrancar la imagen mfsBSD de forma apropiada, se tiene que situar en la "
+"primera unidad (arrancable) de la máquina. Esto se puede conseguir "
+"utilizando el siguiente ejemplo asumiendo que [.filename]#sda# es la primera "
+"unidad de disco arrancable:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/remote-install/_index.adoc:208
 #, no-wrap
 msgid "# dd if=/root/disk.img of=/dev/sda bs=1m\n"
-msgstr ""
+msgstr "# dd if=/root/disk.img of=/dev/sda bs=1m\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:213
@@ -491,6 +506,11 @@ msgid ""
 "the man:ping[8] tool.  Once it has came back on-line, it should be possible "
 "to access it over man:ssh[1] as user `root` with the configured password."
 msgstr ""
+"Si todo fue bien, la imagen debería estar ahora en el MBR de la primera "
+"unidad y la máquina se puede reinciar. Controla que la máquina arranca "
+"correctamente con la herramienta man:ping[8]. Una vez que esté on-line, "
+"debería ser posible acceder a ella con man:ssh[1] como usuario `root` con la "
+"contraseña configurada."
 
 #. type: Title ==
 #: documentation/content/en/articles/remote-install/_index.adoc:215
@@ -506,6 +526,10 @@ msgid ""
 "slices, set up `gmirror` for RAID-1, and how to use `sysinstall` to install "
 "a minimal distribution of the FreeBSD operating system."
 msgstr ""
+"El mfsBSD ha arrancado co éxito y debería ser posible conectarse mediante "
+"man:ssh[1]. Esta sección describirá cómo crear y etiquetar \"slices\" de "
+"disco, configurar `gmirror` para RAID-1, y cómo utilizar `sysinstall` para "
+"instalar una distribución mínima del sistema operativo FreeBSD."
 
 #. type: Title ===
 #: documentation/content/en/articles/remote-install/_index.adoc:220
@@ -522,22 +546,26 @@ msgid ""
 "drives.  To complete this task, it is possible to use either `sysinstall` or "
 "man:fdisk[8] in conjunction to man:bsdlabel[8]."
 msgstr ""
+"La primera tarea es reservar espacio de disco para FreeBSD, es decir: crear "
+"particiones y \"slices\". Obviamente, el sistema que está actualmente en "
+"ejecución está cargado completamente en memoria y por lo tanto no habrá "
+"problemas al maniupular los discos duros. Para completar la tarea, es "
+"posible usar tanto `sysinstall` como man:fdisk[8] junto con man:bsdlabel[8]."
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:228
-#, fuzzy
 msgid ""
 "At the start, mark all system disks as empty.  Repeat the following command "
 "for each hard drive:"
 msgstr ""
-"Al principio, marque todos los discos del sistema como vacíos. Repita el "
+"Al principio, marca todos los discos del sistema como vacíos. Repite el "
 "siguiente comando para cada disco duro:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/remote-install/_index.adoc:232
 #, no-wrap
 msgid "# dd if=/dev/zero of=/dev/ad0 count=2\n"
-msgstr ""
+msgstr "# dd if=/dev/zero of=/dev/ad0 count=2\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:240
@@ -556,6 +584,20 @@ msgid ""
 "system will be configured after the FreeBSD operating system is successfully "
 "installed and booted."
 msgstr ""
+"Después, crea los \"slices\" y etiquétalos con tu herramienta preferida. "
+"Aunque `sysinstall` es considerada más fácil de usar, un método potente y "
+"quizás menos propenso a errores será usar herramientas UNIX(R) estándar en "
+"modo texto, como man:fdisk[8] y man:bsdlabel[8], que se cubrirán también en "
+"esta sección. La primera opción está bien documentada en el capítulo "
+"extref:{handbook}[Instalar FreeBSD, install-steps] del FreeBSD Handbook. "
+"Como se mencionó en la introducción, esta artículo presentará cómo "
+"configurara un sistema con RAID-1 y capacidades ZFS. Nuestra configuración "
+"consistirá en un pequeño [.filename]#/# (root), [.filename]#/usr# y [."
+"filename]#/var# configurado en espejo con man:gmirror[8] y el resto del "
+"espacio en disco será reservado para un man:zpool[8] en espejo de un sistema "
+"de ficheros ZFS. Por favor, date cuenta de que el sistema de ficheros ZFS se "
+"configurará después de que el sistema operativo FreeBSD haya sido instalado "
+"con éxito y arrancado."
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:242
@@ -564,6 +606,9 @@ msgid ""
 "initialize man:gmirror[8] on each partition and how to create a UFS2 file "
 "system in each mirrored partition:"
 msgstr ""
+"El siguiente ejemplo describirá cómo crear \"slices\" y etiquetas, "
+"inicializar man:gmirror[8] en cada partición y cómo crear un sistema de "
+"ficheros UFS2 en cada partición en espejo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/remote-install/_index.adoc:258
@@ -583,25 +628,37 @@ msgid ""
 "# newfs /dev/mirror/var\n"
 "# newfs /dev/mirror/usr\n"
 msgstr ""
+"# fdisk -BI /dev/ad0 <.>\n"
+"# fdisk -BI /dev/ad1\n"
+"# bsdlabel -wB /dev/ad0s1 <.>\n"
+"# bsdlabel -wB /dev/ad1s1\n"
+"# bsdlabel -e /dev/ad0s1 <.>\n"
+"# bsdlabel /dev/ad0s1 > /tmp/bsdlabel.txt && bsdlabel -R /dev/ad1s1 /tmp/"
+"bsdlabel.txt <.>\n"
+"# gmirror label root /dev/ad[01]s1a <.>\n"
+"# gmirror label var /dev/ad[01]s1d\n"
+"# gmirror label usr /dev/ad[01]s1e\n"
+"# gmirror label -F swap /dev/ad[01]s1b <.>\n"
+"# newfs /dev/mirror/root <.>\n"
+"# newfs /dev/mirror/var\n"
+"# newfs /dev/mirror/usr\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:261
-#, fuzzy
 msgid ""
 "Create a slice covering the entire disk and initialize the boot code "
 "contained in sector 0 of the given disk. Repeat this command for all hard "
 "drives in the system."
 msgstr ""
-"Cree una slice que use todo el disco e inicialice el boot code del sector 0 "
-"del disco seleccionado. Repita este comando para todos los discos duros en "
+"Crea una slice que use todo el disco e inicializa el boot code del sector 0 "
+"del disco seleccionado. Repite este comando para todos los discos duros en "
 "el sistema."
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:263
-#, fuzzy
 msgid "Write a standard label for each disk including the bootstrap code."
 msgstr ""
-"Escriba una etiqueta estándar para cada disco, incluido el código de "
+"Escribe una etiqueta estándar para cada disco, incluido el código de "
 "arranque."
 
 #. type: Plain text
@@ -613,21 +670,25 @@ msgid ""
 "filename]#/var#, `e` for [.filename]#/usr# and finally `f` which will later "
 "be used for ZFS."
 msgstr ""
+"Ahora edita manualmente la etiqueta del disco. Lee la página de manual de "
+"man:bsdlabel[8] para averiguar cómo crear particiones. Crea particiones `a` "
+"para el sistema de ficheros [.filename]#/# (root), `b` para swap, `d` para [."
+"filename]#/var#, `e` para [.filename]#/usr# y finalmente `f` para ser usada "
+"más tarde por ZFS."
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:267
-#, fuzzy
 msgid ""
 "Import the recently created label for the second hard drive, so both hard "
 "drives will be labeled in the same way."
 msgstr ""
-"Importe la etiqueta creada recientemente para el segundo disco duro, de modo "
-"que ambos discos estén etiquetados de la misma manera."
+"Importa la etiqueta creada recientemente para el segundo disco duro, de "
+"forma que los dos discos estén etiquetados de la misma forma."
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:269
 msgid "Initialize man:gmirror[8] on each partition."
-msgstr ""
+msgstr "Inicializa man:gmirror[8] en cada partición."
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:271
@@ -636,11 +697,14 @@ msgid ""
 "to assume that the device is in the consistent state after the power/system "
 "failure."
 msgstr ""
+"Ten en cuenta que se utiliza `-F` para la partición swap. Esto indica a "
+"man:gmirror[8] que asuma que el dispositivo estará en un estado consistente "
+"después de un error del sistema/fuente de energía."
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:273
 msgid "Create a UFS2 file system on each mirrored partition."
-msgstr ""
+msgstr "Crea un sistema de ficheros UFS2 en cada partición del espejo."
 
 #. type: Title ===
 #: documentation/content/en/articles/remote-install/_index.adoc:274
@@ -650,7 +714,6 @@ msgstr "Instalación del sistema"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:279
-#, fuzzy
 msgid ""
 "This is the most important part.  This section will describe how to actually "
 "install the minimal distribution of FreeBSD on the hard drives that we have "
@@ -661,8 +724,8 @@ msgstr ""
 "Esta es la parte más importante. Esta sección describirá cómo instalar la "
 "distribución mínima de FreeBSD en los discos duros que hemos preparado en la "
 "sección anterior. Para lograr este objetivo, todos los sistemas de archivos "
-"deben montarse, para que <application>sysinstall</application> pueda "
-"escribir el contenido de FreeBSD en los discos duros:"
+"deben montarse, para que `sysinstall` pueda escribir el contenido de FreeBSD "
+"en los discos duros:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/remote-install/_index.adoc:286
@@ -673,6 +736,10 @@ msgid ""
 "# mount /dev/mirror/var /mnt/var\n"
 "# mount /dev/mirror/usr /mnt/usr\n"
 msgstr ""
+"# mount /dev/mirror/root /mnt\n"
+"# mkdir /mnt/var /mnt/usr\n"
+"# mount /dev/mirror/var /mnt/var\n"
+"# mount /dev/mirror/usr /mnt/usr\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:293
@@ -684,6 +751,12 @@ msgid ""
 "to [.filename]#/mnt#.  Press kbd:[Enter] to submit your changes and exit the "
 "[.guimenuitem]#Options# menu by pressing kbd:[q]."
 msgstr ""
+"Cuando hayas terminado, arranca man:sysinstall[8]. Selecciona la instalación "
+"[.guimenuitem]#Custom# en el menú principal. Selecciona [."
+"guimenuitem]#Options# y presiona kbd:[Enter]. Con la ayuda de las teclas de "
+"dirección, mueve el cursor al elemento `Install Root`, presiona kbd:[Space] "
+"y cambialo a [.filename]#/mnt#. Presiona kbd:[Enter] para hacer los cambios "
+"y sal del menú [.guimenuitem]#Options# presionando kbd:[q]."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/remote-install/_index.adoc:297
@@ -691,6 +764,8 @@ msgid ""
 "Note that this step is very important and if skipped, `sysinstall` will be "
 "unable to install FreeBSD."
 msgstr ""
+"Ten en cuenta que este paso es muy importante y si lo omites, `sysinstall` "
+"no será capaz de instalar FreeBSD."
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:302
@@ -700,6 +775,11 @@ msgid ""
 "the Minimal distribution in order to save network traffic, because the "
 "system itself will be installed over ftp.  Exit this menu by choosing `Exit`."
 msgstr ""
+"Ve al menú  [.guimenuitem]#Distributions#, mueve el cursos con las teclas de "
+"dirección a `Minimal`, y márcala presionando kbd:[Space]. Este artículo "
+"utiliza la distribución Minimal para ahorrar tráfico de red, porque el "
+"sistema en sí mismo será instalado mediante ftp. Sal de este menú escogiendo "
+"`Exit`."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/remote-install/_index.adoc:306
@@ -707,6 +787,8 @@ msgid ""
 "The [.guimenuitem]#Partition# and [.guimenuitem]#Label# menus will be "
 "skipped, as these are useless now."
 msgstr ""
+"Los menús [.guimenuitem]#Partition# y [.guimenuitem]#Label# se omitirán ya "
+"que ahora son inútiles."
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:311
