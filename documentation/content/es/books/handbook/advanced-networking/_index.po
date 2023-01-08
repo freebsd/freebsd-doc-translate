@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-01 13:49-0300\n"
-"PO-Revision-Date: 2023-01-06 13:21+0000\n"
+"PO-Revision-Date: 2023-01-08 19:21+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookadvanced-networking_index/es/>\n"
@@ -271,7 +271,7 @@ msgstr ""
 "el sistema utiliza la entrada para el enrutamiento por defecto. Para hosts "
 "en la red de área local, el campo `Gateway` en la ruta por defecto se "
 "establece al sistema que tiene una conexión directa a Internet. Cuando se "
-"lee esta entrada, verifica que la columna `Flags`indica que el gateway se "
+"lee esta entrada, verifica que la columna `Flags` indica que el gateway se "
 "puede usar (`UG`)."
 
 #. type: Plain text
@@ -470,54 +470,60 @@ msgstr "G"
 #, no-wrap
 msgid "Send anything for this destination on to this gateway, which will figure out from there where to send it."
 msgstr ""
+"Envía cualquier cosa a este destino a través de este gateway, que averiguará "
+"a dónde enviarlo a continuación."
 
 #. type: Table
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:177
 #, no-wrap
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #. type: Table
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:179
 #, no-wrap
 msgid "This route was statically configured."
-msgstr ""
+msgstr "Esta ruta se ha configurado de forma estática."
 
 #. type: Table
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:180
 #, no-wrap
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #. type: Table
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:182
 #, no-wrap
 msgid "Clones a new route based upon this route for machines to connect to. This type of route is normally used for local networks."
 msgstr ""
+"Clona una nueva ruta basada en esta ruta para que las máquinas puedan "
+"conectarse. Este tipo de ruta se usa normalmente para redes locales."
 
 #. type: Table
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:183
 #, no-wrap
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #. type: Table
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:185
 #, no-wrap
 msgid "The route was auto-configured based upon a local area network (clone) route."
 msgstr ""
+"La ruta ha sido auto configurada basada en una ruta (clonada) de una red de "
+"área local."
 
 #. type: Table
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:186
 #, no-wrap
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #. type: Table
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:187
 #, no-wrap
 msgid "Route involves references to Ethernet (link) hardware."
-msgstr ""
+msgstr "La ruta incluye referencias a hardware Ethernet (link)."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:190
@@ -525,23 +531,26 @@ msgid ""
 "On a FreeBSD system, the default route can defined in [.filename]#/etc/rc."
 "conf# by specifying the IP address of the default gateway:"
 msgstr ""
+"En un sistema FreeBSD, la ruta por defecto se puede configurar en [."
+"filename]#/etc/rc.conf# especificando la dirección IP del gateway por "
+"defecto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:194
 #, no-wrap
 msgid "defaultrouter=\"10.20.30.1\"\n"
-msgstr ""
+msgstr "defaultrouter=\"10.20.30.1\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:197
 msgid "It is also possible to manually add the route using `route`:"
-msgstr ""
+msgstr "También es posible añadir la ruta de forma manual usando `route`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:201
 #, no-wrap
 msgid "# route add default 10.20.30.1\n"
-msgstr ""
+msgstr "# route add default 10.20.30.1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:205
@@ -550,12 +559,15 @@ msgid ""
 "information on manual manipulation of network routing tables, refer to man:"
 "route[8]."
 msgstr ""
+"Date cuenta de que las rutas añadidas manualmente no persisten entre "
+"reinicios. Para más información sobre la manipulación manual de tablas de "
+"enrutamiento de red, consulta man:route[8]."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:207
 #, no-wrap
 msgid "Configuring a Router with Static Routes"
-msgstr ""
+msgstr "Configurando un Router con Rutas Estáticas"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:212
@@ -567,6 +579,12 @@ msgid ""
 "bind multiple addresses, each on a different subnet, to one physical "
 "interface."
 msgstr ""
+"Un sistema FreeBSD se puede configurar como el gateway por defecto, o "
+"router, para una red si es un sistema \"dual-homed\". Un sistema \"dual-"
+"homed\" es una máquina que está en al menos dos redes diferentes. "
+"Típicamente cada red se conecta a un interfaz de red separada, aunque se "
+"puede usar IP aliasing para enlazar múltiples direcciones, cada una en una "
+"subred diferente, a una única interfaz física."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:215
@@ -577,12 +595,18 @@ msgid ""
 "can be configured to start at boot by adding this line to [.filename]#/etc/"
 "rc.conf#:"
 msgstr ""
+"Para que el sistema pueda reenviar paquetes entre interfaces, FreeBSD debe "
+"ser configurado como un router. Los estándares de Internet y las buenas "
+"prácticas de ingeniería evitan que el Proyecto FreeBSD active esta "
+"característica por defecto, pero se puede configurar en el arranque "
+"añadiendo esta línea a [.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:219
 #, no-wrap
 msgid "gateway_enable=\"YES\"          # Set to YES if this host will be a gateway\n"
 msgstr ""
+"gateway_enable=\"YES\"          # Set to YES if this host will be a gateway\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:223
@@ -590,6 +614,8 @@ msgid ""
 "To enable routing now, set the man:sysctl[8] variable `net.inet.ip."
 "forwarding` to `1`.  To stop routing, reset this variable to `0`."
 msgstr ""
+"Para habilitar el enrutado, establece la variable man:sysctl[8] `net.inet.ip."
+"forwarding` a `1`. Para parar el enrutado, restablece esta variable a `0`."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:227
@@ -600,6 +626,11 @@ msgid ""
 "Static routes are appropriate for small networks and this section describes "
 "how to add a static routing entry for a small network."
 msgstr ""
+"La tabla de enrutamiento de un router necesita rutas adicionales para saber "
+"cómo llegar a otras redes. Las rutas se puede añadir manualmente utilizando "
+"rutas estáticas o se pueden aprender automáticamente usando un protocolo de "
+"enrutamiento. Las rutas estáticas son apropiadas para redes pequeñas y esta "
+"sección describe cómo añadir una ruta estática para una red pequeña."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:233
@@ -610,17 +641,22 @@ msgid ""
 "OSPF routing protocols can be installed using the package:net/zebra[] "
 "package or port."
 msgstr ""
+"Para redes grandes, las rutas estáticas pronto se vuelven impracticables. "
+"FreeBSD incluye el demonio de enrutamiento BSD estándar man:routed[8], que "
+"proporciona los protocolos de enrutamiento RIP, versiones 1 y 2, y IRDP. Se "
+"puede instalar soporte para los protocolos de enrutado BGP y OSPFS usando el "
+"paquete o port package:net/zebra[]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:236
 msgid "Consider the following network:"
-msgstr ""
+msgstr "Considera la siguiente red:"
 
 #. type: Target for macro image
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:237
 #, no-wrap
 msgid "static-routes.png"
-msgstr ""
+msgstr "static-routes.png"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:242
@@ -630,6 +666,10 @@ msgid ""
 "allows it to connect with the outside world.  `RouterB` is already "
 "configured to use `192.168.1.1` as its default gateway."
 msgstr ""
+"En este escenario, `RouterA` es una máquina FreeBSD que está actuando como "
+"un router para el resto de Internet. Tiene una ruta por defecto establecida "
+"a `10.0.0.1` que le permite conectarse con el mundo exterior. `RouterB` ya "
+"está configurado para utilizar `192.168.1.1` como su gateway por defecto."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:244
@@ -637,6 +677,8 @@ msgid ""
 "Before adding any static routes, the routing table on `RouterA` looks like "
 "this:"
 msgstr ""
+"Antes de añadir ninguna ruta estática, la tabla de enrutamiento de `RouterA` "
+"tiene este aspecto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:249
@@ -645,6 +687,8 @@ msgid ""
 "% netstat -nr\n"
 "Routing tables\n"
 msgstr ""
+"% netstat -nr\n"
+"Routing tables\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:256
@@ -657,6 +701,12 @@ msgid ""
 "10.0.0.0/24        link#1             UC          0        0    xl0\n"
 "192.168.1.0/24     link#2             UC          0        0    xl1\n"
 msgstr ""
+"Internet:\n"
+"Destination        Gateway            Flags    Refs      Use  Netif  Expire\n"
+"default            10.0.0.1           UGS         0    49378    xl0\n"
+"127.0.0.1          127.0.0.1          UH          0        6    lo0\n"
+"10.0.0.0/24        link#1             UC          0        0    xl0\n"
+"192.168.1.0/24     link#2             UC          0        0    xl1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:260
@@ -665,12 +715,16 @@ msgid ""
 "`192.168.2.0/24` network.  The following command adds the `Internal Net 2` "
 "network to ``RouterA``'s routing table using `192.168.1.2` as the next hop:"
 msgstr ""
+"Con la tabla de enrutamiento actual, `RouterA` no tiene una ruta a la red "
+"`192.168.2.0/24`. El siguiente comando añade la red `Internal Net 2` a la "
+"tabla de enrutamiento de `RouterA` usando `192.168.1.2` para el siguiente "
+"salto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:264
 #, no-wrap
 msgid "# route add -net 192.168.2.0/24 192.168.1.2\n"
-msgstr ""
+msgstr "# route add -net 192.168.2.0/24 192.168.1.2\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:269
@@ -679,6 +733,10 @@ msgid ""
 "the routing information will not persist if the FreeBSD system reboots.  If "
 "a static route needs to be persistent, add it to [.filename]#/etc/rc.conf#:"
 msgstr ""
+"Ahora, `RouterA` puede alcanzar cualquier host en la red `192.168.2.0/24`. "
+"Sin embargo, la información de enrutamiento no persistirá si el sistema "
+"FreeBSD se reinicia. Si una ruta estática necesita ser persistente, añádela "
+"a [.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:275
@@ -688,6 +746,9 @@ msgid ""
 "static_routes=\"internalnet2\"\n"
 "route_internalnet2=\"-net 192.168.2.0/24 192.168.1.2\"\n"
 msgstr ""
+"# Add Internal Net 2 as a persistent static route\n"
+"static_routes=\"internalnet2\"\n"
+"route_internalnet2=\"-net 192.168.2.0/24 192.168.1.2\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:279
@@ -696,6 +757,10 @@ msgid ""
 "a space, where each string references a route name.  The variable "
 "`route_internalnet2` contains the static route for that route name."
 msgstr ""
+"La variable de configuración `static_routes` es una lista de cadenas "
+"separadas por un espacio, donde cada cadena referencia el nombre de una "
+"ruta. La variable `route_internalnet2` contiene la ruta estática para el "
+"nombre de esa ruta."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:282
@@ -704,6 +769,9 @@ msgid ""
 "routes.  The following shows an example of adding static routes for the "
 "`192.168.0.0/24` and `192.168.1.0/24` networks:"
 msgstr ""
+"Usar más de una cadena en `static_routes` crea múltiples rutas estáticas. Lo "
+"siguiente muestra un ejemplo de cómo añadir rutas estáticas para las redes "
+"`192.168.0.0/24` y `192.168.1.0/24`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:288
@@ -713,6 +781,9 @@ msgid ""
 "route_net1=\"-net 192.168.0.0/24 192.168.0.1\"\n"
 "route_net2=\"-net 192.168.1.0/24 192.168.1.1\"\n"
 msgstr ""
+"static_routes=\"net1 net2\"\n"
+"route_net1=\"-net 192.168.0.0/24 192.168.0.1\"\n"
+"route_net2=\"-net 192.168.1.0/24 192.168.1.1\"\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:291
@@ -720,7 +791,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1881
 #, no-wrap
 msgid "Troubleshooting"
-msgstr "Solución de problemas"
+msgstr "Resolución de problemas"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:295
@@ -730,6 +801,11 @@ msgid ""
 "sent to the link for the site.  But how do external sites know to send their "
 "packets to the network's ISP?"
 msgstr ""
+"Cuando se asigna un espacio de direcciones a una red, el proveedor de "
+"servicio configura sus propias tablas de enrutamiento de forma que todo el "
+"tráfico para la red se enviará a través del enlace para el sitio. Pero ¿cómo "
+"saben los sitios externos que tienen que enviar sus paquetes al ISP de la "
+"red?"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:298
@@ -742,6 +818,13 @@ msgid ""
 "from there down the chain of service providers until it reaches a particular "
 "network."
 msgstr ""
+"Hay un sistema que lleva el control de todos los espacios de direcciones "
+"asignados y define sus puntos de conexión a la red principal de Internet, o "
+"las líneas troncales que llevan el tráfico por todo el país y alrededor del "
+"mundo. Cada máquina troncal tiene una copia de un conjunto maestro de "
+"tablas, las cuales dirigen el tráfico para una red particular hacia un "
+"portador troncal específico, y de ahí bajando por la cadena de proveedores "
+"de servicio hasta que alcanza una red particular."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:301
