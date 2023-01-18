@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-01 13:49-0300\n"
-"PO-Revision-Date: 2023-01-13 15:21+0000\n"
+"PO-Revision-Date: 2023-01-18 13:21+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookadvanced-networking_index/es/>\n"
@@ -1271,6 +1271,15 @@ msgid ""
 "Windows(R) driver with the help of the crossref:config[config-network-ndis,"
 "NDIS] driver wrapper."
 msgstr ""
+"Los ejemplos en esta sección utilizan un dispositivo man:ath[4] y el nombre "
+"del dispositivo en los ejemplos se debe cambiar de acuerdo con la "
+"configuración. Se puede encontrar una lista de los controladores "
+"inalámbricos disponibles así como los adaptadores soportados en las Notas de "
+"Hardware de FreeBSD en la página https://www.FreeBSD.org/releases/[Release "
+"Information] del sitio web de FreeBSD. Si no existe un controlador nativo de "
+"FreeBSD para el dispositivo inalámbrico, podría ser posible utilizar el "
+"controlador de Windows(R) con la ayuda del adaptador de controladores ."
+"crossref:config[config-network-ndis,NDIS]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:456
@@ -1285,6 +1294,16 @@ msgid ""
 "support is not needed.  To load these modules at boot time, add the "
 "following lines to [.filename]#/boot/loader.conf#:"
 msgstr ""
+"Además, se tienen que cargar los módulos que implementan el soporte "
+"criptográfico para los protocolos de seguridad. Estos están pensados para "
+"ser cargados dinámicamente bajo demanda por el módulo man:wlan[4], pero por "
+"el momento se deben configurar manualmente. Los siguientes módulos están "
+"disponibles: man:wlan_wep[4], man:wlan_ccmp[4], y man:wlan_tkip[4]. Los "
+"constroladores man:wlan_ccmp[4] y man:wlan_tkip[4] sólo son necesarios "
+"cuando se utilizan protocolos de seguridad WPA o 802.11i. Si la red no "
+"soporta encriptación, no se necesita man:wlan_wep[4]. Para cargar estos "
+"módulos en el arranque, añade las siguientes líneas a [.filename]#/boot/"
+"loader.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:462
@@ -1294,6 +1313,9 @@ msgid ""
 "wlan_ccmp_load=\"YES\"\n"
 "wlan_tkip_load=\"YES\"\n"
 msgstr ""
+"wlan_wep_load=\"YES\"\n"
+"wlan_ccmp_load=\"YES\"\n"
+"wlan_tkip_load=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:466
@@ -1302,6 +1324,9 @@ msgid ""
 "reboot the FreeBSD box.  Alternately, load the modules by hand using man:"
 "kldload[8]."
 msgstr ""
+"Una vez que se ha añadido esta información a [.filename]#/boot/loader.conf#, "
+"reinicia la máquina FreeBSD. De forma alternativa, carga los módulos a mano "
+"utilizando man:kldload[8]."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:470
@@ -1310,6 +1335,9 @@ msgid ""
 "drivers into the kernel by adding the following lines to a custom kernel "
 "configuration file:"
 msgstr ""
+"Para usuarios que no quieren usar módulos, es posible compilar estos "
+"controladores en el kernel añadiendo las siguientes líneas al fichero de "
+"configuración de un kernel personalizado:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:482
@@ -1325,6 +1353,15 @@ msgid ""
 "options AH_SUPPORT_AR5416   # enable AR5416 tx/rx descriptors\n"
 "device ath_rate_sample      # SampleRate tx rate control for ath\n"
 msgstr ""
+"device wlan                 # 802.11 support\n"
+"device wlan_wep             # 802.11 WEP support\n"
+"device wlan_ccmp            # 802.11 CCMP support\n"
+"device wlan_tkip            # 802.11 TKIP support\n"
+"device wlan_amrr            # AMRR transmit rate control algorithm\n"
+"device ath                  # Atheros pci/cardbus NIC's\n"
+"device ath_hal              # pci/cardbus chip support\n"
+"options AH_SUPPORT_AR5416   # enable AR5416 tx/rx descriptors\n"
+"device ath_rate_sample      # SampleRate tx rate control for ath\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:485
@@ -1332,6 +1369,8 @@ msgid ""
 "With this information in the kernel configuration file, recompile the kernel "
 "and reboot the FreeBSD machine."
 msgstr ""
+"Con esta información en el fichero de configuración del kernele, recompila "
+"el kernel y reinicia la máquina FreeBSD."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:488
@@ -1339,6 +1378,8 @@ msgid ""
 "Information about the wireless device should appear in the boot messages, "
 "like this:"
 msgstr ""
+"En los mensajes de arranque debería aparecer información como esta acerca "
+"del dispositivo inalámbrico:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:494
@@ -1348,12 +1389,16 @@ msgid ""
 "ath0: [ITHREAD]\n"
 "ath0: AR2413 mac 7.9 RF2413 phy 4.5\n"
 msgstr ""
+"ath0: <Atheros 5212> mem 0x88000000-0x8800ffff irq 11 at device 0.0 on "
+"cardbus1\n"
+"ath0: [ITHREAD]\n"
+"ath0: AR2413 mac 7.9 RF2413 phy 4.5\n"
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:496
 #, no-wrap
 msgid "Setting the Correct Region"
-msgstr ""
+msgstr "Estableciendo la Región Correcta"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:499
@@ -1362,6 +1407,10 @@ msgid ""
 "it is necessary to correctly set the domains that apply to your location to "
 "have the correct information about what channels can be used."
 msgstr ""
+"Como la situación regulatoria es diferente en varios puntos del mundo, es "
+"necesario establecer correctamente los dominios que aplican a tu "
+"localización para así tener información correcta sobre los canales que se "
+"pueden utilizar."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:502
@@ -1369,29 +1418,33 @@ msgid ""
 "The available region definitions can be found in [.filename]#/etc/regdomain."
 "xml#.  To set the data at runtime, use `ifconfig`:"
 msgstr ""
+"Se pueden encontrar las definiciones de las regiones disponibles en [."
+"filename]#/etc/regdomain.xml#. Para establecer datos en tiempo de ejecución, "
+"usa `ifconfig`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:506
 #, no-wrap
 msgid "# ifconfig wlan0 regdomain ETSI country AT\n"
-msgstr ""
+msgstr "# ifconfig wlan0 regdomain ETSI country AT\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:509
 msgid "To persist the settings, add it to [.filename]#/etc/rc.conf#:"
 msgstr ""
+"Para hacer los cambios persistentes, añádelos a [.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:513
 #, no-wrap
 msgid "# sysrc create_args_wlan0=\"country AT regdomain ETSI\"\n"
-msgstr ""
+msgstr "# sysrc create_args_wlan0=\"country AT regdomain ETSI\"\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:515
 #, no-wrap
 msgid "Infrastructure Mode"
-msgstr ""
+msgstr "Modo Infraestructura"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:521
@@ -1401,18 +1454,22 @@ msgid ""
 "wireless network has its own name, called the SSID.  Wireless clients "
 "connect to the wireless access points."
 msgstr ""
+"El modo infraestructura (BSS) es el modo que se utiliza habitualmente. En "
+"este modo, un número de puntos de acceso inalámbrico se conectan a una red "
+"por cable. Cada red inalámbrica tiene su propio nombre, llamado SSID. Los "
+"clientes inalámbricos se conectan a los puntos de acceso inalámbricos."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:522
 #, no-wrap
 msgid "FreeBSD Clients"
-msgstr ""
+msgstr "Clientes FreeBSD"
 
 #. type: Title =====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:524
 #, no-wrap
 msgid "How to Find Access Points"
-msgstr ""
+msgstr "Cómo Encontrar Puntos de Acceso"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:529
@@ -1422,6 +1479,10 @@ msgid ""
 "available wireless frequency and probe for available access points.  Only "
 "the superuser can initiate a scan:"
 msgstr ""
+"Para escanear redes disponibles, usa man:ifconfig[8]. Esta petición puede "
+"tardar un poco en completarse ya que requiere que el sistema cambie para "
+"cada una de las frecuencias inalámbricas disponibles y escanee puntos de "
+"acceso disponibles. Sólo el super usuario puede iniciar un escaneo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:537
@@ -1433,6 +1494,11 @@ msgid ""
 "dlinkap         00:13:46:49:41:76   11   54M -90:96   100 EPS  WPA WME\n"
 "freebsdap       00:11:95:c3:0d:ac    1   54M -83:96   100 EPS  WPA\n"
 msgstr ""
+"# ifconfig wlan0 create wlandev ath0\n"
+"# ifconfig wlan0 up scan\n"
+"SSID/MESH ID    BSSID              CHAN RATE   S:N     INT CAPS\n"
+"dlinkap         00:13:46:49:41:76   11   54M -90:96   100 EPS  WPA WME\n"
+"freebsdap       00:11:95:c3:0d:ac    1   54M -83:96   100 EPS  WPA\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:543
@@ -1440,6 +1506,8 @@ msgid ""
 "The interface must be `up` before it can scan.  Subsequent scan requests do "
 "not require the interface to be marked as up again."
 msgstr ""
+"El interfaz debe estar levantado (`up`) para poder escanear. Escaneos "
+"subsiguientes no necesitan que la interfaz se levante de nuevo."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:548
@@ -1451,17 +1519,23 @@ msgid ""
 "operating there (see the definition of `list scan` in man:ifconfig[8] for "
 "more details)."
 msgstr ""
+"La salida de una petición de estaneo lista cada red BSS/IBSS encontrada. "
+"Además de listar el nombre de la red, el `SSID`, la salida también muestra "
+"el `BSSID`, que es la dirección MAC del punto de acceso. El campo `CAPS` "
+"identifica el tipo de cada red y las capacidades de las estaciones de "
+"operación (consulta la definición de `list scan` en man:ifconfig[8] para más "
+"detalles)."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:550
 msgid "One can also display the current list of known networks with:"
-msgstr ""
+msgstr "También se puede mostrar la lista actual de redes conocidas con:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:554
 #, no-wrap
 msgid "# ifconfig wlan0 list scan\n"
-msgstr ""
+msgstr "# ifconfig wlan0 list scan\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:558
@@ -1470,13 +1544,17 @@ msgid ""
 "with a `scan` request.  Old data is automatically removed from the cache, so "
 "over time this list may shrink unless more scans are done."
 msgstr ""
+"La información puede ser actualizada automáticamente por el adaptador o de "
+"forma manual con una petición `scan`. Los datos antiguos se eliminan "
+"automáticamente de la caché, de forma que con el tiempo esta lista se hace "
+"más pequeña a menos que se hagan más escaneos."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:559
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1137
 #, no-wrap
 msgid "Basic Settings"
-msgstr ""
+msgstr "Configuración Básica"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:563
@@ -1486,6 +1564,10 @@ msgid ""
 "concepts, it is strongly recommend to use <<network-wireless-wpa,WPA>> to "
 "set up the wireless network."
 msgstr ""
+"Esta sección proporciona un ejemplo sencillo de cómo hacer que un adaptador "
+"de red inalámbrico funcione en FreeBSD sin encriptación. Una vez "
+"familiarizados con estos conceptos, se recomienda encarecidamente usar "
+"<<network-wireless-wpa,WPA>> para configurar la red inalámbrica."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:566
@@ -1494,11 +1576,14 @@ msgid ""
 "access point, authenticate the station, and configure an IP address.  The "
 "following sections discuss each step."
 msgstr ""
+"Hay tres pasos básicos para configurar una red inalámbrica: seleccionar el "
+"punto de acceso, autenticar la estación, y configurar una dirección IP. Las "
+"secciones siguientes discuten cada uno de los pasos."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:568
 msgid "====== Selecting an Access Point"
-msgstr ""
+msgstr "====== Seleccionar un Punto de Acceso"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:571
@@ -1507,6 +1592,10 @@ msgid ""
 "using the builtin heuristics.  This is the default behavior when an "
 "interface is marked as up or it is listed in [.filename]#/etc/rc.conf#:"
 msgstr ""
+"La mayoría de las veces, es suficiente con dejar al sistema escoger un punto "
+"de acceso utilizando las heurísticas integradas. Este es el comportamiento "
+"por defecto cuando una interfaz se marca como levantada o si está listada en "
+"[.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:576
@@ -1516,6 +1605,8 @@ msgid ""
 "wlans_ath0=\"wlan0\"\n"
 "ifconfig_wlan0=\"DHCP\"\n"
 msgstr ""
+"wlans_ath0=\"wlan0\"\n"
+"ifconfig_wlan0=\"DHCP\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:579
@@ -1523,6 +1614,8 @@ msgid ""
 "If there are multiple access points, a specific one can be selected by its "
 "SSID:"
 msgstr ""
+"Si hay varios puntos de acceso, se puede seleccionar uno específico por su "
+"SSID:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:584
@@ -1531,6 +1624,8 @@ msgid ""
 "wlans_ath0=\"wlan0\"\n"
 "ifconfig_wlan0=\"ssid your_ssid_here DHCP\"\n"
 msgstr ""
+"wlans_ath0=\"wlan0\"\n"
+"ifconfig_wlan0=\"ssid your_ssid_here DHCP\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:588
@@ -1540,6 +1635,10 @@ msgid ""
 "one specific device.  In this case, the BSSID of the access point can be "
 "specified, with or without the SSID:"
 msgstr ""
+"En entornos donde hay varios puntos de acceso con el mismo SSID, que es algo "
+"habitual para simplificar el roaming, podría ser necesario asociar con un "
+"dispositivo específico. En este caso, se puede especificar el BSSID del "
+"punto de acceso, con o sin el SSID:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:593
@@ -1548,6 +1647,8 @@ msgid ""
 "wlans_ath0=\"wlan0\"\n"
 "ifconfig_wlan0=\"ssid your_ssid_here bssid xx:xx:xx:xx:xx:xx DHCP\"\n"
 msgstr ""
+"wlans_ath0=\"wlan0\"\n"
+"ifconfig_wlan0=\"ssid your_ssid_here bssid xx:xx:xx:xx:xx:xx DHCP\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:598
@@ -1558,6 +1659,11 @@ msgid ""
 "time-consuming.  To limit operation to a specific band, use the `mode` "
 "parameter:"
 msgstr ""
+"Hay otras formas de limitar la elección de un punto de acceso, como limitar "
+"el conjunto de frecuencias que puede escanear el sistema. Esto podría ser "
+"útil para tarjetas inalámbricas multi-banda ya que escanear todos los "
+"canales puede llevar mucho tiempo. Para limitar la operación a una banda "
+"específica, utiliza el parámetro `mode`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:603
@@ -1566,6 +1672,8 @@ msgid ""
 "wlans_ath0=\"wlan0\"\n"
 "ifconfig_wlan0=\"mode 11g ssid your_ssid_here DHCP\"\n"
 msgstr ""
+"wlans_ath0=\"wlan0\"\n"
+"ifconfig_wlan0=\"mode 11g ssid your_ssid_here DHCP\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:608
@@ -1577,11 +1685,17 @@ msgid ""
 "specify a list of channels for scanning.  More information about these "
 "parameters can be found in man:ifconfig[8]."
 msgstr ""
+"Este ejemplo forzará a la tarjeta a operar en 802.11g, que sólo se define "
+"para frecuencias de 2.4GHz de forma que no se considerarán los canales de "
+"5GHz. Esto también se puede hacer con el parámetro `channel`, que fija la "
+"operación a una frecuencia específica, y el parámetro `chanlist`, para "
+"especificar una lista de canales para escanear. Se puede encontrar más "
+"información acerca de estos parámetros en man:ifconfig[8]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:610
 msgid "====== Authentication"
-msgstr ""
+msgstr "====== Autenticación"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:618
@@ -1597,6 +1711,18 @@ msgid ""
 "next most common setup is WPA-PSK, also known as WPA Personal, which is "
 "described in <<network-wireless-wpa-wpa-psk>>."
 msgstr ""
+"Una vez que se ha seleccionado un punto de acceso, la estación necesita "
+"autenticarse antes de que pueda pasar datos. La autenticación se puede hacer "
+"de varias maneras. El esquema más común, autenticación abierta, permite a "
+"cualquier estación unirse a la red y comunicarse. Esta es la tenticación "
+"utilizada para realizar pruebas la primera vez que se configura una red "
+"inalámbrica. Otros esquemas requieren que se completen negociaciones "
+"criptográficas antes de que los datos puedan fluir, bien utilizando claves o "
+"secretos previamente compartidos, o esquemas más completos que involucran "
+"servicios de backend como RADIUS. La autenticación abierta es la "
+"configuración por defecto. La siguiente configuración más habitual es WPA-"
+"PSK, también conocida como WPA Personal, que se describe en <<network-"
+"wireless-wpa-wpa-psk>>."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:624
@@ -1607,6 +1733,11 @@ msgid ""
 "wpa_supplicant[8].  For a single AirPort(R) base station, access can be "
 "configured with:"
 msgstr ""
+"Si se usa una estación base Apple(R) AirPort(R) Extreme como punto de "
+"acceso, se necesita configurar una clave WEP junto con autenticación de "
+"clave compartida. Esto se puede configurar en [.filename]#/etc/rc.conf# o "
+"usando man:wpa_supplicant[8]. Para una única estación base AirPort(R), se "
+"puede configurar el acceso con:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:629
@@ -1615,6 +1746,9 @@ msgid ""
 "wlans_ath0=\"wlan0\"\n"
 "ifconfig_wlan0=\"authmode shared wepmode on weptxkey 1 wepkey 01234567 DHCP\"\n"
 msgstr ""
+"wlans_ath0=\"wlan0\"\n"
+"ifconfig_wlan0=\"authmode shared wepmode on weptxkey 1 wepkey 01234567 DHCP\""
+"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:634
@@ -1625,11 +1759,16 @@ msgid ""
 "it is better to use WEP with `open` authentication.  More information "
 "regarding WEP can be found in <<network-wireless-wep>>."
 msgstr ""
+"En general, se debería evitar utilizar la autenticación de clave compartida "
+"porque utiliza la clave WEP de forma muy restringica, haciéndal incluso más "
+"fácil de romper. Si se tiene que usar WEP por compatibilidad con "
+"dispositivos heredados, es mejor usar WEP con autenticación `open`. Se puede "
+"encontrar más información acerca de WEP en <<network-wireless-wep>>."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:637
 msgid "====== Getting an IP Address with DHCP"
-msgstr ""
+msgstr "====== Obteniendo una Dirección IP con DHCP"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:641
@@ -1639,17 +1778,22 @@ msgid ""
 "the IP address is obtained via DHCP.  To achieve that, edit [.filename]#/etc/"
 "rc.conf# and add `DHCP` to the configuration for the device:"
 msgstr ""
+"Una vez que se ha seleccionado un punto de acceso y se han configurado los "
+"parámetros de autenticación, se necesita obtener una dirección IP para poder "
+"comunicarse. La mayoría de las veces la dirección IP se obtiene mediante "
+"DHCP. Para conseguirlo, edita [.filename]#/etc/rc.conf# y añade `DHCP` a la "
+"configuración del dispositivo:"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:649
 msgid "The wireless interface is now ready to bring up:"
-msgstr ""
+msgstr "Ahora el interfaz inalámbrico está listo para ser levantado:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:653
 #, no-wrap
 msgid "# service netif start\n"
-msgstr ""
+msgstr "# service netif start\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:656
@@ -1657,6 +1801,8 @@ msgid ""
 "Once the interface is running, use man:ifconfig[8] to see the status of the "
 "interface [.filename]#ath0#:"
 msgstr ""
+"Una vez que el interfaz se está ejecutando, utiliza man:ifconfig[8] para ver "
+"el estado del interfaz [.filename]#ath0#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:669
@@ -1673,6 +1819,16 @@ msgid ""
 "        scanvalid 60 bgscan bgscanintvl 300 bgscanidle 250 roam:rssi 7\n"
 "        roam:rate 5 protmode CTS wme burst\n"
 msgstr ""
+"# ifconfig wlan0\n"
+"wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500\n"
+"        ether 00:11:95:d5:43:62\n"
+"        inet 192.168.1.100 netmask 0xffffff00 broadcast 192.168.1.255\n"
+"        media: IEEE 802.11 Wireless Ethernet OFDM/54Mbps mode 11g\n"
+"        status: associated\n"
+"        ssid dlinkap channel 11 (2462 Mhz 11g) bssid 00:13:46:49:41:76\n"
+"        country US ecm authmode OPEN privacy OFF txpower 21.5 bmiss 7\n"
+"        scanvalid 60 bgscan bgscanintvl 300 bgscanidle 250 roam:rssi 7\n"
+"        roam:rate 5 protmode CTS wme burst\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:673
@@ -1681,11 +1837,14 @@ msgid ""
 "network.  The `bssid 00:13:46:49:41:76` is the MAC address of the access "
 "point and `authmode OPEN` indicates that the communication is not encrypted."
 msgstr ""
+"La línea `status:associated` signifia que está conectado a la red "
+"inalámbrica. `bssid 00:13:46:49:41:76` es la dirección MAC del punto de "
+"acceso y `authmode OPEN` indica que la comunicación no está encriptada."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:675
 msgid "====== Static IP Address"
-msgstr ""
+msgstr "====== Dirección IP Estática"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:679
@@ -1695,6 +1854,10 @@ msgid ""
 "information.  Be sure to retain any other parameters for selecting the "
 "access point:"
 msgstr ""
+"Si no se puede obtener una dirección IP de un servidor DHCP, establece una "
+"dirección IP fija. Reemplaza la palabra clave `DHCP` mostrada arriba con la "
+"información de la dirección. Asegúrate de mantener cualquier otro parámetro "
+"para seleccionar el punto de acceso:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:684
@@ -1703,12 +1866,15 @@ msgid ""
 "wlans_ath0=\"wlan0\"\n"
 "ifconfig_wlan0=\"inet 192.168.1.100 netmask 255.255.255.0 ssid your_ssid_here\"\n"
 msgstr ""
+"wlans_ath0=\"wlan0\"\n"
+"ifconfig_wlan0=\"inet 192.168.1.100 netmask 255.255.255.0 ssid "
+"your_ssid_here\"\n"
 
 #. type: Title =====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:687
 #, no-wrap
 msgid "WPA"
-msgstr ""
+msgstr "WPA"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:697
@@ -1726,6 +1892,19 @@ msgid ""
 "as an alternative to TKIP, and that is preferred when possible.  For this "
 "specification, the term WPA2 or RSN is commonly used."
 msgstr ""
+"Wi-Fi Protected Access (WPA) es un protocolo de seguridad utilizado junto a "
+"redes 802.11 para atajar la falta de autenticación adecuada y las "
+"debilidades de WEP. WPA utiliza el protocolo de autenticación 802.1X y usa "
+"uno o varios encriptadores en lugar de WEP para favorecer la integridad de "
+"los datos. El único encriptador requerido por WPA es el Temporary Key "
+"Integrity Protocol (TKIP). TKIP es un encriptador que extiende el "
+"encriptador básico RC4 usado por WEP y le añade comprobación de integridad, "
+"detección de modificaciones, y medidas para responder a las intrusiones "
+"detectadas. TKIP está diseñado para funcionar en hardware heredado sólo con "
+"modificaciones software. Representa un compromiso que mejora la seguridad "
+"pero que todavía no es inmune a ataques. WPA también especifica en "
+"encriptador AES-CCMP como alternativa TKIP, y es el preferido si es posible. "
+"âra esta especificación, los términos WPA2 o RSN se usan comúnmente."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:702
@@ -1739,6 +1918,14 @@ msgid ""
 "network, WPA-PSK is by far the most commonly encountered configuration for "
 "WPA."
 msgstr ""
+"WPA define protocolos de encriptación y autenticación. La autenticación se "
+"hace habitualmente utilizando alguna de estas dos técnicas: usando 802.1X y "
+"un servicio de autenticación backend como RADIUS, o mediante una negociación "
+"mínima entre la estación y el punto de acceso utilizando un secreto "
+"previamente compartido. El primero se suele denominar WPA Enterprise y el "
+"segundo se conoce como WPA Personal. Como la mayoría de la gente no "
+"configurará un servidor RADIUS como backend para su red inalámbrica, WPA-PSK "
+"es de lejos la configuración más habitual para WPA."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:706
@@ -1749,11 +1936,16 @@ msgid ""
 "conf#, to run.  More information regarding this file can be found in man:"
 "wpa_supplicant.conf[5]."
 msgstr ""
+"El control de la conexión wireless y la negociación de la clave o la "
+"autenticación con un servidor se realiza utilizando man:wpa_supplicant[8]. "
+"Este programa requiere un fichero de configuración, [.filename]#/etc/"
+"wpa_supplicant.conf#, para ejecutarse. Se puede encontrar más información "
+"acerca de este fichero en man:wpa_supplicant.conf[5]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:709
 msgid "====== WPA-PSK"
-msgstr ""
+msgstr "====== WPA-PSK"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:713
@@ -1764,6 +1956,12 @@ msgid ""
 "WPA-PSK is intended for small networks where the use of an authentication "
 "server is not possible or desired."
 msgstr ""
+"WPA-PSK, también conocido como WPA Personal, se basa en una clave "
+"previamente compartida (PSK) que se genera a partir de una contraseña dada y "
+"se usa como clave maestra en la red inalámbrica. Esto significa que cada "
+"usuario inalámbrico compartirá la misma clave. WPA-PSK está pensado para "
+"redes pequeñas donde el uso de un servidor de autenticación no es posible o "
+"deseable."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:717
@@ -1771,6 +1969,8 @@ msgid ""
 "Always use strong passwords that are sufficiently long and made from a rich "
 "alphabet so that they will not be easily guessed or attacked."
 msgstr ""
+"Utiliza simpre contraseñas fuertes que sean suficientemente largas y creadas "
+"a partir de un alfabeto rico y que no sean fáciles de adivinar o atacar."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:720
@@ -1778,6 +1978,8 @@ msgid ""
 "The first step is the configuration of [.filename]#/etc/wpa_supplicant.conf# "
 "with the SSID and the pre-shared key of the network:"
 msgstr ""
+"El primer paso es la configuración de [.filename]#/etc/wpa_supplicant.conf# "
+"con el SSID y la clave compartida de la red:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:727
@@ -1788,6 +1990,10 @@ msgid ""
 "  psk=\"freebsdmall\"\n"
 "}\n"
 msgstr ""
+"network={\n"
+"  ssid=\"freebsdap\"\n"
+"  psk=\"freebsdmall\"\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:730
@@ -1796,6 +2002,9 @@ msgid ""
 "configuration will be done with WPA and the IP address will be obtained with "
 "DHCP:"
 msgstr ""
+"Luego, en [.filename]#/etc/rc.conf#, indica laque la configuracińo del "
+"dispositivo inalámbrico se realizará con WPA y que la dirección IP se "
+"obtendrá con DHCP:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:735
@@ -1807,12 +2016,14 @@ msgid ""
 "wlans_ath0=\"wlan0\"\n"
 "ifconfig_wlan0=\"WPA DHCP\"\n"
 msgstr ""
+"wlans_ath0=\"wlan0\"\n"
+"ifconfig_wlan0=\"WPA DHCP\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:738
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1008
 msgid "Then, bring up the interface:"
-msgstr ""
+msgstr "Después, levanta la interfaz:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:759
@@ -1837,6 +2048,24 @@ msgid ""
 "      bgscanintvl 300 bgscanidle 250 roam:rssi 7 roam:rate 5 protmode CTS\n"
 "      wme burst roaming MANUAL\n"
 msgstr ""
+"# service netif start\n"
+"Starting wpa_supplicant.\n"
+"DHCPDISCOVER on wlan0 to 255.255.255.255 port 67 interval 5\n"
+"DHCPDISCOVER on wlan0 to 255.255.255.255 port 67 interval 6\n"
+"DHCPOFFER from 192.168.0.1\n"
+"DHCPREQUEST on wlan0 to 255.255.255.255 port 67\n"
+"DHCPACK from 192.168.0.1\n"
+"bound to 192.168.0.254 -- renewal in 300 seconds.\n"
+"wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500\n"
+"      ether 00:11:95:d5:43:62\n"
+"      inet 192.168.0.254 netmask 0xffffff00 broadcast 192.168.0.255\n"
+"      media: IEEE 802.11 Wireless Ethernet OFDM/36Mbps mode 11g\n"
+"      status: associated\n"
+"      ssid freebsdap channel 1 (2412 Mhz 11g) bssid 00:11:95:c3:0d:ac\n"
+"      country US ecm authmode WPA2/802.11i privacy ON deftxkey UNDEF\n"
+"      AES-CCM 3:128-bit txpower 21.5 bmiss 7 scanvalid 450 bgscan\n"
+"      bgscanintvl 300 bgscanidle 250 roam:rssi 7 roam:rate 5 protmode CTS\n"
+"      wme burst roaming MANUAL\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:762
@@ -1844,6 +2073,8 @@ msgid ""
 "Or, try to configure the interface manually using the information in [."
 "filename]#/etc/wpa_supplicant.conf#:"
 msgstr ""
+"O, intenta configurar manualmente la interfaz utilizando la información que "
+"hay en [.filename]#/etc/wpa_supplicant.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:770
@@ -1855,6 +2086,12 @@ msgid ""
 "WPA: Key negotiation completed with 00:11:95:c3:0d:ac [PTK=CCMP GTK=CCMP]\n"
 "CTRL-EVENT-CONNECTED - Connection to 00:11:95:c3:0d:ac completed (auth) [id=0 id_str=]\n"
 msgstr ""
+"# wpa_supplicant -i wlan0 -c /etc/wpa_supplicant.conf\n"
+"Trying to associate with 00:11:95:c3:0d:ac (SSID='freebsdap' freq=2412 MHz)\n"
+"Associated with 00:11:95:c3:0d:ac\n"
+"WPA: Key negotiation completed with 00:11:95:c3:0d:ac [PTK=CCMP GTK=CCMP]\n"
+"CTRL-EVENT-CONNECTED - Connection to 00:11:95:c3:0d:ac completed (auth) ["
+"id=0 id_str=]\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:773
@@ -1862,6 +2099,8 @@ msgid ""
 "The next operation is to launch man:dhclient[8] to get the IP address from "
 "the DHCP server:"
 msgstr ""
+"La siguiente operación es lanzar man:dhcliente[8] para obtener una dirección "
+"IP del servidor DHCP:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:791
@@ -1883,6 +2122,21 @@ msgid ""
 "      bgscanintvl 300 bgscanidle 250 roam:rssi 7 roam:rate 5 protmode CTS\n"
 "      wme burst roaming MANUAL\n"
 msgstr ""
+"# dhclient wlan0\n"
+"DHCPREQUEST on wlan0 to 255.255.255.255 port 67\n"
+"DHCPACK from 192.168.0.1\n"
+"bound to 192.168.0.254 -- renewal in 300 seconds.\n"
+"# ifconfig wlan0\n"
+"wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500\n"
+"      ether 00:11:95:d5:43:62\n"
+"      inet 192.168.0.254 netmask 0xffffff00 broadcast 192.168.0.255\n"
+"      media: IEEE 802.11 Wireless Ethernet OFDM/36Mbps mode 11g\n"
+"      status: associated\n"
+"      ssid freebsdap channel 1 (2412 Mhz 11g) bssid 00:11:95:c3:0d:ac\n"
+"      country US ecm authmode WPA2/802.11i privacy ON deftxkey UNDEF\n"
+"      AES-CCM 3:128-bit txpower 21.5 bmiss 7 scanvalid 450 bgscan\n"
+"      bgscanintvl 300 bgscanidle 250 roam:rssi 7 roam:rate 5 protmode CTS\n"
+"      wme burst roaming MANUAL\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:796
@@ -1891,6 +2145,9 @@ msgid ""
 "dhclient[8] will be launched automatically after man:wpa_supplicant[8] "
 "associates with the access point."
 msgstr ""
+"Si [.filename]#/etc/rc.conf# tiene una entrada `ifconfig_wlan0=\"DHCP\"`, "
+"man:dhcliente[8] se arrancará automáticamente después de que "
+"man:wpa_supplicant[8] se asocie al punto de acceso."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:799
@@ -1898,6 +2155,8 @@ msgid ""
 "If DHCP is not possible or desired, set a static IP address after man:"
 "wpa_supplicant[8] has authenticated the station:"
 msgstr ""
+"Si no es posible o deseable utilizar DHCP, establece una dirección IP "
+"estática después de que man:wpa_supplicant[8] haya autenticado la estación:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:814
@@ -1916,6 +2175,18 @@ msgid ""
 "      bgscanintvl 300 bgscanidle 250 roam:rssi 7 roam:rate 5 protmode CTS\n"
 "      wme burst roaming MANUAL\n"
 msgstr ""
+"# ifconfig wlan0 inet 192.168.0.100 netmask 255.255.255.0\n"
+"# ifconfig wlan0\n"
+"wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500\n"
+"      ether 00:11:95:d5:43:62\n"
+"      inet 192.168.0.100 netmask 0xffffff00 broadcast 192.168.0.255\n"
+"      media: IEEE 802.11 Wireless Ethernet OFDM/36Mbps mode 11g\n"
+"      status: associated\n"
+"      ssid freebsdap channel 1 (2412 Mhz 11g) bssid 00:11:95:c3:0d:ac\n"
+"      country US ecm authmode WPA2/802.11i privacy ON deftxkey UNDEF\n"
+"      AES-CCM 3:128-bit txpower 21.5 bmiss 7 scanvalid 450 bgscan\n"
+"      bgscanintvl 300 bgscanidle 250 roam:rssi 7 roam:rate 5 protmode CTS\n"
+"      wme burst roaming MANUAL\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:817
@@ -1923,6 +2194,8 @@ msgid ""
 "When DHCP is not used, the default gateway and the nameserver also have to "
 "be manually set:"
 msgstr ""
+"Cuando no se usa DHCP, el gateway por defecto y el servidor de nombres se "
+"tienen que establecer manualmente:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:822
@@ -1931,11 +2204,13 @@ msgid ""
 "# route add default your_default_router\n"
 "# echo \"nameserver your_DNS_server\" >> /etc/resolv.conf\n"
 msgstr ""
+"# route add default your_default_router\n"
+"# echo \"nameserver your_DNS_server\" >> /etc/resolv.conf\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:826
 msgid "====== WPA with EAP-TLS"
-msgstr ""
+msgstr "====== WPA con EAP-TLS"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:830
@@ -1945,6 +2220,10 @@ msgid ""
 "secure WPA Personal.  Authentication in WPA Enterprise is based on the "
 "Extensible Authentication Protocol (EAP)."
 msgstr ""
+"La segunda forma de utilizar WPA es con un servidor de autenticación 802.1X. "
+"En este caso, WPA se llama WPA Enterprise para diferenciarlo del WPA "
+"Personal menos seguro. La autenticación en WPA Enterprise se basa en el "
+"Extensible Authentication Protocol (EAP)."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:834
@@ -1953,6 +2232,9 @@ msgid ""
 "inside an encrypted tunnel.  There are many EAP authentication methods, but "
 "EAP-TLS, EAP-TTLS, and EAP-PEAP are the most common."
 msgstr ""
+"EAP no viene con un método de encriptación. En su lugar, EAP se introduce "
+"dentro de un túnel encriptado. Hay muchos métodos de autenticación EAP, pero "
+"EAP-TLS, EAP-TTLS, y EAP-PEAP son los más comunes."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:838
@@ -1967,6 +2249,16 @@ msgid ""
 "other by presenting their respective certificates, and then verify that "
 "these certificates were signed by the organization's CA."
 msgstr ""
+"EAP con Transport Layer Security (EAP-TLS) es un protocolo de autenticación "
+"inalámbrica bien soportado ya que fue el primer método EAP certificado por "
+"la http://www.wi-fi.org/[Wi-Fi Alliance].  EAP-TLS requiere tres "
+"certificados para funcionar: el certificado de Certificate Authority (CA) "
+"instalado en todas las máquinas, el certificado de servidor para el servidor "
+"de autenticación, y un cliente de certificado para cliente inalámbrico. En "
+"este método EAP, tanto el servidor de autenticación como el cliente "
+"inalámbrico se autentican entre sí presentando sus respectivos certificados, "
+"y luego verificando que estos certificados están firmados por la CA de la "
+"organización."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:840
@@ -1974,6 +2266,8 @@ msgid ""
 "As previously, the configuration is done via [.filename]#/etc/wpa_supplicant."
 "conf#:"
 msgstr ""
+"Como antes, la configuración se hace mediante [.filename]#/etc/wpa_supplicant"
+".conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:854
@@ -1991,16 +2285,29 @@ msgid ""
 "  private_key_passwd=\"freebsdmallclient\" <.>\n"
 "}\n"
 msgstr ""
+"network={\n"
+"  ssid=\"freebsdap\" <.>\n"
+"  proto=RSN  <.>\n"
+"  key_mgmt=WPA-EAP <.>\n"
+"  eap=TLS <.>\n"
+"  identity=\"loader\" <.>\n"
+"  ca_cert=\"/etc/certs/cacert.pem\" <.>\n"
+"  client_cert=\"/etc/certs/clientcert.pem\" <.>\n"
+"  private_key=\"/etc/certs/clientkey.pem\" <.>\n"
+"  private_key_passwd=\"freebsdmallclient\" <.>\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:857
 msgid "This field indicates the network name (SSID)."
-msgstr ""
+msgstr "Este campo indica el nombre de la red (SSID)."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:858
 msgid "This example uses the RSN IEEE(R) 802.11i protocol, also known as WPA2."
 msgstr ""
+"Este ejemplo utiliza el protocolo RSN IEEE(R) 802.11i también conocido como "
+"WPA2."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:859
@@ -2008,16 +2315,18 @@ msgid ""
 "The `key_mgmt` line refers to the key management protocol to use. In this "
 "example, it is WPA using EAP authentication."
 msgstr ""
+"La línea `key_mgmt` hace referencia al protocolo de gestión de claves que se "
+"utiliza. En este ejemplo, es WPA con autenticación EAP."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:860
 msgid "This field indicates the EAP method for the connection."
-msgstr ""
+msgstr "Este campo indica el método EAP para la conexión."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:861
 msgid "The `identity` field contains the identity string for EAP."
-msgstr ""
+msgstr "El campo `identity` contiene la cadena de identidad para EAP."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:862
@@ -2027,6 +2336,8 @@ msgid ""
 "The `ca_cert` field indicates the pathname of the CA certificate file. This "
 "file is needed to verify the server certificate."
 msgstr ""
+"El campo `ca_cert` indica la ruta al fichero del certificado de CA. Este "
+"fichero es necesario para verificar el certificado de servidor."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:863
@@ -2034,6 +2345,8 @@ msgid ""
 "The `client_cert` line gives the pathname to the client certificate file. "
 "This certificate is unique to each wireless client of the network."
 msgstr ""
+"La línea `cliente_cert` da la ruta al fichero de certificado del cliente. "
+"Este certificado es único para cada cliente inalámbrico de la red."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:864
@@ -2041,23 +2354,26 @@ msgid ""
 "The `private_key` field is the pathname to the client certificate private "
 "key file."
 msgstr ""
+"El campo `private_key` es la ruta al fichero de clave privada del "
+"certificado del cliente."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:865
 msgid ""
 "The `private_key_passwd` field contains the passphrase for the private key."
 msgstr ""
+"El campo `private_key_passwd` contienen la contraseña para la clave privada."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:867
 msgid "Then, add the following lines to [.filename]#/etc/rc.conf#:"
-msgstr ""
+msgstr "Después, añade las siguientes líneas a [.filename]#/etc/rc.conf#:"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:875
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:937
 msgid "The next step is to bring up the interface:"
-msgstr ""
+msgstr "El siguiente paso es levantar la interfaz:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:894
@@ -2080,6 +2396,22 @@ msgid ""
 "      bgscanintvl 300 bgscanidle 250 roam:rssi 7 roam:rate 5 protmode CTS\n"
 "      wme burst roaming MANUAL\n"
 msgstr ""
+"# service netif start\n"
+"Starting wpa_supplicant.\n"
+"DHCPREQUEST on wlan0 to 255.255.255.255 port 67 interval 7\n"
+"DHCPREQUEST on wlan0 to 255.255.255.255 port 67 interval 15\n"
+"DHCPACK from 192.168.0.20\n"
+"bound to 192.168.0.254 -- renewal in 300 seconds.\n"
+"wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500\n"
+"      ether 00:11:95:d5:43:62\n"
+"      inet 192.168.0.254 netmask 0xffffff00 broadcast 192.168.0.255\n"
+"      media: IEEE 802.11 Wireless Ethernet DS/11Mbps mode 11g\n"
+"      status: associated\n"
+"      ssid freebsdap channel 1 (2412 Mhz 11g) bssid 00:11:95:c3:0d:ac\n"
+"      country US ecm authmode WPA2/802.11i privacy ON deftxkey UNDEF\n"
+"      AES-CCM 3:128-bit txpower 21.5 bmiss 7 scanvalid 450 bgscan\n"
+"      bgscanintvl 300 bgscanidle 250 roam:rssi 7 roam:rate 5 protmode CTS\n"
+"      wme burst roaming MANUAL\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:897
@@ -2087,11 +2419,13 @@ msgid ""
 "It is also possible to bring up the interface manually using man:"
 "wpa_supplicant[8] and man:ifconfig[8]."
 msgstr ""
+"También es posible levantar la interfaz manualmente utilizando "
+"man:wpa_supplicant[8] y man:ifconfig[8]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:900
 msgid "====== WPA with EAP-TTLS"
-msgstr ""
+msgstr "====== WPA con EAP-TTLS"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:905
@@ -2102,6 +2436,12 @@ msgid ""
 "visitors do not have client-side certificates.  EAP-TTLS uses an encrypted "
 "TLS tunnel for safe transport of the authentication data."
 msgstr ""
+"Con EAP-TLS, tanto la autenticación de servidor como la de cliente necesitan "
+"un certificado. Con EAP-TTLS, el certificado de cliente es opcional. Este "
+"método es similar a un servidor web que crea un tunel SSL seguro incluso "
+"cuando los visitantes no tienen certificados de cliente. EAP-TTLS utiliza un "
+"túnel encriptado con TLS para el transporte seguro de los datos de "
+"autenticación."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:907
@@ -2109,6 +2449,8 @@ msgid ""
 "The required configuration can be added to [.filename]#/etc/wpa_supplicant."
 "conf#:"
 msgstr ""
+"La configuración necesaria se puede añadir a [.filename]#/etc/wpa_supplicant."
+"conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:920
@@ -2125,12 +2467,22 @@ msgid ""
 "  phase2=\"auth=MD5\" <.>\n"
 "}\n"
 msgstr ""
+"network={\n"
+"  ssid=\"freebsdap\"\n"
+"  proto=RSN\n"
+"  key_mgmt=WPA-EAP\n"
+"  eap=TTLS <.>\n"
+"  identity=\"test\" <.>\n"
+"  password=\"test\" <.>\n"
+"  ca_cert=\"/etc/certs/cacert.pem\" <.>\n"
+"  phase2=\"auth=MD5\" <.>\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:923
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:993
 msgid "This field specifies the EAP method for the connection."
-msgstr ""
+msgstr "Este campo especifica el método EAP para la conexión."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:924
@@ -2139,13 +2491,15 @@ msgid ""
 "The `identity` field contains the identity string for EAP authentication "
 "inside the encrypted TLS tunnel."
 msgstr ""
+"El campo `identity` contiene la cadena de identidad para la autenticación "
+"EAP dentro del túnel encriptado con TLS."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:925
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:995
 msgid ""
 "The `password` field contains the passphrase for the EAP authentication."
-msgstr ""
+msgstr "El campo `password` contiene la contrtaseña para la autenticación EAP."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:927
@@ -2154,11 +2508,14 @@ msgid ""
 "tunnel. In this example, EAP with MD5-Challenge is used. The \"inner "
 "authentication\" phase is often called \"phase2\"."
 msgstr ""
+"Este campo especifica el método de autenticación usado en el túnel TLS "
+"encriptado. En este ejemplo, se utiliza EAP con MD5-Challenge. La fase de "
+"\"autenticación interna\" se llama habitualmente \"phase2\"."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:929
 msgid "Next, add the following lines to [.filename]#/etc/rc.conf#:"
-msgstr ""
+msgstr "Después, añade las siguientes líneas a [.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:957
@@ -2183,11 +2540,28 @@ msgid ""
 "      bgscanintvl 300 bgscanidle 250 roam:rssi 7 roam:rate 5 protmode CTS\n"
 "      wme burst roaming MANUAL\n"
 msgstr ""
+"# service netif start\n"
+"Starting wpa_supplicant.\n"
+"DHCPREQUEST on wlan0 to 255.255.255.255 port 67 interval 7\n"
+"DHCPREQUEST on wlan0 to 255.255.255.255 port 67 interval 15\n"
+"DHCPREQUEST on wlan0 to 255.255.255.255 port 67 interval 21\n"
+"DHCPACK from 192.168.0.20\n"
+"bound to 192.168.0.254 -- renewal in 300 seconds.\n"
+"wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500\n"
+"      ether 00:11:95:d5:43:62\n"
+"      inet 192.168.0.254 netmask 0xffffff00 broadcast 192.168.0.255\n"
+"      media: IEEE 802.11 Wireless Ethernet DS/11Mbps mode 11g\n"
+"      status: associated\n"
+"      ssid freebsdap channel 1 (2412 Mhz 11g) bssid 00:11:95:c3:0d:ac\n"
+"      country US ecm authmode WPA2/802.11i privacy ON deftxkey UNDEF\n"
+"      AES-CCM 3:128-bit txpower 21.5 bmiss 7 scanvalid 450 bgscan\n"
+"      bgscanintvl 300 bgscanidle 250 roam:rssi 7 roam:rate 5 protmode CTS\n"
+"      wme burst roaming MANUAL\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:961
 msgid "====== WPA with EAP-PEAP"
-msgstr ""
+msgstr "====== WPA con EAP-PEAP"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:966
@@ -2195,6 +2569,8 @@ msgid ""
 "PEAPv0/EAP-MSCHAPv2 is the most common PEAP method.  In this chapter, the "
 "term PEAP is used to refer to that method."
 msgstr ""
+"PEAPv0/EAP-MSCHAPv2 es el método PEAP más común. En este capítulo, el "
+"término PEAP se usa para referirnos a ese método."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:970
@@ -2203,6 +2579,10 @@ msgid ""
 "most used EAP standard after EAP-TLS.  In a network with mixed operating "
 "systems, PEAP should be the most supported standard after EAP-TLS."
 msgstr ""
+"Proteted EAP (PEAP) se diseñó como una alternativa a EAP-TTLS y es el "
+"segundo estándar EAP más usado por detrás de EAP-TLS. En una red con "
+"sistemas operativos variados, PEAP debería ser el estándar más soportado por "
+"detrás de EAP-TLS."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:974
@@ -2215,6 +2595,13 @@ msgid ""
 "encrypted TLS tunnel.  EAP-TTLS will use the TLS tunnel for both the "
 "username and password."
 msgstr ""
+"PEAP es similar a EAP-TTLS ya que utiliza un certificado de servidor para "
+"autenticar clientes mediante la creación de un túnel TLS encriptado entre el "
+"cliente y el servidor de autenticación, el cual protege el subsiguiente "
+"intercambio de información de autenticación. La autenticación PEAP es "
+"diferente de EAP-TTLS ya que emite el usuario sin encriptar y sólo la "
+"contraseña se envía por el túnel TLS encriptado. EAP-TTLS utilizará el túnel "
+"TLS tanto para el nombre de usuario como para la contraseña."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:976
@@ -2222,6 +2609,8 @@ msgid ""
 "Add the following lines to [.filename]#/etc/wpa_supplicant.conf# to "
 "configure the EAP-PEAP related settings:"
 msgstr ""
+"Añade las siguientes líneas a [.filename]#/etc/wpa_supplicant.conf# para "
+"configurar los parámetros relacionados con EAP-PEAP:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:990
@@ -2239,6 +2628,17 @@ msgid ""
 "  phase2=\"auth=MSCHAPV2\" <.>\n"
 "}\n"
 msgstr ""
+"network={\n"
+"  ssid=\"freebsdap\"\n"
+"  proto=RSN\n"
+"  key_mgmt=WPA-EAP\n"
+"  eap=PEAP <.>\n"
+"  identity=\"test\" <.>\n"
+"  password=\"test\" <.>\n"
+"  ca_cert=\"/etc/certs/cacert.pem\" <.>\n"
+"  phase1=\"peaplabel=0\" <.>\n"
+"  phase2=\"auth=MSCHAPV2\" <.>\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:997
@@ -2249,6 +2649,11 @@ msgid ""
 "\"client EAP encryption\" which is set by using `peaplabel=0`. More "
 "information can be found in man:wpa_supplicant.conf[5]."
 msgstr ""
+"Este campo contiene los parámetros para la primera fase de autenticación, el "
+"túnel TLS. Según el servidor de autenticación utilizado, especifica una "
+"etiqueta concreta para la autenticación. La mayoría de las veces la etiqueta "
+"será \"cliente EAP encryption\" que se establece usando `peaplabel=0`. Se "
+"puede encontrar más información en man:wpa_supplicant.confg[5]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:998
@@ -2256,17 +2661,19 @@ msgid ""
 "This field specifies the authentication protocol used in the encrypted TLS "
 "tunnel. In the case of PEAP, it is `auth=MSCHAPV2`."
 msgstr ""
+"Este campo especifica el protocolo de autenticación utilizado en el túnel "
+"encriptado con TLS. En el caso de PEAP, es `auth=MSCHAPV2`."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1000
 msgid "Add the following to [.filename]#/etc/rc.conf#:"
-msgstr ""
+msgstr "Añade lo siguiente a [.filename]#/etc/rc.conf#:"
 
 #. type: Title =====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1031
 #, no-wrap
 msgid "WEP"
-msgstr ""
+msgstr "WEP"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1035
@@ -2275,11 +2682,14 @@ msgid ""
 "There is no authentication mechanism, only a weak form of access control "
 "which is easily cracked."
 msgstr ""
+"Wired Equivalent Privacy (WEP) es parte del estándar 802.11 original. No hay "
+"mecanismo de autenticación, sólo una débil forma de control de acceso que se "
+"rompe fácilmente."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1037
 msgid "WEP can be set up using man:ifconfig[8]:"
-msgstr ""
+msgstr "Se puede configurar WEP usando man:ifconfig[8]:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1043
@@ -2289,6 +2699,9 @@ msgid ""
 "# ifconfig wlan0 inet 192.168.1.100 netmask 255.255.255.0 \\\n"
 "\t    ssid my_net wepmode on weptxkey 3 wepkey 3:0x3456789012\n"
 msgstr ""
+"# ifconfig wlan0 create wlandev ath0\n"
+"# ifconfig wlan0 inet 192.168.1.100 netmask 255.255.255.0 \\\n"
+"\t    ssid my_net wepmode on weptxkey 3 wepkey 3:0x3456789012\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1046
@@ -2298,6 +2711,10 @@ msgid ""
 "point. When unsure which key is used by the access point, try `1` (the first "
 "key) for this value."
 msgstr ""
+"`weptxkey` especifica qué clave WEP se usará en la transmisión. Este ejemplo "
+"utiliza la tercera clave. Esto debe concordar con la configuración del punto "
+"de acceso. Cuando no estés seguro de qué clave utiliza el punto de acceso, "
+"utiliza `1` (la primera clave) para este valor."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1047
@@ -2306,6 +2723,9 @@ msgid ""
 "key_. Key `1` is used by default; the index only needs to be set when using "
 "a key other than the first key."
 msgstr ""
+"`wepkey` selecciona una de las claves WEP. Debería seguir el formato _index:"
+"key_. La clave `1` se utiliza por defecto; sólo se necesita especificar el "
+"índice cuando se usa otra clave que no sea la primera."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1051
@@ -2313,11 +2733,13 @@ msgid ""
 "Replace the `0x3456789012` with the key configured for use on the access "
 "point."
 msgstr ""
+"Remplaza `0x3456789012` con la clave configurada para ser usada en el punto "
+"de acceso."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1054
 msgid "Refer to man:ifconfig[8] for further information."
-msgstr ""
+msgstr "Consulta man:ifconfig[8] para más información."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1057
@@ -2326,6 +2748,9 @@ msgid ""
 "interface with WEP.  The example above can be set up by adding the following "
 "lines to [.filename]#/etc/wpa_supplicant.conf#:"
 msgstr ""
+"La utilidad man:wpa_suppliccant[8] se puede usar para configurara una "
+"interfaz inalámbrica con WEP. El ejemplo de arriba se puede modificar "
+"añadiendo las siguientes líneas a [.filename]#/etc/wpa_supplicant.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1066
@@ -2338,11 +2763,17 @@ msgid ""
 "  wep_tx_keyidx=3\n"
 "}\n"
 msgstr ""
+"network={\n"
+"  ssid=\"my_net\"\n"
+"  key_mgmt=NONE\n"
+"  wep_key3=3456789012\n"
+"  wep_tx_keyidx=3\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1069
 msgid "Then:"
-msgstr ""
+msgstr "Después:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1075
@@ -2352,12 +2783,15 @@ msgid ""
 "Trying to associate with 00:13:46:49:41:76 (SSID='dlinkap' freq=2437 MHz)\n"
 "Associated with 00:13:46:49:41:76\n"
 msgstr ""
+"# wpa_supplicant -i wlan0 -c /etc/wpa_supplicant.conf\n"
+"Trying to associate with 00:13:46:49:41:76 (SSID='dlinkap' freq=2437 MHz)\n"
+"Associated with 00:13:46:49:41:76\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1077
 #, no-wrap
 msgid "Ad-hoc Mode"
-msgstr ""
+msgstr "Modo Ad-hoc"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1081
@@ -2366,11 +2800,14 @@ msgid ""
 "connections.  For example, to establish an ad-hoc network between the "
 "machines `A` and `B`, choose two IP addresses and a SSID."
 msgstr ""
+"El modo IBSS, también llamado modo ad-hoc, está diseñado para comunicaciones "
+"punto a punto. Por ejemplo, para establecer una red ad-hoc entre las "
+"máquinas `A` y `B`, escoge dos direcciones IP y un SSID."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1083
 msgid "On `A`:"
-msgstr ""
+msgstr "En `A`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1097
@@ -2388,17 +2825,30 @@ msgid ""
 "\t  country US ecm authmode OPEN privacy OFF txpower 21.5 scanvalid 60\n"
 "\t  protmode CTS wme burst\n"
 msgstr ""
+"# ifconfig wlan0 create wlandev ath0 wlanmode adhoc\n"
+"# ifconfig wlan0 inet 192.168.0.1 netmask 255.255.255.0 ssid freebsdap\n"
+"# ifconfig wlan0\n"
+"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
+"1500\n"
+"\t  ether 00:11:95:c3:0d:ac\n"
+"\t  inet 192.168.0.1 netmask 0xffffff00 broadcast 192.168.0.255\n"
+"\t  media: IEEE 802.11 Wireless Ethernet autoselect mode 11g <adhoc>\n"
+"\t  status: running\n"
+"\t  ssid freebsdap channel 2 (2417 Mhz 11g) bssid 02:11:95:c3:0d:ac\n"
+"\t  country US ecm authmode OPEN privacy OFF txpower 21.5 scanvalid 60\n"
+"\t  protmode CTS wme burst\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1100
 msgid ""
 "The `adhoc` parameter indicates that the interface is running in IBSS mode."
 msgstr ""
+"El parámetro `ad-hoc` indica que el interfaz está funcionando en modo IBSS."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1102
 msgid "`B` should now be able to detect `A`:"
-msgstr ""
+msgstr "Ahora `B` debería ser capaz de detecta a `A`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1109
@@ -2409,6 +2859,10 @@ msgid ""
 "  SSID/MESH ID    BSSID              CHAN RATE   S:N     INT CAPS\n"
 "  freebsdap       02:11:95:c3:0d:ac    2   54M -64:-96  100 IS   WME\n"
 msgstr ""
+"# ifconfig wlan0 create wlandev ath0 wlanmode adhoc\n"
+"# ifconfig wlan0 up scan\n"
+"  SSID/MESH ID    BSSID              CHAN RATE   S:N     INT CAPS\n"
+"  freebsdap       02:11:95:c3:0d:ac    2   54M -64:-96  100 IS   WME\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1113
@@ -2416,6 +2870,8 @@ msgid ""
 "The `I` in the output confirms that `A` is in ad-hoc mode.  Now, configure "
 "`B` with a different IP address:"
 msgstr ""
+"La `I` en la salida confirma que `A` está en modo ad-hoc. Ahora, configura "
+"`B` con una dirección IP diferente:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1126
@@ -2432,17 +2888,28 @@ msgid ""
 "\t  country US ecm authmode OPEN privacy OFF txpower 21.5 scanvalid 60\n"
 "\t  protmode CTS wme burst\n"
 msgstr ""
+"# ifconfig wlan0 inet 192.168.0.2 netmask 255.255.255.0 ssid freebsdap\n"
+"# ifconfig wlan0\n"
+"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
+"1500\n"
+"\t  ether 00:11:95:d5:43:62\n"
+"\t  inet 192.168.0.2 netmask 0xffffff00 broadcast 192.168.0.255\n"
+"\t  media: IEEE 802.11 Wireless Ethernet autoselect mode 11g <adhoc>\n"
+"\t  status: running\n"
+"\t  ssid freebsdap channel 2 (2417 Mhz 11g) bssid 02:11:95:c3:0d:ac\n"
+"\t  country US ecm authmode OPEN privacy OFF txpower 21.5 scanvalid 60\n"
+"\t  protmode CTS wme burst\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1129
 msgid "Both `A` and `B` are now ready to exchange information."
-msgstr ""
+msgstr "Ahora `A` y `B` están listas para intercambiar información."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1131
 #, no-wrap
 msgid "FreeBSD Host Access Points"
-msgstr ""
+msgstr "Puntos de Acceso Host FreeBSD"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1135
@@ -2452,6 +2919,10 @@ msgid ""
 "a FreeBSD machine is acting as a gateway to another network such as the "
 "Internet."
 msgstr ""
+"FreeBSD puede actuar como un Punto de Acceso (AP) lo que elimina la "
+"necesidad de comparar un hardware AP o montar una red ad-hoc. Esto puede ser "
+"particularmente útil cuando una máquina FreeBSD está actuando como gateway a "
+"otra red como Internet."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1141
@@ -2461,6 +2932,10 @@ msgid ""
 "security protocols being used.  For more details, see <<network-wireless-"
 "basic>>."
 msgstr ""
+"Antes de configurar una máquina FreeBSD como un AP, el kernel se tiene que "
+"configurar con el soporte de red apropiado para la tarjeta inalámbrica así "
+"como con los protocolos de seguridad que se utilizarán. Para más detalles, "
+"consulta <<network-wireless-basic>>."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1146
@@ -2468,6 +2943,9 @@ msgid ""
 "The NDIS driver wrapper for Windows(R) drivers does not currently support AP "
 "operation.  Only native FreeBSD wireless drivers support AP mode."
 msgstr ""
+"El adaptador de controladores NDIS para controladores de Windows(R) "
+"actualmente no soporta operar en modo AP. Sólo los controladores "
+"inalámbricos nativos de FreeBSD soportan modo AP."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1149
@@ -2475,6 +2953,9 @@ msgid ""
 "Once wireless networking support is loaded, check if the wireless device "
 "supports the host-based access point mode, also known as hostap mode:"
 msgstr ""
+"Una vez que se ha cargado el soporte para redes inalámbricas, comprueba si "
+"el dispositivo inalámbrico soporta el modo de punto de acceso basado en "
+"host, también conocido como modo hostap:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1156
@@ -2485,6 +2966,11 @@ msgid ""
 "drivercaps=6f85edc1<STA,FF,TURBOP,IBSS,HOSTAP,AHDEMO,TXPMGT,SHSLOT,SHPREAMBLE,MONITOR,MBSS,WPA1,WPA2,BURST,WME,WDS,BGSCAN,TXFRAG>\n"
 "cryptocaps=1f<WEP,TKIP,AES,AES_CCM,TKIPMIC>\n"
 msgstr ""
+"# ifconfig wlan0 create wlandev ath0\n"
+"# ifconfig wlan0 list caps\n"
+"drivercaps=6f85edc1<STA,FF,TURBOP,IBSS,HOSTAP,AHDEMO,TXPMGT,SHSLOT,SHPREAMBLE"
+",MONITOR,MBSS,WPA1,WPA2,BURST,WME,WDS,BGSCAN,TXFRAG>\n"
+"cryptocaps=1f<WEP,TKIP,AES,AES_CCM,TKIPMIC>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1162
@@ -2494,6 +2980,10 @@ msgid ""
 "also listed: WEP, TKIP, and AES.  This information indicates which security "
 "protocols can be used on the AP."
 msgstr ""
+"Esta salida muestra las capacidades de la tarjeta. La palabra `HOSTAP` "
+"confirma que la tarjeta inalámbrica puede actuar como un AP. También se "
+"listan varios encriptadores soportados: WEP, TKIP, y AES. Esta información "
+"indica qué protocolos de seguridad se pueden utilizar con el AP."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1164
@@ -2502,18 +2992,23 @@ msgid ""
 "the network pseudo-device, so a previously created device must be destroyed "
 "first:"
 msgstr ""
+"El dispositivo inalámbrico sólo puede ser puesto en modo hostap durante la "
+"creación del pseudo-dispositivo de red, de forma que si hay una dispositivo "
+"creado anteriormente se tiene que destruir primero:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1168
 #, no-wrap
 msgid "# ifconfig wlan0 destroy\n"
-msgstr ""
+msgstr "# ifconfig wlan0 destroy\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1171
 msgid ""
 "then regenerated with the correct option before setting the other parameters:"
 msgstr ""
+"después regenerado con la opción correcta antes de establecer otros "
+"parámetros:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1176
@@ -2522,6 +3017,9 @@ msgid ""
 "# ifconfig wlan0 create wlandev ath0 wlanmode hostap\n"
 "# ifconfig wlan0 inet 192.168.0.1 netmask 255.255.255.0 ssid freebsdap mode 11g channel 1\n"
 msgstr ""
+"# ifconfig wlan0 create wlandev ath0 wlanmode hostap\n"
+"# ifconfig wlan0 inet 192.168.0.1 netmask 255.255.255.0 ssid freebsdap mode "
+"11g channel 1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1179
@@ -2529,6 +3027,8 @@ msgid ""
 "Use man:ifconfig[8] again to see the status of the [.filename]#wlan0# "
 "interface:"
 msgstr ""
+"Usa man:ifconfig[8] de nuevo para ver el estado de la interfaz [."
+"filename]#wlan0#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1191
@@ -2544,6 +3044,16 @@ msgid ""
 "\t  country US ecm authmode OPEN privacy OFF txpower 21.5 scanvalid 60\n"
 "\t  protmode CTS wme burst dtimperiod 1 -dfs\n"
 msgstr ""
+"# ifconfig wlan0\n"
+"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
+"1500\n"
+"\t  ether 00:11:95:c3:0d:ac\n"
+"\t  inet 192.168.0.1 netmask 0xffffff00 broadcast 192.168.0.255\n"
+"\t  media: IEEE 802.11 Wireless Ethernet autoselect mode 11g <hostap>\n"
+"\t  status: running\n"
+"\t  ssid freebsdap channel 1 (2412 Mhz 11g) bssid 00:11:95:c3:0d:ac\n"
+"\t  country US ecm authmode OPEN privacy OFF txpower 21.5 scanvalid 60\n"
+"\t  protmode CTS wme burst dtimperiod 1 -dfs\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1194
@@ -2551,6 +3061,8 @@ msgid ""
 "The `hostap` parameter indicates the interface is running in the host-based "
 "access point mode."
 msgstr ""
+"El parámetro `hostap` indica que el interfaz está funcionando en modo punto "
+"de acceso basado en host."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1196
@@ -2558,6 +3070,8 @@ msgid ""
 "The interface configuration can be done automatically at boot time by adding "
 "the following lines to [.filename]#/etc/rc.conf#:"
 msgstr ""
+"La configuración del interfaz se puede hacer de forma automática al arrancar "
+"añadiendo las siguientes líneas a [.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1202
@@ -2567,12 +3081,16 @@ msgid ""
 "create_args_wlan0=\"wlanmode hostap\"\n"
 "ifconfig_wlan0=\"inet 192.168.0.1 netmask 255.255.255.0 ssid freebsdap mode 11g channel 1\"\n"
 msgstr ""
+"wlans_ath0=\"wlan0\"\n"
+"create_args_wlan0=\"wlanmode hostap\"\n"
+"ifconfig_wlan0=\"inet 192.168.0.1 netmask 255.255.255.0 ssid freebsdap mode "
+"11g channel 1\"\n"
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1204
 #, no-wrap
 msgid "Host-based Access Point Without Authentication or Encryption"
-msgstr ""
+msgstr "Punto de Acceso basado en Host Sin Autenticación o Encriptación"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1208
@@ -2581,6 +3099,9 @@ msgid ""
 "encryption, this is a simple way to check if the AP is working.  This "
 "configuration is also important for debugging client issues."
 msgstr ""
+"Aunque no se recomienda ejecutar un AP sin ninguna autenticación o "
+"encriptación, es una forma simple de comprobar que el AP funciona. Esta "
+"configuración también es importante para depurar problemas en el cliente."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1210
@@ -2588,6 +3109,8 @@ msgid ""
 "Once the AP is configured, initiate a scan from another wireless machine to "
 "find the AP:"
 msgstr ""
+"Una vez que el AP está configurado, inicia un escaneo desde otra máquina "
+"inalámbrica para encontrar el AP:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1217
@@ -2598,11 +3121,15 @@ msgid ""
 "SSID/MESH ID    BSSID              CHAN RATE   S:N     INT CAPS\n"
 "freebsdap       00:11:95:c3:0d:ac    1   54M -66:-96  100 ES   WME\n"
 msgstr ""
+"# ifconfig wlan0 create wlandev ath0\n"
+"# ifconfig wlan0 up scan\n"
+"SSID/MESH ID    BSSID              CHAN RATE   S:N     INT CAPS\n"
+"freebsdap       00:11:95:c3:0d:ac    1   54M -66:-96  100 ES   WME\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1220
 msgid "The client machine found the AP and can be associated with it:"
-msgstr ""
+msgstr "La máquina cliente ha encontrado el AP y se puede asociar con él:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1234
@@ -2620,12 +3147,24 @@ msgid ""
 "\t  scanvalid 60 bgscan bgscanintvl 300 bgscanidle 250 roam:rssi 7\n"
 "\t  roam:rate 5 protmode CTS wme burst\n"
 msgstr ""
+"# ifconfig wlan0 inet 192.168.0.2 netmask 255.255.255.0 ssid freebsdap\n"
+"# ifconfig wlan0\n"
+"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
+"1500\n"
+"\t  ether 00:11:95:d5:43:62\n"
+"\t  inet 192.168.0.2 netmask 0xffffff00 broadcast 192.168.0.255\n"
+"\t  media: IEEE 802.11 Wireless Ethernet OFDM/54Mbps mode 11g\n"
+"\t  status: associated\n"
+"\t  ssid freebsdap channel 1 (2412 Mhz 11g) bssid 00:11:95:c3:0d:ac\n"
+"\t  country US ecm authmode OPEN privacy OFF txpower 21.5 bmiss 7\n"
+"\t  scanvalid 60 bgscan bgscanintvl 300 bgscanidle 250 roam:rssi 7\n"
+"\t  roam:rate 5 protmode CTS wme burst\n"
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1237
 #, no-wrap
 msgid "WPA2 Host-based Access Point"
-msgstr ""
+msgstr "Punto de Acceso WPA2 basado en Host"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1241
@@ -2634,6 +3173,10 @@ msgid ""
 "security protocol.  More details regarding WPA and the configuration of WPA-"
 "based wireless clients can be found in <<network-wireless-wpa>>."
 msgstr ""
+"Esta sección se centra en configurar un punto de acceso FreeBSD usando el "
+"protocolo de seguridad WPA2. Se pueden encontrar más detalles acerca de WPA "
+"y de la configuración de clientes inalámbricos basados en WPA en <<network-"
+"wireless-wpa>>."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1243
@@ -2641,6 +3184,8 @@ msgid ""
 "The man:hostapd[8] daemon is used to deal with client authentication and key "
 "management on the WPA2-enabled AP."
 msgstr ""
+"El demonio man:hostapd[8] se usa para manejar la autenticación del cliente y "
+"la gestión de la clave en el AP con WPA2 habilitado."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1246
@@ -2649,12 +3194,16 @@ msgid ""
 "acting as the AP.  Once the AP is correctly working, man:hostapd[8] can be "
 "automatically started at boot with this line in [.filename]#/etc/rc.conf#:"
 msgstr ""
+"Una máquina FreeBSD configurada como AP realiza las siguientes operaciones "
+"de configuración. Una vez que el AP está funcionando correctamente, se puede "
+"iniciar man:hostapd[8] durante el arranque con esta línea en [.filename]#/"
+"etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1250
 #, no-wrap
 msgid "hostapd_enable=\"YES\"\n"
-msgstr ""
+msgstr "hostapd_enable=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1253
@@ -2662,12 +3211,14 @@ msgid ""
 "Before trying to configure man:hostapd[8], first configure the basic "
 "settings introduced in <<network-wireless-ap-basic>>."
 msgstr ""
+"Antes de intentar configurar man:hostapd[8], primero configura los "
+"parámetros básicos presentados en <<network-wireless-ap-basic>>."
 
 #. type: Title =====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1254
 #, no-wrap
 msgid "WPA2-PSK"
-msgstr ""
+msgstr "WPA2-PSK"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1257
@@ -2675,11 +3226,13 @@ msgid ""
 "WPA2-PSK is intended for small networks where the use of a backend "
 "authentication server is not possible or desired."
 msgstr ""
+"WPA2-PSK está pensado para pequeñas redes donde no se puede o no es deseable "
+"utilizar un servidor de autenticación."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1259
 msgid "The configuration is done in [.filename]#/etc/hostapd.conf#:"
-msgstr ""
+msgstr "La configuración se hace en [.filename]#/etc/hostapd.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1271
@@ -2695,11 +3248,20 @@ msgid ""
 "wpa_key_mgmt=WPA-PSK             <.>\n"
 "wpa_pairwise=CCMP                <.>\n"
 msgstr ""
+"interface=wlan0                  <.>\n"
+"debug=1                          <.>\n"
+"ctrl_interface=/var/run/hostapd  <.>\n"
+"ctrl_interface_group=wheel       <.>\n"
+"ssid=freebsdap                   <.>\n"
+"wpa=2                            <.>\n"
+"wpa_passphrase=freebsdmall       <.>\n"
+"wpa_key_mgmt=WPA-PSK             <.>\n"
+"wpa_pairwise=CCMP                <.>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1274
 msgid "Wireless interface used for the access point."
-msgstr ""
+msgstr "Interfaz inalámbrica utilizada para el punto de acceso."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1275
@@ -2707,6 +3269,8 @@ msgid ""
 "Level of verbosity used during the execution of man:hostapd[8]. A value of "
 "`1` represents the minimal level."
 msgstr ""
+"Nivel de verbosidad utilizado durante la ejecución de man:hostapd[8]. Un "
+"valor de `1` representa el nivel mínimo."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1276
@@ -2715,16 +3279,23 @@ msgid ""
 "files for communication with external programs such as man:hostapd_cli[8]. "
 "The default value is used in this example."
 msgstr ""
+"Ruta del directorio utilizado por man:hostapd[8] para almacenar ficheros de "
+"sockets de dominio para comunicación con programas externos como "
+"man:hostapd_cli[8]. En este ejemplo se usa el valor por defecto."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1277
 msgid "The group allowed to access the control interface files."
 msgstr ""
+"El grupo que tiene permitido el acceso a los ficheros de control del "
+"interfaz."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1278
 msgid "The wireless network name, or SSID, that will appear in wireless scans."
 msgstr ""
+"El nombre de la red inalámbrica, o SSID, que aparecerá en los escaneos "
+"inalámbricos."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1279
@@ -2733,16 +3304,20 @@ msgid ""
 "value of `2` configures the AP for WPA2 and is recommended. Set to `1` only "
 "if the obsolete WPA is required."
 msgstr ""
+"Activa WPA y especifica qué protocolo de autenticación WPA se requerirá. Un "
+"valor de `2` configura el AP para WPA2 y es el recomendado. Establécelo a `1`"
+" sólo si se necesita el obsoleto WPA."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1280
 msgid "ASCII passphrase for WPA authentication."
-msgstr ""
+msgstr "Contraseña ASCII para la autenticación WPA."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1281
 msgid "The key management protocol to use. This example sets WPA-PSK."
 msgstr ""
+"El protocolo de gestión de claves a usar. Este ejemplo establece WPA-PSK."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1282
@@ -2752,17 +3327,21 @@ msgid ""
 "strongly preferred when possible. TKIP should be allowed only when there are "
 "stations incapable of using CCMP."
 msgstr ""
+"Algoritmos de encriptación aceptados por el punto de acceso. En este "
+"ejemplo, sólo se acepta el encriptador CCMP (AES). CCMP es una alternativa a "
+"TKIP y se prefiere siempre que se a posible. TKIP sólo debería permitirse "
+"cuando las estaciones con incapaces de usar CCMP."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1284
 msgid "The next step is to start man:hostapd[8]:"
-msgstr ""
+msgstr "El siguiente paso es arrancar man:hostapd[8]:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1288
 #, no-wrap
 msgid "# service hostapd forcestart\n"
-msgstr ""
+msgstr "# service hostapd forcestart\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1305
@@ -2782,6 +3361,20 @@ msgid ""
 "\tdtimperiod 1 -dfs\n"
 "\tgroups: wlan\n"
 msgstr ""
+"# ifconfig wlan0\n"
+"wlan0: flags=8943<UP,BROADCAST,RUNNING,PROMISC,SIMPLEX,MULTICAST> metric 0 "
+"mtu 1500\n"
+"\tether 04:f0:21:16:8e:10\n"
+"\tinet6 fe80::6f0:21ff:fe16:8e10%wlan0 prefixlen 64 scopeid 0x9\n"
+"\tnd6 options=21<PERFORMNUD,AUTO_LINKLOCAL>\n"
+"\tmedia: IEEE 802.11 Wireless Ethernet autoselect mode 11na <hostap>\n"
+"\tstatus: running\n"
+"\tssid No5ignal channel 36 (5180 MHz 11a ht/40+) bssid 04:f0:21:16:8e:10\n"
+"\tcountry US ecm authmode WPA2/802.11i privacy MIXED deftxkey 2\n"
+"\tAES-CCM 2:128-bit AES-CCM 3:128-bit txpower 17 mcastrate 6 mgmtrate 6\n"
+"\tscanvalid 60 ampdulimit 64k ampdudensity 8 shortgi wme burst\n"
+"\tdtimperiod 1 -dfs\n"
+"\tgroups: wlan\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1310
@@ -2790,12 +3383,15 @@ msgid ""
 "wireless-wpa>> for more details.  It is possible to see the stations "
 "associated with the AP using `ifconfig _wlan0_ list sta`."
 msgstr ""
+"Una vez que el AP está funcionando, los clientes se pueden asociar a él. "
+"Consulta <<network-wireless-wpa>> para más detalles. Es posible ver las "
+"estaciones asociadas con el AP usando `ifconfig _wlan0_ list sta`."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1311
 #, no-wrap
 msgid "WEP Host-based Access Point"
-msgstr ""
+msgstr "Punto de acceso WEP basado en Host"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1315
@@ -2805,6 +3401,10 @@ msgid ""
 "wireless cards only support WEP and these cards will only support an AP "
 "without authentication or encryption."
 msgstr ""
+"No se recomienda utilizar WEP para configurar un AP ya que no hay mecanismo "
+"de autenticación y la encriptación se rompe fácilmente. Algunas tarjetas "
+"inalámbricas heredades sólo soportan WEP y estas tarjetas sólo soportarán un "
+"AP sin autenticación o encriptación."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1317
@@ -2812,6 +3412,8 @@ msgid ""
 "The wireless device can now be put into hostap mode and configured with the "
 "correct SSID and IP address:"
 msgstr ""
+"El dispositivo inalámbrico se pude poner ahora en modo hostap y se puede "
+"configurar con la SSID correcta y la dirección IP:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1323
@@ -2821,6 +3423,9 @@ msgid ""
 "# ifconfig wlan0 inet 192.168.0.1 netmask 255.255.255.0 \\\n"
 "\tssid freebsdap wepmode on weptxkey 3 wepkey 3:0x3456789012 mode 11g\n"
 msgstr ""
+"# ifconfig wlan0 create wlandev ath0 wlanmode hostap\n"
+"# ifconfig wlan0 inet 192.168.0.1 netmask 255.255.255.0 \\\n"
+"\tssid freebsdap wepmode on weptxkey 3 wepkey 3:0x3456789012 mode 11g\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1326
@@ -2829,6 +3434,9 @@ msgid ""
 "This example uses the third key as key numbering starts with `1`. This "
 "parameter must be specified in order to encrypt the data."
 msgstr ""
+"`weptxkey` indica qué clave WEP se usará en la transmisión. Este ejemplo usa "
+"la tercera clave ya que la numeración de las claves empieza por `1`. Este "
+"parámetro se debe especificar para encriptar los datos."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1327
@@ -2837,12 +3445,15 @@ msgid ""
 "key_. If the index is not given, key `1` is set. The index needs to be set "
 "when using keys other than the first key."
 msgstr ""
+"`wepkey` establece la clave WEP seleccionada. Debería estar en el formato "
+"_index:key_. Si no se proporciona índice, se establece la clave a `1`. El "
+"índice necesita establecerse cuando se usa otra clave que no sea la primera."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1329
 msgid ""
 "Use man:ifconfig[8] to see the status of the [.filename]#wlan0# interface:"
-msgstr ""
+msgstr "Usa man:ifconfig[8] para ver el estado del interfaz [.filename]#wlan0#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1341
@@ -2858,6 +3469,16 @@ msgid ""
 "\t  country US ecm authmode OPEN privacy ON deftxkey 3 wepkey 3:40-bit\n"
 "\t  txpower 21.5 scanvalid 60 protmode CTS wme burst dtimperiod 1 -dfs\n"
 msgstr ""
+"# ifconfig wlan0\n"
+"  wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
+"1500\n"
+"\t  ether 00:11:95:c3:0d:ac\n"
+"\t  inet 192.168.0.1 netmask 0xffffff00 broadcast 192.168.0.255\n"
+"\t  media: IEEE 802.11 Wireless Ethernet autoselect mode 11g <hostap>\n"
+"\t  status: running\n"
+"\t  ssid freebsdap channel 4 (2427 Mhz 11g) bssid 00:11:95:c3:0d:ac\n"
+"\t  country US ecm authmode OPEN privacy ON deftxkey 3 wepkey 3:40-bit\n"
+"\t  txpower 21.5 scanvalid 60 protmode CTS wme burst dtimperiod 1 -dfs\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1344
@@ -2865,6 +3486,8 @@ msgid ""
 "From another wireless machine, it is now possible to initiate a scan to find "
 "the AP:"
 msgstr ""
+"Desde otra máquina inalámbrica, ahora es posible iniciar un escaneo para "
+"encontrar el AP:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1351
@@ -2875,6 +3498,10 @@ msgid ""
 "SSID            BSSID              CHAN RATE  S:N   INT CAPS\n"
 "freebsdap       00:11:95:c3:0d:ac    1   54M 22:1   100 EPS\n"
 msgstr ""
+"# ifconfig wlan0 create wlandev ath0\n"
+"# ifconfig wlan0 up scan\n"
+"SSID            BSSID              CHAN RATE  S:N   INT CAPS\n"
+"freebsdap       00:11:95:c3:0d:ac    1   54M 22:1   100 EPS\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1355
@@ -2882,12 +3509,15 @@ msgid ""
 "In this example, the client machine found the AP and can associate with it "
 "using the correct parameters.  See <<network-wireless-wep>> for more details."
 msgstr ""
+"En este ejemplo, la máquina cliente ha encontrado el AP y se puede asociar a "
+"él usando los parámetros correctos. Consulta <<network-wireless-wep>> para "
+"más detalles."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1356
 #, no-wrap
 msgid "Using Both Wired and Wireless Connections"
-msgstr ""
+msgstr "Usando Tanto Redes con Cable como Inalámbricas"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1360
@@ -2896,6 +3526,10 @@ msgid ""
 "wireless connection provides flexibility and mobility.  Laptop users "
 "typically want to roam seamlessly between the two types of connections."
 msgstr ""
+"Una conexión por cable proporciona mejor rendimiento y fiabilidad, mientras "
+"que una conexión inalámbrica proporciona flexibilidad y movilidad. Los "
+"usuarios de portátiles típicamente prefieren moverse entre los dos tipos de "
+"conexiones sin interrupciones."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1363
@@ -2905,6 +3539,10 @@ msgid ""
 "most preferred and available connection from a group of network interfaces, "
 "and the operating system switches automatically when the link state changes."
 msgstr ""
+"En FreeBSD, es posible combinar dos o incluso más interfaces de red en una "
+"modalidad \"failover\". Este tipo de configuración utiliza la conexión más "
+"disponible y preferente de un grupo de interfaces de red, y el sistema "
+"operativo cambia automáticamente cuando el estado del enlace cambia."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1365
@@ -2913,6 +3551,9 @@ msgid ""
 "example for using both wired and wireless connections is provided at "
 "<<networking-lagg-wired-and-wireless>>."
 msgstr ""
+"La agregación de enlaces y el failover se cubre en <<network-aggregation>> y "
+"en <<networking-lagg-wired-and-wireless>> se proporciona un ejemplo para "
+"usar tanto una conexión por cable como una inalámbrica."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1369
@@ -2920,6 +3561,8 @@ msgid ""
 "This section describes a number of steps to help troubleshoot common "
 "wireless networking problems."
 msgstr ""
+"Esta sección describe una serie de pasos para ayudar a solucionar problemas "
+"comunes de redes inalámbricas."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1371
@@ -2928,6 +3571,9 @@ msgid ""
 "configuration has not limited the wireless device to a limited set of "
 "channels."
 msgstr ""
+"Si el punto de acceso no está en la lista cuando se escanea, comprueba que "
+"la configuración no ha limitado el dispositivo inalámbrico a un conjunto "
+"limitado de canales."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1372
@@ -2939,6 +3585,12 @@ msgid ""
 "configure the access point for open authentication and no security to see if "
 "traffic will pass."
 msgstr ""
+"Si el dispositivo no se puede asociar con el punto de acceso, verifica que "
+"la configuración concuerda con los parámetros del punto de acceso. Esto "
+"incluye el esquema de autenticación y cualquier protocolo de seguridad. "
+"Simplifica la configuración lo más posible. Si se usa un protocolo de "
+"seguridad como WAP o WEP, configura el punto de acceso con autenticación "
+"abierta y sin seguridad para ver si el tráfico pasa."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1374
@@ -2946,6 +3598,8 @@ msgid ""
 "Debugging support is provided by man:wpa_supplicant[8]. Try running this "
 "utility manually with `-dd` and look at the system logs."
 msgstr ""
+"El soporte para depuración lo proporciona man:wpa_supplicant[8]. Intenta "
+"ejecutar esta utilidad manualmente con `-dd` y mira los logs del sistema."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1375
@@ -2953,6 +3607,8 @@ msgid ""
 "Once the system can associate with the access point, diagnose the network "
 "configuration using tools like man:ping[8]."
 msgstr ""
+"Una vez que el sistema se pueda asociar con el punto de acceso, diagnostica "
+"la configuración de la red utilizando herramientas como man:ping[8]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1376
@@ -2962,6 +3618,11 @@ msgid ""
 "example, to enable console messages related to scanning for access points "
 "and the 802.11 protocol handshakes required to arrange communication:"
 msgstr ""
+"Hay muchas herramientas de depuración de bajo nivel. Los mensajes de "
+"depuración se pueden habilitar en la capa de soporte del protocolo 802.11 "
+"usando man:wlandebug[8]. Por ejemplo, para activar mensajes de consola "
+"relativos al escaneo de puntos de acceso y las negociaciones del protocolo "
+"802.11 requeridas para establecer la comunicación:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1381
@@ -2970,6 +3631,8 @@ msgid ""
 "# wlandebug -i wlan0 +scan+auth+debug+assoc\n"
 "  net.wlan.0.debug: 0 => 0xc80000<assoc,auth,scan>\n"
 msgstr ""
+"# wlandebug -i wlan0 +scan+auth+debug+assoc\n"
+"  net.wlan.0.debug: 0 => 0xc80000<assoc,auth,scan>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1387
@@ -2981,6 +3644,13 @@ msgid ""
 "that lie below the 802.11 layer so they may not show up.  To diagnose device-"
 "specific problems, refer to the driver documentation."
 msgstr ""
+"La capa 802.11 mantiene muchas estadísticas útiles y `wlanstats`, que se "
+"encuentra en [.filename]#/usr/src/tools/tools/net80211#, mostrará esta "
+"información. Estas estadísticas deberían mostrar todos los errores "
+"identificados por la capa 802.11. Sin embargo, algunos errores son "
+"identificados en los controladores de dispositivo que está por debajo de la "
+"capa 802.11 de forma que podrían no verse. Para diagnosticar problemas "
+"específicos del dispositivo, consulta la documentación del controlador."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1389
@@ -2988,12 +3658,14 @@ msgid ""
 "If the above information does not help to clarify the problem, submit a "
 "problem report and include output from the above tools."
 msgstr ""
+"Si la información de arriba no ayuda a clarificar el problema, envía un "
+"informe de error e incluye la salida de las herramientas de arriba."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1391
 #, no-wrap
 msgid "USB Tethering"
-msgstr ""
+msgstr "Tethering USB"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1395
@@ -3002,26 +3674,35 @@ msgid ""
 "(often called \"tethering\").  This feature uses one of RNDIS, CDC, or a "
 "custom Apple(R) iPhone(R)/iPad(R) protocol."
 msgstr ""
+"Muchos teléfonos móviles proporcionan la opción de compartir su conexión de "
+"datos a través de USB (habitualmente llamado \"tethering\"). Esta "
+"característica usa uno de los protocolos RNDIS, CDC o el protocolo "
+"personalizado Apple(R) iPhone(R)/iPad(R)."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1397
 msgid "Android(TM) devices generally use the man:urndis[4] driver."
 msgstr ""
+"Los dispositivos Android(TM) normalmente utilizan el controlador "
+"man:urndis[4]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1398
 msgid "Apple(R) devices use the man:ipheth[4] driver."
-msgstr ""
+msgstr "Los dispositivos Apple(R) usan el controlador man:ipheth[4]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1399
 msgid "Older devices will often use the man:cdce[4] driver."
 msgstr ""
+"Dispositivos más antiguos usarán habitualmente el controlador man:cdce[4]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1401
 msgid "Before attaching a device, load the appropriate driver into the kernel:"
 msgstr ""
+"Antes de conectar un dispositivo, carga el controlador apropiado en el "
+"kernel:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1407
@@ -3031,6 +3712,9 @@ msgid ""
 "# kldload if_cdce\n"
 "# kldload if_ipheth\n"
 msgstr ""
+"# kldload if_urndis\n"
+"# kldload if_cdce\n"
+"# kldload if_ipheth\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1411
@@ -3039,6 +3723,9 @@ msgid ""
 "normal network device.  Be sure that the \"USB tethering\" option is enabled "
 "on the device."
 msgstr ""
+"Una vez que el dispositivo está conectado ``ue``_0_ estará disponible para "
+"que lo usemos como un dispositivo de red normal. Asegúrate de que el "
+"dispositivo tiene la opción \"USB tethering\" activada."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1413
@@ -3047,6 +3734,9 @@ msgid ""
 "place the appropriate line of the following in [.filename]#/boot/loader."
 "conf#:"
 msgstr ""
+"Para hacer este cambio permanente y cargar el controlador como un módulo en "
+"el arranque, escribe la línea apropiada de las siguientes en [.filename]#/"
+"boot/loader.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1419
@@ -3056,12 +3746,15 @@ msgid ""
 "if_cdce_load=\"YES\"\n"
 "if_ipheth_load=\"YES\"\n"
 msgstr ""
+"if_urndis_load=\"YES\"\n"
+"if_cdce_load=\"YES\"\n"
+"if_ipheth_load=\"YES\"\n"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1422
 #, no-wrap
 msgid "Bluetooth"
-msgstr ""
+msgstr "Bluetooth"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1427
@@ -3073,6 +3766,13 @@ msgid ""
 "higher level service profiles, such as FTP-like file servers, file pushing, "
 "voice transport, serial line emulation, and more."
 msgstr ""
+"Bluetooth es una tecnología inalámbrica para crear redes personales que "
+"operen en la banda sin licenciar de 2.4 GHz, con un rago de 10 metros. Las "
+"redes se forman normalmente como ad-hoc a partir de dispositivos portátiles "
+"como teléfonos móviles, tabletas, y portátiles. A diferencia de la "
+"tecnología inalámbrica Wi-Fi, Bluetooth ofrece perfiles de servicio de más "
+"alto nivel, como servidores de fichero tipo FTP, envío de ficheros, "
+"transporte de voz, emulación de línea serie, y más."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1430
@@ -3080,12 +3780,14 @@ msgid ""
 "This section describes the use of a USB Bluetooth dongle on a FreeBSD "
 "system.  It then describes the various Bluetooth protocols and utilities."
 msgstr ""
+"Esta sección describe el uso de un conector USB Bluetooth en un sistema "
+"FreeBSD. Después describe varias de las utilidades y protocolos de Bluetooth."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1431
 #, no-wrap
 msgid "Loading Bluetooth Support"
-msgstr ""
+msgstr "Cargando Soporte Bluetooth"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1438
@@ -3098,6 +3800,13 @@ msgid ""
 "Bluetooth devices are supported by man:sio[4], man:ng_h4[4], and man:"
 "hcseriald[8]."
 msgstr ""
+"La pila Bluetooth en FreeBSD está implementada utilizando el framework "
+"man:netgraph[4]. Una gran variedad de conectores USB Bluetooth se soporta "
+"con man:ng_ubt[4]. Los dispositivos Bluetooth basados en Broadcom BCM2033 se "
+"soportan mediante los controladores man:ubtbcmfw[4] y man:ng_ubt[4]. La "
+"tarjeta 3Com Bluetooth PC Card 3CRWB60-A está soportada por el controlador "
+"man:ng_bt3c[4]. Los dispositivos serie y UART Bluetooth están soportados por "
+"man:sio[4], man:ng_h4[4], y man:hcseriald[8]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1441
@@ -3106,12 +3815,15 @@ msgid ""
 "then load the driver.  For example, if the device uses the man:ng_ubt[4] "
 "driver:"
 msgstr ""
+"Antes de conectar un dispositivo, determina cuál de los controladores "
+"anteriores utiliza, después carga el controlador. Por ejemplo, si el "
+"dispositivo utiliza el controlador man:ng_ubt[4]:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1445
 #, no-wrap
 msgid "# kldload ng_ubt\n"
-msgstr ""
+msgstr "# kldload ng_ubt\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1448
@@ -3120,12 +3832,15 @@ msgid ""
 "startup, the system can be configured to load the module at boot time by "
 "adding the driver to [.filename]#/boot/loader.conf#:"
 msgstr ""
+"Si el dispositivo Bluetooth se va a conectar al sistema durante el arranque, "
+"éste se puede configurar para cargar el módulo durante el arranque añadiendo "
+"el controlador a [.filename]#/boot/loader.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1452
 #, no-wrap
 msgid "ng_ubt_load=\"YES\"\n"
-msgstr ""
+msgstr "ng_ubt_load=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1456
@@ -3134,6 +3849,9 @@ msgid ""
 "successful, output similar to the following should appear on the console and "
 "in [.filename]#/var/log/messages#:"
 msgstr ""
+"Una vez que el controlador está cargado, conecta el dispositivo USB. Si el "
+"controlador se cargó de forma correcta, en la consola y en [.filename]#/var/"
+"log/messages# debería aparecer una salida similar a la siguiente:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1463
@@ -3144,6 +3862,10 @@ msgid ""
 "ubt0: Interface 1 (alt.config 5) endpoints: isoc-in=0x83, isoc-out=0x3,\n"
 "      wMaxPacketSize=49, nframes=6, buffer size=294\n"
 msgstr ""
+"ubt0: vendor 0x0a12 product 0x0001, rev 1.10/5.25, addr 2\n"
+"ubt0: Interface 0 endpoints: interrupt=0x81, bulk-in=0x82, bulk-out=0x2\n"
+"ubt0: Interface 1 (alt.config 5) endpoints: isoc-in=0x83, isoc-out=0x3,\n"
+"      wMaxPacketSize=49, nframes=6, buffer size=294\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1468
@@ -3153,6 +3875,10 @@ msgid ""
 "stack might require man:hcsecd[8] to be started.  When starting the stack, "
 "the output should be similar to the following:"
 msgstr ""
+"Para iniciar y parar la pila Bluetooth, utiliza su script de arranque. Es "
+"una buena idea parar la pila después de desconectar el dispositivo. Arrancar "
+"la pila bluetooth podría necesitar que se arranque man:hcsecd[8]. Cuando se "
+"arranca la pila, la salida debería ser similar a la siguiente:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1483
@@ -3171,12 +3897,24 @@ msgid ""
 "Max. SCO packet size: 64 bytes\n"
 "Number of SCO packets: 8\n"
 msgstr ""
+"# service bluetooth start ubt0\n"
+"BD_ADDR: 00:02:72:00:d4:1a\n"
+"Features: 0xff 0xff 0xf 00 00 00 00 00\n"
+"<3-Slot> <5-Slot> <Encryption> <Slot offset>\n"
+"<Timing accuracy> <Switch> <Hold mode> <Sniff mode>\n"
+"<Park mode> <RSSI> <Channel quality> <SCO link>\n"
+"<HV2 packets> <HV3 packets> <u-law log> <A-law log> <CVSD>\n"
+"<Paging scheme> <Power control> <Transparent SCO data>\n"
+"Max. ACL packet size: 192 bytes\n"
+"Number of ACL packets: 8\n"
+"Max. SCO packet size: 64 bytes\n"
+"Number of SCO packets: 8\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1485
 #, no-wrap
 msgid "Finding Other Bluetooth Devices"
-msgstr ""
+msgstr "Encontrando Otros Dispositivos Bluetooth"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1490
@@ -3185,6 +3923,10 @@ msgid ""
 "Bluetooth baseband capabilities.  In FreeBSD, a netgraph HCI node is created "
 "for each Bluetooth device.  For more details, refer to man:ng_hci[4]."
 msgstr ""
+"El Host Controller Interface (HCI) proporciona un método uniforme para "
+"acceder a las capacidades de la banda base de Bluetooth. En FreeBSD, se crea "
+"un nodo HCI de netgraph para cada dispositivo Bluetooth. Para más detalles, "
+"consulta man:ng_hci[4]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1497
@@ -3196,6 +3938,13 @@ msgid ""
 "should be displayed in a few seconds.  Note that a remote device will only "
 "answer the inquiry if it is set to _discoverable_ mode."
 msgstr ""
+"Una de las tareas más comunes es el descubrimiento de dispositivos Bluetooth "
+"dentro del rango de proximidad de RF. Esta operación se llama _inquiry_ "
+"(pregunta). Inquiry y otras operaciones HCI relacionadas se ejecutan con "
+"man:hccontrol[8]. El ejemplo de abajo muestra cómo encontrar dispositivos "
+"Bluetooth que están dentro de rango. La lista de dispositivos debería "
+"mostrarse en unos pocos segundos. Ten en cuenta que un dispositivo remoto "
+"sólo contestará a la pregunta si está en modo _descubrible_."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1510
@@ -3212,6 +3961,16 @@ msgid ""
 "       Clock offset: 0x78ef\n"
 "Inquiry complete. Status: No error [00]\n"
 msgstr ""
+"% hccontrol -n ubt0hci inquiry\n"
+"Inquiry result, num_responses=1\n"
+"Inquiry result #0\n"
+"       BD_ADDR: 00:80:37:29:19:a4\n"
+"       Page Scan Rep. Mode: 0x1\n"
+"       Page Scan Period Mode: 00\n"
+"       Page Scan Mode: 00\n"
+"       Class: 52:02:04\n"
+"       Clock offset: 0x78ef\n"
+"Inquiry complete. Status: No error [00]\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1516
@@ -3223,6 +3982,13 @@ msgid ""
 "contained in [.filename]#/etc/bluetooth/hosts#.  The following example shows "
 "how to obtain the human readable name that was assigned to the remote device:"
 msgstr ""
+"`BD_ADDR` es la dirección única de un dispositivo Bluetooth, similar a la "
+"dirección MAC de una tarjeta de red. Esta dirección es necesaria para la "
+"comunicación posterior con el dispositivo y es posible asignarle un valor "
+"que se amigable de leer. Hay información acerca de los hosts Bluetooth "
+"conocidos en [.filename]#/etc/bluetooth/hosts#. El siguiente ejemplo muestra "
+"cómo obtener un nombre legible por las personas que ha sido asignado a un "
+"dispositivo remoto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1522
@@ -3232,6 +3998,9 @@ msgid ""
 "BD_ADDR: 00:80:37:29:19:a4\n"
 "Name: Pav's T39\n"
 msgstr ""
+"% hccontrol -n ubt0hci remote_name_request 00:80:37:29:19:a4\n"
+"BD_ADDR: 00:80:37:29:19:a4\n"
+"Name: Pav's T39\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1526
@@ -3240,6 +4009,9 @@ msgid ""
 "computer as \"your.host.name (ubt0)\".  The name assigned to the local "
 "device can be changed at any time."
 msgstr ""
+"Si se realiza una pregunta a un dispositivo Bluetooth remoto, encontrará tu "
+"ordenador como \"your.host.name (ubt0)\". El nombre asignado al dispositivo "
+"local se puede cambiar en cualquier momento."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1529
@@ -3248,6 +4020,9 @@ msgid ""
 "hosts#.  More information about [.filename]#/etc/bluetooth/hosts# file might "
 "be found in man:bluetooth.hosts[5]."
 msgstr ""
+"Se puede asignar alias a los dispositivos remotos en [.filename]#/etc/"
+"bluetooth/hosts#. Se puede encontrar más información acerca de [.filename]#/"
+"etc/bluetooth/hosts# en man:bluetooth.hosts[5]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1532
@@ -3257,12 +4032,16 @@ msgid ""
 "several Bluetooth devices.  The following example shows how to create a "
 "connection to a remote device:"
 msgstr ""
+"El sistema Bluetooth proporciona conexión punto a punto entre dos unidades "
+"Bluetooth, o punto a multipunto que se comparte entre varios dispositivos "
+"Bluetooth. El siguiente ejemplo muestra cómo crear una conexión con un "
+"dispositivo remoto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1536
 #, no-wrap
 msgid "% hccontrol -n ubt0hci create_connection BT_ADDR\n"
-msgstr ""
+msgstr "% hccontrol -n ubt0hci create_connection BT_ADDR\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1539
@@ -3270,6 +4049,8 @@ msgid ""
 "`create_connection` accepts `BT_ADDR` as well as host aliases in [."
 "filename]#/etc/bluetooth/hosts#."
 msgstr ""
+"`create_connection` acepta `BT_ADDR` así como los alias encontrados en [."
+"filename]#/etc/bluetooth/hosts#."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1541
@@ -3277,6 +4058,8 @@ msgid ""
 "The following example shows how to obtain the list of active baseband "
 "connections for the local device:"
 msgstr ""
+"El siguiente ejemplo muestra cómo obtener la lista de conexiones activas en "
+"la banda base para el dispositivo local:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1547
@@ -3286,6 +4069,9 @@ msgid ""
 "Remote BD_ADDR    Handle Type Mode Role Encrypt Pending Queue State\n"
 "00:80:37:29:19:a4     41  ACL    0 MAST    NONE       0     0 OPEN\n"
 msgstr ""
+"% hccontrol -n ubt0hci read_connection_list\n"
+"Remote BD_ADDR    Handle Type Mode Role Encrypt Pending Queue State\n"
+"00:80:37:29:19:a4     41  ACL    0 MAST    NONE       0     0 OPEN\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1551
@@ -3294,6 +4080,10 @@ msgid ""
 "is required, though it is normally not required to do this by hand.  The "
 "stack will automatically terminate inactive baseband connections."
 msgstr ""
+"Un _manejador de conexión_ es útil cuando se requiere la terminación de una "
+"conexión de la banda base, aunque normalmente no es necesario hacer esto a "
+"mano. La pila terminará automáticamente las conexiones de banda base "
+"inactivas."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1557
@@ -3303,6 +4093,9 @@ msgid ""
 "Connection handle: 41\n"
 "Reason: Connection terminated by local host [0x16]\n"
 msgstr ""
+"# hccontrol -n ubt0hci disconnect 41\n"
+"Connection handle: 41\n"
+"Reason: Connection terminated by local host [0x16]\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1561
@@ -3310,12 +4103,15 @@ msgid ""
 "Type `hccontrol help` for a complete listing of available HCI commands.  "
 "Most of the HCI commands do not require superuser privileges."
 msgstr ""
+"Teclea `hccontrol help` para obtener un listado completo de los comandos HCI "
+"disponibles. La mayoría de los comandos HCI no requieren privilegios de "
+"súper usuario."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1562
 #, no-wrap
 msgid "Device Pairing"
-msgstr ""
+msgstr "Emparejamiento de Dispositivos"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1573
@@ -3331,6 +4127,19 @@ msgid ""
 "previously generated link key.  This procedure is called _pairing_.  Note "
 "that if the link key is lost by either device, the pairing must be repeated."
 msgstr ""
+"Por defecto, la comunicación Bluetooth no está autenticada, y cualquier "
+"dispositivo puede hablar con cualquier otro. Un dispositivo Bluetooth, como "
+"un teléfono móvil, podría decidir requerir autenticación para proporcionar "
+"un servicio particular. La autenticación Bluetooth se hacer normalmente con "
+"un _código PIN_, una cadena ASCII de hasta 16 caracteres. Se requiere que el "
+"usuario introduzca el mismo código PIN en ambos dispositivos. Una vez que el "
+"usuario ha introducido el código PIN, ambos dispositivos generarán una "
+"_clave de enlace_. Después de eso, la clave de enlace se puede almacenar en "
+"los dispositivos o en almacenamiento persistente. La siguiente vez, ambos "
+"dispositivos utilizarán las claves de enlace generadas previamente. Este "
+"procedimiento se llama _emparejamiento_. Ten en cuenta que si alguno de los "
+"dispositivos pierde la clave de enlace, se tiene que repetir el "
+"emparejamiento."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1577
@@ -3340,6 +4149,10 @@ msgid ""
 "bluetooth/hcsecd.conf#.  An example section for a cellular phone with the "
 "PIN code set to `1234` is shown below:"
 msgstr ""
+"El demonio man:hcsecd[8] es el responsable de manejar las peticiones de "
+"autenticación Bluetooth. El fichero de configuración por defecto es [."
+"filename]#/etc/bluetooth/hcsecd.conf#. A continuación se muestra un ejemplo "
+"de sección para un teléfono móvil con el PIN establecido a `1234`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1586
@@ -3352,6 +4165,12 @@ msgid ""
 "        pin     \"1234\";\n"
 "      }\n"
 msgstr ""
+"device {\n"
+"        bdaddr  00:80:37:29:19:a4;\n"
+"        name    \"Pav's T39\";\n"
+"        key     nokey;\n"
+"        pin     \"1234\";\n"
+"      }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1596
@@ -3366,6 +4185,16 @@ msgid ""
 "remote device are paired.  Alternatively, pairing can be initiated on the "
 "remote device."
 msgstr ""
+"La única limitación de los códigos PIN es la longitud. Algunos dispositivos, "
+"como los auriculares Bluetooth, podrían tener un código PIN fijo de fábrica. "
+"La opción `-d` fuerza a man:hcsecd[8] a permanecer en primer plano, de forma "
+"que es fácil ver lo que está pasando. Establece el dispositivo remoto para "
+"que reciba emparejamientos e inicia la conexión Bluetooth con el dispositivo "
+"remoto. El dispositivo remoto debería indicar que el emparejamiento ha sido "
+"aceptado y solicitar el código PIN. Introduce el mismo código PIN listado en "
+"[.filename]#hcsecd.conf#. Ahora el ordenador y el dispositivo remoto están "
+"emparejados. De forma alternativa, el emparejamiento puede ser iniciado por "
+"el dispositivo remoto."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1598
@@ -3373,17 +4202,20 @@ msgid ""
 "The following line can be added to [.filename]#/etc/rc.conf# to configure "
 "man:hcsecd[8] to start automatically on system start:"
 msgstr ""
+"Se puede añadir la siguiente línea a [.filename]#/etc/rc.conf# para "
+"configurar que man:hcsecd[8] arranque automáticamente cuando se inicia el "
+"sistema:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1602
 #, no-wrap
 msgid "hcsecd_enable=\"YES\"\n"
-msgstr ""
+msgstr "hcsecd_enable=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1605
 msgid "The following is a sample of the man:hcsecd[8] daemon output:"
-msgstr ""
+msgstr "Lo siguiente es una muestra de la salida del demonio man:hcsecd[8]:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1614
@@ -3396,12 +4228,24 @@ msgid ""
 "hcsecd[16484]: Found matching entry, remote bdaddr 0:80:37:29:19:a4, name 'Pav's T39', PIN code exists\n"
 "hcsecd[16484]: Sending PIN_Code_Reply to 'ubt0hci' for remote bdaddr 0:80:37:29:19:a4\n"
 msgstr ""
+"hcsecd[16484]: Got Link_Key_Request event from 'ubt0hci', remote bdaddr "
+"0:80:37:29:19:a4\n"
+"hcsecd[16484]: Found matching entry, remote bdaddr 0:80:37:29:19:a4, name "
+"'Pav's T39', link key doesn't exist\n"
+"hcsecd[16484]: Sending Link_Key_Negative_Reply to 'ubt0hci' for remote "
+"bdaddr 0:80:37:29:19:a4\n"
+"hcsecd[16484]: Got PIN_Code_Request event from 'ubt0hci', remote bdaddr "
+"0:80:37:29:19:a4\n"
+"hcsecd[16484]: Found matching entry, remote bdaddr 0:80:37:29:19:a4, name "
+"'Pav's T39', PIN code exists\n"
+"hcsecd[16484]: Sending PIN_Code_Reply to 'ubt0hci' for remote bdaddr "
+"0:80:37:29:19:a4\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1616
 #, no-wrap
 msgid "Network Access with PPP Profiles"
-msgstr ""
+msgstr "Acceso a la Red con Perfiles PPP"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1620
