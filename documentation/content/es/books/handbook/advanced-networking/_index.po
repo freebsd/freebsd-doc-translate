@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-01 13:49-0300\n"
-"PO-Revision-Date: 2023-01-18 13:21+0000\n"
+"PO-Revision-Date: 2023-01-20 10:21+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookadvanced-networking_index/es/>\n"
@@ -4255,6 +4255,10 @@ msgid ""
 "can also be used to configure a computer to receive data calls from a "
 "cellular phone."
 msgstr ""
+"Es posible utilizar un perfile DUN (Dial-Up Networking) para configurar un "
+"teléfono móvil como un módem inalámbrico para conectarse a un servidor de "
+"acceso a Internet. También se puede utilizar para configurar un ordenador "
+"para recibir llamadas de datos desde un teléfono móvil."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1623
@@ -4263,6 +4267,9 @@ msgid ""
 "single Bluetooth device or multiple Bluetooth devices.  It can also provide "
 "PC to PC connection using PPP networking over serial cable emulation."
 msgstr ""
+"Se puede usar el acceso a la red mediante un perfil PPP para proporcionar "
+"acceso LAN para uno o varios dispositivos Bluetooth. También puede "
+"proporcionar conexión PC a PC usando PPP sobre emulación de cable serie."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1627
@@ -4272,6 +4279,11 @@ msgid ""
 "PPP can use.  Before a profile can be used, a new PPP label must be created "
 "in [.filename]#/etc/ppp/ppp.conf#.  Consult man:rfcomm_pppd[8] for examples."
 msgstr ""
+"En FreeBSD, estos perfiles se implementan con man:ppp[8] y el adaptador "
+"man:rfcomm_pppd[8] que convierte la conexión Bluetooth en algo que PPP puede "
+"usar. Antes de que se pueda usar el perfile, se debe crear una nueva "
+"etiqueta PPP en [.filename]#/etc/ppp/ppp.conf#. Consulta man:rfcomm_pppd[8] "
+"para ver ejemplos."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1629
@@ -4279,12 +4291,15 @@ msgid ""
 "In this example, man:rfcomm_pppd[8] is used to open a connection to a remote "
 "device with a `BD_ADDR` of `00:80:37:29:19:a4` on a DUNRFCOMM channel:"
 msgstr ""
+"En este ejemplo, se usa man:rfcomm_pppd[8] para abrir una conexión con un "
+"dispositivo remoto con un `BD_ADDR` de `00:80:37:29:19:a4` en un canal "
+"DUNRFCOMM:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1633
 #, no-wrap
 msgid "# rfcomm_pppd -a 00:80:37:29:19:a4 -c -C dun -l rfcomm-dialup\n"
-msgstr ""
+msgstr "# rfcomm_pppd -a 00:80:37:29:19:a4 -c -C dun -l rfcomm-dialup\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1638
@@ -4294,6 +4309,10 @@ msgid ""
 "this case man:rfcomm_pppd[8] will not perform the SDP query.  Use man:"
 "sdpcontrol[8] to find out the RFCOMM channel on the remote device."
 msgstr ""
+"El número de canal real se obtendrá del dispositivo remoto usando el "
+"protocolo SDP. Es posible especificar el canal RFCOMM a mano, y en este caso "
+"man:rfcomm_pppd[8] no realizará la consulta SDP. Usa man:sdpcontrol[8] para "
+"averiguar el canal RFCOMM en el dispositivo remoto."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1644
@@ -4305,18 +4324,25 @@ msgid ""
 "will automatically register the Bluetooth LAN service with the local SDP "
 "daemon.  The example below shows how to start the RFCOMMPPP server."
 msgstr ""
+"Para proporcionar acceso a la red con el servicio PPPLAN, se debe estar "
+"ejecutando man:sdpd[8] y se tienen que crear una nueva entrada para clientes "
+"LAN en [.filename]#/etc/ppp/ppp.conf#. Consulta man:rfcomm_pppd[8] para ver "
+"ejemplos. Finalmente, arrancar el servidor RFCOMMPPP en un número de canal "
+"RFCOMM válido. El servidor RFCOMMPPP registrará automáticamente el servicio "
+"LAN Bluetooth con el demonio SDP local. El ejemplo de abajo muestra cómo "
+"arrancar el servidor RFCOMMPPP."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1648
 #, no-wrap
 msgid "# rfcomm_pppd -s -C 7 -l rfcomm-server\n"
-msgstr ""
+msgstr "# rfcomm_pppd -s -C 7 -l rfcomm-server\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1650
 #, no-wrap
 msgid "Bluetooth Protocols"
-msgstr ""
+msgstr "Protocolos Bluetooth"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1653
@@ -4324,12 +4350,14 @@ msgid ""
 "This section provides an overview of the various Bluetooth protocols, their "
 "function, and associated utilities."
 msgstr ""
+"Esta sección proporciona un resumen de varios protocolos Bluetooth, sus "
+"funciones, y sus utilidades asociadas."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1654
 #, no-wrap
 msgid "Logical Link Control and Adaptation Protocol (L2CAP)"
-msgstr ""
+msgstr "Logical Link Control and Adaptation Protocol (L2CAP)"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1658
@@ -4339,6 +4367,11 @@ msgid ""
 "permits higher level protocols and applications to transmit and receive "
 "L2CAP data packets up to 64 kilobytes in length."
 msgstr ""
+"El Logical Link Control and Adaptation Protocol (L2CAP) proporciona "
+"servicios de datos orientados a conexión así como no orientados a conexión a "
+"los protocolos de las capas superiores. L2CAP permite a los protocolos y "
+"aplicaciones de niveles más altos transmitir y recibir paquetes de datos "
+"L2CAP de hasta 64 kilobytes de longitud."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1664
@@ -4351,6 +4384,13 @@ msgid ""
 "higher level protocol.  Multiple channels can share the same baseband "
 "connection."
 msgstr ""
+"L2CAP se basa en el concepto de _canales_. Un canal es una conexión lógica "
+"construida sobre una conexión de banda base, donde cada canal está asociado "
+"a un sólo protocolo en una forma muchos-a-uno. Se pueden asociar múltiples "
+"canales al mismo protocolo, pero un canal no se puede asociar a múltiples "
+"protocolos. Cada paquete L2CAP recibido en un canal es redirigido al "
+"protocolo de nivel superior apropiado. Varios canales pueden compartir la "
+"misma conexión de banda base."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1669
@@ -4360,6 +4400,10 @@ msgid ""
 "upstream Bluetooth socket nodes.  The default name for the L2CAP node is "
 "\"devicel2cap\".  For more details refer to man:ng_l2cap[4]."
 msgstr ""
+"En FreeBSD, se crear un nodo L2CAP de netgraph para cada dispositivo "
+"Bluetooth. Este nodo normalmente se conecta con el nodo HCI Bluetooth "
+"inferior y los nodos socket Bluetooth superiores. El nombre por defecto para "
+"el nodo L2CAP es \"devicel2cap\". Para más detalles consulta man:ng_l2cap[4]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1672
@@ -4368,6 +4412,10 @@ msgid ""
 "Some Bluetooth implementations might not return all of the data sent to "
 "them, so `0 bytes` in the following example is normal."
 msgstr ""
+"Un comando útil es man:l2ping[8], que puede ser usado para hacer ping a "
+"otros dispositivos. Algunas implementaciones Bluetooth podrían no devolver "
+"todos los datos que se les envía, de forma que los `0 bytes' en el siguiente "
+"ejemplo es algo normal."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1680
@@ -4379,6 +4427,11 @@ msgid ""
 "0 bytes from 0:80:37:29:19:a4 seq_no=2 time=28.324 ms result=0\n"
 "0 bytes from 0:80:37:29:19:a4 seq_no=3 time=46.150 ms result=0\n"
 msgstr ""
+"# l2ping -a 00:80:37:29:19:a4\n"
+"0 bytes from 0:80:37:29:19:a4 seq_no=0 time=48.633 ms result=0\n"
+"0 bytes from 0:80:37:29:19:a4 seq_no=1 time=37.551 ms result=0\n"
+"0 bytes from 0:80:37:29:19:a4 seq_no=2 time=28.324 ms result=0\n"
+"0 bytes from 0:80:37:29:19:a4 seq_no=3 time=46.150 ms result=0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1684
@@ -4387,6 +4440,10 @@ msgid ""
 "nodes.  This example shows how to obtain the list of logical connections "
 "(channels) and the list of baseband connections for the local device:"
 msgstr ""
+"La utilidad man:l2control[8] se utiliza para realizar varias operaciones "
+"sobre los nodos L2CAP. Este ejemplo muestra cómo obtener la lista de "
+"conexiones lógicas (canales) y la lista de conexiones de banda base para el "
+"dispositivo local:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1695
@@ -4401,6 +4458,14 @@ msgid ""
 "Remote BD_ADDR    Handle Flags Pending State\n"
 "00:07:e0:00:0b:ca     41 O           0 OPEN\n"
 msgstr ""
+"% l2control -a 00:02:72:00:d4:1a read_channel_list\n"
+"L2CAP channels:\n"
+"Remote BD_ADDR     SCID/ DCID   PSM  IMTU/ OMTU State\n"
+"00:07:e0:00:0b:ca    66/   64     3   132/  672 OPEN\n"
+"% l2control -a 00:02:72:00:d4:1a read_connection_list\n"
+"L2CAP connections:\n"
+"Remote BD_ADDR    Handle Flags Pending State\n"
+"00:07:e0:00:0b:ca     41 O           0 OPEN\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1700
@@ -4409,6 +4474,9 @@ msgid ""
 "netstat[1], but for Bluetooth network-related data structures.  The example "
 "below shows the same logical connection as man:l2control[8] above."
 msgstr ""
+"Otra herramienta de diagnóstico es man:btsockstat[1]. Es similar a "
+"man:netstat[1], pero para estructuras de datos de red Bluetooth. El ejemplo "
+"de abajo muestra la misma conexión lógica como man:l2control[8] arriba."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1713
@@ -4425,12 +4493,23 @@ msgid ""
 "PCB      Recv-Q Send-Q Local address     Foreign address   Chan DLCI State\n"
 "c2e8bc80      0    250 00:02:72:00:d4:1a 00:07:e0:00:0b:ca 3    6    OPEN\n"
 msgstr ""
+"% btsockstat\n"
+"Active L2CAP sockets\n"
+"PCB      Recv-Q Send-Q Local address/PSM       Foreign address   CID   "
+"State\n"
+"c2afe900      0      0 00:02:72:00:d4:1a/3     00:07:e0:00:0b:ca 66    OPEN\n"
+"Active RFCOMM sessions\n"
+"L2PCB    PCB      Flag MTU   Out-Q DLCs State\n"
+"c2afe900 c2b53380 1    127   0     Yes  OPEN\n"
+"Active RFCOMM sockets\n"
+"PCB      Recv-Q Send-Q Local address     Foreign address   Chan DLCI State\n"
+"c2e8bc80      0    250 00:02:72:00:d4:1a 00:07:e0:00:0b:ca 3    6    OPEN\n"
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1715
 #, no-wrap
 msgid "Radio Frequency Communication (RFCOMM)"
-msgstr ""
+msgstr "Comunicación por Radio Frecuencia (RFCOMM)"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1720
@@ -4441,6 +4520,11 @@ msgid ""
 "supports up to 60 simultaneous connections (RFCOMM channels) between two "
 "Bluetooth devices."
 msgstr ""
+"El protocolo RFCOMM proporciona emulación de puertos serie sobre el "
+"protocolo L2CAP. RFCOMM es un protocolo de transporte simple, con soporte "
+"adicional para emular los 9 circuitos de los puertos serie RS-2332 "
+"(EIATIA-232-E). Soporta hasta 60 conexiones simultáneas (canales RFCOMM) "
+"entre dos dispositivos Bluetooth."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1724
@@ -4452,6 +4536,12 @@ msgid ""
 "communication segment is a direct connect Bluetooth link from one device to "
 "another."
 msgstr ""
+"Para los propósitos de RFCOMM, un camino de comunicación completo incluye "
+"dos aplicaciones ejecutándose en los extremos de la comunicación con un "
+"segmento de comunicación entre ellos. RFCOMM está pensado para cubrir "
+"aplicaciones que hace uso de los puertos serie de los dispositivos en los "
+"que se encuentra. El segmento de comunicación es una enlace de conexión "
+"Bluetooth directa desde un dispositivo a otro."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1727
@@ -4462,17 +4552,22 @@ msgid ""
 "via Bluetooth wireless technology on one side and provide a wired interface "
 "on the other side."
 msgstr ""
+"RFCOMM sólo se preocupa de la conexión entre los dispositivos en el caso de "
+"una conexión directa, o entre un dispositivo y un módem en el caso de red. "
+"RFCOMM puede soportar otras configuraciones, como módulos que se comunican "
+"vía tecnología inalámbrica Bluetooth en un lado y proporciona un interfaz "
+"por cable en el otro lado."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1729
 msgid "In FreeBSD, RFCOMM is implemented at the Bluetooth sockets layer."
-msgstr ""
+msgstr "En FreeBSD, RFCOMM está implementado en la capa de sockets Bluetooth."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1730
 #, no-wrap
 msgid "Service Discovery Protocol (SDP)"
-msgstr ""
+msgstr "Protocolo de Descubrimiento de Servicios (SDP)"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1734
@@ -4483,6 +4578,12 @@ msgid ""
 "a service include the type or class of service offered and the mechanism or "
 "protocol information needed to utilize the service."
 msgstr ""
+"El Protocolo de Descubrimiento de Servicios (SDP) proporciona los medios "
+"para que las aplicaciones cliente descubran la existencia de servicios "
+"proporcionados por aplicaciones servidoras así como los atributos de dichos "
+"servicios. Los atributos de un servicio incluyen el tipo o clase del "
+"servicio ofrecido y el mecanismo o protocolo de información necesario para "
+"utilizarlo."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1741
@@ -4498,6 +4599,16 @@ msgid ""
 "and their attributes, but it does not provide a mechanism for utilizing "
 "those services."
 msgstr ""
+"SDP incluye comunicación entre un servidor SDP y un cliente SDP. El servidor "
+"mantiene una lista de registros de servicio que describe las características "
+"de los servicios asociados con el servidor. Cada registro de servicio "
+"contiene información acerca de un único servicio. Un cliente puede recuperar "
+"información de un registro de servicio mantenido por el servidor SDP "
+"realizando una petición SDP. Si el cliente, o una aplicación asociada con el "
+"cliente, decide usar un servicio, debe abrir una conexión separada con el "
+"proveedor del servicio para poder utilizarlo. SDP proporciona un mecanismo "
+"para descubrir servicios y sus atributos, pero no proporciona un mecanismo "
+"para utilizar esos servicios."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1745
@@ -4508,6 +4619,12 @@ msgid ""
 "server's service records without any prior information about the services.  "
 "This process of looking for any offered services is called _browsing_."
 msgstr ""
+"Normalmente, un cliente SDP busca servicios basándose en alguna "
+"característica deseada de los servicios. Sin embargo, a veces es preferible "
+"descubrir qué tipos de servicios están descritos por los registros de "
+"servicio de un servidor SDP sin ninguna información previa acerca de los "
+"servicios. Este proceso de buscar cualquier servicio ofrecido se llama "
+"_navegación_ (browsing)."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1748
@@ -4516,6 +4633,9 @@ msgid ""
 "sdpcontrol[8], are included in the standard FreeBSD installation.  The "
 "following example shows how to perform a SDP browse query."
 msgstr ""
+"El servidor SDP Bluetooth, man:sdpd[8], y cliente en línea de comando, "
+"man:sdpcontrol[8], están incluidos en la instalación estándar de FreeBSD. El "
+"siguiente ejemplo muestra cómo realizar una petición de navegación SDP."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1759
@@ -4530,6 +4650,14 @@ msgid ""
 "                Protocol specific parameter #1: u/int/uuid16 1\n"
 "                Protocol specific parameter #2: u/int/uuid16 1\n"
 msgstr ""
+"% sdpcontrol -a 00:01:03:fc:6e:ec browse\n"
+"Record Handle: 00000000\n"
+"Service Class ID List:\n"
+"        Service Discovery Server (0x1000)\n"
+"Protocol Descriptor List:\n"
+"        L2CAP (0x0100)\n"
+"                Protocol specific parameter #1: u/int/uuid16 1\n"
+"                Protocol specific parameter #2: u/int/uuid16 1\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1763
@@ -4539,6 +4667,9 @@ msgid ""
 "Service Class ID List:\n"
 "        Browse Group Descriptor (0x1001)\n"
 msgstr ""
+"Record Handle: 0x00000001\n"
+"Service Class ID List:\n"
+"        Browse Group Descriptor (0x1001)\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1773
@@ -4554,6 +4685,15 @@ msgid ""
 "Bluetooth Profile Descriptor List:\n"
 "        LAN Access Using PPP (0x1102) ver. 1.0\n"
 msgstr ""
+"Record Handle: 0x00000002\n"
+"Service Class ID List:\n"
+"        LAN Access Using PPP (0x1102)\n"
+"Protocol Descriptor List:\n"
+"        L2CAP (0x0100)\n"
+"        RFCOMM (0x0003)\n"
+"                Protocol specific parameter #1: u/int8/bool 1\n"
+"Bluetooth Profile Descriptor List:\n"
+"        LAN Access Using PPP (0x1102) ver. 1.0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1780
@@ -4565,12 +4705,18 @@ msgid ""
 "search for the specific service.  The example below shows how to search for "
 "the OBEX Object Push (OPUSH) service:"
 msgstr ""
+"Ten en cuenta que cada servicio tiene una lista de atributos, como el canal "
+"RFCOMM. Dependiendo del servicio, el usuario podría necesitar anotar algunos "
+"de los atributos. Algunas implementaciones de Bluetooth no soportan la "
+"navegación de servicios y podrían devolver una lista vacía. En este caso, es "
+"posible buscar un servicio específico. El ejemplo inferior muestra cómo "
+"buscar el servicio OBEX Object Push (OPUSH):"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1784
 #, no-wrap
 msgid "% sdpcontrol -a 00:01:03:fc:6e:ec search OPUSH\n"
-msgstr ""
+msgstr "% sdpcontrol -a 00:01:03:fc:6e:ec search OPUSH\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1788
@@ -4579,23 +4725,25 @@ msgid ""
 "sdpd[8] server.  The following line can be added to [.filename]#/etc/rc."
 "conf#:"
 msgstr ""
+"Ofrecer servicios de FreeBSD a clientes Bluetooth se hace con el servidor "
+"man:sdpd[8]. Se puede añadir la siguiente línea a [.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1792
 #, no-wrap
 msgid "sdpd_enable=\"YES\"\n"
-msgstr ""
+msgstr "sdpd_enable=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1795
 msgid "Then the man:sdpd[8] daemon can be started with:"
-msgstr ""
+msgstr "El demonio man:sdpd[8] se puede arrancar con:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1799
 #, no-wrap
 msgid "# service sdpd start\n"
-msgstr ""
+msgstr "# service sdpd start\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1804
@@ -4605,6 +4753,10 @@ msgid ""
 "example of such an application is man:rfcomm_pppd[8].  Once started, it will "
 "register the Bluetooth LAN service with the local SDP daemon."
 msgstr ""
+"La aplicación servidora local que quiera proporcionar un servicio Bluetooth "
+"a clientes remotos registrará el servicio en el demonio SDP local. Un "
+"ejemplo de dicha aplicación es man:rfcomm_pppd[8]. Una vez iniciado, "
+"registrará el servicio LAN Bluetooth con el demonio local SDP."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1806
@@ -4612,18 +4764,20 @@ msgid ""
 "The list of services registered with the local SDP server can be obtained by "
 "issuing a SDP browse query via the local control channel:"
 msgstr ""
+"Se puede obtener la lista de servicios registrados en el servidor SDP local "
+"realizando una petición de navegación SDP mediante el canal de control local:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1810
 #, no-wrap
 msgid "# sdpcontrol -l browse\n"
-msgstr ""
+msgstr "# sdpcontrol -l browse\n"
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1812
 #, no-wrap
 msgid "OBEX Object Push (OPUSH)"
-msgstr ""
+msgstr "OBEX Object Push (OPUSH)"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1816
@@ -4634,6 +4788,12 @@ msgid ""
 "sending business cards or calendar entries between cellular phones and other "
 "devices with Personal Information Manager (PIM) applications."
 msgstr ""
+"Object Exchange (OBEX) es un protocolo ampliamente utilizado para "
+"transferencias de ficheros sencillas entre dispositivos móviles. Su "
+"principal uso está en la comunicación infrarroja, donde se usa para "
+"transferencias de ficheros genéricas entre portátiles o PDAs, y para enviar "
+"tarjetas de negocios o entradas de calendario entre teléfonos móviles y "
+"otros dispositivos con aplicaciones PIM (Personal Information Manager)."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1818
@@ -4641,6 +4801,8 @@ msgid ""
 "The OBEX server and client are implemented by obexapp, which can be "
 "installed using the package:comms/obexapp[] package or port."
 msgstr ""
+"El servidor y cliente OBEX están implementados por obexapp, que se pude "
+"instalar usando el paquete o port package:comms/obexapp[]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1826
@@ -4655,6 +4817,15 @@ msgid ""
 "from the cellular phone, and a new object, the business card, is pushed into "
 "the phone's directory."
 msgstr ""
+"El cliente OBEX es utilizado para subir y/o bajar objetos del servidor OBEX. "
+"Un objeto de ejemplo es una tarjeta de negocio o una cita. El cliente OBEX "
+"puede obtener el número de canal RFCOMM del dispositivo remoto vía SDP. Esto "
+"se puede hacer especificando el nombre del servicio en lugar del número de "
+"canal RFCOMM. Los nombres de servicios soportados son: `IrMC`, `FTRN`, y "
+"`OPUSH`. También es posible especificar el canal RFCOMM como un número. "
+"Abajo hay un ejemplo de una sesión OBEX donde el objeto de información del "
+"dispositivo se descarga desde un teléfono móvil, y un nuevo objeto, la "
+"tarjeta de negocio, se sube al directorio del teléfono."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1836
@@ -4668,6 +4839,13 @@ msgid ""
 "obex> di\n"
 "Success, response: OK, Success (0x20)\n"
 msgstr ""
+"% obexapp -a 00:80:37:29:19:a4 -C IrMC\n"
+"obex> get telecom/devinfo.txt devinfo-t39.txt\n"
+"Success, response: OK, Success (0x20)\n"
+"obex> put new.vcf\n"
+"Success, response: OK, Success (0x20)\n"
+"obex> di\n"
+"Success, response: OK, Success (0x20)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1843
@@ -4679,18 +4857,24 @@ msgid ""
 "server will automatically register the OPUSH service with the local SDP "
 "daemon.  The example below shows how to start the OBEX server."
 msgstr ""
+"Para proporcionar el servicio OPUSH, man:sdpd[8] debe estar en ejecución y "
+"se debe crear una carpeta raíz donde se almacenarán todos los objetos "
+"recibidos. La ruta por defecto de la carpeta raíz es [.filename]#/var/spool/"
+"obex#. Por último, inicia el servidor OBEX en un número de canal RFCOMM "
+"válido. El servidor OBEX registrará automáticamente el servicio OPUSH con el "
+"demonio SDP local. El ejemplo de abajo muestra cómo iniciar el servidor OBEX."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1847
 #, no-wrap
 msgid "# obexapp -s -C 10\n"
-msgstr ""
+msgstr "# obexapp -s -C 10\n"
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1849
 #, no-wrap
 msgid "Serial Port Profile (SPP)"
-msgstr ""
+msgstr "Perfile de Puerto Serie (SPP)"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1853
@@ -4699,6 +4883,10 @@ msgid ""
 "cable emulation.  This profile allows legacy applications to use Bluetooth "
 "as a cable replacement, through a virtual serial port abstraction."
 msgstr ""
+"El Perfil de Puerto Serie (SPP) permite a los dispositivos Bluetooth "
+"realizar emulación de cable serie. Este perfile permite a aplicaciones "
+"heredadas utilizar Bluetooth como un sustituto del cable, a través de una "
+"abstracción de puerto serie."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1858
@@ -4709,6 +4897,12 @@ msgid ""
 "specified as man:rfcomm_sppd[1] can obtain it from the remote device via "
 "SDP.  To override this, specify a RFCOMM channel on the command line."
 msgstr ""
+"En FreeBSD, man:rfcomm_sppd[1] implementa SPP y un pseudo tty es usado como "
+"abstracción de puerto serie virtual. El ejemplo de abajo muestra cómo "
+"conectarse al servicio de puerto serie de un dispositivo remoto. No se tiene "
+"que especificar un canal RFCOMM ya que man:rfcomm_sppd[1] puede obtenerlo "
+"del dispositivo remoto vía SDP. Para cambiar esto, especifica un canal "
+"RFCOMM en la línea de comando."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1864
@@ -4718,22 +4912,25 @@ msgid ""
 "rfcomm_sppd[94692]: Starting on /dev/pts/6...\n"
 "/dev/pts/6\n"
 msgstr ""
+"# rfcomm_sppd -a 00:07:E0:00:0B:CA -t\n"
+"rfcomm_sppd[94692]: Starting on /dev/pts/6...\n"
+"/dev/pts/6\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1867
 msgid "Once connected, the pseudo tty can be used as serial port:"
-msgstr ""
+msgstr "Una vez conectado, el pseudo tty puede ser usado como un puerto serie:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1871
 #, no-wrap
 msgid "# cu -l /dev/pts/6\n"
-msgstr ""
+msgstr "# cu -l /dev/pts/6\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1874
 msgid "The pseudo tty is printed on stdout and can be read by wrapper scripts:"
-msgstr ""
+msgstr "El pseudo tty se imprime en stdout y se puede leer mediante scripts:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1879
@@ -4742,6 +4939,8 @@ msgid ""
 "PTS=`rfcomm_sppd -a 00:07:E0:00:0B:CA -t`\n"
 "cu -l $PTS\n"
 msgstr ""
+"PTS=`rfcomm_sppd -a 00:07:E0:00:0B:CA -t`\n"
+"cu -l $PTS\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1887
@@ -4753,12 +4952,19 @@ msgid ""
 "ask the remote device if it supports role switching.  However, there is a "
 "HCI option to disable role switching on the local side:"
 msgstr ""
+"Por defecto, cuando FreeBSD está aceptando una nueva conexión, intenta "
+"realizar un cambio de roles y convertirse en maestro. Algunos dispositivos "
+"Bluetooth más antiguos que no soportan el cambio de roles no serán capaces "
+"de conectar. Puesto que el cambio de roles se realiza cuando se establece "
+"una nueva conexión, no es posible preguntar al dispositivo remoto si soporta "
+"el cambio de roles. Sin embargo, hay una opción HCI para deshabilitar el "
+"intercambio de roles en el lado local:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1891
 #, no-wrap
 msgid "# hccontrol -n ubt0hci write_node_role_switch 0\n"
-msgstr ""
+msgstr "# hccontrol -n ubt0hci write_node_role_switch 0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1895
@@ -4769,12 +4975,17 @@ msgid ""
 "of Bluetooth packets on the terminal and to dump the Bluetooth packets to a "
 "file."
 msgstr ""
+"Para mostrar paquetes Bluetooht, usa el paquete de terceros hcidump, que se "
+"puede instalar mediante el paquete o port package:comms/hcidump[]. Esta "
+"utilidad es similar a man:tcpdump[1] y se puede usar para mostrar el "
+"contenido de los paquetes Bluetooth en el terminal y para volcarlos a un "
+"fichero."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1897
 #, no-wrap
 msgid "Bridging"
-msgstr ""
+msgstr "Bridging"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1901
@@ -4784,6 +4995,10 @@ msgid ""
 "to connect the segments together.  A device that connects two networks "
 "together in this fashion is called a \"bridge\"."
 msgstr ""
+"A veces es útil dividir una red, como un segmento Ethernet, en segumentos de "
+"red sin tener que crear subredes IP y utilizar un router para conectar los "
+"segmentos entre ellos. Un dispositivo que conecta dos redes juntas de esta "
+"forma se llama \"bridge\"."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1906
@@ -4795,17 +5010,23 @@ msgid ""
 "FreeBSD system with multiple network interfaces can be configured to act as "
 "a bridge."
 msgstr ""
+"Un bridge funciona aprendiendo las direcciones MAC de los dispositivos en "
+"cada una de sus interfaces de red. Reenvía tráfico entre las redes sólo "
+"cuando las direcciones de origen y destino están en diferentes redes. En "
+"muchos aspectos, un bridge es como un switch Ethernet con muy pocos puertos. "
+"Un sistema FReeBSD como varias interfaces de red puede ser configurado para "
+"funcionar como un bridge."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1908
 msgid "Bridging can be useful in the following situations:"
-msgstr ""
+msgstr "Un bridge puede ser útil en las siguientes situaciones:"
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1909
 #, no-wrap
 msgid "Connecting Networks"
-msgstr ""
+msgstr "Conectar Redes"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1913
@@ -4816,12 +5037,17 @@ msgid ""
 "connect a wireless interface running in hostap mode to a wired network and "
 "act as an access point."
 msgstr ""
+"La operación básica de un bridge es juntar dos o más segmentos de red. Hay "
+"muchas razones para usar un bridge basado en host en lugar de un "
+"equipamiento de red, como restricciones en el cableado o los firewalls. Un "
+"bridge también puede conectar una interfaz inalámbrica funcionando en modo "
+"hostap con una red cableada y actuar como punto de acceso."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1914
 #, no-wrap
 msgid "Filtering/Traffic Shaping Firewall"
-msgstr ""
+msgstr "Filtrado/Firewall the Modelado de Tráfico"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1916
@@ -4829,6 +5055,9 @@ msgid ""
 "A bridge can be used when firewall functionality is needed without routing "
 "or Network Address Translation (NAT)."
 msgstr ""
+"Se puede usar un bridge cuando se necesita funcionalidad de firewall sin "
+"enrutado o traducciones de direcciones de red (NAT, Network Address "
+"Translation)."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1921
@@ -4839,12 +5068,17 @@ msgid ""
 "because of subnetting issues.  A bridge-based firewall can be configured "
 "without any IP addressing issues."
 msgstr ""
+"Un ejemplo es una pequeña compañía que está conectada a un ISP mediante DSL "
+"o ISDN. Hay trece direcciones IP públicas del ISP y diez ordenadores en la "
+"red. En esta situación, usar un firewall basado en un router es difícil por "
+"problemas con las subredes. Un firewall basado en bridge se puede configurar "
+"sin ningún problema con las direcciones IP."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1922
 #, no-wrap
 msgid "Network Tap"
-msgstr ""
+msgstr "Network Tap"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1924
@@ -4854,12 +5088,16 @@ msgid ""
 "bridge interface, or by sending a copy of all frames out on an additional "
 "interface known as a span port."
 msgstr ""
+"Un bridge puede unir dos segmentos de red para inspeccionar todas las tramas "
+"Ethernet que pasan entre ellos usando man:bpf[4] y man:tcpdump[1] en la "
+"interfaz bridge, o enviando una copia de todas las tramas hacia un interfaz "
+"adicional conocido como un puerto span."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1925
 #, no-wrap
 msgid "Layer 2 VPN"
-msgstr ""
+msgstr "VPN en la Capa 2"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1927
@@ -4867,12 +5105,14 @@ msgid ""
 "Two Ethernet networks can be joined across an IP link by bridging the "
 "networks to an EtherIP tunnel or a man:tap[4] based solution such as OpenVPN."
 msgstr ""
+"Dos redes Ethernet se pueden unir mediante un enlace IP uniendo las redes a "
+"un túnel EtherIP o a una solución basada en man:tap[4] como OpenVPN."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1928
 #, no-wrap
 msgid "Layer 2 Redundancy"
-msgstr ""
+msgstr "Redundancia en la Capa 2"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1930
@@ -4880,6 +5120,8 @@ msgid ""
 "A network can be connected together with multiple links and use the Spanning "
 "Tree Protocol (STP) to block redundant paths."
 msgstr ""
+"Una red puede estar conectada con múltiples enlaces y usar el Spanning Tree "
+"Protocol (STP) para bloquear caminos redundantes."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1933
@@ -4888,6 +5130,9 @@ msgid ""
 "man:if_bridge[4].  A netgraph bridging driver is also available, and is "
 "described in man:ng_bridge[4]."
 msgstr ""
+"Esta sección describe cómo configurar un sistema FreeBSD como un bridge "
+"usando man:if_bridge[4]. También hay disponible un driver bridge de "
+"netgraph, y se describe en man:ng_bridge[4]."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1938
@@ -4896,12 +5141,15 @@ msgid ""
 "man:pfil[9] framework.  The bridge can be used as a traffic shaper with man:"
 "altq[4] or man:dummynet[4]."
 msgstr ""
+"Se pude usar filtrado de paquetes con cualquier paquete de firewall que se "
+"enganche en el framework man:pfil[9]. El bridge se puede usar como un "
+"perfilador de tráfico con man:altq[4] o man:dummynet[4]."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1940
 #, no-wrap
 msgid "Enabling the Bridge"
-msgstr "Habilitando el bridge"
+msgstr "Habilitando el Bridge"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1944
@@ -4911,13 +5159,17 @@ msgid ""
 "possible to compile bridge support into a custom kernel by adding `device "
 "if_bridge` to the custom kernel configuration file."
 msgstr ""
+"En FreeBSD, man:if_bridge[4] es un módulo del kernel que se carga "
+"automáticamente cuando man:ifconfig[8] crea un interfaz bridge. También es "
+"posible compilar soporte para bridge en un kernel personalizado añadiendo `"
+"device if_bridge` al fichero de configuración del kernel personalizado."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1947
 msgid ""
 "The bridge is created using interface cloning.  To create the bridge "
 "interface:"
-msgstr ""
+msgstr "El bridge se crea clonando una interfaz. Para crear la interfaz bridge:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1958
@@ -4932,6 +5184,14 @@ msgid ""
 "        maxage 20 holdcnt 6 proto rstp maxaddr 100 timeout 1200\n"
 "        root id 00:00:00:00:00:00 priority 0 ifcost 0 port 0\n"
 msgstr ""
+"# ifconfig bridge create\n"
+"bridge0\n"
+"# ifconfig bridge0\n"
+"bridge0: flags=8802<BROADCAST,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
+"        ether 96:3d:4b:f1:79:7a\n"
+"        id 00:00:00:00:00:00 priority 32768 hellotime 2 fwddelay 15\n"
+"        maxage 20 holdcnt 6 proto rstp maxaddr 100 timeout 1200\n"
+"        root id 00:00:00:00:00:00 priority 0 ifcost 0 port 0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1963
@@ -4942,6 +5202,12 @@ msgid ""
 "many seconds before each entry is removed after it is last seen.  The other "
 "parameters control how STP operates."
 msgstr ""
+"Cuando se crea una interfaz bridge, se le asigna automáticamente una "
+"dirección Ethernet generada de forma aleatoria. Los parámetros `maxaddr` y "
+"`timeout` controlan cuántas direcciones MAC puede mantener el bridge en su "
+"tabla de reenvío y cuántos segundos deben pasar para eliminarla desde la "
+"última vez que han sido vistas. Los otros parámetros controlan cómo opera "
+"STP."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1966
@@ -4950,6 +5216,9 @@ msgid ""
 "the bridge to forward packets, all member interfaces and the bridge need to "
 "be up:"
 msgstr ""
+"Después, especifica qué interfaces de red añadir como miembros del bridge. "
+"Para que el bridge sea capaz de reenviar paquetes, todas las interfaces y el "
+"bridge necesitan estar levantadas:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1972
@@ -4959,6 +5228,9 @@ msgid ""
 "# ifconfig fxp0 up\n"
 "# ifconfig fxp1 up\n"
 msgstr ""
+"# ifconfig bridge0 addm fxp0 addm fxp1 up\n"
+"# ifconfig fxp0 up\n"
+"# ifconfig fxp1 up\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1976
@@ -4967,6 +5239,9 @@ msgid ""
 "filename]#fxp1#.  Add the following lines to [.filename]#/etc/rc.conf# so "
 "the bridge is created at startup:"
 msgstr ""
+"El puente ahora puede reenviar tramas Ethernet entre [.filename]#fxp0# y [."
+"filename]#fxp1#. Añade las siguientes líneas a [.filename]#/etc/rc.conf# de "
+"forma que el bridge se cree al arrancar:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1983
@@ -4977,6 +5252,10 @@ msgid ""
 "ifconfig_fxp0=\"up\"\n"
 "ifconfig_fxp1=\"up\"\n"
 msgstr ""
+"cloned_interfaces=\"bridge0\"\n"
+"ifconfig_bridge0=\"addm fxp0 addm fxp1 up\"\n"
+"ifconfig_fxp0=\"up\"\n"
+"ifconfig_fxp1=\"up\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1988
@@ -4985,12 +5264,16 @@ msgid ""
 "on the member interfaces.  The address can be set statically or via DHCP.  "
 "This example sets a static IP address:"
 msgstr ""
+"Si la máquina bridge necesita una dirección IP, establécela en la interfaz "
+"del bridge, no en las interfaces que son miembro. La dirección puede "
+"establecerse estáticamente o vía DHCP. Este ejemplo establece una dirección "
+"IP estática:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1992
 #, no-wrap
 msgid "# ifconfig bridge0 inet 192.168.0.1/24\n"
-msgstr ""
+msgstr "# ifconfig bridge0 inet 192.168.0.1/24\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:1996
@@ -4999,6 +5282,9 @@ msgid ""
 "make the changes permanent, add the addressing information to [.filename]#/"
 "etc/rc.conf#."
 msgstr ""
+"También es posible establecer una dirección IPv6 al interfaz del bridge. "
+"Para hacer los cambios permanentes, añade la información de la dirección a [."
+"filename]#/etc/rc.conf#."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2002
@@ -5009,6 +5295,12 @@ msgid ""
 "direction of the packet flow is important, it is best to firewall on the "
 "member interfaces rather than the bridge itself."
 msgstr ""
+"Cuando el filtrado de paquetes está habilitado, los paquetes que van por el "
+"bridge pasarán a través del filtro de entrada en la interfaz de origen en el "
+"interfaz del bridge, y de salida en las interfaces apropiadas. Cualquiera de "
+"las dos fases puede deshabilitarse. Cuando la dirección de un paquete es "
+"importante, es mejor aplicar el firewall en las interfaces que forman el "
+"bridge que en el bridge en sí mismo."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2005
@@ -5017,12 +5309,15 @@ msgid ""
 "packets, and layer2 firewalling with man:ipfw[8].  See man:if_bridge[4] for "
 "more information."
 msgstr ""
+"El bridge tiene varios valores configurables para pasar paquetes IP y no IP, "
+"y firewall the capa 2 con man:ipfw[8]. Consulta man:if_bridge[4] para más "
+"información."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2007
 #, no-wrap
 msgid "Enabling Spanning Tree"
-msgstr ""
+msgstr "Activando Spanning Tree"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2012
@@ -5033,6 +5328,11 @@ msgid ""
 "calculates a different tree and enables one of the blocked paths to restore "
 "connectivity to all points in the network."
 msgstr ""
+"Para que una red Ethernet funcione adecuadamente, sólo debe existir un "
+"camino activo entre dos dispositivos. El protocolo STP detecta bucles y pone "
+"enlaces redundantes en un estado bloqueado. Si uno de los enlaces activos "
+"fallara, STP calcula un árbol diferente y activa uno de los caminos "
+"bloqueados para restaurar la conectividad a todos los puntos de la red."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2016
@@ -5043,6 +5343,11 @@ msgid ""
 "forwarding mode without creating loops.  FreeBSD supports RSTP and STP as "
 "operating modes, with RSTP being the default mode."
 msgstr ""
+"El protocolo Rapid Spanning Tree (RSTP o 802.1w) proporciona compatibilidad "
+"hacia atrás con el STP antiguo. RSTP proporciona una convergencia más rápida "
+"e intercambia información con switches vecinos para transicionar rápidamente "
+"a modo reenvío sin crear bycles. FreeBSD soporta como modos de operación "
+"RSTP y STP, siendo RSTP el modo por defecto."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2019
@@ -5051,6 +5356,9 @@ msgid ""
 "with [.filename]#fxp0# and [.filename]#fxp1# as the current interfaces, "
 "enable STP with:"
 msgstr ""
+"Se puede activar STP en las interfaces miembro usando man:ifconfig[8]. Para "
+"un bridge con [.filename]#fxp0# y [.filename]#fxp1# como interfaces "
+"actuales, activa STP con:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2034
@@ -5069,6 +5377,19 @@ msgid ""
 "                port 4 priority 128 path cost 200000 proto rstp\n"
 "                role designated state forwarding\n"
 msgstr ""
+"# ifconfig bridge0 stp fxp0 stp fxp1\n"
+"bridge0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
+"1500\n"
+"        ether d6:cf:d5:a0:94:6d\n"
+"        id 00:01:02:4b:d4:50 priority 32768 hellotime 2 fwddelay 15\n"
+"        maxage 20 holdcnt 6 proto rstp maxaddr 100 timeout 1200\n"
+"        root id 00:01:02:4b:d4:50 priority 32768 ifcost 0 port 0\n"
+"        member: fxp0 flags=1c7<LEARNING,DISCOVER,STP,AUTOEDGE,PTP,AUTOPTP>\n"
+"                port 3 priority 128 path cost 200000 proto rstp\n"
+"                role designated state forwarding\n"
+"        member: fxp1 flags=1c7<LEARNING,DISCOVER,STP,AUTOEDGE,PTP,AUTOPTP>\n"
+"                port 4 priority 128 path cost 200000 proto rstp\n"
+"                role designated state forwarding\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2038
@@ -5077,11 +5398,14 @@ msgid ""
 "`32768`.  As the `root id` is the same, it indicates that this is the root "
 "bridge for the tree."
 msgstr ""
+"Este bridge tiene un spanning tree con un ID de `00:01:02:4b:d4:50` y una "
+"prioridad de `32768`. Como el `root id` es el mismo, eso indica que es el "
+"bridge raíz del árbol."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2040
 msgid "Another bridge on the network also has STP enabled:"
-msgstr ""
+msgstr "Otro bridge en la red tiene STP activado:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2054
@@ -5099,6 +5423,18 @@ msgid ""
 "                port 5 priority 128 path cost 200000 proto rstp\n"
 "                role designated state forwarding\n"
 msgstr ""
+"bridge0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu "
+"1500\n"
+"        ether 96:3d:4b:f1:79:7a\n"
+"        id 00:13:d4:9a:06:7a priority 32768 hellotime 2 fwddelay 15\n"
+"        maxage 20 holdcnt 6 proto rstp maxaddr 100 timeout 1200\n"
+"        root id 00:01:02:4b:d4:50 priority 32768 ifcost 400000 port 4\n"
+"        member: fxp0 flags=1c7<LEARNING,DISCOVER,STP,AUTOEDGE,PTP,AUTOPTP>\n"
+"                port 4 priority 128 path cost 200000 proto rstp\n"
+"                role root state forwarding\n"
+"        member: fxp1 flags=1c7<LEARNING,DISCOVER,STP,AUTOEDGE,PTP,AUTOPTP>\n"
+"                port 5 priority 128 path cost 200000 proto rstp\n"
+"                role designated state forwarding\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2058
@@ -5108,12 +5444,16 @@ msgid ""
 "`400000` from this bridge.  The path to the root bridge is via `port 4` "
 "which is [.filename]#fxp0#."
 msgstr ""
+"La línea `root id 00:01:02:4b:d4:50 priority 32768 ifcost 400000 port 4` "
+"muestra que el bridge raíz es `00:01:02:4b:d4:50` y que tiene un camino con "
+"coste `400000` desde este bridge. La ruta al brige raíz es vía `port 4` que "
+"es [.filename]#fxp0#."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2059
 #, no-wrap
 msgid "Bridge Interface Parameters"
-msgstr ""
+msgstr "Parámetros de la Interfaz del Bridge"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2064
@@ -5122,12 +5462,15 @@ msgid ""
 "summarizes some common uses for these parameters.  The complete list of "
 "available parameters is described in man:ifconfig[8]."
 msgstr ""
+"Varios parámetros de `ifconfig` son únicos de las interfaces del bridge. "
+"Esta sección resume algunos casos comunes para estos parámetros. "
+"man:ifconfig[8] describe la lista completa de parámetros disponibles."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2065
 #, no-wrap
 msgid "private"
-msgstr ""
+msgstr "private"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2069
@@ -5138,12 +5481,17 @@ msgid ""
 "packets.  If traffic needs to be selectively blocked, a firewall should be "
 "used instead."
 msgstr ""
+"Una interfaz privada no reenvía nada de tráfico a otro puerto que no esté "
+"designado como una interfaz privada. El tráfico se bloquea "
+"incondicionalmente de forma que las tramas Ethernet no serán reenviadas, "
+"incluyendo los paquetes ARP. Si se necesita bloquear el tráfico de forma "
+"selectiva, se tiene que usar un firewall."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2070
 #, no-wrap
 msgid "span"
-msgstr ""
+msgstr "span"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2075
@@ -5156,18 +5504,25 @@ msgid ""
 "For example, to send a copy of all frames out the interface named [."
 "filename]#fxp4#:"
 msgstr ""
+"Un puerto span transmite una copia de cada trama Ethernet recibida en el "
+"bridge. El número de puertos span configurados en el bridge es ilimitado, "
+"pero si una interfaz es designada como un puerto span, no puede ser usada "
+"también como un puerto regular en el bridge. Esto es muy útil para husmear "
+"en una red con bridge de forma pasiva en otro host conectado a uno de los "
+"puertos span del bridge. Por ejemplo, para enviar una copia de todas las "
+"tramas obtenidas de la interfaz [.filename]#fxp4#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2079
 #, no-wrap
 msgid "# ifconfig bridge0 span fxp4\n"
-msgstr ""
+msgstr "# ifconfig bridge0 span fxp4\n"
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2081
 #, no-wrap
 msgid "sticky"
-msgstr ""
+msgstr "sticky"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2086
@@ -5180,6 +5535,13 @@ msgid ""
 "Clients learned on a particular segment of the bridge cannot roam to another "
 "segment."
 msgstr ""
+"Si una interfaz del bridge es marcada como sticky, las entradas de "
+"direcciones aprendidas dinámicamente se tratan como entradas estáticas en la "
+"caché de reenvío. Las entradas sticky no envejecen nunca en la caché ni son "
+"reemplazadas, incluso si la dirección es vista en otra interfaz. Esto ofrece "
+"el beneficio de las entradas de direcciones estáticas sin la necesidad de "
+"poblar la tabla de reenvío con antelación. Los clientes que se han aprendido "
+"de un segmento del bridge en particular no pueden moverse a otro segmento."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2089
@@ -5189,6 +5551,10 @@ msgid ""
 "Consider that `CustomerA` is on `vlan100`, `CustomerB` is on `vlan101`, and "
 "the bridge has the address `192.168.0.1`:"
 msgstr ""
+"Un ejemplo de uso de direcciones sticky es combinar el bridge con VLANs para "
+"aislar redes cliente sin gastar espacio de direcciones IP. Considera que "
+"`CustomerA` está en `vlan100`, `CustomerB` está en `vlan101`, y el bridge "
+"tiene la dirección `192.168.0.1`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2094
@@ -5197,6 +5563,8 @@ msgid ""
 "# ifconfig bridge0 addm vlan100 sticky vlan100 addm vlan101 sticky vlan101\n"
 "# ifconfig bridge0 inet 192.168.0.1/24\n"
 msgstr ""
+"# ifconfig bridge0 addm vlan100 sticky vlan100 addm vlan101 sticky vlan101\n"
+"# ifconfig bridge0 inet 192.168.0.1/24\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2098
@@ -5205,6 +5573,9 @@ msgid ""
 "Since the bridge cache is sticky, one host cannot spoof the MAC address of "
 "the other customer in order to intercept their traffic."
 msgstr ""
+"En este ejemplo, ambos clientes ven `192.168.0.1` como su gateway por "
+"defecto. Puesto que la caché del bridge es sticky, un host no puede falsear "
+"la dirección MAC de otro cliente para interceptar su tráfico."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2100
@@ -5212,12 +5583,14 @@ msgid ""
 "Any communication between the VLANs can be blocked using a firewall or, as "
 "seen in this example, private interfaces:"
 msgstr ""
+"Cualquier comunicación entre las VLANs se puede bloquear utilizando un "
+"firewall o, como se ve en este ejemplo, usando interfaces privadas:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2104
 #, no-wrap
 msgid "# ifconfig bridge0 private vlan100 private vlan101\n"
-msgstr ""
+msgstr "# ifconfig bridge0 private vlan100 private vlan101\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2107
@@ -5225,6 +5598,8 @@ msgid ""
 "The customers are completely isolated from each other and the full `/24` "
 "address range can be allocated without subnetting."
 msgstr ""
+"Los clientes están completamente aislados entre sí y el rango de direcciones "
+"completo `/24` se puede reservar sin necesidad de crear subredes."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2110
@@ -5233,6 +5608,10 @@ msgid ""
 "limited.  Once the limit is reached, packets with unknown source addresses "
 "are dropped until an existing host cache entry expires or is removed."
 msgstr ""
+"Se puede limitar el número direcciones MAX fuente únicas detrás de una "
+"interfaz. Una vez que se alcance el límite, los paquetes que tengan una "
+"dirección de origen desconocida serán descartados hasta que una entrada "
+"existente de caché en el host que expire o que sea eliminada."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2112
@@ -5240,12 +5619,14 @@ msgid ""
 "The following example sets the maximum number of Ethernet devices for "
 "`CustomerA` on `vlan100` to 10:"
 msgstr ""
+"El siguiente ejemplo establece el número máximo de dispositivos Ethernet a "
+"10 para `CustomerA` en `vlan100`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2116
 #, no-wrap
 msgid "# ifconfig bridge0 ifmaxaddr vlan100 10\n"
-msgstr ""
+msgstr "# ifconfig bridge0 ifmaxaddr vlan100 10\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2122
@@ -5258,6 +5639,13 @@ msgid ""
 "interfaces.  For example, to read the input from four network interfaces as "
 "one stream:"
 msgstr ""
+"Las interfaces del bridge también soportan modo monitor, donde los paquetes "
+"son descartados después de haber sido procesados por man:bpf[4] y no se "
+"procesan más ni se reenvían. Esto se puede usar para multiplexar la entrada "
+"de dos o más interfaces en un único flujo man:bpf[4]. Esto es útil para "
+"reconstruir el tráfico de redes que transmiten las señales RX/TX hacia fuera "
+"usando dos interfaces separadas. Por ejemplo, para leer la entrada desde "
+"cuatro interfaces de red como un único flujo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2127
@@ -5266,12 +5654,14 @@ msgid ""
 "# ifconfig bridge0 addm fxp0 addm fxp1 addm fxp2 addm fxp3 monitor up\n"
 "# tcpdump -i bridge0\n"
 msgstr ""
+"# ifconfig bridge0 addm fxp0 addm fxp1 addm fxp2 addm fxp3 monitor up\n"
+"# tcpdump -i bridge0\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2129
 #, no-wrap
 msgid "SNMP Monitoring"
-msgstr ""
+msgstr "Monitorización SNMP"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2133
@@ -5281,6 +5671,10 @@ msgid ""
 "conform to IETF standards so any SNMP client or monitoring package can be "
 "used to retrieve the data."
 msgstr ""
+"El interfaz bridge y los parámetros STP se pueden monitorizar con "
+"man:bsnmpd[1] que se incluye con el sistema base FreeBSD. Las MIBs del "
+"bridge exportadas siguen el estándar IETF de forma que se puede usar "
+"cualquier cliente SNMP o paquete de monitorización para recuperar los datos."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2135
@@ -5288,12 +5682,14 @@ msgid ""
 "To enable monitoring on the bridge, uncomment this line in [.filename]#/etc/"
 "snmpd.config# by removing the beginning `#` symbol:"
 msgstr ""
+"Para habilitar la monitorización en el bridge, descomenta esta línea en [."
+"filename]#/etc/snmpd.config# eliminando el símbolo `#` al comienzo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2139
 #, no-wrap
 msgid "begemotSnmpdModulePath.\"bridge\" = \"/usr/lib/snmp_bridge.so\"\n"
-msgstr ""
+msgstr "begemotSnmpdModulePath.\"bridge\" = \"/usr/lib/snmp_bridge.so\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2144
@@ -5303,23 +5699,27 @@ msgid ""
 "for more information.  Once these edits are saved, add this line to [."
 "filename]#/etc/rc.conf#:"
 msgstr ""
+"Podría ser necesario modificar en este fichero otros valores de "
+"configuración, como los nombres de la comunidad y listas de acceso. "
+"Consulta  man:bsnmpd[1] y man:snmp_bridge[3]. Una vez guardados los cambios, "
+"añade esta línea a [.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2148
 #, no-wrap
 msgid "bsnmpd_enable=\"YES\"\n"
-msgstr ""
+msgstr "bsnmpd_enable=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2151
 msgid "Then, start man:bsnmpd[1]:"
-msgstr ""
+msgstr "Después, arranca man:bsnmpd[1]:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2155
 #, no-wrap
 msgid "# service bsnmpd start\n"
-msgstr ""
+msgstr "# service bsnmpd start\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2160
@@ -5330,6 +5730,11 @@ msgid ""
 "Net-SNMP, add the following lines to [.filename]#$HOME/.snmp/snmp.conf# in "
 "order to import the bridge MIB definitions:"
 msgstr ""
+"Los siguientes ejemplos usan el software Net-SNMP (package:net-mgmt/net-"
+"snmp[]) para consultar un bridge desde un sistema cliente. También se puede "
+"usar el port package:net-mgmt/bsnmptools[]. Desde el cliente SNMP que está "
+"ejecutando Net-SNMP, añade las siguientes líneas a [.filename]#$HOME/.snmp/"
+"snmp.conf# para importar las definiciones MIB del bridge:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2165
@@ -5338,11 +5743,13 @@ msgid ""
 "mibdirs +/usr/share/snmp/mibs\n"
 "mibs +BRIDGE-MIB:RSTP-MIB:BEGEMOT-MIB:BEGEMOT-BRIDGE-MIB\n"
 msgstr ""
+"mibdirs +/usr/share/snmp/mibs\n"
+"mibs +BRIDGE-MIB:RSTP-MIB:BEGEMOT-MIB:BEGEMOT-BRIDGE-MIB\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2168
 msgid "To monitor a single bridge using the IETF BRIDGE-MIB (RFC4188):"
-msgstr ""
+msgstr "Para monitorizar un sólo bridge usando IETF BRIDGE-MIB (RFC4188):"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2187
@@ -5365,6 +5772,25 @@ msgid ""
 "BRIDGE-MIB::dot1dStpPortForwardTransitions.3 = Counter32: 1\n"
 "RSTP-MIB::dot1dStpVersion.0 = INTEGER: rstp(2)\n"
 msgstr ""
+"% snmpwalk -v 2c -c public bridge1.example.com mib-2.dot1dBridge\n"
+"BRIDGE-MIB::dot1dBaseBridgeAddress.0 = STRING: 66:fb:9b:6e:5c:44\n"
+"BRIDGE-MIB::dot1dBaseNumPorts.0 = INTEGER: 1 ports\n"
+"BRIDGE-MIB::dot1dStpTimeSinceTopologyChange.0 = Timeticks: (189959) 0:31:"
+"39.59 centi-seconds\n"
+"BRIDGE-MIB::dot1dStpTopChanges.0 = Counter32: 2\n"
+"BRIDGE-MIB::dot1dStpDesignatedRoot.0 = Hex-STRING: 80 00 00 01 02 4B D4 50\n"
+"...\n"
+"BRIDGE-MIB::dot1dStpPortState.3 = INTEGER: forwarding(5)\n"
+"BRIDGE-MIB::dot1dStpPortEnable.3 = INTEGER: enabled(1)\n"
+"BRIDGE-MIB::dot1dStpPortPathCost.3 = INTEGER: 200000\n"
+"BRIDGE-MIB::dot1dStpPortDesignatedRoot.3 = Hex-STRING: 80 00 00 01 02 4B D4 "
+"50\n"
+"BRIDGE-MIB::dot1dStpPortDesignatedCost.3 = INTEGER: 0\n"
+"BRIDGE-MIB::dot1dStpPortDesignatedBridge.3 = Hex-STRING: 80 00 00 01 02 4B "
+"D4 50\n"
+"BRIDGE-MIB::dot1dStpPortDesignatedPort.3 = Hex-STRING: 03 80\n"
+"BRIDGE-MIB::dot1dStpPortForwardTransitions.3 = Counter32: 1\n"
+"RSTP-MIB::dot1dStpVersion.0 = INTEGER: rstp(2)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2192
@@ -5374,6 +5800,11 @@ msgid ""
 "in the network have changed or failed and a new tree has been calculated.  "
 "The `dot1dStpTimeSinceTopologyChange.0` value will show when this happened."
 msgstr ""
+"El valor `dot1dStpTopChanges.0` es dos, lo que indica que la topología STP "
+"ha cambiado dos veces. Un cambio de topología significa que uno o más "
+"enlaces en la red han cambiado o fallado y se ha tenido que calcular un "
+"nuevo árbol. El valor `dot1dStpTimeSinceTopologyChange.0` mostrará cuándo "
+"sucede esto."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2194
@@ -5381,6 +5812,8 @@ msgid ""
 "To monitor multiple bridge interfaces, the private BEGEMOT-BRIDGE-MIB can be "
 "used:"
 msgstr ""
+"To monitor multiple bridge interfaces, the private BEGEMOT-BRIDGE-MIB can be "
+"used:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2212
@@ -5402,6 +5835,27 @@ msgid ""
 "BEGEMOT-BRIDGE-MIB::begemotBridgeStpDesignatedRoot.\"bridge0\" = Hex-STRING: 80 00 00 40 95 30 5E 31\n"
 "BEGEMOT-BRIDGE-MIB::begemotBridgeStpDesignatedRoot.\"bridge2\" = Hex-STRING: 80 00 00 50 8B B8 C6 A9\n"
 msgstr ""
+"% snmpwalk -v 2c -c public bridge1.example.com\n"
+"enterprises.fokus.begemot.begemotBridge\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeBaseName.\"bridge0\" = STRING: bridge0\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeBaseName.\"bridge2\" = STRING: bridge2\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeBaseAddress.\"bridge0\" = STRING: "
+"e:ce:3b:5a:9e:13\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeBaseAddress.\"bridge2\" = STRING: "
+"12:5e:4d:74:d:fc\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeBaseNumPorts.\"bridge0\" = INTEGER: 1\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeBaseNumPorts.\"bridge2\" = INTEGER: 1\n"
+"...\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeStpTimeSinceTopologyChange.\"bridge0\" = "
+"Timeticks: (116927) 0:19:29.27 centi-seconds\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeStpTimeSinceTopologyChange.\"bridge2\" = "
+"Timeticks: (82773) 0:13:47.73 centi-seconds\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeStpTopChanges.\"bridge0\" = Counter32: 1\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeStpTopChanges.\"bridge2\" = Counter32: 1\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeStpDesignatedRoot.\"bridge0\" = Hex-STRING: "
+"80 00 00 40 95 30 5E 31\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeStpDesignatedRoot.\"bridge2\" = Hex-STRING: "
+"80 00 00 50 8B B8 C6 A9\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2215
@@ -5409,6 +5863,8 @@ msgid ""
 "To change the bridge interface being monitored via the `mib-2.dot1dBridge` "
 "subtree:"
 msgstr ""
+"Para cambiar la interfaz del bridge que está siendo monitorizada mediante el "
+"subárbol `mib-2.dot1dBridge`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2220
@@ -5417,12 +5873,14 @@ msgid ""
 "% snmpset -v 2c -c private bridge1.example.com\n"
 "BEGEMOT-BRIDGE-MIB::begemotBridgeDefaultBridgeIf.0 s bridge2\n"
 msgstr ""
+"% snmpset -v 2c -c private bridge1.example.com\n"
+"BEGEMOT-BRIDGE-MIB::begemotBridgeDefaultBridgeIf.0 s bridge2\n"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2223
 #, no-wrap
 msgid "Link Aggregation and Failover"
-msgstr ""
+msgstr "Agregación de Enlaces y Conmutación"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2228
@@ -5435,6 +5893,14 @@ msgid ""
 "protocol distributes traffic bi-directionally while responding to the "
 "failure of individual links."
 msgstr ""
+"FreeBSD proporciona la interfaz man:lagg[4] que se puede usar para agregar "
+"múltiples interfaces de red en una interfaz virtual para proporcionar "
+"tolerancia a fallos (\"failover\") y agregación de enlaces. El failover "
+"permite que el tráfico continúe fluyendo mientras haya al menos una interfaz "
+"de red que tenga establecido un enlace. La agregación de enlaces funciona "
+"mejor en switches que soportan LACP, ya que este protocolo distribuye el "
+"tráfico de forma bidireccional a la vez que responde al fallo de enlaces "
+"individuales."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2231
@@ -5444,12 +5910,16 @@ msgid ""
 "accepts incoming traffic.  The following protocols are supported by man:"
 "lagg[4]:"
 msgstr ""
+"Los protocolos de agregación soportados por el interfaz lagg determinan qué "
+"puertos se usan para tráfico saliente y si un puerto específico acepta o no "
+"tráfico de entrada. Los siguientes protocolos están soportados por "
+"man:lagg[4]:"
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2232
 #, no-wrap
 msgid "failover"
-msgstr ""
+msgstr "failover"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2237
@@ -5461,12 +5931,18 @@ msgid ""
 "a non-master port occurs, the original port becomes master once it becomes "
 "available again."
 msgstr ""
+"Este modo envía y recibe tráfico sólo a través del puerto maestro. Si el "
+"puerto maestro no está disponible, se usa el siguiente puerto activo. La "
+"primera interfaz añadida a la interfaz virtual es el puerto maestro y todas "
+"las interfaces añadidas posteriormente se usan como dispositivos "
+"redundantes. Si se produce un cambio a un puerto no maestro, el puerto "
+"original se convierte en maestro una vez que esté disponible de nuevo."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2238
 #, no-wrap
 msgid "loadbalance"
-msgstr ""
+msgstr "loadbalance"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2241
@@ -5475,12 +5951,15 @@ msgid ""
 "peer or exchange frames to monitor the link.  If the switch supports LACP, "
 "that should be used instead."
 msgstr ""
+"Esto proporciona una configuración estática y no negocia agregación con los "
+"pares o intercambia marcos para monitorizar el enlace. Si el switch soporta "
+"LACP, se debería usar en su lugar."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2242
 #, no-wrap
 msgid "lacp"
-msgstr ""
+msgstr "lacp"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2247
@@ -5493,6 +5972,14 @@ msgid ""
 "all the ports.  In the event of changes in physical connectivity, LACP will "
 "quickly converge to a new configuration."
 msgstr ""
+"El protocolo IEEE(R) 802.3ad Link Aggregation Control Protocol (LACP) "
+"negocia un conjunto de enlaces agregables con el par en uno o más grupos "
+"\"Link Aggregated Groups\" (LAGs). Cada LAG se compone de puertos con la "
+"misma velocidad, conjunto de operaciones full-duplex, y el tráfico se "
+"balancea entre los puertos en el LAG con la velocidad total mayor. "
+"Típicamente, sólo hay un LAG que contiene todos los puertos. En el caso de "
+"cambios en la conectividad física, LACP convergerá rápido a una nueva "
+"configuración."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2250
@@ -5502,12 +5989,17 @@ msgid ""
 "port.  The hash includes the Ethernet source and destination address and, if "
 "available, the VLAN tag, and the IPv4 or IPv6 source and destination address."
 msgstr ""
+"LACP balancea el tráfico de salida a lo largo de los puestos activos "
+"basándose en un hash de la cabecera de información del protocolo y acepta "
+"tráfico de entrada de cualquier puerto activo. El hash incluye la fuente "
+"Ehternet y la dirección de destino y, si está disponible, la etiqueta VLAN, "
+"y las direcciones de fuente y destino IPv4 o IPv6."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2251
 #, no-wrap
 msgid "roundrobin"
-msgstr ""
+msgstr "roundrobin"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2254
@@ -5516,12 +6008,16 @@ msgid ""
 "all active ports and accepts incoming traffic from any active port.  Since "
 "this mode violates Ethernet frame ordering, it should be used with caution."
 msgstr ""
+"Este modo distribuye el tráfico de salida utilizando un planificador round-"
+"robin entre todos los puertos activos y acepta tráfico de entrada desde "
+"cualquier puerto activo. Puesto que esto viola el órden de las tramas "
+"Ethernet, debería ser usado con precaución."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2255
 #, no-wrap
 msgid "broadcast"
-msgstr ""
+msgstr "broadcast"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2257
@@ -5529,12 +6025,14 @@ msgid ""
 "This mode sends outgoing traffic to all ports configured on the lagg "
 "interface, and receives frames on any port."
 msgstr ""
+"Este modo envía tráfico de salida a todos los puertos configurados en la "
+"interfaz lagg, y recibe tramas desde cualquier puerto."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2258
 #, no-wrap
 msgid "Configuration Examples"
-msgstr ""
+msgstr "Ejemplos de Configuración"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2262
@@ -5544,12 +6042,16 @@ msgid ""
 "interfaces in failover mode as well as how to configure failover mode "
 "between an Ethernet and a wireless interface."
 msgstr ""
+"Esta sección muestra cómo configurar un switch Cisco(R) y un sistema FreeBSD "
+"para hacer balanceado de carga LACP. Después muestra cómo configurar dos "
+"interfaces Ethernet en modo failover así como cómo configurar el modo "
+"failover entre una interfaz Ethernet y otra inalámbrica."
 
 #. type: Block title
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2264
 #, no-wrap
 msgid "LACP Aggregation with a Cisco(R) Switch"
-msgstr ""
+msgstr "Agregación LACP con un Switch Cisco(R)"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2270
@@ -5561,6 +6063,13 @@ msgid ""
 "ports, Ethernet devices, channel group number, and IP address shown in the "
 "example to match the local configuration."
 msgstr ""
+"Este ejemplo conecta dos interfaces Ethernet man:fcp[4] en una máquina "
+"FreeBSD con los dos primeros puertos Ethernet en un switch Cisco(R) como un "
+"enlace único de balanceo de carga y tolerante a fallos. Se pueden añadir más "
+"interfaces para incrementar la productividad y la tolerancia a fallos. "
+"Reemplaza los nombres de los puertos Cisco(R), dispositivos Ethernet, número "
+"de grupo del canal, y dirección IP como se muestra en el ejemplo para "
+"adaptarlo a la configuración local."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2273
@@ -5571,6 +6080,12 @@ msgid ""
 "much information as it can to distinguish different traffic flows and "
 "balance the flows across the available interfaces."
 msgstr ""
+"El orden de las tramas es obligatorio en los enlaces Ethernet y cualquier "
+"tráfico entre dos estaciones siempre debe fluir por el mismo enlace físico, "
+"limitando la velocidad máxima a aquella de un interfaz. El algoritmo de "
+"transmisión intenta usar la mayor cantidad de información posible para "
+"distinguir entre distintos flujos de tráfico y balancear los flujos entre "
+"las interfaces disponibles."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2275
@@ -5578,6 +6093,8 @@ msgid ""
 "On the Cisco(R) switch, add the _FastEthernet0/1_ and _FastEthernet0/2_ "
 "interfaces to channel group _1_:"
 msgstr ""
+"En el switch Cisco(R), añade las interfaces _FastEthernet0/1_ y "
+"_FastEthernet0/2_ al grupo del canal _1_:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2285
@@ -5591,6 +6108,13 @@ msgid ""
 " channel-group 1 mode active\n"
 " channel-protocol lacp\n"
 msgstr ""
+"interface FastEthernet0/1\n"
+" channel-group 1 mode active\n"
+" channel-protocol lacp\n"
+"!\n"
+"interface FastEthernet0/2\n"
+" channel-group 1 mode active\n"
+" channel-protocol lacp\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2288
@@ -5599,6 +6123,9 @@ msgid ""
 "interfaces _fxp0_ and _fxp1_ and bring the interfaces up with an IP address "
 "of _10.0.0.3/24_:"
 msgstr ""
+"En el sistema FreeBSD, crea el interfaz man:lagg[4] usando las interfaces "
+"físicas _fxp0_ y _fxp1_ y levanta las interfaces con la dirección IP _10.0.0."
+"3/24_:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2295
@@ -5609,11 +6136,15 @@ msgid ""
 "# ifconfig lagg0 create\n"
 "# ifconfig lagg0 up laggproto lacp laggport fxp0 laggport fxp1 10.0.0.3/24\n"
 msgstr ""
+"# ifconfig fxp0 up\n"
+"# ifconfig fxp1 up\n"
+"# ifconfig lagg0 create\n"
+"# ifconfig lagg0 up laggproto lacp laggport fxp0 laggport fxp1 10.0.0.3/24\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2298
 msgid "Next, verify the status of the virtual interface:"
-msgstr ""
+msgstr "Después, verifica el estado de la interfaz virtual:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2311
@@ -5630,6 +6161,16 @@ msgid ""
 "        laggport: fxp1 flags=1c<ACTIVE,COLLECTING,DISTRIBUTING>\n"
 "        laggport: fxp0 flags=1c<ACTIVE,COLLECTING,DISTRIBUTING>\n"
 msgstr ""
+"# ifconfig lagg0\n"
+"lagg0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
+"        options=8<VLAN_MTU>\n"
+"        ether 00:05:5d:71:8d:b8\n"
+"        inet 10.0.0.3 netmask 0xffffff00 broadcast 10.0.0.255\n"
+"        media: Ethernet autoselect\n"
+"        status: active\n"
+"        laggproto lacp\n"
+"        laggport: fxp1 flags=1c<ACTIVE,COLLECTING,DISTRIBUTING>\n"
+"        laggport: fxp0 flags=1c<ACTIVE,COLLECTING,DISTRIBUTING>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2316
@@ -5638,11 +6179,15 @@ msgid ""
 "the remote switch.  Traffic will be transmitted and received through these "
 "active ports.  Add `-v` to the above command to view the LAG identifiers."
 msgstr ""
+"Los puertos marcados como `ACTIVE` forman parte del LAG que se ha negociado "
+"con el switch remoto. El tráfico será transmitido y recibido a través de "
+"estos puertos activos. Añade `-v` al comando de arriba para ver los "
+"identificadores LAG."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2318
 msgid "To see the port status on the Cisco(R) switch:"
-msgstr ""
+msgstr "Para ver el estado del puerto en el switch Cisco(R):"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2325
@@ -5653,18 +6198,22 @@ msgid ""
 "        F - Device is requesting Fast LACPDUs\n"
 "        A - Device is in Active mode       P - Device is in Passive mode\n"
 msgstr ""
+"switch# show lacp neighbor\n"
+"Flags:  S - Device is requesting Slow LACPDUs\n"
+"        F - Device is requesting Fast LACPDUs\n"
+"        A - Device is in Active mode       P - Device is in Passive mode\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2327
 #, no-wrap
 msgid "Channel group 1 neighbors\n"
-msgstr ""
+msgstr "Channel group 1 neighbors\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2329
 #, no-wrap
 msgid "Partner's information:\n"
-msgstr ""
+msgstr "Partner's information:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2334
@@ -5675,11 +6224,15 @@ msgid ""
 "Fa0/1     SA      32768     0005.5d71.8db8  29s    0x146   0x3      0x3D\n"
 "Fa0/2     SA      32768     0005.5d71.8db8  29s    0x146   0x4      0x3D\n"
 msgstr ""
+"                  LACP port                        Oper    Port     Port\n"
+"Port      Flags   Priority  Dev ID         Age     Key     Number   State\n"
+"Fa0/1     SA      32768     0005.5d71.8db8  29s    0x146   0x3      0x3D\n"
+"Fa0/2     SA      32768     0005.5d71.8db8  29s    0x146   0x4      0x3D\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2337
 msgid "For more detail, type `show lacp neighbor detail`."
-msgstr ""
+msgstr "Para más detalles, teclea `show lacp neighbor detail`."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2339
@@ -5687,6 +6240,8 @@ msgid ""
 "To retain this configuration across reboots, add the following entries to [."
 "filename]#/etc/rc.conf# on the FreeBSD system:"
 msgstr ""
+"Para mantener esta configuración entre reinicios, añade las siguientes "
+"entradas en el fichero [.filename]#/etc/rc.conf#del sistema FreeBSD:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2346
@@ -5697,12 +6252,16 @@ msgid ""
 "cloned_interfaces=\"lagg0\"\n"
 "ifconfig_lagg0=\"laggproto lacp laggport fxp0 laggport fxp1 10.0.0.3/24\"\n"
 msgstr ""
+"ifconfig_fxp0=\"up\"\n"
+"ifconfig_fxp1=\"up\"\n"
+"cloned_interfaces=\"lagg0\"\n"
+"ifconfig_lagg0=\"laggproto lacp laggport fxp0 laggport fxp1 10.0.0.3/24\"\n"
 
 #. type: Block title
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2351
 #, no-wrap
 msgid "Failover Mode"
-msgstr ""
+msgstr "Modo Failover"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2358
@@ -5714,6 +6273,12 @@ msgid ""
 "secondary interface, and the virtual interface is assigned an IP address of "
 "_10.0.0.15/24_:"
 msgstr ""
+"El modo failover se puede usar para cambiar a un interfaz secundario si se "
+"pierde el enlace en el interfaz maestro. Para configurar failover, asegúrate "
+"de que las interfaces físicas están levantadas, después crea el interfaz "
+"man:lagg[4]. En este ejemplo, _fxp0_ es la interfaz maestra, _fxp1_ es la "
+"interfaz secundaria, y el interfaz virtual tiene asignada la dirección IP _10"
+".0.0.15/24_:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2365
@@ -5724,12 +6289,17 @@ msgid ""
 "# ifconfig lagg0 create\n"
 "# ifconfig lagg0 up laggproto failover laggport fxp0 laggport fxp1 10.0.0.15/24\n"
 msgstr ""
+"# ifconfig fxp0 up\n"
+"# ifconfig fxp1 up\n"
+"# ifconfig lagg0 create\n"
+"# ifconfig lagg0 up laggproto failover laggport fxp0 laggport fxp1 10.0.0.15/"
+"24\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2368
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2469
 msgid "The virtual interface should look something like this:"
-msgstr ""
+msgstr "La interfaz virtual debería tener un aspecto parecido a este:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2381
@@ -5746,6 +6316,16 @@ msgid ""
 "        laggport: fxp1 flags=0<>\n"
 "        laggport: fxp0 flags=5<MASTER,ACTIVE>\n"
 msgstr ""
+"# ifconfig lagg0\n"
+"lagg0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
+"        options=8<VLAN_MTU>\n"
+"        ether 00:05:5d:71:8d:b8\n"
+"        inet 10.0.0.15 netmask 0xffffff00 broadcast 10.0.0.255\n"
+"        media: Ethernet autoselect\n"
+"        status: active\n"
+"        laggproto failover\n"
+"        laggport: fxp1 flags=0<>\n"
+"        laggport: fxp0 flags=5<MASTER,ACTIVE>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2386
@@ -5754,6 +6334,9 @@ msgid ""
 "_fxp0_, _fxp1_ will become the active link.  If the link is restored on the "
 "master interface, it will once again become the active link."
 msgstr ""
+"El tráfico será transmitido y recibido en _fxp0_. Si se pierde el enlace en "
+"_fxp0_, _fxp1_ se convertirá en el enlace activo. Si se restaura el enlace "
+"en la interfaz maestra, se convertirá de nuevo en el enlace activo."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2388
@@ -5762,6 +6345,8 @@ msgid ""
 "To retain this configuration across reboots, add the following entries to [."
 "filename]#/etc/rc.conf#:"
 msgstr ""
+"Para mantener esta configuración entre reinicios, añade las siguientes "
+"entradas en [.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2395
@@ -5772,12 +6357,17 @@ msgid ""
 "cloned_interfaces=\"lagg0\"\n"
 "ifconfig_lagg0=\"laggproto failover laggport fxp0 laggport fxp1 10.0.0.15/24\"\n"
 msgstr ""
+"ifconfig_fxp0=\"up\"\n"
+"ifconfig_fxp1=\"up\"\n"
+"cloned_interfaces=\"lagg0\"\n"
+"ifconfig_lagg0=\"laggproto failover laggport fxp0 laggport fxp1 10.0.0.15/"
+"24\"\n"
 
 #. type: Block title
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2400
 #, no-wrap
 msgid "Failover Mode Between Ethernet and Wireless Interfaces"
-msgstr ""
+msgstr "Modo Failover Entre Interfaces Ethernet y Wireless"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2406
@@ -5788,6 +6378,12 @@ msgid ""
 "prefers the Ethernet connection for both performance and security reasons, "
 "while maintaining the ability to transfer data over the wireless connection."
 msgstr ""
+"Para los usuarios de portátiles, normalmente es deseable configurar el "
+"dispositivo inalámbrico como un secundario que sólo usa cuando la conexión "
+"Ethernet no está disponible. Con man:lagg[4], es posible configurar un "
+"failover que prefiera la conexión Ethernet tanto por rendimiento como por "
+"razones de seguridad, mientras que se mantiene la posibilidad de transferir "
+"datos por la conexión inalámbrica."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2408
@@ -5795,6 +6391,8 @@ msgid ""
 "This is achieved by overriding the Ethernet interface's MAC address with "
 "that of the wireless interface."
 msgstr ""
+"Esto se consigue sobrescribiendo la dirección MAC del interfaz Ethernet con "
+"el de la interfaz inalámbrica."
 
 #. type: delimited block * 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2414
@@ -5804,6 +6402,11 @@ msgid ""
 "overriding the MAC address.  We therefore recommend overriding the Ethernet "
 "MAC address for this purpose."
 msgstr ""
+"En teoría, cualquiera de las dos direcciones MAC (Ethernet o inalámbrica) se "
+"puede cambiar para igualarse a la otra. Sin embargo, algunas interfaces "
+"inalámbricas populares carecen del soporte para sobrescribir la dirección "
+"MAX. Por lo tanto para este propósito recomendamos sobrescribir la dirección "
+"MAC Ethernet."
 
 #. type: delimited block * 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2421
@@ -5817,6 +6420,15 @@ msgid ""
 "This is needed because otherwise the driver is not loaded yet at the time "
 "the man:lagg[4] interface is set up."
 msgstr ""
+"Si el controlador para el interfaz inalámbrico no está cargado en el kernel "
+"`GENERIC` o en el personalizado, y el ordenador está ejecutando "
+"FreeBSD{rel121-current}, carga el [.filename]#.ko# correspondiente en [."
+"filename]#/boot/loader.conf# añadiendo `*driver_load=\"YES\"*` a ese fichero "
+"y después reiniciando. Otra forma mejor es cargar el driver en [.filename]#/"
+"etc/rc.conf# añadiéndolo a `kld_list` (consulta man:rc.conf[5] para los "
+"detalles) en ese fichero y reiniciando. Esto es necesario porque de otra "
+"forma el controlador no está todavía cargado en el momento en el que se "
+"configura el interfaz man:lagg[4]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2427
@@ -5829,17 +6441,24 @@ msgid ""
 "own 2-letter country code), but do not set an IP address.  Replace _wlan0_ "
 "to match the system's wireless interface name:"
 msgstr ""
+"En este ejemplo, el interfaz Ethernet, _re0_, es el maestro y el interfaz "
+"inalámbrico, _wlan0_, es el recambio. El interfaz _wlan0_ ha sido creado a "
+"partir del interfaz inalámbrico físico _ath0_, y el interfaz Ethernet se "
+"configurará con la dirección MAC del interfaz inalámbrico. Primero, levanta "
+"el interfaz inalámbrico (reemplaza _FR_ con tu código de país de dos letras)"
+", pero no establezcas una dirección IP. Reemplaza _wlan0_ con el nombre del "
+"interfaz inalámbrico del sistema:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2431
 #, no-wrap
 msgid "# ifconfig wlan0 create wlandev ath0 country FR ssid my_router up\n"
-msgstr ""
+msgstr "# ifconfig wlan0 create wlandev ath0 country FR ssid my_router up\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2434
 msgid "Now you can determine the MAC address of the wireless interface:"
-msgstr ""
+msgstr "Ahora puedes saber la dirección MAC del interfaz inalámbrico:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2449
@@ -5858,6 +6477,18 @@ msgid ""
 "\tstatus: associated\n"
 "\tnd6 options=29<PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL>\n"
 msgstr ""
+"# ifconfig wlan0\n"
+"wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
+"\tether b8:ee:65:5b:32:59\n"
+"\tgroups: wlan\n"
+"\tssid Bbox-A3BD2403 channel 6 (2437 MHz 11g ht/20) bssid 00:37:b7:56:4b:60\n"
+"\tregdomain ETSI country FR indoor ecm authmode WPA2/802.11i privacy ON\n"
+"\tdeftxkey UNDEF AES-CCM 2:128-bit txpower 30 bmiss 7 scanvalid 60\n"
+"\tprotmode CTS ampdulimit 64k ampdudensity 8 shortgi -stbctx stbcrx\n"
+"\t-ldpc wme burst roaming MANUAL\n"
+"\tmedia: IEEE 802.11 Wireless Ethernet MCS mode 11ng\n"
+"\tstatus: associated\n"
+"\tnd6 options=29<PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2453
@@ -5865,12 +6496,14 @@ msgid ""
 "The `ether` line will contain the MAC address of the specified interface.  "
 "Now, change the MAC address of the Ethernet interface to match:"
 msgstr ""
+"La línea `ether` contendrá la dirección MAC del interfaz especificado. "
+"Ahora, cambia la dirección MAC del interfaz Ethernet para que concuerde:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2457
 #, no-wrap
 msgid "# ifconfig re0 ether b8:ee:65:5b:32:59\n"
-msgstr ""
+msgstr "# ifconfig re0 ether b8:ee:65:5b:32:59\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2460
@@ -5878,6 +6511,8 @@ msgid ""
 "Make sure the _re0_ interface is up, then create the man:lagg[4] interface "
 "with _re0_ as master with failover to _wlan0_:"
 msgstr ""
+"Asegúrate de que el interfaz _re0_ está levantado, luego crea el interfaz "
+"man:lagg[4] con _re0_ como maestro con _wlan0_ como recambio:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2466
@@ -5887,6 +6522,9 @@ msgid ""
 "# ifconfig lagg0 create\n"
 "# ifconfig lagg0 up laggproto failover laggport re0 laggport wlan0\n"
 msgstr ""
+"# ifconfig re0 up\n"
+"# ifconfig lagg0 create\n"
+"# ifconfig lagg0 up laggproto failover laggport re0 laggport wlan0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2482
@@ -5903,17 +6541,27 @@ msgid ""
 "        media: Ethernet autoselect\n"
 "        status: active\n"
 msgstr ""
+"# ifconfig lagg0\n"
+"lagg0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500\n"
+"        options=8<VLAN_MTU>\n"
+"        ether b8:ee:65:5b:32:59\n"
+"        laggproto failover lagghash l2,l3,l4\n"
+"        laggport: re0 flags=5<MASTER,ACTIVE>\n"
+"        laggport: wlan0 flags=0<>\n"
+"        groups: lagg\n"
+"        media: Ethernet autoselect\n"
+"        status: active\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2485
 msgid "Then, start the DHCP client to obtain an IP address:"
-msgstr ""
+msgstr "Después, arranca el cliente DHCP para obtener una dirección IP:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2489
 #, no-wrap
 msgid "# dhclient lagg0\n"
-msgstr ""
+msgstr "# dhclient lagg0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2501
@@ -5926,12 +6574,18 @@ msgid ""
 "cloned_interfaces=\"lagg0\"\n"
 "ifconfig_lagg0=\"up laggproto failover laggport re0 laggport wlan0 DHCP\"\n"
 msgstr ""
+"ifconfig_re0=\"ether b8:ee:65:5b:32:59\"\n"
+"wlans_ath0=\"wlan0\"\n"
+"ifconfig_wlan0=\"WPA\"\n"
+"create_args_wlan0=\"country FR\"\n"
+"cloned_interfaces=\"lagg0\"\n"
+"ifconfig_lagg0=\"up laggproto failover laggport re0 laggport wlan0 DHCP\"\n"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2506
 #, no-wrap
 msgid "Diskless Operation with PXE"
-msgstr ""
+msgstr "Operación sin Disco con PXE"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2512
@@ -5943,6 +6597,13 @@ msgid ""
 "the machine starts, select the `Boot from network` option in the BIOS setup "
 "or type a function key during system initialization."
 msgstr ""
+"El Preboot eXecution Environment (PXE) de Intel(R) permite a un sistema "
+"operativo arrancar por red. Por ejemplo, un sistema FreeBSD puede arrancar "
+"sobre la red y operar sin un disco local, usando sistemas de ficheros "
+"montados desde un servidor NFS. El soporte de PXE normalmente está "
+"disponible en la BIOS. Para usar PXE cuando arranca la máquina, selecciona "
+"la opción `Arrancar desde la red` en la configuración de la BIOS o teclea "
+"una tecla de función durante la inicialización del sistema."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2514
@@ -5951,6 +6612,9 @@ msgid ""
 "the network, a PXE setup also requires properly configured DHCP, TFTP, and "
 "NFS servers, where:"
 msgstr ""
+"Para proporcionar a un sistema operativo los ficheros necesarios para que "
+"arranque sobre la red, la configuración de PXE también necesita configurar "
+"apropiadamente DHCP, TFTP y los servidores NFS, donde:"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2516
@@ -5958,16 +6622,19 @@ msgid ""
 "Initial parameters, such as an IP address, executable boot filename and "
 "location, server name, and root path are obtained from the DHCP server."
 msgstr ""
+"Parámetros iniciales, como una dirección IP, el nombre del fichero "
+"ejecutable de arranque y su localización, el nombre del servidor, y la ruta "
+"raíz se obtienen del servidor DHCP."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2517
 msgid "The operating system loader file is booted using TFTP."
-msgstr ""
+msgstr "El fichero del cargador del sistema operativo se obtiene mediante TFTP."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2518
 msgid "The file systems are loaded using NFS."
-msgstr ""
+msgstr "Los sistemas de ficheros se cargan usando NFS."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2523
@@ -5980,6 +6647,14 @@ msgid ""
 "loaded and the rest of the FreeBSD bootup sequence proceeds, as described in "
 "crossref:boot[boot,The FreeBSD Booting Process]."
 msgstr ""
+"Cuando un ordenador arranca mediante PXE, recibe información a través de "
+"DHCP sobre dónde obtener el fichero inicial del cargador de arranque. "
+"Después de que el ordenador recibe esta información, descarga el cargador de "
+"arranque vía TFTP y después ejecuta el cargador de arranque. En FreeBSD, el "
+"fichero del cargador de arranque es [.filename]#/boot/pxeboot#. Después de "
+"que [.filename]#/boot/pxeboot# se ejecute, se carga el kernel de FreeBSD y "
+"el resto de la secuencia de arranque de FreeBSD prosigue su curso como se "
+"describe en crossref:boot[boot,El Proceso de Arranque de FreeBSD]."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2526
@@ -5988,6 +6663,9 @@ msgid ""
 "so that other systems can PXE boot into FreeBSD.  Refer to man:diskless[8] "
 "for more information."
 msgstr ""
+"Esta sección describe cómo configurar estos servicios en un sistema FreeBSD "
+"de forma que otros sistemas puedan arrancar mediante PXE en FreeBSD. "
+"Consulta man:diskless[8] para más información."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2531
@@ -5995,12 +6673,15 @@ msgid ""
 "As described, the system providing these services is insecure.  It should "
 "live in a protected area of a network and be untrusted by other hosts."
 msgstr ""
+"Como se ha descrito, el sistema que proporciona estos servicios no es "
+"seguro. Debería vivir en un área protegida de la red y otros hosts no "
+"deberían confiar en él."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2534
 #, no-wrap
 msgid "Setting Up the PXE Environment"
-msgstr ""
+msgstr "Configurando el Entorno PXE"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2540
@@ -6013,6 +6694,13 @@ msgid ""
 "in both [.filename]#/etc/inetd.conf# and [.filename]#/usr/local/etc/dhcpd."
 "conf#."
 msgstr ""
+"Las pasos que se muestran en esta sección configuran los servidores NFS y "
+"TFTP incluidos. La siguiente sección muestra cómo instalar y configurar el "
+"servidor DHCP. En este ejemplo, el dirección que contendrá los ficheros "
+"usados por los usuarios PXE es [.filename]#/b/tftpboot/FreeBSD/install#. Es "
+"importante que este directorio exista y que el nombre del directorio esté "
+"configurado tanto en [.filename]#/etc/inetd.conf# como en [.filename]#/usr/"
+"local/etc/dhcpd.conf#."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2545
@@ -6021,6 +6709,9 @@ msgid ""
 "and man:tcsh[1] users will need to start a man:sh[1] shell or adapt the "
 "commands to man:csh[1] syntax."
 msgstr ""
+"Los ejemplos de comandos que siguen asumen el uso del shell man:sh[1]. Los "
+"usuarios de man:chs[1] y man:tcsh[1] tendrán que iniciar un shell man:sh[1] "
+"o adaptar los comandos a la sintaxis de man:csh[1]."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2549
@@ -6028,6 +6719,8 @@ msgid ""
 "Create the root directory which will contain a FreeBSD installation to be "
 "NFS mounted:"
 msgstr ""
+"Crea el directorio raíz que contendrá la instalación de FreeBSD que será "
+"montada por NFS:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2554
@@ -6036,17 +6729,20 @@ msgid ""
 "# export NFSROOTDIR=/b/tftpboot/FreeBSD/install\n"
 "# mkdir -p ${NFSROOTDIR}\n"
 msgstr ""
+"# export NFSROOTDIR=/b/tftpboot/FreeBSD/install\n"
+"# mkdir -p ${NFSROOTDIR}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2557
 msgid "Enable the NFS server by adding this line to [.filename]#/etc/rc.conf#:"
 msgstr ""
+"Activa el servidor NFS añadiendo esta línea a [.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2561
 #, no-wrap
 msgid "nfs_server_enable=\"YES\"\n"
-msgstr ""
+msgstr "nfs_server_enable=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2564
@@ -6054,23 +6750,25 @@ msgid ""
 "Export the diskless root directory via NFS by adding the following to [."
 "filename]#/etc/exports#:"
 msgstr ""
+"Exporta el directorio raíz del sistema sin disco vía NFS añadiendo lo "
+"siguiente a [.filename]#/etc/exports#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2568
 #, no-wrap
 msgid "/b -ro -alldirs -maproot=root\n"
-msgstr ""
+msgstr "/b -ro -alldirs -maproot=root\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2571
 msgid "Start the NFS server:"
-msgstr ""
+msgstr "Arranca el servidor NFS:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2575
 #, no-wrap
 msgid "# service nfsd start\n"
-msgstr ""
+msgstr "# service nfsd start\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2578
@@ -6078,12 +6776,13 @@ msgid ""
 "Enable man:inetd[8] by adding the following line to [.filename]#/etc/rc."
 "conf#:"
 msgstr ""
+"Activa man:inetd[8] añadiendo la siguiente línea a [.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2582
 #, no-wrap
 msgid "inetd_enable=\"YES\"\n"
-msgstr ""
+msgstr "inetd_enable=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2585
@@ -6091,12 +6790,14 @@ msgid ""
 "Uncomment the following line in [.filename]#/etc/inetd.conf# by making sure "
 "it does not start with a `#` symbol:"
 msgstr ""
+"Descomenta la siguiente línea en [.filename]#/etc/inetd.conf# asegurándote "
+"de que no comienza con un símbolo `#`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2589
 #, no-wrap
 msgid "tftp dgram udp wait root /usr/libexec/tftpd tftpd -l -s /b/tftpboot\n"
-msgstr ""
+msgstr "tftp dgram udp wait root /usr/libexec/tftpd tftpd -l -s /b/tftpboot\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2595
@@ -6104,17 +6805,19 @@ msgid ""
 "Some PXE versions require the TCP version of TFTP.  In this case, uncomment "
 "the second `tftp` line which contains `stream tcp`."
 msgstr ""
+"Algunas versiones de PXE necesitan la versión TCP de TFTP. En este caso, "
+"descomenta la segunda línea `tftp` que contiene `stream tcp`."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2598
 msgid "Start man:inetd[8]:"
-msgstr ""
+msgstr "Arranca man:inetd[8]:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2602
 #, no-wrap
 msgid "# service inetd start\n"
-msgstr ""
+msgstr "# service inetd start\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2605
@@ -6126,6 +6829,12 @@ msgid ""
 "${NFSROOTDIR}_` when running the `make installkernel` and `make "
 "installworld` commands."
 msgstr ""
+"Instala el sistema base en [.filename]#${NFSROOTDIR}#, bien descomprimiendo "
+"los archivos oficiales o recompilando el kernel de FreeBSD y el espacio de "
+"usuario (consulta crossref:cutting-edge[makeworld,“Actualizando FreeBSD "
+"desde las Fuentes”] para instrucciones más detalladas, pero no olvides "
+"añadir `DESTDIR=_${NFSROOTDIR}_` cuando ejecutes los comands `make "
+"installkernel` y `make installworld`."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2606
@@ -6133,6 +6842,8 @@ msgid ""
 "Test that the TFTP server works and can download the boot loader which will "
 "be obtained via PXE:"
 msgstr ""
+"Comprueba que el servidor TFTP funciona y que puede descargar el cargador de "
+"arranque que se obtendrá vía PXE:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2612
@@ -6142,6 +6853,9 @@ msgid ""
 "tftp> get FreeBSD/install/boot/pxeboot\n"
 "Received 264951 bytes in 0.1 seconds\n"
 msgstr ""
+"# tftp localhost\n"
+"tftp> get FreeBSD/install/boot/pxeboot\n"
+"Received 264951 bytes in 0.1 seconds\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2615
@@ -6149,6 +6863,8 @@ msgid ""
 "Edit [.filename]#${NFSROOTDIR}/etc/fstab# and create an entry to mount the "
 "root file system over NFS:"
 msgstr ""
+"Edita [.filename]#${NFSROOTDIR}/etc/fstab# y crea una entrada para montar el "
+"sistema de ficheros raíz sobre NFS:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2620
@@ -6157,6 +6873,10 @@ msgid ""
 "# Device                                         Mountpoint    FSType   Options  Dump Pass\n"
 "myhost.example.com:/b/tftpboot/FreeBSD/install       /         nfs      ro        0    0\n"
 msgstr ""
+"# Device                                         Mountpoint    FSType   "
+"Options  Dump Pass\n"
+"myhost.example.com:/b/tftpboot/FreeBSD/install       /         nfs      "
+"ro        0    0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2624
@@ -6166,6 +6886,10 @@ msgid ""
 "to prevent NFS clients from potentially deleting the contents of the root "
 "file system."
 msgstr ""
+"Reemplaza _myhost.example.com_ con el nombre de la máquina o la dirección IP "
+"del servidor NFS. En este ejemplo, el sistema de ficheros raíz está montado "
+"como solo lectura para evitar que los clientes NFS puedan borrar los "
+"contenidos del sistema de ficheros raíz."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2625
@@ -6173,6 +6897,8 @@ msgid ""
 "Set the root password in the PXE environment for client machines which are "
 "PXE booting :"
 msgstr ""
+"Establece la contraseña de root en el entorno PXE para las máquinas cliente "
+"que están arrancando mediante PXE:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2630
@@ -6181,6 +6907,8 @@ msgid ""
 "# chroot ${NFSROOTDIR}\n"
 "# passwd\n"
 msgstr ""
+"# chroot ${NFSROOTDIR}\n"
+"# passwd\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2633
@@ -6189,6 +6917,10 @@ msgid ""
 "booting by editing [.filename]#${NFSROOTDIR}/etc/ssh/sshd_config# and "
 "enabling `PermitRootLogin`. This option is documented in man:sshd_config[5]."
 msgstr ""
+"Si es necesario, habilita el inicio de sesión de root en man:ssh[1] para las "
+"máquinas cliente que arrancan con PXE editando [.filename]#${NFSROOTDIR}/etc/"
+"ssh/sshd_config# y habilitando `PermitRootLogin`. Esta opción está "
+"documentada en man:sshd_config[5]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2634
@@ -6197,6 +6929,9 @@ msgid ""
 "filename]#${NFSROOTDIR}#. These customizations could include things like "
 "installing packages or editing the password file with man:vipw[8]."
 msgstr ""
+"Realiza cualquier otra personalización del entorno PXE en [."
+"filename]#${NFSROOTDIR}#. Estas personalizaciones podrían incluir cosas como "
+"instalación de paquetes o editar el fichero de contraseñas con man:vipw[8]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2637
@@ -6206,6 +6941,11 @@ msgid ""
 "etc# and [.filename]#/var# need to be memory backed file systems so that "
 "these directories are writable but the NFS root directory is read-only:"
 msgstr ""
+"Cuando se arranca desde un volumen raíz NFS, [.filename]#/etc/rc# detecta el "
+"arranque NFS y ejecuta [.filename]#/etc/rc.initdiskless#. En este caso se "
+"necesita que [.filename]#/etc# y [.filename]#/var# estén cargados den "
+"memoria de forma que estos directorios sean escribibles pero el directorio "
+"raíz NFS sea de sólo escritura:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2644
@@ -6216,6 +6956,10 @@ msgid ""
 "# tar -c -v -f conf/base/etc.cpio.gz --format cpio --gzip etc\n"
 "# tar -c -v -f conf/base/var.cpio.gz --format cpio --gzip var\n"
 msgstr ""
+"# chroot ${NFSROOTDIR}\n"
+"# mkdir -p conf/base\n"
+"# tar -c -v -f conf/base/etc.cpio.gz --format cpio --gzip etc\n"
+"# tar -c -v -f conf/base/var.cpio.gz --format cpio --gzip var\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2649
@@ -6231,12 +6975,22 @@ msgid ""
 "var/md_size# files for [.filename]#/etc# and [.filename]#/var# file systems "
 "respectively."
 msgstr ""
+"Cuando el sistema arranca, los sistemas de fichero en memoria para [."
+"filename]#/etc# y [.filename]#/var# se crearán y montarán y el contenido de "
+"los ficheros [.filename]#cpio.gz# se copiará dentro de ellos. Por defecto, "
+"estos sistemas de ficheros tienen una capacidad máxima de 5 megabytes. Si "
+"tus archivos no caben, que es habitualmente el caso para [.filename]#/var# "
+"cuando se han instalado paquetes binarios, solicita más tamaño poniendo el "
+"número de sectores de 512 bytes necesarios (por ejemplo, 5 megabytes es "
+"10240 sectores) en [.filename]#${NFSROOTDIR}/conf/base/etc/md_size# y [."
+"filename]#${NFSROOTDIR}/conf/base/var/md_size# para los sistemas de ficheros "
+"[.filename]#/etc# y [.filename]#/var# respectivamente."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2651
 #, no-wrap
 msgid "Configuring the DHCP Server"
-msgstr ""
+msgstr "Configurando el Servidor DHCP"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/advanced-networking/_index.adoc:2654
