@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 10:28-0300\n"
-"PO-Revision-Date: 2023-01-25 12:58+0000\n"
+"PO-Revision-Date: 2023-01-26 16:00+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesserial-uart_index/es/>\n"
@@ -267,7 +267,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:111
-#, fuzzy
 msgid ""
 "When the receiver has received all of the bits in the data word, it may "
 "check for the Parity Bits (both sender and receiver must agree on whether a "
@@ -290,7 +289,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:114
-#, fuzzy
 msgid ""
 "Regardless of whether the data was received correctly or not, the UART "
 "automatically discards the Start, Parity and Stop bits.  If the sender and "
@@ -360,7 +358,6 @@ msgstr "Los Estándares RS232-C y V.24"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:129
-#, fuzzy
 msgid ""
 "In most computer systems, the UART is connected to circuitry that generates "
 "signals that comply with the EIA RS232-C specification.  There is also a "
@@ -491,7 +488,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:161
-#, fuzzy
 msgid ""
 "In modern systems there are two types of Break signals.  If the Break is "
 "longer than 1.6 seconds, it is considered a \"Modem Break\", and some modems "
@@ -2793,7 +2789,7 @@ msgstr ""
 #: documentation/content/en/articles/serial-uart/_index.adoc:777
 #, no-wrap
 msgid "+0x04"
-msgstr ""
+msgstr "+0x04"
 
 #. type: Table
 #: documentation/content/en/articles/serial-uart/_index.adoc:788
@@ -2809,12 +2805,32 @@ msgid ""
 "Bit 1 -> Request to Send (RTS). When set to \"1\", the output of the UART -RTS line is Low (Active). +\n"
 "Bit 0 -> Data Terminal Ready (DTR). When set to \"1\", the output of the UART -DTR line is Low (Active). +"
 msgstr ""
+"Modem Control Register (MCR) +\n"
+"Bit 7 -> Reservado, siempre 0. +\n"
+"Bit 6 -> Reservado, siempre 0. +\n"
+"Bit 5 -> Reservado, siempre 0. +\n"
+"Bit 4 -> Loop-Back Enable. Cuando está a \"1\", el transmisor y el receptor "
+"de la UART se conectan juntos internamente para permitir operaciones de "
+"diagnóstico. Además, las salidas de control de la UART se conectan a las "
+"entradas de control de la UART. CTS se conecta a RTS, DTR se conecta a DSR, "
+"OUT 1 se conecta a RI, y OUT 2 se conecta a DCD. + \n"
+"Bit 3 -> OUT 2. Una salida auxiliar que el procesador host puede establecer "
+"a alto o bajo. En el adaptador serie del PC de IBM (y en la mayoría de los "
+"clones), OUT 2 se usa para deshabilitar la señal de interrupción del 8250/"
+"16450/16550 de la UART. +\n"
+"Bit 2 -> OUT 1. Una salida auxiliar que el procesador host puede establecer "
+"a alto o bajo. Esta salida no se utiliza en el adaptador serie del PC de "
+"IBM. +\n"
+"Bit 1 -> Request to Send (RTS). Cuando se establece a \"1\", la salida de la "
+"línea RTS de la UART está en Bajo (Activa). +\n"
+"Bit 0 -> Data Terminal Ready (DTR). Cuando se establece a \"1\", la salida "
+"de la línea DTR de la UART está en Bajo (Activa). +"
 
 #. type: Table
 #: documentation/content/en/articles/serial-uart/_index.adoc:789
 #, no-wrap
 msgid "+0x05"
-msgstr ""
+msgstr "+0x05"
 
 #. type: Table
 #: documentation/content/en/articles/serial-uart/_index.adoc:800
@@ -2830,12 +2846,38 @@ msgid ""
 "Bit 1 -> Overrun Error (OE). A new word was received and there was no room in the receive buffer. The newly-arrived word in the shift register is discarded. On 8250/16450 UARTs, the word in the holding register is discarded and the newly- arrived word is put in the holding register. +\n"
 "Bit 0 -> Data Ready (DR) One or more words are in the receive FIFO that the host may read. A word must be completely received and moved from the shift register into the FIFO (or holding register for 8250/16450 designs) before this bit is set."
 msgstr ""
+"Line Status Register (LSR) +\n"
+"Bit 7 -> Error in Receiver FIFO. En la UART 8250/16450, este bit es cero. "
+"Este bit se pone a \"1\" cuando alguno de los bits en el FIFIO tienen una o "
+"más de las siguientes condiciones de error: PE, FE, o BI. +\n"
+"Bit 6 -> Transmitter Empty (TEMT). Cuando está a \"1\", no quedan palabras "
+"en el FIFO de transmisión o el registro de desplazamiento de transmisión. El "
+"transmisor está completamente ocioso. +\n"
+"Bit 5 -> Transmitter Holding Register Empty (THRE). Cuando está a \"1\", el "
+"FIFO ahora tiene espacio para transmitir al menos una palabra adicional. El "
+"transmisor puede estar todavía transmitiendo cuando este bit se establece a "
+"\"1\". +\n"
+"Bit 4 -> Break Interrupt (BI). El receptor a detectado una señal Break +\n"
+"Bit 3 -> Framing Error (FE). Se detectó un Start Bit pero no se detectó el "
+"Stop Bit en el tiempo esperado. La palabra recibida está probablemente "
+"incoherente. +\n"
+"Bit 2 -> Parity Error (PE). El bit de paridad era incorrecto para la palabra "
+"recibida. +\n"
+"Bit 1 -> Overrun Error (OE). Se recibió una nueva palabra y no había sitio "
+"en el buffer de recepción. La palabra recién llegada al registro de "
+"desplazamiento se descartó. En las UART 8250/16450 la palabra en el registro "
+"de mantenimiento se desacarta y se pone en su lugar la nueva palabra que ha "
+"llegado. +\n"
+"Bit 0 -> Data Ready (DR). Hay en el FIFO de recepción una o más palabras que "
+"el host puede leer. Se tiene que recibir completamente una palabra y mover "
+"al registro de desplazamiento del FIFO (o registro de mantenimiento para los "
+"diseños 8250/16450) antes de establecer este bit."
 
 #. type: Table
 #: documentation/content/en/articles/serial-uart/_index.adoc:801
 #, no-wrap
 msgid "+0x06"
-msgstr ""
+msgstr "+0x06"
 
 #. type: Table
 #: documentation/content/en/articles/serial-uart/_index.adoc:811
@@ -2851,24 +2893,48 @@ msgid ""
 "Bit 1 -> Delta Data Set Ready (DDSR). Set to \"1\" if the -DSR line has changed state one more time since the last time the MSR was read by the host. +\n"
 "Bit 0 -> Delta Clear To Send (DCTS). Set to \"1\" if the -CTS line has changed state one more time since the last time the MSR was read by the host. +"
 msgstr ""
+"Modem Status Register (MSR) +\n"
+"Bit 7 -> Data Carrier Detect (DCD). Refleja el estado de la línea DCD en la "
+"UART. +\n"
+"Bit 6 -> Ring Indicator (RI). Refleja el estado de la línea RI en la UART. +"
+"\n"
+"Bit 5 -> Data Set Ready (DSR). Refleja el estado de la línea DSR en la UART. "
+"+\n"
+"Bit 4 -> Clear To Send (CTS). Refleja el estado de la línea CTS en la UART. +"
+"\n"
+"Bit 3 -> Delta Data Carrier Detect (DDCD). Se establece a \"1\" si la línea "
+"DCD ha cambiado de estado una o más veces desde la última vez que el MSR fue "
+"leído por el host. +\n"
+"Bit 2 -> Trailing Edge Ring Indicator (TERI). Se establece a \"1\" si la "
+"línea RI ha cambiado de estado una o más veces desde la última vez que el "
+"MSR fue leído por el host. +\n"
+"Bit 1 -> Delta Data Set Ready (DDSR). Se establece a \"1\" si la línea DSR "
+"ha cambiado de estado una o más veces desde la última vez que el MSR fue "
+"leído por el host. +\n"
+"Bit 0 -> Delta Clear To Send (DCTS). Se establece a \"1\" si la línea CTS ha "
+"cambiado de estado una o más veces desde la última vez que el MSR fue leído "
+"por el host. +"
 
 #. type: Table
 #: documentation/content/en/articles/serial-uart/_index.adoc:812
 #, no-wrap
 msgid "+0x07"
-msgstr ""
+msgstr "+0x07"
 
 #. type: Table
 #: documentation/content/en/articles/serial-uart/_index.adoc:814
 #, no-wrap
 msgid "Scratch Register (SCR). This register performs no function in the UART. Any value can be written by the host to this location and read by the host later on."
 msgstr ""
+"Scratch Register (SCR). Este registro no tiene ninguna función en la UART. "
+"El host puede escribir cualquier valor en esta localización y leerlo "
+"posteriormente."
 
 #. type: Title ===
 #: documentation/content/en/articles/serial-uart/_index.adoc:816
 #, no-wrap
 msgid "Beyond the 16550A UART"
-msgstr ""
+msgstr "Más allá de la UART 16550A"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:821
