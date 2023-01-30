@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 10:28-0300\n"
-"PO-Revision-Date: 2023-01-28 22:00+0000\n"
+"PO-Revision-Date: 2023-01-30 16:00+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesserial-uart_index/es/>\n"
@@ -3177,18 +3177,18 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:887
 msgid "Add the line"
-msgstr ""
+msgstr "Añade la línea"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:891
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "options COM_MULTIPORT\n"
 msgstr "options COM_MULTIPORT\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:893
 msgid "to the config file."
-msgstr ""
+msgstr "al fichero de configuración."
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:894
@@ -3198,6 +3198,11 @@ msgid ""
 "and a base IO address 100h. The IO address for Each port is +8 hexadecimal "
 "from the previous port, thus the 100h, 108h, 110h... addresses."
 msgstr ""
+"Tendrás que añadir 16 dispositivos más donde estén las líneas actuales `"
+"device sio__n__`. El siguiente ejemplo es para una placa Boca con 3 "
+"interrupciones, y una dirección base de IO en 100h. La dirección IO para "
+"cada puerto es +8 respecto del puerto anterior, por lo tanto las direcciones "
+"100h, 108h, 110h..."
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:904
@@ -3211,6 +3216,13 @@ msgid ""
 "device sio15 at isa? port 0x170 flags 0x1005\n"
 "device sio16 at isa? port 0x178 flags 0x1005 irq 3\n"
 msgstr ""
+"device sio1 at isa? port 0x100 flags 0x1005\n"
+"device sio2 at isa? port 0x108 flags 0x1005\n"
+"device sio3 at isa? port 0x110 flags 0x1005\n"
+"device sio4 at isa? port 0x118 flags 0x1005\n"
+"...\n"
+"device sio15 at isa? port 0x170 flags 0x1005\n"
+"device sio16 at isa? port 0x178 flags 0x1005 irq 3\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:909
@@ -3222,6 +3234,12 @@ msgid ""
 "is used(yes) and if there is an AST/4 compatible IRQ control register(no).  "
 "In this example,"
 msgstr ""
+"La entrada de los flags _se debe_ cambiar respecto de este ejemplo a menos "
+"que estés usando exactamente las mismas asignaciones sio. Los flags se "
+"estableced conforme a 0x``__MYY__`` donde _M_ indica el número menor del "
+"puerto maestro (el último puerto en una Boca 16) y _YY_ indica si FIFO está "
+"activado o desactivado(activado), si se usa IRQ(sí) y si hay un registro de "
+"control de IRQ compatible con AST/4(no). En este ejemplo,"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:914
@@ -3230,6 +3248,8 @@ msgid ""
 " flags\n"
 "\t      0x1005\n"
 msgstr ""
+" flags\n"
+"\t      0x1005\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:918
@@ -3239,6 +3259,9 @@ msgid ""
 "would be 0x1C05, where 1C indicates the minor number of the master port.  Do "
 "not change the 05 setting."
 msgstr ""
+"indica que el puerto maestro es sio16. Si añadiera otra placa y asignara "
+"desde sio17 a sio28, los flags para los 16 puertos de _esa_ placa sería "
+"0x1C05, donde 1C indica el número menor del puerto maestro. No cambies el 05."
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:919
@@ -3249,6 +3272,11 @@ msgid ""
 "successful probe of the Boca ports as follows: (obviously the sio numbers, "
 "IO and IRQ could be different)"
 msgstr ""
+"Guarda y termina la configuración del núcleo, recompila, instala y reinicia. "
+"Asumiendo que has instalado el núcleo recompilado con éxito y que has "
+"establecido la dirección correcta y la IRQ, tu mensaje de arranque debería "
+"indicar un sondeo con éxito de los ports de Boca como sigue: (obviamente los "
+"números sio, IO e IRQ podrían ser diferentes)"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:954
@@ -3287,22 +3315,54 @@ msgid ""
 "sio16 at 0x178-0x17f irq 3 flags 0x1005 on isa\n"
 "sio16: type 16550A (multiport master)\n"
 msgstr ""
+"sio1 at 0x100-0x107 flags 0x1005 on isa\n"
+"sio1: type 16550A (multiport)\n"
+"sio2 at 0x108-0x10f flags 0x1005 on isa\n"
+"sio2: type 16550A (multiport)\n"
+"sio3 at 0x110-0x117 flags 0x1005 on isa\n"
+"sio3: type 16550A (multiport)\n"
+"sio4 at 0x118-0x11f flags 0x1005 on isa\n"
+"sio4: type 16550A (multiport)\n"
+"sio5 at 0x120-0x127 flags 0x1005 on isa\n"
+"sio5: type 16550A (multiport)\n"
+"sio6 at 0x128-0x12f flags 0x1005 on isa\n"
+"sio6: type 16550A (multiport)\n"
+"sio7 at 0x130-0x137 flags 0x1005 on isa\n"
+"sio7: type 16550A (multiport)\n"
+"sio8 at 0x138-0x13f flags 0x1005 on isa\n"
+"sio8: type 16550A (multiport)\n"
+"sio9 at 0x140-0x147 flags 0x1005 on isa\n"
+"sio9: type 16550A (multiport)\n"
+"sio10 at 0x148-0x14f flags 0x1005 on isa\n"
+"sio10: type 16550A (multiport)\n"
+"sio11 at 0x150-0x157 flags 0x1005 on isa\n"
+"sio11: type 16550A (multiport)\n"
+"sio12 at 0x158-0x15f flags 0x1005 on isa\n"
+"sio12: type 16550A (multiport)\n"
+"sio13 at 0x160-0x167 flags 0x1005 on isa\n"
+"sio13: type 16550A (multiport)\n"
+"sio14 at 0x168-0x16f flags 0x1005 on isa\n"
+"sio14: type 16550A (multiport)\n"
+"sio15 at 0x170-0x177 flags 0x1005 on isa\n"
+"sio15: type 16550A (multiport)\n"
+"sio16 at 0x178-0x17f irq 3 flags 0x1005 on isa\n"
+"sio16: type 16550A (multiport master)\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:957
 msgid "If the messages go by too fast to see,"
-msgstr ""
+msgstr "Si los mensajes pasan demasiado rápidos como para poder verlos,"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:961
 #, no-wrap
 msgid "# dmesg | more\n"
-msgstr ""
+msgstr "# dmesg | more\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:963
 msgid "will show you the boot messages."
-msgstr ""
+msgstr "te mostrará los mensajes de arranque."
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:964
@@ -3312,6 +3372,10 @@ msgid ""
 "are running FreeBSD 5.X with a kernel that has man:devfs[5] support compiled "
 "in."
 msgstr ""
+"Después, se deben crear las entradas apropiadas para los dispositivos en [."
+"filename]#/dev# usando el script [.filename]#/dev/MAKEDEV#. Este paso se "
+"puede omitir si estás ejecutando FreeBSD 5.X (o posterior) con un núcleo que "
+"tiene soporte para man:devfs[5] integrado."
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:966
@@ -3319,6 +3383,8 @@ msgid ""
 "If you do need to create the [.filename]#/dev# entries, run the following as "
 "`root`:"
 msgstr ""
+"Si no necesitas crear las entradas en [.filename]#/dev#, ejecuta lo "
+"siguiente como `root`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:972
@@ -3328,6 +3394,9 @@ msgid ""
 "# ./MAKEDEV tty1\n"
 "# ./MAKEDEV cua1\n"
 msgstr ""
+"# cd /dev\n"
+"# ./MAKEDEV tty1\n"
+"# ./MAKEDEV cua1\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:976
@@ -3337,6 +3406,9 @@ msgid ""
 "# ./MAKEDEV ttyg\n"
 "# ./MAKEDEV cuag\n"
 msgstr ""
+"(todo entre medias)\n"
+"# ./MAKEDEV ttyg\n"
+"# ./MAKEDEV cuag\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:979
@@ -3344,6 +3416,8 @@ msgid ""
 "If you do not want or need call-out devices for some reason, you can "
 "dispense with making the [.filename]#cua*# devices."
 msgstr ""
+"Si no quieres o no necesitas dispositivos de aviso por algún motivo, puedes "
+"ahorrarte crear los dispositivos [.filename]#cua*#."
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:980
@@ -3351,12 +3425,14 @@ msgid ""
 "If you want a quick and sloppy way to make sure the devices are working, you "
 "can simply plug a modem into each port and (as root)"
 msgstr ""
+"Si quieres una forma rápida y sucia de asegurarte de que los dispositivos "
+"funcionan, puedes simplemente enchufar un modem en cada puerto (como root)"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:984
 #, no-wrap
 msgid "# echo at > ttyd*\n"
-msgstr ""
+msgstr "# echo at > ttyd*\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:986
@@ -3364,12 +3440,14 @@ msgid ""
 "for each device you have made. You _should_ see the RX lights flash for each "
 "working port."
 msgstr ""
+"para cada dispositivo que has creado. _Deberías_ ver parpadead las luces RX "
+"para cada puerto que funcione."
 
 #. type: Title ===
 #: documentation/content/en/articles/serial-uart/_index.adoc:988
 #, no-wrap
 msgid "Support for Cheap Multi-UART Cards"
-msgstr ""
+msgstr "Soporte para Tarjetas Multi-UART Baratas"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:991
@@ -3377,6 +3455,8 @@ msgid ""
 "_Contributed by Helge Oldach_ mailto:hmo@sep.hamburg.com[hmo@sep.hamburg."
 "com], September 1999"
 msgstr ""
+"_Aportado por Helge Oldach_ mailto:hmo@sep.hamburg.com[hmo@sep.hamburg.com], "
+"Septiembre 1999"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:993
@@ -3384,6 +3464,9 @@ msgid ""
 "Ever wondered about FreeBSD support for your 20$ multi-I/O card with two (or "
 "more) COM ports, sharing IRQs? Here is how:"
 msgstr ""
+"¿Alguna vez te has preguntado acerca del soporte de FreeBSD para tu tarjeta "
+"multi-I/O de 20$ con dos (o más) puertos COM, compartiendo IRQs? Aquí tienes "
+"cómo se hace:"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:997
