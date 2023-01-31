@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 10:28-0300\n"
-"PO-Revision-Date: 2023-01-30 16:00+0000\n"
+"PO-Revision-Date: 2023-01-31 16:00+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesserial-uart_index/es/>\n"
@@ -3481,6 +3481,17 @@ msgid ""
 "possible to run both extension board ports using a single IRQ with the "
 "`COM_MULTIPORT` configuration described in the previous sections."
 msgstr ""
+"Normalmente la única opción para soportar este tipo de placas es usar una "
+"IRQ distinta para cada puerto. Por ejemplo, si la placa de tu CP tiene un "
+"puerto [.filename]#COM1# integrado (también llamado [.filename]#sio0#-I/O "
+"dirección 0x3F8 y IRQ 4) y tienes una placa de extensión con dos UARTs, "
+"seguramente necesitarás configurarlos como [.filename]#COM2# (también "
+"llamado [.filename]#sio1#-I/O dirección 0x2F8 y IRQ 3), y el tercer puerto ("
+"también llamado [.filename]#sio2#) como I/O 0x3E8 y IRQ 5. Obviamente esto "
+"es un desperdicio de recursos de IRQ, ya que básicamente debería ser posible "
+"hacer funcionar ambos puertos de las placas de extensión usando una única "
+"IRQ con la configuración `COM_MULTIPORT` descrita en las secciones "
+"anteriores."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:999
@@ -3488,6 +3499,8 @@ msgid ""
 "Such cheap I/O boards commonly have a 4 by 3 jumper matrix for the COM "
 "ports, similar to the following:"
 msgstr ""
+"Estas placas de I/O baratas tienen normalmente una matriz 4 por 3 de jumpers "
+"para los puertos COM, similar a lo siguiente:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1008
@@ -3500,6 +3513,12 @@ msgid ""
 "            o  *  o  o\n"
 "IRQ         2  3  4  5\n"
 msgstr ""
+"            o  o  o  *\n"
+"Port A               |\n"
+"            o  *  o  *\n"
+"Port B         |\n"
+"            o  *  o  o\n"
+"IRQ         2  3  4  5\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1012
@@ -3508,6 +3527,10 @@ msgid ""
 "columns on your specific board may vary-other boards may supply jumpers for "
 "IRQs 3, 4, 5, and 7 instead."
 msgstr ""
+"Lo que se muestra aquí es el puerto A conectado con la IRQ 5 y el puerto B "
+"conectado con la IRQ 3. Las columnas IRQ en tu placa específica podrían "
+"variar - otras placas podrían proporcionar jumpers para las IRQs 3, 4, 5, y "
+"7 en su lugar."
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1016
@@ -3520,6 +3543,14 @@ msgid ""
 "Depending on the implementation of the extension board or your motherboard, "
 "the IRQ 3 line will continuously stay up, or always stay low."
 msgstr ""
+"Uno podría concluir que conectar ambos puertos con la IRQ 3 usando un jumper "
+"hecho a mano que cubra los tres puntos de conexión en la columna IRQ 3 "
+"resolvería este problema, pero no. No puedes duplicar IRQ 3 porque los "
+"controladores de salida de cada UART están conectados en modo \"totem pole\""
+", de forma que si una UART controla la IRQ 3, la señal de salida no será la "
+"que esperas. Dependiendo de la implementación de la placada de extensión en "
+"tu placa madre, la línea IRQ 3 se mantendrá continuamente elevada, o "
+"permanecerá siempre baja."
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1020
@@ -3532,6 +3563,13 @@ msgid ""
 "preferred) and a 1 kOhm resistor.  Here is the schematic, starting from the "
 "4 by 3 jumper field above:"
 msgstr ""
+"Necesitas desacoplar los controladores de IRQ para las dos UARTs, de forma "
+"que la línea de la IRQ sólo se levanta si (y sólo si) una de las UARTs emite "
+"una IRQ, y permanece baja en caso contrario. La solución fue propuesta por "
+"Joerg Wunsch mailto:j@ida.interface-business.de[j@ida.interface-business.de]:"
+" Soldar un OR cableado compuesto de dos diodos (Germanio o de tipo Schottky "
+"preferentemente) y una resistencia de 1kOhm. Aquí está el diagrama, "
+"comenzando por el campo de 4 por 3 jumpers de arriba:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1034
@@ -3549,6 +3587,17 @@ msgid ""
 "                 +--------->|-------+\n"
 "IRQ         2  3  4  5    Diode\n"
 msgstr ""
+"                          Diode\n"
+"                +---------->|-------+\n"
+"               /                    |\n"
+"            o  *  o  o              |     1 kOhm\n"
+"Port A                              +----|######|-------+\n"
+"            o  *  o  o              |                   |\n"
+"Port B          `-------------------+                 ==+==\n"
+"            o  *  o  o              |                 Ground\n"
+"                \\                   |\n"
+"                 +--------->|-------+\n"
+"IRQ         2  3  4  5    Diode\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1038
@@ -3557,6 +3606,9 @@ msgid ""
 "1 kOhm pull-down resistor.  It is essential to connect the resistor to "
 "ground to avoid floating of the IRQ line on the bus."
 msgstr ""
+"Los cátodos de los diodos están conectados a un punto común, junto con una "
+"resistencia de 1 kOhm de \"pull-down\". Es esencial conectar la resistencia "
+"a tierra para evitar que la línea de IRQ flote en el bus."
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1041
@@ -3564,6 +3616,8 @@ msgid ""
 "Now we are ready to configure a kernel.  Staying with this example, we would "
 "configure:"
 msgstr ""
+"Ahora ya estamos listos para configurar el núcleo. Siguiendo con este "
+"ejemplo, configuraríamos:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1050
@@ -3576,6 +3630,12 @@ msgid ""
 "device          sio1    at isa? port \"IO_COM2\" flags 0x205\n"
 "device          sio2    at isa? port \"IO_COM3\" flags 0x205 irq 3\n"
 msgstr ""
+"# standard on-board COM1 port\n"
+"device          sio0    at isa? port \"IO_COM1\" flags 0x10\n"
+"# patched-up multi-I/O extension board\n"
+"options         COM_MULTIPORT\n"
+"device          sio1    at isa? port \"IO_COM2\" flags 0x205\n"
+"device          sio2    at isa? port \"IO_COM3\" flags 0x205 irq 3\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1055
@@ -3586,6 +3646,12 @@ msgid ""
 "and you surely want a `5` low nibble.)  With kernel verbose mode turned on "
 "this should yield something similar to this:"
 msgstr ""
+"Fíjate que la configuración de los `flags` para [.filename]#sio1# y [."
+"filename]#sio2# es realmente esencial; consulta man:sio[4] para más "
+"detalles. (Generalmente, el `2` en el atributo `flags` se refiere a [."
+"filename]#sio#`2` que se refiere a la IRQ, y que seguramente quieres un `5` "
+"en la parte baja de los flags.) Con el modo verboso del núcleo activado se "
+"debería obtener algo similar a lo siguiente:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1067
@@ -3601,6 +3667,15 @@ msgid ""
 "sio2 at 0x3e8-0x3ef irq 3 flags 0x205 on isa\n"
 "sio2: type 16550A (multiport master)\n"
 msgstr ""
+"sio0: irq maps: 0x1 0x11 0x1 0x1\n"
+"sio0 at 0x3f8-0x3ff irq 4 flags 0x10 on isa\n"
+"sio0: type 16550A\n"
+"sio1: irq maps: 0x1 0x9 0x1 0x1\n"
+"sio1 at 0x2f8-0x2ff flags 0x205 on isa\n"
+"sio1: type 16550A (multiport)\n"
+"sio2: irq maps: 0x1 0x9 0x1 0x1\n"
+"sio2 at 0x3e8-0x3ef irq 3 flags 0x205 on isa\n"
+"sio2: type 16550A (multiport master)\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1072
@@ -3612,17 +3687,23 @@ msgid ""
 "If your kernel does not display this behavior, most likely there is "
 "something wrong with your wiring."
 msgstr ""
+"Aunque [.filename]#/sys/i386/isa/sio.c# es algo críptico con el uso del "
+"array de \"mapas de irq\" de arriba, la idea básica que es que tú observas "
+"`0x1` en el primer, tercer, y cuarto lugar. Esto significa que la IRQ "
+"correspondiente se estableció junto con la salida y se limpió después, que "
+"es justo lo que esperaríamos. Si tu núcleo no muestra este comportamiento, "
+"seguramente haya algo mal con el cableado."
 
 #. type: Title ==
 #: documentation/content/en/articles/serial-uart/_index.adoc:1074
 #, no-wrap
 msgid "Configuring the [.filename]#cy# driver"
-msgstr ""
+msgstr "Configurando el controlador [.filename]#cy#"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1077
 msgid "_Contributed by Alex Nash. 6 June 1996._"
-msgstr ""
+msgstr "_Aportado por Alex Nash. 6 de Junio de 1996._"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1080
@@ -3631,6 +3712,9 @@ msgid ""
 "of the usual [.filename]#sio# driver used by other multiport cards.  "
 "Configuration is a simple matter of:"
 msgstr ""
+"Las tarjetas multi puerto Cyclades se basan en el controlador [.filename]#cy#"
+" en lugar del habitual [.filename]#sio# usado por otras tarjetas multi "
+"puerto. Configurarlo es simplemente:"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1084
@@ -3638,17 +3722,19 @@ msgid ""
 "Add the [.filename]#cy# device to your kernel configuration (note that your "
 "irq and iomem settings may differ)."
 msgstr ""
+"Añade el controlador [.filename]#cy# a la configuración de tu núcleo (date "
+"cuenta de que tus configuraciones de irq e iomem podrían diferir)."
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1088
 #, no-wrap
 msgid "device cy0 at isa? irq 10 iomem 0xd4000 iosiz 0x2000\n"
-msgstr ""
+msgstr "device cy0 at isa? irq 10 iomem 0xd4000 iosiz 0x2000\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1090
 msgid "Rebuild and install the new kernel."
-msgstr ""
+msgstr "Recompila e instala el nuevo núcleo."
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1091
@@ -3656,6 +3742,8 @@ msgid ""
 "Make the device nodes by typing (the following example assumes an 8-port "
 "board):"
 msgstr ""
+"Crea los nodos de dispositivo tecleando (el ejemplo siguiente asume una "
+"placa de 8 puertos):"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1096
@@ -3664,6 +3752,8 @@ msgid ""
 "# cd /dev\n"
 "# for i in 0 1 2 3 4 5 6 7;do ./MAKEDEV cuac$i ttyc$i;done\n"
 msgstr ""
+"# cd /dev\n"
+"# for i in 0 1 2 3 4 5 6 7;do ./MAKEDEV cuac$i ttyc$i;done\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1099
@@ -3672,6 +3762,9 @@ msgid ""
 "serial device (`ttyd`) entries and using `ttyc` in place of `ttyd`. For "
 "example:"
 msgstr ""
+"Si es apropiado, añade entradas de \"dialup\" a [.filename]#/etc/ttys# "
+"duplicando las entradas del dispositivo serie (`ttyd`) y usando `ttyc` en "
+"lugar de `ttyd`. Por ejemplo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1107
@@ -3683,22 +3776,27 @@ msgid ""
 "...\n"
 "ttyc7   \"/usr/libexec/getty std.38400\"  unknown on insecure\n"
 msgstr ""
+"ttyc0   \"/usr/libexec/getty std.38400\"  unknown on insecure\n"
+"ttyc1   \"/usr/libexec/getty std.38400\"  unknown on insecure\n"
+"ttyc2   \"/usr/libexec/getty std.38400\"  unknown on insecure\n"
+"...\n"
+"ttyc7   \"/usr/libexec/getty std.38400\"  unknown on insecure\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/serial-uart/_index.adoc:1109
 msgid "Reboot with the new kernel."
-msgstr ""
+msgstr "Reinicia con el nuevo núcleo."
 
 #. type: Title ==
 #: documentation/content/en/articles/serial-uart/_index.adoc:1111
 #, no-wrap
 msgid "Configuring the [.filename]#si# driver"
-msgstr ""
+msgstr "Configurando el controlador [.filename]#si#"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1114
 msgid "_Contributed by `{nsayer}`. 25 March 1998._"
-msgstr ""
+msgstr "_Aportado por `{nsayer}`. 25 de Marzo de 1998._"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1118
@@ -3707,31 +3805,34 @@ msgid ""
 "A single machine can have up to 4 host cards.  The following host cards are "
 "supported:"
 msgstr ""
+"Las tarjetas multi puerto Specialix SI/XIO y SX usan el controlador [."
+"filename]#si#. Una sola máquina puede tener hasta 4 tarjetas host. Se "
+"soportan las siguientes tarjetas host:"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1120
 msgid "ISA SI/XIO host card (2 versions)"
-msgstr ""
+msgstr "Tarjeta host ISA SI/XIO (2 versiones)"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1121
 msgid "EISA SI/XIO host card"
-msgstr ""
+msgstr "Tarjeta host EISA SI/XIO"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1122
 msgid "PCI SI/XIO host card"
-msgstr ""
+msgstr "Tarjeta host PCI SI/XIO"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1123
 msgid "ISA SX host card"
-msgstr ""
+msgstr "Tarjeta host ISA SX"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1124
 msgid "PCI SX host card"
-msgstr ""
+msgstr "Tarjeta host PCI SX"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/serial-uart/_index.adoc:1130
