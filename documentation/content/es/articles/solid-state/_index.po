@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:21-0300\n"
-"PO-Revision-Date: 2023-02-04 16:00+0000\n"
+"PO-Revision-Date: 2023-02-06 16:00+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlessolid-state_index/es/>\n"
@@ -242,21 +242,27 @@ msgid ""
 "created by [.filename]#/etc/rc.d/var# based on the value of this variable in "
 "[.filename]#rc.conf#:"
 msgstr ""
+"[.filename]#/etc/rc.d/var# monta [.filename]#/var# como un sistema de "
+"ficheros en memoria, crea una lista configurable de directorios en [."
+"filename]#/var# con el comando man:mkdir[1], y cambia los modos de algunos "
+"de esos directorios. En la ejecución de [.filename]#/etc/rc.d/var#, otra "
+"variable de [.filename]#rc.conf# entra en juego - `varsize`. Una partición [."
+"filename]#/var# es creada por [.filename]#/etc/rc.d/var# basándose en el "
+"valor de esta variable en [.filename]#rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/solid-state/_index.adoc:108
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "varsize=8192\n"
 msgstr "varsize=8192\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:111
 msgid "Remember that this value is in sectors by default."
-msgstr "Recuerde que por defecto este valor está en sectores."
+msgstr "Recuerda que por defecto este valor está en sectores."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:118
-#, fuzzy
 msgid ""
 "The fact that [.filename]#/var# is a read-write filesystem is an important "
 "distinction, as the [.filename]#/# partition (and any other partitions you "
@@ -270,33 +276,32 @@ msgid ""
 "`swap` entry from your [.filename]#/etc/fstab#, you should also change the "
 "Options field for each filesystem to `ro` as follows:"
 msgstr ""
-"El hecho de que <filename>/var</filename> sea un sistema de archivos de "
-"lectura y escritura es una distinción importante, ya que la partición "
-"<filename>/</filename> (y cualquier otra partición que pueda tener en su "
-"medio flash) se debe montar como solo lectura. Recuerde que en la <xref "
-"linkend=\"intro\"/> detallamos las limitaciones de la memoria flash, "
-"específicamente, la capacidad de escritura limitada. La importancia de no "
-"montar sistemas de archivos en medios flash de lectura-escritura, y la "
-"importancia de no usar swap, no es exagerada. Un archivo swap en un sistema "
-"concurrido puede deteriorar un medio flash en menos de un año. Un logging "
-"intenso o la creación y destrucción de archivos temporales puede hacer lo "
-"mismo. Por lo tanto, además de quitar la entrada <literal>swap</literal> de "
-"su <filename>/etc/fstab</filename>, también debe cambiar el campo Options "
-"para cada sistema de archivos a <literal>ro</literal> de la siguiente forma:"
+"El hecho de que [.filename]#/var# sea un sistema de archivos de lectura y "
+"escritura es una distinción importante, ya que la partición [.filename]#/# ("
+"y cualquier otra partición que puedas tener en tu medio flash) se debe "
+"montar como solo lectura. Recuerda que en la <<intro>> detallamos las "
+"limitaciones de la memoria flash, específicamente, la capacidad de escritura "
+"limitada. La importancia de no montar sistemas de archivos en medios flash "
+"de lectura-escritura, y la importancia de no usar swap, no es exagerada. Un "
+"archivo swap en un sistema concurrido puede deteriorar un medio flash en "
+"menos de un año. Un logging intenso o la creación y destrucción de archivos "
+"temporales puede hacer lo mismo. Por lo tanto, además de quitar la entrada "
+"`swap` de tu [.filename]#/etc/fstab#, también deberías cambiar el campo "
+"Options para cada sistema de archivos a `ro` de la siguiente forma:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/solid-state/_index.adoc:123
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "# Device                Mountpoint      FStype  Options         Dump    Pass#\n"
 "/dev/ad0s1a             /               ufs     ro              1       1\n"
 msgstr ""
-"# Device                Mountpoint      FStype  Options         Dump    Pass#\n"
+"# Device                Mountpoint      FStype  Options         Dump    Pass#"
+"\n"
 "/dev/ad0s1a             /               ufs     ro              1       1\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:128
-#, fuzzy
 msgid ""
 "A few applications in the average system will immediately begin to fail as a "
 "result of this change.  For instance, cron will not run properly as a result "
@@ -309,31 +314,29 @@ msgid ""
 msgstr ""
 "Algunas aplicaciones en el sistema comenzarán a fallar inmediatamente como "
 "resultado de este cambio. Por ejemplo, cron no se ejecutará correctamente al "
-"faltar las cron tabs en <filename>/var</filename> creadas por <filename>/etc/"
-"rc.d/var</filename>, además, syslog y dhcp encontrarán problemas como "
-"resultado de montar el sistema de archivos como solo lectura y la falta de "
-"elementos en <filename>/var</filename> que ha creado <filename>/etc/rc.d/"
-"var</filename>. Sin embargo, esto son solo problemas temporales y se tratan, "
-"junto con las soluciones para la ejecución de otros programas de uso común "
-"en la <xref linkend=\"strategies\"/>."
+"faltar las cron tabs en [.filename]#/var# creadas por [.filename]#/etc/rc.d/"
+"var#, además, syslog y dhcp encontrarán problemas como resultado de montar "
+"el sistema de archivos como solo lectura y la falta de elementos en [."
+"filename]#/var# que ha creado [.filename]#/etc/rc.d/var#. Sin embargo, esto "
+"son solo problemas temporales y se tratan, junto con las soluciones para la "
+"ejecución de otros programas de uso común en <<strategies>>."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:130
-#, fuzzy
 msgid ""
 "An important thing to remember is that a filesystem that was mounted read-"
 "only with [.filename]#/etc/fstab# can be made read-write at any time by "
 "issuing the command:"
 msgstr ""
 "Una cosa importante a recordar es que un sistema de archivos que fue montado "
-"como solo lectura con <filename>/etc/fstab</filename> puede ser montado como "
-"lectura-escrita en cualquier momento ejecutando el comando:"
+"como solo lectura con [.filename]#/etc/fstab# puede ser montado como lectura-"
+"escrita en cualquier momento ejecutando el comando:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/solid-state/_index.adoc:134
 #, no-wrap
 msgid "# /sbin/mount -uw partition\n"
-msgstr ""
+msgstr "# /sbin/mount -uw partition\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:137
@@ -344,13 +347,13 @@ msgstr "y se puede cambiar de nuevo a solo lectura con el comando:"
 #: documentation/content/en/articles/solid-state/_index.adoc:141
 #, no-wrap
 msgid "# /sbin/mount -ur partition\n"
-msgstr ""
+msgstr "# /sbin/mount -ur partition\n"
 
 #. type: Title ==
 #: documentation/content/en/articles/solid-state/_index.adoc:143
 #, no-wrap
 msgid "Building a File System from Scratch"
-msgstr "Construyendo un sistema de archivos desde cero"
+msgstr "Construyendo un Sistema de Archivos Desde Cero"
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:146
@@ -359,6 +362,9 @@ msgid ""
 "hard drives, you could theoretically install FreeBSD from the network using "
 "the kern and mfsroot floppies or from a CD."
 msgstr ""
+"Como las tarjetas flash compactas compatibles con ATA son vistas por FreeBSD "
+"como discos duros IDE normales, en teoría podrías instalar FreeBSD desde una "
+"red usando los disquetes kern y mfsroot o desde un CD."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:149
@@ -370,10 +376,16 @@ msgid ""
 "installation using normal mechanisms is not possible-there is simply not "
 "enough disk space for even the smallest of conventional installations."
 msgstr ""
+"Sin embargo, incluso una instalación pequeña de FreeBSD usando el "
+"procedimiento normal de instalación puede producir un sistema de tamaño "
+"superior a los 200 megabytes. La mayoría de la gente usará memorias flash "
+"menores (128 megabytes se considera bastante grande - 32 o incluso 16 "
+"megabytes es bastante común), de forma que una instalación utilizando "
+"mecanismos normales no es posible - simplemente no hay suficiente espacio en "
+"disco incluso para la más pequeña de las instalaciones convencionales."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:155
-#, fuzzy
 msgid ""
 "The easiest way to overcome this space limitation is to install FreeBSD "
 "using conventional means to a normal hard disk.  After the installation is "
@@ -387,24 +399,22 @@ msgid ""
 msgstr ""
 "La forma más fácil de superar esta limitación de espacio es instalar FreeBSD "
 "utilizando medios convencionales en un disco duro normal. Una vez finalizada "
-"la instalación, reduzca el sistema operativo a un tamaño que se ajuste a su "
-"medio flash,\n"
-"y comprima el sistema de archivos completo en un fichero tar. Los siguientes "
-"pasos le guiarán en el proceso de preparación de una memoria flash para su "
-"sistema de archivos comprimido en un fichero tar. Recuerde que no estamos "
-"ejecutando una instalación normal, luego las operaciones como particionado, "
-"etiquetado, creación del sistema de archivos, etc. deben ejecutarse "
-"manualmente. Además de los disquetes kern y mfsroot, también necesitará usar "
-"el disquete fixit."
+"la instalación, reduce el sistema operativo a un tamaño que se ajuste a tu "
+"medio flash, y comprime el sistema de archivos completo en un fichero tar. "
+"Los siguientes pasos te guiarán en el proceso de preparación de una memoria "
+"flash para tu sistema de archivos comprimido en un fichero tar. Recuerda que "
+"no estamos ejecutando una instalación normal, luego las operaciones como "
+"particionado, etiquetado, creación del sistema de archivos, etc. deben "
+"ejecutarse manualmente. Además de los disquetes kern y mfsroot, también "
+"necesitarás usar el disquete fixit."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:159
 msgid "Partitioning Your Flash Media Device"
-msgstr "Particionando su dispositivo flash"
+msgstr "Particionando Tu Dispositivo Flash"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:169
-#, fuzzy
 msgid ""
 "After booting with the kern and mfsroot floppies, choose `custom` from the "
 "installation menu.  In the custom installation menu, choose `partition`.  In "
@@ -418,25 +428,23 @@ msgid ""
 "the partition menu.  You will be shown the boot manager menu once more - "
 "repeat the choice you made earlier."
 msgstr ""
-"Después de arrancar con los disquetes kern y mfsroot, seleccione "
-"<literal>custom</literal> en el menú de instalación. En el menú de "
-"instalación personalizado, seleccione <literal>partition</literal>. En el "
-"menú de particiones, debe borrar todas las particiones existentes mediante "
-"la tecla <keycap>d</keycap>. Después de eliminar todas las particiones "
-"existentes, cree una partición utilizando la tecla <keycap>c</keycap> y "
-"acepte el valor predeterminado para el tamaño de la partición. Cuando se le "
-"pregunte el tipo de partición, asegúrese de que el valor esté establecido en "
-"<literal>165</literal>. Ahora escriba la tabla de particiones en el disco "
-"presionando <keycap>w</keycap> (es una opción oculta en esta pantalla). Si "
-"está utilizando una tarjeta compact flash compatible con ATA, debe elegir el "
-"FreeBSD Boot Manager. Ahora presione <keycap>q</keycap> para salir del menú "
-"de partición. Verá de nuevo el menú del gestor de arranque - repita la "
-"opción hecha anteriormente."
+"Después de arrancar con los disquetes kern y mfsroot, selecciona `custom` en "
+"el menú de instalación. En el menú de instalación personalizado, selecciona "
+"`partition`. En el menú de particiones, debe borrar todas las particiones "
+"existentes mediante la tecla kbd:[d]. Después de eliminar todas las "
+"particiones existentes, crea una partición utilizando la tecla kbd:[c] y "
+"acepta el valor predeterminado para el tamaño de la partición. Cuando se te "
+"pregunte el tipo de partición, asegúrate de que el valor esté establecido en "
+"`165`. Ahora escribe la tabla de particiones en el disco presionando kbd:[w] "
+"(es una opción oculta en esta pantalla). Si estás utilizando una tarjeta "
+"compact flash compatible con ATA, debes elegir el FreeBSD Boot Manager. "
+"Ahora presione kbd:[q] para salir del menú de partición. Verás de nuevo el "
+"menú del gestor de arranque - repite la opción hecha anteriormente."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:170
 msgid "Creating Filesystems on Your Flash Memory Device"
-msgstr "Creación de sistemas de archivos en su dispositivo de memoria flash"
+msgstr "Creación de Sistemas de Archivos en Tu Dispositivo de Memoria Flash"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:173
