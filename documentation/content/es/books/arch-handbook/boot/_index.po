@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-30 14:39-0300\n"
-"PO-Revision-Date: 2023-02-20 16:00+0000\n"
+"PO-Revision-Date: 2023-02-21 16:00+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookboot_index/es/>\n"
@@ -99,21 +99,21 @@ msgstr ""
 "El proceso de arranque es una actividad extremadamente dependiente de la "
 "máquina. No solo se debe escribir código para cada arquitectura de "
 "computadora, sino que también puede haber varios tipos de arranque en la "
-"misma arquitectura. Por ejemplo, una lista de directorio de [."
-"filename]#stand# revela una gran cantidad de código dependiente de la "
-"arquitectura. Hay un directorio para cada una de las diversas arquitecturas "
-"compatibles. FreeBSD soporta el estándar de arranque CSM (Compatibility "
-"Support Module). Así que se soporta CSM (con los esquemas de particionado "
-"GTP y MBR) y UEFI (GTP está totalmente soportado, y MBR casi en su totalidad)"
-". También soporta cargar ficheros desde ext2fs, MSDOS, UFS y ZFS. FreeBSD "
-"también soporta la característica de entorno de arranque de ZFS que permite "
-"al sistema operativo HOST comunicar detalles acerca de lo que se quiere "
-"arrancar que van más allá de una simple partición como sucedía en el pasado. "
-"Pero UEFI es más relevante hoy en día que CSM. El ejemplo que sigue muestra "
-"el arranque de una computadora x86 desde un disco duro particionado con MBR "
-"con el cargador multi-arranque de FreeBSD [.filename]#boot0# almacenado en "
-"el primer sector. Ese código de arranque inicia el proceso de arranque de "
-"tres etapas de FreeBSD."
+"misma arquitectura. Por ejemplo, al listar el directorio [.filename]#stand# "
+"se revela una gran cantidad de código dependiente de la arquitectura. Hay un "
+"directorio para cada una de las diversas arquitecturas compatibles. FreeBSD "
+"soporta el estándar de arranque CSM (Compatibility Support Module). Así que "
+"se soporta CSM (con los esquemas de particionado GTP y MBR) y UEFI (GTP está "
+"totalmente soportado, y MBR casi en su totalidad). También soporta cargar "
+"ficheros desde ext2fs, MSDOS, UFS y ZFS. FreeBSD también soporta la "
+"característica de entorno de arranque de ZFS que permite al sistema "
+"operativo HOST comunicar detalles acerca de lo que se quiere arrancar que "
+"van más allá de una simple partición como sucedía en el pasado. Pero UEFI es "
+"más relevante hoy en día que CSM. El ejemplo que sigue muestra el arranque "
+"de una computadora x86 desde un disco duro particionado con MBR con el "
+"cargador multi-arranque de FreeBSD [.filename]#boot0# almacenado en el "
+"primer sector. Ese código de arranque inicia el proceso de arranque de tres "
+"etapas de FreeBSD."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:81
@@ -464,6 +464,13 @@ msgid ""
 "is bootable or not.  Exactly one record must have that flag set, otherwise [."
 "filename]#boot0#'s code will refuse to proceed."
 msgstr ""
+"La _tabla de particiones_ es una estructura especial que empieza en el "
+"desplazamiento `0x1be` en el MBR. Tiene cuatro registros de 16 bytes cada "
+"uno, llamados _registros de partición_, que representan cómo está "
+"particionado el disco, o, en terminología de FreeBSD, cortado en rodajas. Un "
+"byte de esos 16 dice si una partición (rodaja) es arrancable o no. "
+"Exactamente un registro debe tener este flag activado, de lo contrario, el "
+"código en [.filename]#boot0# se negará a continuar."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:203
@@ -500,10 +507,16 @@ msgid ""
 "(Cylinder Head Sector) has coordinates for the first and last sectors of the "
 "partition.  The partition table ends with the special signature `0xaa55`."
 msgstr ""
+"Un descriptor de registro de partición contiene información acerca de dónde "
+"exactamente reside la partición en la unidad. Ambos descriptores, LBA y CHS, "
+"describen la misma información, pero de forma diferente: LBA (Logical Block "
+"Addressing) tiene el sector de comienzo de la partición y la longitud de la "
+"partición, mientras que CHS (Cylinder Head Sector) tienen las coordenadas "
+"para el primer y el último sector de la partición. La tabla de particiones "
+"termina con el valor especial `0xaa55`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:217
-#, fuzzy
 msgid ""
 "The MBR must fit into 512 bytes, a single disk sector.  This program uses "
 "low-level \"tricks\" like taking advantage of the side effects of certain "
@@ -512,14 +525,13 @@ msgid ""
 "when handling the partition table, which is embedded in the MBR itself.  For "
 "these reasons, be very careful when modifying [.filename]#boot0.S#."
 msgstr ""
-"El <acronym>MBR</acronym> debe caber en 512 bytes, un solo sector de disco. "
-"Este programa utiliza bajo nivel <quote>tricks</quote> como aprovechar los "
-"efectos secundarios de ciertas instrucciones y reutilizar los valores de "
-"registro de operaciones anteriores para aprovechar al máximo la menor "
-"cantidad de instrucciones posibles. También se debe tener cuidado al "
-"manipular la tabla de partición, que está incrustada en el <acronym>MBR</"
-"acronym> sí mismo. Por estas razones, tenga mucho cuidado al "
-"modificar<filename>boot0.S</filename>."
+"El MBR debe caber en 512 bytes, un solo sector de disco. Este programa "
+"utiliza \"trucos\" de bajo nivel como aprovechar los efectos laterales de "
+"ciertas instrucciones y reutilizar los valores de registros de operaciones "
+"anteriores para aprovechar al máximo la menor cantidad de instrucciones "
+"posibles. También se debe tener cuidado al manipular la tabla de "
+"particiones, que está incrustada en el MBR mismo. Por estas razones, ten "
+"mucho cuidado al modificar [.filename]#boot0.S#."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:222
@@ -532,6 +544,14 @@ msgid ""
 "at address `0x600`.  In practice this means that [.filename]#boot0# must be "
 "loaded to memory address `0x600` in order to function properly."
 msgstr ""
+"Date cuenta de que el fichero fuente [.filename]#boot0.S# se ensambla \"tal "
+"cual\": las instrucciones se traducen una a una a binario, sin información "
+"adicional (por ejemplo, sin formato de fichero ELF). Este tipo de control de "
+"bajo nivel se consigue en tiempo de enlazado mediante flags especiales de "
+"control que se pasan al enlazador. Por ejemplo, la sección de texto del "
+"programa se establece a la dirección `0x600`. En la práctica esto significa "
+"que [.filename]#boot0# se tiene que cargar en la dirección de memoria `0x600`"
+" para funcionar correctamente."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:229
@@ -547,6 +567,17 @@ msgid ""
 "command the linker to start the text section at address `0x600`, and to "
 "build the output file \"as is\" (strip out any file formatting):"
 msgstr ""
+"Merece la pena mirar el .filename]#Makefile# para [.filename]#boot0# ([."
+"filename]#stand/i386/boot0/Makefile#), ya que define parte del "
+"comportamiento en tiempo de ejecución de [.filename]#boot0#. Por ejemplo, si "
+"una terminal conectada al puerto serie (COM1) se usa para I/O, se debe "
+"definir la macro `SIO`(`-DSIO`). `-DPXE` habilita el arranque mediante PXE "
+"al presionar kbd:[F6]. Adicionalmente, el programa define un conjunto de "
+"_flags_ que permiten más modificaciones de su comportamiento. Todo esto se "
+"ilustra en el [.filename]#Makefile#. Por ejemplo, mira las directivas del "
+"enlazador que le ordenan iniciar la sección de texto en la dirección `0x600 `"
+", y construir el fichero de salida \"tal cual\" (eliminando cualquier "
+"formato del fichero):"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:234
@@ -555,12 +586,14 @@ msgid ""
 "      BOOT_BOOT0_ORG?=0x600\n"
 "      ORG=${BOOT_BOOT0_ORG}\n"
 msgstr ""
+"      BOOT_BOOT0_ORG?=0x600\n"
+"      ORG=${BOOT_BOOT0_ORG}\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:236
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/Makefile# [[boot-boot0-makefile-as-is]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/Makefile# [[boot-boot0-makefile-as-is]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:238
@@ -568,15 +601,11 @@ msgid ""
 "Let us now start our study of the MBR, or [.filename]#boot0#, starting where "
 "execution begins."
 msgstr ""
+"Empecemos ahora nuestro estudio del MBR, o [.filename]#boot0#, empezando por "
+"donde comienza la ejecución."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:244
-#, fuzzy
-#| msgid ""
-#| "Some modifications have been made to some instructions in favor of better "
-#| "exposition. For example, some macros are expanded, and some macro tests "
-#| "are omitted when the result of the test is known. This applies to all of "
-#| "the code examples shown."
 msgid ""
 "Some modifications have been made to some instructions in favor of better "
 "exposition.  For example, some macros are expanded, and some macro tests are "
@@ -585,8 +614,8 @@ msgid ""
 msgstr ""
 "Se han realizado algunas modificaciones a algunas instrucciones a favor de "
 "una mejor exposición. Por ejemplo, algunas macros se expanden y algunas "
-"macropruebas se omiten cuando se conoce el resultado de la prueba. Esto se "
-"aplica a todos los ejemplos de código que se muestran."
+"pruebas de macros se omiten cuando se conoce el resultado de la prueba. Esto "
+"se aplica a todos los ejemplos de código que se muestran."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:255
@@ -600,12 +629,19 @@ msgid ""
 "      movw %ax,%ss\t\t# Set up\n"
 "      movw $LOAD,%sp\t\t#  stack\n"
 msgstr ""
+"start:\n"
+"      cld\t\t\t# String ops inc\n"
+"      xorw %ax,%ax\t\t# Zero\n"
+"      movw %ax,%es\t\t# Address\n"
+"      movw %ax,%ds\t\t#  data\n"
+"      movw %ax,%ss\t\t# Set up\n"
+"      movw $LOAD,%sp\t\t#  stack\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:257
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-entrypoint]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-entrypoint]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:263
@@ -619,6 +655,14 @@ msgid ""
 "sets the stack pointer register (`%sp`) to ($LOAD = address `0x7c00`), so we "
 "have a working stack."
 msgstr ""
+"El primer bloque de código es el punto de entrada del programa. Es donde la "
+"BIOS transfiere el control. Primero, se asegura de que las operaciones de "
+"cadena autoincrementan sus punteros a los operandos (la instrucción `cld`) "
+"footnote:[Ante la duda, el lector debe consultar los manuales oficiales de "
+"Intel, que describen la semántica exacta para cada instrucción:.]. Después, "
+"como no asume nada acerca del estado del los registros de segmento, los "
+"inicializa. Finalmente, establece el registro del puntero de pila (`%sp`) a "
+"($LOAD = address `0x7c00`), de forma que tenemos una pila funcional."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:265
@@ -645,12 +689,23 @@ msgid ""
 "      incb -0xe(%di)\t\t# Set the S field to 1\n"
 "      jmp main-LOAD+ORIGIN\t# Jump to relocated code\n"
 msgstr ""
+"      movw %sp,%si\t# Source\n"
+"      movw $start,%di\t\t# Destination\n"
+"      movw $0x100,%cx\t\t# Word count\n"
+"      rep\t\t\t# Relocate\n"
+"      movsw\t\t\t#  code\n"
+"      movw %di,%bp\t\t# Address variables\n"
+"      movb $0x8,%cl\t\t# Words to clear\n"
+"      rep\t\t\t# Zero\n"
+"      stosw\t\t\t#  them\n"
+"      incb -0xe(%di)\t\t# Set the S field to 1\n"
+"      jmp main-LOAD+ORIGIN\t# Jump to relocated code\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:281
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-relocation]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-relocation]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:291
