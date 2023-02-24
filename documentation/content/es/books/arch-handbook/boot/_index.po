@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-30 14:39-0300\n"
-"PO-Revision-Date: 2023-02-24 09:06+0000\n"
+"PO-Revision-Date: 2023-02-24 16:00+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookboot_index/es/>\n"
@@ -781,6 +781,8 @@ msgid ""
 "The following code block tests whether the drive number provided by the BIOS "
 "should be used, or the one stored in [.filename]#boot0#."
 msgstr ""
+"El bloque de código siguiente comprueba si se debería usar el número de "
+"unidad proporcionado por la BIOS, el almacenado en [.filename]#boot0#."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:315
@@ -796,12 +798,21 @@ msgid ""
 "      js save_curdrive\t\t# Possibly (0x80 set)\n"
 "#endif\n"
 msgstr ""
+"main:\n"
+"      testb $SETDRV,_FLAGS(%bp)\t# Set drive number?\n"
+"#ifndef CHECK_DRIVE\t/* disable drive checks */\n"
+"      jz save_curdrive\t\t# no, use the default\n"
+"#else\n"
+"      jnz disable_update\t# Yes\n"
+"      testb %dl,%dl\t\t# Drive number valid?\n"
+"      js save_curdrive\t\t# Possibly (0x80 set)\n"
+"#endif\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:317
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-drivenumber]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-drivenumber]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:324
@@ -816,6 +827,15 @@ msgid ""
 "defaults, and that the BIOS provided a valid drive number, so we jump to "
 "`save_curdrive`."
 msgstr ""
+"Este código comprueba el bit `SETDRV`(`0x20`) en la variable _flags_. "
+"Recuerda que el registro `%bp` apunta a la posición de memoria `0x800`, de "
+"forma que el test se hace a la variable _flags_ en la dirección `0x800`-`69`"
+"= `0x7bb`. Este es un ejemplo del tipo de modificaciones que se pueden hacer "
+"a [.filename]#boot0#. El flag `SETDRV` no se establece por defecto, pero se "
+"puede establecer en el [.filename]#Makefile#. Cuando está activo, se usa el "
+"número de unidad almacenado en el MBR en lugar del proporcionado por la "
+"BIOS. Asumimos los valores por defecto, y que la BIOS proporcionó un número "
+"de unidad válido, así que saltamos a `save_curdrive`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:326
@@ -823,6 +843,8 @@ msgid ""
 "The next block saves the drive number provided by the BIOS, and calls `putn` "
 "to print a new line on the screen."
 msgstr ""
+"El siguiente bloque guarda el número de unidad proporcionado por la BIOS, y "
+"llama a `putn` para imprimir una línea nueva en la pantalla."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:338
@@ -838,23 +860,31 @@ msgid ""
 "#endif\n"
 "      callw putn\t\t# Print a newline\n"
 msgstr ""
+"save_curdrive:\n"
+"      movb %dl, (%bp)\t\t# Save drive number\n"
+"      pushw %dx\t\t\t# Also in the stack\n"
+"#ifdef\tTEST\t/* test code, print internal bios drive */\n"
+"      rolb $1, %dl\n"
+"      movw $drive, %si\n"
+"      call putkey\n"
+"#endif\n"
+"      callw putn\t\t# Print a newline\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:340
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-savedrivenumber]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-savedrivenumber]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:342
-#, fuzzy
 msgid ""
 "Note that we assume `TEST` is not defined, so the conditional code in it is "
 "not assembled and will not appear in our executable [.filename]#boot0#."
 msgstr ""
-"Tenga en cuenta que asumimos <varname>TEST</varname> no está definido, por "
-"lo que el código condicional que contiene no está ensamblado y no aparecerá "
-"en nuestro ejecutable <filename>boot0</filename>."
+"Ten en cuenta que asumimos que `TEST` no está definido, por lo que el código "
+"condicional que contiene no está ensamblado y no aparecerá en nuestro "
+"ejecutable [.filename]#boot0#."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:348
@@ -866,6 +896,13 @@ msgid ""
 "(Windows(R), ID 0x7), `ext2fs` (Linux(R), ID 0x83), and, of course, `ffs`/"
 "`ufs2` (FreeBSD, ID 0xa5).  The implementation is fairly simple."
 msgstr ""
+"Nuestro siguiente bloque implementa el escaneo real de la tabla de "
+"particiones. Imprime en pantalla el tipo de partición para cada una de las "
+"cuatro entradas de la tabla de particiones. Compara cada tipo con una lista "
+"de sistemas de ficheros de sistemas operativos bien conocidos. Ejemplos de "
+"tipos de partición reconocidos son NTFS (Windows(R), ID 0x7), `ext2fs` "
+"(Linux(R), ID 0x83), y, por supuesto, `ffs`/`ufs2` (FreeBSD, ID 0xa5). La "
+"implementación es bastante simple."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:353
@@ -874,6 +911,8 @@ msgid ""
 "      movw $(partbl+0x4),%bx\t# Partition table (+4)\n"
 "      xorw %dx,%dx\t\t# Item number\n"
 msgstr ""
+"      movw $(partbl+0x4),%bx\t# Partition table (+4)\n"
+"      xorw %dx,%dx\t\t# Item number\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:369
@@ -895,6 +934,21 @@ msgid ""
 "      addw %cx,%di\t\t#  description\n"
 "      callw putx\t\t# Display it\n"
 msgstr ""
+"read_entry:\n"
+"      movb %ch,-0x4(%bx)\t# Zero active flag (ch == 0)\n"
+"      btw %dx,_FLAGS(%bp)\t# Entry enabled?\n"
+"      jnc next_entry\t\t# No\n"
+"      movb (%bx),%al\t\t# Load type\n"
+"      test %al, %al\t\t# skip empty partition\n"
+"      jz next_entry\n"
+"      movw $bootable_ids,%di\t# Lookup tables\n"
+"      movb $(TLEN+1),%cl\t# Number of entries\n"
+"      repne\t\t\t# Locate\n"
+"      scasb\t\t\t#  type\n"
+"      addw $(TLEN-1), %di\t# Adjust\n"
+"      movb (%di),%cl\t\t# Partition\n"
+"      addw %cx,%di\t\t#  description\n"
+"      callw putx\t\t# Display it\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:374
@@ -905,16 +959,19 @@ msgid ""
 "      addb $0x10,%bl\t\t# Next entry\n"
 "      jnc read_entry\t\t# Till done\n"
 msgstr ""
+"next_entry:\n"
+"      incw %dx\t\t\t# Next item\n"
+"      addb $0x10,%bl\t\t# Next entry\n"
+"      jnc read_entry\t\t# Till done\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:376
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-partition-scan]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-partition-scan]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:380
-#, fuzzy
 msgid ""
 "It is important to note that the active flag for each entry is cleared, so "
 "after the scanning, _no_ partition entry is active in our memory copy of [."
@@ -922,12 +979,12 @@ msgid ""
 "partition.  This ensures that only one active partition exists if the user "
 "chooses to write the changes back to disk."
 msgstr ""
-"Es importante tener en cuenta que la bandera activa para cada entrada se "
-"borra, por lo que después del escaneo, <emphasis>no</emphasis> La entrada de "
-"partición está activa en nuestra copia de memoria de <filename>boot0</"
-"filename>. posteriormente, la bandera activa se establecerá para la "
-"partición seleccionada. Esto asegura que solo exista una partición activa si "
-"el usuario elige volver a escribir los cambios en el disco."
+"Es importante tener en cuenta que el flag activo para cada entrada se borra, "
+"por lo que después del escaneo, _no_ hay ninguna entrada de partición activa "
+"en nuestra copia en memoria de [.filename]#boot0#. Posteriormente, la se "
+"establecerá el flag activo para la partición seleccionada. Esto asegura que "
+"solo exista una partición activa si el usuario elige volver a escribir los "
+"cambios en el disco."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:385
@@ -938,6 +995,11 @@ msgid ""
 "screen.  The user may command [.filename]#boot0# to scan partitions on "
 "another drive later."
 msgstr ""
+"El siguiente bloque comprueba otras unidades. En el arranque, la BIOS "
+"escribe en la dirección `0x475` el número de unidades presentes en la "
+"computadora. Si hay otras unidades presentes, [.filename]#boot0# imprime la "
+"unidad actual en pantalla. El usuario puede ordenar a [.filename]#boot0# que "
+"escanee particiones en otra unidad posteriormente."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:394
@@ -950,12 +1012,18 @@ msgid ""
 "      decw %ax\t\t\t# Already drive 0?\n"
 "      jz print_prompt\t\t# Yes\n"
 msgstr ""
+"      popw %ax\t\t\t# Drive number\n"
+"      subb $0x80-0x1,%al\t\t# Does next\n"
+"      cmpb NHRDRV,%al\t\t#  drive exist? (from BIOS?)\n"
+"      jb print_drive\t\t# Yes\n"
+"      decw %ax\t\t\t# Already drive 0?\n"
+"      jz print_prompt\t\t# Yes\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:396
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-test-drives]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-test-drives]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:399
@@ -964,6 +1032,9 @@ msgid ""
 "`print_drive` is not performed.  We also assume nothing strange happened, so "
 "we jump to `print_prompt`."
 msgstr ""
+"Asumimos que sólo hay una unidad presente, de forma que no se realiza el "
+"salto a `print_drive`. También asumimos que no ha sucedido nada extraño, así "
+"que saltamos a `print_promp`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:401
@@ -985,12 +1056,19 @@ msgid ""
 "      callw putkey\t\t#  key\n"
 "      jmp start_input\t\t# Skip beep\n"
 msgstr ""
+"print_prompt:\n"
+"      movw $prompt,%si\t\t# Display\n"
+"      callw putstr\t\t#  prompt\n"
+"      movb _OPT(%bp),%dl\t# Display\n"
+"      decw %si\t\t\t#  default\n"
+"      callw putkey\t\t#  key\n"
+"      jmp start_input\t\t# Skip beep\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:413
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-prompt]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-prompt]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:415
@@ -999,6 +1077,10 @@ msgid ""
 "used to start a timer and for reading user input from the keyboard; if the "
 "timer expires, the default option will be selected:"
 msgstr ""
+"Finalmente, ser realiza un salto a `start_input`, donde se usan los "
+"servicios de la BIOS para activar un temporizador y para leer la entrada de "
+"usuario desde el teclado; si el temporizador expira, se seleccionará la "
+"opción por defecto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:431
@@ -1018,12 +1100,25 @@ msgid ""
 "      cmpw %di,%dx\t\t# Timeout?\n"
 "      jb read_key\t\t# No\n"
 msgstr ""
+"start_input:\n"
+"      xorb %ah,%ah\t\t# BIOS: Get\n"
+"      int $0x1a\t\t\t#  system time\n"
+"      movw %dx,%di\t\t# Ticks when\n"
+"      addw _TICKS(%bp),%di\t#  timeout\n"
+"read_key:\n"
+"      movb $0x1,%ah\t\t# BIOS: Check\n"
+"      int $0x16\t\t\t#  for keypress\n"
+"      jnz got_key\t\t# Have input\n"
+"      xorb %ah,%ah\t\t# BIOS: int 0x1a, 00\n"
+"      int $0x1a\t\t\t#  get system time\n"
+"      cmpw %di,%dx\t\t# Timeout?\n"
+"      jb read_key\t\t# No\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:433
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-start-input]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-start-input]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:446
