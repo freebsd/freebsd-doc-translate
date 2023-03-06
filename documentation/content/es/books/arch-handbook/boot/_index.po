@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-30 14:39-0300\n"
-"PO-Revision-Date: 2023-02-24 16:00+0000\n"
+"PO-Revision-Date: 2023-03-06 16:54+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookboot_index/es/>\n"
@@ -1145,10 +1145,32 @@ msgid ""
 "filename]#boot0# continually asks the BIOS for any user input; this is done "
 "through `int 0x16`, argument `1` in `%ah`."
 msgstr ""
+"Se solicita una interrupción con número `0x1a` y argumento `0` en el "
+"registro `%ah`. La BIOS tiene un conjunto predefinido de servicios, "
+"solicitados por las aplicaciones como interrupciones generadas por software "
+"a través de la instrucción `int` y que recibe argumentos en los registros ("
+"en este caso, `%ah`). Aquí, en particular, estamos solicitando el número de "
+"ticks de reloj desde la medianoche; Este valor lo computa la BIOS mediante "
+"el RTC (Real Time Clock). Este reloj se puede programar para trabajar a "
+"frecuencias que van de los 2 Hz a los 8192 Hz. La BIOS lo establece a 18.2 "
+"Hz en el arranque. Cuando la solicitud se ha satisfecho, la BIOS devuelve un "
+"resultado de 32 bits en los registros `%cx` y `%dx` (bits menos "
+"significativos en `%dx`). Este resultado (la parte `%dx`) se copia al "
+"registro `%di`, y el valor de la variable `TICKS `se añade a `%di`. Esta "
+"variable se encuentra en [.filename]#boot0# en el desplazamiento `_TICKS` ("
+"un valor negativo) desde `%bp` (que, recordemos, apunta a `0x800`). El valor "
+"por defecto de esta variable es `0xb6` (182 en decimal). Ahora, la idea es "
+"que [.filename]#boot0# solicita constantemente la hora de la BIOS, y cuando "
+"el valor devuelto en el registro `%dx` es mayor que el almacenado en `%di`, "
+"se ha cumplido el tiempo y se realizará la selección por defecto. Como el "
+"RTC avanza 18.2 veces por segundo, esta condición se cumplirá después de 10 "
+"segundos (este comportamiento por defecto se puede cambiar en el [."
+"filename]#Makefile#). Hasta que este tiempo haya pasado, [.filename]#boot0# "
+"pregunta de forma continua a la BIOS por una entrada de usuario; esto se "
+"hace a través de `int 0x16`, argumento `1` en `%ah`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:454
-#, fuzzy
 msgid ""
 "Whether a key was pressed or the time expired, subsequent code validates the "
 "selection.  Based on the selection, the register `%si` is set to point to "
@@ -1160,25 +1182,23 @@ msgid ""
 "details of this implementation to the reader."
 msgstr ""
 "Si se presionó una tecla o expiró el tiempo, el código posterior valida la "
-"selección. Basado en la selección, el registro <literal>%si</literal> está "
-"configurado para apuntar a la entrada de partición apropiada en la tabla de "
-"particiones. Esta nueva selección anula la anterior predeterminada. De "
-"hecho, se convierte en el nuevo valor predeterminado. Finalmente, se "
-"establece el indicador ACTIVO de la partición seleccionada. Si se habilitó "
-"en el momento de la compilación, la versión en memoria de <filename>boot0</"
-"filename> con estos valores modificados se vuelve a escribir en el "
-"<acronym>MBR</acronym> en disco. Dejamos los detalles de esta implementación "
-"al lector."
+"selección. Basado en la selección, el registro `%si` está configurado para "
+"apuntar a la entrada de partición apropiada en la tabla de particiones. Esta "
+"nueva selección anula la anterior predeterminada. De hecho, se convierte en "
+"el nuevo valor predeterminado. Finalmente, se establece el indicador ACTIVO "
+"de la partición seleccionada. Si se habilitó en el momento de la "
+"compilación, la versión en memoria de [.filename]#boot0# con estos valores "
+"modificados se vuelve a escribir en el MBR en disco. Dejamos los detalles de "
+"esta implementación al lector."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:456
-#, fuzzy
 msgid ""
 "We now end our study with the last code block from the [.filename]#boot0# "
 "program:"
 msgstr ""
-"Ahora terminamos nuestro estudio con el último bloque de código del "
-"<filename>boot0</filename> programa:"
+"Ahora terminamos nuestro estudio con el último bloque de código del programa "
+"[.filename]#boot0#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:469
@@ -1195,12 +1215,22 @@ msgid ""
 "      popw %si\t\t\t# Restore, next stage uses it\n"
 "      jmp *%bx\t\t\t# Invoke bootstrap\n"
 msgstr ""
+"      movw $LOAD,%bx\t\t# Address for read\n"
+"      movb $0x2,%ah\t\t# Read sector\n"
+"      callw intx13\t\t#  from disk\n"
+"      jc beep\t\t\t# If error\n"
+"      cmpw $MAGIC,0x1fe(%bx)\t# Bootable?\n"
+"      jne beep\t\t\t# No\n"
+"      pushw %si\t\t\t# Save ptr to selected part.\n"
+"      callw putn\t\t# Leave some space\n"
+"      popw %si\t\t\t# Restore, next stage uses it\n"
+"      jmp *%bx\t\t\t# Invoke bootstrap\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:471
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-check-bootable]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-check-bootable]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:475
@@ -1209,6 +1239,10 @@ msgid ""
 "us where the partition begins on disk.  We assume, of course, that the "
 "partition selected is actually a FreeBSD slice."
 msgstr ""
+"Recuerda que `%si` apunta a la entrada de la partición seleccionada. Esta "
+"entrada nos dice dónde empieza la partición en el disco. Asumimos, por "
+"supuesto, que la partición seleccionada es en realidad una sección de "
+"FreeBSD."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:479
@@ -1216,6 +1250,8 @@ msgid ""
 "From now on, we will favor the use of the technically more accurate term "
 "\"slice\" rather than \"partition\"."
 msgstr ""
+"A partir de ahora, usaremos el término \"sección\" (slice) más preciso "
+"técnicamente en lugar de \"partición\"."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:485
@@ -1228,12 +1264,21 @@ msgid ""
 "preserved for use by the next stage, and a jump is performed to address "
 "`0x7c00`, where execution of our next stage (the just-read block) is started."
 msgstr ""
+"El búfer de transferencia se establece a `0x7c00` (registro `%bx`), y se "
+"solicita una lectura del primer sector de la sección de FreeBSD llamando a "
+"`intx13`. Asumimos que todo fue bien, de forma que no se ejecuta un salto a "
+"`beep`. En concreto, la lectura del nuevo sector tiene que terminar con la "
+"secuencia mágica `0xaa55`. Finalmente, el valor en `%si` (el puntero a la "
+"tabla de particiones seleccionada) es preservador para que se use en la "
+"siguiente etapa, y se realiza un salto a la dirección `0x7c00`, donde "
+"comienza la ejecución de nuestra siguiente etapa (el bloque que se acaba de "
+"leer)."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:487
 #, no-wrap
 msgid "`boot1` Stage"
-msgstr ""
+msgstr "Etapa `boot1`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:490
@@ -1247,10 +1292,13 @@ msgid ""
 "MBR ([.filename]#boot0#) was loaded from absolute disk sector one to address "
 "`0x7c00`.  Execution control was passed to that location."
 msgstr ""
+"La BIOS realizó alguna inicialización de harwdware temprana, incluyendo el "
+"POST. El MBR ([.filename]#boot0#) se cargó desde el sector absoluto uno de "
+"disco a la dirección `0x7c00`. El control de la ejecución se pasó a esa "
+"posición."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:497
-#, fuzzy
 msgid ""
 "[.filename]#boot0# relocated itself to the location it was linked to execute "
 "(`0x600`), followed by a jump to continue execution at the appropriate "
@@ -1258,11 +1306,11 @@ msgid ""
 "FreeBSD slice to address `0x7c00`.  Execution control was passed to that "
 "location."
 msgstr ""
-"<filename>boot0</filename> se trasladó a la ubicación donde estaba vinculado "
-"para ejecutar (<literal>0x600</literal>), seguido de un salto para continuar "
-"la ejecución en el lugar apropiado. Finalmente, <filename>boot0</filename> "
-"cargó el primer sector del disco desde el segmento FreeBSD a la dirección "
-"<literal>0x7c00</literal>.El control de ejecución se pasó a esa ubicación."
+"[.filename]#boot0# se trasladó a la ubicación donde estaba enlazado para "
+"ejecutarse (`0x600`), seguido de un salto para continuar la ejecución en el "
+"lugar apropiado. Finalmente, [.filename]#boot0# cargó el primer sector del "
+"disco desde la sección FreeBSD a la dirección `0x7c00`El control de "
+"ejecución se pasó a esa ubicación."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:510
