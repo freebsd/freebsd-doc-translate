@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-30 14:39-0300\n"
-"PO-Revision-Date: 2023-03-06 16:54+0000\n"
+"PO-Revision-Date: 2023-03-14 16:54+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookboot_index/es/>\n"
@@ -1336,6 +1336,28 @@ msgid ""
 "of the FreeBSD slice (512 bytes), it is actually loading [.filename]#boot1# "
 "and transferring control to it."
 msgstr ""
+"[.filename]#boot1# es el siguiente paso en la secuencia de carga del "
+"arranque. Es la primera de las tres etapas de arranque. Fíjate en que hemos "
+"tratado exclusivamente con sectores de disco. Por supuesto, la BIOS carga el "
+"primero sector absoluto, mientras que [.filename]#boot0# carga el primer "
+"sector de la sección de FreeBSD. Ambas cargas se hacen a la dirección "
+"`0x7c00`. Podemos pensar conceptualmente en estos sectores de disco como si "
+"contuvieran los ficheros [.filename]#boot0# y [.filename]#boot1#, "
+"respectivamente, pero en realidad eso no es completamente cierto para [."
+"filename]#boot1#. Hablando de forma estricta, a diferencia de [."
+"filename]#boot0#, [.filename]#boot1# no es parte de los bloques de arranque "
+"footnote:[Hay un fichero /boot/boot1, pero no está escrito al comienzo de la "
+"sección de FreeBSD. En su lugar, se concatena con boot2 para formar boot, "
+"que se escribe al comienzo de la sección de FreeBSD y se lee al arrancar.]. "
+"En su lugar, un solo, fichero completo, [.filename]#boot# ([.filename]#/boot/"
+"boot#), es lo que se escribe en última instancia en disco. Este fichero es "
+"una combinación de [.filename]#boot1#, [.filename]#boot2# y el `Boot "
+"Extender` (o BTX). Este fichero único es mayor en tamaño que un sólo sector ("
+"mayor que 512 bytes). Afortunadamente, [.filename]#boot1# ocupa "
+"_exactamente_ los primeros 512 bytes de este único fichero, de forma que "
+"cuando [.filename]#boot0# carga el primer sector de la sección de FreeBSD ("
+"512 bytes), en realidad está cargando [.filename]#boot1# y transfiriéndole "
+"el control."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:515
@@ -1346,17 +1368,20 @@ msgid ""
 "will see, the last boot stage, [.filename]#loader#, is also a client of the "
 "BTX server."
 msgstr ""
+"La tarea principal de [.filename]#boot1# es cargar la siguiente fase del "
+"arranque. Esta siguiente fase es algo más compleja. Está formada por un "
+"servidor llamado \"Boot Extender\", o BTX, y un cliente, llamado [."
+"filename]#boot2#. Como veremos, la última fase del arranque, [."
+"filename]#loader#, también es un cliente del servidor BTX."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:517
-#, fuzzy
 msgid ""
 "Let us now look in detail at what exactly is done by [.filename]#boot1#, "
 "starting like we did for [.filename]#boot0#, at its entry point:"
 msgstr ""
-"Veamos ahora en detalle lo que hace exactamente <filename>boot1</filename>, "
-"comenzando como lo hicimos para <filename>boot0</filename>, en su punto de "
-"entrada:"
+"Veamos ahora en detalle lo que hace exactamente [.filename]#boot1#, "
+"comenzando como lo hicimos para [.filename]#boot0#, en su punto de entrada:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:522
@@ -1365,12 +1390,14 @@ msgid ""
 "start:\n"
 "\tjmp main\n"
 msgstr ""
+"start:\n"
+"\tjmp main\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:524
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-entry]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-entry]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:526
