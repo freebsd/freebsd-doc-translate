@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-30 14:39-0300\n"
-"PO-Revision-Date: 2023-03-14 16:54+0000\n"
+"PO-Revision-Date: 2023-03-17 14:53+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookboot_index/es/>\n"
@@ -1405,6 +1405,8 @@ msgid ""
 "The entry point at `start` simply jumps past a special data area to the "
 "label `main`, which in turn looks like this:"
 msgstr ""
+"El punto de entrada en `start`simplemente salta a la etiqueta `main` pasada "
+"un área especial de datos, que a su vez se parece a esto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:541
@@ -1423,12 +1425,24 @@ msgid ""
 "      rep\t\t\t# Copy\n"
 "      movsw\t\t\t#  code\n"
 msgstr ""
+"main:\n"
+"      cld\t\t\t# String ops inc\n"
+"      xor %cx,%cx\t\t# Zero\n"
+"      mov %cx,%es\t\t# Address\n"
+"      mov %cx,%ds\t\t#  data\n"
+"      mov %cx,%ss\t\t# Set up\n"
+"      mov $start,%sp\t\t#  stack\n"
+"      mov %sp,%si\t\t# Source\n"
+"      mov $MEM_REL,%di\t\t# Destination\n"
+"      incb %ch\t\t\t# Word count\n"
+"      rep\t\t\t# Copy\n"
+"      movsw\t\t\t#  code\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:543
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-main]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-main]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:548
@@ -1439,6 +1453,12 @@ msgid ""
 "`0x7c00`, effectively where it was loaded in the first place.  The reason "
 "for this relocation will be discussed shortly."
 msgstr ""
+"Al igual que [.filename]#boot0#, este código reposiciona [.filename]#boot1#, "
+"esta vez en la dirección de memoria `0x700`. Sin embargo, a diferencia de [."
+"filename]#boot0#, no salta a esa dirección. [.filename]#boot1#, está "
+"enlazado para ejecutarse en la dirección `0x7c00`, efectivamente donde fue "
+"cargado en primer lugar. La razón para este reposicionamiento se discutirá "
+"enseguida."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:553
