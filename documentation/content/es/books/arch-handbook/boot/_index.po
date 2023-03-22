@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-30 14:39-0300\n"
-"PO-Revision-Date: 2023-03-17 14:53+0000\n"
+"PO-Revision-Date: 2023-03-22 16:53+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookboot_index/es/>\n"
@@ -1472,6 +1472,15 @@ msgid ""
 "rescan the partition table to find where the FreeBSD slice starts.  "
 "Therefore it rereads the MBR:"
 msgstr ""
+"Después viene un bucle que busca la sección FreeBSD. Aunque [."
+"filename]#boot0# cargó [.filename]#boot1# desde la sección de FreeBSD, no se "
+"ha pasado ninguna información acerca de esto footnote:[En realidad sí "
+"pasamos un puntero a la entrada de la sección en el registro %si. Sin "
+"embargo, boot1 no asume que haya sido cargado por boot0 (quizás lo ha "
+"cargado otro MBR, y no ha pasado esta información), de forma que no asume "
+"nada.], de forma que [.filename]#boot1# debe escanear de nuevo la tabla de "
+"particiones para ver dónde comienza la sección FreeBSD. Por lo tanto vuelve "
+"a leer el MBR:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:561
@@ -1483,12 +1492,17 @@ msgid ""
 "      movb $0x1,%dh\t\t# Block count\n"
 "      callw nread\t\t# Read MBR\n"
 msgstr ""
+"      mov $part4,%si\t\t# Partition\n"
+"      cmpb $0x80,%dl\t\t# Hard drive?\n"
+"      jb main.4\t\t\t# No\n"
+"      movb $0x1,%dh\t\t# Block count\n"
+"      callw nread\t\t# Read MBR\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:563
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-find-freebsd]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-find-freebsd]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:571
@@ -1501,6 +1515,14 @@ msgid ""
 "%si`.  This memory address holds a \"fake partition\" to be used by "
 "`nread`.  The following is the data in the fake partition:"
 msgstr ""
+"En el código de arriba, el registro `%dl` mantiene información acerca del "
+"dispositivo de arranque. Ésta ha sido pasada por la BIOS y preservada por el "
+"MBR. Los números `0x80` y mayores nos dicen que estamos tratando con un "
+"disco duro, de forma que se hace una llamada a `nread`, donde se lee el MBR. "
+"Los argumentos de `nread` se pasan mediante `%si` y `%dh`. La dirección de "
+"memoria en la etiqueta `part4` se copia a `%si`. Esta dirección de memoria "
+"contienen una \"partición de mentira\" para ser usada por `nread`. Lo que "
+"sigue son los datos en la partición de mentira:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:579
@@ -1512,16 +1534,21 @@ msgid ""
 "\t.byte 0x00, 0x00, 0x00, 0x00\n"
 "\t.byte 0x50, 0xc3, 0x00, 0x00\n"
 msgstr ""
+"      part4:\n"
+"\t.byte 0x80, 0x00, 0x01, 0x00\n"
+"\t.byte 0xa5, 0xfe, 0xff, 0xff\n"
+"\t.byte 0x00, 0x00, 0x00, 0x00\n"
+"\t.byte 0x50, 0xc3, 0x00, 0x00\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:581
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot2-make-fake-partition]]"
 msgstr ""
+"[.filename]#stand/i386/boot2/boot1.S# [[boot-boot2-make-fake-partition]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:586
-#, fuzzy
 msgid ""
 "In particular, the LBA for this fake partition is hardcoded to zero.  This "
 "is used as an argument to the BIOS for reading absolute sector one from the "
@@ -1529,17 +1556,16 @@ msgid ""
 "fake partition holds cylinder 0, head 0 and sector 1, which is equivalent to "
 "absolute sector one."
 msgstr ""
-"En particular, el <acronym>LBA</acronym> porque esta partición falsa está "
-"codificada a cero. Esto se utiliza como argumento para <acronym>BIOS</"
-"acronym> para leer el sector absoluto uno del disco duro. Alternativamente, "
-"se podría utilizar el direccionamiento CHS. En este caso, la partición falsa "
-"contiene el cilindro 0, la cabeza 0 y el sector 1, que es equivalente al "
-"sector uno absoluto."
+"En particular, el LBA para esta partición falsa está establecida a cero. "
+"Esto se utiliza como argumento para que la BIOS lea el sector absoluto uno "
+"del disco duro. Alternativamente, se podría utilizar el direccionamiento "
+"CHS. En este caso, la partición falsa contiene el cilindro 0, la cabeza 0 y "
+"el sector 1, que es equivalente al sector uno absoluto."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:588
 msgid "Let us now proceed to take a look at `nread`:"
-msgstr ""
+msgstr "Prosigamos ahora echando un vistazo a `nread`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:598
@@ -1553,12 +1579,19 @@ msgid ""
 "      callw xread.1\t\t#  disk\n"
 "      jnc return\t\t# If success, return\n"
 msgstr ""
+"nread:\n"
+"      mov $MEM_BUF,%bx\t\t# Transfer buffer\n"
+"      mov 0x8(%si),%ax\t\t# Get\n"
+"      mov 0xa(%si),%cx\t\t#  LBA\n"
+"      push %cs\t\t\t# Read from\n"
+"      callw xread.1\t\t#  disk\n"
+"      jnc return\t\t# If success, return\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:600
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-nread]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-nread]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:609
@@ -1573,6 +1606,16 @@ msgid ""
 "we will see shortly, [.filename]#boot2#, in conjunction with the BTX server, "
 "also uses `xread.1`.  This mechanism will be discussed in the next section."
 msgstr ""
+"Recuerda que `%si` apunta a una partición falsa. La palabra footnote:[En el "
+"contexto del modo real de 16 bits, una palabra son 2 bytes.] en el "
+"desplazamiento `0x8` se copia al registro `%ax` y la palabra en el "
+"desplazamiento `0xa` se copia a `%cx`. Son interpretados por la BIOS como "
+"los 4 bytes más bajos que denotan el LBA a leer (los cuatro bytes más altos "
+"se asume que son cero). El registro `%bx` contiene la dirección de memoria "
+"donde se cargará el MBR. La instrucción que empuja `%cs` a la pila es muy "
+"interesante. En este contexto, no hace nada. Sin embargo, como veremos en "
+"breve, [.filename]#boot2#, junto con el servidor BTX, también usa `xread.1`. "
+"Este mecanismo se discutirá en la siguiente sección."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:611
@@ -1580,6 +1623,8 @@ msgid ""
 "The code at `xread.1` further calls the `read` function, which actually "
 "calls the BIOS asking for the disk sector:"
 msgstr ""
+"El código en `xread.1` llama posteriormente a la función `read`, que en "
+"realidad llama a la BIOS pidiendo el sector del disco:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:628
@@ -1600,12 +1645,26 @@ msgid ""
 "\tlea 0x10(%bp),%sp\t# Clear stack\n"
 "\tlret\t\t\t# To far caller\n"
 msgstr ""
+"xread.1:\n"
+"\tpushl $0x0\t\t#  absolute\n"
+"\tpush %cx\t\t#  block\n"
+"\tpush %ax\t\t#  number\n"
+"\tpush %es\t\t# Address of\n"
+"\tpush %bx\t\t#  transfer buffer\n"
+"\txor %ax,%ax\t\t# Number of\n"
+"\tmovb %dh,%al\t\t#  blocks to\n"
+"\tpush %ax\t\t#  transfer\n"
+"\tpush $0x10\t\t# Size of packet\n"
+"\tmov %sp,%bp\t\t# Packet pointer\n"
+"\tcallw read\t\t# Read from disk\n"
+"\tlea 0x10(%bp),%sp\t# Clear stack\n"
+"\tlret\t\t\t# To far caller\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:630
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-xread1]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-xread1]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:634
@@ -1614,6 +1673,9 @@ msgid ""
 "pops out the `%cs` register pushed by `nread`, and returns.  Finally, "
 "`nread` also returns."
 msgstr ""
+"Fíjate en la instrucción de retorno de lejos al final de este bloque. Esta "
+"instrucción saca el registro `%cs` empujado por `nread`, y retorno. "
+"Finalmente, `nread` también retorna."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:636
@@ -1621,6 +1683,8 @@ msgid ""
 "With the MBR loaded to memory, the actual loop for searching the FreeBSD "
 "slice begins:"
 msgstr ""
+"Con el MBR cargado en memoria, comienza el bucle de verdad para buscar la "
+"sección FreeBSD:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:656
@@ -1644,12 +1708,29 @@ msgid ""
 "\tdec %cx\t\t\t # Do two\n"
 "\tjcxz main.1\t\t #  passes\n"
 msgstr ""
+"\tmov $0x1,%cx\t\t # Two passes\n"
+"main.1:\n"
+"\tmov $MEM_BUF+PRT_OFF,%si # Partition table\n"
+"\tmovb $0x1,%dh\t\t # Partition\n"
+"main.2:\n"
+"\tcmpb $PRT_BSD,0x4(%si)\t # Our partition type?\n"
+"\tjne main.3\t\t # No\n"
+"\tjcxz main.5\t\t # If second pass\n"
+"\ttestb $0x80,(%si)\t # Active?\n"
+"\tjnz main.5\t\t # Yes\n"
+"main.3:\n"
+"\tadd $0x10,%si\t\t # Next entry\n"
+"\tincb %dh\t\t # Partition\n"
+"\tcmpb $0x1+PRT_NUM,%dh\t\t # In table?\n"
+"\tjb main.2\t\t # Yes\n"
+"\tdec %cx\t\t\t # Do two\n"
+"\tjcxz main.1\t\t #  passes\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:658
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-find-part]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-find-part]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:662
@@ -1659,6 +1740,11 @@ msgid ""
 "the partition table, and `%dh` holds the partition number.  We assume that a "
 "FreeBSD slice is found, so we continue execution at `main.5`:"
 msgstr ""
+"Si se identifica una sección FreeBSD, la ejecución continúa en `main.5`. "
+"Fíjate que cuando se encuentra una sección FreeBSD `%si` apunta a la entrada "
+"apropiada en la tabla de particiones, y que `%dh` contiene el número de "
+"partición. Asumimos que no se ha encontrado una sección FreeBSD, de forma "
+"que continuamos la ejecución en `main.5`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:677
@@ -1677,12 +1763,24 @@ msgid ""
 "\trep\t\t\t\t   # Relocate\n"
 "\tmovsb\t\t\t\t   #  client\n"
 msgstr ""
+"main.5:\n"
+"\tmov %dx,MEM_ARG\t\t\t   # Save args\n"
+"\tmovb $NSECT,%dh\t\t\t   # Sector count\n"
+"\tcallw nread\t\t\t   # Read disk\n"
+"\tmov $MEM_BTX,%bx\t\t\t   # BTX\n"
+"\tmov 0xa(%bx),%si\t\t   # Get BTX length and set\n"
+"\tadd %bx,%si\t\t\t   #  %si to start of boot2.bin\n"
+"\tmov $MEM_USR+SIZ_PAG*2,%di\t\t\t   # Client page 2\n"
+"\tmov $MEM_BTX+(NSECT-1)*SIZ_SEC,%cx\t\t\t   # Byte\n"
+"\tsub %si,%cx\t\t\t   #  count\n"
+"\trep\t\t\t\t   # Relocate\n"
+"\tmovsb\t\t\t\t   #  client\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:679
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-main5]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-main5]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:685
@@ -1697,6 +1795,15 @@ msgid ""
 "filename]#/boot/boot#.  Let us look at the size of these files in the "
 "filesystem:"
 msgstr ""
+"Recuerda que en este punto, el registro `%si` apunta a la entrada de la "
+"sección FreeBSD en la tabla de particiones del MBR, de forma que una llamada "
+"a `nread` leerá los sectores al comienzo de esta partición. El argumento "
+"pasado en el registro `%dh ` le indica a `nread` que lea 16 sectores de "
+"disco. Recuerda que los primeros 512 bytes, el primero sector de la sección "
+"FreeBSD, coincide con el programa [.filename]#boot1#. Recuerda también que "
+"el fichero escrito al comienzo de la sección FreeBSD no es [.filename]#/boot/"
+"boot1#, sino [.filename]#/boot/boot#. Veamos los tamaños de estos ficheros "
+"en el sistema de ficheros:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:692
@@ -1707,6 +1814,10 @@ msgid ""
 "-r--r--r--  1 root  wheel   7.5K Jan  8 00:15 /boot/boot2\n"
 "-r--r--r--  1 root  wheel   8.0K Jan  8 00:15 /boot/boot\n"
 msgstr ""
+"-r--r--r--  1 root  wheel   512B Jan  8 00:15 /boot/boot0\n"
+"-r--r--r--  1 root  wheel   512B Jan  8 00:15 /boot/boot1\n"
+"-r--r--r--  1 root  wheel   7.5K Jan  8 00:15 /boot/boot2\n"
+"-r--r--r--  1 root  wheel   8.0K Jan  8 00:15 /boot/boot\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:700
