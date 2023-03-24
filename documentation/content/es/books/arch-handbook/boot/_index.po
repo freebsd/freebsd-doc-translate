@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-30 14:39-0300\n"
-"PO-Revision-Date: 2023-03-23 16:54+0000\n"
+"PO-Revision-Date: 2023-03-24 16:53+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookboot_index/es/>\n"
@@ -1859,6 +1859,14 @@ msgid ""
 "filename]#boot# is formed from [.filename]#boot1# and [.filename]#boot2# in "
 "the next section."
 msgstr ""
+"Así que [.filename]#boot1# ocupa exactamente los primeros 512 bytes de [."
+"filename]#boot# y, debido a que [.filename]#boot# se escribe en el primer "
+"sector de la sección FreeBSD, [.filename]#boot1# encaja exactamente en este "
+"primer sector. Cuando `nread` lee los primeros 16 sectores de la sección "
+"FreeBSD, lee de forma efectiva el fichero [.filename]#boot# entero "
+"footnote:[512*16=8192 bytes, exactamente el tamaño de boot]. Veremos más "
+"detalles acerca de cómo se forma [.filename]#boot# a partir de [."
+"filename]#boot1# y [.filename]#boot2# en la siguiente sección."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:710
@@ -1871,6 +1879,14 @@ msgid ""
 "disklabel.  If you ever wondered where FreeBSD stored this information, it "
 "is in this region - see man:bsdlabel[8]]."
 msgstr ""
+"Recuerda que `nread` utiliza la dirección de memoria `0x8c00` como búfer de "
+"transferencia para guardar los sectores leídos. Esta dirección se escoge por "
+"conveniencia. De hecho, como [.filename]#boot1# está en los primeros 512 "
+"bytes, termina estando en el rango `0x8c00` - `0x8dff`. Los 512 bytes que "
+"siguen (rango `0x8e00` - `0x8fff`) se usan para almacenar la _bsdlabel_ "
+"footnote:[Históricamente conocida como disklabel. Si alguna vez te has "
+"preguntado dónde almacenaba FreeBSD esta información, es en esta región - "
+"consulta man:bsdlabel[8]]."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:718
@@ -1885,6 +1901,16 @@ msgid ""
 "because the BTX server arranges [.filename]#boot2# to execute in a segment "
 "starting at `0xa000`.  We explore this in detail in the following section."
 msgstr ""
+"El servidor BTX comienza en la dirección `0x9000`, e inmediatamente después "
+"está el cliente [.filename]#boot2#. El servidor BTX actúa como un kernel, y "
+"se ejecuta en modo protegido en el nivel de privilegio más elevado. En "
+"contraste, los clientes BTX ([.filename]#boot2#, por ejemplo), se ejecutan "
+"en modo usuario. En la siguiente sección veremos cómo se consigue esto. El "
+"código después de la llamada a `nread` localiza el comienzo de [."
+"filename]#boot2# en el búfer de memoria, y lo copia a la dirección de "
+"memoria `0xc000`. Esto es porque el servidor BTX prepara a [.filename]#boot2#"
+" para que se ejecute en el segmento que comienza en `0xa000`. Exploramos "
+"esto en detalle en la siguiente sección."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:721
@@ -1893,6 +1919,10 @@ msgid ""
 "footnote:[This is necessary for legacy reasons.  Interested readers should "
 "see .] and concludes with a jump to the starting point of the BTX server:"
 msgstr ""
+"El último bloque de código de [.filename]#boot1# habilita el acceso a "
+"memoria por encima de 1B footnote:[Esto es necesario por razones históricas. "
+"Los lectores interesados deberían leer .] y termina con un salto al punto de "
+"inicio del servidor BTX:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:729
@@ -1904,6 +1934,11 @@ msgid ""
 "\tdec %cx\t\t\t# Timeout?\n"
 "\tjz seta20.3\t\t# Yes\n"
 msgstr ""
+"seta20:\n"
+"\tcli\t\t\t# Disable interrupts\n"
+"seta20.1:\n"
+"\tdec %cx\t\t\t# Timeout?\n"
+"\tjz seta20.3\t\t# Yes\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:744
@@ -1924,12 +1959,26 @@ msgid ""
 "\tsti\t\t\t# Enable interrupts\n"
 "\tjmp 0x9010\t\t# Start BTX\n"
 msgstr ""
+"\tinb $0x64,%al\t\t# Get status\n"
+"\ttestb $0x2,%al\t\t# Busy?\n"
+"\tjnz seta20.1\t\t# Yes\n"
+"\tmovb $0xd1,%al\t\t# Command: Write\n"
+"\toutb %al,$0x64\t\t#  output port\n"
+"seta20.2:\n"
+"\tinb $0x64,%al\t\t# Get status\n"
+"\ttestb $0x2,%al\t\t# Busy?\n"
+"\tjnz seta20.2\t\t# Yes\n"
+"\tmovb $0xdf,%al\t\t# Enable\n"
+"\toutb %al,$0x60\t\t#  A20\n"
+"seta20.3:\n"
+"\tsti\t\t\t# Enable interrupts\n"
+"\tjmp 0x9010\t\t# Start BTX\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:746
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-seta20]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-seta20]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:748
@@ -1942,7 +1991,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:750
 #, no-wrap
 msgid "The BTX Server"
-msgstr ""
+msgstr "El servidor BTX"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:754
@@ -1950,6 +1999,8 @@ msgid ""
 "Next in our boot sequence is the BTX Server.  Let us quickly remember how we "
 "got here:"
 msgstr ""
+"Lo siguiente en nuestra secuencia de arranque es el servidor BTX. Recordemos "
+"brevemente cómo hemos llegado hasta aquí:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:756
@@ -1957,6 +2008,8 @@ msgid ""
 "The BIOS loads the absolute sector one (the MBR, or [.filename]#boot0#), to "
 "address `0x7c00` and jumps there."
 msgstr ""
+"La BIOS carga el sector uno absoluto (el MBR, o [.filename]#boot0#), en la "
+"dirección `0x7c00` y salta allí."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:758
