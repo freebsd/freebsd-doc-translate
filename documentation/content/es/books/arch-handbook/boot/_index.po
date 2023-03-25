@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-30 14:39-0300\n"
-"PO-Revision-Date: 2023-03-24 16:53+0000\n"
+"PO-Revision-Date: 2023-03-25 16:53+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookboot_index/es/>\n"
@@ -2019,6 +2019,10 @@ msgid ""
 "FreeBSD slice (which consists of [.filename]#boot1#) into address `0x7c00` "
 "and jumps over there."
 msgstr ""
+"[.filename]#boot0# se recoloca a sí mismo en `0x600`, la dirección en la que "
+"fue enlazado para ejecutarse, y salta allí. Después lee el primer sector de "
+"la sección FreeBSD (que consiste en [.filename]#boot1#) en la dirección "
+"`0x7c00` y salta allí."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:763
@@ -2030,6 +2034,12 @@ msgid ""
 "the [.filename]#boot2# client.  Finally, a jump is made to address `0x9010`, "
 "the entry point of the BTX server."
 msgstr ""
+"[.filename]#boot1# carga los primeros 16 sectores de la sección FreeBSD en "
+"la dirección `0x8c00`. Estos 16 sectores, o 8192 bytes, el fichero [."
+"filename]#boot# entero. El fichero es una concatenación de [.filename]#boot1#"
+" y [.filename]#boot2#. [.filename]#boot2#, a su vez, contiene el servidor "
+"BTX y el cliente [.filename]#boot2#. Finalmente, se salta a la dirección "
+"`0x9010`, el punto de entrada del servidor BTX."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:767
@@ -2040,6 +2050,11 @@ msgid ""
 "filename]#stand/i386/boot2/Makefile#).  Let us look at the rule that creates "
 "the [.filename]#boot# file:"
 msgstr ""
+"Antes de estudiar el Servidor BTX en detalle, revisemos un poco más como se "
+"crea el fichero único, todo en uno [.filename]#boot#. La forma en la que se "
+"construye [.filename]#boot# está definida en su [.filename]#Makefile# ([."
+"filename]#stand/i386/boot2/Makefile#). Veamos la regla que crea el fichero [."
+"filename]#boot#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:772
@@ -2048,12 +2063,14 @@ msgid ""
 "      boot: boot1 boot2\n"
 "\tcat boot1 boot2 > boot\n"
 msgstr ""
+"      boot: boot1 boot2\n"
+"\tcat boot1 boot2 > boot\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:774
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/Makefile# [[boot-boot1-make-boot]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/Makefile# [[boot-boot1-make-boot]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:777
@@ -2063,6 +2080,10 @@ msgid ""
 "filename]#boot#.  The rules for creating [.filename]#boot1# are also quite "
 "simple:"
 msgstr ""
+"Esto nos dice que se necesitan [.filename]#boot1# y [.filename]#boot2#, y la "
+"regla simplemente los concatena para producir un sólo fichero llamado [."
+"filename]#boot#. Las reglas para crear [.filename]#boot1# también son "
+"bastante sencillas:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:782
@@ -2071,6 +2092,8 @@ msgid ""
 "      boot1: boot1.out\n"
 "\t${OBJCOPY} -S -O binary boot1.out ${.TARGET}\n"
 msgstr ""
+"      boot1: boot1.out\n"
+"\t${OBJCOPY} -S -O binary boot1.out ${.TARGET}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:785
@@ -2079,12 +2102,15 @@ msgid ""
 "      boot1.out: boot1.o\n"
 "\t${LD} ${LD_FLAGS} -e start --defsym ORG=${ORG1} -T ${LDSCRIPT} -o ${.TARGET} boot1.o\n"
 msgstr ""
+"      boot1.out: boot1.o\n"
+"\t${LD} ${LD_FLAGS} -e start --defsym ORG=${ORG1} -T ${LDSCRIPT} -o ${."
+"TARGET} boot1.o\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:787
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/Makefile# [[boot-boot1-make-boot1]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/Makefile# [[boot-boot1-make-boot1]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:796
@@ -2102,6 +2128,18 @@ msgid ""
 "information; `-O binary` indicates the output format, that is, a simple, "
 "unformatted binary file."
 msgstr ""
+"Para aplicar la regla para crear [.filename]#boot1#, se tiene que resolver [."
+"filename]#boot1.out#. Esto, a su vez, depende de la existencia de [."
+"filename]#boot1.o#. Este último fichero es simplemente el resultado de "
+"ensamblar nuestro familiar [.filename]#boot1.S#, sin enlazarlo. Ahora, se "
+"aplica la regla para crear [.filename]#boot1.out#. Esto nos dice que [."
+"filename]#boot1.o# se debería enlazar con `start`como su punto de entrada, y "
+"empezar en la dirección `0x7c00`. Finalmente se crea [.filename]#boot1# a "
+"partir de [.filename]#boot1.out# aplicando la regla apropiada. Esta regla es "
+"el comando [.filename]#objcopy# aplicado a [.filename]#boot1.out#. Fíjate en "
+"los flags pasados a [.filename]#objcopy#: `-S` le indica que se deshaga de "
+"toda la información sobre símbolos y recolocación; `-O binary` indica el "
+"formato de salida, es decir, un fichero binario simple, sin formato."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:798
@@ -2109,6 +2147,8 @@ msgid ""
 "Having [.filename]#boot1#, let us take a look at how [.filename]#boot2# is "
 "constructed:"
 msgstr ""
+"Una vez que tenemos [.filename]#boot1#, echemos un vistazo a cómo se "
+"construye [.filename]#boot2#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:805
@@ -2119,6 +2159,10 @@ msgid ""
 "\t    echo \"$$x bytes available\"; test $$x -ge 0\n"
 "\t${DD} if=${.ALLSRC} of=${.TARGET} bs=${BOOT2SIZE} conv=sync\n"
 msgstr ""
+"      boot2: boot2.ld\n"
+"\t@set -- `ls -l ${.ALLSRC}`; x=$$((${BOOT2SIZE}-$$5)); \\\n"
+"\t    echo \"$$x bytes available\"; test $$x -ge 0\n"
+"\t${DD} if=${.ALLSRC} of=${.TARGET} bs=${BOOT2SIZE} conv=sync\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:809
@@ -2128,6 +2172,9 @@ msgid ""
 "\tbtxld -v -E ${ORG2} -f bin -b ${BTXKERN} -l boot2.ldr \\\n"
 "\t    -o ${.TARGET} -P 1 boot2.bin\n"
 msgstr ""
+"      boot2.ld: boot2.ldr boot2.bin ${BTXKERN}\n"
+"\tbtxld -v -E ${ORG2} -f bin -b ${BTXKERN} -l boot2.ldr \\\n"
+"\t    -o ${.TARGET} -P 1 boot2.bin\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:812
@@ -2136,6 +2183,8 @@ msgid ""
 "      boot2.ldr:\n"
 "\t${DD} if=/dev/zero of=${.TARGET} bs=512 count=1\n"
 msgstr ""
+"      boot2.ldr:\n"
+"\t${DD} if=/dev/zero of=${.TARGET} bs=512 count=1\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:815
@@ -2144,6 +2193,8 @@ msgid ""
 "      boot2.bin: boot2.out\n"
 "\t${OBJCOPY} -S -O binary boot2.out ${.TARGET}\n"
 msgstr ""
+"      boot2.bin: boot2.out\n"
+"\t${OBJCOPY} -S -O binary boot2.out ${.TARGET}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:818
@@ -2152,6 +2203,9 @@ msgid ""
 "      boot2.out: ${BTXCRT} boot2.o sio.o ashldi3.o\n"
 "\t${LD} ${LD_FLAGS} --defsym ORG=${ORG2} -T ${LDSCRIPT} -o ${.TARGET} ${.ALLSRC}\n"
 msgstr ""
+"      boot2.out: ${BTXCRT} boot2.o sio.o ashldi3.o\n"
+"\t${LD} ${LD_FLAGS} --defsym ORG=${ORG2} -T ${LDSCRIPT} -o ${.TARGET} ${."
+"ALLSRC}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:825
@@ -2164,23 +2218,29 @@ msgid ""
 "\t    ORG1=`printf \"%d\" ${ORG1}` \\\n"
 "\t    REL1=`printf \"%d\" ${REL1}` > ${.TARGET}\n"
 msgstr ""
+"      boot2.h: boot1.out\n"
+"\t${NM} -t d ${.ALLSRC} | awk '/([0-9])+ T xread/ \\\n"
+"\t    { x = $$1 - ORG1; \\\n"
+"\t    printf(\"#define XREADORG %#x\\n"
+"\", REL1 + x) }' \\\n"
+"\t    ORG1=`printf \"%d\" ${ORG1}` \\\n"
+"\t    REL1=`printf \"%d\" ${REL1}` > ${.TARGET}\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:827
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/Makefile# [[boot-boot1-make-boot2]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/Makefile# [[boot-boot1-make-boot2]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:831
-#, fuzzy
 msgid ""
 "The mechanism for building [.filename]#boot2# is far more elaborate.  Let us "
 "point out the most relevant facts.  The dependency list is as follows:"
 msgstr ""
-"El mecanismo de construcción <filename>boot2</filename> es mucho más "
-"elaborado. Señalemos los hechos más relevantes. La lista de dependencias es "
-"la siguiente:"
+"El mecanismo de construcción [.filename]#boot2# es mucho más elaborado. "
+"Señalemos los hechos más relevantes. La lista de dependencias es la "
+"siguiente:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:839
@@ -2192,39 +2252,42 @@ msgid ""
 "      boot2.out: ${BTXDIR} boot2.o sio.o ashldi3.o\n"
 "      boot2.h: boot1.out\n"
 msgstr ""
+"      boot2: boot2.ld\n"
+"      boot2.ld: boot2.ldr boot2.bin ${BTXDIR}\n"
+"      boot2.bin: boot2.out\n"
+"      boot2.out: ${BTXDIR} boot2.o sio.o ashldi3.o\n"
+"      boot2.h: boot1.out\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:841
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/Makefile# [[boot-boot1-make-boot2-more]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/Makefile# [[boot-boot1-make-boot2-more]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:844
-#, fuzzy
 msgid ""
 "Note that initially there is no header file [.filename]#boot2.h#, but its "
 "creation depends on [.filename]#boot1.out#, which we already have.  The rule "
 "for its creation is a bit terse, but the important thing is that the output, "
 "[.filename]#boot2.h#, is something like this:"
 msgstr ""
-"Tenga en cuenta que inicialmente no hay un archivo de encabezado "
-"<filename>boot2.h</filename>, pero su creación depende de<filename>boot1."
-"out</filename>, que ya tenemos. La regla para su creación es un poco "
-"concisa, pero lo importante es que la salida, <filename>boot2.h</filename>, "
-"es algo como esto:"
+"Ten en cuenta que inicialmente no hay un archivo de encabezado [."
+"filename]#boot2.h#, pero su creación depende de [.filename]#boot1.out#, que "
+"ya tenemos. La regla para su creación es un poco concisa, pero lo importante "
+"es que la salida, [.filename]#boot2.h#, es algo como esto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:848
 #, no-wrap
 msgid "#define XREADORG 0x725\n"
-msgstr ""
+msgstr "#define XREADORG 0x725\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:850
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot2.h# [[boot-boot1-make-boot2h]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot2.h# [[boot-boot1-make-boot2h]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:856
