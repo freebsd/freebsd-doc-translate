@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-30 14:39-0300\n"
-"PO-Revision-Date: 2023-03-26 16:53+0000\n"
+"PO-Revision-Date: 2023-03-27 16:53+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookboot_index/es/>\n"
@@ -2380,19 +2380,28 @@ msgid ""
 "FreeBSD slice during installation.  Let us now proceed to study the BTX "
 "server program."
 msgstr ""
+"Una vez que se tienen los ficheros que forman el programa [.filename]#boot#, "
+"el paso final es _juntarlos_. Esto se hace con un programa especial llamado ["
+".filename]#btxld# (las fuentes se encuentran en [.filename]#/usr/src/usr."
+"sbin/btxld#). Algunos argumentos que se pueden aplicar a este programa "
+"incluyen el nombre del fichero de salida ([.filename]#boot#), su punto de "
+"entrada (`0x2000`) y su formato binario (binario en crudo). Los diferentes "
+"ficheros se mezclan con esta utilidad en el fichero final [.filename]#boot# "
+"que consiste en  [.filename]#boot1#, [.filename]#boot2#, el `bsdlabel` y el "
+"servidor BTX. Este fichero, que ocupa exactamente 16 sectores, o 8192 bytes, "
+"es lo que se escribe en realidad el comienzo de la sección FreeBSD durante "
+"la instalación. Procedamos ahora a estudiar el programa servidor BTX."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:880
-#, fuzzy
 msgid ""
 "The BTX server prepares a simple environment and switches from 16-bit real "
 "mode to 32-bit protected mode, right before passing control to the client.  "
 "This includes initializing and updating the following data structures:"
 msgstr ""
-"El <acronym>BTX</acronym> El servidor prepara un entorno simple y cambia del "
-"modo real de 16 bits al modo protegido de 32 bits, justo antes de pasar el "
-"control al cliente. Esto incluye inicializar y actualizar las siguientes "
-"estructuras de datos:"
+"El servidor BTX prepara un entorno simple y cambia del modo real de 16 bits "
+"al modo protegido de 32 bits, justo antes de pasar el control al cliente. "
+"Esto incluye inicializar y actualizar las siguientes estructuras de datos:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:883
@@ -2400,21 +2409,21 @@ msgid ""
 "Modifies the `Interrupt Vector Table (IVT)`.  The IVT provides exception and "
 "interrupt handlers for Real-Mode code."
 msgstr ""
+"Modifica la `Tabla de Vectores de Interrupción (IVT)`. La IVT proporciona "
+"manejadores de interrupción y excepción para código en Modo Real."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:886
-#, fuzzy
 msgid ""
 "The `Interrupt Descriptor Table (IDT)` is created.  Entries are provided for "
 "processor exceptions, hardware interrupts, two system calls and V86 "
 "interface.  The IDT provides exception and interrupt handlers for Protected-"
 "Mode code."
 msgstr ""
-"El <literal>Tabla de descriptores de interrupciones (IDT)</literal> es "
-"creado. Se proporcionan entradas para excepciones de procesador, "
-"interrupciones de hardware, dos llamadas al sistema e interfaz V86. El IDT "
-"proporciona manejadores de excepciones e interrupciones para el código en "
-"modo protegido."
+"Se crea la `Tabla de descriptores de interrupciones (IDT)`. Se proporcionan "
+"entradas para excepciones de procesador, interrupciones de hardware, dos "
+"llamadas al sistema e interfaz V86. El IDT proporciona manejadores de "
+"excepciones e interrupciones para el código en Modo Protegido."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:888
@@ -2424,6 +2433,10 @@ msgid ""
 "filename]#boot2#), but in the _most_ privileged level when executing the BTX "
 "server."
 msgstr ""
+"Se crea un `Segmento de Estado de Tarea (TSS)`. Esto es necesario porque el "
+"procesador trabaja en el nivel de _menor_ privilegio cuando está ejecutando "
+"el cliente ([.filename]#boot2#), pero en el nivel de _mayor_ privilegio "
+"cuando ejecuta el servidor BTX."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:891
@@ -2434,6 +2447,11 @@ msgid ""
 "switching back to real mode from protected mode, as suggested by the Intel "
 "manuals.]"
 msgstr ""
+"Se configura la Tabla de Descriptor Global (GDT). Se proporcionan entradas "
+"(descriptores) para código y datos de supervisor, código y datos de usuario, "
+"y código y datos en modo real. footnote:[El código y los datos en modo real "
+"son necesarios cuando se cambia de modo protegido a modo real, como sugieren "
+"los manuales de Intel.]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:896
@@ -2444,6 +2462,12 @@ msgid ""
 "has a special header at address range `0x9000-0x900f`, right before its "
 "entry point.  This header is defined as follows:"
 msgstr ""
+"Estudiemos ahora la implementación real. Recuerda que [.filename]#boot1# "
+"saltó a la dirección `0x9010`, el punto de entrada del servidor BTX. Antes "
+"de estudiar la ejecución del programa allí, fíjate en que el servidor BTX "
+"tiene un encabezado especial en el rango de direcciones `0x9000-0x900f`, "
+"justo antes de su punto de entrada. Este encabezado se define de la "
+"siguiente manera:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:912
@@ -2463,12 +2487,25 @@ msgid ""
 "\t\t.word break-start\t\t# Text size\n"
 "\t\t.long 0x0\t\t\t# Entry address\n"
 msgstr ""
+"start:\t\t\t\t\t\t# Start of code\n"
+"/*\n"
+" * BTX header.\n"
+" */\n"
+"btx_hdr:\t.byte 0xeb\t\t\t# Machine ID\n"
+"\t\t.byte 0xe\t\t\t# Header size\n"
+"\t\t.ascii \"BTX\"\t\t\t# Magic\n"
+"\t\t.byte 0x1\t\t\t# Major version\n"
+"\t\t.byte 0x2\t\t\t# Minor version\n"
+"\t\t.byte BTX_FLAGS\t\t\t# Flags\n"
+"\t\t.word PAG_CNT-MEM_ORG>>0xc\t# Paging control\n"
+"\t\t.word break-start\t\t# Text size\n"
+"\t\t.long 0x0\t\t\t# Entry address\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:914
 #, no-wrap
 msgid "[.filename]#stand/i386/btx/btx/btx.S# [[btx-header]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-header]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:919
@@ -2480,11 +2517,20 @@ msgid ""
 "header is a pointer to the client's ([.filename]#boot2#) entry pointb2.  "
 "This field is patched at link time."
 msgstr ""
+"Date cuenta de que los dos primeros bytes son ``0xeb y `0xe`. En la "
+"arquitectura IA-32, estos dos bytes se interpretan como un salto relativo "
+"hacia el punto de entrada pasada la cabecera, de forma que en teoría, [."
+"filename]#boot1# podría saltar aquí (dirección `0x9000`) en lugar de a la "
+"dirección `0x9010`. Fíjate que el último campo del encabezado de BTX es un "
+"punto al punto de entrada del cliente ([.filename]#boot2#) pointb2. Este "
+"campo se parchea en tiempo de enlazado."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:921
 msgid "Immediately following the header is the BTX server's entry point:"
 msgstr ""
+"Inmediatamente después del encabezado está el punto de entrada del servidor "
+"BTX:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:935
@@ -2502,12 +2548,23 @@ msgid ""
 "\t\tpushl $0x2\t\t\t# Clear\n"
 "\t\tpopfl\t\t\t\t#  flags\n"
 msgstr ""
+"/*\n"
+" * Initialization routine.\n"
+" */\n"
+"init:\t\tcli\t\t\t\t# Disable interrupts\n"
+"\t\txor %ax,%ax\t\t\t# Zero/segment\n"
+"\t\tmov %ax,%ss\t\t\t# Set up\n"
+"\t\tmov $MEM_ESP0,%sp\t\t#  stack\n"
+"\t\tmov %ax,%es\t\t\t# Address\n"
+"\t\tmov %ax,%ds\t\t\t#  data\n"
+"\t\tpushl $0x2\t\t\t# Clear\n"
+"\t\tpopfl\t\t\t\t#  flags\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:937
 #, no-wrap
 msgid "[.filename]#stand/i386/btx/btx/btx.S# [[btx-init]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-init]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:941
@@ -2519,6 +2576,12 @@ msgid ""
 "EFLAGS register is effectively cleared (IA-32 requires that bit 2 of the "
 "EFLAGS register always be 1)."
 msgstr ""
+"Este código deshabilita interrupciones, configura una pila funcional ("
+"empezando en la dirección `0x1800`) y borra los flags en el registro EFLAGS. "
+"Date cuenta de que la instrucción `popfl` saca una palabra doble (4 bytes) "
+"de la pila y la coloca en el registro EFLAGS. Como el valor que se ha sacado "
+"es en realidad `2`, el registro EFLAGS se borra de forma efectiva (IA-32 "
+"requiere que el bit 2 del registro EFLAGS sea siempre 1)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:944
@@ -2526,6 +2589,9 @@ msgid ""
 "Our next code block clears (sets to `0`) the memory range `0x5e00-0x8fff`.  "
 "This range is where the various data structures will be created:"
 msgstr ""
+"Nuestro siguiente bloque de código borra (establece a `0`) el rango de "
+"memoria `0x5e00-0x8fff`. Este rango es donde se crearán varias estructuras "
+"de datos:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:954
@@ -2539,12 +2605,19 @@ msgid ""
 "\t\trep\t\t\t\t# Zero-fill\n"
 "\t\tstosw\t\t\t\t#  memory\n"
 msgstr ""
+"/*\n"
+" * Initialize memory.\n"
+" */\n"
+"\t\tmov $MEM_IDT,%di\t\t# Memory to initialize\n"
+"\t\tmov $(MEM_ORG-MEM_IDT)/2,%cx\t# Words to zero\n"
+"\t\trep\t\t\t\t# Zero-fill\n"
+"\t\tstosw\t\t\t\t#  memory\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:956
 #, no-wrap
 msgid "[.filename]#stand/i386/btx/btx/btx.S# [[btx-clear-mem]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-clear-mem]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:959
@@ -2554,6 +2627,11 @@ msgid ""
 "However, also recall that [.filename]#boot1# was relocated to `0x700`, so "
 "_that_ copy is still in memory, and the BTX server will make use of it."
 msgstr ""
+"Recuerda que [.filename]#boot1# se cargaba originalmente en la dirección "
+"`0x7c00`, de forma que, con esta inicialización de memoria, esa copia "
+"desaparece. Sin embargo, recuerda también que [.filename]#boot1# fue "
+"recolocado en `0x700`, de forma que _esa_ copia todavía está en memoria, y "
+"el servidor BTX hará uso de ella."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:967
@@ -2571,10 +2649,25 @@ msgid ""
 "switched to 32-bit protected mode shortly.  However, the BTX server sets up "
 "a mechanism to effectively use the handlers provided by the BIOS:"
 msgstr ""
+"Depués se actualiza la IVT (Tabla de Vector de Interrupciones) en modo real. "
+"La IVT es un array de pares segmento/desplazamiento para manejadores de "
+"interrupción y excepción. La BIOS normalmente mapea las interrupciones "
+"hardware a los vectores de interrupción `0x8` a `0xf` y `0x70` a `0x77` "
+"pero, como veremos, el Controlador Programable de Interrupciones 8259A, el "
+"chip que controla el mapeo real de las interrupciones hardware a vectores de "
+"interrupción, se programa para remapear estos vectores de interrupción desde "
+"`0x8-0xf` a `0x20-0x27` y desde `0x70-0x77` a `0x28-0x2f`. Por lo tanto, se "
+"proporcionan manejadores de interrupción para los vectores de interrupción "
+"`0x20-0x2f`. La razón de que no se usen directamente los manejadores "
+"proporcionados por la BIOS es porque funcionan en modo real de 16 bits, no "
+"es modo protegido de 32 bits. El modo del procesador cambiará a modo "
+"protegido de 32 bits en breve. Sin embargo, el servidor BTX configura un "
+"mecanismo para usar los manejadores proporcionados por la BIOS de forma "
+"efectiva:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:982
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "/*\n"
 " * Update real mode IDT for reflecting hardware interrupts.\n"
@@ -2590,7 +2683,8 @@ msgid ""
 "\t\tloop init.0\t\t\t# Next IRQ\n"
 msgstr ""
 "/*\n"
-" * Actualice el IDT en modo real para reflejar las interrupciones de hardware.\n"
+" * Actualiza el IDT en modo real para reflejar las interrupciones de "
+"hardware.\n"
 " */\n"
 "\t\tmov $intr20,%bx\t\t\t# Dirección del primer manejador\n"
 "\t\tmov $0x10,%cx\t\t\t# Número de manipuladores\n"
@@ -2606,11 +2700,10 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:984
 #, no-wrap
 msgid "[.filename]#stand/i386/btx/btx/btx.S# [[btx-ivt]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-ivt]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:989
-#, fuzzy
 msgid ""
 "The next block creates the IDT (Interrupt Descriptor Table).  The IDT is "
 "analogous, in protected mode, to the IVT in real mode.  That is, the IDT "
@@ -2620,19 +2713,17 @@ msgid ""
 "complex, because segments in protected mode are different than in real mode, "
 "and various protection mechanisms apply:"
 msgstr ""
-"El siguiente bloque crea el <acronym>IDT</acronym> (Tabla de descriptores de "
-"interrupciones). los <acronym>IDT</acronym> es análogo, en modo protegido, "
-"al <acronym>IVT</acronym> en modo real. Eso es el <acronym>IDT</acronym> "
+"El siguiente bloque crea el IDT (Tabla de Descriptores de Interrupciones). "
+"La IDT es análoga, en modo protegido, al IVT en modo real. Es decir, la IDT "
 "describe los diversos manejadores de excepciones e interrupciones que se "
 "utilizan cuando el procesador se ejecuta en modo protegido. En esencia, "
-"también consta de una matriz de pares de segmento / desplazamiento, aunque "
-"la estructura es algo más compleja, porque los segmentos en modo protegido "
-"son diferentes a los del modo real, y se aplican varios mecanismos de "
-"protección:"
+"también consta de una matriz de pares de segmento/desplazamiento, aunque la "
+"estructura es algo más compleja, porque los segmentos en modo protegido son "
+"diferentes a los del modo real, y se aplican varios mecanismos de protección:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1016
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "/*\n"
 " * Create IDT.\n"
@@ -2688,7 +2779,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1018
 #, no-wrap
 msgid "[.filename]#stand/i386/btx/btx/btx.S# [[btx-idt]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-idt]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1026
@@ -2712,6 +2803,27 @@ msgid ""
 "Hardware-generated interrupts and processor-generated exceptions are "
 "_always_ handled adequately, regardless of the actual privileges involved."
 msgstr ""
+"Cada entrada en la `IDT` ocupa 8 bytes. Además de la información de segmento/"
+"desplazamiento, también describe el tipo de segmento, nivel de privilegio, y "
+"si el segmento está en memoria o no. Se construye de tal forma que los "
+"vectores de interrupción de `0` a `0xf` (excepciones) son manejados por "
+"`intx00`; el vector `0x10` (también excepción) es manejado por `intx10`; las "
+"interrupciones hardware, que se configuran posteriormente para empezar en el "
+"vector de interrupción `0x20` hasta el vector `0x2f`, se manejan con la "
+"función `intx20`. Por último, el vector de interrupción `0x30`, que se usa "
+"para llamadas al sistema, es manejado por `intx30`, y los vectores `0x31` y "
+"`0x32` son manejados por `intx31`. Hay que fijarse en que sólo a los "
+"descriptores para los vectores de interrupción `0x30`, `0x31` y `0x32` se "
+"les da nivel de privilegios 3, el mismo nivel de privilegio que el cliente [."
+"filename]#boot2#, lo que significa que el cliente puede ejecutar "
+"interrupciones generadas por software en estos vectores mediante la "
+"instrucción `int` sin que fallen (esta es la forma en la que [."
+"filename]#boot2# usa los servicios proporcionados por el servidor BTX). "
+"También, fíjate que _sólo_ las interrupciones generadas por software están "
+"protegidas respecto de código que se ejecuta en niveles menores de "
+"privilegio. Las interrupciones generadas por hardware y las excepciones "
+"generadas por el procesador _siempre_ se manejan de forma adecuada, "
+"independientemente de los niveles de privilegio involucrados."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1031
@@ -2724,6 +2836,14 @@ msgid ""
 "Since the [.filename]#boot2# client is executed in privilege level 3, but "
 "the BTX server runs in privilege level 0, a TSS must be defined:"
 msgstr ""
+"El siguiente paso es inicializar el TSS (Segmento de Estado de Tarea). El "
+"TSS es una característica hardware que ayuda al sistema operativo o al "
+"software ejecutivo a implementar funcionalidad de multitarea mediante la "
+"abstracción de procesos. La arquitectura IA-32 exige la creación y el uso de "
+"_al menos_ un TSS si se usan las facilidades multitarea o si se definen "
+"diferentes niveles de privilegio. Como el cliente [.filename]#boot2# se "
+"ejecuta en nivel de privilegio 3, pero el servidor BTX se ejecuta en nivel "
+"de privilegio 0, se tiene que definir un TSS:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1040
@@ -2736,16 +2856,21 @@ msgid ""
 "\t\tmovb $SEL_SDATA,TSS_SS0(%di)\t# Set SS0\n"
 "\t\tmovb $_TSSIO,TSS_MAP(%di)\t# Set I/O bit map base\n"
 msgstr ""
+"/*\n"
+" * Initialize TSS.\n"
+" */\n"
+"init.4:\t\tmovb $_ESP0H,TSS_ESP0+1(%di)\t# Set ESP0\n"
+"\t\tmovb $SEL_SDATA,TSS_SS0(%di)\t# Set SS0\n"
+"\t\tmovb $_TSSIO,TSS_MAP(%di)\t# Set I/O bit map base\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1042
 #, no-wrap
 msgid "[.filename]#stand/i386/btx/btx/btx.S# [[btx-tss]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-tss]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1046
-#, fuzzy
 msgid ""
 "Note that a value is given for the Privilege Level 0 stack pointer and stack "
 "segment in the TSS.  This is needed because, if an interrupt or exception is "
@@ -2755,16 +2880,15 @@ msgid ""
 "is given a value, which is a 16-bit offset from the beginning of the TSS to "
 "the I/O Permission Bitmap and the Interrupt Redirection Bitmap."
 msgstr ""
-"Tenga en cuenta que se proporciona un valor para el puntero de pila de nivel "
-"de privilegio 0 y el segmento de pila en el <acronym>TSS</acronym>. Esto es "
-"necesario porque, si se recibe una interrupción o excepción durante la "
-"ejecución <filename>boot2</filename> en Privilege Level 3, el procesador "
-"realiza automáticamente un cambio al Privilege Level 0, por lo que se "
-"necesita una nueva pila de trabajo. Finalmente, el campo Dirección base del "
-"mapa de E / S del <acronym>TSS</acronym> se le da un valor, que es un "
-"desplazamiento de 16 bits desde el comienzo de la <acronym>TSS</acronym> al "
-"mapa de bits de permisos de E / S y al mapa de bits de redirección de "
-"interrupciones."
+"Ten en cuenta que se proporciona un valor para el puntero de pila de nivel "
+"de privilegio 0 y el segmento de pila en el TSS. Esto es necesario porque, "
+"si se recibe una interrupción o excepción durante la ejecución de [."
+"filename]#boot2# en el nivel de privilegio 3, el procesador realiza "
+"automáticamente un cambio al nivel de privilegio 0, por lo que se necesita "
+"una nueva pila de trabajo. Finalmente, se le da un valor al campo de la "
+"Dirección Base del Aapa de E/S del TSS, que es un desplazamiento de 16 bits "
+"desde el comienzo de la TSS al mapa de bits de permisos de E/S y al mapa de "
+"bits de redirección de interrupciones."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1049
@@ -2772,10 +2896,12 @@ msgid ""
 "After the IDT and TSS are created, the processor is ready to switch to "
 "protected mode.  This is done in the next block:"
 msgstr ""
+"Después de haber creado la IDT y el TSS, el procesaodor está listo para "
+"cambiar a modo protegido. Esto se hace en el siguiente bloque:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1067
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "/*\n"
 " * Bring up the system.\n"
@@ -2794,7 +2920,7 @@ msgid ""
 "\t\tmovw %cx,%ss\t\t\t#  stack\n"
 msgstr ""
 "/*\n"
-" * Trae el sistema.\n"
+" *Levantar el sistema.\n"
 " */\n"
 "\t\tmov $0x2820,%bx\t\t\t# Establecer modo protegido\n"
 "\t\tcallw setpic\t\t\t#  Compensaciones de IRQ\n"
@@ -2813,11 +2939,10 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1069
 #, no-wrap
 msgid "[.filename]#stand/i386/btx/btx/btx.S# [[btx-prot]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-prot]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1082
-#, fuzzy
 msgid ""
 "First, a call is made to `setpic` to program the 8259A PIC (Programmable "
 "Interrupt Controller).  This chip is connected to multiple hardware "
@@ -2837,47 +2962,42 @@ msgid ""
 "selector SEL_SDATA to the `%ss` register.  This data segment also has a "
 "privilege level of `0`."
 msgstr ""
-"Primero, se hace una llamada a <literal>setpic</literal> para programar el "
-"8259A <acronym>PIC</acronym> (Controlador de interrupción programable). Este "
-"chip está conectado a múltiples fuentes de interrupción de hardware. Al "
-"recibir una interrupción de un dispositivo, envía una señal al procesador "
-"con el vector de interrupción apropiado. Esto se puede personalizar para que "
-"las interrupciones específicas se asocien con vectores de interrupción "
-"específicos, como se explicó antes. A continuación, el <acronym>IDTR</"
-"acronym> (Registro de tabla de descriptores de interrupción) y<acronym>GDTR</"
-"acronym> (Registro de tabla de descriptor global) se cargan con las "
-"instrucciones <literal>lidt</literal> y <literal>lgdt</literal>, "
-"respectivamente. Estos registros se cargan con la dirección base y la "
-"dirección límite para el  <acronym>IDT</acronym> y <acronym>GDT</acronym>. "
-"Las siguientes tres instrucciones establecen el bit de habilitación de "
-"protección (PE) del<literal>%cr0</literal>Registrarse. Esto cambia "
-"efectivamente el procesador al modo protegido de 32 bits. A continuación, se "
-"realiza un salto de longitud para <literal>init.8</literal> utilizando el "
-"selector de segmento SEL_SCODE, que selecciona el segmento de código de "
-"supervisor. El procesador se está ejecutando efectivamente en CPL 0, el "
-"nivel más privilegiado, después de este salto. Finalmente, el segmento de "
-"datos del supervisor se selecciona para la pila asignando el selector de "
-"segmento SEL_SDATA to the <literal>%ss</literal> registrar. Este segmento de "
-"datos también tiene un nivel de privilegio de <literal>0</literal>."
+"Primero, se hace una llamada a `setpic` para programar el PIC (Controlador "
+"de interrupción programable) 8259A . Este chip está conectado a múltiples "
+"fuentes de interrupción de hardware. Al recibir una interrupción de un "
+"dispositivo, envía una señal al procesador con el vector de interrupción "
+"apropiado. Esto se puede personalizar para que las interrupciones "
+"específicas se asocien con vectores de interrupción específicos, como se "
+"explicó antes. A continuación, la IDTR (Registro de tabla de descriptores de "
+"interrupción) y el GDTR (Registro de tabla de descriptor global) se cargan "
+"con las instrucciones `lidt` y `lgdt`, respectivamente. Estos registros se "
+"cargan con la dirección base y la dirección límite para la IDT y la GDT. Las "
+"siguientes tres instrucciones establecen el bit de habilitación de "
+"protección (PE) del`%cr0`Registrarse. Esto cambia efectivamente el "
+"procesador al modo protegido de 32 bits. A continuación, se realiza un salto "
+"de largo a `init.8` utilizando el selector de segmento SEL_SCODE, que "
+"selecciona el segmento de código de supervisor. El procesador se está "
+"ejecutando efectivamente en CPL 0, el nivel más privilegiado, después de "
+"este salto. Finalmente, el segmento de datos del supervisor se selecciona "
+"para la pila asignando el selector de segmento SEL_SDATA al registro `%ss`. "
+"Este segmento de datos también tiene un nivel de privilegio de `0`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1084
-#, fuzzy
 msgid ""
 "Our last code block is responsible for loading the TR (Task Register) with "
 "the segment selector for the TSS we created earlier, and setting the User "
 "Mode environment before passing execution control to the [.filename]#boot2# "
 "client."
 msgstr ""
-"Nuestro último bloque de código es responsable de cargar el <acronym>TR</"
-"acronym> (Registro de tareas) con el selector de segmento para el "
-"<acronym>TSS</acronym> que creamos anteriormente y configuramos el entorno "
-"de modo de usuario antes de pasar el control de ejecución al<filename>boot2</"
-"filename> cliente."
+"Nuestro último bloque de código es responsable de cargar el TR (Registro de "
+"Tareas) con el selector de segmento para el TSS que creamos anteriormente y "
+"configurar el entorno de modo de usuario antes de pasar el control de "
+"ejecución al cliente [.filename]#boot2#."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1120
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "/*\n"
 " * Launch user task.\n"
@@ -2948,11 +3068,10 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1122
 #, no-wrap
 msgid "[.filename]#stand/i386/btx/btx/btx.S# [[btx-end]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-end]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1146
-#, fuzzy
 msgid ""
 "Note that the client's environment include a stack segment selector and "
 "stack pointer (registers `%ss` and `%esp`).  Indeed, once the TR is loaded "
@@ -2985,44 +3104,38 @@ msgid ""
 "pointer (`%esp`) and the stack segment (`%ss`).  Now, execution continues at "
 "``boot0``'s entry point."
 msgstr ""
-"Tenga en cuenta que el entorno del cliente incluye un selector de segmento "
-"de pila y un puntero de pila (registra <literal>%ss</literal> y <literal>"
-"%esp</literal>). De hecho, una vez que el <acronym>TR</acronym> se carga con "
-"el selector de segmento de pila apropiado (instrucción <literal>ltr</"
-"literal>), el puntero de la pila se calcula y se inserta en la pila junto "
-"con el selector de segmento de la pila. A continuación, el valor "
-"<literal>0x202</literal> se empuja hacia la pila; es el valor que obtendrá "
-"EFLAGS cuando el control se pase al cliente. Además, se presionan el "
-"selector de segmento de código del modo de usuario y el punto de entrada del "
-"cliente. Recuerde que este punto de entrada está parcheado en el "
-"<acronym>BTX</acronym> encabezado en el momento del enlace. Finalmente, los "
-"selectores de segmento (almacenados en el registro <literal>%ecx</literal>) "
-"para los registros de segmento <literal>%gs, %fs, %ds and %es</literal> se "
-"colocan en la pila, junto con el valor en <literal>%edx</literal> "
-"(<literal>0xa000</literal>). Tenga en cuenta los diversos valores que se han "
-"introducido en la pila (aparecerán en breve). A continuación, los valores de "
-"los registros de propósito general restantes también se insertan en la pila "
-"(tenga en cuenta el<literal>loop</literal> que empuja el valor <literal>0</"
-"literal> siete veces). Ahora, los valores comenzarán a salir de la pila. "
-"Primero el <literal>popa</literal>La instrucción emerge de la pila con los "
-"últimos siete valores insertados. Se almacenan en los registros de propósito "
-"general en orden <literal>%edi, %esi, %ebp, %ebx, %edx, %ecx, %eax</"
-"literal>. Luego, los diversos selectores de segmento presionados se "
-"introducen en los distintos registros de segmento. Aún quedan cinco valores "
-"en la pila. Se reventan cuando el <literal>iret</literal> se ejecuta la "
-"instrucción. Esta instrucción primero muestra el valor que fue empujado "
-"desde el<acronym>BTX</acronym> encabezamiento. Este valor es un puntero a "
-"<filename>boot2</filename>'s punto de entrada. Se coloca en el registro "
-"<literal>%eip</literal>, el registro de puntero de instrucción. A "
-"continuación, el selector de segmento para el segmento de código de usuario "
-"se abre y se copia para registrar <literal>%cs</literal>. Recuerde que el "
-"nivel de privilegio de este segmento es 3, el nivel menos privilegiado. Esto "
-"significa que debemos proporcionar valores para la pila de este nivel de "
-"privilegio. Esta es la razón por la que el procesador, además de extraer aún "
-"más el valor del registro EFLAGS, hace dos salidas más de la pila. Estos "
-"valores van al puntero de la pila(<literal>%esp</literal>) y el segmento de "
-"pila (<literal>%ss</literal>).Ahora, la ejecución continúa en "
-"<literal>boot0</literal>'s punto de entrada."
+"Ten en cuenta que el entorno del cliente incluye un selector de segmento de "
+"pila y un puntero de pila (registra `%ss` y `%esp`). De hecho, una vez que "
+"el TR se carga con el selector de segmento de pila apropiado (instrucción "
+"`ltr`), el puntero de la pila se calcula y se inserta en la pila junto con "
+"el selector de segmento de la pila. A continuación, el valor `0x202` se "
+"empuja hacia la pila; es el valor que obtendrá EFLAGS cuando el control se "
+"pase al cliente. Además, se empujan el selector de segmento de código del "
+"modo de usuario y el punto de entrada del cliente. Recuerda que este punto "
+"de entrada está parcheado en el encabezado de BTX en el momento de enlazado. "
+"Finalmente, los selectores de segmento (almacenados en el registro `%ecx`) "
+"para los registros de segmento `%gs`, `%fs`, `%ds` y `%es` se colocan en la "
+"pila, junto con el valor en `%edx` (`0xa000`). Ten en cuenta los diversos "
+"valores que se han introducido en la pila (aparecerán en breve). A "
+"continuación, los valores de los registros de propósito general restantes "
+"también se insertan en la pila (ten en cuenta el`loop` que empuja el valor "
+"`0` siete veces). Ahora, los valores comenzarán a salir de la pila. Primero "
+"la instrucción `popa`saca de la pila con los últimos siete valores "
+"insertados. Se almacenan en los registros de propósito general en orden "
+"`%edi`, `%esi`, `%ebp`, `%ebx`, `%edx`, `%ecx`, `%eax`. Luego, los diversos "
+"selectores de segmento empujados se introducen en los distintos registros de "
+"segmento. Aún quedan cinco valores en la pila. Se sacan cuando el `iret` se "
+"ejecuta la instrucción. Esta instrucción primero muestra el valor que fue "
+"empujado desde elBTX encabezamiento. Este valor es un puntero al punto de "
+"entrada de [.filename]#boot2#. Se coloca en el registro `%eip`, el registro "
+"de puntero de instrucción. A continuación, el selector de segmento para el "
+"segmento de código de usuario se abre y se copia para registrar `%cs`. "
+"Recuerda que el nivel de privilegio de este segmento es 3, el nivel menos "
+"privilegiado. Esto significa que debemos proporcionar valores para la pila "
+"de este nivel de privilegio. Esta es la razón por la que el procesador, "
+"además de extraer el valor del registro EFLAGS, extrae dos valores más de la "
+"pila. Estos valores van al puntero de la pila(`%esp`) y el segmento de pila "
+"(`%ss`). Ahora, la ejecución continúa en el punto de entrada de `boot0`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1150
@@ -3033,12 +3146,17 @@ msgid ""
 "fetched from address `0x2000`, the _actual_ memory addressed is "
 "`0xa000+0x2000=0xc000`."
 msgstr ""
+"Es importante fijarse en cómo se define el Segmento de Código de usuario. La "
+"_dirección base_ de este segmento es `0xa000`. Esto significa que las "
+"direcciones de memoria de código son _relativas_ a la dirección 0xa000; si "
+"el código que se está ejecutando se ha leído de la dirección `0x20000`, la "
+"dirección de memoria _que realmente se accede_ es `0xa000+0x2000=0xc000`."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1152
 #, no-wrap
 msgid "boot2 Stage"
-msgstr ""
+msgstr "Etapa boot2"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1159
@@ -3050,6 +3168,13 @@ msgid ""
 "filename, BIOS harddisk geometry, BIOS drive number for boot device, "
 "physical memory available, `envp` pointer etc.  The definition for it is:"
 msgstr ""
+"`boot2` define una estructura importante, `struct bootinfo`. Esta estructura "
+"es inicializada por `boot2` y pasada al cargador, y posteriormente al "
+"kernel. Algunos nodos de esta estructura están escritos por `boot2`, el "
+"resto por el cargador. Esta estructura, entre otra información, contiene el "
+"nombre del kernel, la geometría de disco de la BIOS, el número de unidad de "
+"la BIOS para el dispositivo de arranque, la memoria física disponible, el "
+"puntero `envp`etc. Su definición es:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1184
@@ -3078,6 +3203,28 @@ msgid ""
 "\tu_int32_t\tbi_modulep;\t\t/* preloaded modules */\n"
 "};\n"
 msgstr ""
+"/usr/include/machine/bootinfo.h:\n"
+"struct bootinfo {\n"
+"\tu_int32_t\tbi_version;\n"
+"\tu_int32_t\tbi_kernelname;\t\t/* represents a char * */\n"
+"\tu_int32_t\tbi_nfs_diskless;\t/* struct nfs_diskless * */\n"
+"\t\t\t\t/* End of fields that are always present. */\n"
+"#define\tbi_endcommon\tbi_n_bios_used\n"
+"\tu_int32_t\tbi_n_bios_used;\n"
+"\tu_int32_t\tbi_bios_geom[N_BIOS_GEOM];\n"
+"\tu_int32_t\tbi_size;\n"
+"\tu_int8_t\tbi_memsizes_valid;\n"
+"\tu_int8_t\tbi_bios_dev;\t\t/* bootdev BIOS unit number */\n"
+"\tu_int8_t\tbi_pad[2];\n"
+"\tu_int32_t\tbi_basemem;\n"
+"\tu_int32_t\tbi_extmem;\n"
+"\tu_int32_t\tbi_symtab;\t\t/* struct symtab * */\n"
+"\tu_int32_t\tbi_esymtab;\t\t/* struct symtab * */\n"
+"\t\t\t\t/* Items below only from advanced bootloader */\n"
+"\tu_int32_t\tbi_kernend;\t\t/* end of kernel space */\n"
+"\tu_int32_t\tbi_envp;\t\t/* environment */\n"
+"\tu_int32_t\tbi_modulep;\t\t/* preloaded modules */\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1191
