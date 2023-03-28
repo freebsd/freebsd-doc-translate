@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-10-30 14:39-0300\n"
-"PO-Revision-Date: 2023-03-27 16:53+0000\n"
+"PO-Revision-Date: 2023-03-28 16:54+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookboot_index/es/>\n"
@@ -3036,33 +3036,36 @@ msgstr ""
 "/*\n"
 " * Launch user task.\n"
 " */\n"
-"\t\tmovb $SEL_TSS,%cl\t\t# Establecer tarea\n"
-"\t\tltr %cx\t\t\t\t#  registrar\n"
-"\t\tmovl $0xa000,%edx\t\t# Dirección base de usuario\n"
-"\t\tmovzwl %ss:BDA_MEM,%eax\t\t# Obtenga memoria libre\n"
-"\t\tshll $0xa,%eax\t\t\t# A bytes\n"
-"\t\tsubl $ARGSPACE,%eax\t\t# Menos espacio arg\n"
-"\t\tsubl %edx,%eax\t\t\t# Menos base\n"
-"\t\tmovb $SEL_UDATA,%cl\t\t# Selector de datos de usuario\n"
-"\t\tpushl %ecx\t\t\t# Establecer SS\n"
-"\t\tpushl %eax\t\t\t# Establecer ESP\n"
-"\t\tpush $0x202\t\t\t# Establecer flags (IF set)\n"
-"\t\tpush $SEL_UCODE\t\t\t# Establecer CS\n"
-"\t\tpushl btx_hdr+0xc\t\t# Establecer EIP\n"
-"\t\tpushl %ecx\t\t\t# Establecer GS\n"
-"\t\tpushl %ecx\t\t\t# Establecer FS\n"
-"\t\tpushl %ecx\t\t\t# Establecer DS\n"
-"\t\tpushl %ecx\t\t\t# Establecer ES\n"
-"\t\tpushl %edx\t\t\t# Establecer EAX\n"
-"\t\tmovb $0x7,%cl\t\t\t# Establecer restante\n"
+"\t\tmovb $SEL_TSS,%cl\t\t# Set task\n"
+"\t\tltr %cx\t\t\t\t#  register\n"
+"\t\tmovl $MEM_USR,%edx\t\t# User base address\n"
+"\t\tmovzwl %ss:BDA_MEM,%eax\t\t# Get free memory\n"
+"\t\tshll $0xa,%eax\t\t\t# To bytes\n"
+"\t\tsubl $ARGSPACE,%eax\t\t# Less arg space\n"
+"\t\tsubl %edx,%eax\t\t\t# Less base\n"
+"\t\tmovb $SEL_UDATA,%cl\t\t# User data selector\n"
+"\t\tpushl %ecx\t\t\t# Set SS\n"
+"\t\tpushl %eax\t\t\t# Set ESP\n"
+"\t\tpush $0x202\t\t\t# Set flags (IF set)\n"
+"\t\tpush $SEL_UCODE\t\t\t# Set CS\n"
+"\t\tpushl btx_hdr+0xc\t\t# Set EIP\n"
+"\t\tpushl %ecx\t\t\t# Set GS\n"
+"\t\tpushl %ecx\t\t\t# Set FS\n"
+"\t\tpushl %ecx\t\t\t# Set DS\n"
+"\t\tpushl %ecx\t\t\t# Set ES\n"
+"\t\tpushl %edx\t\t\t# Set EAX\n"
+"\t\tmovb $0x7,%cl\t\t\t# Set remaining\n"
 "init.9:\t\tpush $0x0\t\t\t#  general\n"
-"\t\tloop init.9\t\t\t#  registros\n"
-"\t\tpopa\t\t\t\t# e inicializar\n"
-"\t\tpopl %es\t\t\t# Inicializar\n"
-"\t\tpopl %ds\t\t\t#  usuario\n"
-"\t\tpopl %fs\t\t\t#  segmento\n"
-"\t\tpopl %gs\t\t\t#  registros\n"
-"\t\tiret\t\t\t\t# Al modo de usuario\n"
+"\t\tloop init.9\t\t\t#  registers\n"
+"#ifdef BTX_SERIAL\n"
+"\t\tcall sio_init\t\t\t# setup the serial console\n"
+"#endif\n"
+"\t\tpopa\t\t\t\t#  and initialize\n"
+"\t\tpopl %es\t\t\t# Initialize\n"
+"\t\tpopl %ds\t\t\t#  user\n"
+"\t\tpopl %fs\t\t\t#  segment\n"
+"\t\tpopl %gs\t\t\t#  registers\n"
+"\t\tiret\t\t\t\t# To user mode\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1122
@@ -3239,6 +3242,16 @@ msgid ""
 "`load()` scans the loader's ELF header, loading the content of [.filename]#/"
 "boot/loader# into memory, and passing the execution to the loader's entry:"
 msgstr ""
+"`boot2` entra en un bucle infinito esperando la entrada del usuario, después "
+"llama a `load()`. Si el usuario no presiona nada, el bucle se finaliza por "
+"timeout, de forma que `load()` cargará el fichero por defecto ([.filename]#/"
+"boot/loader#). Las funciones `ino_t lookup(char *filename)` y `int xfsread("
+"ino_t inode, void *buf, size_t nbyte)` se usan para leer el contenido desde "
+"un fichero a memoria. [.filename]#/boot/loader# es un binario ELF, pero "
+"donde la cabecera ELF tiene como prefijo la estructura `struct exec` de [."
+"filename]#a.out#. `load()` escanea la cabecera ELF del cargador, cargando el "
+"contenido de [.filename]#/boot/loader# en memoria, pasando la ejecución a la "
+"entrada del cargador:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1198
@@ -3249,12 +3262,16 @@ msgid ""
 "\t   MAKEBOOTDEV(dev_maj[dsk.type], dsk.slice, dsk.unit, dsk.part),\n"
 "\t   0, 0, 0, VTOP(&bootinfo));\n"
 msgstr ""
+"stand/i386/boot2/boot2.c:\n"
+"    __exec((caddr_t)addr, RB_BOOTINFO | (opts & RBX_MASK),\n"
+"\t   MAKEBOOTDEV(dev_maj[dsk.type], dsk.slice, dsk.unit, dsk.part),\n"
+"\t   0, 0, 0, VTOP(&bootinfo));\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1201
 #, no-wrap
 msgid "loader Stage"
-msgstr ""
+msgstr "Etapa loader"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1206
@@ -3263,13 +3280,12 @@ msgid ""
 "there is a comprehensive man page written by Mike Smith, man:loader[8].  The "
 "underlying mechanisms and BTX were discussed above."
 msgstr ""
+"El cargador también es un cliente BTX. No lo describiré aquí en detalle, hay "
+"una página de manual muy completa escrita por Mike Smith, man:loader[8]. Los "
+"mecanismos subyacentes y BTX se han discutido arriba."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1209
-#, fuzzy
-#| msgid ""
-#| "The main task for the loader is to boot the kernel. When the kernel is "
-#| "loaded into memory, it is being called by the loader:"
 msgid ""
 "The main task for the loader is to boot the kernel.  When the kernel is "
 "loaded into memory, it is being called by the loader:"
@@ -3285,6 +3301,9 @@ msgid ""
 "    /* Call the exec handler from the loader matching the kernel */\n"
 "    file_formats[fp->f_loader]->l_exec(fp);\n"
 msgstr ""
+"stand/common/boot.c:\n"
+"    /* Call the exec handler from the loader matching the kernel */\n"
+"    file_formats[fp->f_loader]->l_exec(fp);\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1218
@@ -3294,11 +3313,6 @@ msgstr "Inicialización del kernel"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1225
-#, fuzzy
-#| msgid ""
-#| "Let us take a look at the command that links the kernel. This will help "
-#| "identify the exact location where the loader passes execution to the "
-#| "kernel. This location is the kernel's actual entry point."
 msgid ""
 "Let us take a look at the command that links the kernel.  This will help "
 "identify the exact location where the loader passes execution to the "
@@ -3309,7 +3323,10 @@ msgid ""
 msgstr ""
 "Echemos un vistazo al comando que enlaza el kernel. Esto ayudará a "
 "identificar la ubicación exacta donde el cargador pasa la ejecución al "
-"kernel. Esta ubicación es el punto de entrada real del kernel."
+"kernel. Esta ubicación es el punto de entrada real del kernel. Este comando "
+"ya no está en [.filename]#sys/conf/Makefile.i386#. El contenido que nos "
+"interesa se puede encontrar en [.filename]#/usr/obj/usr/src/i386.i386/sys/"
+"GENERIC/#."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1232
@@ -3320,10 +3337,15 @@ msgid ""
 "--warn-common --export-dynamic  --dynamic-linker /red/herring -X -o kernel locore.o\n"
 "<lots of kernel .o files>\n"
 msgstr ""
+"/usr/obj/usr/src/i386.i386/sys/GENERIC/kernel.meta:\n"
+"ld -m elf_i386_fbsd -Bdynamic -T /usr/src/sys/conf/ldscript.i386 --build-"
+"id=sha1 --no-warn-mismatch \\\n"
+"--warn-common --export-dynamic  --dynamic-linker /red/herring -X -o kernel "
+"locore.o\n"
+"<lots of kernel .o files>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1238
-#, fuzzy
 msgid ""
 "A few interesting things can be seen here.  First, the kernel is an ELF "
 "dynamically linked binary, but the dynamic linker for kernel is [.filename]#/"
@@ -3334,11 +3356,10 @@ msgid ""
 msgstr ""
 "Aquí se pueden ver algunas cosas interesantes. Primero, el kernel es un "
 "binario ELF enlazado dinámicamente, pero el enlazador dinámico para el "
-"kernel es <filename>/red/herring</filename>, que definitivamente es un "
-"archivo falso. En segundo lugar, echa un vistazo al archivo <filename>sys/"
-"conf/ldscript.i386</filename> da una idea de lo que<application>ld</"
-"application> Las opciones se utilizan al compilar un kernel. Al leer las "
-"primeras líneas, la cadena"
+"kernel es [.filename]#/red/herring#, que definitivamente es un archivo "
+"falso. En segundo lugar, echar un vistazo al archivo [.filename]#sys/conf/"
+"ldscript.i386# da una idea de qué opciones de ld se utilizan al compilar el "
+"kernel. Al leer las primeras líneas, la cadena"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1243
@@ -3347,16 +3368,17 @@ msgid ""
 "sys/conf/ldscript.i386:\n"
 "ENTRY(btext)\n"
 msgstr ""
+"sys/conf/ldscript.i386:\n"
+"ENTRY(btext)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1247
-#, fuzzy
 msgid ""
 "says that a kernel's entry point is the symbol `btext`.  This symbol is "
 "defined in [.filename]#locore.s#:"
 msgstr ""
 "dice que el punto de entrada de un kernel es el símbolo 'btext'. Este "
-"símbolo se define en <filename>locore.s</filename>:"
+"símbolo se define en [.filename]#locore.s#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1258
@@ -3371,13 +3393,17 @@ msgid ""
 " */\n"
 "NON_GPROF_ENTRY(btext)\n"
 msgstr ""
+"sys/i386/i386/locore.s:\n"
+"\t.text\n"
+"/**********************************************************************\n"
+" *\n"
+" * This is where the bootblocks start us, set the ball rolling...\n"
+" *\n"
+" */\n"
+"NON_GPROF_ENTRY(btext)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1262
-#, fuzzy
-#| msgid ""
-#| "First, the register EFLAGS is set to a predefined value of 0x00000002. "
-#| "Then all the segment registers are initialized:"
 msgid ""
 "First, the register EFLAGS is set to a predefined value of 0x00000002.  Then "
 "all the segment registers are initialized:"
@@ -3394,6 +3420,10 @@ msgid ""
 "\tpushl\t$PSL_KERNEL\n"
 "\tpopfl\n"
 msgstr ""
+"sys/i386/i386/locore.s:\n"
+"/* Don't trust what the BIOS gives for eflags. */\n"
+"\tpushl\t$PSL_KERNEL\n"
+"\tpopfl\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1277
@@ -3407,6 +3437,13 @@ msgid ""
 "\tmov\t%ax, %fs\n"
 "\tmov\t%ax, %gs\n"
 msgstr ""
+"/*\n"
+" * Don't trust what the BIOS gives for %fs and %gs.  Trust the bootstrap\n"
+" * to set %cs, %ds, %es and %ss.\n"
+" */\n"
+"\tmov\t%ds, %ax\n"
+"\tmov\t%ax, %fs\n"
+"\tmov\t%ax, %gs\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1281
@@ -3415,12 +3452,15 @@ msgid ""
 "also defined in [.filename]#locore.s#.  Here is a description of what they "
 "do:"
 msgstr ""
+"btext llama a las rutinas `recover_bootinfo()`, `identify_cpu()`, que "
+"también están definidas en [.filename]#locore.s#. Aquí hay una descripción "
+"de lo que hacen:"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1287
 #, no-wrap
 msgid "`recover_bootinfo`"
-msgstr ""
+msgstr "`recover_bootinfo`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1291
@@ -3430,18 +3470,26 @@ msgid ""
 "The kernel may have been booted in 3 ways: by the loader, described above, by the old disk boot blocks, or by the old diskless boot procedure.\n"
 "This function determines the booting method, and stores the `struct bootinfo` structure into the kernel memory."
 msgstr ""
+"Esta rutina parsea los parámetros pasados al kernel desde el arranque.\n"
+"El kernel podría haber sido arrancado de 3 formas: por el cargador, descrito "
+"arriba, por los bloques de arranque de disco antiguos, o por el "
+"procedimiento antiguo de arranque sin disco.\n"
+"Esta función determina el método de arranque y almacena la estructura `"
+"struct bootinfo`en la memoria del kernel."
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1292
 #, no-wrap
 msgid "`identify_cpu`"
-msgstr ""
+msgstr "`identify_cpu`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1293
 #, no-wrap
 msgid "This function tries to find out what CPU it is running on, storing the value found in a variable `_cpu`."
 msgstr ""
+"Esta función intenta averiguar en qué CPU se está ejecutando, almacenando el "
+"valor encontrado en la variable `_cpu`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1296
@@ -3458,6 +3506,11 @@ msgid ""
 "\torl\t$CR4_VME,%eax\n"
 "3:\tmovl\t%eax,%cr4\n"
 msgstr ""
+"sys/i386/i386/mpboot.s:\n"
+"\ttestl\t$CPUID_VME,%edx\n"
+"\tjz\t3f\n"
+"\torl\t$CR4_VME,%eax\n"
+"3:\tmovl\t%eax,%cr4\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1307
@@ -3466,7 +3519,7 @@ msgstr "Luego, habilitando la paginación:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1317
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "sys/i386/i386/mpboot.s:\n"
 "/* Now enable paging */\n"
@@ -3476,12 +3529,13 @@ msgid ""
 "\torl\t$CR0_PE|CR0_PG,%eax\t\t/* enable paging */\n"
 "\tmovl\t%eax,%cr0\t\t\t/* and let's page NOW! */\n"
 msgstr ""
+"sys/i386/i386/mpboot.s:\n"
 "/* Now enable paging */\n"
-"\tmovl\tR(_IdlePTD), %eax\n"
-"\tmovl\t%eax,%cr3\t\t\t/* cargar ptd addr en mmu */\n"
-"\tmovl\t%cr0,%eax\t\t\t/* obtener palabra de control */\n"
-"\torl\t$CR0_PE|CR0_PG,%eax\t\t/*habilitar paginación */\n"
-"\tmovl\t%eax,%cr0\t\t\t/*y busquemos AHORA! */\n"
+"\tmovl\tIdlePTD_nopae, %eax\n"
+"\tmovl\t%eax,%cr3\t\t\t/* load ptd addr into mmu */\n"
+"\tmovl\t%cr0,%eax\t\t\t/* get control word */\n"
+"\torl\t$CR0_PE|CR0_PG,%eax\t\t/* enable paging */\n"
+"\tmovl\t%eax,%cr0\t\t\t/* and let's page NOW! */\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1320
@@ -3501,6 +3555,9 @@ msgid ""
 "\tpushl\t$mp_begin\t\t\t\t/* jump to high mem */\n"
 "\tret\n"
 msgstr ""
+"sys/i386/i386/mpboot.s:\n"
+"\tpushl\t$mp_begin\t\t\t\t/* jump to high mem */\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1329
@@ -3509,6 +3566,8 @@ msgid ""
 "/* now running relocated at KERNBASE where the system is linked to run */\n"
 "mp_begin:\t/* now running relocated at KERNBASE */\n"
 msgstr ""
+"/* now running relocated at KERNBASE where the system is linked to run */\n"
+"mp_begin:\t/* now running relocated at KERNBASE */\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1334
@@ -3519,10 +3578,15 @@ msgid ""
 "one (the 'mi_' prefix stands for Machine Independent).  The kernel never "
 "returns from `mi_startup()`, and by calling it, the kernel finishes booting:"
 msgstr ""
+"La función `init386()` se llama con un puntero a la primera página física "
+"libre, después de `mi_startup()`. `init386` es una función de inicialización "
+"dependiente de la arquitectura, y `mi_startup()` es una independiente de la "
+"arquitectura (el prefijo `mi_` significa Machine Independent). El kernel "
+"nunca vuelve de `mi_startup()`, y al llamarla, el kernel termina de arrancar:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1344
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "sys/i386/i386/locore.s:\n"
 "\tpushl\tphysfree\t\t\t/* value of first for init386(first) */\n"
@@ -3532,22 +3596,22 @@ msgid ""
 "\tcall\tmi_startup\t\t\t/* autoconfiguration, mountroot etc */\n"
 "\t/* NOTREACHED */\n"
 msgstr ""
-"<filename>sys/i386/i386/locore.s:</filename>\n"
-"\tmovl\tphysfree, %esi\n"
-"\tpushl\t%esi\t\t\t\t/* valor de primero para init386 (primero) */\n"
-"\tcall\t_init386\t\t\t/*chip de alambre 386 para operación Unix */\n"
-"\tcall\t_mi_startup\t\t\t/* autoconfiguración, mountroot, etc. */\n"
-"\thlt\t\t/* nunca vuelve a aqui*/\n"
+"sys/i386/i386/locore.s:\n"
+"\tpushl\tphysfree\t\t\t/* value of first for init386(first) */\n"
+"\tcall\tinit386\t\t\t\t/* wire 386 chip for unix operation */\n"
+"\taddl\t$4,%esp\n"
+"\tmovl\t%eax,%esp\t\t\t/* Switch to true top of stack. */\n"
+"\tcall\tmi_startup\t\t\t/* autoconfiguration, mountroot etc */\n"
+"\t/* NOTREACHED */\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1346
 #, no-wrap
 msgid "`init386()`"
-msgstr ""
+msgstr "`init386()`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1351
-#, fuzzy
 msgid ""
 "`init386()` is defined in [.filename]#sys/i386/i386/machdep.c# and performs "
 "low-level initialization specific to the i386 chip. The switch to protected "
@@ -3556,12 +3620,12 @@ msgid ""
 "consider the tasks the processor must complete to initialize protected mode "
 "execution:"
 msgstr ""
-"<function>init386()</function> se define en <filename>sys/i386/i386/machdep."
-"c</filename> y realiza una inicialización de bajo nivel específica para el "
-"chip i386. El cambio al modo protegido fue realizado por el cargador. El "
-"cargador ha creado la primera tarea, en la que el kernel sigue funcionando. "
-"Antes de mirar el código, considere las tareas que el procesador debe "
-"completar para inicializar la ejecución del modo protegido:"
+"`init386()` se define en [.filename]#sys/i386/i386/machdep.c# y realiza una "
+"inicialización de bajo nivel específica para el chip i386. El cambio al modo "
+"protegido fue realizado por el cargador. El cargador ha creado la primera "
+"tarea, en la que el kernel sigue funcionando. Antes de mirar el código, "
+"considera las tareas que el procesador debe completar para inicializar la "
+"ejecución del modo protegido:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1353
@@ -3604,10 +3668,8 @@ msgstr "Prepare el LDT."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1360
-#, fuzzy
-#| msgid "Set up proc0's pcb."
 msgid "Set up thread0's pcb."
-msgstr "Configure la pcb de proc0."
+msgstr "Configurar el pcb de thread0."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1363
@@ -3616,6 +3678,10 @@ msgid ""
 "setting the environment pointer (envp) and calling `init_param1()`.  The "
 "envp pointer has been passed from loader in the `bootinfo` structure:"
 msgstr ""
+"`init386()` inicializa los parámetros configurables pasados desde el "
+"arranque mediante el establecimiento del puntero al entorno (envp) y "
+"llamando a `init_param1()`. El puntero envp se ha pasado desde el cargador "
+"en la estructura `bootinfo`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1369
@@ -3625,6 +3691,9 @@ msgid ""
 "\t/* Init basic tunables, hz etc */\n"
 "\tinit_param1();\n"
 msgstr ""
+"sys/i386/i386/machdep.c:\n"
+"\t/* Init basic tunables, hz etc */\n"
+"\tinit_param1();\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1373
@@ -3633,6 +3702,9 @@ msgid ""
 "has a number of sysctls, and two functions, `init_param1()` and "
 "`init_param2()`, that are called from `init386()`:"
 msgstr ""
+"`init_param1()` está definida en [.filename]#sys/kern/subr_param.c#. Ese "
+"fichero tiene varias sysctls y dos funciones, `init_param1()` e "
+"`init_param2()`, que se llaman desde `init386()`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1381
@@ -3644,12 +3716,17 @@ msgid ""
 "\tif (hz == -1)\n"
 "\t\thz = vm_guest > VM_GUEST_NO ? HZ_VM : HZ;\n"
 msgstr ""
+"sys/kern/subr_param.c:\n"
+"\thz = -1;\n"
+"\tTUNABLE_INT_FETCH(\"kern.hz\", &hz);\n"
+"\tif (hz == -1)\n"
+"\t\thz = vm_guest > VM_GUEST_NO ? HZ_VM : HZ;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1384
 msgid ""
 "TUNABLE_<typename>_FETCH is used to fetch the value from the environment:"
-msgstr ""
+msgstr "TUNABLE_<typename>_FETCH se usa para obtener el valor del entorno:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1389
@@ -3658,6 +3735,8 @@ msgid ""
 "/usr/src/sys/sys/kernel.h:\n"
 "#define\tTUNABLE_INT_FETCH(path, var)\tgetenv_int((path), (var))\n"
 msgstr ""
+"/usr/src/sys/sys/kernel.h:\n"
+"#define\tTUNABLE_INT_FETCH(path, var)\tgetenv_int((path), (var))\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1393
@@ -3666,10 +3745,13 @@ msgid ""
 "set by `init_param1()`: `kern.maxswzone, kern.maxbcache, kern.maxtsiz, kern."
 "dfldsiz, kern.maxdsiz, kern.dflssiz, kern.maxssiz, kern.sgrowsiz`."
 msgstr ""
+"La sysctl `kern.hz` es el tick del reloj del sistema. Adicionalmente, estas "
+"otras sysctls se establecen en `init_param1()`: `kern.maxswzone, "
+"kern.maxbcache, kern.maxtsiz, kern.dfldsiz, kern.maxdsiz, kern.dflssiz, "
+"kern.maxssiz, kern.sgrowsiz`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1401
-#, fuzzy
 msgid ""
 "Then `init386()` prepares the Global Descriptors Table (GDT).  Every task on "
 "an x86 is running in its own virtual address space, and this space is "
@@ -3683,19 +3765,19 @@ msgid ""
 "precise, an index is not a selector itself, but the INDEX field of a "
 "selector).  FreeBSD's GDT holds descriptors for 15 selectors per CPU:"
 msgstr ""
-"Luego <function>init386()</function> prepara la Tabla de descriptores "
-"globales (GDT). Cada tarea en un x86 se ejecuta en su propio espacio de "
-"direcciones virtuales, y este espacio está dirigido por un segmento: par de "
-"compensación. Digamos, por ejemplo, que la instrucción actual que ejecutará "
-"el procesador se encuentra en CS: EIP, entonces la dirección virtual lineal "
-"para esa instrucción sería <quote> la dirección virtual del segmento de "
-"código CS</quote> + EIP. Para mayor comodidad, los segmentos comienzan en la "
-"dirección virtual 0 y terminan en un límite de 4Gb. Por lo tanto, la "
-"dirección virtual lineal de la instrucción para este ejemplo sería "
-"simplemente el valor de EIP. Los registros de segmento como CS, DS, etc.son "
-"los selectores, es decir, los índices, en GDT (para ser más precisos, un "
-"índice no es un selector en sí mismo, sino el campo INDEX de un selector). "
-"El GDT de FreeBSD contiene descriptores para 15 selectores por CPU:"
+"Luego `init386()` prepara la Tabla de descriptores globales (GDT). Cada "
+"tarea en un x86 se ejecuta en su propio espacio de direcciones virtuales, y "
+"este espacio está dirigido por un par segmento:desplazamiento. Digamos, por "
+"ejemplo, que la instrucción actual que ejecutará el procesador se encuentra "
+"en CS: EIP, entonces la dirección virtual lineal para esa instrucción sería "
+"\"la dirección virtual del segmento de código CS\" + EIP. Para mayor "
+"comodidad, los segmentos comienzan en la dirección virtual 0 y terminan en "
+"un límite de 4Gb. Por lo tanto, la dirección virtual lineal de la "
+"instrucción para este ejemplo sería simplemente el valor de EIP. Los "
+"registros de segmento como CS, DS, etc son los selectores, es decir, los "
+"índices, en la GDT (para ser más precisos, un índice no es un selector en sí "
+"mismo, sino el campo INDEX de un selector). El GDT de FreeBSD contiene "
+"descriptores para 15 selectores por CPU:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1407
@@ -3705,6 +3787,9 @@ msgid ""
 "union descriptor gdt0[NGDT];\t/* initial global descriptor table */\n"
 "union descriptor *gdt = gdt0;\t/* global descriptor table */\n"
 msgstr ""
+"sys/i386/i386/machdep.c:\n"
+"union descriptor gdt0[NGDT];\t/* initial global descriptor table */\n"
+"union descriptor *gdt = gdt0;\t/* global descriptor table */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1432
@@ -3735,29 +3820,46 @@ msgid ""
 "#define\tGNDIS_SEL\t18\t/* For the NDIS layer */\n"
 "#define\tNGDT\t\t19\n"
 msgstr ""
+"sys/x86/include/segments.h:\n"
+"/*\n"
+" * Entries in the Global Descriptor Table (GDT)\n"
+" */\n"
+"#define\tGNULL_SEL\t0\t/* Null Descriptor */\n"
+"#define\tGPRIV_SEL\t1\t/* SMP Per-Processor Private Data */\n"
+"#define\tGUFS_SEL\t2\t/* User %fs Descriptor (order critical: 1) */\n"
+"#define\tGUGS_SEL\t3\t/* User %gs Descriptor (order critical: 2) */\n"
+"#define\tGCODE_SEL\t4\t/* Kernel Code Descriptor (order critical: 1) */\n"
+"#define\tGDATA_SEL\t5\t/* Kernel Data Descriptor (order critical: 2) */\n"
+"#define\tGUCODE_SEL\t6\t/* User Code Descriptor (order critical: 3) */\n"
+"#define\tGUDATA_SEL\t7\t/* User Data Descriptor (order critical: 4) */\n"
+"#define\tGBIOSLOWMEM_SEL\t8\t/* BIOS low memory access (must be entry 8) */\n"
+"#define\tGPROC0_SEL\t9\t/* Task state process slot zero and up */\n"
+"#define\tGLDT_SEL\t10\t/* Default User LDT */\n"
+"#define\tGUSERLDT_SEL\t11\t/* User LDT */\n"
+"#define\tGPANIC_SEL\t12\t/* Task state to consider panic from */\n"
+"#define\tGBIOSCODE32_SEL\t13\t/* BIOS interface (32bit Code) */\n"
+"#define\tGBIOSCODE16_SEL\t14\t/* BIOS interface (16bit Code) */\n"
+"#define\tGBIOSDATA_SEL\t15\t/* BIOS interface (Data) */\n"
+"#define\tGBIOSUTIL_SEL\t16\t/* BIOS interface (Utility) */\n"
+"#define\tGBIOSARGS_SEL\t17\t/* BIOS interface (Arguments) */\n"
+"#define\tGNDIS_SEL\t18\t/* For the NDIS layer */\n"
+"#define\tNGDT\t\t19\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1436
-#, fuzzy
-#| msgid ""
-#| "Note that those #defines are not selectors themselves, but just a field "
-#| "INDEX of a selector, so they are exactly the indices of the GDT. for "
-#| "example, an actual selector for the kernel code (GCODE_SEL) has the value "
-#| "0x08."
 msgid ""
 "Note that those #defines are not selectors themselves, but just a field "
 "INDEX of a selector, so they are exactly the indices of the GDT.  for "
 "example, an actual selector for the kernel code (GCODE_SEL) has the value "
 "0x20."
 msgstr ""
-"Tenga en cuenta que esos #defines no son selectores en sí mismos, sino solo "
-"un INDICE de campo de un selector, por lo que son exactamente los índices "
-"del GDT. por ejemplo, un selector real para el código del kernel (GCODE_SEL) "
-"tiene el valor 0x08."
+"Ten en cuenta que esos #defines no son selectores en sí mismos, sino solo un "
+"INDICE de campo de un selector, por lo que son exactamente los índices del "
+"GDT. por ejemplo, un selector real para el código del kernel (GCODE_SEL) "
+"tiene el valor 0x20."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1444
-#, fuzzy
 msgid ""
 "The next step is to initialize the Interrupt Descriptor Table (IDT).  This "
 "table is referenced by the processor when a software or hardware interrupt "
@@ -3772,13 +3874,13 @@ msgstr ""
 "El siguiente paso es inicializar la tabla de descriptores de interrupciones "
 "(IDT). El procesador hace referencia a esta tabla cuando se produce una "
 "interrupción de software o hardware. Por ejemplo, para realizar una llamada "
-"al sistema, la aplicación de usuario emite <literal>INT 0x80</literal> "
-"instrucción. Esta es una interrupción de software, por lo que el hardware "
-"del procesador busca un registro con índice 0x80 en el IDT. Este registro "
-"apunta a la rutina que maneja esta interrupción, en este caso particular, "
-"esta será la puerta de llamada al sistema del kernel. El IDT puede tener un "
-"máximo de 256 (0x100) registros. El kernel asigna registros NIDT para el "
-"IDT, donde NIDT es el máximo (256):"
+"al sistema, la aplicación de usuario emite la instrucción `INT 0x80`. Esta "
+"es una interrupción de software, por lo que el hardware del procesador busca "
+"un registro con índice 0x80 en el IDT. Este registro apunta a la rutina que "
+"maneja esta interrupción, en este caso particular, esta será la puerta de "
+"llamada al sistema del kernel. El IDT puede tener un máximo de 256 (0x100) "
+"registros. El kernel asigna registros NIDT para el IDT, donde NIDT es el "
+"máximo (256):"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1450
@@ -3788,6 +3890,9 @@ msgid ""
 "static struct gate_descriptor idt0[NIDT];\n"
 "struct gate_descriptor *idt = &idt0[0];\t/* interrupt descriptor table */\n"
 msgstr ""
+"sys/i386/i386/machdep.c:\n"
+"static struct gate_descriptor idt0[NIDT];\n"
+"struct gate_descriptor *idt = &idt0[0];\t/* interrupt descriptor table */\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1454
@@ -3795,6 +3900,8 @@ msgid ""
 "For each interrupt, an appropriate handler is set.  The syscall gate for "
 "`INT 0x80` is set as well:"
 msgstr ""
+"Para cada interrupción, se establece un manejador apropiado. También se "
+"establece la puerta para la llamada al sistema `INT 0X80`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1460
@@ -3804,6 +3911,9 @@ msgid ""
 "\tsetidt(IDT_SYSCALL, &IDTVEC(int0x80_syscall),\n"
 "\t\t\tSDT_SYS386IGT, SEL_UPL, GSEL(GCODE_SEL, SEL_KPL));\n"
 msgstr ""
+"sys/i386/i386/machdep.c:\n"
+"\tsetidt(IDT_SYSCALL, &IDTVEC(int0x80_syscall),\n"
+"\t\t\tSDT_SYS386IGT, SEL_UPL, GSEL(GCODE_SEL, SEL_KPL));\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1463
@@ -3812,6 +3922,10 @@ msgid ""
 "will transfer to the function `_Xint0x80_syscall`, which is in the kernel "
 "code segment and will be executed with supervisor privileges."
 msgstr ""
+"Así que cuando una aplicación de modo usuario ejecuta una instrucción `INT "
+"0X80`, el control se transfiere a la función `_Xint0x80_syscall`, que está "
+"en el segmento de código del kenerl y será ejecutada con privilegios de "
+"supervisor."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1465
@@ -3831,6 +3945,14 @@ msgid ""
 "\t\tkdb_enter(KDB_WHY_BOOTFLAGS, \"Boot flags requested debugger\");\n"
 "#endif\n"
 msgstr ""
+"sys/i386/i386/machdep.c:\n"
+"\tcninit();\n"
+"/* skipped */\n"
+"  kdb_init();\n"
+"#ifdef KDB\n"
+"\tif (boothowto & RB_KDB)\n"
+"\t\tkdb_enter(KDB_WHY_BOOTFLAGS, \"Boot flags requested debugger\");\n"
+"#endif\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1479
@@ -3844,17 +3966,12 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1482
-#, fuzzy
-#| msgid ""
-#| "The Local Descriptors Table is used to reference userland code and data. "
-#| "Several selectors are defined to point to the LDT, they are the system "
-#| "call gates and the user code and data selectors:"
 msgid ""
 "The Local Descriptors Table is used to reference userland code and data.  "
 "Several selectors are defined to point to the LDT, they are the system call "
 "gates and the user code and data selectors:"
 msgstr ""
-"La tabla de descriptores locales se utiliza para hacer referencia al código "
+"La Tabla de Descriptores Locales se utiliza para hacer referencia al código "
 "y los datos del área de usuario. Se definen varios selectores para apuntar "
 "al LDT, son las puertas de llamada del sistema y los selectores de código de "
 "usuario y datos:"
@@ -3870,20 +3987,25 @@ msgid ""
 "#define\tLUDATA_SEL\t5\n"
 "#define\tNLDT\t\t(LUDATA_SEL + 1)\n"
 msgstr ""
+"sys/x86/include/segments.h:\n"
+"#define\tLSYS5CALLS_SEL\t0\t/* forced by intel BCS */\n"
+"#define\tLSYS5SIGR_SEL\t1\n"
+"#define\tLUCODE_SEL\t3\n"
+"#define\tLUDATA_SEL\t5\n"
+"#define\tNLDT\t\t(LUDATA_SEL + 1)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1496
-#, fuzzy
 msgid ""
 "Next, proc0's Process Control Block (`struct pcb`) structure is "
 "initialized.  proc0 is a `struct proc` structure that describes a kernel "
 "process.  It is always present while the kernel is running, therefore it is "
 "linked with thread0:"
 msgstr ""
-"A continuación, el bloque de control de procesos de proc0(<literal>struct "
-"pcb</literal>) se inicializa la estructura. proc0 es un <literal>struct "
-"proc</literal> estructura que describe un proceso del kernel. Siempre está "
-"presente mientras se ejecuta el kernel, por lo tanto, se declara como global:"
+"A continuación, se inicializa el Bloque de Control de Procesos (`struct pcb`)"
+" de proc0. proc0 es una estructura `struct proc` que describe un proceso del "
+"kernel. Siempre está presente mientras se ejecuta el kernel, por lo tanto se "
+"enlaza con thread0:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1504
@@ -3895,6 +4017,11 @@ msgid ""
 "{\n"
 "    /* ... skipped ... */\n"
 msgstr ""
+"sys/i386/i386/machdep.c:\n"
+"register_t\n"
+"init386(int first)\n"
+"{\n"
+"    /* ... skipped ... */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1508
@@ -3904,25 +4031,26 @@ msgid ""
 "    /* ... skipped ... */\n"
 "}\n"
 msgstr ""
+"    proc_linkup0(&proc0, &thread0);\n"
+"    /* ... skipped ... */\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1512
-#, fuzzy
 msgid ""
 "The structure `struct pcb` is a part of a proc structure.  It is defined in "
 "[.filename]#/usr/include/machine/pcb.h# and has a process's information "
 "specific to the i386 architecture, such as registers values."
 msgstr ""
-"La estructura <literal>struct pcb</literal>es parte de una estructura proc. "
-"Se define en <filename>/usr/include/machine/pcb.h</filename> y tiene "
-"información de un proceso específica para la arquitectura i386, como "
-"registros de valores."
+"La estructura `struct pcb`es parte de una estructura proc. Se define en [."
+"filename]#/usr/include/machine/pcb.h# y tiene información de un proceso "
+"específica para la arquitectura i386, como valores de registros."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1513
 #, no-wrap
 msgid "`mi_startup()`"
-msgstr ""
+msgstr "`mi_startup()`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1516
@@ -3941,12 +4069,14 @@ msgid ""
 "sys/kern/init_main.c:\n"
 "\tfor (sipp = sysinit; sipp < sysinit_end; sipp++) {\n"
 msgstr ""
+"sys/kern/init_main.c:\n"
+"\tfor (sipp = sysinit; sipp < sysinit_end; sipp++) {\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1523
 #, no-wrap
 msgid "\t\t/* ... skipped ... */\n"
-msgstr ""
+msgstr "\t\t/* ... skipped ... */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1528
@@ -3957,6 +4087,10 @@ msgid ""
 "\t\t/* ... skipped ... */\n"
 "\t}\n"
 msgstr ""
+"\t\t/* Call function */\n"
+"\t\t(*((*sipp)->func))((*sipp)->udata);\n"
+"\t\t/* ... skipped ... */\n"
+"\t}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1531
@@ -3964,6 +4098,8 @@ msgid ""
 "Although the sysinit framework is described in the link:/books/developers-"
 "handbook[Developers' Handbook], I will discuss the internals of it."
 msgstr ""
+"Aunque el framework sysinit se describe en el link:/books/developers-"
+"handbook[Manual del Desarrollador], describiré su parte interna."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1535
@@ -3972,6 +4108,9 @@ msgid ""
 "SYSINIT() macro.  Let us take as example an `announce` sysinit object.  This "
 "object prints the copyright message:"
 msgstr ""
+"Cada objeto de inicialización del sistema (objeto sysinit) se crea llamando "
+"a la macro SYSINIT(). Tomemos como ejemplo un objeto sysinit `announce`. "
+"Este objeto imprime el siguiente mensaje de derechos de autor:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1546
@@ -3986,23 +4125,26 @@ msgid ""
 "/* ... skipped ... */\n"
 "SYSINIT(announce, SI_SUB_COPYRIGHT, SI_ORDER_FIRST, print_caddr_t, copyright);\n"
 msgstr ""
+"sys/kern/init_main.c:\n"
+"static void\n"
+"print_caddr_t(void *data __unused)\n"
+"{\n"
+"\tprintf(\"%s\", (char *)data);\n"
+"}\n"
+"/* ... skipped ... */\n"
+"SYSINIT(announce, SI_SUB_COPYRIGHT, SI_ORDER_FIRST, print_caddr_t, "
+"copyright);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1550
-#, fuzzy
-#| msgid ""
-#| "The subsystem ID for this object is SI_SUB_COPYRIGHT (0x0800001), which "
-#| "comes right after the SI_SUB_CONSOLE (0x0800000). So, the copyright "
-#| "message will be printed out first, just after the console initialization."
 msgid ""
 "The subsystem ID for this object is SI_SUB_COPYRIGHT (0x0800001).  So, the "
 "copyright message will be printed out first, just after the console "
 "initialization."
 msgstr ""
-"El ID de subsistema para este objeto es SI_SUB_COPYRIGHT (0x0800001), que "
-"viene justo después de SI_SUB_CONSOLE (0x0800000). Por lo tanto, el mensaje "
-"de copyright se imprimirá primero, justo después de la inicialización de la "
-"consola."
+"El ID de subsistema para este objeto es SI_SUB_COPYRIGHT (0x0800001). Por lo "
+"tanto, el mensaje de copyright se imprimirá primero, justo después de la "
+"inicialización de la consola."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1554
@@ -4011,6 +4153,10 @@ msgid ""
 "to a `C_SYSINIT()` macro.  The `C_SYSINIT()` macro then expands to a static "
 "`struct sysinit` structure declaration with another `DATA_SET` macro call:"
 msgstr ""
+"Echemos un vistazo ahora a qué hace exactamente la macro `SYSINIT()`. Se "
+"expande a una macro `C_SYSINIT()`. La macro `C_SYSINIT()` se expande a su "
+"vez a una declaración estática de una estructura `struct sysinit` con otra "
+"llamada a la macro `DATA_SET`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1562
@@ -4022,6 +4168,12 @@ msgid ""
 "      order, \\ func, \\ (ident) \\ }; \\ DATA_WSET(sysinit_set,uniquifier ##\n"
 "      _sys_init);\n"
 msgstr ""
+"/usr/include/sys/kernel.h:\n"
+"      #define C_SYSINIT(uniquifier, subsystem, order, func, ident) \\\n"
+"      static struct sysinit uniquifier ## _sys_init = { \\ subsystem, \\\n"
+"      order, \\ func, \\ (ident) \\ }; \\ DATA_WSET(sysinit_set,uniquifier ##"
+"\n"
+"      _sys_init);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1566
@@ -4031,6 +4183,9 @@ msgid ""
 "\tC_SYSINIT(uniquifier, subsystem, order,\t\t\t\\\n"
 "\t(sysinit_cfunc_t)(sysinit_nfunc_t)func, (void *)(ident))\n"
 msgstr ""
+"#define\tSYSINIT(uniquifier, subsystem, order, func, ident)\t\\\n"
+"\tC_SYSINIT(uniquifier, subsystem, order,\t\t\t\\\n"
+"\t(sysinit_cfunc_t)(sysinit_nfunc_t)func, (void *)(ident))\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1569
@@ -4038,6 +4193,8 @@ msgid ""
 "The `DATA_SET()` macro expands to a `_MAKE_SET()`, and that macro is the "
 "point where all the sysinit magic is hidden:"
 msgstr ""
+"La macro `DATA_SET()` se expande a `_MAKE_SET()`, y esa macro es el punto "
+"donde se esconde toda la magia de sysinit:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1575
@@ -4047,6 +4204,9 @@ msgid ""
 "#define TEXT_SET(set, sym) _MAKE_SET(set, sym)\n"
 "#define DATA_SET(set, sym) _MAKE_SET(set, sym)\n"
 msgstr ""
+"/usr/include/linker_set.h:\n"
+"#define TEXT_SET(set, sym) _MAKE_SET(set, sym)\n"
+"#define DATA_SET(set, sym) _MAKE_SET(set, sym)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1579
@@ -4055,6 +4215,9 @@ msgid ""
 "including`set.sysinit_set`.  Running objdump on a kernel binary, you may "
 "notice the presence of such small sections:"
 msgstr ""
+"Después de ejecutar estas macros, se crean varias secciones en el kernel, "
+"incluyendo `set.sysinit_set`. Ejecutar objdump en un binario del kernel, "
+"podrías notar la presencia de esas secciones pequeñas:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1591
@@ -4070,21 +4233,28 @@ msgid ""
 " 33 set_scrndr_set                     00000024 0182c828 DATA\n"
 " 41 set_sysinit_set                    000014d8 018fabb0 DATA\n"
 msgstr ""
+"% llvm-objdump -h /kernel\n"
+"Sections:\n"
+"Idx Name                               Size     VMA      Type\n"
+" 10 set_sysctl_set                     000021d4 01827078 DATA\n"
+" 16 set_kbddriver_set                  00000010 0182a4d0 DATA\n"
+" 20 set_scterm_set                     0000000c 0182c75c DATA\n"
+" 21 set_cons_set                       00000014 0182c768 DATA\n"
+" 33 set_scrndr_set                     00000024 0182c828 DATA\n"
+" 41 set_sysinit_set                    000014d8 018fabb0 DATA\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1595
-#, fuzzy
 msgid ""
 "This screen dump shows that the size of set.sysinit_set section is 0x14d8 "
 "bytes, so `0x14d8/sizeof(void *)` sysinit objects are compiled into the "
 "kernel.  The other sections such as `set.sysctl_set` represent other linker "
 "sets."
 msgstr ""
-"Este volcado de pantalla muestra que el tamaño de la sección .set."
-"sysinit_set es 0x664 bytes, por lo que <literal>0x664/sizeof(void *)</"
-"literal> Los objetos sysinit se compilan en el kernel. Las otras secciones "
-"como <literal>.set.sysctl_set</literal> representan otros conjuntos de "
-"enlazadores."
+"Este volcado de pantalla muestra que el tamaño de la sección ."
+"set.sysinit_set es 0x664 bytes, por lo que se compila un total de `0x14d8/"
+"sizeof(void *)` objetos sysinit en el kernel. Las otras secciones como `.set."
+"sysctl_set` representan otros conjuntos del linker."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1597
@@ -4092,6 +4262,8 @@ msgid ""
 "By defining a variable of type `struct sysinit` the content of `set."
 "sysinit_set` section will be \"collected\" into that variable:"
 msgstr ""
+"El contenido de `set.sysinit_set` se \"recoge\" en la variable de tipo `"
+"struct sysinit` al definir dicha variable:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1602
@@ -4100,11 +4272,13 @@ msgid ""
 "sys/kern/init_main.c:\n"
 "  SET_DECLARE(sysinit_set, struct sysinit);\n"
 msgstr ""
+"sys/kern/init_main.c:\n"
+"  SET_DECLARE(sysinit_set, struct sysinit);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1605
 msgid "The `struct sysinit` is defined as follows:"
-msgstr ""
+msgstr "`struct sysinit` se define de la siguiente manera:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1615
@@ -4118,23 +4292,28 @@ msgid ""
 "\tconst void\t*udata;\t\t\t/* multiplexer/argument */\n"
 "};\n"
 msgstr ""
+"sys/sys/kernel.h:\n"
+"  struct sysinit {\n"
+"\tenum sysinit_sub_id\tsubsystem;\t/* subsystem identifier*/\n"
+"\tenum sysinit_elem_order\torder;\t\t/* init order within subsystem*/\n"
+"\tsysinit_cfunc_t func;\t\t\t/* function\t\t*/\n"
+"\tconst void\t*udata;\t\t\t/* multiplexer/argument */\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1620
-#, fuzzy
 msgid ""
 "Returning to the `mi_startup()` discussion, it is must be clear now, how the "
 "sysinit objects are being organized.  The `mi_startup()` function sorts them "
 "and calls each.  The very last object is the system scheduler:"
 msgstr ""
-"Volviendo al <function>mi_startup()</function> discusión, debe quedar claro "
-"ahora, cómo se están organizando los objetos sysinit. "
-"los<function>mi_startup()</function> la función los ordena y llama a cada "
-"uno. El último objeto es el programador del sistema:"
+"Volviendo a la discusión sobre `mi_startup()`, debe quedar claro ahora, cómo "
+"se están organizando los objetos sysinit. La función `mi_startup()` los "
+"ordena y llama a cada uno. El último objeto es el planificador del sistema:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1632
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "/usr/include/sys/kernel.h:\n"
 "enum sysinit_sub_id {\n"
@@ -4146,19 +4325,18 @@ msgid ""
 "\tSI_SUB_LAST\t\t= 0xfffffff\t/* final initialization */\n"
 "};\n"
 msgstr ""
-"<filename>/usr/include/sys/kernel.h:</filename>\n"
+"/usr/include/sys/kernel.h:\n"
 "enum sysinit_sub_id {\n"
-"\tSI_SUB_DUMMY\t\t= 0x0000000,\t/* sin ejecutar; para enlazador*/\n"
-"\tSI_SUB_DONE\t\t= 0x0000001,\t/* procesada*/\n"
-"\tSI_SUB_CONSOLE\t\t= 0x0800000,\t/* consola*/\n"
-"\tSI_SUB_COPYRIGHT\t= 0x0800001,\t/* primer uso de la consola*/\n"
+"\tSI_SUB_DUMMY\t\t= 0x0000000,\t/* not executed; for linker*/\n"
+"\tSI_SUB_DONE\t\t= 0x0000001,\t/* processed*/\n"
+"\tSI_SUB_TUNABLES\t\t= 0x0700000,\t/* establish tunable values */\n"
+"\tSI_SUB_COPYRIGHT\t= 0x0800001,\t/* first use of console*/\n"
 "...\n"
-"\tSI_SUB_RUN_SCHEDULER\t= 0xfffffff\t/*Planificador: sin retorno*/\n"
+"\tSI_SUB_LAST\t\t= 0xfffffff\t/* final initialization */\n"
 "};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1637
-#, fuzzy
 msgid ""
 "The system scheduler sysinit object is defined in the file [.filename]#sys/"
 "vm/vm_glue.c#, and the entry point for that object is `scheduler()`.  That "
@@ -4166,11 +4344,11 @@ msgid ""
 "0, the swapper process.  The thread0 structure, mentioned before, is used to "
 "describe it."
 msgstr ""
-"El objeto sysinit del programador del sistema se define en el archivo "
-"<filename>sys/vm/vm_glue.c</filename>, y el punto de entrada para ese objeto "
-"es <function>scheduler()</function>. Esa función es en realidad un bucle "
-"infinito y representa un proceso con PID 0, el proceso de intercambio. La "
-"estructura proc0, mencionada anteriormente, se usa para describirlo."
+"El objeto sysinit del planificador del sistema se define en el archivo [."
+"filename]#sys/vm/vm_glue.c#, y el punto de entrada para ese objeto es "
+"`scheduler()`. Esa función es en realidad un bucle infinito y representa un "
+"proceso con PID 0, el proceso de intercambio (swapper). La estructura "
+"thread0, mencionada anteriormente, se usa para describirlo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1639
@@ -4178,6 +4356,8 @@ msgid ""
 "The first user process, called _init_, is created by the sysinit object "
 "`init`:"
 msgstr ""
+"El primer proceso de usuario, llamado _init_, se crea mediante el objeto "
+"sysinit `init`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1650
@@ -4192,6 +4372,14 @@ msgid ""
 "\tstruct thread *td;\n"
 "\tint error;\n"
 msgstr ""
+"sys/kern/init_main.c:\n"
+"static void\n"
+"create_init(const void *udata __unused)\n"
+"{\n"
+"\tstruct fork_req fr;\n"
+"\tstruct ucred *newcred, *oldcred;\n"
+"\tstruct thread *td;\n"
+"\tint error;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1683
@@ -4230,6 +4418,40 @@ msgid ""
 "}\n"
 "SYSINIT(init, SI_SUB_CREATE_INIT, SI_ORDER_FIRST, create_init, NULL);\n"
 msgstr ""
+"\tbzero(&fr, sizeof(fr));\n"
+"\tfr.fr_flags = RFFDG | RFPROC | RFSTOPPED;\n"
+"\tfr.fr_procp = &initproc;\n"
+"\terror = fork1(&thread0, &fr);\n"
+"\tif (error)\n"
+"\t\tpanic(\"cannot fork init: %d\\n"
+"\", error);\n"
+"\tKASSERT(initproc->p_pid == 1, (\"create_init: initproc->p_pid != 1\"));\n"
+"\t/* divorce init's credentials from the kernel's */\n"
+"\tnewcred = crget();\n"
+"\tsx_xlock(&proctree_lock);\n"
+"\tPROC_LOCK(initproc);\n"
+"\tinitproc->p_flag |= P_SYSTEM | P_INMEM;\n"
+"\tinitproc->p_treeflag |= P_TREE_REAPER;\n"
+"\toldcred = initproc->p_ucred;\n"
+"\tcrcopy(newcred, oldcred);\n"
+"#ifdef MAC\n"
+"\tmac_cred_create_init(newcred);\n"
+"#endif\n"
+"#ifdef AUDIT\n"
+"\taudit_cred_proc1(newcred);\n"
+"#endif\n"
+"\tproc_set_cred(initproc, newcred);\n"
+"\ttd = FIRST_THREAD_IN_PROC(initproc);\n"
+"\tcrcowfree(td);\n"
+"\ttd->td_realucred = crcowget(initproc->p_ucred);\n"
+"\ttd->td_ucred = td->td_realucred;\n"
+"\tPROC_UNLOCK(initproc);\n"
+"\tsx_xunlock(&proctree_lock);\n"
+"\tcrfree(oldcred);\n"
+"\tcpu_fork_kthread_handler(FIRST_THREAD_IN_PROC(initproc), start_init, NULL);"
+"\n"
+"}\n"
+"SYSINIT(init, SI_SUB_CREATE_INIT, SI_ORDER_FIRST, create_init, NULL);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1689
@@ -4242,6 +4464,13 @@ msgid ""
 "filename]#/sbin/oinit#, [.filename]#/sbin/init.bak#, and finally [."
 "filename]#/rescue/init#:"
 msgstr ""
+"La función `create_init()` crea un nuevo proceso llamando a `fork1()`, pero "
+"no lo marca como ejecutable. Cuando este nuevo proceso se planifica para ser "
+"ejecutado por el planificador, se llamará a `start_init()`. Esa función está "
+"definida en [.filename]#init_main.c#. Intenta cargar y ejecutar el binario [."
+"filename]#init#, probando con [.filename]#/sbin/init# primero, luego con [."
+"filename]#/sbin/oinit#, [.filename]#/sbin/init.bak#, y finalmente con [."
+"filename]#/rescue/init#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1699
@@ -4255,6 +4484,13 @@ msgid ""
 "    \"/sbin/init:/sbin/oinit:/sbin/init.bak:/rescue/init\";\n"
 "#endif\n"
 msgstr ""
+"sys/kern/init_main.c:\n"
+"static char init_path[MAXPATHLEN] =\n"
+"#ifdef\tINIT_PATH\n"
+"    __XSTRING(INIT_PATH);\n"
+"#else\n"
+"    \"/sbin/init:/sbin/oinit:/sbin/init.bak:/rescue/init\";\n"
+"#endif\n"
 
 #~ msgid "In our case, the following declaration will occur:"
 #~ msgstr "En nuestro caso se producirá la siguiente declaración:"

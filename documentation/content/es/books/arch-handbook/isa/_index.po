@@ -1,12 +1,12 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR The FreeBSD Project
 # This file is distributed under the same license as the FreeBSD Documentation package.
-# Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021.
+# Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-09-03 21:28-0300\n"
-"PO-Revision-Date: 2021-11-11 07:33+0000\n"
+"PO-Revision-Date: 2023-03-28 16:54+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookisa_index/es/>\n"
@@ -15,20 +15,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8.1\n"
+"X-Generator: Weblate 4.15.1\n"
 
 #. type: Title =
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:13
 #, no-wrap
 msgid "ISA Device Drivers"
-msgstr ""
+msgstr "Controladores de Dispositivos ISA"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1
 #, no-wrap
 msgid "Chapter 10. ISA Device Drivers"
-msgstr ""
+msgstr "Capítulo 10. Controladores de Dispositivos ISA"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:51
@@ -46,17 +46,24 @@ msgid ""
 "found in the source code of real drivers. In particular the drivers `ep` and "
 "`aha` are good sources of information."
 msgstr ""
+"Esta capítulo hace una introducción a los problemas relevantes a la hora de "
+"escribir un controlador para un dispositivo ISA. El pseudocódigo presentado "
+"aquí es bastante detallado y se asemeja al código real pero sigue siendo "
+"pseudocódigo. Evita los detalles irrelevantes para el tema de discusión. Los "
+"ejemplos de la vida real se pueden encontrar en el código fuente de los "
+"controladores reales. En particular los controladores `ep` y `aha` son "
+"buenas fuentes de información."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:56
 #, no-wrap
 msgid "Basic Information"
-msgstr ""
+msgstr "Información Básica"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:59
 msgid "A typical ISA driver would need the following include files:"
-msgstr ""
+msgstr "Un controlador ISA típico necesitaría incluir los siguientes ficheros:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:67
@@ -68,6 +75,11 @@ msgid ""
 "#include <machine/resource.h>\n"
 "#include <sys/rman.h>\n"
 msgstr ""
+"#include <sys/module.h>\n"
+"#include <sys/bus.h>\n"
+"#include <machine/bus.h>\n"
+"#include <machine/resource.h>\n"
+"#include <sys/rman.h>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:70
@@ -76,11 +88,13 @@ msgid ""
 "#include <isa/isavar.h>\n"
 "#include <isa/pnpvar.h>\n"
 msgstr ""
+"#include <isa/isavar.h>\n"
+"#include <isa/pnpvar.h>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:73
 msgid "They describe the things specific to the ISA and generic bus subsystem."
-msgstr ""
+msgstr "Describen aspectos específicos de ISA y del subsistema de bus genérico."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:75
@@ -88,6 +102,8 @@ msgid ""
 "The bus subsystem is implemented in an object-oriented fashion, its main "
 "structures are accessed by associated method functions."
 msgstr ""
+"El subsistema de bus está implementado en forma orientada a objetos, sus "
+"estructuras principales se acceden mediante funciones método asociadas."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:77
@@ -95,6 +111,9 @@ msgid ""
 "The list of bus methods implemented by an ISA driver is like one for any "
 "other bus. For a hypothetical driver named \"xxx\" they would be:"
 msgstr ""
+"La lista de los métodos del bus implementados por un controlador ISA es como "
+"la de cualquier otro bus. Para un controlador hipotético llamado \"xxx\" "
+"serían:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:79
@@ -104,6 +123,10 @@ msgid ""
 "special use: if the device provides some device-specific (non-PnP) way to "
 "auto-detect devices this routine may implement it."
 msgstr ""
+"`static void xxx_isa_identify (driver_t *, device_t);` Normalmente usado por "
+"controladores de bus, no de dispositivo. Pero para dispositivos ISA este "
+"método puede tener un uso especial: si el dispositivo proporciona alguna "
+"forma de auto-detección (no PnP) esta rutina podría implementarlo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:80
@@ -112,12 +135,18 @@ msgid ""
 "PnP) location. This routine can also accommodate device-specific auto-"
 "detection of parameters for partially configured devices."
 msgstr ""
+"`static int xxx_isa_probe (device_t dev);` Comprueba si existe un "
+"dispositivo en una localización conocida (o PnP). Esta rutina también puede "
+"acomodar parámetros de auto-detección específicos del dispositivo para "
+"dispositivos configurados parcialmente."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:81
 msgid ""
 "`static int xxx_isa_attach (device_t dev);` Attach and initialize device."
 msgstr ""
+"`static int xxx_isa_attach (device_t dev);` Adjunta e inicializa el "
+"dispositivo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:82
@@ -125,6 +154,8 @@ msgid ""
 "`static int xxx_isa_detach (device_t dev);` Detach device before unloading "
 "the driver module."
 msgstr ""
+"`static int xxx_isa_detach (device_t dev);` Libera el dispositivo antes de "
+"descargar el módulo del controlador."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:83
@@ -132,6 +163,8 @@ msgid ""
 "`static int xxx_isa_shutdown (device_t dev);` Execute shutdown of the device "
 "before system shutdown."
 msgstr ""
+"`static int xxx_isa_shutdown (device_t dev);` Ejecuta el apagado del "
+"dispositivo antes del apagado del sistema."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:84
@@ -140,6 +173,9 @@ msgid ""
 "system goes to the power-save state. May also abort transition to the power-"
 "save state."
 msgstr ""
+"`static int xxx_isa_suspend (device_t dev);` Suspende el dispositivo antes "
+"de que el sistema entre en estado de ahorro de energía. También puede "
+"abortar la transición al estado de ahorro de energía."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:85
@@ -147,6 +183,8 @@ msgid ""
 "`static int xxx_isa_resume (device_t dev);` Resume the device activity after "
 "return from power-save state."
 msgstr ""
+"`static int xxx_isa_resume (device_t dev);` Retoma la actividad en el "
+"dispositivo después de volver del estado de ahorro de energía."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:87
@@ -154,12 +192,16 @@ msgid ""
 "`xxx_isa_probe()` and `xxx_isa_attach()` are mandatory, the rest of the "
 "routines are optional, depending on the device's needs."
 msgstr ""
+"`xxx_isa_probe()` y `xxx_isa_attach()` son obligatorios, el resto de las "
+"rutinas son opcionales, dependiendo de las necesidades del dispositivo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:89
 msgid ""
 "The driver is linked to the system with the following set of descriptions."
 msgstr ""
+"El controlador está enlazado con el sistema con el conjunto de descripciones "
+"siguientes."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:103
@@ -177,6 +219,17 @@ msgid ""
 "        DEVMETHOD(device_suspend,   xxx_isa_suspend),\n"
 "        DEVMETHOD(device_resume,    xxx_isa_resume),\n"
 msgstr ""
+"    /* table of supported bus methods */\n"
+"    static device_method_t xxx_isa_methods[] = {\n"
+"        /* list all the bus method functions supported by the driver */\n"
+"        /* omit the unsupported methods */\n"
+"        DEVMETHOD(device_identify,  xxx_isa_identify),\n"
+"        DEVMETHOD(device_probe,     xxx_isa_probe),\n"
+"        DEVMETHOD(device_attach,    xxx_isa_attach),\n"
+"        DEVMETHOD(device_detach,    xxx_isa_detach),\n"
+"        DEVMETHOD(device_shutdown,  xxx_isa_shutdown),\n"
+"        DEVMETHOD(device_suspend,   xxx_isa_suspend),\n"
+"        DEVMETHOD(device_resume,    xxx_isa_resume),\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:106
@@ -185,6 +238,8 @@ msgid ""
 "\tDEVMETHOD_END\n"
 "    };\n"
 msgstr ""
+"\tDEVMETHOD_END\n"
+"    };\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:112
@@ -196,12 +251,17 @@ msgid ""
 "        sizeof(struct xxx_softc),\n"
 "    };\n"
 msgstr ""
+"    static driver_t xxx_isa_driver = {\n"
+"        \"xxx\",\n"
+"        xxx_isa_methods,\n"
+"        sizeof(struct xxx_softc),\n"
+"    };\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:114
 #, no-wrap
 msgid "    static devclass_t xxx_devclass;\n"
-msgstr ""
+msgstr "    static devclass_t xxx_devclass;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:117
@@ -210,6 +270,8 @@ msgid ""
 "    DRIVER_MODULE(xxx, isa, xxx_isa_driver, xxx_devclass,\n"
 "        load_function, load_argument);\n"
 msgstr ""
+"    DRIVER_MODULE(xxx, isa, xxx_isa_driver, xxx_devclass,\n"
+"        load_function, load_argument);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:120
@@ -218,6 +280,10 @@ msgid ""
 "driver data and descriptors for the driver's resources. The bus code "
 "automatically allocates one softc descriptor per device as needed."
 msgstr ""
+"Aquí la estructura `xxx_softc` es un estructura específica del dispositivo "
+"que contiene datos privados del controlador y descriptores para los recursos "
+"del controlador. El código del bus reserva automáticamente un descriptor "
+"softc por cada dispositivo según sea necesario."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:122
@@ -229,6 +295,13 @@ msgid ""
 "be linked into the kernel) then these values should be set to 0 and the last "
 "definition would look like:"
 msgstr ""
+"Si el controlador se implementa como un módulo cargable entonces se llama a "
+"la función `load_function()`para realizar una inicialización específica del "
+"dispositivo o una limpieza cuando el controlador es cargado o descargado y "
+"se pasa load_argument como uno de sus argumentos. Si el controlador no "
+"soporta carga dinámica (en otras palabras siempre tiene que enlazarse en el "
+"kernel) entonces estos valores deberían establecerse a 0 y la última "
+"definición quedaría así:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:127
@@ -237,6 +310,8 @@ msgid ""
 " DRIVER_MODULE(xxx, isa, xxx_isa_driver,\n"
 "       xxx_devclass, 0, 0);\n"
 msgstr ""
+" DRIVER_MODULE(xxx, isa, xxx_isa_driver,\n"
+"       xxx_devclass, 0, 0);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:130
@@ -246,6 +321,10 @@ msgid ""
 "by this driver and human-readable descriptions of the hardware types and "
 "models having these IDs. It looks like:"
 msgstr ""
+"Si el controlador es para un dispositivo que soporta PnP entonces se debe "
+"definir una tabla de IDs PnP soportados. La tabla consiste en una lista de "
+"IDs PnP soportados por este controlador y descripciones legibles de los "
+"tipos de hardware y modeles que tienen estos IDs. Tiene este aspecto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:139
@@ -258,6 +337,12 @@ msgid ""
 "        { 0,        NULL }, /* end of table */\n"
 "    };\n"
 msgstr ""
+"    static struct isa_pnp_id xxx_pnp_ids[] = {\n"
+"        /* a line for each supported PnP ID */\n"
+"        { 0x12345678,   \"Our device model 1234A\" },\n"
+"        { 0x12345679,   \"Our device model 1234B\" },\n"
+"        { 0,        NULL }, /* end of table */\n"
+"    };\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:142
@@ -265,6 +350,8 @@ msgid ""
 "If the driver does not support PnP devices it still needs an empty PnP ID "
 "table, like:"
 msgstr ""
+"Si el controlador no soporta dispositivos PnP aún así necesita una tabla PnP "
+"vacía como:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:148
@@ -274,12 +361,15 @@ msgid ""
 "        { 0,        NULL }, /* end of table */\n"
 "    };\n"
 msgstr ""
+"    static struct isa_pnp_id xxx_pnp_ids[] = {\n"
+"        { 0,        NULL }, /* end of table */\n"
+"    };\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:151
 #, no-wrap
 msgid "`device_t` Pointer"
-msgstr ""
+msgstr "`device_t` Pointer"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:154
@@ -288,16 +378,23 @@ msgid ""
 "only the methods interesting from the device driver writer's standpoint. The "
 "methods to manipulate values in the device structure are:"
 msgstr ""
+"`device_t` es el tipo puntero para la estructura del dispositivo. Aquí sólo "
+"consideramos métodos interesantes desde el punto de vista del programador de "
+"controladores de dispositivos. Los métodos para manipular valores en la "
+"estructura del dispositivo son:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:156
 msgid "`device_t device_get_parent(dev)` Get the parent bus of a device."
 msgstr ""
+"`device_t device_get_parent(dev)` Obtener el bus padre de un dispositivo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:157
 msgid "`driver_t device_get_driver(dev)` Get pointer to its driver structure."
 msgstr ""
+"`driver_t device_get_driver(dev)` Obtener un puntero a su estructura de "
+"controlador."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:158
@@ -305,6 +402,8 @@ msgid ""
 "`char *device_get_name(dev)` Get the driver name, such as `\"xxx\"` for our "
 "example."
 msgstr ""
+"`char *device_get_name(dev)` Obtener el nombre del controlador, como `\"xxx\""
+"` en nuestro ejemplo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:159
@@ -312,6 +411,8 @@ msgid ""
 "`int device_get_unit(dev)` Get the unit number (units are numbered from 0 "
 "for the devices associated with each driver)."
 msgstr ""
+"`int device_get_unit(dev)` Obtener el número de unidad (las unidades se "
+"numeran empezando en 0 para los dispositivos asociados con cada controlador)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:160
@@ -319,6 +420,8 @@ msgid ""
 "`char *device_get_nameunit(dev)` Get the device name including the unit "
 "number, such as \"xxx0\", \"xxx1\" and so on."
 msgstr ""
+"`char *device_get_nameunit(dev)` Obtener el nombre del dispositivo incluido "
+"el número de unidad, como \"xxx0\", \"xxx1\" etc."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:161
@@ -326,6 +429,9 @@ msgid ""
 "`char *device_get_desc(dev)` Get the device description. Normally it "
 "describes the exact model of device in human-readable form."
 msgstr ""
+"`char *device_get_desc(dev)` Obtener la descripción del dispositivo. "
+"Normalmente describe el modelo exacto de dispositivo en forma legible para "
+"las personas."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:162
@@ -334,6 +440,9 @@ msgid ""
 "description point to the string desc which may not be deallocated or changed "
 "after that."
 msgstr ""
+"`device_set_desc(dev, desc)` Establecer la descripción. Esto hace que la "
+"descripción del dispositivo apunte a la cadena desc que no debería ser "
+"liberada o cambiada después de esto."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:163
@@ -342,6 +451,9 @@ msgid ""
 "copied into an internal dynamically allocated buffer, so the string desc may "
 "be changed afterwards without adverse effects."
 msgstr ""
+"`device_set_desc_copy(dev, desc)` Establecer la descripción. La descripción "
+"se copia en un búfer interno reservado dinámicamente, de forma que la cadena "
+"desc podría cambiarse posteriormente sin efectos adversos."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:164
@@ -349,6 +461,8 @@ msgid ""
 "`void *device_get_softc(dev)` Get pointer to the device descriptor (struct "
 "`xxx_softc`) associated with this device."
 msgstr ""
+"`void *device_get_softc(dev)` Obtener un puntero al descriptor de "
+"dispositivo (struct `xxx_softc`) asociado con este dispositivo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:165
@@ -356,6 +470,8 @@ msgid ""
 "`u_int32_t device_get_flags(dev)` Get the flags specified for the device in "
 "the configuration file."
 msgstr ""
+"`u_int32_t device_get_flags(dev)` Obtener los flags especificados en el "
+"fichero de configuración para el dispositivo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:167
@@ -364,6 +480,10 @@ msgid ""
 "the messages from the device driver. It automatically prepends the unitname "
 "and colon to the message."
 msgstr ""
+"La función de ayuda `device_printf(dev, fmt, ...)` puede usarse para "
+"imprimir los mensajes del controlador de dispositivo. Añade de forma "
+"automática un prefijo con el nombre de la unidad y dos puntos antes del "
+"mensaje."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:169
@@ -371,17 +491,23 @@ msgid ""
 "The device_t methods are implemented in the file [.filename]#kern/bus_subr."
 "c#."
 msgstr ""
+"Los métodos de device_t se implementan en el fichero [.filename]#kern/"
+"bus_subr.c#."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:171
 #, no-wrap
 msgid "Configuration File and the Order of Identifying and Probing During Auto-Configuration"
 msgstr ""
+"El Fichero de Configuración y el Orden de la Identificación y el Sondeo "
+"Durante la Auto-Configuración"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:174
 msgid "The ISA devices are described in the kernel configuration file like:"
 msgstr ""
+"Los dispositivos ISA se describen en el fichero de configuración del kernel "
+"como sigue:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:179
@@ -390,6 +516,8 @@ msgid ""
 "device xxx0 at isa? port 0x300 irq 10 drq 5\n"
 "       iomem 0xd0000 flags 0x1 sensitive\n"
 msgstr ""
+"device xxx0 at isa? port 0x300 irq 10 drq 5\n"
+"       iomem 0xd0000 flags 0x1 sensitive\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:182
@@ -402,6 +530,14 @@ msgid ""
 "bus may be specified in the configuration line, like `isa0` or `isa1`, "
 "otherwise the device would be searched for on all the ISA buses."
 msgstr ""
+"Los valores del puerto, IRQ y demás se convierten a valores de recursos "
+"asociados con el dispositivo. Son opcionales, dependiendo de las necesidades "
+"del dispositivo y las capacidades de auto-configuración. Por ejemplo, "
+"algunos dispositivos no necesitan DRQ en absoluto y algunos permiten al "
+"controlador leer la configuración de las IRQ desde los puertos de "
+"configuración del dispositivo. Si una máquina tiene varios buses ISA se "
+"tiene que especificar el bus exacto en la línea de configuración, como `isa0`"
+" o `isa1`, de lo contrario se buscaría el dispositivo en todos los buses ISA."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:184
@@ -410,6 +546,9 @@ msgid ""
 "all non-sensitive devices. It is supported but does not seem to be used in "
 "any current driver."
 msgstr ""
+"`sensitive` es un recurso que solicita que se sondee este dispositivo antes "
+"de aquellos que sean no-sensitive. Se soporta pero no parece que se use "
+"actualmente en ningún controlador."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:186
@@ -420,18 +559,24 @@ msgid ""
 "system but there is only one configuration line for the corresponding "
 "driver, ie:"
 msgstr ""
+"Para dispositivos ISA antiguos en muchos casos los controladores todavía son "
+"capaces de detectar los parámetros de configuración. Pero cada dispositivo "
+"que necesita ser configurado en el sistema necesita tener una línea de "
+"configuración. Si dos dispositivos de un tipo se instalan en el sistema pero "
+"sólo hay una línea de configuración para el controlador correspondiente, es "
+"decir:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:189
 #, no-wrap
 msgid "device xxx0 at isa?\n"
-msgstr ""
+msgstr "device xxx0 at isa?\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:191
 #, no-wrap
 msgid " then only one device will be configured.\n"
-msgstr ""
+msgstr " entonces sólo se configurará un dispositivo.\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:193
@@ -440,12 +585,16 @@ msgid ""
 "n-Play or some proprietary protocol one configuration line is enough to "
 "configure all the devices in the system, like the one above or just simply:"
 msgstr ""
+"Pero para dispositivos que soportan identificación automática mediante "
+"Plug-n-Play o algún protocolo propietario es suficiente con una línea de "
+"configuración para configurar todos los dispositivos en el sistema, como la "
+"mostrada arriba o simplemente:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:197
 #, no-wrap
 msgid "device xxx at isa?\n"
-msgstr ""
+msgstr "device xxx at isa?\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:200
@@ -455,11 +604,15 @@ msgid ""
 "config file the legacy devices only. The auto-identified devices will be "
 "added automatically."
 msgstr ""
+"Si un controlador soporta tanto auto-identificación como dispositivos "
+"antiguos y se instalan ambos tipos a la vez en una máquina entonces es "
+"suficiente describir en el fichero de configuración sólo los dispositivos "
+"antiguos. Los dispositivos auto-identificados se añadirán automáticamente."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:202
 msgid "When an ISA bus is auto-configured the events happen as follows:"
-msgstr ""
+msgstr "Cuando se auto-configura un bus ISA se suceden los siguientes eventos:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:204
@@ -471,6 +624,14 @@ msgid ""
 "identify routine does not know about the other drivers yet so it does not "
 "associate any with the new devices it adds."
 msgstr ""
+"Todas las rutinas de identificación de los controladores (incluida la rutina "
+"de identificación PnP que identifica todos los dispositivos PnP) se llaman "
+"en orden aleatorio. Según se identifican los dispositivos se añaden a la "
+"lista en el bus ISA. Normalmente las rutinas de identificación de los "
+"controladores asocian sus controladores con los nuevos dispositivos. La "
+"rutina de identificación PnP no sabe nada acerca de otros controladores "
+"todavía de forma que no se asocia con ninguno de los nuevos dispositivos que "
+"añade."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:206
@@ -478,6 +639,8 @@ msgid ""
 "The PnP devices are put to sleep using the PnP protocol to prevent them from "
 "being probed as legacy devices."
 msgstr ""
+"Los dispositivos PnP se ponen a dormir usando el protocolo PnP para evitar "
+"que sean sondeados como dispositivos antiguos."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:208
@@ -485,12 +648,17 @@ msgid ""
 "The probe routines of non-PnP devices marked as `sensitive` are called. If "
 "probe for a device went successfully, the attach routine is called for it."
 msgstr ""
+"Se llama a las rutinas de sondeo para dispositivos no-PnP marcadas como "
+"`sensitive`. Si un sondeo de dispositivo tiene éxito, se llama a la rutina "
+"para adjuntarlo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:210
 msgid ""
 "The probe and attach routines of all non-PNP devices are called likewise."
 msgstr ""
+"Se llama a las rutinas de sondeo y de ajuntar para todos los dispositivos no-"
+"PnP."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:212
@@ -499,6 +667,9 @@ msgid ""
 "resources they request: I/O and memory address ranges, IRQs and DRQs, all of "
 "them not conflicting with the attached legacy devices."
 msgstr ""
+"Se despierta a los dispositivos PnP y se les asigna los recursos que "
+"soliciten: rangos de E/S y memoria, IRQs y DRQs, todos los que no entren en "
+"conflicto con los dispositivos antiguos adjuntados."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:214
@@ -513,6 +684,16 @@ msgid ""
 "supporting any PnP devices must call `ISA_PNP_PROBE()`, at least with an "
 "empty PnP ID table to return failure on unknown PnP devices."
 msgstr ""
+"Después se llama a las rutinas de sondeo para cada dispositivo PnP de todos "
+"los controladores ISA presentes. El primero que reclame el dispositivo se "
+"adjunta. Es posible que varios controladores reclamen el dispositivo con "
+"diferentes prioridades; en este caso gana el controlador con la prioridad "
+"más alta. Las rutinas de sondeo deben llamar a `ISA_PNP_PROBE()` para "
+"comparar el ID PnP actual con la lista de IDs soportada por el controlador y "
+"si el ID no está en la tabla devolver fallo. Eso significa que absolutamente "
+"todos los controladores, incluso los que no soportan ningún dispositivo PnP "
+"deben llamar a `ISA_PNP_PROBE()`, al menos con una tabla de IDs PnP vacía "
+"para devolver fallo en los dispositivos PnP desconocidos."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:216
@@ -520,6 +701,8 @@ msgid ""
 "The probe routine returns a positive value (the error code) on error, zero "
 "or negative value on success."
 msgstr ""
+"Las rutinas de sondeo devuelven un valor positivo (el código de error) si "
+"hay error, cero o valor negativo en caso de éxito."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:218
@@ -537,6 +720,21 @@ msgid ""
 "drivers return the same value then the one called first wins. So if a driver "
 "returns value 0 it may be sure that it won the priority arbitration."
 msgstr ""
+"Los valores de retorno negativos se usan cuando un dispositivo PnP soporta "
+"múltiples interfaces. Por ejemplo, una interfaz de compatibilidad más "
+"antigua y una interfaz avanzada más modernas que se soportan en diferentes "
+"controladores. Después ambos controladores detectarían el dispositivo. El "
+"controlador que devuelve el valor más alto en la rutina de sondeo tiene "
+"preferencia (en otras palabras, el controlador que devuelve 0 tiene mayor "
+"preferencia, el que devuelve -1 es el siguiente, el que devuelve -2 el "
+"siguiente y así sucesivamente). Como resultado los dispositivos que soportan "
+"sólo el interfaz antiguo serán manejados por el controlador antiguo (que "
+"debería devolver -1 en su rutina de sondeo) mientras que los dispositivos "
+"que soportan también el interfaz nuevo serán manejados por el controlador "
+"nuevo (que debería devolver 0 en la rutina de sondeo). Si varios "
+"controladores devuelven el mismo valor entonces el que se haya llamado "
+"primero gana. De forma que si un controlador devuelve 0 puede asegurarse que "
+"ha ganado el arbitraje."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:220
@@ -546,6 +744,11 @@ msgid ""
 "for this device, like the case with PnP. This feature is not implemented in "
 "any existing driver and is not considered further in this document."
 msgstr ""
+"Las rutinas de identificación específicas del dispositivo no sólo pueden "
+"asociar un controlador sino una clase de controladores a un dispositivo. En "
+"este caso se sondean todos los controladores de la clase para este "
+"dispositivo, como el caso con PnP. Esta característica no está implementada "
+"en ningún controlador y no se considera a lo largo de este documento."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:222
@@ -556,6 +759,13 @@ msgid ""
 "make sure that the same device will not be attached by the driver twice: "
 "once as legacy user-configured and once as auto-identified."
 msgstr ""
+"Como los dispositivos PnP se desactivan mientras se están sondeando los "
+"dispositivos antiguos estos no se adjuntarán dos veces (una como dispositivo "
+"antiguo y una como PnP). Pero en el caso de rutinas de identificación "
+"dependientes del dispositivo es responsabilidad del controlador asegurarse "
+"que el mismo dispositivo no será adjuntado dos veces por el controlador: una "
+"como dispositivo antiguo configurador por el usuario y otra como auto-"
+"identificado."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:224
@@ -566,6 +776,11 @@ msgid ""
 "flags from the device unit 0 for all the auto-identified devices or use the "
 "sysctl interface instead of flags."
 msgstr ""
+"Otra consecuencia práctica de los dispositivos auto-identificados (tanto PnP "
+"como específicos del dispositivo) es que los flags no se pueden pasar desde "
+"el fichero de configuración del kernel. Se debe no usar flags en absoluto o "
+"usar los flags de la unida de dispositivo 0 para todos los dispositivos auto-"
+"identificados o usar el interfaz sysctl en lugar de flags."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:226
@@ -578,12 +793,19 @@ msgid ""
 "means of configuration must always be preferred. Leave parsing the "
 "configuration resources to the bus configuration code."
 msgstr ""
+"Se pueden acomodar otras configuraciones menos usuarios accediendo "
+"directamente a los recursos de configuración con funciones de las familias "
+"`resource_query_*()` y `resource_*_value()`. Sus implementaciones están en [."
+"filename]#kern/subr_bus.c#. El antiguo controlador de disco IDE [.filename]#"
+"i386/isa/wd.c# contiene ejemplos de cómo usarlas. Pero el estándar "
+"especifica que siempre se debe preferir la configuración. Deja el parseo de "
+"los recursos de configuración al código de configuración del bus."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:228
 #, no-wrap
 msgid "Resources"
-msgstr ""
+msgstr "Recursos"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:231
@@ -597,6 +819,14 @@ msgid ""
 "this is neither needed nor recommended, so this issue is not discussed "
 "further here."
 msgstr ""
+"La información que el usuario introducen el fichero de configuración del "
+"kernel se procesa y se le pasa al kernel como recursos de configuración. "
+"Esta información se parsea con el código de configuración del bus y se "
+"transforma en un valor de una estructura device_t y los recursos del bus "
+"asociados con él. Los controladores pueden acceder directamente a los "
+"recursos de configuración usando funciones `resource_*` para casos de "
+"configuración más complejos. Sin embargo, generalmente esto no es ni "
+"necesario ni recomendado, de forma que no discutiremos más este asunto."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:233
@@ -605,27 +835,32 @@ msgid ""
 "type and number within the type. For the ISA bus the following types are "
 "defined:"
 msgstr ""
+"Los recursos del bus se asocian con cada dispositivo. Se identifican por un "
+"tipo y un número dentro del tipo. Para el bus ISA se definen los siguientes "
+"tipos:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:235
 msgid "_SYS_RES_IRQ_ - interrupt number"
-msgstr ""
+msgstr "_SYS_RES_IRQ_ - número de interrupción"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:236
 msgid "_SYS_RES_DRQ_ - ISA DMA channel number"
-msgstr ""
+msgstr "_SYS_RES_DRQ_ - número de canal DMA ISA"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:237
 msgid ""
 "_SYS_RES_MEMORY_ - range of device memory mapped into the system memory space"
 msgstr ""
+"_SYS_RES_MEMORY_ - rango de memoria del dispositivo mapeado en el espacio de "
+"memoria del sistema"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:238
 msgid "_SYS_RES_IOPORT_ - range of device I/O registers"
-msgstr ""
+msgstr "_SYS_RES_IOPORT_ - rango de registros de E/S del dispositivo"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:240
