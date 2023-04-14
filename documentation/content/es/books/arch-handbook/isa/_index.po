@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-09-03 21:28-0300\n"
-"PO-Revision-Date: 2023-04-05 16:54+0000\n"
+"PO-Revision-Date: 2023-04-14 16:54+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookisa_index/es/>\n"
@@ -936,11 +936,17 @@ msgid ""
 "that (for example, for memory it would be mapping into the kernel virtual "
 "address space)."
 msgstr ""
+"Los ajustes establecen el rango usado por el recurso. La asignación reserva "
+"el rango solicitado de forma que ningún otro controlador puede reservarlo (y "
+"comprueba que ningún otro controlador haya reservado este rango con "
+"anterioridad). La activación hace que el recurso sea accesible por el "
+"controlador haciendo lo que sea necesario (por ejemplo, para la memoria "
+"sería mapearla en el espacio de direcciones virtuales del kernel)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:260
 msgid "The functions to manipulate resources are:"
-msgstr ""
+msgstr "Las funciones para manipular recursos son:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:262
@@ -948,6 +954,8 @@ msgid ""
 "`int bus_set_resource(device_t dev, int type, int rid, u_long start, u_long "
 "count)`"
 msgstr ""
+"`int bus_set_resource(device_t dev, int type, int rid, u_long start, u_long "
+"count)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:264
@@ -956,26 +964,30 @@ msgid ""
 "Normally, this function will return an error only if one of `type`, `rid`, "
 "`start` or `count` has a value that falls out of the permitted range."
 msgstr ""
+"Establece un rango para un recurso. Devuelve 0 en caso de éxito, en caso "
+"contrario un código de error. Normalmente, esta función sólo devolverá un "
+"error si `type`, `rid`, `start` o `count` tienen un valor que está fuera del "
+"rango permitido."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:266
 msgid "dev - driver's device"
-msgstr ""
+msgstr "dev - dispositivo del controlador"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:267
 msgid "type - type of resource, SYS_RES_*"
-msgstr ""
+msgstr "type - tipo de recurso, SYS_RES_*"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:268
 msgid "rid - resource number (ID) within type"
-msgstr ""
+msgstr "rid - número de recurso (ID) dentro del tipo"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:269
 msgid "start, count - resource range"
-msgstr ""
+msgstr "start, count - rango del recurso"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:271
@@ -983,6 +995,8 @@ msgid ""
 "`int bus_get_resource(device_t dev, int type, int rid, u_long *startp, "
 "u_long *countp)`"
 msgstr ""
+"`int bus_get_resource(device_t dev, int type, int rid, u_long *startp, "
+"u_long *countp)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:273
@@ -990,6 +1004,8 @@ msgid ""
 "Get the range of resource. Returns 0 if successful, error code if the "
 "resource is not defined yet."
 msgstr ""
+"Obtiene el rango del recurso. Devuelve 0 en caso de éxito, código de error "
+"si el recurso no se ha definido todavía."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:274
@@ -997,6 +1013,8 @@ msgid ""
 "`u_long bus_get_resource_start(device_t dev, int type, int rid) u_long "
 "bus_get_resource_count (device_t dev, int type, int rid)`"
 msgstr ""
+"`u_long bus_get_resource_start(device_t dev, int type, int rid) u_long "
+"bus_get_resource_count (device_t dev, int type, int rid)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:276
@@ -1006,16 +1024,21 @@ msgid ""
 "be impossible to tell if the value is 0 or an error occurred. Luckily, no "
 "ISA resources for add-on drivers may have a start value equal to 0."
 msgstr ""
+"Funciones de apoyo para obtener sólo el comienzo o el tamaño. Devuelve 0 en "
+"caso de error, de forma que si el recurso tiene 0 entre sus valores "
+"legítimos sería imposible decir si el valor es 0 o ha ocurrido un error. "
+"Afortunadamente, ningún recurso ISA para controladores añadidos puede tener "
+"un valor de comienzo igual a 0."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:277
 msgid "`void bus_delete_resource(device_t dev, int type, int rid)`"
-msgstr ""
+msgstr "`void bus_delete_resource(device_t dev, int type, int rid)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:279
 msgid "Delete a resource, make it undefined."
-msgstr ""
+msgstr "Borra un recurso, lo hace indefinido."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:280
@@ -1023,6 +1046,8 @@ msgid ""
 "`struct resource * bus_alloc_resource(device_t dev, int type, int *rid, "
 "u_long start, u_long end, u_long count, u_int flags)`"
 msgstr ""
+"`struct resource * bus_alloc_resource(device_t dev, int type, int *rid, "
+"u_long start, u_long end, u_long count, u_int flags)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:282
@@ -1037,11 +1062,22 @@ msgid ""
 "anywhere by the resource allocation code of the ISA bus. (The other buses "
 "may use a different approach and modify it)."
 msgstr ""
+"Asigna un recurso como un rango de count valores no asignados por nadie más, "
+"en algún punto entre start y end. Lamentablemente, no se soporta "
+"alineamiento. Si el recurso no se ha establecido todavía se crea "
+"automáticamente. Los valores especiales 0 para start y ~0 para end (todo "
+"unos) significan que los valores fijos previamente establecidos por "
+"`bus_set_resource()` se tiene que usar en su lugar: start y count como ellos "
+"mismos y end=(start+count), en este caso si el recurso no estaba definido "
+"anteriormente se devuelve un error. Aunque se pasa rid como referencia el "
+"código de asignación del bus ISA no lo establece en ningún sitio. (Los otros "
+"buses podrían usar una aproximación diferente y modificarlo)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:284
 msgid "Flags are a bitmap, the flags interesting for the caller are:"
 msgstr ""
+"Los flags con un mapa de bits, los flags interesantes para el llamante son:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:286
@@ -1049,12 +1085,16 @@ msgid ""
 "_RF_ACTIVE_ - causes the resource to be automatically activated after "
 "allocation."
 msgstr ""
+"_RF_ACTIVE_ - hace que se active el recurso automáticamente después de la "
+"asignación."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:287
 msgid ""
 "_RF_SHAREABLE_ - resource may be shared at the same time by multiple drivers."
 msgstr ""
+"_RF_SHAREABLE_ - el recurso puede ser compartido al mismo tiempo por varios "
+"controladores."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:288
@@ -1063,6 +1103,9 @@ msgid ""
 "allocated at the same time by many but activated only by one at any given "
 "moment of time."
 msgstr ""
+"_RF_TIMESHARE_ - el recurso puede ser de tiempo compartido por varios "
+"controladores, es decir, asignado al mismo tiempo por muchos pero activado "
+"sólo por uno en un momento dado."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:289
@@ -1070,6 +1113,8 @@ msgid ""
 "Returns 0 on error. The allocated values may be obtained from the returned "
 "handle using methods `rhand_*()`."
 msgstr ""
+"Devuelve 0 en caso de error. Los valores asignados se pueden obtener del "
+"manejador devuelto usando los métodos `rhand_*()`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:290
@@ -1077,6 +1122,8 @@ msgid ""
 "`int bus_release_resource(device_t dev, int type, int rid, struct resource "
 "*r)`"
 msgstr ""
+"`int bus_release_resource(device_t dev, int type, int rid, struct resource "
+"*r)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:291
@@ -1084,6 +1131,8 @@ msgid ""
 "Release the resource, r is the handle returned by `bus_alloc_resource()`. "
 "Returns 0 on success, error code otherwise."
 msgstr ""
+"Libera el recurso, r es el manejador devuelto por `bus_alloc_resource()`. "
+"Devuelve 0 en caso de éxito, un código de error en caso contrario."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:292
@@ -1092,6 +1141,9 @@ msgid ""
 "*r) int bus_deactivate_resource(device_t dev, int type, int rid, struct "
 "resource *r)`"
 msgstr ""
+"`int bus_activate_resource(device_t dev, int type, int rid, struct resource "
+"*r) int bus_deactivate_resource(device_t dev, int type, int rid, struct "
+"resource *r)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:293
@@ -1100,6 +1152,9 @@ msgid ""
 "If the resource is time-shared and currently activated by another driver "
 "then `EBUSY` is returned."
 msgstr ""
+"Activa o desactiva un recurso. Devuelve 0 en caso de éxito, un código de "
+"error en caso contrario. Si el recurso es de tiempo compartido y actualmente "
+"está activado por otro controlador entonces se devuelve `EBUSY`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:294
@@ -1108,6 +1163,9 @@ msgid ""
 "driver_intr_t *handler, void *arg, void **cookiep) int "
 "bus_teardown_intr(device_t dev, struct resource *r, void *cookie)`"
 msgstr ""
+"`int bus_setup_intr(device_t dev, struct resource *r, int flags, "
+"driver_intr_t *handler, void *arg, void **cookiep) int bus_teardown_intr("
+"device_t dev, struct resource *r, void *cookie)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:295
@@ -1115,16 +1173,19 @@ msgid ""
 "Associate or de-associate the interrupt handler with a device. Return 0 on "
 "success, error code otherwise."
 msgstr ""
+"Asocia o elimina la asociación de un manejador de interrupciones con un "
+"dispositivo. Devuelve 0 en caso de éxito, un código de error en caso "
+"contrario."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:296
 msgid "r - the activated resource handler describing the IRQ"
-msgstr ""
+msgstr "r - el manejador del recurso activado que describe la IRQ"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:298
 msgid "flags - the interrupt priority level, one of:"
-msgstr ""
+msgstr "flags - el nivel de prioridad de la interrupción, uno de:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:300
@@ -1132,6 +1193,8 @@ msgid ""
 "`INTR_TYPE_TTY` - terminals and other likewise character-type devices. To "
 "mask them use `spltty()`."
 msgstr ""
+"`INTR_TYPE_TTY` - terminales y otros dispositivos tipo carácter. Para "
+"enmascaracrlos utiliza `spltty()`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:301
@@ -1140,6 +1203,9 @@ msgid ""
 "buffer, critical to the data loss on input (such as the old-fashioned serial "
 "ports). To mask them use `spltty()`."
 msgstr ""
+"`(INTR_TYPE_TTY | INTR_TYPE_FAST)` - dispositivos tipo terminal con búfers "
+"de entrada pequeños, críticos respecto a la pérdida de datos de entrada ("
+"como los antiguos puertos serie). Para enmascararlos utiliza `spltty()`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:302
@@ -1147,6 +1213,8 @@ msgid ""
 "`INTR_TYPE_BIO` - block-type devices, except those on the CAM controllers. "
 "To mask them use `splbio()`."
 msgstr ""
+"`INTR_TYPE_BIO` - dispositivos de bloques, excepto aquellos en los "
+"controladores CAM. Para enmascararlos utiliza `splbio()`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:303
@@ -1154,12 +1222,16 @@ msgid ""
 "`INTR_TYPE_CAM` - CAM (Common Access Method) bus controllers. To mask them "
 "use `splcam()`."
 msgstr ""
+"`INTR_TYPE_CAM` - controladores de bus CAM (Common Access Method). Para "
+"enmascararlos utiliza `splcam()`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:304
 msgid ""
 "`INTR_TYPE_NET` - network interface controllers. To mask them use `splimp()`."
 msgstr ""
+"`INTR_TYPE_NET` - controladores de interfaces de red. Para enmascararlos "
+"utiliza `splimp()`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:305
@@ -1167,6 +1239,8 @@ msgid ""
 "`INTR_TYPE_MISC` - miscellaneous devices. There is no other way to mask them "
 "than by `splhigh()` which masks all interrupts."
 msgstr ""
+"`INTR_TYPE_MISC` - dispositivos varios. No hay otra forma de enmascararlos "
+"que no sea con `splhigh()` que enmascara todas las interrupciones."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:307
