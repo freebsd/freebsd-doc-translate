@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2023-01-21 20:00-0300\n"
-"PO-Revision-Date: 2023-04-23 05:28+0000\n"
+"PO-Revision-Date: 2023-04-26 20:24+0000\n"
 "Last-Translator: \"Kyung-tak, Yoo\" <stonegaze@me.com>\n"
 "Language-Team: Korean <https://translate-dev.freebsd.org/projects/"
 "documentation/booksdevelopers-handbookx86_index/ko/>\n"
@@ -23,18 +23,18 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:14
 #, no-wrap
 msgid "x86 Assembly Language Programming"
-msgstr ""
+msgstr "x86 어셈블리 언어 프로그래밍"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1
 #, no-wrap
 msgid "Chapter 11. x86 Assembly Language Programming"
-msgstr ""
+msgstr "11장. x86 어셈블리 언어 프로그래밍"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:52
 msgid "_This chapter was written by {stanislav}._"
-msgstr ""
+msgstr "_이 챕터는 {stanislav}가 작성했습니다._"
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:54
@@ -50,6 +50,10 @@ msgid ""
 "UNIX(R) systems run on different microprocessors, so everything should be "
 "written in C for portability."
 msgstr ""
+"UNIX(R)에서의 어셈블리 언어 프로그래밍은 문서화되어 있지 않습니다.  "
+"일반적으로 다양한 UNIX(R) 시스템이 서로 다른 마이크로프로세서에서 실행되므로 "
+"이식성을 위해 모든 것을 C로 작성해야 하기 때문에 아무도 사용하지 않을 "
+"것이라고 가정합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:62
@@ -59,6 +63,10 @@ msgid ""
 "processor each runs on.  Typically, such a program is full of conditional "
 "statements depending on the system it is compiled for."
 msgstr ""
+"실제로 C 이식성은 신화에 가깝습니다.  C 프로그램도 어떤 프로세서에서 "
+"실행되는지에 관계없이 한 UNIX(R)에서 다른 UNIX(R)로 포팅할 때 수정해야 "
+"합니다.  일반적으로 이러한 프로그램은 컴파일되는 시스템에 따라 조건문으로 "
+"가득 차 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:64
@@ -67,6 +75,9 @@ msgid ""
 "some other high-level language, we still need assembly language programmers: "
 "Who else would write the section of C library that accesses the kernel?"
 msgstr ""
+"모든 UNIX(R) 소프트웨어가 C 또는 다른 고급 언어로 작성되어야 한다고 "
+"생각하더라도 어셈블리 언어 프로그래머는 여전히 필요합니다: 커널에 액세스하는 "
+"C 라이브러리 섹션을 누가 작성할까요?"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:66
@@ -74,6 +85,8 @@ msgid ""
 "In this chapter I will attempt to show you how you can use assembly language "
 "writing UNIX(R) programs, specifically under FreeBSD."
 msgstr ""
+"이 장에서는 어셈블리 언어를 사용하여 UNIX(R) 프로그램을 작성하는 방법, 특히 "
+"FreeBSD에서 사용하는 방법을 보여드리려고 합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:71
@@ -86,31 +99,38 @@ msgid ""
 "chapter is finished, any assembly language programmer will be able to write "
 "programs for FreeBSD quickly and efficiently."
 msgstr ""
+"이 장에서는 어셈블리 언어의 기초를 설명하지 않습니다.  어셈블리 언어에 대한 "
+"전체 온라인 강좌를 보려면 Randall Hyde의 http://webster.cs.ucr.edu/[Art of "
+"Assembly Language]를 참고하거나, 인쇄된 책을 선호한다면 Jeff Duntemann의 "
+"Assembly Language Step-by-Step (ISBN: 0471375233)을 참고하세요.  하지만, 이 "
+"챕터를 다 읽고 나면 어셈블리 언어 프로그래머라면 누구나 FreeBSD용 프로그램을 "
+"빠르고 효율적으로 작성할 수 있을 것입니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:73
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4313
 msgid "Copyright (R) 2000-2001 G. Adam Stanislav. All rights reserved."
-msgstr ""
+msgstr "Copyright (R) 2000-2001 G. Adam Stanislav. All rights reserved."
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:75
 #, no-wrap
 msgid "The Tools"
-msgstr ""
+msgstr "도구"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:78
 #, no-wrap
 msgid "The Assembler"
-msgstr ""
+msgstr "어셈블러"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:81
 msgid ""
 "The most important tool for assembly language programming is the assembler, "
 "the software that converts assembly language code into machine language."
-msgstr ""
+msgstr "어셈블리 언어 프로그래밍에 가장 중요한 도구는 어셈블리 언어 코드를 기계어로 "
+"변환하는 소프트웨어인 어셈블러입니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:85
@@ -119,6 +139,9 @@ msgid ""
 "which uses the traditional UNIX(R) assembly language syntax.  It comes with "
 "the system."
 msgstr ""
+"FreeBSD에는 매우 다른 두 가지 어셈블러를 사용할 수 있습니다.  하나는 "
+"전통적인 UNIX(R) 어셈블리 언어 구문을 사용하는 man:as[1]입니다.  이 "
+"어셈블러는 시스템과 함께 제공됩니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:90
@@ -127,6 +150,9 @@ msgid ""
 "advantage is that it can assemble code for many operating systems.  It needs "
 "to be installed separately, but is completely free."
 msgstr ""
+"다른 하나는 /usr/ports/devel/nasm입니다.  인텔 문법을 사용합니다.  주요 "
+"장점은 많은 운영 체제용 코드를 어셈블할 수 있다는 것입니다.  별도로 설치해야 "
+"하지만 완전히 무료입니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:93
@@ -135,38 +161,43 @@ msgid ""
 "coming to FreeBSD from other operating systems will find it easier to "
 "understand.  And, because, quite frankly, that is what I am used to."
 msgstr ""
+"이 장에서는 다른 운영체제에서 FreeBSD로 넘어오는 대부분의 어셈블리 언어 "
+"프로그래머가 이해하기 쉽도록 nasm 구문을 사용합니다.  그리고 솔직히 말해서, "
+"그것이 제가 익숙한 방식이기 때문입니다."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:95
 #, no-wrap
 msgid "The Linker"
-msgstr ""
+msgstr "링커"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:98
 msgid ""
 "The output of the assembler, like that of any compiler, needs to be linked "
 "to form an executable file."
-msgstr ""
+msgstr "어셈블러의 출력은 다른 컴파일러의 출력과 마찬가지로 실행 파일을 형성하기 "
+"위해 링크해야 합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:101
 msgid ""
 "The standard man:ld[1] linker comes with FreeBSD.  It works with the code "
 "assembled with either assembler."
-msgstr ""
+msgstr "표준 man:ld[1] 링커는 FreeBSD와 함께 제공됩니다.  두 어셈블러로 어셈블된 "
+"코드와 함께 작동합니다."
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:103
 #, no-wrap
 msgid "System Calls"
-msgstr ""
+msgstr "시스템 호출"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:106
 #, no-wrap
 msgid "Default Calling Convention"
-msgstr ""
+msgstr "기본 호출 규칙"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:110
@@ -176,6 +207,9 @@ msgid ""
 "will call a function that issues `int 80h`, rather than issuing `int 80h` "
 "directly."
 msgstr ""
+"기본적으로 FreeBSD 커널은 C 호출 규칙을 사용합니다.  또한 커널은 `int 80h`를 "
+"사용하여 액세스하지만, 프로그램이 `int 80h`를 직접 실행하지 않고 `int 80h`를 "
+"실행하는 함수를 호출할 것으로 가정합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:113
@@ -184,13 +218,17 @@ msgid ""
 "convention used by MS-DOS(R).  Why? Because the UNIX(R) convention allows "
 "any program written in any language to access the kernel."
 msgstr ""
+"이 규칙은 매우 편리하며 MS-DOS(R)에서 사용하는 Microsoft(R) 규칙보다 훨씬 "
+"우수합니다.  왜 그럴까요? UNIX(R) 규칙은 어떤 언어로 작성된 프로그램도 "
+"커널에 액세스할 수 있도록 허용하기 때문입니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:116
 msgid ""
 "An assembly language program can do that as well.  For example, we could "
 "open a file:"
-msgstr ""
+msgstr "어셈블리 언어 프로그램도 이 작업을 수행할 수 있습니다.  예를 들어 파일을 열 "
+"수 있습니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:122
@@ -200,6 +238,9 @@ msgid ""
 "\tint\t80h\t; Call kernel\n"
 "\tret\n"
 msgstr ""
+"kernel:\n"
+"\tint\t80h\t; Call kernel\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:131
@@ -214,6 +255,14 @@ msgid ""
 "\tadd\tesp, byte 12\n"
 "\tret\n"
 msgstr ""
+"open:\n"
+"\tpush\tdword mode\n"
+"\tpush\tdword flags\n"
+"\tpush\tdword path\n"
+"\tmov\teax, 5\n"
+"\tcall\tkernel\n"
+"\tadd\tesp, byte 12\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:135
@@ -222,6 +271,9 @@ msgid ""
 "code to a UNIX(R) system which uses a different interrupt, or a different "
 "way of passing parameters, all you need to change is the kernel procedure."
 msgstr ""
+"이것은 매우 깔끔하고 이식성이 뛰어난 코딩 방식입니다.  다른 인터럽트를 "
+"사용하거나 다른 매개변수 전달 방식을 사용하는 UNIX(R) 시스템으로 코드를 "
+"포팅해야 하는 경우 커널 프로시저만 변경하면 됩니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:139
@@ -230,6 +282,9 @@ msgid ""
 "example requires a `call/ret` combination.  We can eliminate it by "
 "``push``ing an extra dword:"
 msgstr ""
+"하지만 어셈블리 언어 프로그래머는 주기를 줄이는 것을 좋아합니다.  위의 "
+"예제에서는 `call/ret` 조합이 필요합니다.  추가 단어를 ``push``하면 이를 "
+"제거할 수 있습니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:150
@@ -244,19 +299,27 @@ msgid ""
 "\tint\t80h\n"
 "\tadd\tesp, byte 16\n"
 msgstr ""
+"open:\n"
+"\tpush\tdword mode\n"
+"\tpush\tdword flags\n"
+"\tpush\tdword path\n"
+"\tmov\teax, 5\n"
+"\tpush\teax\t\t; Or any other dword\n"
+"\tint\t80h\n"
+"\tadd\tesp, byte 16\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:153
 msgid ""
 "The `5` that we have placed in `EAX` identifies the kernel function, in this "
 "case `open`."
-msgstr ""
+msgstr "`5`에 배치한 `EAX`는 커널 함수(이 경우 `open`)를 식별합니다."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:155
 #, no-wrap
 msgid "Alternate Calling Convention"
-msgstr ""
+msgstr "대체 호출 규칙"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:160
@@ -265,6 +328,9 @@ msgid ""
 "the kernel.  For it to work, however, the system must have Linux emulation "
 "installed."
 msgstr ""
+"FreeBSD는 매우 유연한 시스템입니다.  커널을 호출하는 다른 방법을 "
+"제공합니다.  하지만 이를 사용하려면 시스템에 Linux 에뮬레이션이 설치되어 "
+"있어야 합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:165
@@ -275,6 +341,10 @@ msgid ""
 "parameters, however, are not passed on the stack but in `EBX, ECX, EDX, ESI, "
 "EDI, EBP`:"
 msgstr ""
+"Linux는 UNIX(R)와 유사한 시스템입니다.  그러나 커널은 레지스터에 매개변수를 "
+"전달하는 MS-DOS(R)와 동일한 시스템 호출 규칙을 사용합니다.  UNIX(R) 규칙과 "
+"마찬가지로 함수 번호는 `EAX`에 배치됩니다.  그러나 매개변수는 스택에 "
+"전달되지 않고 `EBX, ECX, EDX, ESI, EDI, EBP`에 전달됩니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:174
@@ -287,6 +357,12 @@ msgid ""
 "\tmov\tedx, mode\n"
 "\tint\t80h\n"
 msgstr ""
+"open:\n"
+"\tmov\teax, 5\n"
+"\tmov\tebx, path\n"
+"\tmov\tecx, flags\n"
+"\tmov\tedx, mode\n"
+"\tint\t80h\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:180
@@ -297,6 +373,10 @@ msgid ""
 "makes your code bulkier and slower.  Nevertheless, FreeBSD gives you a "
 "choice."
 msgstr ""
+"이 규칙은 적어도 어셈블리 언어 프로그래밍에 관한 한 UNIX(R) 방식에 비해 큰 "
+"단점이 있습니다: 커널 호출을 할 때마다 레지스터를 `push`한 다음 나중에 `pop`"
+"해야 합니다.  이로 인해 코드의 부피가 커지고 속도가 느려집니다.  그럼에도 "
+"불구하고 FreeBSD는 여러분에게 선택권을 제공합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:183
@@ -305,18 +385,20 @@ msgid ""
 "it.  After your program is assembled and linked, you need to brand the "
 "executable:"
 msgstr ""
+"Linux 규칙을 선택하는 경우 시스템에 이를 알려야 합니다.  프로그램이 "
+"어셈블되고 링크된 후에는 실행 파일에 브랜딩을 해야 합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:187
 #, no-wrap
 msgid "% brandelf -t Linux filename\n"
-msgstr ""
+msgstr "% brandelf -t Linux filename\n"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:190
 #, no-wrap
 msgid "Which Convention Should You Use?"
-msgstr ""
+msgstr "어떤 규칙을 사용해야 하나요?"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:195
@@ -326,6 +408,9 @@ msgid ""
 "registers, you do not have to brand the executable, and you do not impose "
 "the installation of the Linux emulation package on the target system."
 msgstr ""
+"FreeBSD용으로 특별히 코딩하는 경우 항상 UNIX(R) 규칙을 사용해야 합니다: 더 "
+"빠르고, 전역 변수를 레지스터에 저장할 수 있으며, 실행 파일에 브랜딩할 필요가 "
+"없고, 대상 시스템에 Linux 에뮬레이션 패키지를 설치할 필요가 없습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:198
@@ -335,12 +420,15 @@ msgid ""
 "possible.  I will show you how you can accomplish that after I have "
 "explained the basics."
 msgstr ""
+"리눅스에서도 실행할 수 있는 이식 가능한 코드를 만들고 싶다면, FreeBSD "
+"사용자들에게 가능한 한 효율적인 코드를 제공하고 싶을 것입니다.  기본 사항을 "
+"설명한 후에 이를 달성할 수 있는 방법을 보여드리겠습니다."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:200
 #, no-wrap
 msgid "Call Numbers"
-msgstr ""
+msgstr "호출 번호"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:204
@@ -348,12 +436,14 @@ msgid ""
 "To tell the kernel which system service you are calling, place its number in "
 "`EAX`.  Of course, you need to know what the number is."
 msgstr ""
+"커널에 어떤 시스템 서비스를 호출하고 있는지 알려주려면 해당 번호를 `EAX`에 "
+"입력합니다.  물론 그 번호가 무엇인지 알아야 합니다."
 
 #. type: Title ====
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:206
 #, no-wrap
 msgid "The [.filename]#syscalls# File"
-msgstr ""
+msgstr "[.filename]#syscalls# 파일"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:210
@@ -362,6 +452,9 @@ msgid ""
 "this file in several different formats, all produced automatically from [."
 "filename]#syscalls.master#."
 msgstr ""
+"번호는 [.filename]#syscalls#에 나열됩니다.  `locate syscalls`는 이 파일을 "
+"여러 가지 형식으로 찾으며, 모두 [.filename]#syscalls.master#에서 자동으로 "
+"생성됩니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:213
@@ -371,18 +464,23 @@ msgid ""
 "convention implemented in the Linux emulation mode, read [.filename]#/usr/"
 "src/sys/i386/linux/syscalls.master#."
 msgstr ""
+"기본 UNIX(R) 호출 규칙에 대한 마스터 파일은 [.filename]#/usr/src/sys/kern/"
+"syscalls.master#에서 찾을 수 있습니다.  Linux 에뮬레이션 모드에서 구현된 "
+"다른 규칙을 사용해야 하는 경우 [.filename]#/usr/src/sys/i386/linux/syscalls."
+"master#를 참조하세요."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:217
 msgid ""
 "Not only do FreeBSD and Linux use different calling conventions, they "
 "sometimes use different numbers for the same functions."
-msgstr ""
+msgstr "FreeBSD와 Linux는 서로 다른 호출 규칙을 사용할 뿐만 아니라 같은 기능에 다른 "
+"번호를 사용하는 경우도 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:220
 msgid "[.filename]#syscalls.master# describes how the call is to be made:"
-msgstr ""
+msgstr "[.filename]#syscalls.master#는 호출 방법을 설명합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:231
@@ -397,18 +495,27 @@ msgid ""
 "6\tSTD\tPOSIX\t{ int close(int fd); }\n"
 "etc...\n"
 msgstr ""
+"0\tSTD\tNOHIDE\t{ int nosys(void); } syscall nosys_args int\n"
+"1\tSTD\tNOHIDE\t{ void exit(int rval); } exit rexit_args void\n"
+"2\tSTD\tPOSIX\t{ int fork(void); }\n"
+"3\tSTD\tPOSIX\t{ ssize_t read(int fd, void *buf, size_t nbyte); }\n"
+"4\tSTD\tPOSIX\t{ ssize_t write(int fd, const void *buf, size_t nbyte); }\n"
+"5\tSTD\tPOSIX\t{ int open(char *path, int flags, int mode); }\n"
+"6\tSTD\tPOSIX\t{ int close(int fd); }\n"
+"etc...\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:234
 msgid "It is the leftmost column that tells us the number to place in `EAX`."
-msgstr ""
+msgstr "가장 왼쪽에 있는 열로, `EAX`에 배치할 번호를 알려줍니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:237
 msgid ""
 "The rightmost column tells us what parameters to `push`.  They are "
 "``push``ed _from right to left_."
-msgstr ""
+msgstr "가장 오른쪽 열은 어떤 매개변수를 `push`해야 하는지 알려줍니다.  _오른쪽에서 "
+"왼쪽으로_ `push`됩니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:239
@@ -416,12 +523,14 @@ msgid ""
 "For example, to `open` a file, we need to `push` the `mode` first, then "
 "`flags`, then the address at which the `path` is stored."
 msgstr ""
+"예를 들어 파일을 `open`하려면 먼저 `mode`를 `push`한 다음 `flags`, `path`가 "
+"저장된 주소를 `push`해야 합니다."
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:241
 #, no-wrap
 msgid "Return Values"
-msgstr ""
+msgstr "반환값"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:245
@@ -430,6 +539,9 @@ msgid ""
 "kind of a value: The file descriptor of an open file, the number of bytes "
 "read to a buffer, the system time, etc."
 msgstr ""
+"시스템 호출은 어떤 종류의 값을 반환하지 않으면 대부분의 경우 유용하지 "
+"않습니다: 열린 파일의 파일 기술자, 버퍼에서 읽은 바이트 수, 시스템 시간 "
+"등입니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:248
@@ -438,12 +550,14 @@ msgid ""
 "not exist, system resources are exhausted, we passed an invalid parameter, "
 "etc."
 msgstr ""
+"또한 오류가 발생하면 시스템에서 알려주어야 합니다: 파일이 존재하지 않거나, "
+"시스템 리소스가 소진되었거나, 잘못된 매개변수를 전달한 경우 등입니다."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:250
 #, no-wrap
 msgid "Man Pages"
-msgstr ""
+msgstr "매뉴얼 페이지"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:254
@@ -452,11 +566,14 @@ msgid ""
 "under UNIX(R) systems are the manual pages.  FreeBSD describes its system "
 "calls in section 2, sometimes in section 3."
 msgstr ""
+"UNIX(R) 시스템에서 다양한 시스템 호출에 대한 정보를 찾을 수 있는 전통적인 "
+"장소는 매뉴얼 페이지입니다.  FreeBSD는 섹션 2에서 시스템 호출을 설명하며, "
+"때로는 섹션 3에서 설명합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:256
 msgid "For example, man:open[2] says:"
-msgstr ""
+msgstr "예를 들어, man:open[2]는 다음과 같습니다:"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:260
@@ -465,6 +582,8 @@ msgid ""
 "descriptor.  It returns `-1` on failure, and sets `errno` to indicate the "
 "error."
 msgstr ""
+"성공하면 `open()`은 파일 설명자라고 하는 음수가 아닌 정수를 반환합니다.  "
+"실패하면 `-1`을 반환하고 `errno`를 설정하여 오류를 나타냅니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:262
@@ -472,19 +591,22 @@ msgid ""
 "The assembly language programmer new to UNIX(R) and FreeBSD will immediately "
 "ask the puzzling question: Where is `errno` and how do I get to it?"
 msgstr ""
+"UNIX(R) 및 FreeBSD를 처음 접하는 어셈블리 언어 프로그래머는 즉시 당황스러운 "
+"질문을 던질 것입니다: `errno`는 어디에 있으며 어떻게 찾을 수 있을까요?"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:267
 msgid ""
 "The information presented in the manual pages applies to C programs.  The "
 "assembly language programmer needs additional information."
-msgstr ""
+msgstr "매뉴얼 페이지에 제시된 정보는 C 프로그램에 적용됩니다.  어셈블리 언어 "
+"프로그래머는 추가 정보가 필요합니다."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:270
 #, no-wrap
 msgid "Where Are the Return Values?"
-msgstr ""
+msgstr "반환 값은 어디에 있나요?"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:275
@@ -494,6 +616,9 @@ msgid ""
 "first time, is to look for the return value in `EAX`.  If it is not there, "
 "you need further research."
 msgstr ""
+"불행히도, 상황에 따라 다릅니다. 대부분의 시스템 호출의 경우 `EAX`에 있지만 "
+"모든 것이 그렇지는 않습니다.  시스템 호출을 처음 사용할 때는 `EAX`에서 반환 "
+"값을 찾는 것이 좋습니다.  거기에 없으면 추가 조사가 필요합니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:281
@@ -502,24 +627,28 @@ msgid ""
 "All others I have worked with use `EAX`.  But I have not worked with them "
 "all yet."
 msgstr ""
+"저는 `EDX`의 값을 반환하는 하나의 시스템 호출을 알고 있습니다: `SYS_fork`.  "
+"저와 함께 작업한 모든 사람들은 `EAX`를 사용했습니다.  그러나 저는 아직 그들 "
+"모두와 함께 일하진 않았습니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:286
 msgid ""
 "If you cannot find the answer here or anywhere else, study libc source code "
 "and see how it interfaces with the kernel."
-msgstr ""
+msgstr "여기나 다른 곳에서 답을 찾을 수 없는 경우 libc 소스 코드를 공부하여 커널과 "
+"어떻게 인터페이스하는지 확인하세요."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:289
 #, no-wrap
 msgid "Where Is `errno`?"
-msgstr ""
+msgstr "`errno`는 어디에 있나요?"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:292
 msgid "Actually, nowhere..."
-msgstr ""
+msgstr "사실, 아무데도..."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:295
@@ -528,6 +657,9 @@ msgid ""
 "kernel services directly, the error code is returned in `EAX`, the same "
 "register the proper return value generally ends up in."
 msgstr ""
+"`errno`는 UNIX(R) 커널이 아닌 C 언어의 일부입니다.  커널 서비스에 직접 "
+"액세스하는 경우 오류 코드는 일반적으로 적절한 반환 값이 끝나는 레지스터와 "
+"동일한 `EAX`에 반환됩니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:299
@@ -536,19 +668,23 @@ msgid ""
 "there is an error, there is no return value.  One register can contain "
 "either."
 msgstr ""
+"이것은 완벽하게 이해가 됩니다. 오류가 없으면 오류 코드가 없습니다.  에러가 "
+"있으면 반환값이 없습니다.  하나의 레지스터에는 두 가지가 모두 포함될 수 "
+"있습니다."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:301
 #, no-wrap
 msgid "Determining an Error Occurred"
-msgstr ""
+msgstr "오류 발생 확인하기"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:304
 msgid ""
 "When using the standard FreeBSD calling convention, the `carry flag` is "
 "cleared upon success, set upon failure."
-msgstr ""
+msgstr "표준 FreeBSD 호출 규칙을 사용할 때, 성공하면 `carry flag`가 지워지고 "
+"실패하면 설정됩니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:307
@@ -557,12 +693,14 @@ msgid ""
 "negative upon success, and contains the return value.  In case of an error, "
 "the value is negative, i.e., `-errno`."
 msgstr ""
+"Linux 에뮬레이션 모드를 사용할 때, 성공 시 `EAX`의 부호화된 값은 음수가 "
+"아니며 반환값을 포함합니다.  에러가 발생하면 음수 값, 즉 `-errno`가 됩니다."
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:309
 #, no-wrap
 msgid "Creating Portable Code"
-msgstr ""
+msgstr "이식 가능한 코드 생성하기"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:314
@@ -572,13 +710,18 @@ msgid ""
 "especially with nasm.  I have written assembly language libraries that can "
 "be assembled for such different operating systems as Windows(R) and FreeBSD."
 msgstr ""
+"이식성은 일반적으로 어셈블리 언어의 강점 중 하나가 아닙니다.  하지만 nasm을 "
+"사용하면 다양한 플랫폼에 맞는 어셈블리 언어 프로그램을 작성하는 것이 "
+"가능합니다.  저는 Windows(R) 및 FreeBSD와 같은 다양한 운영 체제용으로 조립할 "
+"수 있는 어셈블리 언어 라이브러리를 작성했습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:316
 msgid ""
 "It is all the more possible when you want your code to run on two platforms "
 "which, while different, are based on similar architectures."
-msgstr ""
+msgstr "서로 다르지만 유사한 아키텍처를 기반으로 하는 두 플랫폼에서 코드를 "
+"실행하려는 경우 더욱 가능합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:320
@@ -588,12 +731,15 @@ msgid ""
 "perspective): The calling convention, the function numbers, and the way of "
 "returning values."
 msgstr ""
+"예를 들어, FreeBSD는 UNIX(R), Linux는 UNIX(R)와 비슷합니다.  (어셈블리 언어 "
+"프로그래머의 관점에서) 세 가지 차이점만 언급했습니다: 호출 규칙, 함수 번호, "
+"값을 반환하는 방식입니다."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:322
 #, no-wrap
 msgid "Dealing with Function Numbers"
-msgstr ""
+msgstr "함수 번호 처리하기"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:327
@@ -603,6 +749,9 @@ msgid ""
 "code, use constants which you have declared differently depending on the "
 "target architecture:"
 msgstr ""
+"대부분의 경우 함수 번호는 동일합니다.  하지만 그렇지 않은 경우에도 문제는 "
+"쉽게 해결할 수 있습니다: 코드에 숫자를 사용하는 대신 대상 아키텍처에 따라 "
+"다르게 선언한 상수를 사용하면 됩니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:335
@@ -614,25 +763,31 @@ msgid ""
 "%define\tSYS_execve\t59\n"
 "%endif\n"
 msgstr ""
+"%ifdef\tLINUX\n"
+"%define\tSYS_execve\t11\n"
+"%else\n"
+"%define\tSYS_execve\t59\n"
+"%endif\n"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:338
 #, no-wrap
 msgid "Dealing with Conventions"
-msgstr ""
+msgstr "관례 다루기"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:341
 msgid ""
 "Both, the calling convention, and the return value (the `errno` problem) can "
 "be resolved with macros:"
-msgstr ""
+msgstr "호출 규칙과 반환 값(그 `errno` 문제) 모두 매크로를 사용하여 해결할 수 "
+"있습니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:345
 #, no-wrap
 msgid "%ifdef\tLINUX\n"
-msgstr ""
+msgstr "%ifdef\tLINUX\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:349
@@ -642,6 +797,9 @@ msgid ""
 "\tcall\tkernel\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsystem\t0\n"
+"\tcall\tkernel\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:358
@@ -656,6 +814,14 @@ msgid ""
 "\tpush\tedi\n"
 "\tpush\tebp\n"
 msgstr ""
+"align 4\n"
+"kernel:\n"
+"\tpush\tebx\n"
+"\tpush\tecx\n"
+"\tpush\tedx\n"
+"\tpush\tesi\n"
+"\tpush\tedi\n"
+"\tpush\tebp\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:365
@@ -668,6 +834,12 @@ msgid ""
 "\tmov\tebp, [esp+48]\n"
 "\tint\t80h\n"
 msgstr ""
+"\tmov\tebx, [esp+32]\n"
+"\tmov\tecx, [esp+36]\n"
+"\tmov\tedx, [esp+40]\n"
+"\tmov\tesi, [esp+44]\n"
+"\tmov\tebp, [esp+48]\n"
+"\tint\t80h\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:372
@@ -680,6 +852,12 @@ msgid ""
 "\tpop\tecx\n"
 "\tpop\tebx\n"
 msgstr ""
+"\tpop\tebp\n"
+"\tpop\tedi\n"
+"\tpop\tesi\n"
+"\tpop\tedx\n"
+"\tpop\tecx\n"
+"\tpop\tebx\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:377
@@ -690,6 +868,10 @@ msgid ""
 "\tclc\n"
 "\tret\n"
 msgstr ""
+"\tor\teax, eax\n"
+"\tjs\t.errno\n"
+"\tclc\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:382
@@ -700,12 +882,16 @@ msgid ""
 "\tstc\n"
 "\tret\n"
 msgstr ""
+".errno:\n"
+"\tneg\teax\n"
+"\tstc\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:384
 #, no-wrap
 msgid "%else\n"
-msgstr ""
+msgstr "%else\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:388
@@ -715,18 +901,21 @@ msgid ""
 "\tint\t80h\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsystem\t0\n"
+"\tint\t80h\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:390
 #, no-wrap
 msgid "%endif\n"
-msgstr ""
+msgstr "%endif\n"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:393
 #, no-wrap
 msgid "Dealing with Other Portability Issues"
-msgstr ""
+msgstr "기타 이식성 문제 해결"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:397
@@ -735,6 +924,9 @@ msgid ""
 "FreeBSD and Linux.  Nevertheless, with some kernel services the differences "
 "are deeper."
 msgstr ""
+"위의 솔루션은 FreeBSD와 리눅스 간에 이식 가능한 코드를 작성하는 대부분의 "
+"경우를 처리할 수 있습니다.  그럼에도 불구하고 일부 커널 서비스의 경우 차이가 "
+"더 심합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:400
@@ -744,12 +936,16 @@ msgid ""
 "something other than calling the kernel, so usually you will only need a few "
 "such conditional sections in your code."
 msgstr ""
+"이 경우 특정 시스템 호출에 대해 두 개의 다른 핸들러를 작성하고 조건부 "
+"어셈블리를 사용해야 합니다.  다행히도 대부분의 코드는 커널을 호출하는 것 "
+"이외의 다른 작업을 수행하므로 일반적으로 코드에 이러한 조건부 섹션이 몇 개만 "
+"필요합니다."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:402
 #, no-wrap
 msgid "Using a Library"
-msgstr ""
+msgstr "라이브러리 사용하기"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:406
@@ -758,6 +954,9 @@ msgid ""
 "library of system calls.  Create a separate library for FreeBSD, a different "
 "one for Linux, and yet other libraries for more operating systems."
 msgstr ""
+"시스템 호출 라이브러리를 작성하면 메인 코드에서 이식성 문제를 완전히 피할 수 "
+"있습니다.  FreeBSD용 라이브러리를 따로 만들고, Linux용 라이브러리를 따로 "
+"만들고, 더 많은 운영 체제를 위한 다른 라이브러리를 만들 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:411
@@ -768,6 +967,11 @@ msgid ""
 "call number in.  In that case, your FreeBSD library can be very simple, as "
 "many seemingly different functions can be just labels to the same code:"
 msgstr ""
+"라이브러리에서 각 시스템 호출에 대해 별도의 함수(또는 기존 어셈블리 언어 "
+"용어를 선호하는 경우 프로시저)를 작성합니다.  매개변수를 전달하는 C 호출 "
+"규칙을 사용합니다.  하지만 호출 번호를 전달할 때는 여전히 `EAX`를 "
+"사용합니다.  이 경우, 겉보기에 서로 다른 많은 함수가 동일한 코드에 대한 "
+"레이블일 수 있으므로 FreeBSD 라이브러리는 매우 간단해질 수 있습니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:419
@@ -779,6 +983,11 @@ msgid ""
 "\tint\t80h\n"
 "\tret\n"
 msgstr ""
+"sys.open:\n"
+"sys.close:\n"
+"[etc...]\n"
+"\tint\t80h\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:423
@@ -786,6 +995,8 @@ msgid ""
 "Your Linux library will require more different functions.  But even here you "
 "can group system calls using the same number of parameters:"
 msgstr ""
+"Linux 라이브러리에는 더 많은 다양한 함수가 필요합니다.  하지만 여기에서도 "
+"동일한 수의 매개 변수를 사용하여 시스템 호출을 그룹화할 수 있습니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:434
@@ -800,12 +1011,20 @@ msgid ""
 "\tpop\tebx\n"
 "\tjmp\tsys.return\n"
 msgstr ""
+"sys.exit:\n"
+"sys.close:\n"
+"[etc... one-parameter functions]\n"
+"\tpush\tebx\n"
+"\tmov\tebx, [esp+12]\n"
+"\tint\t80h\n"
+"\tpop\tebx\n"
+"\tjmp\tsys.return\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:436
 #, no-wrap
 msgid "...\n"
-msgstr ""
+msgstr "...\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:442
@@ -817,6 +1036,11 @@ msgid ""
 "\tclc\n"
 "\tret\n"
 msgstr ""
+"sys.return:\n"
+"\tor\teax, eax\n"
+"\tjs\tsys.err\n"
+"\tclc\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:447
@@ -827,6 +1051,10 @@ msgid ""
 "\tstc\n"
 "\tret\n"
 msgstr ""
+"sys.err:\n"
+"\tneg\teax\n"
+"\tstc\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:454
@@ -840,6 +1068,13 @@ msgid ""
 "even by other programmers, by simply writing a new library without any "
 "changes to your code."
 msgstr ""
+"라이브러리 접근 방식은 코드가 의존하는 파일을 별도로 생성해야 하므로 "
+"처음에는 불편해 보일 수 있습니다.  하지만 많은 장점이 있습니다: 우선, 한 "
+"번만 작성하면 모든 프로그램에 사용할 수 있습니다.  다른 어셈블리 언어 "
+"프로그래머가 사용하도록 허용하거나 다른 사람이 작성한 라이브러리를 사용할 "
+"수도 있습니다.  하지만 라이브러리의 가장 큰 장점은 코드를 변경하지 않고 새 "
+"라이브러리를 작성하기만 하면 다른 프로그래머가 다른 시스템으로 코드를 포팅할 "
+"수 있다는 점입니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:456
@@ -849,12 +1084,15 @@ msgid ""
 "main program. Here, again, all porters have to do is create a new object "
 "file to link with your main program."
 msgstr ""
+"라이브러리를 사용하는 것이 마음에 들지 않는다면 모든 시스템 호출을 별도의 "
+"어셈블리 언어 파일에 배치하고 메인 프로그램과 연결할 수 있습니다. 여기서도 "
+"포터들은 메인 프로그램과 연결할 새로운 객체 파일을 생성하기만 하면 됩니다."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:458
 #, no-wrap
 msgid "Using an Include File"
-msgstr ""
+msgstr "Include File 사용하기"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:461
@@ -862,6 +1100,8 @@ msgid ""
 "If you are releasing your software as (or with) source code, you can use "
 "macros and place them in a separate file, which you include in your code."
 msgstr ""
+"소프트웨어를 소스 코드 형태로(또는 소스 코드와 함께) 릴리스하는 경우 "
+"매크로를 사용하여 별도의 파일에 배치하고 코드에 포함할 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:464
@@ -870,6 +1110,9 @@ msgid ""
 "or external object file is necessary, yet your code is portable without any "
 "need to edit the code."
 msgstr ""
+"소프트웨어 포터는 새로운 인클루드 파일을 작성하기만 하면 됩니다.  "
+"라이브러리나 외부 객체 파일이 필요하지 않으므로 코드를 편집할 필요 없이 "
+"이식할 수 있습니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:469
@@ -878,13 +1121,16 @@ msgid ""
 "include file [.filename]#system.inc#, and add to it whenever we deal with a "
 "new system call."
 msgstr ""
+"이것이 이 장 전체에서 사용할 접근 방식입니다.  include file의 이름을 [."
+"filename]#system.inc#로 지정하고 새로운 시스템 호출을 처리할 때마다 이 "
+"파일에 추가합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:472
 msgid ""
 "We can start our [.filename]#system.inc# by declaring the standard file "
 "descriptors:"
-msgstr ""
+msgstr "표준 파일 설명자를 선언하여 [.filename]#system.inc#을 시작할 수 있습니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:478
@@ -894,11 +1140,14 @@ msgid ""
 "%define\tstdout\t1\n"
 "%define\tstderr\t2\n"
 msgstr ""
+"%define\tstdin\t0\n"
+"%define\tstdout\t1\n"
+"%define\tstderr\t2\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:481
 msgid "Next, we create a symbolic name for each system call:"
-msgstr ""
+msgstr "다음으로 각 시스템 호출에 대한 심볼릭 이름을 만듭니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:490
@@ -911,13 +1160,20 @@ msgid ""
 "%define\tSYS_write\t4\n"
 "; [etc...]\n"
 msgstr ""
+"%define\tSYS_nosys\t0\n"
+"%define\tSYS_exit\t1\n"
+"%define\tSYS_fork\t2\n"
+"%define\tSYS_read\t3\n"
+"%define\tSYS_write\t4\n"
+"; [etc...]\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:493
 msgid ""
 "We add a short, non-global procedure with a long name, so we do not "
 "accidentally reuse the name in our code:"
-msgstr ""
+msgstr "긴 이름을 가진 짧은 non-global 프로시저를 추가하여 코드에서 실수로 이름을 "
+"재사용하는 일이 없도록 합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:501
@@ -929,11 +1185,16 @@ msgid ""
 "\tint\t80h\n"
 "\tret\n"
 msgstr ""
+"section\t.text\n"
+"align 4\n"
+"access.the.bsd.kernel:\n"
+"\tint\t80h\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:504
 msgid "We create a macro which takes one argument, the syscall number:"
-msgstr ""
+msgstr "하나의 인자, 즉 시스템 호출 번호를 받는 매크로를 만듭니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:511
@@ -944,12 +1205,17 @@ msgid ""
 "\tcall\taccess.the.bsd.kernel\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsystem\t1\n"
+"\tmov\teax, %1\n"
+"\tcall\taccess.the.bsd.kernel\n"
+"%endmacro\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:515
 msgid ""
 "Finally, we create macros for each syscall.  These macros take no arguments."
-msgstr ""
+msgstr "마지막으로 각 시스템 호출에 대한 매크로를 생성합니다.  이러한 매크로는 "
+"인수를 받지 않습니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:521
@@ -959,6 +1225,9 @@ msgid ""
 "\tsystem\tSYS_exit\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.exit\t0\n"
+"\tsystem\tSYS_exit\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:525
@@ -968,6 +1237,9 @@ msgid ""
 "\tsystem\tSYS_fork\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.fork\t0\n"
+"\tsystem\tSYS_fork\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:529
@@ -977,6 +1249,9 @@ msgid ""
 "\tsystem\tSYS_read\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.read\t0\n"
+"\tsystem\tSYS_read\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:533
@@ -986,12 +1261,15 @@ msgid ""
 "\tsystem\tSYS_write\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.write\t0\n"
+"\tsystem\tSYS_write\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:535
 #, no-wrap
 msgid "; [etc...]\n"
-msgstr ""
+msgstr "; [etc...]\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:539
@@ -999,17 +1277,19 @@ msgid ""
 "Go ahead, enter it into your editor and save it as [.filename]#system.inc#.  "
 "We will add more to it as we discuss more syscalls."
 msgstr ""
+"계속해서 편집기에 입력하고 [.filename]#system.inc#로 저장하세요.  더 많은 "
+"시스템 호출에 대해 논의하면서 여기에 더 추가할 것입니다."
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:541
 #, no-wrap
 msgid "Our First Program"
-msgstr ""
+msgstr "우리의 첫 번째 프로그램"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:544
 msgid "We are now ready for our first program, the mandatory Hello, World!"
-msgstr ""
+msgstr "이제 첫 번째 프로그램이자 필수 프로그램인 Hello, World!의 준비가 되었습니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:563
@@ -1032,6 +1312,22 @@ msgid ""
 "15:\tpush\tdword 0\n"
 "16:\tsys.exit\n"
 msgstr ""
+"1:\t%include\t'system.inc'\n"
+" 2:\n"
+" 3:\tsection\t.data\n"
+" 4:\thello\tdb\t'Hello, World!', 0Ah\n"
+" 5:\thbytes\tequ\t$-hello\n"
+" 6:\n"
+" 7:\tsection\t.text\n"
+" 8:\tglobal\t_start\n"
+" 9:\t_start:\n"
+"10:\tpush\tdword hbytes\n"
+"11:\tpush\tdword hello\n"
+"12:\tpush\tdword stdout\n"
+"13:\tsys.write\n"
+"14:\n"
+"15:\tpush\tdword 0\n"
+"16:\tsys.exit\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:566
@@ -1039,6 +1335,8 @@ msgid ""
 "Here is what it does: Line 1 includes the defines, the macros, and the code "
 "from [.filename]#system.inc#."
 msgstr ""
+"이 파일의 기능은 다음과 같습니다: 1줄에는 정의, 매크로, [.filename]#system."
+"inc#의 코드가 포함되어 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:570
@@ -1048,6 +1346,9 @@ msgid ""
 "5 creates a constant that contains the length of the string from line 4 in "
 "bytes."
 msgstr ""
+"3~5줄은 데이터입니다: 3줄은 데이터 섹션/세그먼트를 시작합니다.  4줄에는 "
+"\"Hello, World!\"라는 문자열과 그 뒤에 새 줄(`0Ah`)이 포함됩니다.  5줄은 "
+"4줄의 문자열 길이를 바이트 단위로 포함하는 상수를 만듭니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:574
@@ -1057,13 +1358,18 @@ msgid ""
 "labeled `_start` (or, more precisely, the linker expects that).  This label "
 "has to be global."
 msgstr ""
+"7~16행에 코드가 들어 있습니다.  FreeBSD는 실행 파일에 _elf_ 파일 형식을 "
+"사용하므로 모든 프로그램이 `_start`라고 표시된 지점에서 시작해야 합니다(더 "
+"정확하게는 링커가 예상하는 지점에서 시작해야 합니다).  이 레이블은 "
+"global이어야 합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:576
 msgid ""
 "Lines 10-13 ask the system to write `hbytes` bytes of the `hello` string to "
 "`stdout`."
-msgstr ""
+msgstr "10~13행은 시스템에 `hello` 문자열의 `hbytes` 바이트를 `stdout`에 기록하도록 "
+"요청합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:579
@@ -1071,6 +1377,8 @@ msgid ""
 "Lines 15-16 ask the system to end the program with the return value of `0`.  "
 "The `SYS_exit` syscall never returns, so the code ends there."
 msgstr ""
+"15-16행은 반환값이 `0`인 프로그램을 종료하도록 시스템에 요청합니다.  "
+"`SYS_exit` 시스콜은 반환되지 않으므로 코드가 여기서 끝납니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:587
@@ -1083,6 +1391,12 @@ msgid ""
 "even the input of another program.  Which one it is, is for the system to "
 "figure out."
 msgstr ""
+"MS-DOS(R) 어셈블리 언어 배경에서 UNIX(R)로 넘어오셨다면, 비디오 하드웨어에 "
+"직접 쓰는 것에 익숙하실 것입니다.  FreeBSD나 다른 어떤 UNIX(R) 버전에서도 "
+"이런 걱정은 하지 않으셔도 됩니다.  여러분이 걱정하는 한, [.filename]#stdout#"
+"이라는 파일에 쓰고 있는 것입니다.  이 파일은 비디오 화면, 텔넷 터미널, 실제 "
+"파일, 심지어 다른 프로그램의 입력일 수도 있습니다.  어떤 파일인지는 "
+"시스템에서 알아내야 합니다."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:590
