@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-07-07 23:23-0300\n"
-"PO-Revision-Date: 2023-04-29 23:39+0000\n"
+"PO-Revision-Date: 2023-04-29 23:57+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlesrc-scripting_index/pt_BR/>\n"
@@ -798,6 +798,10 @@ msgid ""
 "`dummy_msg`.  This is a trivial example of how man:rc.conf[5] variables can "
 "control an [.filename]#rc.d# script."
 msgstr ""
+"&#10125; Agora a mensagem a ser exibida na inicialização não é mais "
+"codificada no script. É especificada por uma variável man:rc.conf[5] chamada "
+"`dummy_msg`. Este é um exemplo trivial de como as variáveis man:rc.conf[5] "
+"podem controlar um script [.filename]#rc.d#."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:302
@@ -806,6 +810,9 @@ msgid ""
 "_must_ have the same prefix: `${name}_`.  For example: `dummy_mode`, "
 "`dummy_state_file`, and so on."
 msgstr ""
+"Os nomes de todas as variáveis man:rc.conf[5] usadas exclusivamente pelo "
+"nosso script _devem_ ter o mesmo prefixo: `${name}_`. Por exemplo: "
+"`dummy_mode`, `dummy_state_file`, e assim por diante."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:307
@@ -815,6 +822,10 @@ msgid ""
 "script will save us from possible collisions with the man:rc.subr[8] "
 "namespace."
 msgstr ""
+"Embora seja possível usar um nome mais curto internamente, por exemplo, "
+"apenas `msg`, adicionar o prefixo único `${name}_` a todos os nomes globais "
+"introduzidos pelo nosso script nos salvará de possíveis colisões com o "
+"namespace do man:rc.subr[8]."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:310
@@ -825,6 +836,11 @@ msgid ""
 "filename]#rc.d# scripts for ports should provide the defaults as shown in "
 "the example."
 msgstr ""
+"Como regra geral, os scripts [.filename]#rc.d# do sistema base não precisam "
+"fornecer valores padrão para suas variáveis man:rc.conf[5], pois os valores "
+"padrão devem ser definidos em [.filename]#/etc/defaults/rc.conf#. Por outro "
+"lado, os scripts [.filename]#rc.d# para ports devem fornecer os valores "
+"padrão conforme mostrado no exemplo."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:314
@@ -833,6 +849,10 @@ msgid ""
 "emit a variable message.  Use of a shell function is overkill here, since it "
 "only runs a single command; an equally valid alternative is:"
 msgstr ""
+"&#10126; Aqui usamos `dummy_msg` para controlar nosso script, ou seja, para "
+"emitir uma mensagem variável. O uso de uma função shell é excessivo aqui, "
+"uma vez que ela executa apenas um único comando; uma alternativa igualmente "
+"válida é:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:318
@@ -855,6 +875,11 @@ msgid ""
 "assume now that we need to write an [.filename]#rc.d# script for such a "
 "daemon called `mumbled`.  Here it is:"
 msgstr ""
+"Dissemos anteriormente que o man:rc.subr[8] pode fornecer métodos padrões. "
+"Obviamente, tais padrões não podem ser muito gerais. Eles são adequados para "
+"o caso comum de iniciar e desligar um programa de daemon simples. Vamos "
+"supor agora que precisamos escrever um script [.filename]#rc.d# para um "
+"daemon chamado `mumbled`. Aqui está:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:337
@@ -865,12 +890,14 @@ msgid ""
 "name=mumbled\n"
 "rcvar=mumbled_enable\n"
 msgstr ""
+"name=mumbled\n"
+"rcvar=mumbled_enable\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:339
 #, no-wrap
 msgid "command=\"/usr/sbin/${name}\" <.>\n"
-msgstr ""
+msgstr "command=\"/usr/sbin/${name}\" <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:342
@@ -881,10 +908,11 @@ msgid ""
 "load_rc_config $name\n"
 "run_rc_command \"$1\"\n"
 msgstr ""
+"load_rc_config $name\n"
+"run_rc_command \"$1\"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:346
-#, fuzzy
 msgid ""
 "Pleasingly simple, isn't it? Let us examine our little script.  The only new "
 "thing to note is as follows:"
@@ -900,6 +928,10 @@ msgid ""
 "conventional daemon.  In particular, the default methods will be provided "
 "for such arguments: `start`, `stop`, `restart`, `poll`, and `status`."
 msgstr ""
+"&#10122; A variável `command` é significativa para man:rc.subr[8]. Se ela "
+"estiver definida, man:rc.subr[8] agirá de acordo com o cenário de servir a "
+"um daemon convencional. Em particular, os métodos padrão serão fornecidos "
+"para esses argumentos: `start`, `stop`, `restart`, `poll` e `status`."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:359
@@ -916,6 +948,18 @@ msgid ""
 "`procname` is effectively set to the same value.  This enables our script to "
 "kill the daemon and to check if it is running in the first place."
 msgstr ""
+"O daemon será iniciado executando `$command` com as flags de linha de "
+"comando especificadas por `$mumbled_flags`. Assim, todos os dados de entrada "
+"para o método `start` padrão estão disponíveis nas variáveis definidas pelo "
+"nosso script. Ao contrário de `start`, outros métodos podem exigir "
+"informações adicionais sobre o processo iniciado. Por exemplo, `stop` deve "
+"saber o PID do processo para terminá-lo. No caso presente, man:rc.subr[8] "
+"irá pesquisar a lista de todos os processos, procurando por um processo com "
+"o nome igual a `procname`. Este último é outra variável com significado para "
+"man:rc.subr[8], e seu valor padrão é o de `command`. Em outras palavras, "
+"quando definimos `command`, `procname` é efetivamente definido para o mesmo "
+"valor. Isso permite que nosso script mate o daemon e verifique se ele está "
+"em execução."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:366
@@ -927,6 +971,12 @@ msgid ""
 "`command_interpreter` to let man:rc.subr[8] know the actual name of the "
 "process if `$command` is a script."
 msgstr ""
+"Algumas vezes, programas são de fato scripts executáveis. O sistema executa "
+"esse script iniciando o seu interpretador e passando o nome do script como "
+"um argumento na linha de comando. Isso é refletido na lista de processos, o "
+"que pode confundir man:rc.subr[8]. Você deve adicionalmente definir "
+"`command_interpreter` para que man:rc.subr[8] saiba o nome real do processo "
+"se `$command` for um script."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:371
@@ -938,6 +988,11 @@ msgid ""
 "`mumbled_program`.  It is man:rc.subr[8] that arranges `${name}_program` to "
 "override `command`."
 msgstr ""
+"A cada script [.filename]#rc.d#, há uma variável opcional do man:rc.conf[5] "
+"que tem precedência sobre `command`. Seu nome é construído da seguinte forma:"
+" `${name}_program`, onde `name` é a variável obrigatória discutida "
+"anteriormente. Por exemplo, neste caso, será `mumbled_program`. É o man:rc."
+"subr[8] que arruma `${name}_program` para substituir `command`."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:375
