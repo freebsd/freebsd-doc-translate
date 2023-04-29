@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2023-04-20 20:56-0300\n"
-"PO-Revision-Date: 2023-04-29 12:57+0000\n"
+"PO-Revision-Date: 2023-04-29 23:39+0000\n"
 "Last-Translator: \"Kyung-tak, Yoo\" <stonegaze@me.com>\n"
 "Language-Team: Korean <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookconfig_index/ko/>\n"
@@ -2689,6 +2689,13 @@ msgid ""
 "DNS server or [.filename]#/etc/hosts# on both the logging server and "
 "clients.  Repeat until the `ping` is successful from both hosts."
 msgstr ""
+"로그 서버에 메시지가 수신되지 않는다면 네트워크 연결 문제, 호스트 이름 확인 "
+"문제 또는 구성 파일의 오타가 원인일 가능성이 높습니다.  원인을 파악하려면 "
+"로깅 서버와 로깅 클라이언트가 모두 [.filename]#/etc/rc.conf#에 지정된 "
+"호스트명을 사용하여 서로를 `ping`할 수 있는지 확인하세요.  실패하면 네트워크 "
+"케이블, 방화벽 규칙 집합, 로깅 서버와 클라이언트 모두의 DNS 서버 또는 [."
+"filename]#/etc/hosts#에 있는 호스트 이름 항목을 확인하세요.  두 호스트 "
+"모두에서 `ping`이 성공할 때까지 이 과정을 반복합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1036
@@ -2701,19 +2708,25 @@ msgid ""
 "To increase debugging output, edit the `syslogd_flags` entry on the logging "
 "server and issue a restart:"
 msgstr ""
+"두 호스트 모두에서 `ping`이 성공했지만 로그 메시지가 여전히 수신되지 않는 "
+"경우 일시적으로 로깅 상세도를 높여 구성 문제를 좁히세요.  다음 예제에서는 "
+"로깅 서버의 [.filename]#/var/log/logclient.log#가 비어 있고 로깅 "
+"클라이언트의 [.filename]#/var/log/messages#에 실패 사유가 표시되지 "
+"않습니다.  디버깅 출력을 늘리려면 로깅 서버에서 `syslogd_flags` 항목을 "
+"편집하고 다시 시작하세요:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1040
 #, no-wrap
 msgid "syslogd_flags=\"-d -a logclient.example.com -v -v\"\n"
-msgstr ""
+msgstr "syslogd_flags=\"-d -a logclient.example.com -v -v\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1048
 msgid ""
 "Debugging data similar to the following will flash on the console "
 "immediately after the restart:"
-msgstr ""
+msgstr "재시작 직후 콘솔에 다음과 유사한 디버깅 데이터가 깜박입니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1059
@@ -2728,6 +2741,15 @@ msgid ""
 "validate: dgram from IP 192.168.1.10, port 514, name logclient.example.com;\n"
 "rejected in rule 0 due to name mismatch.\n"
 msgstr ""
+"logmsg: pri 56, flags 4, from logserv.example.com, msg syslogd: restart\n"
+"syslogd: restarted\n"
+"logmsg: pri 6, flags 4, from logserv.example.com, msg syslogd: kernel boot "
+"file is /boot/kernel/kernel\n"
+"Logging to FILE /var/log/messages\n"
+"syslogd: kernel boot file is /boot/kernel/kernel\n"
+"cvthname(192.168.1.10)\n"
+"validate: dgram from IP 192.168.1.10, port 514, name logclient.example.com;\n"
+"rejected in rule 0 due to name mismatch.\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1064
@@ -2737,6 +2759,9 @@ msgid ""
 "`logclient`, not `logclien`.  Fix the typo, issue a restart, and verify the "
 "results:"
 msgstr ""
+"이 예에서는 오타로 인해 호스트 이름 불일치가 발생하여 로그 메시지가 거부되고 "
+"있습니다.  클라이언트의 호스트 이름은 `logclient`가 아니라 `logclien`이어야 "
+"합니다.  오타를 수정하고 다시 시작한 후 결과를 확인합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1080
