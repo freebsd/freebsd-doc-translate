@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:21-0300\n"
-"PO-Revision-Date: 2023-04-29 13:23+0000\n"
+"PO-Revision-Date: 2023-04-29 13:34+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlessolid-state_index/pt_BR/>\n"
@@ -349,7 +349,7 @@ msgstr "e pode ser alternado de volta para read-only com o comando:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/solid-state/_index.adoc:141
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "# /sbin/mount -ur partition\n"
 msgstr "# /sbin/mount -ur partition\n"
 
@@ -785,12 +785,14 @@ msgid ""
 "Now, add a line to [.filename]#/etc/rc.d/var# that links the [.filename]#/"
 "etc/pkg# directory to [.filename]#/var/db/pkg#. An example:"
 msgstr ""
+"Agora, adicione uma linha em [.filename]#/etc/rc.d/var# que vincule o "
+"diretório [.filename]#/etc/pkg# a [.filename]#/var/db/pkg#. Um exemplo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/solid-state/_index.adoc:293
 #, no-wrap
 msgid "# ln -s /etc/pkg /var/db/pkg\n"
-msgstr ""
+msgstr "# ln -s /etc/pkg /var/db/pkg\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:296
@@ -801,6 +803,12 @@ msgid ""
 "at that time, be mounted read-write) which will always be available to the "
 "operating system as [.filename]#/var/db/pkg#."
 msgstr ""
+"Agora, sempre que você montar seus sistemas de arquivos como leitura-"
+"gravação e instalar um pacote, o `make install` funcionará, e as informações "
+"do pacote serão gravadas com sucesso em [.filename]#/etc/pkg# (porque o "
+"sistema de arquivos estará, naquele momento, montado como leitura-gravação), "
+"que sempre estará disponível para o sistema operacional como [.filename]#/"
+"var/db/pkg#."
 
 #. type: Title ===
 #: documentation/content/en/articles/solid-state/_index.adoc:297
@@ -810,7 +818,6 @@ msgstr "Servidor Web Apache"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:303
-#, fuzzy
 msgid ""
 "The steps in this section are only necessary if Apache is set up to write "
 "its pid or log information outside of [.filename]#/var#.  By default, Apache "
@@ -818,9 +825,9 @@ msgid ""
 "filename]#/var/log#."
 msgstr ""
 "As etapas nesta seção são necessárias apenas se o Apache estiver configurado "
-"para gravar suas informações de pid ou log fora do <filename>/var</"
-"filename>. Por padrão, o Apache mantém seu arquivo pid em <filename>/var/run/"
-"httpd.pid</filename> e seus arquivos de log em <filename>/var/log</filename>."
+"para gravar suas informações de pid ou log fora do [.filename]#/var#. Por "
+"padrão, o Apache mantém seu arquivo pid em [.filename]#/var/run/httpd.pid# e "
+"seus arquivos de log em [.filename]#/var/log#."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:309
@@ -834,6 +841,14 @@ msgid ""
 "filename]#/var/log/apache#.  It is also necessary to set permissions and "
 "ownership on this new directory."
 msgstr ""
+"Agora, supõe-se que o Apache mantém seus arquivos de log em um diretório [."
+"filename]#apache_log_dir# fora do [.filename]#/var#. Quando esse diretório "
+"está em um sistema de arquivos somente leitura, o Apache não poderá salvar "
+"nenhum arquivo de log e pode ter problemas para funcionar. Se for o caso, é "
+"necessário adicionar um novo diretório à lista de diretórios em [.filename]#/"
+"etc/rc.d/var# para criar em [.filename]#/var# e vincular o [."
+"filename]#apache_log_dir# ao [.filename]#/var/log/apache#. Também é "
+"necessário definir as permissões e o proprietário deste novo diretório."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:311
@@ -841,16 +856,17 @@ msgid ""
 "First, add the directory `log/apache` to the list of directories to be "
 "created in [.filename]#/etc/rc.d/var#."
 msgstr ""
+"Primeiro, adicione o diretório `log/apache` à lista de diretórios a serem "
+"criados em [.filename]#/etc/rc.d/var#."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:313
-#, fuzzy
 msgid ""
 "Second, add these commands to [.filename]#/etc/rc.d/var# after the directory "
 "creation section:"
 msgstr ""
-"Segundo, adicione estes comandos ao <filename>/etc/rc.d/var</filename> após "
-"a seção de criação do diretório:"
+"Segundo, adicione estes comandos ao [.filename]#/etc/rc.d/var# após a seção "
+"de criação do diretório:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/solid-state/_index.adoc:318
@@ -859,6 +875,8 @@ msgid ""
 "# chmod 0774 /var/log/apache\n"
 "# chown nobody:nobody /var/log/apache\n"
 msgstr ""
+"# chmod 0774 /var/log/apache\n"
+"# chown nobody:nobody /var/log/apache\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:321
@@ -866,6 +884,8 @@ msgid ""
 "Finally, remove the existing [.filename]#apache_log_dir# directory, and "
 "replace it with a link:"
 msgstr ""
+"Por fim, remova o diretório existente [.filename]#apache_log_dir# e "
+"substitua-o por um link:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/solid-state/_index.adoc:326
@@ -874,6 +894,8 @@ msgid ""
 "# rm -rf apache_log_dir\n"
 "# ln -s /var/log/apache apache_log_dir\n"
 msgstr ""
+"# rm -rf apache_log_dir\n"
+"# ln -s /var/log/apache apache_log_dir\n"
 
 #~ msgid ""
 #~ "include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
