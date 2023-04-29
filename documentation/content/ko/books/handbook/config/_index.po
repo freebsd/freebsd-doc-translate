@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2023-04-20 20:56-0300\n"
-"PO-Revision-Date: 2023-04-29 23:39+0000\n"
+"PO-Revision-Date: 2023-04-29 23:57+0000\n"
 "Last-Translator: \"Kyung-tak, Yoo\" <stonegaze@me.com>\n"
 "Language-Team: Korean <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookconfig_index/ko/>\n"
@@ -2781,19 +2781,35 @@ msgid ""
 "Logging to FILE /var/log/logclient.log\n"
 "Logging to FILE /var/log/messages\n"
 msgstr ""
+"# service syslogd restart\n"
+"logmsg: pri 56, flags 4, from logserv.example.com, msg syslogd: restart\n"
+"syslogd: restarted\n"
+"logmsg: pri 6, flags 4, from logserv.example.com, msg syslogd: kernel boot "
+"file is /boot/kernel/kernel\n"
+"syslogd: kernel boot file is /boot/kernel/kernel\n"
+"logmsg: pri 166, flags 17, from logserv.example.com,\n"
+"msg Dec 10 20:55:02 <syslog.err> logserv.example.com syslogd: exiting on "
+"signal 2\n"
+"cvthname(192.168.1.10)\n"
+"validate: dgram from IP 192.168.1.10, port 514, name logclient.example.com;\n"
+"accepted in rule 0.\n"
+"logmsg: pri 15, flags 0, from logclient.example.com, msg Dec 11 02:01:28 "
+"trhodes: Test message 2\n"
+"Logging to FILE /var/log/logclient.log\n"
+"Logging to FILE /var/log/messages\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1083
 msgid ""
 "At this point, the messages are being properly received and placed in the "
 "correct file."
-msgstr ""
+msgstr "이 시점에서는 메시지가 제대로 수신되어 올바른 파일에 저장되고 있는 것입니다."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1084
 #, no-wrap
 msgid "Security Considerations"
-msgstr ""
+msgstr "보안 고려사항"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1090
@@ -2806,6 +2822,12 @@ msgid ""
 "package:security/stunnel[], which will transmit the logging data over an "
 "encrypted tunnel."
 msgstr ""
+"다른 네트워크 서비스와 마찬가지로 로깅 서버를 구현하기 전에 보안 요구 사항을 "
+"고려해야 합니다.  로그 파일에는 로컬 호스트에서 활성화된 서비스, 사용자 계정 "
+"및 구성 데이터에 대한 민감한 데이터가 포함될 수 있습니다.  클라이언트에서 "
+"서버로 전송되는 네트워크 데이터는 암호화되거나 비밀번호로 보호되지 "
+"않습니다.  암호화가 필요한 경우, 암호화된 터널을 통해 로깅 데이터를 전송하는 "
+"package:security/stunnel[] 사용을 고려하세요."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1098
@@ -2818,6 +2840,13 @@ msgid ""
 "mode `600` should prevent unwanted access by local users.  Refer to man:"
 "newsyslog.conf[5] for additional information."
 msgstr ""
+"로컬 보안도 문제입니다.  로그 파일은 사용 중 또는 로그 로테이션 후에 "
+"암호화되지 않습니다.  로컬 사용자는 로그 파일에 액세스하여 시스템 구성에 "
+"대한 추가 인사이트를 얻을 수 있습니다.  로그 파일에 대한 적절한 권한을 "
+"설정하는 것이 중요합니다.  기본 제공 로그 로테이터인 newsyslog는 새로 생성 "
+"및 로테이션되는 로그 파일에 대한 권한 설정을 지원합니다.  로그 파일을 `600` "
+"모드로 설정하면 로컬 사용자의 원치 않는 액세스를 방지할 수 있습니다.  자세한 "
+"내용은 man:newsyslog.conf[5]를 참조하세요."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/config/_index.adoc:1100
@@ -2829,110 +2858,113 @@ msgstr "구성 파일"
 #: documentation/content/en/books/handbook/config/_index.adoc:1102
 #, no-wrap
 msgid "[.filename]#/etc# Layout"
-msgstr ""
+msgstr "[.filename]#/etc# 레이아웃"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1106
 msgid ""
 "There are a number of directories in which configuration information is "
 "kept.  These include:"
-msgstr ""
+msgstr "구성 정보가 저장되는 디렉터리에는 여러 가지가 있습니다.  여기에는 다음이 "
+"포함됩니다:"
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1112
 #, no-wrap
 msgid "[.filename]#/etc#"
-msgstr ""
+msgstr "[.filename]#/etc#"
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1114
 #, no-wrap
 msgid "Generic system-specific configuration information."
-msgstr ""
+msgstr "일반적인 시스템별 구성 정보."
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1115
 #, no-wrap
 msgid "[.filename]#/etc/defaults#"
-msgstr ""
+msgstr "[.filename]#/etc/defaults#"
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1117
 #, no-wrap
 msgid "Default versions of system configuration files."
-msgstr ""
+msgstr "시스템 구성 파일의 기본 버전."
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1118
 #, no-wrap
 msgid "[.filename]#/etc/mail#"
-msgstr ""
+msgstr "[.filename]#/etc/mail#"
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1120
 #, no-wrap
 msgid "Extra man:sendmail[8] configuration and other MTA configuration files."
-msgstr ""
+msgstr "추가 man:sendmail[8] 구성 및 기타 MTA 구성 파일."
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1121
 #, no-wrap
 msgid "[.filename]#/etc/ppp#"
-msgstr ""
+msgstr "[.filename]#/etc/ppp#"
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1123
 #, no-wrap
 msgid "Configuration for both user- and kernel-ppp programs."
-msgstr ""
+msgstr "사용자 및 커널-ppp 프로그램 모두에 대한 구성."
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1124
 #, no-wrap
 msgid "[.filename]#/usr/local/etc#"
-msgstr ""
+msgstr "[.filename]#/usr/local/etc#"
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1126
 #, no-wrap
 msgid "Configuration files for installed applications. May contain per-application subdirectories."
-msgstr ""
+msgstr "설치된 애플리케이션의 구성 파일. 애플리케이션별 하위 디렉터리를 포함할 수 "
+"있습니다."
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1127
 #, no-wrap
 msgid "[.filename]#/usr/local/etc/rc.d#"
-msgstr ""
+msgstr "[.filename]#/usr/local/etc/rc.d#"
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1129
 #, no-wrap
 msgid "man:rc[8] scripts for installed applications."
-msgstr ""
+msgstr "설치된 애플리케이션에 대한 man:rc[8] 스크립트."
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1130
 #, no-wrap
 msgid "[.filename]#/var/db#"
-msgstr ""
+msgstr "[.filename]#/var/db#"
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1131
 #, no-wrap
 msgid "Automatically generated system-specific database files, such as the package database and the man:locate[1] database."
-msgstr ""
+msgstr "패키지 데이터베이스 및 man:locate[1] 데이터베이스와 같은 시스템별 "
+"데이터베이스 파일을 자동으로 생성합니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/config/_index.adoc:1133
 #, no-wrap
 msgid "Hostnames"
-msgstr ""
+msgstr "Hostnames"
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1135
 #, no-wrap
 msgid "[.filename]#/etc/resolv.conf#"
-msgstr ""
+msgstr "[.filename]#/etc/resolv.conf#"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1138
@@ -2940,52 +2972,56 @@ msgid ""
 "How a FreeBSD system accesses the Internet Domain Name System (DNS) is "
 "controlled by man:resolv.conf[5]."
 msgstr ""
+"FreeBSD 시스템이 인터넷 도메인 네임 시스템(DNS)에 액세스하는 방법은 "
+"man:resolv.conf[5]에 의해 제어됩니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1140
 msgid "The most common entries to [.filename]#/etc/resolv.conf# are:"
-msgstr ""
+msgstr "[.filename]#/etc/resolv.conf#의 가장 일반적인 항목은 다음과 같습니다:"
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1146
 #, no-wrap
 msgid "`nameserver`"
-msgstr ""
+msgstr "`nameserver`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1148
 #, no-wrap
 msgid "The IP address of a name server the resolver should query. The servers are queried in the order listed with a maximum of three."
-msgstr ""
+msgstr "확인자가 쿼리해야 하는 네임 서버의 IP 주소입니다. 서버는 나열된 순서대로 "
+"쿼리되며 최대 3개까지 쿼리할 수 있습니다."
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1149
 #, no-wrap
 msgid "`search`"
-msgstr ""
+msgstr "`search`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1151
 #, no-wrap
 msgid "Search list for hostname lookup. This is normally determined by the domain of the local hostname."
-msgstr ""
+msgstr "호스트명 조회를 위한 검색 목록입니다. 이는 일반적으로 로컬 호스트명의 "
+"도메인에 따라 결정됩니다."
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1152
 #, no-wrap
 msgid "`domain`"
-msgstr ""
+msgstr "`domain`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/config/_index.adoc:1153
 #, no-wrap
 msgid "The local domain name."
-msgstr ""
+msgstr "로컬 도메인 네임."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1156
 msgid "A typical [.filename]#/etc/resolv.conf# looks like this:"
-msgstr ""
+msgstr "일반적인 [.filename]#/etc/resolv.conf#는 다음과 같습니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1162
@@ -2995,11 +3031,14 @@ msgid ""
 "nameserver 147.11.1.11\n"
 "nameserver 147.11.100.30\n"
 msgstr ""
+"search example.com\n"
+"nameserver 147.11.1.11\n"
+"nameserver 147.11.100.30\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1167
 msgid "Only one of the `search` and `domain` options should be used."
-msgstr ""
+msgstr "`search` 및 `domain` 옵션 중 하나만 사용해야 합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1170
