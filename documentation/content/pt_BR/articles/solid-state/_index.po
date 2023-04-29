@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:21-0300\n"
-"PO-Revision-Date: 2023-04-29 13:13+0000\n"
+"PO-Revision-Date: 2023-04-29 13:23+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlessolid-state_index/pt_BR/>\n"
@@ -623,11 +623,10 @@ msgstr ""
 #: documentation/content/en/articles/solid-state/_index.adoc:245
 #, no-wrap
 msgid "System Strategies for Small and Read Only Environments"
-msgstr "Estratégias do Sistema para Ambientes Pequenos e Somente Leitura"
+msgstr "Estratégias do Sistema para Ambientes Pequenos e Read-Only"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:249
-#, fuzzy
 msgid ""
 "In <<ro-fs>>, it was pointed out that the [.filename]#/var# filesystem "
 "constructed by [.filename]#/etc/rc.d/var# and the presence of a read-only "
@@ -635,12 +634,12 @@ msgid ""
 "FreeBSD.  In this article, suggestions for successfully running cron, "
 "syslog, ports installations, and the Apache web server will be provided."
 msgstr ""
-"Em <xref linkend=\"ro-fs\"/>, foi apontado que o sistema de arquivos "
-"<filename>/var</filename> construído pelo <filename>/etc/rc.d/var</filename> "
-"e a presença de um sistema de arquivos raiz read-only causa problemas com "
-"muitos pacotes de software comuns usados com o FreeBSD. Neste artigo, serão "
-"fornecidas sugestões para a execução bem-sucedida do cron, do syslog, "
-"instalações de ports e do servidor Web Apache."
+"Em <<ro-fs>>, foi apontado que o sistema de arquivos [.filename]#/var# "
+"construído pelo [.filename]#/etc/rc.d/var# e a presença de um sistema de "
+"arquivos raiz read-only causa problemas com muitos pacotes de software "
+"comuns usados com o FreeBSD. Neste artigo, serão fornecidas sugestões para a "
+"execução bem-sucedida do cron, do syslog, instalações de ports e do servidor "
+"Web Apache."
 
 #. type: Title ===
 #: documentation/content/en/articles/solid-state/_index.adoc:250
@@ -656,10 +655,13 @@ msgid ""
 "filename]#cron#, [.filename]#cron/tabs#, [.filename]#at#, and a few other "
 "standard directories get created."
 msgstr ""
+"Ao inicializar, o [.filename]#/var# é preenchido por [.filename]#/etc/rc.d/"
+"var# usando a lista de [.filename]#/etc/mtree/BSD.var.dist#, então os "
+"diretórios [.filename]#cron#, [.filename]#cron/tabs#, [.filename]#at# e "
+"alguns outros diretórios padrões são criados."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:258
-#, fuzzy
 msgid ""
 "However, this does not solve the problem of maintaining cron tabs across "
 "reboots.  When the system reboots, the [.filename]#/var# filesystem that is "
@@ -675,17 +677,16 @@ msgid ""
 msgstr ""
 "No entanto, isso não resolve o problema de manter as crontabs entre nas "
 "reinicializações. Quando o sistema for reinicializado, o sistema de arquivos "
-"<filename>/var</filename> que está na memória desaparecerá e todas as "
-"crontabs que você tenha nele também desaparecerão. Portanto, uma solução "
-"seria criar crontabs para os usuários que precisam delas, montar seu sistema "
-"de arquivos <filename>/</filename> como read-write e copiar estas crontabs "
-"para algum lugar seguro, como <filename>/etc/tabs</filename>, em seguida, "
-"adicione uma linha ao final do  <filename>/etc/rc.initdiskless</filename> "
-"que copie estes crontabs para <filename>/var/cron/tabs</filename> depois que "
-"o diretório for criado durante inicialização do sistema. Você também pode "
-"precisar adicionar uma linha que altere modos e permissões nos diretórios "
-"criados e nos arquivos copiados com <filename>/etc/rc.initdiskless</"
-"filename>."
+"[.filename]#/var# que está na memória desaparecerá e todas as crontabs que "
+"você tenha nele também desaparecerão. Portanto, uma solução seria criar "
+"crontabs para os usuários que precisam delas, montar seu sistema de arquivos "
+"[.filename]#/# como read-write e copiar estas crontabs para algum lugar "
+"seguro, como [.filename]#/etc/tabs#, em seguida, adicione uma linha ao final "
+"do [.filename]#/etc/rc.initdiskless# que copie estes crontabs para [."
+"filename]#/var/cron/tabs# depois que o diretório for criado durante "
+"inicialização do sistema. Você também pode precisar adicionar uma linha que "
+"altere modos e permissões nos diretórios criados e nos arquivos copiados com "
+"[.filename]#/etc/rc.initdiskless#."
 
 #. type: Title ===
 #: documentation/content/en/articles/solid-state/_index.adoc:259
@@ -695,7 +696,6 @@ msgstr "Syslog"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/solid-state/_index.adoc:264
-#, fuzzy
 msgid ""
 "[.filename]#syslog.conf# specifies the locations of certain log files that "
 "exist in [.filename]#/var/log#.  These files are not created by [.filename]#/"
@@ -703,12 +703,11 @@ msgid ""
 "filename]#/etc/rc.d/var#, after the section that creates the directories in "
 "[.filename]#/var#, you will need to add something like this:"
 msgstr ""
-"O <filename>syslog.conf</filename> especifica os locais de certos arquivos "
-"de log que existem em <filename>/var/log</filename>. Esses arquivos não são "
-"criados pelo <filename>/etc/rc.d/var</filename> na inicialização do sistema. "
-"Portanto, em algum lugar do <filename>/etc/rc.d/var</filename>, logo após a "
-"seção que cria os diretórios em <filename>/var</filename>, você precisará "
-"adicionar algo como isto:"
+"O [.filename]#syslog.conf# especifica os locais de certos arquivos de log "
+"que existem em [.filename]#/var/log#. Esses arquivos não são criados pelo [."
+"filename]#/etc/rc.d/var# na inicialização do sistema. Portanto, em algum "
+"lugar do [.filename]#/etc/rc.d/var#, logo após a seção que cria os "
+"diretórios em [.filename]#/var#, você precisará adicionar algo como isto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/solid-state/_index.adoc:269
@@ -717,6 +716,8 @@ msgid ""
 "# touch /var/log/security /var/log/maillog /var/log/cron /var/log/messages\n"
 "# chmod 0644 /var/log/*\n"
 msgstr ""
+"# touch /var/log/security /var/log/maillog /var/log/cron /var/log/messages\n"
+"# chmod 0644 /var/log/*\n"
 
 #. type: Title ===
 #: documentation/content/en/articles/solid-state/_index.adoc:271
@@ -726,7 +727,6 @@ msgstr "Instalação de Ports"
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:276
-#, fuzzy
 msgid ""
 "Before discussing the changes necessary to successfully use the ports tree, "
 "a reminder is necessary regarding the read-only nature of your filesystems "
@@ -740,10 +740,9 @@ msgstr ""
 "ports, é necessário um lembrete sobre a natureza read-only dos seus sistemas "
 "de arquivos na mídia flash. Como eles são read-only, você precisará montá-"
 "los temporariamente para read-write usando a sintaxe de montagem mostrada em "
-"<xref linkend=\"ro-fs\"/>. Você sempre deve remontar esses sistemas de "
-"arquivos no modo read-only quando tiver terminado qualquer manutenção - "
-"gravações desnecessárias na mídia flash podem reduzir consideravelmente sua "
-"vida útil."
+"<<ro-fs>>. Você sempre deve remontar esses sistemas de arquivos no modo read-"
+"only quando tiver terminado qualquer manutenção - gravações desnecessárias "
+"na mídia flash podem reduzir consideravelmente sua vida útil."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:279
@@ -755,24 +754,30 @@ msgid ""
 "anyway, it is sensible to assume that an area on the flash media can also be "
 "used for package information to be written to."
 msgstr ""
+"Para tornar possível entrar em um diretório do ports e executar com sucesso "
+"o comando `make install`, devemos criar um diretório de pacotes em um "
+"sistema de arquivos que não seja de memória e que acompanhe nossos pacotes "
+"entre as reinicializações. Como é necessário montar seus sistemas de "
+"arquivos como leitura-gravação para a instalação de um pacote de qualquer "
+"maneira, é sensato supor que uma área na mídia flash também possa ser usada "
+"para gravar informações do pacote."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:282
-#, fuzzy
 msgid ""
 "First, create a package database directory.  This is normally in [."
 "filename]#/var/db/pkg#, but we cannot place it there as it will disappear "
 "every time the system is booted."
 msgstr ""
 "Primeiro, crie o diretório do banco de dados de pacotes. Ele fica "
-"normalmente em <filename>/var/db/pkg</filename>, mas não podemos colocá-lo "
-"lá, pois ele irá desaparecer toda vez que o sistema for inicializado."
+"normalmente em [.filename]#/var/db/pkg#, mas não podemos colocá-lo lá, pois "
+"ele irá desaparecer toda vez que o sistema for inicializado."
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/solid-state/_index.adoc:286
 #, no-wrap
 msgid "# mkdir /etc/pkg\n"
-msgstr ""
+msgstr "# mkdir /etc/pkg\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:289
