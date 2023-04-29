@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-07-07 23:23-0300\n"
-"PO-Revision-Date: 2023-04-22 03:54+0000\n"
-"Last-Translator: \"Danilo G. Baio\" <dbaio@FreeBSD.org>\n"
+"PO-Revision-Date: 2023-04-29 23:09+0000\n"
+"Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlesrc-scripting_index/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -24,13 +24,14 @@ msgstr ""
 #, no-wrap
 msgid "A guide to writing new rc.d scripts and understanding those already written"
 msgstr ""
+"Um guia para escrever novos scripts rc.d e entender aqueles que já existem"
 
 #. type: Title =
 #: documentation/content/en/articles/rc-scripting/_index.adoc:1
 #: documentation/content/en/articles/rc-scripting/_index.adoc:12
 #, no-wrap
 msgid "Practical rc.d scripting in BSD"
-msgstr "Scripts rc.d práticos no BSD"
+msgstr "Scripting rc.d na prática no BSD"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:45
@@ -39,7 +40,6 @@ msgstr "Resumo"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:49
-#, fuzzy
 msgid ""
 "Beginners may find it difficult to relate the facts from the formal "
 "documentation on the BSD [.filename]#rc.d# framework with the practical "
@@ -50,12 +50,12 @@ msgid ""
 "application of [.filename]#rc.d#."
 msgstr ""
 "Os iniciantes podem achar difícil relacionar os fatos da documentação formal "
-"do framework <filename>rc.d</filename> do BSD com as tarefas práticas do "
-"script <filename>rc.d</filename>. Neste artigo, consideramos alguns casos "
-"típicos de complexidade crescente, vamos mostrar os recursos do <filename>rc."
-"d</filename> adequados para cada caso e vamos discutir como eles funcionam. "
-"Esse exame deve fornecer pontos de referência para um estudo mais "
-"aprofundado do design e da aplicação eficiente do <filename>rc.d</filename>."
+"sobre o framework [.filename]#rc.d# do BSD com as tarefas práticas de "
+"escrever scripts [.filename]#rc.d#. Neste artigo, consideramos alguns casos "
+"típicos de crescente complexidade, mostramos recursos do [.filename]#rc.d# "
+"adequados para cada caso e discutimos como eles funcionam. Essa análise deve "
+"fornecer pontos de referência para estudos posteriores do design e aplicação "
+"eficiente do [.filename]#rc.d#."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:51
@@ -79,10 +79,17 @@ msgid ""
 "few exceptions, [.filename]#/etc/rc# had to be modified, and true hackers "
 "liked it."
 msgstr ""
+"No histórico BSD, havia um script de inicialização monolítico, [.filename]#/"
+"etc/rc#. Ele era invocado pelo man:init[8] no momento da inicialização do "
+"sistema e realizava todas as tarefas de usuário necessárias para a operação "
+"multiusuário: verificação e montagem de sistemas de arquivos, configuração "
+"da rede, inicialização de daemons e assim por diante. A lista precisa de "
+"tarefas não era a mesma em todos os sistemas; os administradores precisavam "
+"personalizá-la. Com poucas exceções, o [.filename]#/etc/rc# tinha que ser "
+"modificado, e os verdadeiros hackers gostavam disso."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:67
-#, fuzzy
 msgid ""
 "The real problem with the monolithic approach was that it provided no "
 "control over the individual components started from [.filename]#/etc/rc#.  "
@@ -95,17 +102,17 @@ msgid ""
 "In a few words, the single script failed to fulfil what scripts are for: to "
 "make the system admin's life easier."
 msgstr ""
-"O problema real com a abordagem monolítica era que ela não fornecia nenhum "
-"controle sobre os componentes individuais iniciados a partir do <filename>/"
-"etc/rc</filename>. Por exemplo, o <filename>/etc/rc</filename> não podia "
-"reiniciar um único daemon. O administrador do sistema tinha que encontrar o "
-"processo daemon manualmente, matá-lo, esperar até que ele realmente "
-"finalizasse, então procurar pelas flags no <filename>/etc/rc</filename>, e "
-"finalmente digitar a linha de comando completa para iniciar o daemon "
-"novamente. A tarefa se tornaria ainda mais difícil e propensa a erros se o "
-"serviço de reinicialização consistisse em mais de um daemon ou exigisse "
-"ações adicionais. Em poucas palavras, o único script não cumpriu o objetivo "
-"dos scripts: tornar a vida do administrador do sistema mais fácil."
+"O problema real com a abordagem monolítica era que ela não fornecia controle "
+"sobre os componentes individuais iniciados a partir do [.filename]#/etc/rc#. "
+"Por exemplo, o [.filename]#/etc/rc# não podia reiniciar um único daemon. O "
+"administrador do sistema tinha que encontrar o processo do daemon "
+"manualmente, matá-lo, aguardar até que ele realmente finalizasse, navegar "
+"por [.filename]#/etc/rc# em busca das flags e, finalmente, digitar a linha "
+"de comando completa para iniciar o daemon novamente. A tarefa se tornaria "
+"ainda mais difícil e propensa a erros se o serviço a ser reiniciado "
+"consistisse em mais de um daemon ou exigisse ações adicionais. Em poucas "
+"palavras, o script único falhou em cumprir o objetivo pelo qual um script é "
+"criado: tornar a vida do administrador do sistema mais fácil."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:74
@@ -123,10 +130,22 @@ msgid ""
 "diverse and sophisticated, the \"quasi-modular\" approach became even more "
 "of a drag than the monolithic [.filename]#/etc/rc# had been."
 msgstr ""
+"Mais tarde, houve uma tentativa de dividir algumas partes do [.filename]#/"
+"etc/rc# para iniciar os subsistemas mais importantes separadamente. O "
+"exemplo notório foi o [.filename]#/etc/netstart# para iniciar a rede. Isso "
+"permitiu o acesso à rede no modo de usuário único, mas não se integrou bem "
+"ao processo de inicialização automática porque partes de seu código "
+"precisavam intercalar com ações essencialmente não relacionadas à rede. Foi "
+"por isso que o [.filename]#/etc/netstart# se transformou em [.filename]#/etc/"
+"rc.network#. Este último não era mais um script comum; era composto de "
+"grandes funções man:sh[1] complexas chamadas pelo [.filename]#/etc/rc# em "
+"diferentes estágios da inicialização do sistema. No entanto, à medida que as "
+"tarefas de inicialização ficaram mais diversas e sofisticadas, a abordagem "
+"\"quase modular\" tornou-se ainda mais pesada do que o monolítico [."
+"filename]#/etc/rc# tinha sido."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:82
-#, fuzzy
 msgid ""
 "Without a clean and well-designed framework, the startup scripts had to bend "
 "over backwards to satisfy the needs of rapidly developing BSD-based "
@@ -139,16 +158,15 @@ msgid ""
 "[.filename]#rc.d# system and see how the individual scripts are invoked."
 msgstr ""
 "Sem um framework limpo e bem projetado, os scripts de inicialização tiveram "
-"que se curvar para satisfazer as necessidades de desenvolvimento rápido dos "
-"sistemas operacionais baseados no BSD. Tornou-se óbvio, finalmente, que mais "
-"passos eram necessários no caminho para construção de um sistema "
-"<filename>rc</filename> extensível e customizável. Assim nasceu o BSD "
-"<filename>rc.d</filename>. Seus pais reconhecidos foram o Luke Mewburn e a "
-"comunidade do NetBSD. Mais tarde ele foi importado para o FreeBSD. Seu nome "
-"se refere à localização dos scripts do sistema para serviços individuais, "
-"que é o <filename>/etc/rc.d</filename>. Em breve, vamos aprender sobre mais "
-"componentes do sistema <filename>rc.d</filename> e vamos ver como os scripts "
-"individuais são invocados."
+"que se dobrar para atender às necessidades dos sistemas operacionais "
+"baseados em BSD que estavam em rápida evolução. Tornou-se evidente, "
+"finalmente, que mais etapas eram necessárias para se chegar a um sistema [."
+"filename]#rc# refinado, granular e extensível. Assim nasceu o [.filename]#rc."
+"d# do BSD. Seus pais reconhecidos foram Luke Mewburn e a comunidade NetBSD. "
+"Mais tarde, foi importado para o FreeBSD. Seu nome se refere ao local dos "
+"scripts do sistema para serviços individuais, que está em [.filename]#/etc/rc"
+".d#. Em breve, aprenderemos mais sobre os componentes do sistema [."
+"filename]#rc.d# e veremos como os scripts individuais são invocados."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:93
@@ -172,10 +190,30 @@ msgid ""
 "between them.  It can help [.filename]#/etc/rc.shutdown#, too, because the "
 "proper order for the shutdown sequence is opposite to that of startup."
 msgstr ""
+"As ideias básicas por trás do [.filename]#rc.d# do BSD são _modularidade "
+"fina_ e __reutilização de código__. _Modularidade fina_ significa que cada "
+"\"serviço\" básico, como um daemon do sistema ou uma tarefa de inicialização "
+"primitiva, possui seu próprio script man:sh[1] capaz de iniciar o serviço, "
+"pará-lo, recarregá-lo e verificar seu status. Uma ação específica é "
+"escolhida pelo argumento da linha de comando do script. O script [."
+"filename]#/etc/rc# ainda conduz a inicialização do sistema, mas agora ele "
+"apenas invoca os scripts menores um por um com o argumento `start`. Também é "
+"fácil realizar tarefas de desligamento executando o mesmo conjunto de "
+"scripts com o argumento `stop`, que é feito por [.filename]#/etc/rc.shutdown#"
+". Observe como isso segue de perto a maneira Unix de ter um conjunto de "
+"ferramentas especializadas pequenas, cada uma cumprindo sua tarefa da melhor "
+"maneira possível. _Reutilização de código_ significa que operações comuns "
+"são implementadas como funções man:sh[1] e coletadas em [.filename]#/etc/rc."
+"subr#. Agora, um script típico pode ser composto apenas de algumas linhas de "
+"código man:sh[1]. Finalmente, uma parte importante do framework [."
+"filename]#rc.d# é o man:rcorder[8], que ajuda o [.filename]#/etc/rc# a "
+"executar os pequenos scripts de maneira ordenada com respeito às "
+"dependências entre eles. Isso também pode ajudar o [.filename]#/etc/rc."
+"shutdown#, porque a ordem apropriada para a sequência de desligamento é "
+"oposta à de inicialização."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:101
-#, fuzzy
 msgid ""
 "The BSD [.filename]#rc.d# design is described in <<lukem, the original "
 "article by Luke Mewburn>>, and the [.filename]#rc.d# components are "
@@ -191,19 +229,18 @@ msgid ""
 "to refer to them for more formal and complete documentation while reading "
 "this article."
 msgstr ""
-"O design do BSD <filename>rc.d</filename> é descrito no <link linkend=\"lukem"
-"\">artigo original de Luke Mewburn</link>, e os componentes do <filename>rc."
-"d</filename> são documentados em grande detalhe nas <link linkend=\"manpages"
-"\">respectivas páginas de manual</link>. No entanto, pode não parecer óbvio "
-"para um novato em <filename>rc.d</filename> como amarrar os inúmeros pedaços "
-"juntos para criar um script bem estilizado para uma tarefa específica. "
-"Portanto, este artigo tentará uma abordagem diferente para descrever o "
-"<filename>rc.d</filename>. Ele mostrará quais recursos devem ser usados em "
-"vários casos típicos e por quê. Note que este não é um documento explicativo "
+"O design do BSD [.filename]#rc.d# é descrito no <<lukem, artigo original de "
+"Luke Mewburn>>, e os componentes do [.filename]#rc.d# são documentados em "
+"grande detalhe nas <<manpages, respectivas páginas do manual>>. No entanto, "
+"pode não ser óbvio para um iniciante no [.filename]#rc.d# como ele deve unir "
+"as numerosas partes para criar um script bem estruturado para uma tarefa "
+"específica. Portanto, este artigo tentará abordar o [.filename]#rc.d# de "
+"forma diferente. Mostrará quais recursos devem ser usados em vários casos "
+"típicos e por que. Observe que este não é um documento de \"como fazer\", "
 "porque nosso objetivo não é fornecer receitas prontas, mas mostrar algumas "
-"entradas fáceis no domínio do <filename>rc.d</filename>. Nem este artigo é "
-"um substituto para as páginas de manual relevantes. Não hesite em consultá-"
-"los para obter uma documentação mais formal e completa ao ler este artigo."
+"entradas fáceis no mundo do [.filename]#rc.d#. Este artigo também não "
+"substitui as páginas do manual relevantes. Não hesite em consultá-las para "
+"obter documentação mais formal e completa enquanto lê este artigo."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:105
@@ -213,21 +250,24 @@ msgid ""
 "[.filename]#rc.d#.  In addition, you should know how the system performs "
 "userland startup and shutdown tasks, which is described in man:rc[8]."
 msgstr ""
+"Existem pré-requisitos para entender este artigo. Em primeiro lugar, você "
+"deve estar familiarizado com a linguagem de script man:sh[1] para dominar o ["
+".filename]#rc.d#. Além disso, você deve saber como o sistema realiza tarefas "
+"de inicialização e desligamento do espaço do usuário, o que é descrito em "
+"man:rc[8]."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:108
-#, fuzzy
 msgid ""
 "This article focuses on the FreeBSD branch of [.filename]#rc.d#.  "
 "Nevertheless, it may be useful to NetBSD developers, too, because the two "
 "branches of BSD [.filename]#rc.d# not only share the same design but also "
 "stay similar in their aspects visible to script authors."
 msgstr ""
-"Este artigo foca no branch <filename>rc.d</filename> do FreeBSD. No entanto, "
-"ele também pode ser útil para os desenvolvedores do NetBSD, porque os dois "
-"branchs <filename>rc.d</filename> do BSD não apenas compartilham o mesmo "
-"design, mas também permanecem similares em seus aspectos visíveis aos "
-"autores do script."
+"Este artigo foca no ramo do FreeBSD do [.filename]#rc.d#. No entanto, ele "
+"pode ser útil também para desenvolvedores do NetBSD, pois os dois ramos do [."
+"filename]#rc.d# não apenas compartilham o mesmo design, mas também "
+"permanecem similares em seus aspectos visíveis aos autores de scripts."
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:110
@@ -237,16 +277,14 @@ msgstr "Esboçando a tarefa"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:114
-#, fuzzy
 msgid ""
 "A little consideration before starting `$EDITOR` will not hurt.  In order to "
 "write a well-tempered [.filename]#rc.d# script for a system service, we "
 "should be able to answer the following questions first:"
 msgstr ""
-"Um pouco de consideração antes de iniciar o <envar>$EDITOR</envar> não irá "
-"prejudicar. Para escrever um script <filename>rc.d</filename> corretamente "
-"customizado para um serviço do sistema, devemos poder responder as seguintes "
-"questões primeiro:"
+"Uma pequena reflexão antes de iniciar o `$EDITOR` não fará mal. Para "
+"escrever um script [.filename]#rc.d# bem elaborado para um serviço do "
+"sistema, devemos ser capazes de responder às seguintes perguntas primeiro:"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:116
@@ -294,13 +332,13 @@ msgstr ""
 #: documentation/content/en/articles/rc-scripting/_index.adoc:129
 #, no-wrap
 msgid "#!/bin/sh <.>\n"
-msgstr ""
+msgstr "#!/bin/sh <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:131
 #, no-wrap
 msgid ". /etc/rc.subr <.>\n"
-msgstr ""
+msgstr ". /etc/rc.subr <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:135
@@ -310,6 +348,9 @@ msgid ""
 "start_cmd=\"${name}_start\" <.>\n"
 "stop_cmd=\":\" <.>\n"
 msgstr ""
+"name=\"dummy\" <.>\n"
+"start_cmd=\"${name}_start\" <.>\n"
+"stop_cmd=\":\" <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:140
@@ -320,6 +361,10 @@ msgid ""
 "\techo \"Nothing started.\"\n"
 "}\n"
 msgstr ""
+"dummy_start() <.>\n"
+"{\n"
+"\techo \"Nothing started.\"\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:143
@@ -328,11 +373,13 @@ msgid ""
 "load_rc_config $name <.>\n"
 "run_rc_command \"$1\" <.>\n"
 msgstr ""
+"load_rc_config $name <.>\n"
+"run_rc_command \"$1\" <.>\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:146
 msgid "Things to note are:"
-msgstr "Os pontos a serem observadas são:"
+msgstr "Os pontos a serem observados são:"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:152
@@ -343,12 +390,18 @@ msgid ""
 "provided that it has the execute bit set.  (See man:chmod[1].)  For example, "
 "a system admin can run our script manually, from the command line:"
 msgstr ""
+"&#10122; Um script interpretado deve começar com a linha mágica \"shebang\". "
+"Essa linha especifica o programa interpretador para o script. Devido à linha "
+"shebang, o script pode ser invocado exatamente como um programa binário, "
+"desde que tenha o bit de execução definido. (Veja man:chmod[1].) Por "
+"exemplo, um administrador do sistema pode executar nosso script manualmente, "
+"a partir da linha de comando:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:156
 #, no-wrap
 msgid "# /etc/rc.d/dummy start\n"
-msgstr ""
+msgstr "# /etc/rc.d/dummy start\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:162
@@ -360,6 +413,13 @@ msgid ""
 "system) or [.filename]#/usr/local/sbin# (for ports) and call it from a man:"
 "sh[1] script in the appropriate [.filename]#rc.d# directory."
 msgstr ""
+"Para ser gerenciado corretamente pelo framework [.filename]#rc.d#, os "
+"scripts devem ser escritos na linguagem man:sh[1]. Se você tiver um serviço "
+"ou port que usa um utilitário de controle binário ou uma rotina de "
+"inicialização escrita em outra linguagem, instale esse elemento em [."
+"filename]#/usr/sbin# (para o sistema) ou [.filename]#/usr/local/sbin# (para "
+"ports) e chame-o a partir de um script man:sh[1] no diretório [.filename]#rc."
+"d# apropriado."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:167
@@ -369,6 +429,10 @@ msgid ""
 "them by means of `run_rc_script`, then study the implementation of "
 "`run_rc_script` in [.filename]#/etc/rc.subr#."
 msgstr ""
+"Se você gostaria de aprender os detalhes de por que os scripts [.filename]#rc"
+".d# devem ser escritos na linguagem man:sh[1], veja como o [.filename]#/etc/"
+"rc# os invoca por meio de `run_rc_script` e, em seguida, estude a "
+"implementação de `run_rc_script` em [.filename]#/etc/rc.subr#."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:173
@@ -381,6 +445,13 @@ msgid ""
 "is no surprise that everybody resorts to man:rc.subr[8] in [.filename]#rc.d# "
 "scripts.  We are not going to be an exception."
 msgstr ""
+"&#10123; Em [.filename]#/etc/rc.subr#, uma série de funções man:sh[1] estão "
+"definidas para serem utilizadas por um script [.filename]#rc.d#. As funções "
+"estão documentadas em man:rc.subr[8]. Embora seja teoricamente possível "
+"escrever um script [.filename]#rc.d# sem nunca usar o man:rc.subr[8], suas "
+"funções provam ser extremamente úteis e tornam o trabalho uma ordem de "
+"magnitude mais fácil. Portanto, não é surpresa que todo mundo recorra ao "
+"man:rc.subr[8] em scripts [.filename]#rc.d#. Não seremos uma exceção."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:176
@@ -390,16 +461,19 @@ msgid ""
 "that man:sh[1] has an opportunity to learn the functions.  The preferred "
 "style is to source [.filename]#/etc/rc.subr# first of all."
 msgstr ""
+"Um script [.filename]#rc.d# deve fazer o \"source\" do [.filename]#/etc/rc."
+"subr# (inclua-o usando \"`.`\") _antes_ de chamar as funções man:rc.subr[8] "
+"para que o man:sh[1] tenha a oportunidade de aprender as funções. O estilo "
+"preferido é incluir o [.filename]#/etc/rc.subr# antes de tudo."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:180
-#, fuzzy
 msgid ""
 "Some useful functions related to networking are provided by another include "
 "file, [.filename]#/etc/network.subr#."
 msgstr ""
-"Algumas funções úteis relacionadas a rede são fornecidas por outro arquivo "
-"include, o <filename>/etc/network.subr</filename>."
+"Algumas funções úteis relacionadas à rede são fornecidas por outro arquivo "
+"de inclusão, o [.filename]#/etc/network.subr#."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:185
@@ -408,10 +482,13 @@ msgid ""
 "script.  It is required by man:rc.subr[8].  That is, each [.filename]#rc.d# "
 "script _must_ set `name` before it calls man:rc.subr[8] functions."
 msgstr ""
+"&#10124; A variável obrigatória `name` especifica o nome do nosso script. "
+"Ela é exigida pelo man:rc.subr[8]. Isso significa que cada script [."
+"filename]#rc.d# _deve_ definir `name` antes de chamar funções do man:rc."
+"subr[8]."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:189
-#, fuzzy
 msgid ""
 "Now it is the right time to choose a unique name for our script once and for "
 "all.  We will use it in a number of places while developing the script.  For "
@@ -432,6 +509,14 @@ msgid ""
 "the value by man:sh[1].  A programmer should be able to tell the language "
 "syntax from style conventions and use both of them wisely."
 msgstr ""
+"O estilo atual de escrita de scripts [.filename]#rc.d# é envolver os valores "
+"atribuídos às variáveis em aspas duplas. Tenha em mente que isso é apenas "
+"uma questão de estilo que nem sempre é aplicável. Você pode seguramente "
+"omitir as aspas ao redor de palavras simples sem metacaracteres man:sh[1], "
+"enquanto em certos casos você precisará de aspas simples para evitar "
+"qualquer interpretação do valor por man:sh[1]. Um programador deve ser capaz "
+"de distinguir a sintaxe da linguagem das convenções de estilo e usá-las "
+"sabiamente."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:202
@@ -444,18 +529,24 @@ msgid ""
 "specified on the script's command line.  We will see later how man:rc."
 "subr[8] provides default methods for the standard arguments."
 msgstr ""
+"Cada script [.filename]#rc.d# fornece manipuladores, ou métodos, para o "
+"man:rc.subr[8] invocar. Em particular, `start`, `stop`, e outros argumentos "
+"para um script [.filename]#rc.d# são manipulados desta forma. Um método é "
+"uma expressão man:sh[1] armazenada em uma variável chamada `argument_cmd`, "
+"onde _argument_ corresponde ao que pode ser especificado na linha de comando "
+"do script. Veremos mais tarde como o man:rc.subr[8] fornece métodos padrão "
+"para os argumentos padrão."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:207
-#, fuzzy
 msgid ""
 "To make the code in [.filename]#rc.d# more uniform, it is common to use `"
 "${name}` wherever appropriate.  Thus a number of lines can be just copied "
 "from one script to another."
 msgstr ""
-"Para tornar o código em <filename>rc.d</filename> mais uniforme, é comum "
-"usar <envar>${name}</envar> onde for apropriado. Assim, várias linhas podem "
-"ser copiadas de um script para outro."
+"Para tornar o código em [.filename]#rc.d# mais uniforme, é comum usar "
+"`${name}` sempre que apropriado. Assim, várias linhas podem ser simplesmente "
+"copiadas de um script para outro."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:211
