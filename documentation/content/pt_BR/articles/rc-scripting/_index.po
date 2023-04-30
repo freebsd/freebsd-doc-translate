@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-07-07 23:23-0300\n"
-"PO-Revision-Date: 2023-04-30 00:12+0000\n"
+"PO-Revision-Date: 2023-04-30 01:04+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlesrc-scripting_index/pt_BR/>\n"
@@ -1004,12 +1004,21 @@ msgid ""
 "`${name}_program` is discouraged because using it together with `command` "
 "became an idiom of [.filename]#rc.d# scripting."
 msgstr ""
+"Claro que o man:sh[1] permite definir `${name}_program` a partir do man:rc."
+"conf[5] ou do próprio script, mesmo se `command` não estiver definido. Nesse "
+"caso, as propriedades especiais de `${name}_program` são perdidas, e ela se "
+"torna uma variável comum que o script pode usar para seus próprios fins. No "
+"entanto, o uso exclusivo de `${name}_program` é desencorajado, pois usá-la "
+"em conjunto com `command` se tornou idiomático em [.filename]#rc.d# "
+"scripting."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:378
 msgid ""
 "For more detailed information on default methods, refer to man:rc.subr[8]."
 msgstr ""
+"Para obter informações mais detalhadas sobre os métodos padrões, consulte "
+"man:rc.subr[8]."
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:380
@@ -1155,6 +1164,11 @@ msgid ""
 "actual execution, input and output redirections can be specified in "
 "`command_args`."
 msgstr ""
+"&#10122; Argumentos adicionais para `$command` podem ser passados em "
+"`command_args`. Eles serão adicionados à linha de comando após "
+"`$mumbled_flags`. Como a linha de comando final é passada para `eval` para "
+"sua execução real, redirecionamentos de entrada e saída podem ser "
+"especificados em `command_args`."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:452
@@ -1167,6 +1181,13 @@ msgid ""
 "add them to the beginning of `${name}_flags`.  Another way is to modify "
 "`rc_flags` <<rc-flags, as shown later>>."
 msgstr ""
+"_Nunca_ inclua opções com hífen, como `-X` ou `--foo`, em `command_args`. O "
+"conteúdo de `command_args` aparecerá no final da linha de comando final, "
+"portanto, é provável que sigam argumentos presentes em `${name}_flags`; mas "
+"a maioria dos comandos não reconhecerá opções com hífen após argumentos "
+"comuns. Uma maneira melhor de passar opções adicionais para `$command` é "
+"adicioná-las no início de `${name}_flags`. Outra maneira é modificar "
+"`rc_flags` <<rc-flags, conforme mostrado posteriormente>>."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:456
@@ -1176,6 +1197,10 @@ msgid ""
 "set, tells man:rc.subr[8] where it can find the pidfile for its default "
 "methods to use."
 msgstr ""
+"&#10123; Um daemon bem comportado deve criar um _pidfile_ para que seu "
+"processo possa ser encontrado de forma mais fácil e confiável. A variável "
+"`pidfile`, se definida, informa ao man:rc.subr[8] onde ele pode encontrar o "
+"pidfile para ser utilizado em seus métodos padrões."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:461
@@ -1184,6 +1209,9 @@ msgid ""
 "already running before starting it.  This check can be skipped by using the "
 "`faststart` argument."
 msgstr ""
+"De fato, o man:rc.subr[8] também usa o pidfile para ver se o daemon já está "
+"em execução antes de iniciá-lo. Essa verificação pode ser ignorada usando o "
+"argumento `faststart`."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:466
@@ -1194,6 +1222,11 @@ msgid ""
 "`required_vars` for directories and environment variables, respectively.  "
 "They all are described in detail in man:rc.subr[8]."
 msgstr ""
+"&#10124; Se o daemon não puder ser executado a menos que certos arquivos "
+"existam, basta listá-los em `required_files`, e o man:rc.subr[8] verificará "
+"se esses arquivos existem antes de iniciar o daemon. Existem também "
+"`required_dirs` e `required_vars` para diretórios e variáveis de ambiente, "
+"respectivamente. Todos eles são descritos em detalhes no man:rc.subr[8]."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:470
@@ -1201,6 +1234,8 @@ msgid ""
 "The default method from man:rc.subr[8] can be forced to skip the "
 "prerequisite checks by using `forcestart` as the argument to the script."
 msgstr ""
+"O método padrão do man:rc.subr[8] pode ser forçado a pular as verificações "
+"de pré-requisito usando `forcestart` como argumento para o script."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:476
@@ -1211,6 +1246,12 @@ msgid ""
 "Another signal is sent to stop the daemon process; the default is SIGTERM, "
 "but this can be changed by setting `sig_stop` appropriately."
 msgstr ""
+"&#10125; Podemos personalizar sinais a serem enviados ao daemon caso eles "
+"difiram dos sinais conhecidos. Em particular, `sig_reload` especifica o "
+"sinal que faz com que o daemon recarregue sua configuração; por padrão, é o "
+"SIGHUP. Outro sinal é enviado para interromper o processo do daemon; o "
+"padrão é o SIGTERM, mas isso pode ser alterado configurando `sig_stop` "
+"adequadamente."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:481
@@ -1219,6 +1260,10 @@ msgid ""
 "prefix, as it is shown in the example.  The FreeBSD version of man:kill[1] "
 "can recognize the `SIG` prefix, but the versions from other OS types may not."
 msgstr ""
+"As sinalizações devem ser especificadas para o man:rc.subr[8] sem o prefixo "
+"`SIG`, como é mostrado no exemplo. A versão do FreeBSD do man:kill[1] pode "
+"reconhecer o prefixo `SIG`, mas as versões de outros sistemas operacionais "
+"podem não reconhecer."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:486
@@ -1229,6 +1274,11 @@ msgid ""
 "are invoked before and after the respective method, as it is evident from "
 "their names."
 msgstr ""
+"&#10126;&#10127; Realizar tarefas adicionais antes ou depois dos métodos "
+"padrões é fácil. Para cada argumento de comando suportado por nosso script, "
+"podemos definir `argument_precmd` e `argument_postcmd`. Esses comandos "
+"man:sh[1] são invocados antes e depois do respectivo método, como é evidente "
+"pelos seus nomes."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:492
@@ -1240,6 +1290,12 @@ msgid ""
 "itself.  Using `argument_precmd` along with `argument_cmd` lets us logically "
 "separate the checks from the action."
 msgstr ""
+"Sobrescrever um método padrão com um `argument_cmd` personalizado ainda não "
+"nos impede de usar `argument_precmd` ou `argument_postcmd` se precisarmos. "
+"Em particular, o primeiro é bom para verificar condições personalizadas e "
+"sofisticadas que devem ser atendidas antes de executar o próprio comando. "
+"Usar `argument_precmd` juntamente com `argument_cmd` nos permite separar "
+"logicamente as verificações da ação."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:495
@@ -1249,6 +1305,11 @@ msgid ""
 "makes the real job is a good style in most cases, but never let style limit "
 "your understanding of what is going on behind the curtain."
 msgstr ""
+"Não se esqueça de que você pode colocar qualquer expressão válida do "
+"man:sh[1] nos métodos, pre e pós comandos que você define. Invocar uma "
+"função que realiza o trabalho real é um bom estilo na maioria dos casos, mas "
+"nunca deixe o estilo limitar sua compreensão do que está acontecendo nos "
+"bastidores."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:498
@@ -1257,6 +1318,9 @@ msgid ""
 "thought of as _commands_ to our script, we need to list them in "
 "`extra_commands` and provide methods to handle them."
 msgstr ""
+"&#10128; Se quisermos implementar argumentos personalizados, que também "
+"podem ser considerados como _comandos_ para o nosso script, precisamos listá-"
+"los em `extra_commands` e fornecer métodos para lidar com eles."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:506
@@ -1267,6 +1331,12 @@ msgid ""
 "nothing to reload at all.  So we need to ask explicitly that the builtin "
 "functionality be provided.  We can do so via `extra_commands`."
 msgstr ""
+"O comando `reload` é especial. Por um lado, ele possui um método predefinido "
+"em man:rc.subr[8]. Por outro lado, `reload` não é oferecido por padrão. A "
+"razão é que nem todos os daemons usam o mesmo mecanismo de recarga e alguns "
+"não têm nada para recarregar. Portanto, precisamos pedir explicitamente que "
+"a funcionalidade integrada seja fornecida. Podemos fazer isso por meio de "
+"`extra_commands`."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:510
@@ -1277,6 +1347,11 @@ msgid ""
 "to it.  The signal is preset to SIGHUP but can be customized via "
 "`sig_reload` if necessary."
 msgstr ""
+"O que recebemos do método padrão para `reload`? Muitas vezes, os daemons "
+"recarregam sua configuração após receber um sinal - geralmente, SIGHUP. "
+"Portanto, o man:rc.subr[8] tenta recarregar o daemon enviando um sinal para "
+"ele. O sinal é pré-definido como SIGHUP, mas pode ser personalizado via "
+"`sig_reload`, se necessário."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:515
@@ -1286,6 +1361,10 @@ msgid ""
 "provide methods for them.  The method for `xyzzy` is just inlined while that "
 "for `plugh` is implemented as the `mumbled_plugh` function."
 msgstr ""
+"&#10129;&#9454; O nosso script suporta dois comandos não padrão, `plugh` e "
+"`xyzzy`. Nós os vimos listados em `extra_commands`, e agora é hora de "
+"fornecer métodos para eles. O método para `xyzzy` é apenas inserido em linha "
+"enquanto que para `plugh` é implementado como a função `mumbled_plugh`."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:519
@@ -1294,6 +1373,10 @@ msgid ""
 "they are for the system admin's convenience.  They can also be used from "
 "other subsystems, e.g., man:devd[8] if specified in man:devd.conf[5]."
 msgstr ""
+"Comandos não padrão não são invocados durante a inicialização ou "
+"desligamento. Geralmente, eles são para a conveniência do administrador do "
+"sistema. Eles também podem ser usados em outros subsistemas, por exemplo, o "
+"man:devd[8] se especificados em man:devd.conf[5]."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:522
@@ -1302,6 +1385,9 @@ msgid ""
 "by man:rc.subr[8] when the script is invoked without arguments.  For "
 "example, here is the usage line from the script under study:"
 msgstr ""
+"A lista completa de comandos disponíveis pode ser encontrada na linha de uso "
+"impressa pelo man:rc.subr[8] quando o script é invocado sem argumentos. Por "
+"exemplo, aqui está a linha de uso do script em estudo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:527
@@ -1325,6 +1411,13 @@ msgid ""
 "proper way for a script to run its own command is by means of man:rc."
 "subr[8], as shown in the example."
 msgstr ""
+"&#9453; Um script pode invocar seus próprios comandos padrão ou não-padrão, "
+"se necessário. Isso pode parecer semelhante a chamar funções, mas sabemos "
+"que comandos e funções do shell nem sempre são a mesma coisa. Por exemplo, "
+"`xyzzy` não é implementado como uma função aqui. Além disso, pode haver um "
+"pré-comando e um pós-comando, que devem ser invocados ordenadamente. "
+"Portanto, a maneira adequada para um script executar seu próprio comando é "
+"por meio do man:rc.subr[8], como mostrado no exemplo."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:540
@@ -1337,6 +1430,14 @@ msgid ""
 "or `0`, case insensitive; it prints a warning message if the variable "
 "contains anything else, i.e., junk."
 msgstr ""
+"&#10130; Uma função útil chamada `checkyesno` é fornecida pelo man:rc.subr[8]"
+". Ela recebe um nome de variável como argumento e retorna um código de saída "
+"zero se e somente se a variável estiver definida como `YES`, ou `TRUE`, ou "
+"`ON`, ou `1`, insensível a maiúsculas e minúsculas; um código de saída não-"
+"zero é retornado caso contrário. Neste último caso, a função testa se a "
+"variável está definida como `NO`, `FALSE`, `OFF` ou `0`, insensível a "
+"maiúsculas e minúsculas; ela imprime uma mensagem de aviso se a variável "
+"contiver qualquer outra coisa, ou seja, lixo."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:542
@@ -1344,6 +1445,8 @@ msgid ""
 "Keep in mind that for man:sh[1] a zero exit code means true and a non-zero "
 "exit code means false."
 msgstr ""
+"Tenha em mente que para o man:sh[1], um código de saída zero significa "
+"verdadeiro e um código de saída não-zero significa falso."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:547
@@ -1351,11 +1454,13 @@ msgid ""
 "The `checkyesno` function takes a __variable name__.  Do not pass the "
 "expanded _value_ of a variable to it; it will not work as expected."
 msgstr ""
+"A função `checkyesno` recebe um __nome de variável__. Não passe o _valor "
+"expandido_ de uma variável para ela; isso não funcionará como esperado."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:549
 msgid "The following is the correct usage of `checkyesno`:"
-msgstr ""
+msgstr "Aqui está o uso correto de `checkyesno`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:555
@@ -1375,6 +1480,8 @@ msgid ""
 "On the contrary, calling `checkyesno` as shown below will not work - at "
 "least not as expected:"
 msgstr ""
+"Ao contrário, chamar `checkyesno` como mostrado abaixo não funcionará - pelo "
+"menos não como esperado:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:564
@@ -1394,6 +1501,8 @@ msgid ""
 "&#10131; [[rc-flags]]We can affect the flags to be passed to `$command` by "
 "modifying `rc_flags` in `$start_precmd`."
 msgstr ""
+"&#10131; [[rc-flags]]Podemos afetar as flags que serão passadas para "
+"`$command` modificando `rc_flags` em `$start_precmd`."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:573
@@ -1403,6 +1512,10 @@ msgid ""
 "man:rc.subr[8] functions: `debug`, `info`, `warn`, and `err`.  The latter "
 "function then exits the script with the code specified."
 msgstr ""
+"&#9451; Em certos casos, podemos precisar emitir uma mensagem importante que "
+"também deve ser registrada no `syslog`. Isso pode ser feito facilmente com "
+"as seguintes funções do man:rc.subr[8]: `debug`, `info`, `warn` e `err`. "
+"Esta última função finaliza o script com o código especificado."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:577
@@ -1412,6 +1525,11 @@ msgid ""
 "main method will not be performed.  In turn, `argument_postcmd` will not be "
 "invoked unless the main method returns a zero exit code."
 msgstr ""
+"&#9452; Os códigos de saída dos métodos e seus pre-comandos não são apenas "
+"ignorados por padrão. Se `argument_precmd` retornar um código de saída "
+"diferente de zero, o método principal não será executado. Por sua vez, "
+"`argument_postcmd` não será chamado, a menos que o método principal retorne "
+"um código de saída igual a zero."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:581
@@ -1420,6 +1538,9 @@ msgid ""
 "those exit codes and invoke all commands anyway by prefixing an argument "
 "with `force`, as in `forcestart`."
 msgstr ""
+"Entretanto, é possível instruir o man:rc.subr[8] a ignorar esses códigos de "
+"saída e executar todos os comandos mesmo assim, adicionando um argumento com "
+"o prefixo `force`, como em `forcestart`."
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:584
@@ -1440,6 +1561,15 @@ msgid ""
 "there.  Port scripts can be installed using `USE_RC_SUBR` as described "
 "extref:{porters-handbook}[in the Porter's Handbook, rc-scripts]."
 msgstr ""
+"Depois que um script é escrito, ele precisa ser integrado ao [.filename]#rc."
+"d#. O passo crucial é instalar o script em [.filename]#/etc/rc.d# (para o "
+"sistema base) ou [.filename]#/usr/local/etc/rc.d# (para o ports). Tanto o [."
+"filename]#bsd.prog.mk# quanto o [.filename]#bsd.port.mk# fornecem ganchos "
+"convenientes para isso, e geralmente você não precisa se preocupar com a "
+"propriedade e o modo adequados. Os scripts do sistema devem ser instalados a "
+"partir de [.filename]#src/libexec/rc/rc.d# através do [.filename]#Makefile# "
+"encontrado lá. Scripts de ports podem ser instalados usando `USE_RC_SUBR` "
+"como descrito no extref:{porters-handbook}[Porter's Handbook, rc-scripts]."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:596
@@ -1469,22 +1599,31 @@ msgid ""
 "that each file can speak for itself only.  A file can specify the following "
 "information:"
 msgstr ""
+"Nós já mencionamos o man:rcorder[8]. Agora é hora de dar uma olhada mais de "
+"perto nele. Em poucas palavras, o man:rcorder[8] pega um conjunto de "
+"arquivos, examina seus conteúdos e imprime uma lista ordenada por "
+"dependência dos arquivos do conjunto no `stdout`. O objetivo é manter as "
+"informações de dependência _dentro_ dos arquivos, de modo que cada arquivo "
+"possa falar apenas por si mesmo. Um arquivo pode especificar as seguintes "
+"informações:"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:604
 msgid ""
 "the names of the \"conditions\" (which means services to us) it __provides__;"
 msgstr ""
+"os nomes das \"condições\" (ou seja, serviços para nós) que ele __fornece__;"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:605
 msgid "the names of the \"conditions\" it __requires__;"
-msgstr ""
+msgstr "os nomes das \"condições\" que ele __requer__;"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:606
 msgid "the names of the \"conditions\" this file should run __before__;"
 msgstr ""
+"os nomes das \"condições\" que este arquivo deve ser executado __antes__;"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:607
@@ -1493,6 +1632,10 @@ msgid ""
 "of files (man:rcorder[8] can be instructed via options to include or omit "
 "the files having particular keywords listed.)"
 msgstr ""
+"palavras-chave adicionais que podem ser usadas para selecionar um "
+"subconjunto do conjunto completo de arquivos (man:rcorder[8] pode ser "
+"instruído via opções para incluir ou omitir os arquivos que possuem "
+"determinadas palavras-chave listadas.)"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:612
@@ -1503,6 +1646,11 @@ msgid ""
 "is rather rigid to simplify their processing.  See man:rcorder[8] for "
 "details."
 msgstr ""
+"Não é surpresa que o man:rcorder[8] possa lidar apenas com arquivos de texto "
+"com uma sintaxe próxima à do man:sh[1]. Ou seja, as linhas especiais "
+"entendidas pelo man:rcorder[8] se parecem com comentários do man:sh[1]. A "
+"sintaxe dessas linhas especiais é bastante rígida para simplificar seu "
+"processamento. Consulte man:rcorder[8] para obter detalhes."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:615
@@ -1512,6 +1660,11 @@ msgid ""
 "needed when the other service is optional and will not start by itself "
 "because the system admin has disabled it mistakenly in man:rc.conf[5]."
 msgstr ""
+"Além de usar as linhas especiais entendidas pelo man:rcorder[8], um script "
+"pode exigir sua dependência de outro serviço simplesmente iniciando-o "
+"forçadamente. Isso pode ser necessário quando o outro serviço é opcional e "
+"não iniciará por si só porque o administrador do sistema o desativou por "
+"engano em man:rc.conf[5]."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:617
@@ -1580,6 +1733,9 @@ msgid ""
 "provides.  Now other scripts can record a dependency on our script by those "
 "names."
 msgstr ""
+"&#10122; Essa linha declara os nomes das \"condições\" que nosso script "
+"fornece. Agora, outros scripts podem registrar uma dependência em nosso "
+"script por esses nomes."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:657
@@ -1598,6 +1754,8 @@ msgid ""
 "In any case, the name of the main, or the only, `PROVIDE:` condition should "
 "be the same as `${name}`."
 msgstr ""
+"Em qualquer caso, o nome da condição principal, ou única, `PROVIDE:` deve "
+"ser o mesmo que `${name}`."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:663
@@ -1607,6 +1765,11 @@ msgid ""
 "rcorder[8] to put it after the script(s) providing [.filename]#DAEMON# and [."
 "filename]#cleanvar#, but before that providing [.filename]#LOGIN#."
 msgstr ""
+"&#10123;&#10124; Então, nosso script indica em quais \"condições\" "
+"fornecidas por outros scripts ele depende. De acordo com as linhas, nosso "
+"script pede para o man:rcorder[8] colocá-lo após o(s) script(s) fornecendo o "
+"[.filename]#DAEMON# e o [.filename]#cleanvar#, mas antes daquele que fornece "
+"[.filename]#LOGIN#."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:669
