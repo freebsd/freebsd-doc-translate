@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2023-04-20 20:56-0300\n"
-"PO-Revision-Date: 2023-04-29 23:57+0000\n"
+"PO-Revision-Date: 2023-04-30 00:12+0000\n"
 "Last-Translator: \"Kyung-tak, Yoo\" <stonegaze@me.com>\n"
 "Language-Team: Korean <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookconfig_index/ko/>\n"
@@ -3046,12 +3046,14 @@ msgid ""
 "When using DHCP, man:dhclient[8] usually rewrites [.filename]#/etc/resolv."
 "conf# with information received from the DHCP server."
 msgstr ""
+"DHCP를 사용할 때 man:dhclient[8]는 일반적으로 DHCP 서버에서 받은 정보로 [."
+"filename]#/etc/resolv.conf#를 다시 작성합니다."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1171
 #, no-wrap
 msgid "[.filename]#/etc/hosts#"
-msgstr ""
+msgstr "[.filename]#/etc/hosts#"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1176
@@ -3064,6 +3066,12 @@ msgid ""
 "names, reducing the need to query external DNS servers for commonly accessed "
 "names."
 msgstr ""
+"[.filename]#/etc/hosts#는 DNS 및 NIS와 함께 작동하여 호스트 이름과 IP 주소 "
+"매핑을 제공하는 간단한 텍스트 데이터베이스입니다.  LAN을 통해 연결된 로컬 "
+"컴퓨터에 대한 항목은 man:named[8] 서버를 설정하는 대신 간단한 명명 목적으로 "
+"이 파일에 추가할 수 있습니다.  또한 [.filename]#/etc/hosts#을 사용하여 "
+"인터넷 이름의 로컬 레코드를 제공할 수 있으므로 일반적으로 액세스하는 이름을 "
+"외부 DNS 서버에 쿼리할 필요성을 줄일 수 있습니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1211
@@ -3102,39 +3110,71 @@ msgid ""
 "# from your regional registry (ARIN, APNIC, LACNIC, RIPE NCC, or AfriNIC.)\n"
 "#\n"
 msgstr ""
+"# $FreeBSD$\n"
+"#\n"
+"#\n"
+"# Host Database\n"
+"#\n"
+"# This file should contain the addresses and aliases for local hosts that\n"
+"# share this file.  Replace 'my.domain' below with the domainname of your\n"
+"# machine.\n"
+"#\n"
+"# In the presence of the domain name service or NIS, this file may\n"
+"# not be consulted at all; see /etc/nsswitch.conf for the resolution order.\n"
+"#\n"
+"#\n"
+"::1\t\t\tlocalhost localhost.my.domain\n"
+"127.0.0.1\t\tlocalhost localhost.my.domain\n"
+"#\n"
+"# Imaginary network.\n"
+"#10.0.0.2\t\tmyname.my.domain myname\n"
+"#10.0.0.3\t\tmyfriend.my.domain myfriend\n"
+"#\n"
+"# According to RFC 1918, you can use the following IP networks for\n"
+"# private nets which will never be connected to the Internet:\n"
+"#\n"
+"#\t10.0.0.0\t-   10.255.255.255\n"
+"#\t172.16.0.0\t-   172.31.255.255\n"
+"#\t192.168.0.0\t-   192.168.255.255\n"
+"#\n"
+"# In case you want to be able to connect to the Internet, you need\n"
+"# real official assigned numbers.  Do not try to invent your own network\n"
+"# numbers but instead get one from your network provider (if any) or\n"
+"# from your regional registry (ARIN, APNIC, LACNIC, RIPE NCC, or AfriNIC.)\n"
+"#\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1214
 msgid "The format of [.filename]#/etc/hosts# is as follows:"
-msgstr ""
+msgstr "[.filename]#/etc/hosts#의 형식은 다음과 같습니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1218
 #, no-wrap
 msgid "[Internet address] [official hostname] [alias1] [alias2] ...\n"
-msgstr ""
+msgstr "[Internet address] [official hostname] [alias1] [alias2] ...\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1221
 msgid "For example:"
-msgstr ""
+msgstr "예를 들어:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1225
 #, no-wrap
 msgid "10.0.0.1 myRealHostname.example.com myRealHostname foobar1 foobar2\n"
-msgstr ""
+msgstr "10.0.0.1 myRealHostname.example.com myRealHostname foobar1 foobar2\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1228
 msgid "Consult man:hosts[5] for more information."
-msgstr ""
+msgstr "자세한 내용은 man:hosts[5]를 참조하세요."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/config/_index.adoc:1230
 #, no-wrap
 msgid "Tuning with man:sysctl[8]"
-msgstr ""
+msgstr "man:sysctl[8]로 튜닝하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1235
@@ -3145,29 +3185,34 @@ msgid ""
 "administrator.  Over five hundred system variables can be read and set using "
 "man:sysctl[8]."
 msgstr ""
+"man:sysctl[8]은 실행 중인 FreeBSD 시스템을 변경하는 데 사용됩니다.  여기에는 "
+"숙련된 시스템 관리자의 성능을 크게 향상시킬 수 있는 TCP/IP 스택과 가상 "
+"메모리 시스템의 많은 고급 옵션이 포함됩니다.  500개 이상의 시스템 변수를 "
+"man:sysctl[8]을 사용하여 읽고 설정할 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1237
 msgid ""
 "At its core, man:sysctl[8] serves two functions: to read and to modify "
 "system settings."
-msgstr ""
+msgstr "man:sysctl[8]은 기본적으로 시스템 설정을 읽고 수정하는 두 가지 기능을 "
+"수행합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1239
 msgid "To view all readable variables:"
-msgstr ""
+msgstr "읽기 가능한 모든 변수를 보려면:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1243
 #, no-wrap
 msgid "% sysctl -a\n"
-msgstr ""
+msgstr "% sysctl -a\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1246
 msgid "To read a particular variable, specify its name:"
-msgstr ""
+msgstr "특정 변수를 읽으려면 해당 이름을 지정합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1251
@@ -3176,11 +3221,13 @@ msgid ""
 "% sysctl kern.maxproc\n"
 "kern.maxproc: 1044\n"
 msgstr ""
+"% sysctl kern.maxproc\n"
+"kern.maxproc: 1044\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1254
 msgid "To set a particular variable, use the _variable_=_value_ syntax:"
-msgstr ""
+msgstr "특정 변수를 설정하려면 _variable_=_value_ 구문을 사용합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1259
@@ -3189,6 +3236,8 @@ msgid ""
 "# sysctl kern.maxfiles=5000\n"
 "kern.maxfiles: 2088 -> 5000\n"
 msgstr ""
+"# sysctl kern.maxfiles=5000\n"
+"kern.maxfiles: 2088 -> 5000\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1262
@@ -3196,6 +3245,8 @@ msgid ""
 "Settings of sysctl variables are usually either strings, numbers, or "
 "booleans, where a boolean is `1` for yes or `0` for no."
 msgstr ""
+"sysctl 변수의 설정은 일반적으로 문자열, 숫자 또는 부울이며, 여기서 부울은 "
+"'예'인 경우 `1`, '아니오'인 경우 `0`입니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1265
@@ -3204,12 +3255,15 @@ msgid ""
 "[.filename]#/etc/sysctl.conf#.  For more information, refer to man:sysctl."
 "conf[5] and <<configtuning-sysctlconf>>."
 msgstr ""
+"머신이 부팅될 때마다 일부 변수를 자동으로 설정하려면 [.filename]#/etc/sysctl."
+"conf#에 추가합니다.  자세한 내용은 man:sysctl.conf[5] 및 <<configtuning-"
+"sysctlconf>>을 참조하세요."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/config/_index.adoc:1267
 #, no-wrap
 msgid "[.filename]#sysctl.conf#"
-msgstr ""
+msgstr "[.filename]#sysctl.conf#"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1273
@@ -3219,6 +3273,10 @@ msgid ""
 "`variable=value` form.  The specified values are set after the system goes "
 "into multi-user mode.  Not all variables are settable in this mode."
 msgstr ""
+"man:sysctl[8]의 구성 파일인 [.filename]#/etc/sysctl.conf#는 [.filename]#/etc/"
+"rc.conf#와 매우 유사합니다.  값은 `variable=value` 형식으로 설정됩니다.  "
+"지정된 값은 시스템이 다중 사용자 모드로 전환된 후에 설정됩니다.  이 모드에서 "
+"모든 변수를 설정할 수 있는 것은 아닙니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1275
@@ -3227,6 +3285,9 @@ msgid ""
 "from seeing processes started by other users, the following tunables can be "
 "set in [.filename]#/etc/sysctl.conf#:"
 msgstr ""
+"예를 들어 치명적인 신호 종료 로깅을 끄고 다른 사용자가 시작한 프로세스가 "
+"사용자에게 표시되지 않도록 하려면 [.filename]#/etc/sysctl.conf#에서 다음 "
+"튜너블을 설정하면 됩니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1280
@@ -3235,6 +3296,8 @@ msgid ""
 "# Do not log fatal signal exits (e.g., sig 11)\n"
 "kern.logsigexit=0\n"
 msgstr ""
+"# Do not log fatal signal exits (e.g., sig 11)\n"
+"kern.logsigexit=0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1284
@@ -3244,19 +3307,23 @@ msgid ""
 "# are being run under another UID.\n"
 "security.bsd.see_other_uids=0\n"
 msgstr ""
+"# Prevent users from seeing information about processes that\n"
+"# are being run under another UID.\n"
+"security.bsd.see_other_uids=0\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/config/_index.adoc:1287
 #, no-wrap
 msgid "man:sysctl[8] Read-only"
-msgstr ""
+msgstr "man:sysctl[8] 읽기 전용"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1290
 msgid ""
 "In some cases it may be desirable to modify read-only man:sysctl[8] values, "
 "which will require a reboot of the system."
-msgstr ""
+msgstr "경우에 따라 시스템을 재부팅해야 하는 읽기 전용 man:sysctl[8] 값을 수정하는 "
+"것이 바람직할 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1292
@@ -3264,6 +3331,8 @@ msgid ""
 "For instance, on some laptop models the man:cardbus[4] device will not probe "
 "memory ranges and will fail with errors similar to:"
 msgstr ""
+"예를 들어, 일부 노트북 모델에서 man:cardbus[4] 장치는 메모리 범위를 조사하지 "
+"않으며 다음과 유사한 오류로 실패합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1297
@@ -3272,6 +3341,8 @@ msgid ""
 "cbb0: Could not map register memory\n"
 "device_probe_and_attach: cbb0 attach returned 12\n"
 msgstr ""
+"cbb0: Could not map register memory\n"
+"device_probe_and_attach: cbb0 attach returned 12\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1302
