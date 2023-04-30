@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2023-04-20 20:56-0300\n"
-"PO-Revision-Date: 2023-04-30 01:04+0000\n"
+"PO-Revision-Date: 2023-04-30 03:31+0000\n"
 "Last-Translator: \"Kyung-tak, Yoo\" <stonegaze@me.com>\n"
 "Language-Team: Korean <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookconfig_index/ko/>\n"
@@ -3853,13 +3853,13 @@ msgstr "커널 제한 튜닝하기"
 #: documentation/content/en/books/handbook/config/_index.adoc:1458
 #, no-wrap
 msgid "File/Process Limits"
-msgstr ""
+msgstr "파일/프로세스 제한"
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1461
 #, no-wrap
 msgid "`kern.maxfiles`"
-msgstr ""
+msgstr "`kern.maxfiles`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1466
@@ -3870,6 +3870,11 @@ msgid ""
 "`file: table is full` will show up repeatedly in the system message buffer, "
 "which can be viewed using man:dmesg[8]."
 msgstr ""
+"`kern.maxfiles` man:sysctl[8] 변수는 시스템 요구 사항에 따라 높이거나 낮출 "
+"수 있습니다.  이 변수는 시스템에서 파일 기술자(descriptor)의 최대 수를 "
+"나타냅니다.  파일 기술자 테이블이 가득 차면 시스템 메시지 버퍼에 `file: "
+"table is full`이 반복적으로 표시되며, 이는 man:dmesg[8]을 사용하여 확인할 수 "
+"있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1469
@@ -3878,6 +3883,9 @@ msgid ""
 "production server may easily require many thousands of file descriptors, "
 "depending on the kind and number of services running concurrently."
 msgstr ""
+"열려 있는 파일, 소켓 또는 fifo는 각각 하나의 파일 기술자를 사용합니다.  "
+"대규모 프로덕션 서버에는 동시에 실행되는 서비스의 종류와 수에 따라 수천 개의 "
+"파일 설명자가 필요할 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1475
@@ -3890,6 +3898,12 @@ msgid ""
 "limits.  Even though a production machine may not have 256 concurrent users, "
 "the resources needed may be similar to a high-scale web server."
 msgstr ""
+"이전 FreeBSD 릴리즈에서, `kern.maxfiles`의 기본값은 커널 구성 파일의 "
+"`maxusers`에서 파생됩니다.  `kern.maxfiles는 `maxusers`의 값에 비례하여 "
+"증가합니다.  커스텀 커널을 컴파일할 때 시스템 용도에 따라 이 커널 구성 "
+"옵션을 설정하는 것을 고려하세요.  이 수치에서 커널은 대부분의 사전 정의된 "
+"한계를 부여받습니다.  프로덕션 머신의 동시 사용자 수가 256명이 아닐지라도 "
+"필요한 리소스는 대규모 웹 서버와 비슷할 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1481
@@ -3905,6 +3919,15 @@ msgid ""
 "Refer to man:loader.conf[5] and [.filename]#/boot/defaults/loader.conf# for "
 "more details and some hints."
 msgstr ""
+"읽기 전용 man:sysctl[8] 변수 `kern.maxusers`는 시스템에서 사용 가능한 메모리 "
+"양에 따라 부팅 시 자동으로 크기가 결정되며, 런타임에 `kern.maxusers`의 값을 "
+"검사하여 결정될 수 있습니다.  일부 시스템에서는 더 크거나 작은 값을 필요로 "
+"하며 `64`, `128`, `256`의 값은 드물지 않습니다.  많은 수의 파일 기술자가 "
+"필요하지 않는 한 `256`을 초과하는 것은 권장하지 않습니다.  `kern.maxusers`에 "
+"의해 기본값으로 설정된 많은 조정 가능한 값은 부팅 시간 또는 런타임에 [."
+"filename]#/boot/loader.conf#에서 개별적으로 재정의할 수 있습니다.  자세한 "
+"내용과 몇 가지 힌트는 man:loader.conf[5] 및 [.filename]#/boot/defaults/loader"
+".conf#를 참조하세요."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1489
@@ -3925,6 +3948,19 @@ msgid ""
 "running with a large number of simultaneous users, increase the number and "
 "rebuild."
 msgstr ""
+"과거 릴리스에선 `maxusers`가 `0`으로 설정되어 있으면 자동 튜닝이 되었습니다. "
+"footnote:[자동 튜닝 알고리즘은 최소 32에서 최대 384까지 시스템의 메모리 양과 "
+"동일한 최대 사용자를 자동 튜닝합니다.]  이 옵션을 설정할 때, 특히 시스템이 "
+"Xorg를 실행하거나 소프트웨어 컴파일에 사용되는 경우 `maxusers`를 최소 `4`로 "
+"설정하세요.  `maxusers`로 설정되는 가장 중요한 테이블은 최대 프로세스 "
+"수이며, `20 + 16 * maxusers`로 설정됩니다.  `maxusers`가 `1`로 설정되면 부팅 "
+"시 시스템이 시작되는 `18`개와 Xorg가 사용하는 `15`개를 포함하여 총 `36`개의 "
+"동시 프로세스만 있을 수 있습니다.  매뉴얼 페이지를 읽는 것과 같은 간단한 "
+"작업도 필터링, 압축 해제 및 보기를 위해 9개의 프로세스가 시작됩니다.  "
+"`maxusers`를 `64`로 설정하면 최대 `1044` 개의 프로세스를 동시에 처리할 수 "
+"있으므로 거의 모든 용도에 충분합니다.  그러나 다른 프로그램을 시작하려고 할 "
+"때 오류가 표시되거나 동시 사용자 수가 많은 서버를 실행 중인 경우 수를 늘린 "
+"후 다시 빌드하세요."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1494
@@ -3934,12 +3970,15 @@ msgid ""
 "considering the maximum number of users on the system and how many processes "
 "each user will be running."
 msgstr ""
+"`maxusers`는 시스템에 로그인할 수 있는 사용자 수를 제한하지 않습니다.  대신 "
+"시스템의 최대 사용자 수와 각 사용자가 실행할 프로세스 수를 고려하여 다양한 "
+"테이블 크기를 합리적인 값으로 설정합니다."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1496
 #, no-wrap
 msgid "`kern.ipc.soacceptqueue`"
-msgstr ""
+msgstr "`kern.ipc.soacceptqueue`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1503
@@ -3953,12 +3992,19 @@ msgid ""
 "directive in its configuration file to adjust the queue size.  Large listen "
 "queues do a better job of avoiding Denial of Service (DoS) attacks."
 msgstr ""
+"`kern.ipc.soacceptqueue` man:sysctl[8] 변수는 새 `TCP` 연결을 수락하기 위한 "
+"수신 대기열의 크기를 제한합니다.  기본값인 `128`은 일반적으로 부하가 많은 웹 "
+"서버에서 새 연결을 안정적으로 처리하기에는 너무 낮습니다.  이러한 환경에서는 "
+"이 값을 `1024` 이상으로 늘리는 것이 좋습니다.  man:sendmail[8]이나 아파치 "
+"같은 서비스는 자체적으로 수신 대기열 크기를 제한할 수도 있지만, 구성 파일에 "
+"대기열 크기를 조정하는 지시어가 있는 경우가 많습니다.  수신 대기열이 크면 "
+"서비스 거부(DoS) 공격을 더 잘 피할 수 있습니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/config/_index.adoc:1505
 #, no-wrap
 msgid "Network Limits"
-msgstr ""
+msgstr "네트워크 제한"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1516
@@ -3977,6 +4023,18 @@ msgid ""
 "arbitrarily high value for this parameter as it could lead to a boot time "
 "crash.  To observe network cluster usage, use `-m` with man:netstat[1]."
 msgstr ""
+"커널 구성 옵션인 `NMBCLUSTERS`는 시스템에서 사용할 수 있는 네트워크 Mbuf의 "
+"양을 결정합니다.  트래픽이 많은 서버에서 Mbuf 수가 적으면 성능이 "
+"저하됩니다.  각 클러스터는 약 2K의 메모리를 나타내므로 `1024` 값은 네트워크 "
+"버퍼를 위해 예약된 커널 메모리의 `2` 메가바이트를 나타냅니다.  간단한 계산을 "
+"통해 얼마나 많은 메모리가 필요한지 알아낼 수 있습니다.  각 연결이 6K 수신 및 "
+"16K 전송 버퍼를 사용하는 동시 연결이 최대 '1000'인 웹 서버의 경우 웹 서버를 "
+"처리하려면 약 32MB 상당의 네트워크 버퍼가 필요합니다.  경험상 `2`를 곱하는 "
+"것이 좋으므로 2x32MB/2KB = 64MB/2kB = `32768`입니다.  `4096`에서 `32768` "
+"사이의 값은 메모리 용량이 더 큰 컴퓨터에 권장됩니다.  이 매개변수에 임의로 "
+"높은 값을 지정하면 부팅 시간 충돌이 발생할 수 있으므로 절대로 높은 값을 "
+"지정하지 마십시오.  네트워크 클러스터 사용량을 관찰하려면 `-m`을 "
+"man:netstat[1]과 함께 사용하세요."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1519
@@ -3985,6 +4043,9 @@ msgid ""
 "boot time.  Only older versions of FreeBSD will require the use of the "
 "`NMBCLUSTERS` kernel man:config[8] option."
 msgstr ""
+"부팅할 때 `kern.ipc.nmbclusters` 로더 튜너블을 사용하여 이를 조정해야 "
+"합니다.  이전 버전의 FreeBSD에서만 `NMBCLUSTERS` 커널 man:config[8] 옵션을 "
+"사용해야 합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1524
@@ -3998,6 +4059,13 @@ msgid ""
 "is read-only.  This parameter nominally scales with `kern.maxusers`, however "
 "it may be necessary to tune accordingly."
 msgstr ""
+"man:sendfile[2] 시스템 호출을 광범위하게 사용하는 바쁜 서버의 경우, `NSFBUFS`"
+" 커널 구성 옵션을 통해 또는 [.filename]#/boot/loader.conf#에 값을 설정하여 "
+"man:sendfile[2] 버퍼 수를 늘려야 할 수 있습니다(자세한 내용은 man:loader[8] "
+"참고).  이 매개변수를 조정해야 하는 일반적인 지표는 프로세스가 `sfbufa` "
+"상태로 표시되는 경우입니다.  man:sysctl[8] 변수 `kern.ipc.nsfbufs`는 읽기 "
+"전용입니다.  이 매개변수는 명목상 `kern.maxusers`에 따라 스케일링되지만 직접 "
+"조정해야 할 수도 있습니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1528
@@ -4006,12 +4074,15 @@ msgid ""
 "sendfile[2] on the non-blocking socket may result in the man:sendfile[2] "
 "call blocking until enough ``struct sf_buf``'s are made available."
 msgstr ""
+"소켓이 비차단 소켓으로 표시되어 있더라도, 비차단 소켓에서 man:sendfile[2]을 "
+"호출하면 충분한 ``struct sf_buf``를 사용할 수 있을 때까지 man:sendfile[2] "
+"호출이 차단될 수 있습니다."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1530
 #, no-wrap
 msgid "`net.inet.ip.portrange.*`"
-msgstr ""
+msgstr "`net.inet.ip.portrange.*`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1542
@@ -4035,18 +4106,33 @@ msgid ""
 "is not recommended that the value of `net.inet.ip.portrange.first` be "
 "lowered."
 msgstr ""
+"`net.inet.ip.portrange.*` man:sysctl[8] 변수는 `TCP` 및 `UDP` 소켓에 "
+"자동으로 바인딩되는 포트 번호 범위를 제어합니다.  낮은 범위, 기본 범위, 높은 "
+"범위의 세 가지 범위가 있습니다.  대부분의 네트워크 프로그램은 `net.inet.ip."
+"portrange.first`와 `net.inet.ip.portrange.last`에 의해 제어되는 기본 범위를 "
+"사용하며, 기본값은 각각 `1024`와 `5000`입니다.  바운드 포트 범위는 나가는 "
+"연결에 사용되며 특정 상황에서는 포트가 부족하여 시스템이 고갈될 수 "
+"있습니다.  이는 부하가 많은 웹 프록시를 실행할 때 가장 일반적으로 "
+"발생합니다.  웹 서버와 같이 주로 들어오는 연결을 처리하거나 메일 릴레이와 "
+"같이 나가는 연결 수가 제한되어 있는 서버를 실행할 때는 포트 범위가 문제가 "
+"되지 않습니다.  포트가 부족한 상황에서는 `net.inet.ip.portrange.last`를 "
+"적당히 늘리는 것이 좋습니다.  `10000`, `20000` 또는 `30000`의 값이 적당할 수 "
+"있습니다. 포트 범위를 변경할 때는 방화벽 효과를 고려하세요.  일부 방화벽은 "
+"넓은 범위의 포트(일반적으로 낮은 번호의 포트)를 차단하고 시스템이 나가는 "
+"연결에 더 높은 범위의 포트를 사용하도록 기대할 수 있습니다.  따라서 `net.inet"
+".ip.portrange.first`의 값을 낮추지 않는 것이 좋습니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/config/_index.adoc:1543
 #, no-wrap
 msgid "Virtual Memory"
-msgstr ""
+msgstr "가상 메모리"
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1545
 #, no-wrap
 msgid "`kern.maxvnodes`"
-msgstr ""
+msgstr "`kern.maxvnodes`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1552
@@ -4058,11 +4144,16 @@ msgid ""
 "running out of vnodes, this setting needs to be increased.  The amount of "
 "inactive and free RAM will need to be taken into account."
 msgstr ""
+"vnode는 파일 또는 디렉터리의 내부 표현입니다.  운영 체제에서 사용할 수 있는 "
+"vnode 수를 늘리면 디스크 I/O가 줄어듭니다.  일반적으로 이는 운영 체제에서 "
+"처리하므로 변경할 필요가 없습니다.  디스크 I/O가 병목 현상이 발생하여 시스템 "
+"vnode가 부족한 경우에는 이 설정을 늘려야 하는 경우도 있습니다.  비활성 및 "
+"사용 가능한 RAM의 양을 고려해야 합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1554
 msgid "To see the current number of vnodes in use:"
-msgstr ""
+msgstr "현재 사용 중인 vnode 수를 확인하려면:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1559
@@ -4071,11 +4162,13 @@ msgid ""
 "# sysctl vfs.numvnodes\n"
 "vfs.numvnodes: 91349\n"
 msgstr ""
+"# sysctl vfs.numvnodes\n"
+"vfs.numvnodes: 91349\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1562
 msgid "To see the maximum vnodes:"
-msgstr ""
+msgstr "최대 vnode 수를 확인하려면:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1567
@@ -4084,6 +4177,8 @@ msgid ""
 "# sysctl kern.maxvnodes\n"
 "kern.maxvnodes: 100000\n"
 msgstr ""
+"# sysctl kern.maxvnodes\n"
+"kern.maxvnodes: 100000\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1573
@@ -4094,12 +4189,17 @@ msgid ""
 "need to be increased further.  Otherwise, a shift in memory usage as "
 "reported by man:top[1] should be visible and more memory should be active."
 msgstr ""
+"현재 vnode 사용량이 최대치에 가까우면 `kern.maxvnodes` 값을 `1000`만큼 "
+"늘려보십시오.  `vfs.numvnodes`의 수를 주시합니다.  다시 최대치까지 "
+"올라간다면 `kern.maxvnodes`를 더 늘려야 합니다.  그렇지 않으면, man:top[1]에 "
+"보고된 메모리 사용량의 변화를 볼 수 있어야 하며 더 많은 메모리가 "
+"활성화되어야 합니다."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/config/_index.adoc:1575
 #, no-wrap
 msgid "Adding Swap Space"
-msgstr ""
+msgstr "스왑 공간 추가하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1579
@@ -4108,6 +4208,9 @@ msgid ""
 "methods to increase swap space: adding swap to an existing partition or new "
 "hard drive, and creating a swap file on an existing partition."
 msgstr ""
+"시스템에 더 많은 스왑 공간이 필요한 경우가 있습니다.  이 섹션에서는 기존 "
+"파티션 또는 새 하드 드라이브에 스왑을 추가하는 방법과 기존 파티션에 스왑 "
+"파일을 만드는 두 가지 스왑 공간을 늘리는 방법에 대해 설명합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1581
@@ -4116,12 +4219,14 @@ msgid ""
 "it should be done, refer to crossref:disks[swap-encrypting,“Encrypting "
 "Swap”]."
 msgstr ""
+"스왑 공간을 암호화하는 방법, 어떤 옵션이 있는지, 왜 암호화해야 하는지에 대한 "
+"자세한 내용은 crossref:disks[swap-encrypting,“Encrypting Swap”]를 참조하세요."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/config/_index.adoc:1583
 #, no-wrap
 msgid "Swap on a New Hard Drive or Existing Partition"
-msgstr ""
+msgstr "새 하드 드라이브 또는 기존 파티션에서 스왑"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1587
@@ -4132,17 +4237,22 @@ msgid ""
 "bsdinstall[configtuning-initial,“Designing the Partition Layout”] discusses "
 "partition layouts and swap partition size considerations."
 msgstr ""
+"스왑을 위해 새 하드 드라이브를 추가하면 기존 드라이브의 파티션을 사용하는 "
+"것보다 더 나은 성능을 제공합니다.  파티션 및 하드 드라이브 설정은 "
+"crossref:disks[disks-adding,“Adding Disks”] 에 설명되어 있으며, "
+"crossref:bsdinstall[configtuning-initial,“Designing the Partition Layout”]"
+"에서는 파티션 레이아웃과 스왑 파티션 크기 고려 사항에 대해 설명합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1590
 msgid "Use `swapon` to add a swap partition to the system.  For example:"
-msgstr ""
+msgstr "`swapon`을 사용하여 시스템에 스왑 파티션을 추가합니다.  예를 들어:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1594
 #, no-wrap
 msgid "# swapon /dev/ada1s1b\n"
-msgstr ""
+msgstr "# swapon /dev/ada1s1b\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1602
@@ -4152,19 +4262,24 @@ msgid ""
 "will overwrite and destroy that data.  Make sure that the partition to be "
 "added as swap is really the intended partition before running `swapon`."
 msgstr ""
+"현재 마운트되지 않은 파티션은 이미 데이터가 포함되어 있더라도 사용할 수 "
+"있습니다.  데이터가 있는 파티션에 `swapon`을 사용하면 해당 데이터를 덮어쓰고 "
+"파괴합니다.  `swapon`을 실행하기 전에 스왑으로 추가할 파티션이 실제로 의도한 "
+"파티션인지 확인하세요."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1605
 msgid ""
 "To automatically add this swap partition on boot, add an entry to [."
 "filename]#/etc/fstab#:"
-msgstr ""
+msgstr "부팅 시 이 스왑 파티션을 자동으로 추가하려면 [.filename]#/etc/fstab#에 "
+"내용을 추가하세요:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1609
 #, no-wrap
 msgid "/dev/ada1s1b\tnone\tswap\tsw\t0\t0\n"
-msgstr ""
+msgstr "/dev/ada1s1b\tnone\tswap\tsw\t0\t0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1613
@@ -4172,20 +4287,23 @@ msgid ""
 "See man:fstab[5] for an explanation of the entries in [.filename]#/etc/"
 "fstab#.  More information about `swapon` can be found in man:swapon[8]."
 msgstr ""
+"[.filename]#/etc/fstab#의 항목에 대한 설명은 man:fstab[5]를 참조하세요.  "
+"`swapon`에 대한 자세한 정보는 man:swapon[8]에서 확인할 수 있습니다."
 
 #. type: Block title
 #: documentation/content/en/books/handbook/config/_index.adoc:1615
 #: documentation/content/en/books/handbook/config/_index.adoc:1623
 #, no-wrap
 msgid "Creating a Swap File"
-msgstr ""
+msgstr "스왑 파일 생성하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1618
 msgid ""
 "These examples create a 512M swap file called [.filename]#/usr/swap0# "
 "instead of using a partition."
-msgstr ""
+msgstr "이 예제에서는 파티션을 사용하는 대신 [.filename]#/usr/swap0#이라는 512M 스왑 "
+"파일을 생성합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1621
@@ -4195,60 +4313,66 @@ msgid ""
 "crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel] for "
 "information about building a custom kernel."
 msgstr ""
+"스왑 파일을 사용하려면 man:md[4]에 필요한 모듈이 커널에 빌드되었거나 스왑이 "
+"활성화되기 전에 로드되어 있어야 합니다.  커스텀 커널을 빌드하는 방법에 대한 "
+"정보는 crossref:kernelconfig[kernelconfig,Configuring the FreeBSD Kernel]를 "
+"참고하세요."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1628
 msgid "Create the swap file:"
-msgstr ""
+msgstr "스왑 파일을 생성합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1632
 #, no-wrap
 msgid "# dd if=/dev/zero of=/usr/swap0 bs=1m count=512\n"
-msgstr ""
+msgstr "# dd if=/dev/zero of=/usr/swap0 bs=1m count=512\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1635
 msgid "Set the proper permissions on the new file:"
-msgstr ""
+msgstr "새 파일에 적절한 권한을 설정합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1639
 #, no-wrap
 msgid "# chmod 0600 /usr/swap0\n"
-msgstr ""
+msgstr "# chmod 0600 /usr/swap0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1642
 msgid ""
 "Inform the system about the swap file by adding a line to [.filename]#/etc/"
 "fstab#:"
-msgstr ""
+msgstr "[.filename]#/etc/fstab#에 한 줄을 추가하여 스왑 파일에 대해 시스템에 "
+"알립니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1646
 #, no-wrap
 msgid "md\tnone\tswap\tsw,file=/usr/swap0,late\t0\t0\n"
-msgstr ""
+msgstr "md\tnone\tswap\tsw,file=/usr/swap0,late\t0\t0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1649
 msgid ""
 "Swap space will be added on system startup. To add swap space immediately, "
 "use man:swapon[8]:"
-msgstr ""
+msgstr "스왑 공간은 시스템 시작 시 추가됩니다. 스왑 공간을 즉시 추가하려면 "
+"man:swapon[8]을 사용합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1653
 #, no-wrap
 msgid "# swapon -aL\n"
-msgstr ""
+msgstr "# swapon -aL\n"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/config/_index.adoc:1658
 #, no-wrap
 msgid "Power and Resource Management"
-msgstr ""
+msgstr "전원 및 리소스 관리"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1668
@@ -4266,6 +4390,16 @@ msgid ""
 "An APM driver in the operating system mediates access to the APM Software "
 "Interface, which allows management of power levels."
 msgstr ""
+"하드웨어 리소스를 효율적으로 활용하는 것이 중요합니다.  전력 및 리소스 "
+"관리를 통해 운영 체제는 시스템 한계를 모니터링하고 시스템 온도가 예기치 않게 "
+"상승할 경우 경고를 제공할 수 있습니다.  전력 관리를 제공하기 위한 초기 "
+"사양은 고급 전원 관리(APM) 기능이었습니다.  APM은 시스템 활동을 기반으로 "
+"시스템의 전력 사용량을 제어합니다.  그러나 운영 체제가 시스템의 전력 "
+"사용량과 열 속성을 관리하는 것은 어렵고 유연하지 않았습니다.  하드웨어는 "
+"BIOS에 의해 관리되었고 사용자는 전원 관리 설정에 대한 구성 가능성과 가시성이 "
+"제한적이었습니다.  APMBIOS는 공급업체에서 제공하며 하드웨어 플랫폼에 따라 "
+"다릅니다.  운영 체제의 APM 드라이버는 전력 수준을 관리할 수 있는 APM "
+"소프트웨어 인터페이스에 대한 액세스를 중개합니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1676
@@ -4284,6 +4418,17 @@ msgid ""
 "did not have enough room to implement a sophisticated power policy or one "
 "that can adapt well to the purpose of the machine."
 msgstr ""
+"APM에는 네 가지 주요 문제가 있습니다.  첫째, 전원 관리가 운영 체제와 별도로 "
+"공급업체별 BIOS에 의해 수행됩니다.  예를 들어, 사용자는 하드 드라이브의 유휴 "
+"시간 값을 APMBIOS에서 설정하여 초과 시 운영 체제의 동의 없이 BIOS가 하드 "
+"드라이브를 턴다운하도록 할 수 있습니다.  둘째, APM 로직은 BIOS에 내장되어 "
+"있으며 운영 체제의 범위 밖에서 작동합니다.  즉, 사용자는 ROM에 새 펌웨어를 "
+"플래시해야만 APMBIOS의 문제를 해결할 수 있으며, 이는 실패 시 시스템을 복구할 "
+"수 없는 상태로 만들 수 있는 위험한 절차입니다.  셋째, APM은 공급업체별 "
+"기술이기 때문에 중복되는 작업이 많고 한 공급업체의 BIOS에서 발견된 버그가 "
+"다른 공급업체에서는 해결되지 않을 수 있습니다.  마지막으로, APMBIOS는 정교한 "
+"전원 정책이나 기계의 목적에 맞게 잘 조정할 수 있는 정책을 구현할 여지가 "
+"충분하지 않았습니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1681
@@ -4294,6 +4439,11 @@ msgid ""
 "APM should still be used for systems manufactured at or before the year "
 "2000.  The driver is documented in man:apm[4]."
 msgstr ""
+"Plug and Play BIOS(PNPBIOS)는 많은 상황에서 불안정했습니다.  PNPBIOS는 "
+"16비트 기술이기 때문에 운영 체제가 16비트 에뮬레이션을 사용해야 PNPBIOS "
+"방식과 인터페이스할 수 있습니다.  2000년 이전에 제조된 시스템에서는 여전히 "
+"APM을 사용해야 하므로 FreeBSD는 APM 드라이버를 제공합니다.  드라이버는 "
+"man:apm[4]에 문서화되어 있습니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1685
@@ -4304,6 +4454,10 @@ msgid ""
 "in _Operating System-directed configuration and Power Management_ as it "
 "provides more control and flexibility to the operating system."
 msgstr ""
+"APM의 후속 버전은 고급 구성 및 전원 인터페이스(ACPI)입니다.  ACPI는 하드웨어 "
+"리소스 및 전원 관리를 위한 인터페이스를 제공하기 위해 공급업체 연합에서 "
+"작성한 표준입니다.  운영 체제에 더 많은 제어와 유연성을 제공하기 때문에 "
+"_운영 체제 중심 구성 및 전원 관리_의 핵심 요소입니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1688
@@ -4312,12 +4466,16 @@ msgid ""
 "some tips on how to debug ACPI and how to submit a problem report containing "
 "debugging information so that developers can diagnosis and fix ACPI issues."
 msgstr ""
+"이 장에서는 FreeBSD에서 ACPI를 구성하는 방법을 설명합니다.  그런 다음 "
+"개발자가 ACPI 문제를 진단하고 수정할 수 있도록 ACPI를 디버깅하는 방법과 "
+"디버깅 정보가 포함된 문제 보고서를 제출하는 방법에 대한 몇 가지 팁을 "
+"제공합니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/config/_index.adoc:1690
 #, no-wrap
 msgid "Configuring ACPI"
-msgstr ""
+msgstr "ACPI 구성하기"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1695
@@ -4330,6 +4488,13 @@ msgid ""
 "in [.filename]#/boot/loader.conf# or by setting this variable at the loader "
 "prompt, as described in crossref:boot[boot-loader,“Stage Three”]."
 msgstr ""
+"FreeBSD에서는 시스템 부팅 시 man:acpi[4] 드라이버가 기본적으로 로드되며 "
+"커널에 컴파일해서는 안됩니다.  이 드라이버는 시스템 버스가 다양한 하드웨어 "
+"상호 작용에 사용하기 때문에 부팅 후 언로드할 수 없습니다.  그러나 시스템에 "
+"문제가 있는 경우 [.filename]#/boot/loader.conf#에서 `hint.acpi.0.disabled=\"1"
+"\"`을 설정한 후 재부팅하거나 crossref:boot[boot-loader,“Stage Three”]에 "
+"설명된 대로 로더 프롬프트에서 이 변수를 설정하여 ACPI를 완전히 비활성화할 수 "
+"있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1700
@@ -4337,6 +4502,8 @@ msgid ""
 "ACPI and APM cannot coexist and should be used separately.  The last one to "
 "load will terminate if the driver notices the other is running."
 msgstr ""
+"ACPI와 APM은 공존할 수 없으며 별도로 사용해야 합니다.  드라이버가 다른 "
+"드라이버가 실행 중인 것을 감지하면 마지막으로 로드한 드라이버가 종료됩니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1705
@@ -4346,6 +4513,10 @@ msgid ""
 "suspend to RAM) or `3` (suspend to RAM).  Option `5` performs a soft-off "
 "which is the same as running `halt -p`."
 msgstr ""
+"ACPI는 `acpiconf`, `-s` 플래그 및 `1`에서 `5` 사이의 숫자를 사용하여 "
+"시스템을 절전 모드로 전환하는 데 사용할 수 있습니다.  대부분의 사용자는 `1`("
+"RAM으로 빠른 일시 중단) 또는 `3`(RAM으로 일시 중단)만 필요합니다.  옵션 `5`"
+"는 `halt -p`를 실행하는 것과 동일한 소프트 오프를 수행합니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1710
@@ -4357,6 +4528,12 @@ msgid ""
 "brightness keys will change the brightness of the screen.  It is possible to "
 "check the ACPI events by inspecting [.filename]#/var/run/devd.pipe#:"
 msgstr ""
+"man:acpi_video[4] 드라이버는 link:https://uefi.org/specs/ACPI/6.4/"
+"Apx_B_Video_Extensions/Apx_B_Video_Extensions.html[ACPI 비디오 확장]을 "
+"사용하여 디스플레이 전환 및 백라이트 밝기를 제어합니다.  이 드라이버는 DRM "
+"커널 모듈 다음에 로드해야 합니다.  드라이버를 로드한 후 kbd:[Fn] 밝기 키로 "
+"화면 밝기를 변경할 수 있습니다.  ACPI 이벤트는 [.filename]#/var/run/devd."
+"pipe#를 검사하여 확인할 수 있습니다:"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1718
@@ -4365,6 +4542,9 @@ msgid ""
 "notify=62 !system=ACPI subsystem=Video type=brightness notify=63 !"
 "system=ACPI subsystem=Video type=brightness notify=64 ..."
 msgstr ""
+"...  # cat /var/run/devd.pipe !system=ACPI subsystem=Video type=brightness "
+"notify=62 !system=ACPI subsystem=Video type=brightness notify=63 "
+"!system=ACPI subsystem=Video type=brightness notify=64 ..."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1721
@@ -4372,12 +4552,14 @@ msgid ""
 "Other options are available using `sysctl`.  Refer to man:acpi[4] and man:"
 "acpiconf[8] for more information."
 msgstr ""
+"다른 옵션은 `sysctl`을 사용하여 사용할 수 있습니다.  자세한 내용은 "
+"man:acpi[4] 및 man:acpiconf[8]을 참조하세요."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/config/_index.adoc:1723
 #, no-wrap
 msgid "Common Problems"
-msgstr ""
+msgstr "일반적인 문제"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1730
@@ -4391,6 +4573,13 @@ msgid ""
 "and battery management support as well.  Laptops also have suspend and "
 "resume, with their own associated complexity."
 msgstr ""
+"ACPI는 ia32(x86) 및 amd64(AMD) 아키텍처를 준수하는 모든 최신 컴퓨터에 "
+"존재합니다.  전체 표준에는 CPU 성능 관리, 전원면 제어, 열 영역, 다양한 "
+"배터리 시스템, 임베디드 컨트롤러, 버스 열거 등 많은 기능이 포함되어 "
+"있습니다.  대부분의 시스템은 전체 표준보다 적은 기능을 구현합니다.  예를 "
+"들어 데스크톱 시스템은 일반적으로 버스 열거만 구현하는 반면 노트북은 냉각 및 "
+"배터리 관리도 지원할 수 있습니다.  또한 노트북에는 일시 중단 및 재개 기능이 "
+"있으며, 이와 관련된 복잡한 설정도 있습니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1734
@@ -4402,6 +4591,11 @@ msgid ""
 "System Description Table DSDT, specifies a tree-like name space of devices "
 "and methods."
 msgstr ""
+"ACPI 호환 시스템에는 다양한 구성 요소가 있습니다.  BIOS 및 칩셋 공급업체는 "
+"APIC 맵(SMP에 사용됨), 구성 레지스터, 간단한 구성 값 등을 지정하는 FADT와 "
+"같은 다양한 고정 테이블을 메모리에 제공합니다.  또한 바이트코드 테이블인 "
+"차별화 시스템 설명 테이블 (Differentiated System Description Table, DSDT는 "
+"장치 및 메서드의 트리와 같은 이름 공간을 지정합니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1740
@@ -4415,6 +4609,14 @@ msgid ""
 "Osd#.  Finally, drivers that implement various ACPI devices are found in [."
 "filename]#src/sys/dev/acpica#."
 msgstr ""
+"ACPI 드라이버는 고정 테이블을 구문 분석하고, 바이트코드에 대한 인터프리터를 "
+"구현하고, 장치 드라이버와 커널을 수정하여 ACPI 서브시스템의 정보를 "
+"받아들여야 합니다.  FreeBSD의 경우, 인텔(R)은 Linux(R) 및 NetBSD와 공유되는 "
+"인터프리터(ACPI-CA)를 제공했습니다.  ACPI-CA 소스 코드의 경로는 [.filename]#"
+"src/sys/contrib/dev/acpica#입니다.  ACPI-CA가 FreeBSD에서 작동할 수 있도록 "
+"하는 글루 코드는 [.filename]#src/sys/dev/acpica/Osd#에 있습니다.  "
+"마지막으로, 다양한 ACPI 장치를 구현하는 드라이버는 [.filename]#src/sys/dev/"
+"acpica#에서 찾을 수 있습니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1744
@@ -4424,12 +4626,16 @@ msgid ""
 "workarounds or fixes.  If a fix does not resolve the issue, refer to <<ACPI-"
 "submitdebug>> for instructions on how to submit a bug report."
 msgstr ""
+"ACPI가 올바르게 작동하려면 모든 부품이 올바르게 작동해야 합니다.  다음은 "
+"자주 발생하는 몇 가지 일반적인 문제와 가능한 해결 방법 또는 수정 사항을 빈도 "
+"순으로 나열한 것입니다.  수정해도 문제가 해결되지 않으면 <<ACPI-"
+"submitdebug>>에서 버그 리포트를 제출하는 방법에 대한 지침을 참조하세요."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1745
 #, no-wrap
 msgid "Mouse Issues"
-msgstr ""
+msgstr "마우스 문제"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1749
@@ -4438,12 +4644,15 @@ msgid ""
 "fail.  A known work around is to add `hint.psm.0.flags=\"0x3000\"` to [."
 "filename]#/boot/loader.conf#."
 msgstr ""
+"경우에 따라 일시 중단된 작업에서 다시 시작하면 마우스가 실패할 수 있습니다.  "
+"알려진 해결 방법은 `hint.psm.0.flags=\"0x3000\"`을 [.filename]#/boot/loader."
+"conf#에 추가하는 것입니다."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1750
 #, no-wrap
 msgid "Suspend/Resume"
-msgstr ""
+msgstr "일시 중단/재개"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1756
@@ -4454,13 +4663,19 @@ msgid ""
 "implemented entirely by the operating system.  The normal state the system "
 "is in when plugged in but not powered up is \"soft off\" (`S5`)."
 msgstr ""
+"ACPI에는 `S1`-`S3`의 세 가지 RAM 일시 중단(STR) 상태와 `S4`라는 하나의 "
+"디스크 일시 중단(STD) 상태가 있습니다.  STD는 두 가지 방법으로 구현할 수 "
+"있습니다.  ``S4`` BIOS는 BIOS가 지원하는 디스크 일시 중단이고 ``S4`` OS는 "
+"운영 체제에서 전적으로 구현합니다.  전원이 연결되었지만 전원이 켜지지 않은 "
+"상태의 정상적인 시스템은 \"소프트 오프\"(``S5``) 상태입니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1759
 msgid ""
 "Use `sysctl hw.acpi` to check for the suspend-related items.  These example "
 "results are from a Thinkpad:"
-msgstr ""
+msgstr "`sysctl hw.acpi`를 사용하여 일시 중단 관련 항목을 확인합니다.  이 예제 "
+"결과는 Thinkpad의 결과입니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1764
@@ -4469,6 +4684,8 @@ msgid ""
 "hw.acpi.supported_sleep_state: S3 S4 S5\n"
 "hw.acpi.s4bios: 0\n"
 msgstr ""
+"hw.acpi.supported_sleep_state: S3 S4 S5\n"
+"hw.acpi.s4bios: 0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1768
@@ -4476,6 +4693,8 @@ msgid ""
 "Use `acpiconf -s` to test `S3`, `S4`, and `S5`.  An `s4bios` of one (`1`) "
 "indicates ``S4``BIOS support instead of `S4` operating system support."
 msgstr ""
+"`acpiconf -s`를 사용하여 `S3`, `S4` 및 `S5`를 테스트합니다.  `s4bios`가 "
+"1(`1`)이면 `S4` 운영 체제 지원 대신 `S4` BIOS를 지원함을 나타냅니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1774
@@ -4486,6 +4705,11 @@ msgid ""
 "the deepest STR state and requires a lot of driver support to properly "
 "reinitialize the hardware."
 msgstr ""
+"일시 중단/재개를 테스트할 때, 지원되는 경우 `S1`으로 시작합니다.  이 상태는 "
+"많은 드라이버 지원이 필요하지 않으므로 작동할 가능성이 가장 높습니다.  `S1`"
+"과 유사한 `S2`를 구현한 곳은 없습니다.  다음으로 `S3`을 시도해 보세요.  "
+"이것은 가장 깊은 STR 상태이며 하드웨어를 올바르게 다시 초기화하기 위해 많은 "
+"드라이버 지원이 필요합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1777
@@ -4494,6 +4718,9 @@ msgid ""
 "save, restore, or reinitialize their firmware, registers, or device memory "
 "properly.  As a first attempt at debugging the problem, try:"
 msgstr ""
+"일시 중단/재개와 관련된 일반적인 문제는 많은 장치 드라이버가 펌웨어, "
+"레지스터 또는 장치 메모리를 제대로 저장, 복원 또는 다시 초기화하지 못한다는 "
+"점입니다.  문제를 디버깅하기 위한 첫 번째 시도로 다음을 시도해 보세요:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1783
@@ -4503,6 +4730,9 @@ msgid ""
 "# sysctl debug.acpi.suspend_bounce=1\n"
 "# acpiconf -s 3\n"
 msgstr ""
+"# sysctl debug.bootverbose=1\n"
+"# sysctl debug.acpi.suspend_bounce=1\n"
+"# acpiconf -s 3\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1788
@@ -4514,6 +4744,12 @@ msgid ""
 "state, which means devices may not lose power, and many will work fine even "
 "if suspend/resume methods are totally missing, unlike real `S3` state."
 msgstr ""
+"이 테스트는 실제로 `S3` 상태가 되지 않고 모든 디바이스 드라이버의 일시 중단/"
+"재개 주기를 에뮬레이션합니다.  경우에 따라 펌웨어 상태 손실, 장치 감시 시간 "
+"초과, 영원히 재시도하는 등의 문제를 이 방법으로 캡처할 수 있습니다.  "
+"시스템이 실제로 `S3`상태가 되지 않으므로 기기의 전원이 손실되지 않을 수 "
+"있으며, 실제 `S3`상태와 달리 일시 중단/재시작 방법이 완전히 누락되더라도 "
+"많은 기기가 정상적으로 작동한다는 점에 유의하세요."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1790
@@ -4522,23 +4758,25 @@ msgid ""
 "system to suspend into `S3` on lid close and resume when it is open back "
 "again:"
 msgstr ""
+"이전 테스트가 작동했다면 노트북에서 뚜껑을 닫을 때 시스템이 `S3'로 일시 "
+"중단되었다가 열면 다시 시작되도록 구성할 수 있습니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1794
 #, no-wrap
 msgid "# sysctl hw.acpi.lid_switch_state=S3\n"
-msgstr ""
+msgstr "# sysctl hw.acpi.lid_switch_state=S3\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1797
 msgid "This change can be made persistent across reboots:"
-msgstr ""
+msgstr "이 변경 사항은 재부팅 시에도 영구적으로 적용될 수 있습니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1801
 #, no-wrap
 msgid "# echo 'hw.acpi.lid_switch_state=S3' >> /etc/sysctl.conf\n"
-msgstr ""
+msgstr "# echo 'hw.acpi.lid_switch_state=S3' >> /etc/sysctl.conf\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1804
@@ -4547,6 +4785,9 @@ msgid ""
 "for debugging through a serial console, a Firewire port and cable for using "
 "man:dcons[4], and kernel debugging skills."
 msgstr ""
+"더 어려운 경우에는 직렬 콘솔을 통한 디버깅하기 위해 직렬 포트 및 케이블, "
+"man:dcons[4] 실행을 위한 Firewire 포트 및 케이블, 커널 디버깅 기술 등의 추가 "
+"하드웨어가 필요합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1811
@@ -4561,6 +4802,15 @@ msgid ""
 "the display is messed up after resume.  Try setting longer or shorter values "
 "for `hw.acpi.sleep_delay` to see if that helps."
 msgstr ""
+"문제를 분리하는 데 도움이 되도록 최대한 많은 드라이버를 언로드하세요.  "
+"작동하면 다시 실패할 때까지 드라이버를 로드하여 어떤 드라이버가 문제인지 "
+"좁혀보세요.  일반적으로 [.filename]#nvidia.ko#와 같은 바이너리 드라이버, "
+"디스플레이 드라이버, USB에 가장 많은 문제가 발생하지만 이더넷 인터페이스는 "
+"보통 정상 작동합니다.  드라이버를 제대로 로드 및 언로드할 수 있는 경우 [."
+"filename]#/etc/rc.suspend# 및 [.filename]#/etc/rc.resume#에 적절한 명령을 "
+"넣어 이 작업을 자동화하세요.  다시 시작한 후 디스플레이가 엉망인 경우 `hw."
+"acpi.reset_video`를 `1`로 설정해 보세요.  `hw.acpi.sleep_delay`의 값을 더 "
+"길게 또는 더 짧게 설정하여 도움이 되는지 확인하세요."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1817
@@ -4574,6 +4824,14 @@ msgid ""
 "maintainer.  Advanced users can include debugging man:printf[3]s in a "
 "problematic driver to track down where in its resume function it hangs."
 msgstr ""
+"최신 Linux(R) 배포판을 로드하여 동일한 하드웨어에서 일시 중단/다시 시작이 "
+"작동하는지 확인하세요.  Linux(R)에서 작동한다면 FreeBSD 드라이버 문제일 "
+"가능성이 높습니다.  문제를 일으키는 드라이버를 좁히면 개발자가 문제를 "
+"해결하는 데 도움이 됩니다.  ACPI 유지 관리자는 사운드나 ATA와 같은 다른 "
+"드라이버는 거의 관리하지 않으므로, 드라이버 문제는 {freebsd-current}에 "
+"게시하고 드라이버 유지 관리자에게 메일을 보내야 합니다.  고급 사용자는 "
+"문제가 있는 드라이버에서 man:printf[3]를 디버깅하여 재개 기능의 어느 "
+"부분에서 중단되는지 추적할 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1821
@@ -4583,12 +4841,16 @@ msgid ""
 "took vendors a while to get ACPI support correct and older hardware is more "
 "likely to have BIOS problems with ACPI."
 msgstr ""
+"마지막으로 ACPI를 비활성화하고 대신 APM을 활성화해 보세요.  일시 중단/재개가 "
+"APM과 함께 작동하는 경우, 특히 구형 하드웨어(2000년 이전)에서는 APM을 계속 "
+"사용하세요.  공급업체가 ACPI를 올바르게 지원하는 데 시간이 걸렸고 구형 "
+"하드웨어는 ACPI와 관련된 BIOS 문제가 있을 가능성이 더 높습니다."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1822
 #, no-wrap
 msgid "System Hangs"
-msgstr ""
+msgstr "시스템 멈춤"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1826
@@ -4598,6 +4860,10 @@ msgid ""
 "before correctness of the APIC (MADT) table, and routing of the System "
 "Control Interrupt (SCI)."
 msgstr ""
+"대부분의 시스템 중단은 인터럽트 손실 또는 인터럽트 폭풍으로 인해 "
+"발생합니다.  칩셋은 부팅, BIOS에서 인터럽트를 구성하는 방법, APIC(MADT) "
+"테이블의 정확성, 시스템 제어 인터럽트(SCI)의 라우팅에 따라 문제가 발생할 수 "
+"있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1830
@@ -4608,6 +4874,10 @@ msgid ""
 "interrupt storm.  If the system appears hung, try breaking to DDB (kbd:[CTRL"
 "+ALT+ESC] on console) and type `show interrupts`."
 msgstr ""
+"인터럽트 폭풍은 `vmstat -i`의 출력을 확인하고 `acpi0`이 있는 줄을 확인하여 "
+"손실된 인터럽트와 구별할 수 있습니다.  카운터가 초당 두 개 이상 증가하면 "
+"인터럽트 폭풍이 발생한 것입니다.  시스템이 중단된 것처럼 보이면 DDB(콘솔에서 "
+"kbd:[CTRL+ALT+ESC])로 이동하여 `show interrupts`를 입력해 보세요."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1832
@@ -4615,12 +4885,14 @@ msgid ""
 "When dealing with interrupt problems, try disabling APIC support with `hint."
 "apic.0.disabled=\"1\"` in [.filename]#/boot/loader.conf#."
 msgstr ""
+"인터럽트 문제를 해결할 때는 [.filename]#/boot/loader.conf#에서 `hint.apic.0."
+"disabled=\"1\"`을 사용하여 APIC 지원을 비활성화해 보세요."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1833
 #, no-wrap
 msgid "Panics"
-msgstr ""
+msgstr "패닉"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1840
@@ -4633,6 +4905,13 @@ msgid ""
 "partition.  To get a backtrace in DDB, use `tr`.  When handwriting the "
 "backtrace, get at least the last five and the top five lines in the trace."
 msgstr ""
+"패닉은 ACPI에서 비교적 드물게 발생하나 최우선적으로 해결해야 할 문제입니다.  "
+"첫 번째 단계는 가능한 경우 패닉을 재현하는 단계를 분리하고 백트레이스를 "
+"확보하는 것입니다.  crossref:serialcomms[serialconsole-ddb,“Entering the DDB "
+"Debugger from the Serial Line”] 또는 덤프 파티션 설정에서 `options DDB`를 "
+"활성화하고 시리얼 콘솔을 설정하는 방법에 대한 조언을 따르세요.  DDB에서 "
+"백트레이스를 얻으려면 `tr`을 사용합니다.  백트레이스를 손으로 기록할 때는 "
+"최소한 추적의 마지막 다섯 줄과 상위 다섯 줄을 가져와야 합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1844
@@ -4641,12 +4920,15 @@ msgid ""
 "works, isolate the ACPI subsystem by using various values of `debug.acpi."
 "disable`.  See man:acpi[4] for some examples."
 msgstr ""
+"그런 다음 ACPI를 비활성화한 상태로 부팅하여 문제를 격리해 보세요.  문제가 "
+"해결되면 `debug.acpi.disable`의 다양한 값을 사용하여 ACPI 하위 시스템을 "
+"격리합니다.  몇 가지 예는 man:acpi[4]를 참조하세요."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1845
 #, no-wrap
 msgid "System Powers Up After Suspend or Shutdown"
-msgstr ""
+msgstr "일시 중단 또는 종료 후 시스템 전원 켜짐"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1851
@@ -4657,12 +4939,17 @@ msgid ""
 "the same reason.  This usually fixes the problem of a system powering up "
 "spontaneously after a suspend or poweroff."
 msgstr ""
+"먼저, [.filename]#/boot/loader.conf#에서 `hw.acpi.disable_on_poweroff=\"0\"`"
+"을 설정해 보세요.  이렇게 하면 종료 프로세스 중에 ACPI가 다양한 이벤트를 "
+"비활성화하지 않습니다.  일부 시스템에서는 같은 이유로 이 값을 `1`(기본값)로 "
+"설정해야 합니다.  이렇게 하면 일반적으로 일시 중단 또는 전원 끄기 후 "
+"시스템이 저절로 전원이 켜지는 문제가 해결됩니다."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/config/_index.adoc:1853
 #, no-wrap
 msgid "BIOS Contains Buggy Bytecode"
-msgstr ""
+msgstr "버기 바이트코드가 포함된 BIOS"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1857
@@ -4670,6 +4957,8 @@ msgid ""
 "Some BIOS vendors provide incorrect or buggy bytecode.  This is usually "
 "manifested by kernel console messages like this:"
 msgstr ""
+"일부 BIOS 공급업체는 부정확하거나 버그가 있는 바이트코드를 제공합니다.  이는 "
+"일반적으로 다음과 같은 커널 콘솔 메시지로 나타납니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1862
@@ -4678,6 +4967,9 @@ msgid ""
 "ACPI-1287: *** Error: Method execution failed [\\\\_SB_.PCI0.LPC0.FIGD._STA] \\\\\n"
 "(Node 0xc3f6d160), AE_NOT_FOUND\n"
 msgstr ""
+"ACPI-1287: *** Error: Method execution failed [\\\\_SB_.PCI0.LPC0.FIGD._STA] "
+"\\\\\n"
+"(Node 0xc3f6d160), AE_NOT_FOUND\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1866
@@ -4687,12 +4979,15 @@ msgid ""
 "problems, like the battery status is not working, these messages are a good "
 "place to start looking for problems."
 msgstr ""
+"대개 이러한 문제는 BIOS를 최신 버전으로 업데이트하면 해결될 수 있습니다.  "
+"대부분의 콘솔 메시지는 무해하지만 배터리 상태가 작동하지 않는 등의 다른 "
+"문제가 있는 경우 이러한 메시지를 통해 문제를 찾아보는 것이 좋습니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/config/_index.adoc:1867
 #, no-wrap
 msgid "Overriding the Default AML"
-msgstr ""
+msgstr "기본 AML 재정의하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1871
@@ -4701,6 +4996,9 @@ msgid ""
 "source language called ACPI Source Language (ASL).  The AML is found in the "
 "table known as the Differentiated System Description Table (DSDT)."
 msgstr ""
+"ACPI 기계어(AML)로 알려진 BIOS 바이트 코드는 ACPI 소스 언어(ASL)라는 소스 "
+"언어에서 컴파일됩니다.  AML은 차별화 시스템 설명 테이블(Differentiated "
+"System Description Table, DSDT)이라는 테이블에서 찾을 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1876
@@ -4714,6 +5012,14 @@ msgid ""
 "which non-standard behavior is allowed by Microsoft(R)'s interpreter and "
 "replicate it so that FreeBSD can work without forcing users to fix the ASL."
 msgstr ""
+"FreeBSD의 목표는 모든 사람이 사용자 개입 없이 작동하는 ACPI를 사용하는 "
+"것입니다.  BIOS 공급업체가 흔히 저지르는 실수에 대한 해결 방법은 여전히 개발 "
+"중입니다.  Microsoft(R) 인터프리터([.filename]#acpi.sys# 및 [."
+"filename]#acpiec.sys#)는 표준 준수 여부를 엄격하게 검사하지 않기 때문에, "
+"Windows(R)에서만 ACPI를 테스트하는 많은 BIOS 벤더들은 그들의 ASL을 수정하지 "
+"않습니다.  FreeBSD 개발자들은 Microsoft(R)의 인터프리터가 허용하는 비표준 "
+"동작을 지속적으로 식별하고 문서화하여 사용자가 ASL을 수정하지 않고도 "
+"FreeBSD가 작동할 수 있도록 복제하고 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1879
@@ -4723,12 +5029,16 @@ msgid ""
 "name, use `acpidump` with `-t`, to show the contents of the fixed tables, "
 "and `-d`, to disassemble the AML:"
 msgstr ""
+"버그가 있는 동작을 식별하고 수동으로 수정하는 데 도움이 되도록 시스템의 "
+"ASL을 복사할 수 있습니다.  시스템의 ASL을 지정된 파일 이름으로 복사하려면 "
+"`acpidump`에 고정 테이블의 내용을 표시하는 `-t`와 AML을 분해하는 `-d`를 함께 "
+"사용합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1883
 #, no-wrap
 msgid "# acpidump -td > my.asl\n"
-msgstr ""
+msgstr "# acpidump -td > my.asl\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1887
@@ -4737,6 +5047,9 @@ msgid ""
 "set `hw.acpi.osname=_\"Windows 2009\"_` in [.filename]#/boot/loader.conf#, "
 "using the most recent Windows(R) version listed in the ASL."
 msgstr ""
+"일부 AML 버전은 사용자가 Windows(R)를 실행하고 있다고 가정합니다.  이를 "
+"재정의하려면 ASL에 나열된 가장 최신 Windows(R) 버전을 사용하여 [.filename]#/"
+"boot/loader.conf#에 `hw.acpi.osname=_\"Windows 2009\"_`를 설정하세요."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1891
@@ -4746,12 +5059,16 @@ msgid ""
 "can usually be ignored, but errors are bugs that will usually prevent ACPI "
 "from working correctly."
 msgstr ""
+"다른 해결 방법을 사용하려면 [.filename]#my.asl#을 사용자 지정해야 할 수도 "
+"있습니다.  이 파일을 편집한 경우 다음 명령을 사용하여 새 ASL을 "
+"컴파일합니다.  경고는 일반적으로 무시할 수 있지만 오류는 일반적으로 ACPI가 "
+"올바르게 작동하지 못하게 하는 버그입니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1895
 #, no-wrap
 msgid "# iasl -f my.asl\n"
-msgstr ""
+msgstr "# iasl -f my.asl\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1899
@@ -4760,6 +5077,8 @@ msgid ""
 "compilation.  Some errors, such as missing return statements, are "
 "automatically worked around by the FreeBSD interpreter."
 msgstr ""
+"`-f`를 포함하면 컴파일 중에 오류가 있더라도 AML을 강제로 생성합니다.  누락된 "
+"반환문과 같은 일부 오류는 FreeBSD 인터프리터가 자동으로 해결합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1902
@@ -4768,6 +5087,9 @@ msgid ""
 "file instead of the BIOS's buggy copy, which is still present in flash "
 "memory, by editing [.filename]#/boot/loader.conf# as follows:"
 msgstr ""
+"`iasl`의 기본 출력 파일 이름은 [.filename]#DSDT.aml#입니다.  플래시 메모리에 "
+"여전히 존재하는 BIOS의 버그 복사본 대신 이 파일을 로드하려면 [.filename]#/"
+"boot/loader.conf#를 다음과 같이 편집합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1907
@@ -4776,6 +5098,8 @@ msgid ""
 "acpi_dsdt_load=\"YES\"\n"
 "acpi_dsdt_name=\"/boot/DSDT.aml\"\n"
 msgstr ""
+"acpi_dsdt_load=\"YES\"\n"
+"acpi_dsdt_name=\"/boot/DSDT.aml\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1911
@@ -4785,12 +5109,16 @@ msgid ""
 "ASL to {freebsd-acpi} so that developers can work around the buggy behavior "
 "in [.filename]#acpica#."
 msgstr ""
+"[.filename]#DSDT.aml#을 [.filename]#/boot#에 복사한 다음 시스템을 "
+"재부팅하세요.  이렇게 해서 문제가 해결되면 개발자가 [.filename]#acpica#에서 "
+"버그가 있는 동작을 해결할 수 있도록 이전 및 새 ASL의 man:diff[1]을 {freebsd-"
+"acpi}로 보내세요."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/config/_index.adoc:1913
 #, no-wrap
 msgid "Getting and Submitting Debugging Info"
-msgstr ""
+msgstr "디버깅 정보 얻기 및 제출하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1921
@@ -4806,6 +5134,15 @@ msgid ""
 "it is not lost as the console message buffer flushes.  A full list of the "
 "individual layers and levels is found in man:acpi[4]."
 msgstr ""
+"ACPI 드라이버에는 유연한 디버깅 기능이 있습니다. 하위 시스템 세트와 상세 "
+"수준을 지정할 수 있습니다.  디버깅할 서브시스템은 레이어로 지정되며 "
+"컴포넌트(`ACPI_ALL_COMPONENTS`)와 ACPI 하드웨어 지원(`ACPI_ALL_DRIVERS`)으로 "
+"구분됩니다.  디버깅 출력의 상세도는 레벨로 지정되며, 오류만 보고하는 "
+"것(`ACPI_LV_ERROR`)부터 모든 것을 보고하는 것(`ACPI_LV_VERBOSE`)까지 "
+"다양합니다.  레벨은 비트마스크이므로 공백으로 구분하여 여러 옵션을 한 번에 "
+"설정할 수 있습니다.  실제로는 직렬 콘솔을 사용하여 출력을 기록해야 콘솔 "
+"메시지 버퍼가 플러시될 때 손실되지 않습니다.  개별 레이어와 레벨의 전체 "
+"목록은 man:acpi[4]에서 확인할 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1925
@@ -4816,12 +5153,17 @@ msgid ""
 "globally.  If a module is used instead of a custom kernel, recompile just "
 "the [.filename]#acpi.ko# module as follows:"
 msgstr ""
+"디버깅 출력은 기본적으로 활성화되어 있지 않습니다. 활성화하려면 ACPI가 "
+"커널로 컴파일된 경우 커스텀 커널 구성 파일에 `options ACPI_DEBUG`를 "
+"추가합니다.  전역으로 활성화하려면 [.filename]#/etc/make.conf#에 "
+"`ACPI_DEBUG=1`을 추가합니다.  커스텀 커널 대신 모듈을 사용하는 경우 다음과 "
+"같이 [.filename]#acpi.ko# 모듈만 다시 컴파일하세요:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1929
 #, no-wrap
 msgid "# cd /sys/modules/acpi/acpi && make clean && make ACPI_DEBUG=1\n"
-msgstr ""
+msgstr "# cd /sys/modules/acpi/acpi && make clean && make ACPI_DEBUG=1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1933
@@ -4831,6 +5173,10 @@ msgid ""
 "in this example enable debug messages for all ACPI components and hardware "
 "drivers and output error messages at the least verbose level:"
 msgstr ""
+"컴파일된 [.filename]#acpi.ko#를 [.filename]#/boot/kernel#에 복사하고 원하는 "
+"레벨과 레이어를 [.filename]#/boot/loader.conf#에 추가합니다.  이 예제의 "
+"항목은 모든 ACPI 구성 요소 및 하드웨어 드라이버에 대한 디버그 메시지를 "
+"활성화하고 최소 상세 수준에서 오류 메시지를 출력합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1938
@@ -4839,6 +5185,8 @@ msgid ""
 "debug.acpi.layer=\"ACPI_ALL_COMPONENTS ACPI_ALL_DRIVERS\"\n"
 "debug.acpi.level=\"ACPI_LV_ERROR\"\n"
 msgstr ""
+"debug.acpi.layer=\"ACPI_ALL_COMPONENTS ACPI_ALL_DRIVERS\"\n"
+"debug.acpi.level=\"ACPI_LV_ERROR\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1943
@@ -4850,6 +5198,11 @@ msgid ""
 "using `sysctl` are named the same as the tunables in [.filename]#/boot/"
 "loader.conf#."
 msgstr ""
+"일시 중단 후 재개와 같은 특정 이벤트에 의해 필요한 정보가 트리거되는 경우 [."
+"filename]#/boot/loader.conf#를 수정하지 마세요.  대신, 부팅 후 특정 이벤트에 "
+"대비하여 시스템을 준비한 후 `sysctl`을 사용하여 레이어와 레벨을 지정하세요.  "
+"`sysctl`을 사용하여 설정할 수 있는 변수의 이름은 [.filename]#/boot/loader."
+"conf#의 튜너블과 동일합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1945
@@ -4858,6 +5211,8 @@ msgid ""
 "so that it can be used by the FreeBSD ACPI maintainers to identify the root "
 "cause of the problem and to develop a solution."
 msgstr ""
+"디버깅 정보가 수집되면 {freebsd-acpi}로 전송되어 FreeBSD ACPI 유지 관리자가 "
+"문제의 근본 원인을 파악하고 해결책을 개발하는 데 사용할 수 있습니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1949
@@ -4866,11 +5221,14 @@ msgid ""
 "latest BIOS version is installed and, if available, the embedded controller "
 "firmware version."
 msgstr ""
+"이 메일링 리스트에 디버깅 정보를 제출하기 전에 최신 BIOS 버전이 설치되어 "
+"있는지, 가능한 경우 임베디드 컨트롤러 펌웨어 버전이 설치되어 있는지 "
+"확인합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1952
 msgid "When submitting a problem report, include the following information:"
-msgstr ""
+msgstr "문제 보고서를 제출할 때는 다음 정보를 포함하세요:"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1954
@@ -4879,13 +5237,16 @@ msgid ""
 "anything that causes the bug to appear. Note as accurately as possible when "
 "the bug began occurring if it is new."
 msgstr ""
+"시스템 유형, 모델, 버그를 발생시킨 원인 등 버그가 발생한 동작에 대한 "
+"설명입니다. 새로운 버그인 경우 버그가 언제 발생하기 시작했는지 가능한 한 "
+"정확하게 기록하세요."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1955
 msgid ""
 "The output of `dmesg` after running `boot -v`, including any error messages "
 "generated by the bug."
-msgstr ""
+msgstr "`boot -v`를 실행한 후 `dmesg`의 출력(버그로 인해 생성된 오류 메시지 포함)."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1956
@@ -4893,12 +5254,14 @@ msgid ""
 "The `dmesg` output from `boot -v` with ACPI disabled, if disabling ACPI "
 "helps to fix the problem."
 msgstr ""
+"ACPI를 비활성화하여 문제를 해결하는 데 도움이 되는 경우, ACPI를 비활성화한 "
+"상태에서 `boot -v`의 `dmesg` 출력을 확인합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1957
 msgid ""
 "Output from `sysctl hw.acpi`. This lists which features the system offers."
-msgstr ""
+msgstr "`sysctl hw.acpi`의 출력. 시스템이 제공하는 기능을 나열합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1958
@@ -4907,12 +5270,14 @@ msgid ""
 "directly to the list as it can be very large. Generate a copy of the ASL by "
 "running this command:"
 msgstr ""
+"붙여넣은 버전의 시스템 ASL에 대한 URL. ASL은 매우 클 수 있으므로 목록에 직접 "
+"보내지 마세요. 이 명령을 실행하여 ASL의 복사본을 생성합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/config/_index.adoc:1962
 #, no-wrap
 msgid "# acpidump -dt > name-system.asl\n"
-msgstr ""
+msgstr "# acpidump -dt > name-system.asl\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1966
@@ -4920,6 +5285,8 @@ msgid ""
 "Substitute the login name for _name_ and manufacturer/model for _system_.  "
 "For example, use [.filename]#njl-FooCo6000.asl#."
 msgstr ""
+"로그인 이름을 _이름_으로, 제조사/모델을 _시스템_으로 대체합니다.  예를 들어 ["
+".filename]#njl-FooCo6000.asl#을 사용합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1973
@@ -4932,17 +5299,23 @@ msgid ""
 "send a PR without emailing {freebsd-acpi} first as it is likely that the "
 "problem has been reported before."
 msgstr ""
+"대부분의 FreeBSD 개발자는 {freebsd-current}를 보지만, {freebsd-acpi}에 "
+"문제를 제출해야 볼 수 있습니다.  응답을 기다릴 때는 인내심을 가지세요.  "
+"버그가 즉시 드러나지 않는다면 버그 리포트를 제출하세요.  PR을 입력할 때 "
+"위에서 요청한 것과 동일한 정보를 포함하세요.  이렇게 하면 개발자가 문제를 "
+"추적하고 해결하는 데 도움이 됩니다.  이전에 문제가 보고되었을 가능성이 "
+"높으므로 {freebsd-acpi}에 먼저 이메일을 보내지 않고 PR을 보내지 마세요."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/config/_index.adoc:1975
 #, no-wrap
 msgid "References"
-msgstr ""
+msgstr "참고 자료"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1978
 msgid "More information about ACPI may be found in the following locations:"
-msgstr ""
+msgstr "ACPI에 대한 자세한 정보는 다음 위치에서 확인할 수 있습니다:"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1980
@@ -4950,13 +5323,15 @@ msgid ""
 "The FreeBSD ACPI Mailing List Archives (https://lists.freebsd.org/pipermail/"
 "freebsd-acpi/[https://lists.freebsd.org/pipermail/freebsd-acpi/])"
 msgstr ""
+"FreeBSD ACPI 메일링 리스트 아카이브(https://lists.freebsd.org/pipermail/"
+"freebsd-acpi/[https://lists.freebsd.org/pipermail/freebsd-acpi/])"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1981
 msgid ""
 "The ACPI 2.0 Specification (http://acpi.info/spec.htm[http://acpi.info/spec."
 "htm])"
-msgstr ""
+msgstr "ACPI 2.0 사양 (http://acpi.info/spec.htm[http://acpi.info/spec.htm])"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/config/_index.adoc:1981
@@ -4964,3 +5339,4 @@ msgid ""
 "man:acpi[4], man:acpi_thermal[4], man:acpidump[8], man:iasl[8], and man:"
 "acpidb[8]"
 msgstr ""
+"man:acpi[4], man:acpi_thermal[4], man:acpidump[8], man:iasl[8], man:acpidb[8]"
