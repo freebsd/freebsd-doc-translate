@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-07-07 23:23-0300\n"
-"PO-Revision-Date: 2023-04-30 01:04+0000\n"
+"PO-Revision-Date: 2023-04-30 08:42+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlesrc-scripting_index/pt_BR/>\n"
@@ -1800,6 +1800,11 @@ msgid ""
 "filename]#UPPERCASE# names.  Their list and purposes can be found in man:"
 "rc[8]."
 msgstr ""
+"Além das condições correspondentes a um único serviço, existem meta-"
+"condições e seus scripts \"placeholder\" usados para garantir que certos "
+"grupos de operações sejam executados antes de outros. Estes são denotados "
+"por nomes em [.filename]#UPPERCASE#. Sua lista e propósitos podem ser "
+"encontrados no manual man:rc[8]."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:679
@@ -1812,6 +1817,14 @@ msgid ""
 "script should be able to cope with any required services being unavailable.  "
 "In certain cases, we can help it as discussed <<forcedep, below>>"
 msgstr ""
+"Lembre-se de que colocar o nome de um serviço na linha `REQUIRE:` não "
+"garante que o serviço realmente estará em execução no momento em que o "
+"script começar. O serviço necessário pode falhar ao iniciar ou simplesmente "
+"ser desativado em man:rc.conf[5]. Obviamente, o man:rcorder[8] não pode "
+"controlar esses detalhes e o man:rc[8] também não fará isso. "
+"Consequentemente, a aplicação iniciada pelo nosso script deve ser capaz de "
+"lidar com qualquer serviço necessário que esteja indisponível. Em certos "
+"casos, podemos ajudá-lo conforme discutido <<forcedep, abaixo>>"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:684
@@ -1824,6 +1837,14 @@ msgid ""
 "keyword from the keep list (unless empty) and not having a keyword from the "
 "skip list."
 msgstr ""
+"[[keywords]]&#10125; Como lembramos do texto acima, as palavras-chave do "
+"man:rcorder[8] podem ser usadas para selecionar ou deixar de fora alguns "
+"scripts. Qualquer consumidor do man:rcorder[8] pode especificar, através das "
+"opções `-k` e `-s`, quais palavras-chave estarão na \"lista de manutenção\" "
+"e na \"lista de exclusão\", respectivamente. De todos os arquivos a serem "
+"ordenados por dependência, man:rcorder[8] escolherá apenas aqueles que "
+"tiverem uma palavra-chave da lista de manutenção (a menos que esteja vazia) "
+"e que não tiverem uma palavra-chave da lista de exclusão."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:687
@@ -1832,6 +1853,9 @@ msgid ""
 "etc/rc.shutdown#.  These two scripts define the standard list of FreeBSD [."
 "filename]#rc.d# keywords and their meanings as follows:"
 msgstr ""
+"No FreeBSD, o man:rcorder[8] é usado por [.filename]#/etc/rc# e [.filename]#/"
+"etc/rc.shutdown#. Esses dois scripts definem a lista padrão de palavras-"
+"chaves do FreeBSD [.filename]#rc.d# e seus significados da seguinte forma:"
 
 #. type: Labeled list
 #: documentation/content/en/articles/rc-scripting/_index.adoc:688
@@ -1845,6 +1869,9 @@ msgid ""
 "The service is not for man:jail[8] environment.  The automatic startup and "
 "shutdown procedures will ignore the script if inside a jail."
 msgstr ""
+"O serviço não é para ambiente man:jail[8]. Os procedimentos automáticos de "
+"inicialização e desligamento ignorarão o script se estiver dentro de uma "
+"jail."
 
 #. type: Labeled list
 #: documentation/content/en/articles/rc-scripting/_index.adoc:691
@@ -1860,6 +1887,10 @@ msgid ""
 "filename]#shutdown# keyword, this can be used to write scripts that do "
 "something only at system shutdown."
 msgstr ""
+"O serviço deve ser iniciado manualmente ou não iniciado de forma alguma. O "
+"procedimento de inicialização automático ignorará o script. Em conjunto com "
+"a palavra-chave [.filename]#shutdown#, isso pode ser usado para escrever "
+"scripts que fazem algo apenas no desligamento do sistema."
 
 #. type: Labeled list
 #: documentation/content/en/articles/rc-scripting/_index.adoc:695
@@ -1873,6 +1904,8 @@ msgid ""
 "This keyword is to be listed __explicitly__ if the service needs to be "
 "stopped before system shutdown."
 msgstr ""
+"Este palavra-chave deve ser listada de forma __explícita__ se o serviço "
+"precisa ser parado antes do desligamento do sistema."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:709
@@ -1896,6 +1929,26 @@ msgid ""
 "special actions to shut down cleanly.  A typical example of such a service "
 "is a database engine."
 msgstr ""
+"Quando o sistema está prestes a desligar, o arquivo [.filename]#/etc/rc."
+"shutdown# é executado. Ele assume que a maioria dos scripts [.filename]#rc.d#"
+" não tem nada a fazer nesse momento. Portanto, o [.filename]#/etc/rc."
+"shutdown# invoca seletivamente scripts [.filename]#rc.d# com a palavra-chave "
+"[.filename]#shutdown#, ignorando efetivamente o restante dos scripts. Para "
+"desligamento ainda mais rápido, o [.filename]#/etc/rc.shutdown# passa o "
+"comando [.filename]#faststop# para os scripts que executa para que eles "
+"pulem verificações preliminares, como a verificação do pidfile. Como os "
+"serviços dependentes devem ser interrompidos antes de suas dependências, o [."
+"filename]#/etc/rc.shutdown# executa os scripts em ordem de dependência "
+"reversa. Se você está escrevendo um script [.filename]#rc.d# real, deve "
+"considerar se ele é relevante no momento do desligamento do sistema. Por "
+"exemplo, se o seu script faz seu trabalho apenas em resposta ao comando [."
+"filename]#start#, então você não precisa incluir essa palavra-chave. No "
+"entanto, se o seu script gerencia um serviço, é provavelmente uma boa ideia "
+"pará-lo antes que o sistema prossiga para o estágio final de sua sequência "
+"de desligamento descrita em man:halt[8]. Em particular, um serviço deve ser "
+"interrompido explicitamente se precisar de tempo considerável ou ações "
+"especiais para ser desligado corretamente. Um exemplo típico desse tipo de "
+"serviço é um mecanismo de banco de dados."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:713
@@ -1904,6 +1957,10 @@ msgid ""
 "care.  It is generally better to revise the hierarchy of configuration "
 "variables for your [.filename]#rc.d# scripts if they are interdependent."
 msgstr ""
+"[[forcedep]] &#10126; Em primeiro lugar, `force_depend` deve ser usado com "
+"muito cuidado. Geralmente, é melhor revisar a hierarquia das variáveis de "
+"configuração para seus scripts [.filename]#rc.d# se eles são "
+"interdependentes."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:722
@@ -1919,6 +1976,17 @@ msgid ""
 "not running.  A warning message will be emitted by `force_depend` because it "
 "should be invoked only if a misconfiguration has been detected."
 msgstr ""
+"Se ainda assim você não puder abrir mão do `force_depend`, o exemplo oferece "
+"um exemplo de como invocá-lo condicionalmente. No exemplo, nosso daemon "
+"`mumbled` requer que outro daemon, `frotz`, seja iniciado antecipadamente. "
+"No entanto, `frotz` também é opcional; e o man:rcorder[8] não conhece esses "
+"detalhes. Felizmente, nosso script tem acesso a todas as variáveis de man:rc."
+"conf[5]. Se `frotz_enable` for verdadeiro, esperamos o melhor e confiamos no "
+"[.filename]#rc.d# para ter iniciado `frotz`. Caso contrário, verificamos "
+"forçadamente o status de `frotz`. Finalmente, impomos nossa dependência em "
+"`frotz` se ele não estiver em execução. Uma mensagem de aviso será emitida "
+"por `force_depend`, pois ele só deve ser invocado se uma configuração "
+"incorreta for detectada."
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:724
@@ -1943,6 +2011,20 @@ msgid ""
 "the respective [.filename]#rc.d# script calls for an extra argument, the "
 "interface name."
 msgstr ""
+"Quando invocado durante a inicialização ou desligamento, um script [."
+"filename]#rc.d# deve agir em todo o subsistema pelo qual é responsável. Por "
+"exemplo, o [.filename]#/etc/rc.d/netif# deve iniciar ou parar todas as "
+"interfaces de rede descritas em man:rc.conf[5]. Cada tarefa pode ser "
+"indicada por um único argumento de comando, como `start` ou `stop`. Entre a "
+"inicialização e o desligamento, os scripts [.filename]#rc.d# ajudam o "
+"administrador a controlar o sistema em execução e é quando surge a "
+"necessidade de mais flexibilidade e precisão. Por exemplo, o administrador "
+"pode querer adicionar as configurações de uma nova interface de rede em "
+"man:rc.conf[5] e, em seguida, iniciá-la sem interferir na operação das "
+"interfaces existentes. Na próxima vez, o administrador pode precisar "
+"desligar uma única interface de rede. Para facilitar o uso na linha de "
+"comando, o respectivo script [.filename]#rc.d# pede um argumento extra, o "
+"nome da interface."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:736
@@ -1951,6 +2033,9 @@ msgid ""
 "script's methods (within the system limits).  Due to that, the changes in "
 "the script itself can be minimal."
 msgstr ""
+"Felizmente, o man:rc.subr[8] permite passar qualquer número de argumentos "
+"para os métodos do script (dentro dos limites do sistema). Devido a isso, as "
+"mudanças no próprio script podem ser mínimas."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:741
@@ -1962,6 +2047,13 @@ msgid ""
 "filename]#rc.d# dictates that it is for the main script to decide which "
 "arguments are to be passed to its methods."
 msgstr ""
+"Como o man:rc.subr[8] pode ter acesso aos argumentos adicionais da linha de "
+"comando? Ele deve simplesmente pegá-los diretamente? De maneira alguma! Em "
+"primeiro lugar, uma função do man:sh[1] não tem acesso aos parâmetros "
+"posicionais de quem a chamou, mas o man:rc.subr[8] é apenas um conjunto "
+"dessas funções. Em segundo lugar, a boa prática do [.filename]#rc.d# dita "
+"que é responsabilidade do script principal decidir quais argumentos devem "
+"ser passados para seus métodos."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:745
@@ -1973,6 +2065,12 @@ msgid ""
 "is `$2` in the original command line will be presented as `$1` to the "
 "method, and so on."
 msgstr ""
+"Portanto, a abordagem adotada pelo man:rc.subr[8] é a seguinte: "
+"`run_rc_command` passa todos os seus argumentos, exceto o primeiro, ao "
+"respectivo método sem alterações. O primeiro argumento omitido é o nome do "
+"método em si: `start`, `stop`, etc. Ele será removido por `run_rc_command`, "
+"então o que é `$2` na linha de comando original será apresentado como `$1` "
+"para o método, e assim por diante."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:748
