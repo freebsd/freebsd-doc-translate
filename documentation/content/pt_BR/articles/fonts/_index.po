@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:21-0300\n"
-"PO-Revision-Date: 2023-05-02 19:51+0000\n"
+"PO-Revision-Date: 2023-05-02 20:10+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlesfonts_index/pt_BR/>\n"
@@ -797,6 +797,11 @@ msgid ""
 "Using the font from the previous example, here is how to use it with "
 "Ghostscript:"
 msgstr ""
+"O Ghostscript referencia uma fonte por meio de seu arquivo [."
+"filename]#Fontmap#. Este arquivo deve ser modificado de maneira semelhante "
+"ao arquivo [.filename]#fonts.dir# do X11. O Ghostscript pode usar fontes em "
+"formato [.filename]#.pfa# ou [.filename]#.pfb#. Usando a fonte do exemplo "
+"anterior, aqui está como usá-la com o Ghostscript:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/fonts/_index.adoc:327
@@ -806,6 +811,9 @@ msgid ""
 "% cd /usr/local/share/ghostscript/fonts\n"
 "% ln -s /usr/local/share/fonts/type1/showboat.pfb .\n"
 msgstr ""
+"Coloque a fonte no diretório de fontes do Ghostscript.\n"
+"% cd /usr/local/share/ghostscript/fonts\n"
+"% ln -s /usr/local/share/fonts/type1/showboat.pfb .\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/fonts/_index.adoc:335
@@ -819,6 +827,13 @@ msgid ""
 ".\n"
 ":wq\n"
 msgstr ""
+"Edite o arquivo Fontmap para que o Ghostscript saiba sobre a fonte\n"
+"% cd /usr/local/share/ghostscript/4.01\n"
+"% ex Fontmap\n"
+":$a\n"
+"/Showboat        (showboat.pfb) ; % From CICA /fonts/atm/showboat\n"
+".\n"
+":wq\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/fonts/_index.adoc:351
@@ -840,11 +855,30 @@ msgid ""
 ">>showpage, press <return> to continue<<\n"
 "GS>quit\n"
 msgstr ""
+"Use o Ghostscript para examinar a fonte.\n"
+"% gs prfont.ps\n"
+"Aladdin Ghostscript 4.01 (1996-7-10)\n"
+"Copyright (C) 1996 Aladdin Enterprises, Menlo Park, CA.  All rights\n"
+"reserved.\n"
+"This software comes with NO WARRANTY: see the file PUBLIC for details.\n"
+"Loading Times-Roman font from /usr/local/share/ghostscript/fonts/tir_____."
+"pfb...\n"
+" /1899520 581354 1300084 13826 0 done.\n"
+"GS>Showboat DoFont\n"
+"Loading Showboat font from /usr/local/share/ghostscript/fonts/showboat.pfb..."
+"\n"
+" 1939688 565415 1300084 16901 0 done.\n"
+">>showpage, press <return> to continue<<\n"
+">>showpage, press <return> to continue<<\n"
+">>showpage, press <return> to continue<<\n"
+"GS>quit\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:354
 msgid "References: [.filename]#fonts.txt# in the Ghostscript 4.01 distribution"
 msgstr ""
+"Referências: arquivo [.filename]#fonts.txt# na distribuição do Ghostscript 4."
+"01"
 
 #. type: Title ==
 #: documentation/content/en/articles/fonts/_index.adoc:356
@@ -863,18 +897,26 @@ msgid ""
 "With our example, the font file could be [.filename]#/usr/share/groff_font/"
 "devps/SHOWBOAT#.  The file must be created using tools provided by groff."
 msgstr ""
+"Agora que a nova fonte pode ser usada tanto pelo X11 quanto pelo "
+"Ghostscript, como se pode usá-la com o groff? Em primeiro lugar, uma vez que "
+"estamos lidando com fontes PostScript(R) type 1, o dispositivo groff que é "
+"aplicável é o dispositivo _ps_. Um arquivo de fonte deve ser criado para "
+"cada fonte que o groff possa usar. Um nome de fonte groff é apenas um "
+"arquivo em [.filename]#/usr/share/groff_font/devps#. Em nosso exemplo, o "
+"arquivo de fonte poderia ser [.filename]#/usr/share/groff_font/devps/"
+"SHOWBOAT#. O arquivo deve ser criado usando ferramentas fornecidas pelo "
+"groff."
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:367
-#, fuzzy
 msgid ""
 "The first tool is `afmtodit`.  This is not normally installed, so it must be "
 "retrieved from the source distribution.  I found I had to change the first "
 "line of the file, so I did:"
 msgstr ""
-"A primeira ferramenta é o <command>afmtodit</command>. Ela normalmente não "
-"está instalada, então deve ser baixada de uma fonte de distribuição. Eu "
-"percebi que teria que mudar a primeira linha do arquivo, então eu fiz:"
+"A primeira ferramenta é `afmtodit`. Ela não costuma ser instalada por "
+"padrão, então é necessário obtê-la da distribuição de origem. Descobri que "
+"precisei alterar a primeira linha do arquivo, então fiz o seguinte:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/fonts/_index.adoc:376
@@ -887,6 +929,12 @@ msgid ""
 ".\n"
 ":wq\n"
 msgstr ""
+"% cp /usr/src/gnu/usr.bin/groff/afmtodit/afmtodit.pl /tmp\n"
+"% ex /tmp/afmtodit.pl\n"
+":1c\n"
+"#!/usr/bin/perl -P-\n"
+".\n"
+":wq\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:380
@@ -894,6 +942,8 @@ msgid ""
 "This tool will create the groff font file from the metrics file ([."
 "filename]#.afm# suffix.)  Continuing with our example:"
 msgstr ""
+"Essa ferramenta criará o arquivo de fonte do groff a partir do arquivo de "
+"métricas (sufixo [.filename]#.afm#). Continuando com nosso exemplo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/fonts/_index.adoc:388
@@ -905,6 +955,12 @@ msgid ""
 "% cat /usr/local/share/fonts/type1/showboat.afm |\n"
 "\ttr '\\015' '\\012' >showboat.afm\n"
 msgstr ""
+"Muitos arquivos .afm estão no formato Mac, com linhas delimitadas por ^M. \n"
+"É necessário convertê-los para o estilo UNIX(R), com linhas delimitadas por "
+"^J.\n"
+"% cd /tmp\n"
+"% cat /usr/local/share/fonts/type1/showboat.afm |\n"
+"\ttr '\\015' '\\012' >showboat.afm\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/fonts/_index.adoc:392
@@ -914,6 +970,10 @@ msgid ""
 "% cd /usr/share/groff_font/devps\n"
 "% /tmp/afmtodit.pl -d DESC -e text.enc /tmp/showboat.afm generate/textmap SHOWBOAT\n"
 msgstr ""
+"Agora crie o arquivo de fonte do groff.\n"
+"% cd /usr/share/groff_font/devps\n"
+"% /tmp/afmtodit.pl -d DESC -e text.enc /tmp/showboat.afm generate/textmap "
+"SHOWBOAT\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:395
@@ -933,6 +993,16 @@ msgid ""
 "[.filename]#download# must reference the internal name of the font.  This "
 "can easily be determined from the groff font file as illustrated:"
 msgstr ""
+"Se o Ghostscript for usado para controlar as impressoras no sistema, então "
+"nada mais precisa ser feito. No entanto, se forem usadas impressoras "
+"PostScript(R) reais, a fonte deve ser baixada para a impressora para que a "
+"fonte seja usada (a menos que a impressora tenha a fonte showboat "
+"incorporada ou em um disco de fonte acessível). O último passo é criar uma "
+"fonte transferível. A ferramenta `pfbtops` é usada para criar o formato [."
+"filename]#.pfa# da fonte, e o arquivo [.filename]#download# é modificado "
+"para referenciar a nova fonte. O arquivo [.filename]#download# deve fazer "
+"referência ao nome interno da fonte. Isso pode ser facilmente determinado a "
+"partir do arquivo de fonte do groff, como ilustrado:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/fonts/_index.adoc:407
@@ -941,16 +1011,17 @@ msgid ""
 "Create the .pfa font file\n"
 "% pfbtops /usr/local/share/fonts/type1/showboat.pfb >showboat.pfa\n"
 msgstr ""
+"Crie o arquivo de fonte .pfa.\n"
+"% pfbtops /usr/local/share/fonts/type1/showboat.pfb >showboat.pfa\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:410
-#, fuzzy
 msgid ""
 "Of course, if [.filename]#.pfa# is already available, just use a symbolic "
 "link to reference it."
 msgstr ""
-"Claro que, se o arquivo<filename>.pfa</filename> já existe, apenas crie um "
-"link simbólico para referenciá-lo."
+"Claro, se o arquivo [.filename]#.pfa# já estiver disponível, basta usar um "
+"link simbólico para fazer referência a ele."
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/fonts/_index.adoc:422
@@ -966,6 +1037,15 @@ msgid ""
 ".\n"
 ":wq\n"
 msgstr ""
+"Obtenha o nome interno da fonte\n"
+"% fgrep internalname SHOWBOAT\n"
+"internalname Showboat\n"
+"Informe ao groff que a fonte deve ser baixada.\n"
+"% ex download\n"
+":$a\n"
+"Showboat      showboat.pfa\n"
+".\n"
+":wq\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:425
@@ -1005,6 +1085,36 @@ msgid ""
 "EOF\n"
 "% groff -Tps example.t >example.ps\n"
 msgstr ""
+"% cd /tmp\n"
+"% cat >exemplo.t <<EOF\n"
+".sp 5\n"
+".ps 16\n"
+"Este é um exemplo da fonte Showboat:\n"
+".br\n"
+".ps 48\n"
+".vs (\\n"
+"(.s+2)p\n"
+".sp\n"
+".ft SHOWBOAT\n"
+"ABCDEFGHI\n"
+".br\n"
+"JKLMNOPQR\n"
+".br\n"
+"STUVWXYZ\n"
+".sp\n"
+".ps 16\n"
+".vs (\\n"
+"(.s+2)p\n"
+".fp 5 SHOWBOAT\n"
+".ft R\n"
+"Para usá-lo como a primeira letra de um parágrafo, ficará assim:\n"
+".sp 50p\n"
+"\\s(48\\f5H\\s0\\fRqui está a primeira frase de um parágrafo que usa a\n"
+"fonte showboat como a primeira letra.\n"
+"Deve-se usar espaço vertical adicional para permitir espaço para a letra "
+"maior.\n"
+"EOF\n"
+"% groff -Tps example.t > exemplo.ps\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/fonts/_index.adoc:459
@@ -1013,6 +1123,8 @@ msgid ""
 "To use ghostscript/ghostview\n"
 "% ghostview example.ps\n"
 msgstr ""
+"Para usar o ghostscript/ghostview\n"
+"% ghostview example.ps\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/fonts/_index.adoc:462
@@ -1021,6 +1133,8 @@ msgid ""
 "To print it\n"
 "% lpr -Ppostscript example.ps\n"
 msgstr ""
+"Para imprimir:\n"
+"% lpr -Ppostscript example.ps\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:465
@@ -1028,6 +1142,8 @@ msgid ""
 "References: [.filename]#/usr/src/gnu/usr.bin/groff/afmtodit/afmtodit.man#, "
 "man:groff_font[5], man:groff_char[7], man:pfbtops[1]."
 msgstr ""
+"Referências: [.filename]#/usr/src/gnu/usr.bin/groff/afmtodit/afmtodit.man#, "
+"man:groff_font[5], man:groff_char[7], man:pfbtops[1]."
 
 #. type: Title ==
 #: documentation/content/en/articles/fonts/_index.adoc:467
@@ -1038,31 +1154,29 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:471
-#, fuzzy
 msgid ""
 "This potentially requires a bit of work, simply because it depends on some "
 "utilities that are not installed as part of the base system.  They are:"
 msgstr ""
-"Isso potencialmente requer um pouco de trabalho, simplesmente porque depende "
-"de alguns utilitários que não são instalados como parte do sistema base. "
-"Eles são:"
+"Isso pode requerer um pouco de trabalho, simplesmente porque depende de "
+"algumas ferramentas que não são instaladas como parte do sistema base. Elas "
+"são:"
 
 #. type: Labeled list
 #: documentation/content/en/articles/fonts/_index.adoc:472
 #, no-wrap
 msgid "`ttf2pf`"
-msgstr ""
+msgstr "`ttf2pf`"
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:475
-#, fuzzy
 msgid ""
 "TrueType to PostScript conversion utilities.  This allows conversion of a "
 "TrueType font to an ascii font metric ([.filename]#.afm#) file."
 msgstr ""
-"Utilitário de conversão TrueType para PostScript. Ee permite a conversão de "
-"uma fonte TrueType em um arquivo de métrica de fonte ascii (<filename>.afm</"
-"filename>)."
+"Utilitários de conversão de TrueType para PostScript. Isso permite a "
+"conversão de uma fonte TrueType para um arquivo de métricas de fonte ascii (["
+".filename]#.afm#)."
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:479
@@ -1073,6 +1187,12 @@ msgid ""
 "holding down kbd:[Shift] when clicking on the link.  Otherwise, your browser "
 "may try to launch ghostview to view them."
 msgstr ""
+"Disponível atualmente em http://sunsite.icm.edu.pl/pub/GUST/contrib/"
+"BachoTeX98/ttf2pf/[http://sunsite.icm.edu.pl/pub/GUST/contrib/BachoTeX98/"
+"ttf2pf/]. Observe: esses arquivos são programas PostScript e devem ser "
+"baixados para o disco mantendo pressionada a tecla kbd:[Shift] ao clicar no "
+"link. Caso contrário, o seu navegador pode tentar abrir o ghostview para "
+"visualizá-los."
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:481
@@ -1082,17 +1202,17 @@ msgstr "Os arquivos de interesse são:"
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:483
 msgid "[.filename]#GS_TTF.PS#"
-msgstr ""
+msgstr "[.filename]#GS_TTF.PS#"
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:484
 msgid "[.filename]#PF2AFM.PS#"
-msgstr ""
+msgstr "[.filename]#PF2AFM.PS#"
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:485
 msgid "[.filename]#ttf2pf.ps#"
-msgstr ""
+msgstr "[.filename]#ttf2pf.ps#"
 
 #. type: Plain text
 #: documentation/content/en/articles/fonts/_index.adoc:491
