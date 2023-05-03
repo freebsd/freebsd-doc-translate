@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:21-0300\n"
-"PO-Revision-Date: 2023-05-03 19:24+0000\n"
+"PO-Revision-Date: 2023-05-03 19:42+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlesgeom-class_index/pt_BR/>\n"
@@ -139,6 +139,10 @@ msgid ""
 "g_provider[9], man:g_consumer[9], man:g_access[9] & others linked from "
 "those, for documentation on specific functionalities."
 msgstr ""
+"As páginas de manual man:g_bio[9], man:g_event[9], man:g_data[9], "
+"man:g_geom[9], man:g_provider[9], man:g_consumer[9], man:g_access[9] e "
+"outras vinculadas a elas, para documentação sobre funcionalidades "
+"específicas."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:68
@@ -147,6 +151,9 @@ msgid ""
 "conventions which must be followed for any code which is to be committed to "
 "the FreeBSD tree."
 msgstr ""
+"A página de manual man:style[9] - para documentação sobre as convenções de "
+"estilo de codificação que devem ser seguidas para qualquer código que seja "
+"commitado para a árvore do FreeBSD."
 
 #. type: Title ==
 #: documentation/content/en/articles/geom-class/_index.adoc:70
@@ -156,7 +163,6 @@ msgstr "Preliminares"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:77
-#, fuzzy
 msgid ""
 "The best way to do kernel development is to have (at least) two separate "
 "computers.  One of these would contain the development environment and "
@@ -167,15 +173,14 @@ msgid ""
 "require a proper display.  Instead, it could be connected with a serial "
 "cable or KVM to the first one."
 msgstr ""
-"A melhor maneira de fazer o desenvolvimento do kernel é ter (pelo menos) "
-"dois computadores separados. Um deles conteria o ambiente de desenvolvimento "
-"e o código fonte, e o outro seria usado para testar o código recém escrito, "
-"inicializando por meio da rede e montando seu sistema de arquivo a partir do "
-"primeiro computador. Desta forma, se o novo código contiver erros e travar a "
-"máquina, isso não irá atrapalhar o código fonte (e nem nenhum outros dado "
-"<quote>vivo</quote>). O segundo sistema nem sequer requer um monitor "
-"adequado. Em vez disso, ele pode ser conectado por meio de um cabo serial ou "
-"KVM ao primeiro computador."
+"A melhor maneira de desenvolver para o kernel é ter (pelo menos) dois "
+"computadores separados. Um deles conteria o ambiente de desenvolvimento e as "
+"fontes, e o outro seria usado para testar o código recém-escrito por meio do "
+"boot e montagem de sistemas de arquivos por rede do primeiro. Dessa forma, "
+"se o novo código contiver erros e travar a máquina, ele não afetará as "
+"fontes (e outros dados \"ao vivo\"). O segundo sistema nem mesmo precisa de "
+"uma tela adequada. Em vez disso, ele pode ser conectado com um cabo serial "
+"ou KVM para o primeiro."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:80
@@ -186,6 +191,12 @@ msgid ""
 "http://www.vmware.com/[VMWare] or http://www.qemu.org/[QEmu] virtual machine "
 "(the next best thing after a dedicated development machine)."
 msgstr ""
+"No entanto, como nem todo mundo tem dois ou mais computadores disponíveis, "
+"existem algumas coisas que podem ser feitas para preparar um sistema \"ao "
+"vivo\" para o desenvolvimento de código do kernel. Essa configuração também "
+"é aplicável para desenvolvimento em uma máquina virtual http://www.vmware."
+"com/[VMWare] ou http://www.qemu.org/[QEmu] (a próxima melhor opção depois de "
+"uma máquina de desenvolvimento dedicada)."
 
 #. type: Title ===
 #: documentation/content/en/articles/geom-class/_index.adoc:82
@@ -195,18 +206,17 @@ msgstr "Modificando um sistema para desenvolvimento"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:85
-#, fuzzy
 msgid ""
 "For any kernel programming a kernel with `INVARIANTS` enabled is a must-"
 "have. So enter these in your kernel configuration file:"
 msgstr ""
-"Para qualquer programação do kernel, um kernel com a opção "
-"<option>INVARIANTS</option> ativada é obrigatório. Então, digite estas "
-"linhas no seu arquivo de configuração do kernel:"
+"Para qualquer programação de kernel, é essencial ter um kernel com "
+"`INVARIANTS` ativado. Portanto, adicione as seguintes opções no arquivo de "
+"configuração do kernel:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/geom-class/_index.adoc:90
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "options INVARIANT_SUPPORT\n"
 "options INVARIANTS\n"
@@ -220,12 +230,12 @@ msgid ""
 "For more debugging you should also include WITNESS support, which will alert "
 "you of mistakes in locking:"
 msgstr ""
-"Para ter um maior nível de depuração, você também devrá incluir o suporte ao "
-"WITNESS, o qual irá alertá-lo sobre erros relacionados a bloqueios (locking):"
+"Para obter mais depuração, você também deve incluir o suporte a WITNESS, que "
+"alertará sobre erros de bloqueio:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/geom-class/_index.adoc:98
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "options WITNESS_SUPPORT\n"
 "options WITNESS\n"
@@ -237,12 +247,12 @@ msgstr ""
 #: documentation/content/en/articles/geom-class/_index.adoc:101
 msgid "For debugging crash dumps, a kernel with debug symbols is needed:"
 msgstr ""
-"Para depurar despejos de memória, é necessário um kernel com símbolos de "
-"depuração:"
+"Para depurar despejos de falhas (crash dumps), é necessário um kernel com "
+"símbolos de depuração:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/geom-class/_index.adoc:105
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "  makeoptions    DEBUG=-g\n"
 msgstr "  makeoptions    DEBUG=-g\n"
 
@@ -254,6 +264,11 @@ msgid ""
 "debug# and located in [.filename]#/usr/obj/usr/src/sys/KERNELNAME/#.  For "
 "convenience it should be copied to [.filename]#/boot/kernel/#."
 msgstr ""
+"Com a maneira usual de instalar o kernel (`make installkernel`), o kernel de "
+"depuração não será instalado automaticamente. Ele é chamado de [."
+"filename]#kernel.debug# e fica localizado em [.filename]#/usr/obj/usr/src/"
+"sys/NOME_DO_KERNEL/#. Por conveniência, ele deve ser copiado para [."
+"filename]#/boot/kernel/#."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:113
