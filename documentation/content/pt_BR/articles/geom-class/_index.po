@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:21-0300\n"
-"PO-Revision-Date: 2023-05-04 19:33+0000\n"
+"PO-Revision-Date: 2023-05-04 19:53+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlesgeom-class_index/pt_BR/>\n"
@@ -1008,13 +1008,13 @@ msgid ""
 "and brought up in geoms"
 msgstr ""
 "label - para escrever metadados nos dispositivos para que possam ser "
-"reconhecidos durante o processo de \"tasting\" e trazidos à tona em geoms."
+"reconhecidos durante o processo de \"tasting\" e trazidos à tona em geoms"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:342
 msgid "destroy - to destroy metadata, so the geoms get destroyed"
 msgstr ""
-"destroy - para destruir metadados, fazendo com que os geoms sejam destruídos."
+"destroy - para destruir metadados, fazendo com que os geoms sejam destruídos"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:344
@@ -1135,6 +1135,9 @@ msgid ""
 "`g_down` : Handles requests coming from high-level entities (such as a "
 "userland request) on the way to physical devices"
 msgstr ""
+"`g_down` : responsável por lidar com solicitações vindas de entidades de "
+"alto nível (como uma solicitação do espaço do usuário) a caminho de "
+"dispositivos físicos"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:377
@@ -1142,6 +1145,8 @@ msgid ""
 "`g_up` : Handles responses from device drivers to requests made by higher-"
 "level entities"
 msgstr ""
+"`g_up` : Lida com as respostas dos drivers de dispositivo às solicitações "
+"feitas por entidades de nível superior"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:378
@@ -1149,6 +1154,8 @@ msgid ""
 "`g_event` : Handles all other cases: creation of geom instances, access "
 "counting, \"spoil\" events, etc."
 msgstr ""
+"`g_event` : lida com todos os outros casos: criação de instâncias de geom, "
+"contagem de acesso, eventos de \"spoil\", etc."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:380
@@ -1156,6 +1163,8 @@ msgid ""
 "When a user process issues \"read data X at offset Y of a file\" request, "
 "this is what happens:"
 msgstr ""
+"Quando um processo do usuário emite uma solicitação para \"ler dados X no "
+"deslocamento Y de um arquivo\", o seguinte acontece:"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:382
@@ -1171,14 +1180,13 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:383
-#, fuzzy
 msgid ""
 "The request ends up as a call to the `.start`() function made on the g_down "
 "thread and reaches the top-level geom instance."
 msgstr ""
-"A requisição termina como uma chamada para a função <function>.start</"
-"function>() feita para a thread g_down e atinge a instância geom de nível "
-"superior."
+"A requisição termina como uma chamada para a função <function>."
+"start</function>() feita para a thread g_down e atinge a instância geom de "
+"nível superior."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:384
@@ -1189,6 +1197,12 @@ msgid ""
 "to be copied between instances, with `g_clone_bio`()!), modifies the data "
 "offset and target provider fields and executes the copy with `g_io_request`()"
 msgstr ""
+"Esta instância geom de nível superior (por exemplo, o \"partition slicer\") "
+"determina que a solicitação deve ser encaminhada para uma instância de nível "
+"inferior (por exemplo, o driver de disco). Ela faz uma cópia da solicitação "
+"bio (solicitações bio PRECISAM SEMPRE ser copiadas entre instâncias, com "
+"`g_clone_bio`()!), modifica o deslocamento dos dados e os campos do provider "
+"de destino e executa a cópia com `g_io_request`()"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:385
@@ -1197,6 +1211,9 @@ msgid ""
 "`g_down` thread. It talks to hardware, gets the data back, and calls "
 "`g_io_deliver`() on the bio."
 msgstr ""
+"O driver de disco também recebe a requisição bio como uma chamada para `."
+"start`() na thread `g_down`. Ele conversa com o hardware, recebe os dados de "
+"volta e chama `g_io_deliver`() na bio."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:386
@@ -1206,6 +1223,10 @@ msgid ""
 "uses information stored in the bio to free the cloned `bio` structure (with "
 "`g_destroy_bio`()) and calls `g_io_deliver`() on the original request."
 msgstr ""
+"Agora, a notificação da conclusão do bio \"sobe\" na thread `g_up`. "
+"Primeiro, o particionador recebe `.done`() chamado na thread `g_up`, usa as "
+"informações armazenadas no bio para liberar a estrutura de `bio` clonada ("
+"com `g_destroy_bio`()) e chama `g_io_deliver`() no pedido original."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:387
@@ -1219,6 +1240,10 @@ msgid ""
 "forth in the `bio` structure (note in particular the `bio_parent` and "
 "`bio_children` fields and how they are handled)."
 msgstr ""
+"Consulte a página do manual man:g_bio[9] para obter informações sobre como "
+"os dados são passados de um lado para o outro na estrutura `bio` (observe em "
+"particular os campos `bio_parent` e `bio_children` e como eles são "
+"manipulados)."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:392
@@ -1227,11 +1252,15 @@ msgid ""
 "THREADS__.  This means that none of the following things can be done in "
 "those threads (the list is of course not complete, but only informative):"
 msgstr ""
+"Uma característica importante é que __ NÃO PODEM HAVER CHAMADAS DE FUNÇÃO "
+"QUE BLOQUEIEM O PROCESSO (DURMAM) NAS THREADS G_UP E G_DOWN__. Isso "
+"significa que nenhuma das seguintes coisas pode ser feita nesses threads (a "
+"lista é apenas informativa e não completa):"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:394
 msgid "Calls to `msleep`() and `tsleep`(), obviously."
-msgstr ""
+msgstr "Chamadas para `msleep`() e `tsleep`(), obviamente."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:395
@@ -1239,6 +1268,8 @@ msgid ""
 "Calls to `g_write_data`() and `g_read_data`(), because these sleep between "
 "passing the data to consumers and returning."
 msgstr ""
+"Chamadas para `g_write_data`() e `g_read_data()`, pois elas dormem entre a "
+"passagem dos dados para os consumidores e o retorno."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:396
@@ -1249,6 +1280,7 @@ msgstr "Aguardando I/O."
 #: documentation/content/en/articles/geom-class/_index.adoc:397
 msgid "Calls to man:malloc[9] and `uma_zalloc`() with `M_WAITOK` flag set"
 msgstr ""
+"Chamadas a man:malloc[9] e `uma_zalloc`() com a flag `M_WAITOK` definida"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:398
@@ -1257,7 +1289,6 @@ msgstr "sx e outros tipos de bloqueios sleepable"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:402
-#, fuzzy
 msgid ""
 "This restriction is here to stop GEOM code clogging the I/O request path, "
 "since sleeping is usually not time-bound and there can be no guarantees on "
@@ -1266,13 +1297,13 @@ msgid ""
 "example, almost any complex thing requires memory allocation.  Fortunately, "
 "there is a way out: creating additional kernel threads."
 msgstr ""
-"Esta restrição está aqui para impedir que o código GEOM obstrua o caminho da "
-"solicitação de I/O, já que sleeping normalmente não é limitado pelo tempo e "
-"não pode haver garantias sobre quanto tempo levará (também existem algumas "
-"outras razões mais técnicas). Isso também significa que não existe muito o "
-"que possa ser feito nessas threads; por exemplo, quase qualquer coisa "
-"complexa requer alocação de memória. Felizmente, existe uma saída: criar "
-"threads adicionais no kernel."
+"Essa restrição foi imposta para evitar que o código GEOM obstrua o caminho "
+"de solicitação de E/S, já que a espera geralmente não está relacionada ao "
+"tempo e não há garantias sobre quanto tempo levará (há outras razões "
+"técnicas também). Isso também significa que não há muito o que se possa "
+"fazer nessas threads; por exemplo, quase qualquer coisa complexa requer "
+"alocação de memória. Felizmente, há uma saída: criar threads adicionais do "
+"kernel."
 
 #. type: Title ===
 #: documentation/content/en/articles/geom-class/_index.adoc:404
@@ -1287,10 +1318,13 @@ msgid ""
 "sort of similar to userland threads in behavior, only they cannot return to "
 "caller to signify termination, but must call man:kthread_exit[9]."
 msgstr ""
+"Threads do Kernel são criados com a função man:kthread_create[9], e eles são "
+"parecidos com threads de espaço de usuário em termos de comportamento, "
+"apenas que não podem retornar ao chamador para indicar término, mas devem "
+"chamar man:kthread_exit[9]."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:410
-#, fuzzy
 msgid ""
 "In GEOM code, the usual use of threads is to offload processing of requests "
 "from `g_down` thread (the `.start`() function).  These threads look like "
@@ -1299,17 +1333,16 @@ msgid ""
 "must be protected by a mutex), take the events from the list one by one and "
 "process them in a big `switch`() statement."
 msgstr ""
-"No código GEOM, o uso usual de threads é para descarregar o processamento de "
-"requisições da thread <literal>g_down</literal> (a função <function>.start</"
-"function>). Estas threads se parecem com um <quote>event handlers</quote>: "
-"elas têm uma lista encadeada de eventos associados a elas (nos quais eventos "
-"podem ser postados por várias funções em várias threads, portanto, devem ser "
-"protegidos por um mutex), pegam os eventos da lista, um por um, e processa-"
-"os em uma grande instrução <literal>switch</literal>()."
+"No código do GEOM, o uso usual de threads é para descarregar o processamento "
+"de solicitações da thread `g_down` (a função `.start()`). Essas threads se "
+"parecem com \"manipuladores de eventos\": elas têm uma lista vinculada de "
+"eventos associados a elas (na qual eventos podem ser postados por várias "
+"funções em várias threads, então ela deve ser protegida por um mutex), pegam "
+"os eventos da lista um por um e os processam em uma grande declaração "
+"`switch()`."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:415
-#, fuzzy
 msgid ""
 "The main benefit of using a thread to handle I/O requests is that it can "
 "sleep when needed.  Now, this sounds good, but should be carefully thought "
@@ -1318,13 +1351,13 @@ msgid ""
 "classes probably should do all the work in `.start`() function call, taking "
 "great care to handle out-of-memory and similar errors."
 msgstr ""
-"A principal vantagem de usar uma thread para lidar com solicitações de I/O é "
-"que ela pode dormir quando necessário. Agora, isso parece bom, mas deve ser "
-"cuidadosamente pensado. Dormir é bom e muito conveniente, mas pode ser muito "
-"efetivo em destruir o desempenho da transformação geom. As classes "
-"extremamente sensíveis ao desempenho provavelmente devem fazer todo o "
-"trabalho na chamada de função <function>.start</function>(), tomando muito "
-"cuidado para lidar com erros de falta de memória e similares."
+"O principal benefício de usar uma thread para lidar com as solicitações de E/"
+"S é que ela pode dormir quando necessário. Agora, isso parece bom, mas deve "
+"ser cuidadosamente pensado. Dormir é bem conveniente, mas pode destruir "
+"efetivamente o desempenho da transformação geom. As classes extremamente "
+"sensíveis ao desempenho provavelmente devem fazer todo o trabalho na chamada "
+"de função `.start()`, tendo muito cuidado para lidar com erros de falta de "
+"memória e similares."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:419
@@ -1334,6 +1367,11 @@ msgid ""
 "thread.  This is also very convenient but can be slow.  In most cases, "
 "handling of `.done`() requests can be left to the `g_up` thread."
 msgstr ""
+"O outro benefício de ter uma thread de tratamento de eventos é a "
+"serialização de todas as solicitações e respostas vindas de diferentes "
+"threads do geom em uma única thread. Isso também é muito conveniente, mas "
+"pode ser lento. Na maioria dos casos, o tratamento de solicitações `.done`() "
+"pode ser deixado para a thread `g_up`."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:422
@@ -1344,6 +1382,11 @@ msgid ""
 "appropriate.  On the other hand, if you do almost everything in a single "
 "thread, you may get away with no mutexes at all."
 msgstr ""
+"Mutexes no kernel do FreeBSD (veja man:mutex[9]) possuem uma distinção em "
+"relação às suas contrapartes mais comuns no userland - o código não pode "
+"dormir enquanto segura um mutex. Se o código precisa dormir muito, as travas "
+"man:sx[9] podem ser mais apropriadas. Por outro lado, se você fizer quase "
+"tudo em um único thread, pode se livrar completamente do uso de mutexes."
 
 #~ msgid ""
 #~ "include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
