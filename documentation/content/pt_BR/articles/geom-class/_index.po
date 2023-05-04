@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:21-0300\n"
-"PO-Revision-Date: 2023-05-04 17:59+0000\n"
+"PO-Revision-Date: 2023-05-04 19:17+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlesgeom-class_index/pt_BR/>\n"
@@ -624,6 +624,12 @@ msgid ""
 "buffer, and a bunch of \"user-specific\" flags and fields that can help "
 "implement various hacks."
 msgstr ""
+"A estrutura `bio` é usada para todas e quaisquer operações de entrada/saída "
+"relacionadas ao GEOM. Basicamente, ela contém informações sobre qual "
+"dispositivo ('provider') deve satisfazer a solicitação, tipo de solicitação, "
+"deslocamento, comprimento, ponteiro para um buffer e um conjunto de flags e "
+"campos \"específicos do usuário\" que podem ajudar a implementar vários "
+"ajustes."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:246
@@ -634,6 +640,12 @@ msgid ""
 "done.  Rather, a developer-supplied function is called as a notification "
 "when the request gets completed (or results in error)."
 msgstr ""
+"O importante aqui é que os ``bio``s são manipulados de forma assíncrona. "
+"Isso significa que, na maioria das partes do código, não há um análogo das "
+"chamadas man:read[2] e man:write[2] do espaço do usuário que não retornam "
+"até que uma solicitação seja concluída. Em vez disso, uma função fornecida "
+"pelo desenvolvedor é chamada como uma notificação quando a solicitação é "
+"concluída (ou resulta em erro)."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:250
@@ -646,6 +658,13 @@ msgid ""
 "example, the GEOM topology mutex or the internal mutex held during the `."
 "start`() and `.stop`() functions."
 msgstr ""
+"O modelo de programação assíncrono (também chamado de \"event-driven\") é um "
+"pouco mais difícil do que o muito usado modelo imperativo usado no espaço do "
+"usuário (pelo menos leva um tempo para se acostumar). Em alguns casos, as "
+"rotinas auxiliares `g_write_data()` e `g_read_data()` podem ser usadas, mas "
+"__nem sempre__. Em particular, elas não podem ser usadas quando um mutex é "
+"mantido; por exemplo, o mutex de topologia GEOM ou o mutex interno mantido "
+"durante as funções `.start()` e `.stop()`."
 
 #. type: Title ==
 #: documentation/content/en/articles/geom-class/_index.adoc:252
@@ -661,7 +680,6 @@ msgstr "Ggate"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:259
-#, fuzzy
 msgid ""
 "If maximum performance is not needed, a much simpler way of making a data "
 "transformation is to implement it in userland via the ggate (GEOM gate) "
@@ -686,6 +704,9 @@ msgid ""
 "combined in a tree-like fashion.  Instances of GEOM classes are called "
 "__geoms__."
 msgstr ""
+"As classes GEOM são transformações nos dados. Essas transformações podem ser "
+"combinadas de maneira semelhante a uma árvore. As instâncias de classes GEOM "
+"são chamadas de __geoms__."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:268
@@ -694,6 +715,9 @@ msgid ""
 "no geom instance available (or they are simply not bound to a single "
 "instance):"
 msgstr ""
+"Cada classe GEOM tem vários \"métodos de classe\" que são chamados quando "
+"não há uma instância geom disponível (ou simplesmente não estão vinculados a "
+"uma única instância):"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:270
@@ -701,6 +725,8 @@ msgid ""
 "`.init` is called when GEOM becomes aware of a GEOM class (when the kernel "
 "module gets loaded.)"
 msgstr ""
+"O `.init` é chamado quando o GEOM toma conhecimento de uma classe GEOM ("
+"quando o módulo do kernel é carregado.)"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:271
@@ -708,28 +734,31 @@ msgid ""
 "`.fini` gets called when GEOM abandons the class (when the module gets "
 "unloaded)"
 msgstr ""
+"O `.fini` é chamado quando o GEOM abandona a classe (quando o módulo é "
+"descarregado)"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:272
-#, fuzzy
 msgid ""
 "`.taste` is called next, once for each provider the system has available. If "
 "applicable, this function will usually create and start a geom instance."
 msgstr ""
-"<function>.taste</function> é chamada next, uma vez para cada provedor que o "
-"sistema tiver disponível. Se aplicável, essa função geralmente criará e "
-"iniciará uma instância geom."
+"O `.taste` é chamado em seguida, uma vez para cada provider que o sistema "
+"tem disponível. Se aplicável, esta função geralmente criará e iniciará uma "
+"instância geom."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:273
 msgid "`.destroy_geom` is called when the geom should be disbanded"
-msgstr ""
+msgstr "O `.destroy_geom` é chamado quando o geom deve ser desmontado"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:274
 msgid ""
 "`.ctlconf` is called when user requests reconfiguration of existing geom"
 msgstr ""
+"O `.ctlconf` é chamado quando o usuário solicita a reconfiguração do geom "
+"existente"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:276
@@ -746,6 +775,8 @@ msgid ""
 "Field `.geom` in the `g_class` structure is a LIST of geoms instantiated "
 "from the class."
 msgstr ""
+"O campo `.geom` na estrutura `g_class` é uma LISTA de geoms instanciados a "
+"partir da classe."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:280
@@ -760,7 +791,6 @@ msgstr "Softc"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:288
-#, fuzzy
 msgid ""
 "The name \"softc\" is a legacy term for \"driver private data\".  The name "
 "most probably comes from the archaic term \"software control block\".  In "
@@ -768,22 +798,25 @@ msgid ""
 "attached to a geom instance to hold whatever data is private to the geom "
 "instance.  Most GEOM classes have the following members:"
 msgstr ""
-"O nome <quote>softc</quote> é um termo legado para <quote>dados privados do "
-"driver</quote>. O nome provavelmente vem do termo arcaico <quote>bloco de "
-"controle de software</quote>. No GEOM, ele é uma estrutura (mais "
-"precisamente: ponteiro para uma estrutura) que pode ser anexada a uma "
-"instância geom para armazenar quaisquer dados que sejam privados para a "
-"instância geom. A maioria das classes GEOM possui os seguintes membros:"
+"O nome \"softc\" é um termo legado para \"dados privados do driver\". O nome "
+"provavelmente vem do termo arcaico \"bloco de controle de software\". No "
+"GEOM, é uma estrutura (mais precisamente, um ponteiro para uma estrutura) "
+"que pode ser anexada a uma instância geom para manter quaisquer dados que "
+"sejam privados à instância geom. A maioria das classes GEOM tem os seguintes "
+"membros:"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:290
 msgid "`struct g_provider *provider` : The \"provider\" this geom instantiates"
 msgstr ""
+"`struct g_provider *provider`: Instância geom criada a partir do provider "
+"correspondente"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:291
 msgid "`uint16_t n_disks` : Number of consumer this geom consumes"
 msgstr ""
+"`uint16_t n_disks`: Número de consumidores que esta instância geom consome"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:292
@@ -792,6 +825,9 @@ msgid ""
 "possible to use just single indirection because struct g_consumer* are "
 "created on our behalf by GEOM)."
 msgstr ""
+"`struct g_consumer \\**disks`: Array de `struct g_consumer*`. (Não é "
+"possível usar apenas uma única indireção porque os `struct g_consumer*` são "
+"criados em nosso nome pelo GEOM)."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:295
@@ -799,6 +835,8 @@ msgid ""
 "The `softc` structure contains all the state of geom instance.  Every geom "
 "instance has its own softc."
 msgstr ""
+"A estrutura `softc` contém todo o estado da instância geom. Cada instância "
+"geom tem sua própria estrutura `softc`."
 
 #. type: Title ===
 #: documentation/content/en/articles/geom-class/_index.adoc:297
