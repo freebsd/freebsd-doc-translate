@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:21-0300\n"
-"PO-Revision-Date: 2023-05-04 19:17+0000\n"
+"PO-Revision-Date: 2023-05-04 19:33+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlesgeom-class_index/pt_BR/>\n"
@@ -906,6 +906,8 @@ msgstr "A sequência de eventos é:"
 #: documentation/content/en/articles/geom-class/_index.adoc:316
 msgid "user calls man:geom[8] utility (or one of its hardlinked friends)"
 msgstr ""
+"O usuário chama o utilitário man:geom[8] (ou um comandos alternativos para o "
+"mesmo utilitário)"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:317
@@ -914,6 +916,9 @@ msgid ""
 "searches for [.filename]#geom_CLASSNAME.so# library (usually in [.filename]#/"
 "lib/geom#)."
 msgstr ""
+"O utilitário determina qual classe geom ele deve manipular e procura pela "
+"biblioteca [.filename]#geom_CLASSNAME.so# (geralmente em [.filename]#/lib/"
+"geom#)."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:318
@@ -921,6 +926,9 @@ msgid ""
 "it man:dlopen[3]-s the library, extracts the definitions of command-line "
 "parameters and helper functions."
 msgstr ""
+"O utilitário utiliza a função man:dlopen[3] para carregar dinamicamente a "
+"biblioteca, extrair as definições dos parâmetros de linha de comando e "
+"funções auxiliares."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:320
@@ -933,6 +941,8 @@ msgid ""
 "man:geom[8] looks in the command-line argument for the command (usually "
 "`label`), and calls a helper function."
 msgstr ""
+"O comando man:geom[8] procura na linha de comando pelo comando (geralmente "
+"`label`) e chama uma função auxiliar correspondente."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:323
@@ -950,6 +960,9 @@ msgid ""
 "\"tasting\" of the providers. The intended geom class recognizes the "
 "metadata and brings the geom up."
 msgstr ""
+"Isso \"anula\" os geoms existentes (se houver) e inicializa uma nova rodada "
+"de \"degustação\" dos providers. A classe geom pretendida reconhece os "
+"metadados e coloca o geom em funcionamento."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:326
@@ -973,10 +986,13 @@ msgid ""
 "structure, which is an array of `struct g_command` elements.  Commands are "
 "of uniform format and look like:"
 msgstr ""
+"A biblioteca auxiliar [.filename]#geom_CLASSNAME.so# exporta a estrutura "
+"`class_commands`, que é um array de elementos `struct g_command`. Os "
+"comandos têm um formato uniforme e se parecem com:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/geom-class/_index.adoc:336
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "  verb [-options] geomname [other]\n"
 msgstr "  verb [-options] geomname [other]\n"
 
@@ -987,19 +1003,18 @@ msgstr "Verbos comuns são:"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:341
-#, fuzzy
 msgid ""
 "label - to write metadata to devices so they can be recognized at tasting "
 "and brought up in geoms"
 msgstr ""
-"label - para gravar metadados em dispositivos para que eles possam ser "
-"reconhecidos em degustações e criados em geoms"
+"label - para escrever metadados nos dispositivos para que possam ser "
+"reconhecidos durante o processo de \"tasting\" e trazidos à tona em geoms."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:342
-#, fuzzy
 msgid "destroy - to destroy metadata, so the geoms get destroyed"
-msgstr "destroy - para destruir metadados, para que as geoms sejam destruídas"
+msgstr ""
+"destroy - para destruir metadados, fazendo com que os geoms sejam destruídos."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:344
@@ -1009,12 +1024,12 @@ msgstr "Opções comuns são:"
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:346
 msgid "`-v` : be verbose"
-msgstr ""
+msgstr "`-v` : ser verboso (mostrar mais informações)"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:347
 msgid "`-f` : force"
-msgstr ""
+msgstr "`-f` : forçar"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:351
@@ -1025,6 +1040,11 @@ msgid ""
 "process a verb.  If `gc_func` is NULL, the command will be passed to kernel "
 "module, to `.ctlreq` function of the geom class."
 msgstr ""
+"Muitas ações, como rotular e destruir metadados, podem ser executadas no "
+"espaço de usuário. Para isso, `struct g_command` fornece o campo `gc_func`, "
+"que pode ser definido como uma função (no mesmo arquivo [.filename]#.so#) "
+"que será chamada para processar um verbo. Se `gc_func` for NULL, o comando "
+"será passado para o módulo do kernel, para a função `.ctlreq` da classe geom."
 
 #. type: Title ===
 #: documentation/content/en/articles/geom-class/_index.adoc:353
@@ -1034,12 +1054,11 @@ msgstr "Geoms"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:357
-#, fuzzy
 msgid ""
 "Geoms are instances of GEOM classes.  They have internal data (a softc "
 "structure) and some functions with which they respond to external events."
 msgstr ""
-"Geoms são instâncias de classes GEOM. Eles possuem dados internos (uma "
+"Os Geoms são instâncias das classes GEOM. Eles têm dados internos (uma "
 "estrutura softc) e algumas funções com as quais eles respondem a eventos "
 "externos."
 
@@ -1051,52 +1070,52 @@ msgstr "As funções de evento são:"
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:361
 msgid "`.access` : calculates permissions (read/write/exclusive)"
-msgstr ""
+msgstr "`.access` : calcula as permissões (leitura/escrita/exclusiva)"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:362
 msgid "`.dumpconf` : returns XML-formatted information about the geom"
 msgstr ""
+"`.dumpconf` : uma função que retorna informações formatadas em XML sobre o "
+"geom"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:363
 msgid "`.orphan` : called when some underlying provider gets disconnected"
-msgstr ""
+msgstr "`.orphan` : chamado quando algum provedor subjacente é desconectado"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:364
 msgid "`.spoiled` : called when some underlying provider gets written to"
-msgstr ""
+msgstr "`.spoiled` : chamado quando algum provedor subjacente é escrito"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:365
 msgid "`.start` : handles I/O"
-msgstr ""
+msgstr "`.start` : lida com operações de entrada/saída (I/O)"
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:367
-#, fuzzy
 msgid ""
 "These functions are called from the `g_down` kernel thread and there can be "
 "no sleeping in this context, (see definition of sleeping elsewhere) which "
 "limits what can be done quite a bit, but forces the handling to be fast."
 msgstr ""
-"Estas funções são chamadas a partir da thread <function>g_down</function> do "
-"kernel e não pode haver sleeping neste contexto, (veja a definição de "
-"sleeping em outro lugar) o que limita um pouco o que pode ser feito, mas "
-"força o manuseio a ser rápido ."
+"Essas funções são chamadas a partir da thread do kernel `g_down` e não é "
+"permitido dormir nesse contexto (consulte a definição de dormir em outro "
+"lugar), o que limita bastante o que pode ser feito, mas força o tratamento a "
+"ser rápido."
 
 #. type: Plain text
 #: documentation/content/en/articles/geom-class/_index.adoc:369
-#, fuzzy
 msgid ""
 "Of these, the most important function for doing actual useful work is the `."
 "start`() function, which is called when a BIO request arrives for a provider "
 "managed by a instance of geom class."
 msgstr ""
-"Destes, a função mais importante para fazer o trabalho útil real é a função "
-"<function>.start</function>(), que é chamada quando uma requisição BIO chega "
-"para um provedor gerenciado por uma instância da classe geom."
+"A função mais importante para realizar trabalho útil é a função `.start()`, "
+"que é chamada quando uma solicitação BIO chega para um provider gerenciado "
+"por uma instância de classe geom."
 
 #. type: Title ===
 #: documentation/content/en/articles/geom-class/_index.adoc:371
