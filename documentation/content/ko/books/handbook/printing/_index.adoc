@@ -1,0 +1,779 @@
+---
+description: '이 장에서는 FreeBSD의 프린트 시스템을 다룹니다'
+next: books/handbook/linuxemu
+part: '파트 II. 일반적인 작업'
+path: /books/handbook/
+prev: books/handbook/kernelconfig
+showBookMenu: 'true'
+tags: ["printing", "CUPS", "LPD", "PostScript", "PDLs", "HPLIP", "LPRng"]
+title: '10장. 프린팅'
+weight: 13
+---
+
+[[printing]]
+= 프린팅
+:doctype: book
+:toc: macro
+:toclevels: 1
+:icons: font
+:sectnums:
+:sectnumlevels: 6
+:sectnumoffset: 10
+:partnums:
+:source-highlighter: rouge
+:experimental:
+:images-path: books/handbook/printing/
+
+ifdef::env-beastie[]
+ifdef::backend-html5[]
+:imagesdir: ../../../../images/{images-path}
+endif::[]
+ifndef::book[]
+include::shared/authors.adoc[]
+include::shared/mirrors.adoc[]
+include::shared/releases.adoc[]
+include::shared/attributes/attributes-{{% lang %}}.adoc[]
+include::shared/{{% lang %}}/teams.adoc[]
+include::shared/{{% lang %}}/mailing-lists.adoc[]
+include::shared/{{% lang %}}/urls.adoc[]
+toc::[]
+endif::[]
+ifdef::backend-pdf,backend-epub3[]
+include::../../../../../shared/asciidoctor.adoc[]
+endif::[]
+endif::[]
+
+ifndef::env-beastie[]
+toc::[]
+include::../../../../../shared/asciidoctor.adoc[]
+endif::[]
+
+정보를 종이에 기록하는 것은 기존 방법을 없애기 위한 많은 시도를 했음에도 불구하고 중요한 기능입니다. 인쇄에는 두 가지 기본 구성 요소가 있습니다. 데이터를 프린터로 전달해야 하며 프린터가 이해할 수 있는 형식이어야 합니다.
+
+[[printing-quick-start]]
+== 빠른 시작
+
+기본 인쇄는 빠르게 설정할 수 있습니다. 프린터는 일반 `ASCII` 텍스트를 인쇄할 수 있어야 합니다. 다른 유형의 파일로 인쇄하려면 <<printing-lpd-filters>> 를 참조하세요.
+
+[.procedure]
+****
+. 인쇄하는 동안 파일을 저장할 디렉터리를 만듭니다:
++
+[source, shell]
+....
+# mkdir -p /var/spool/lpd/lp
+# chown daemon:daemon /var/spool/lpd/lp
+# chmod 770 /var/spool/lpd/lp
+....
++
+. `root` 로 다음 내용을 사용하여 [.filename]#/etc/printcap# 을 생성합니다:
++
+[.programlisting]
+....
+lp:\
+lp=/dev/unlpt0:\  <.>
+sh:\
+mx#0:\
+sd=/var/spool/lpd/lp:\
+lf=/var/log/lpd-errs:
+....
++
+<.> 이 줄은 `USB` 포트에 연결된 프린터용입니다.
++
+병렬 또는 "프린터" 포트에 연결된 프린터의 경우 다음을 사용합니다:
++
+[.programlisting]
+....
+:lp=/dev/lpt0:\
+....
++
+네트워크에 연결된 프린터의 경우 다음을 사용합니다:
++
+[.programlisting]
+....
+:lp=:rm=network-printer-name:rp=raw:\
+....
++
+_network-printer-name_ 을 네트워크 프린터의 `DNS` 호스트 이름으로 바꿉니다.
++
+. [.filename]#/etc/rc.conf# 을 편집하고 다음 줄을 추가하여 LPD를 사용하도록 설정합니다:
++
+[.programlisting]
+....
+lpd_enable="YES"
+....
++
+서비스를 시작합니다:
++
+[source, shell]
+....
+# service lpd start
+Starting lpd.
+....
++
+. 테스트 인쇄를 합니다:
++
+[source, shell]
+....
+# printf "1. This printer can print.\n2. This is the second line.\n" | lpr
+....
++
+[TIP]
+====
+두 줄이 모두 왼쪽 테두리에서 시작하지 않고 대신 "stairstep" 에서 시작하는 경우 <<printing-lpd-filters-stairstep>> 을 참조하세요.
+====
++
+이제 텍스트 파일을 `lpr` 로 인쇄할 수 있습니다. 명령줄에 파일 이름을 지정하거나 출력을 `lpr` 로 직접 파이프합니다.
++
+[source, shell]
+....
+% lpr textfile.txt
+% ls -lh | lpr
+....
+****
+
+[[printing-connections]]
+== 프린터 연결
+
+프린터는 다양한 방식으로 컴퓨터 시스템에 연결됩니다. 소형 데스크탑 프린터는 일반적으로 컴퓨터의 `USB` 포트에 직접 연결합니다. 구형 프린터는 병렬 또는 "printer" 포트에 연결합니다. 일부 프린터는 네트워크에 직접 연결되어 있어 여러 대의 컴퓨터가 쉽게 공유할 수 있습니다. 일부 프린터는 드물게 직렬 포트 연결을 사용합니다.
+
+FreeBSD는 이러한 모든 유형의 프린터와 통신할 수 있습니다.
+
+[[printing-connections-usb]]
+`USB`::
+`USB` 프린터는 컴퓨터의 사용 가능한 모든 `USB` 포트에 연결할 수 있습니다.
++
+FreeBSD가 `USB` 프린터를 감지하면, 두 개의 장치 항목이 만들어집니다: [.filename]#/dev/ulpt0# 및 [.filename]#/dev/unlpt0# 이 그것입니다. 두 장치로 전송된 데이터는 프린터로 전달됩니다. 각 인쇄 작업 후 [.filename]#ulpt0# 은 `USB` 포트를 재설정합니다. 포트를 재설정하면 일부 프린터에서 문제가 발생할 수 있으므로 일반적으로 [.filename]#unlpt0# 장치가 대신 사용됩니다. [.filename]#unlpt0# 은 USB 포트를 전혀 재설정하지 않습니다.
+
+[[printing-connections-parallel]]
+Parallel (`IEEE`-1284)::
+병렬 포트 장치는 [.filename]#/dev/lpt0# 입니다. 이 장치는 프린터가 연결되어 있는지 여부에 관계없이 표시되며 자동감지 기능이 없습니다.
++
+공급업체들은 이러한 "legacy" 포트를 거의 사용하지 않고 있으며, 많은 컴퓨터에는 더 이상 이러한 포트가 없습니다. 어댑터를 사용하여 병렬 프린터를 `USB` 포트에 연결할 수 있습니다. 이러한 어댑터를 사용하면 프린터를 실제로 `USB` 프린터인 것처럼 취급할 수 있습니다. _프린트 서버_ 라는 장치를 사용하여 병렬 프린터를 네트워크에 직접 연결할 수도 있습니다.
+
+[[printing-connections-serial]]
+Serial (RS-232)::
+직렬 포트는 또 다른 레거지 포트로, 특정 틈새 애플리케이션을 제외하고는 프린터에 거의 사용되지 않습니다. 케이블, 커넥터 및 필요한 배선은 매우 다양합니다.
++
+마더보드에 내장된 직렬 포트의 경우, 직렬 장치 이름은 [.filename]#/dev/cuau0# 또는 [.filename]#/dev/cuau1# 입니다. 직렬 `USB` 어댑터도 사용할 수 있으며, 이 경우 [.filename]#/dev/cuaU0# 으로 표시됩니다.
++
+직렬 프린터와 통신하려면 몇 가지 통신 매개변수를 반드시 알아야 합니다. 가장 중요한 것은 _baud rate_ 또는 `BPS` (Bits Per Second)와 _패리티(parity)_ 입니다. 값은 다양하지만 일반적인 직렬 프린터는 9600의 전송 속도와 패리티를 사용하지 않습니다.
+
+[[printing-connections-network]]
+네트워크::
+네트워크 프린터는 로컬 컴퓨터 네트워크에 직접 연결됩니다.
++
+프린터의 `DNS` 호스트 이름을 알고 있어야 합니다. 프린터에 `DHCP` 로 동적 주소가 할당된 경우, 호스트 이름이 항상 올바른 `IP` 주소를 갖도록 `DNS` 를 동적으로 업데이트해야 합니다. 네트워크 프린터에는 이 문제를 방지하기 위해 정적 `IP` 주소가 부여되는 경우가 많습니다.
++
+대부분의 네트워크 프린터는 LPD 프로토콜로 전송된 인쇄 작업을 이해합니다. 인쇄 대기열 이름을 지정할 수도 있습니다. 일부 프린터는 사용되는 큐에 따라 데이터를 다르게 처리합니다. 예를 들어, `raw` 대기열은 데이터를 변경하지 않고 인쇄하는 반면 `text` 대기열은 일반 텍스트에 캐리지 리턴을 추가합니다.
++
+많은 네트워크 프린터는 포트 9100으로 직접 데이터를 전송해 인쇄할 수도 있습니다.
+
+[[printing-connections-summary]]
+=== 요약
+
+유선 네트워크 연결은 일반적으로 설정이 가장 쉽고 가장 빠른 인쇄를 제공합니다. 컴퓨터에 직접 연결하는 경우 속도와 단순성을 위해 `USB` 방식이 선호됩니다. 병렬 연결도 가능하지만 케이블 길이와 속도에 제한이 있습니다. 직렬 연결은 구성하기가 더 어렵습니다. 케이블 배선은 모델마다 다르며 전송 속도 및 패리티 비트와 같은 통신 매개 변수가 복잡성을 더합니다. 다행히도 직렬 프린터는 매우 드뭅니다.
+
+[[printing-pdls]]
+== Common Page Description Languages (공통 페이지 설명 언어)
+
+프린터로 전송되는 데이터는 프린터가 이해할 수 있는 언어여야 합니다. 이러한 언어를 Page Description Languages 또는 PDL이라고 부릅니다.
+
+[[print-pdls-ascii]]
+`ASCII`::
+일반 `ASCII` 텍스트는 프린터로 데이터를 전송하는 가장 간단한 방법입니다. 문자는 인쇄될 내용과 일대일로 대응됩니다: 데이터의 `A` 는 페이지에 `A` 를 인쇄합니다. 서식을 거의 지정할 수 없습니다. 글꼴이나 비례 간격을 선택할 수 있는 방법도 없습니다. 일반 `ASCII` 의 강제된 단순성은 인코딩이나 번역 없이 컴퓨터에서 바로 텍스트를 인쇄할 수 있음을 의미합니다. 인쇄된 출력물은 전송된 내용과 정확히 일치합니다.
++
+일부 저가형 프린터는 일반 `ASCII` 텍스트를 인쇄할 수 없습니다. 이 때문에 설정하기가 더 어렵지만 보통 가능은 합니다.
+
+[[print-pdls-postscript]]
+PostScript(R)::
+PostScript(R)는 `ASCII` 와 거의 정반대입니다. PostScript(R) 프로그램은 단순한 텍스트가 아니라 최종 문서를 그리는 일련의 명령어 집합입니다. 다양한 글꼴과 그래픽을 사용할 수 있으나 이 강력한 기능에는 대가가 따릅니다. 인쇄할 페이지를 그려내는 프로그램을 작성해야 합니다. 일반적으로 이 프로그램은 응용 프로그램 소프트웨어에 의해 생성되므로 프로세스는 사용자에게 보이지 않습니다.
++
+저렴한 프린터의 경우 비용 절감을 위해 PostScript(R) 호환성을 생략하는 경우가 있습니다.
+
+[[print-pdls-pcl]]
+`PCL` (Printer Command Language)::
+`PCL` 은 `ASCII` 의 확장으로 서식 지정, 글꼴 선택 및 그래픽 인쇄를 위한 이스케이프 시퀀스를 추가합니다. 많은 프린터가 `PCL5` 를 지원합니다. 일부는 최신 `PCL6` 또는 `PCLXL` 를 지원합니다. 이러한 최신 버전은 `PCL5` 의 상위 버전이며 더 빠른 인쇄를 제공할 수 있습니다.
+
+[[print-pdls-host-based]]
+Host-Based::
+제조업체는 프린터에 간단한 프로세서와 아주 적은 메모리만 제공하여 프린터 비용을 절감할 수 있습니다. 이러한 프린터는 일반 텍스트를 인쇄할 수 없습니다. 대신 호스트 컴퓨터의 드라이버가 텍스트와 그래픽의 비트맵을 그린 다음 프린터로 전송합니다. 이를 _호스트 기반_ 프린터라고 합니다.
++
+드라이버와 호스트 기반 프린터 사이의 통신은, 종종 독점적이거나 문서화되지 않은 프로토콜을 통해 이루어지기 때문에 가장 일반적인 운영 체제에서만 작동합니다.
+
+[[print-pdls-table]]
+=== PostScript(R)를 다른 PDL로 변환하기
+
+포트 컬렉션과 FreeBSD 유틸리티의 많은 애플리케이션은 PostScript(R) 출력을 생성합니다. 이 표는 이를 다른 일반적인 PDL로 변환하는 데 사용할 수 있는 유틸리티를 보여줍니다:
+
+[[print-pdls-ps-to-other-tbl]]
+.출력 PDLs
+[cols="1,1,1", frame="none", options="header"]
+|===
+<| Output PDL
+<| Generated By
+<| Notes
+
+|`PCL` or `PCL5`
+|package:print/ghostscript9-base[]
+|`-sDEVICE=ljet4` for monochrome, `-sDEVICE=cljet5` for color
+
+|`PCLXL` or `PCL6`
+|package:print/ghostscript9-base[]
+|`-sDEVICE=pxlmono` for monochrome, `-sDEVICE=pxlcolor` for color
+
+|`ESC/P2`
+|package:print/ghostscript9-base[]
+|`-sDEVICE=uniprint`
+
+|`XQX`
+|package:print/foo2zjs[]
+|
+|===
+
+[[print-pdls-summary]]
+=== 요약
+
+가장 쉽게 인쇄하려면 PostScript(R)를 지원하는 프린터를 선택하세요. 다음으로 `PCL` 을 지원하는 프린터가 선호됩니다. package:print/ghostscript9-base[] 를 사용하면 이러한 프린터를 PostScript(R)를 기본적으로 이해하는 것처럼 사용할 수 있습니다. PostScript(R) 또는 `PCL` 을 직접 지원하는 프린터는 거의 항상 일반 `ASCII` 텍스트 파일의 직접 인쇄도 지원합니다.
+
+일반적인 잉크젯과 같은 라인 기반 프린터는, 보통 PostScript(R) 또는 `PCL` 을 지원하지 않습니다. 이러한 프린터는 일반 `ASCII` 텍스트 파일을 인쇄할 수 있는 경우가 많습니다. package:print/ghostscript9-base[] 는 이러한 프린터 중 일부에서 사용하는 PDL을 지원합니다. 그러나 이러한 프린터에서 전체 그래픽 기반 페이지를 인쇄하는 것은 전송 및 인쇄할 데이터의 양이 많기 때문에 매우 느립니다.
+
+호스트 기반 프린터는 설정하기가 더 어려운 경우가 많습니다. 일부는 독점 PDL 때문에 전혀 사용할 수 없습니다. 이러한 프린터는 가급적 피하세요.
+
+많은 PDL에 대한 설명은 http://www.undocprint.org/formats/page_description_languages[] 에서 확인할 수 있습니다. 다양한 프린터 모델에서 사용되는 몇몇 `PDL` 은 http://www.openprinting.org/printers[] 에서 확인할 수 있습니다.
+
+[[printing-direct]]
+== 다이렉트 프린팅
+
+가끔씩 인쇄할 때 별도의 설정 없이 파일을 프린터 장치로 바로 보낼 수 있습니다. 예를 들어, [.filename]#sample.txt# 라는 파일을 `USB` 프린터로 보낼 수 있습니다:
+
+[source, shell]
+....
+# cp sample.txt /dev/unlpt0
+....
+
+네트워크 프린터로 직접 인쇄하는 것은 프린터의 기능에 따라 다르지만, 대부분 포트 9100에서 인쇄 작업을 허용하며 man:nc[1]를 함께 사용할 수 있습니다. 동일한 파일을 `DNS` 호스트명이 _netlaser_ 인 프린터로 인쇄하려면 다음과 같이 하세요:
+
+[source, shell]
+....
+# nc netlaser 9100 < sample.txt
+....
+
+[[printing-lpd]]
+== LPD (라인 프린터 데몬)
+
+백그라운드에서 파일을 인쇄하는 것을 _스풀링_ 이라고 합니다. 스풀러를 사용하면 프린터가 인쇄 작업을 완료할 때까지 기다리지 않고 컴퓨터에서 다른 프로그램을 계속할 수 있습니다.
+
+FreeBSD에는 man:lpd[8]라는 스풀러가 있습니다. 인쇄 작업은 man:lpr[1]로 제출됩니다.
+
+[[printing-lpd-setup]]
+=== 초기 설정
+
+인쇄 작업을 저장할 디렉터리가 생성되고 소유권이 설정되며 다른 사용자가 해당 파일의 내용을 볼 수 없도록 권한이 설정됩니다:
+
+[source, shell]
+....
+# mkdir -p /var/spool/lpd/lp
+# chown daemon:daemon /var/spool/lpd/lp
+# chmod 770 /var/spool/lpd/lp
+....
+
+프린터는 [.filename]#/etc/printcap# 에 정의되어 있습니다. 각 프린터에 대한 항목에는 이름, 프린터가 연결된 포트 및 기타 다양한 설정과 같은 세부 정보가 포함됩니다. 이 내용으로 [.filename]#/etc/printcap# 을 생성합니다:
+
+[.programlisting]
+....
+lp:\				<.>
+	:lp=/dev/unlpt0:\	<.>
+	:sh:\			<.>
+	:mx#0:\			<.>
+	:sd=/var/spool/lpd/lp:\	<.>
+	:lf=/var/log/lpd-errs:	<.>
+....
+
+<.> 다른 프린터가 `-P` 로 지정되지 않는 한, man:lpr[1]은 `lp` 프린터로 인쇄 작업을 보내므로 기본 프린터의 이름은 `lp` 여야 합니다.
+
+<.> 프린터가 연결된 장치입니다. 다음 줄을 여기에 표시된 연결 유형에 적합한 줄로 바꿉니다.
+
+<.> 인쇄 작업을 시작할 때 헤더 페이지 인쇄를 억제합니다.
+
+<.> 인쇄 작업의 최대 크기를 제한하지 마세요.
+
+<.> 프린터의 스풀링 디렉터리 경로입니다. 각 프린터는 자체 스풀링 디렉터리를 사용합니다.
+
+<.> 프린터의 오류가 보고되는 로그 파일입니다.
+
+[.filename]#/etc/printcap# 을 생성한 후 man:chkprintcap[8] 을 사용하여 오류를 테스트합니다:
+
+[source, shell]
+....
+# chkprintcap
+....
+
+계속하기 전에 보고된 문제를 해결하세요.
+
+[.filename]#/etc/rc.conf# 에서 man:lpd[8]을 활성화합니다:
+
+[.programlisting]
+....
+lpd_enable="YES"
+....
+
+서비스를 시작합니다:
+
+[source, shell]
+....
+# service lpd start
+....
+
+[[printing-lpd-lpr]]
+=== man:lpr[1]로 인쇄하기
+
+문서는 `lpr` 과 함께 프린터로 전송됩니다. 인쇄할 파일은 명령줄에서 이름을 지정하거나 `lpr` 로 파이프할 수 있습니다. 이 두 명령은 [.filename]#doc.txt# 의 내용을 기본 프린터로 보내는 것으로 동일합니다:
+
+[source, shell]
+....
+% lpr doc.txt
+% cat doc.txt | lpr
+....
+
+프린터는 `-P` 로 선택할 수 있습니다. _레이저_ 라는 이름의 프린터로 인쇄하려면:
+
+[source, shell]
+....
+% lpr -Plaser doc.txt
+....
+
+[[printing-lpd-filters]]
+=== 필터
+
+지금까지 설명한 예제에서는 텍스트 파일의 내용을 프린터로 직접 보냈습니다. 프린터가 해당 파일의 내용을 이해하는 한 출력은 올바르게 인쇄됩니다.
+
+일부 프린터는 일반 텍스트를 인쇄할 수 없으며, 입력 파일이 일반 텍스트가 아닐 수도 있습니다.
+
+_필터_ 를 사용하면 파일을 번역하거나 처리할 수 있습니다. 일반적으로 일반 텍스트와 같은 한 가지 유형의 입력을 PostScript(R) 또는 `PCL` 과 같이 프린터가 이해할 수 있는 형식으로 번역하는 데 사용됩니다. 필터를 사용하여 페이지 번호를 추가하거나 읽기 쉽도록 소스 코드를 강조 표시하는 등의 추가 기능을 제공할 수도 있습니다.
+
+여기서 설명하는 필터는 _입력 필터_ 또는 _텍스트 필터_ 입니다. 이 필터는 들어오는 파일을 다른 형식으로 변환합니다. 파일을 만들기 전에 man:su[1]을 사용하여 `root` 가 되세요.
+
+필터는 `if=` 식별자와 함께 [.filename]#/ etc/printcap# 에 지정합니다. [.filename]#/usr/local/libexec/lf2crlf# 를 필터로 사용하려면 [.filename]#/etc/printcap# 을 다음과 같이 수정합니다:
+
+[.programlisting]
+....
+lp:\
+	:lp=/dev/unlpt0:\
+	:sh:\
+	:mx#0:\
+	:sd=/var/spool/lpd/lp:\
+	:if=/usr/local/libexec/lf2crlf:\   <.>
+	:lf=/var/log/lpd-errs:
+....
+
+<.> `if=` 는 들어오는 텍스트에 사용할 _입력 필터_ 를 식별합니다.
+
+[TIP]
+====
+백슬래시 _줄 연속_ 문자는 [.filename]#printcap# 항목의 줄 끝에 있는 것으로 보아 프린터용 항목이 실제로는 콜론 문자로 구분된 하나의 긴 줄임을 알 수 있습니다. 앞의 예는 가독성이 낮은 한 줄로 다시 작성할 수 있습니다:
+
+[.programlisting]
+....
+lp:lp=/dev/unlpt0:sh:mx#0:sd=/var/spool/lpd/lp:if=/usr/local/libexec/lf2crlf:lf=/var/log/lpd-errs:
+....
+
+====
+
+[[printing-lpd-filters-stairstep]]
+==== 일반 텍스트 프린터의 Stairstepping 방지하기
+
+일반적인 FreeBSD 텍스트 파일에는 각 줄 끝에 줄 바꿈 문자 하나만 포함되어 있습니다. 이러한 줄은 표준 프린터에서 "계단식"으로 표시됩니다:
+
+[.programlisting]
+....
+A printed file looks
+                    like the steps of a staircase
+                                                 scattered by the wind
+....
+
+필터는 개행 문자를 캐리지 리턴과 개행으로 변환할 수 있습니다. 캐리지 리턴은 프린터가 각 줄 뒤에 왼쪽으로 돌아가도록 합니다. 이러한 내용을 사용하여 [.filename]#/usr/local/libexec/lf2crlf# 을 만듭니다:
+
+[.programlisting]
+....
+#!/bin/sh
+CR=$'\r'
+/usr/bin/sed -e "s/$/${CR}/g"
+....
+
+권한을 설정하고 실행 가능하게 만듭니다:
+
+[source, shell]
+....
+# chmod 555 /usr/local/libexec/lf2crlf
+....
+
+새 필터를 사용하려면 [.filename]#/etc/printcap# 을 수정합니다:
+
+[.programlisting]
+....
+:if=/usr/local/libexec/lf2crlf:\
+....
+
+동일한 일반 텍스트 파일을 인쇄하여 필터를 테스트합니다. 캐리지 리턴을 사용하면 각 줄이 페이지의 왼쪽에서 시작됩니다.
+
+[[printing-lpd-filters-enscript]]
+==== package:print/enscript[] 를 사용하여 PostScript(R) 프린터에서 멋진 일반 텍스트 만들기
+
+GNUEnscript는 일반 텍스트 파일을 PostScript(R) 프린터에서 인쇄할 수 있도록 멋진 형식의 PostScript(R)로 변환합니다. 페이지 번호를 추가하고, 긴 줄을 줄 바꿈하며, 인쇄된 텍스트 파일을 더 읽기 쉽게 만드는 다양한 기능을 제공합니다. 로컬 용지 크기에 따라 포트 컬렉션에서 package:print/enscript-letter[] 또는 package:print/enscript-a4[] 중 하나를 설치하세요.
+
+이러한 내용으로 [.filename]#/usr/local/libexec/enscript# 를 생성합니다:
+
+[.programlisting]
+....
+#!/bin/sh
+/usr/local/bin/enscript -o -
+....
+
+권한을 설정하고 실행 가능하게 만듭니다:
+
+[source, shell]
+....
+# chmod 555 /usr/local/libexec/enscript
+....
+
+새 필터를 사용하려면 [.filename]#/etc/printcap# 을 수정합니다:
+
+[.programlisting]
+....
+:if=/usr/local/libexec/enscript:\
+....
+
+일반 텍스트 파일을 인쇄하여 필터를 테스트합니다.
+
+[[printing-lpd-filters-ps2pcl]]
+==== PostScript(R)를 `PCL` 프린터로 인쇄하기
+
+많은 프로그램에서 PostScript(R) 문서를 생성합니다. 하지만 저가형 프린터는 일반 텍스트 또는 `PCL` 만 인식하는 경우가 많습니다. 이 필터는 프린터로 보내기 전에 PostScript(R) 파일을 `PCL` 로 변환합니다.
+
+포트 컬렉션에서 Ghostscript PostScript(R) 인터프리터 package:print/ghostscript9-base[] 를 설치합니다.
+
+이 내용을 사용하여 [.filename]#/usr/local/libexec/ps2pcl# 을 생성합니다:
+
+[.programlisting]
+....
+#!/bin/sh
+/usr/local/bin/gs -dSAFER -dNOPAUSE -dBATCH -q -sDEVICE=ljet4 -sOutputFile=- -
+....
+
+권한을 설정하고 실행 가능하게 만듭니다:
+
+[source, shell]
+....
+# chmod 555 /usr/local/libexec/ps2pcl
+....
+
+이 스크립트로 전송된 PostScript(R) 입력은 렌더링되어 프린터로 전송되기 전에 `PCL` 로 변환됩니다.
+
+이 새 입력 필터를 사용하려면 [.filename]#/etc/printcap# 을 수정하세요:
+
+[.programlisting]
+....
+:if=/usr/local/libexec/ps2pcl:\
+....
+
+필터에 작은 PostScript(R) 프로그램을 전송하여 필터를 테스트합니다:
+
+[source, shell]
+....
+% printf "%%\!PS \n /Helvetica findfont 18 scalefont setfont \
+72 432 moveto (PostScript printing successful.) show showpage \004" | lpr
+....
+
+[[printing-lpd-filters-smart]]
+==== 스마트 필터
+
+입력 유형을 감지하여 프린터에 적합한 형식으로 자동 변환하는 필터를 사용하면 매우 편리합니다. PostScript(R) 파일의 처음 두 문자는 일반적으로 `%!` 입니다. 필터는 이 두 문자를 감지할 수 있습니다. PostScript(R) 파일을 변경하지 않고 PostScript(R) 프린터로 전송할 수 있습니다. 텍스트 파일은 앞서 설명한 대로 Enscript를 사용하여 PostScript(R)로 변환할 수 있습니다. 이러한 내용으로 [.filename]#/usr/local/libexec/psif# 를 생성합니다:
+
+[.programlisting]
+....
+#!/bin/sh
+#
+#  psif - Print PostScript or plain text on a PostScript printer
+#
+IFS="" read -r first_line
+first_two_chars=`expr "$first_line" : '\(..\)'`
+
+case "$first_two_chars" in
+%!)
+    # %! : PostScript job, print it.
+    echo "$first_line" && cat && exit 0
+    exit 2
+    ;;
+*)
+    # otherwise, format with enscript
+    ( echo "$first_line"; cat ) | /usr/local/bin/enscript -o - && exit 0
+    exit 2
+    ;;
+esac
+....
+
+권한을 설정하고 실행 가능하게 만듭니다:
+
+[source, shell]
+....
+# chmod 555 /usr/local/libexec/psif
+....
+
+이 새 입력 필터를 사용하려면 [.filename]#/etc/printcap# 을 수정하세요:
+
+[.programlisting]
+....
+:if=/usr/local/libexec/psif:\
+....
+
+PostScript(R) 및 일반 텍스트 파일을 인쇄하여 필터를 테스트합니다.
+
+[[printing-lpd-filters-othersmart]]
+==== 기타 스마트 필터
+
+다양한 유형의 입력을 감지하고 올바르게 포맷하는 필터를 작성하는 것은 어려운 일입니다. 포트 컬렉션의 package:print/apsfilter[] 는 수십 가지 파일 유형을 감지하여 프린터가 이해하는 `PDL` 로 자동 변환하는 스마트한 "매직" 필터입니다. 자세한 내용은 http://www.apsfilter.org[] 를 참조하십시오.
+
+[[printing-lpd-queues]]
+=== 다중 대기열
+
+[.filename]#/etc/printcap# 의 항목은 실제로 _queues_ 에 대한 정의입니다. 단일 프린터에 대해 대기열이 두 개 이상 있을 수 있습니다. 필터와 함께 사용하면 여러 대기열을 통해 사용자가 작업 인쇄 방식을 더 세밀하게 제어할 수 있습니다.
+
+예를 들어 사무실에 네트워크에 연결된 PostScript(R) 레이저 프린터가 있다고 가정해 보겠습니다. 대부분의 사용자는 일반 텍스트를 인쇄하기를 원하지만 일부 고급 사용자는 PostScript(R) 파일을 직접 인쇄할 수 있기를 원합니다. 같은 프린터에 대해 [.filename]#/etc/printcap# 에 두 개의 항목을 만들 수 있습니다:
+
+[.programlisting]
+....
+textprinter:\
+	:lp=9100@officelaser:\
+	:sh:\
+	:mx#0:\
+	:sd=/var/spool/lpd/textprinter:\
+	:if=/usr/local/libexec/enscript:\
+	:lf=/var/log/lpd-errs:
+
+psprinter:\
+	:lp=9100@officelaser:\
+	:sh:\
+	:mx#0:\
+	:sd=/var/spool/lpd/psprinter:\
+	:lf=/var/log/lpd-errs:
+....
+
+`textprinter` 로 전송된 문서는 이전 예제에 표시된 [.filename]#/usr/local/libexec/enscript# 필터로 서식이 지정됩니다. 고급 사용자는 필터링이 수행되지 않는 `psprinter` 에서 PostScript(R) 파일을 인쇄할 수 있습니다.
+
+이 다중 대기열 기술을 사용하면 모든 종류의 프린터 기능에 직접 액세스할 수 있습니다. 양면 인쇄기가 있는 프린터는 일반 단면 인쇄용 대기열과, 양면 인쇄를 활성화하는 명령 시퀀스와 함께 들어오는 대기열 두 개를 사용할 수 있습니다.
+
+[[printing-lpd-monitor]]
+=== 인쇄 모니터링 및 제어
+
+인쇄 작업을 모니터링하고 프린터 작동을 확인 및 제어할 수 있는 여러 유틸리티를 사용할 수 있습니다.
+
+[[printing-lpd-monitor-lpq]]
+==== man:lpq[1]
+
+man:lpq[1] 은 사용자의 인쇄 작업 상태를 보여줍니다. 다른 사용자의 인쇄 작업은 표시되지 않습니다.
+
+현재 단일 프린터에서 사용자의 보류 중인 작업을 표시하려면:
+
+[source, shell]
+....
+% lpq -Plp
+Rank   Owner      Job  Files                                 Total Size
+1st    jsmith     0    (standard input)                      12792 bytes
+....
+
+모든 프린터에서 현재 사용자의 보류 중인 작업을 표시하려면:
+
+[source, shell]
+....
+% lpq -a
+lp:
+Rank   Owner      Job  Files                                 Total Size
+1st    jsmith     1    (standard input)                      27320 bytes
+
+laser:
+Rank   Owner      Job  Files                                 Total Size
+1st    jsmith     287  (standard input)                      22443 bytes
+....
+
+[[printing-lpd-monitor-lprm]]
+==== man:lprm[1]
+
+man:lprm[1]은 인쇄 작업을 제거하는 데 사용됩니다. 일반 사용자는 자신의 작업만 제거할 수 있습니다. `root` 는 일부 또는 모든 작업을 제거할 수 있습니다.
+
+프린터에서 보류 중인 모든 작업을 제거합니다:
+
+[source, shell]
+....
+# lprm -Plp -
+dfA002smithy dequeued
+cfA002smithy dequeued
+dfA003smithy dequeued
+cfA003smithy dequeued
+dfA004smithy dequeued
+cfA004smithy dequeued
+....
+
+프린터에서 단일 작업을 제거합니다. man:lpq[1] 을 사용하여 작업 번호를 찾습니다.
+
+[source, shell]
+....
+% lpq
+Rank   Owner      Job  Files                                 Total Size
+1st    jsmith     5    (standard input)                      12188 bytes
+
+% lprm -Plp 5
+dfA005smithy dequeued
+cfA005smithy dequeued
+....
+
+[[printing-lpd-monitor-lpc]]
+==== man:lpc[8]
+
+man:lpc[8] 는 프린터 상태를 확인하고 수정하는 데 사용됩니다. `lpc` 뒤에는 명령과 선택적 프린터 이름이 따라옵니다. 특정 프린터 이름 대신 `all` 을 사용할 수 있으며, 명령은 모든 프린터에 적용됩니다. 일반 사용자는 man:lpc[8]로 상태를 볼 수 있습니다. `root` 만 프린터 상태를 수정하는 명령을 사용할 수 있습니다.
+
+모든 프린터의 상태를 표시합니다:
+
+[source, shell]
+....
+% lpc status all
+lp:
+	queuing is enabled
+	printing is enabled
+	1 entry in spool area
+	printer idle
+laser:
+	queuing is enabled
+	printing is enabled
+	1 entry in spool area
+	waiting for laser to come up
+....
+
+프린터가 새 작업을 수락하지 못하도록 설정한 다음 새 작업을 다시 수락하기 시작합니다:
+
+[source, shell]
+....
+# lpc disable lp
+lp:
+	queuing disabled
+# lpc enable lp
+lp:
+	queuing enabled
+....
+
+인쇄는 중지하지만 새 작업은 계속 수락합니다. 그런 다음 다시 인쇄를 시작합니다:
+
+[source, shell]
+....
+# lpc stop lp
+lp:
+	printing disabled
+# lpc start lp
+lp:
+	printing enabled
+	daemon started
+....
+
+일부 오류 조건이 발생한 후 프린터를 다시 시작합니다:
+
+[source, shell]
+....
+# lpc restart lp
+lp:
+	no daemon to abort
+	printing enabled
+	daemon restarted
+....
+
+인쇄 대기열을 끄고 인쇄를 비활성화하고 사용자에게 문제를 설명하는 메시지를 표시합니다:
+
+[source, shell]
+....
+# lpc down lp Repair parts will arrive on Monday
+lp:
+	printer and queuing disabled
+	status message is now: Repair parts will arrive on Monday
+....
+
+다운된 프린터를 다시 활성화합니다:
+
+[source, shell]
+....
+# lpc up lp
+lp:
+	printing enabled
+	daemon started
+....
+
+더 많은 명령과 옵션은 man:lpc[8]을 참조하세요.
+
+[[printing-lpd-shared]]
+=== 공유 프린터
+
+기업이나 학교에서는 여러 사용자가 프린터를 공유하는 경우가 많습니다. 프린터를 더욱 편리하게 공유할 수 있는 추가 기능이 제공됩니다.
+
+[[printing-shared-aliases]]
+==== Aliases
+
+프린터 이름은 [.filename]#/etc/printcap# 의 항목 첫 줄에 설정됩니다. 해당 이름 뒤에 추가 이름 또는 _별칭_ 을 추가할 수 있습니다. 별칭은 이름과 서로 수직 막대로 구분됩니다:
+
+[.programlisting]
+....
+lp|repairsprinter|salesprinter:\
+....
+
+프린터 이름 대신 별칭을 사용할 수 있습니다. 예를 들어 영업 부서의 사용자는 프린터로 다음과 같이 인쇄합니다.
+
+[source, shell]
+....
+% lpr -Psalesprinter sales-report.txt
+....
+
+수리 부서의 사용자는 다음을 사용하여 _부서의_ 프린터로 인쇄합니다
+
+[source, shell]
+....
+% lpr -Prepairsprinter repairs-report.txt
+....
+
+모든 문서는 해당 단일 프린터에서 인쇄됩니다. 영업 부서가 자체 프린터가 필요할 만큼 성장하면 공유 프린터 항목에서 별칭을 제거하여 새 프린터의 이름으로 사용할 수 있습니다. 두 부서의 사용자는 계속해서 동일한 명령을 사용하지만 영업 문서는 새 프린터로 전송됩니다.
+
+[[printing-shared-headers]]
+==== 헤더 페이지
+
+사용자가 바쁜 공유 프린터에서 생성된 페이지 더미에서 자신의 문서를 찾기가 어려울 수 있습니다. 이 문제를 해결하기 위해 _헤더 페이지_ 가 만들어졌습니다. 사용자 이름과 문서 이름이 포함된 헤더 페이지가 각 인쇄 작업 전에 인쇄됩니다. 이 페이지는 _배너_ 또는 _구분기호_ 페이지라고도 합니다.
+
+헤더 페이지 활성화는 프린터가 `USB`, 병렬 또는 직렬 케이블로 컴퓨터에 직접 연결되어 있는지 또는 네트워크를 통해 원격으로 연결되어 있는지에 따라 달라집니다.
+
+직접 연결된 프린터의 헤더 페이지는 [.filename]#/etc/printcap# 의 항목에서 `:sh:\` (헤더 억제) 줄을 제거하여 활성화할 수 있습니다. 이러한 헤더 페이지는 새 줄에 줄 바꿈 문자만 사용합니다. 일부 프린터에서는 계단식 텍스트를 방지하기 위해 [.filename]#/usr/share/examples/printing/hpif# 필터가 필요할 수 있습니다. 이 필터는 `PCL` 프린터가 줄 바꿈이 수신될 때 캐리지 리턴과 줄 바꿈을 모두 인쇄하도록 구성합니다.
+
+네트워크 프린터용 헤더 페이지는 프린터 자체에서 구성해야 합니다. [.filename]#/etc/printcap# 의 헤더 페이지 항목은 무시됩니다. 설정은 일반적으로 프린터 전면 패널 또는 웹 브라우저로 액세스할 수 있는 구성 웹 페이지에서 사용할 수 있습니다.
+
+[[printing-lpd-references]]
+=== 참조
+
+예시 파일: [.filename]#/usr/share/examples/printing/#.
+
+_4.3BSD 라인 프린터 스풀러 매뉴얼_ , [.filename]#/usr/share/doc/smm/07.lpd/paper.ascii.gz#.
+
+매뉴얼 페이지: man:printcap[5], man:lpd[8], man:lpr[1], man:lpc[8], man:lprm[1], man:lpq[1].
+
+[[printing-other]]
+== 다른 인쇄 시스템
+
+내장된 man:lpd[8] 외에도 여러 가지 다른 인쇄 시스템을 사용할 수 있습니다. 이러한 시스템은 다른 프로토콜이나 추가 기능을 지원합니다.
+
+[[printing-other-cups]]
+=== CUPS (Common UNIX(R) Printing System)
+
+CUPS는 많은 운영체제에서 사용할 수 있는 인기 있는 인쇄 시스템입니다. FreeBSD에서 CUPS를 사용하는 방법은 별도의 문서에 설명되어 있습니다: extref:{cups}[CUPS]
+
+[[printing-other-hplip]]
+=== HPLIP
+
+Hewlett Packard는 다양한 잉크젯 및 레이저 프린터를 지원하는 인쇄 시스템을 제공합니다. 포트는 package:print/hplip[] 입니다. 메인 웹 페이지는 https://developers.hp.com/hp-linux-imaging-and-printing[] 에 있습니다. 이 포트는 FreeBSD에 대한 모든 설치 세부 정보를 처리합니다. 구성 정보는 https://developers.hp.com/hp-linux-imaging-and-printing/install[] 에 나와 있습니다.
+
+[[printing-other-lprng]]
+=== LPRng
+
+LPRng는 man:lpd[8]의 향상된 대안으로 개발되었습니다. 포트는 package:sysutils/LPRng[] 입니다. 자세한 내용과 문서는 http://www.lprng.com/[] 를 참조하세요.
