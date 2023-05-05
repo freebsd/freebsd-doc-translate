@@ -1,0 +1,545 @@
+---
+description: 'FreeBSD를 받는 방법: CD 및 DVD 세트, FTP 사이트, Git 설치 및 사용 방법'
+next: books/handbook/bibliography
+part: '파트 V. 부록'
+path: /books/handbook/
+prev: books/handbook/partv
+showBookMenu: 'true'
+tags: ["Obtaining", "CD", "DVD", "FTP", "Git"]
+title: '부록 A. FreeBSD 구하기'
+weight: 40
+---
+
+[appendix]
+= FreeBSD 구하기
+:doctype: book
+:toc: macro
+:toclevels: 1
+:icons: font
+:sectnums:
+:sectnumlevels: 6
+:sectnumoffset: A
+:partnums:
+:source-highlighter: rouge
+:experimental:
+:images-path: books/handbook/mirrors/
+
+ifdef::env-beastie[]
+ifdef::backend-html5[]
+:imagesdir: ../../../../images/{images-path}
+endif::[]
+ifndef::book[]
+include::shared/authors.adoc[]
+include::shared/mirrors.adoc[]
+include::shared/releases.adoc[]
+include::shared/attributes/attributes-{{% lang %}}.adoc[]
+include::shared/{{% lang %}}/teams.adoc[]
+include::shared/{{% lang %}}/mailing-lists.adoc[]
+include::shared/{{% lang %}}/urls.adoc[]
+toc::[]
+endif::[]
+ifdef::backend-pdf,backend-epub3[]
+include::../../../../../shared/asciidoctor.adoc[]
+endif::[]
+endif::[]
+
+ifndef::env-beastie[]
+toc::[]
+include::../../../../../shared/asciidoctor.adoc[]
+endif::[]
+
+[[mirrors]]
+== 미러
+
+FreeBSD 프로젝트의 공식 미러는 프로젝트 클러스터 관리자가 운영하는 여러 컴퓨터로 구성되어 있으며, 사용자를 가장 가까운 미러로 안내하기 위해 GeoDNS 뒤에 있습니다. 현재 위치는 호주, 브라질, 독일, 일본(2개 사이트), 말레이시아, 남아프리카공화국, 대만, 영국, 미국(캘리포니아, 뉴저지, 워싱턴)입니다.
+
+공식 미러 서비스:
+
+[cols="1,1,3"]
+|===
+| Service Name | Protocols | More information
+
+| **download.FreeBSD.org**
+| link:https://download.FreeBSD.org/[https] link:ftp://download.FreeBSD.org/pub/FreeBSD/[ftp]
+| Same content as `ftp.FreeBSD.org`, `ftp` is a legacy name; `download.FreeBSD.org` is recommended.
+
+| **git.FreeBSD.org**
+| git over `https` and `ssh`
+| More details on link:https://docs.freebsd.org/en/books/handbook/mirrors/#git[using git] section.
+
+| **pkg.FreeBSD.org**
+| man:pkg[8] over `http` and `https`
+| Official FreeBSD package repositories used by the man:pkg[8] program.
+
+| **vuxml.FreeBSD.org** / **www.VuXML.org**
+| link:https://www.vuxml.org/[https]
+| FreeBSD Project VuXML web page. `pkg audit` fetches the list of vulnerabilities from this service.
+|===
+
+모든 공식 미러는 IPv4와 IPv6를 지원합니다.
+
+FreeBSD 웹사이트( https://www.FreeBSD.org 및 https://docs.FreeBSD.org )는 GeoDNS 인프라에서 호스팅되지 않으며, 구현에 대한 연구가 진행 중입니다.
+
+http://ftp-archive.FreeBSD.org 는 한 위치(미국)에서만 호스팅되는 GeoDNS 인프라에 속하지 않습니다.
+
+이 프로젝트는 새로운 미러 장소를 찾고 있으며, 후원을 원하시는 분은 클러스터 관리자 팀에 문의하여 자세한 정보를 알아보세요.
+
+커뮤니티 및 다른 회사에서 관리하는 미러 목록:
+
+[cols="1,1,3"]
+|===
+|Country | Hostname | Protocols
+
+| Australia icon:envelope[link=mailto:{mirrors-australia-email}, title="mirror contact"]
+| ftp.au.FreeBSD.org
+| link:http://ftp.au.FreeBSD.org/pub/FreeBSD[http] link:http://ftp.au.FreeBSD.org/pub/FreeBSD[http_v6] link:rsync://ftp.au.FreeBSD.org[rsync] link:rsync://ftp.au.FreeBSD.org[rsync_v6]
+
+|
+| ftp3.au.FreeBSD.org
+| link:http://ftp3.au.FreeBSD.org/pub/FreeBSD[http] link:ftp://ftp3.au.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp3.au.FreeBSD.org[rsync]
+
+| Austria icon:envelope[link=mailto:{mirrors-austria-email}, title="mirror contact"]
+| ftp.at.FreeBSD.org
+| link:http://ftp.at.FreeBSD.org/pub/FreeBSD/[http] link:http://ftp.at.FreeBSD.org/pub/FreeBSD/[http_v6] link:ftp://ftp.at.FreeBSD.org/pub/FreeBSD/[ftp] link:ftp://ftp.at.FreeBSD.org/pub/FreeBSD/[ftp_v6] link:rsync://ftp.at.FreeBSD.org/pub/FreeBSD/[rsync] link:rsync://ftp.at.FreeBSD.org/pub/FreeBSD/[rsync_v6]
+
+| Brazil icon:envelope[link=mailto:{mirrors-brazil-email}, title="mirror contact"]
+| ftp2.br.FreeBSD.org
+| link:http://ftp2.br.FreeBSD.org/FreeBSD[http] link:rsync://ftp2.br.FreeBSD.org[rsync] link:rsync://ftp2.br.FreeBSD.org[rsync_v6]
+
+|
+| ftp3.br.FreeBSD.org
+| link:http://ftp3.br.FreeBSD.org/pub/FreeBSD[http] link:ftp://ftp3.br.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp3.br.FreeBSD.org[rsync]
+
+| Bulgaria icon:envelope[link=mailto:{mirrors-bulgaria-email}, title="mirror contact"]
+| ftp.bg.FreeBSD.org
+| link:ftp://ftp.bg.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.bg.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp.bg.FreeBSD.org[rsync] link:rsync://ftp.bg.FreeBSD.org[rsync_v6]
+
+| Czech Republic icon:envelope[link=mailto:{mirrors-czech-email}, title="mirror contact"]
+| ftp.cz.FreeBSD.org
+| link:http://ftp.cz.FreeBSD.org/pub/FreeBSD[http] link:http://ftp.cz.FreeBSD.org/pub/FreeBSD[http_v6] link:rsync://ftp.cz.FreeBSD.org[rsync] link:rsync://ftp.cz.FreeBSD.org[rsync_v6]
+
+| Denmark icon:envelope[link=mailto:{mirrors-denmark-email}, title="mirror contact"]
+| ftp.dk.FreeBSD.org
+| link:http://ftp.dk.FreeBSD.org/FreeBSD/[http] link:http://ftp.dk.FreeBSD.org/FreeBSD/[http_v6] link:ftp://ftp.dk.FreeBSD.org/FreeBSD/[ftp] link:ftp://ftp.dk.FreeBSD.org/FreeBSD/[ftp_v6] link:rsync://ftp.dk.FreeBSD.org/FreeBSD/[rsync] link:rsync://ftp.dk.FreeBSD.org/FreeBSD/[rsync_v6]
+
+| Finland icon:envelope[link=mailto:{mirrors-finland-email}, title="mirror contact"]
+| ftp.fi.FreeBSD.org
+| link:ftp://ftp.fi.FreeBSD.org/pub/FreeBSD[ftp]
+
+| France icon:envelope[link=mailto:{mirrors-france-email}, title="mirror contact"]
+| ftp.fr.FreeBSD.org
+| link:http://ftp.fr.FreeBSD.org/pub/FreeBSD[http] link:http://ftp.fr.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp.fr.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.fr.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp.fr.FreeBSD.org[rsync] link:rsync://ftp.fr.FreeBSD.org[rsync_v6]
+
+|
+| ftp3.fr.FreeBSD.org
+| link:ftp://ftp3.fr.FreeBSD.org/pub/FreeBSD[ftp]
+
+|
+| ftp6.fr.FreeBSD.org
+| link:http://ftp6.fr.FreeBSD.org/pub/FreeBSD[http] link:ftp://ftp6.fr.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp6.fr.FreeBSD.org[rsync]
+
+| Germany icon:envelope[link=mailto:{mirrors-germany-email}, title="mirror contact"]
+| ftp.de.FreeBSD.org
+| link:ftp://ftp.de.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.de.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp.de.FreeBSD.org[rsync] link:rsync://ftp.de.FreeBSD.org[rsync_v6]
+
+|
+| ftp1.de.FreeBSD.org
+| link:http://ftp1.de.FreeBSD.org/pub/FreeBSD[http] link:http://ftp1.de.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp1.de.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp1.de.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp1.de.FreeBSD.org[rsync] link:rsync://ftp1.de.FreeBSD.org[rsync_v6]
+
+|
+| ftp2.de.FreeBSD.org
+| link:http://ftp2.de.FreeBSD.org/pub/FreeBSD[http] link:http://ftp2.de.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp2.de.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp2.de.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp2.de.FreeBSD.org[rsync] link:rsync://ftp2.de.FreeBSD.org[rsync_v6]
+
+|
+| ftp5.de.FreeBSD.org
+| link:ftp://ftp5.de.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp5.de.FreeBSD.org/pub/FreeBSD[ftp_v6]
+
+|
+| ftp7.de.FreeBSD.org
+| link:http://ftp7.de.FreeBSD.org/pub/FreeBSD[http] link:http://ftp7.de.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp7.de.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp7.de.FreeBSD.org/pub/FreeBSD[ftp_v6]
+
+| Greece icon:envelope[link=mailto:{mirrors-greece-email}, title="mirror contact"]
+| ftp.gr.FreeBSD.org
+| link:http://ftp.gr.FreeBSD.org/pub/FreeBSD[http] link:http://ftp.gr.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp.gr.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.gr.FreeBSD.org/pub/FreeBSD[ftp_v6]
+
+|
+| ftp2.gr.FreeBSD.org
+| link:http://ftp2.gr.FreeBSD.org/pub/FreeBSD[http] link:http://ftp2.gr.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp2.gr.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp2.gr.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp2.gr.FreeBSD.org[rsync]
+
+| Japan icon:envelope[link=mailto:{mirrors-japan-email}, title="mirror contact"]
+| ftp.jp.FreeBSD.org
+| link:http://ftp.jp.FreeBSD.org/pub/FreeBSD[http] link:http://ftp.jp.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp.jp.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.jp.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp.jp.FreeBSD.org[rsync] link:rsync://ftp.jp.FreeBSD.org[rsync_v6]
+
+|
+| ftp2.jp.FreeBSD.org
+| link:ftp://ftp2.jp.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp2.jp.FreeBSD.org[rsync] link:rsync://ftp2.jp.FreeBSD.org[rsync_v6]
+
+|
+| ftp3.jp.FreeBSD.org
+| link:http://ftp3.jp.FreeBSD.org/pub/FreeBSD[http] link:rsync://ftp3.jp.FreeBSD.org[rsync]
+
+|
+| ftp4.jp.FreeBSD.org
+| link:ftp://ftp4.jp.FreeBSD.org/pub/FreeBSD[ftp]
+
+|
+| ftp6.jp.FreeBSD.org
+| link:http://ftp6.jp.FreeBSD.org/pub/FreeBSD[http] link:http://ftp6.jp.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp6.jp.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp6.jp.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp6.jp.FreeBSD.org[rsync] link:rsync://ftp6.jp.FreeBSD.org[rsync_v6]
+
+| Korea icon:envelope[link=mailto:{mirrors-korea-email}, title="mirror contact"]
+| ftp.kr.FreeBSD.org
+| link:http://ftp.kr.FreeBSD.org/pub/FreeBSD[http] link:https://ftp.kr.FreeBSD.org/pub/FreeBSD[https] link:ftp://ftp.kr.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp.kr.FreeBSD.org[rsync]
+
+|
+| ftp2.kr.FreeBSD.org
+| link:rsync://ftp2.kr.FreeBSD.org[rsync]
+
+| Latvia icon:envelope[link=mailto:{mirrors-latvia-email}, title="mirror contact"]
+| ftp.lv.FreeBSD.org
+| link:http://ftp.lv.FreeBSD.org/freebsd[http] link:ftp://ftp.lv.FreeBSD.org/freebsd[ftp]
+
+| Netherlands icon:envelope[link=mailto:{mirrors-netherlands-email}, title="mirror contact"]
+| ftp.nl.FreeBSD.org
+| link:http://ftp.nl.FreeBSD.org/pub/FreeBSD[http] link:http://ftp.nl.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp.nl.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.nl.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp.nl.FreeBSD.org[rsync] link:rsync://ftp.nl.FreeBSD.org[rsync_v6]
+
+|
+| ftp2.nl.FreeBSD.org
+| link:http://ftp2.nl.FreeBSD.org/pub/FreeBSD[http] link:ftp://ftp2.nl.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp2.nl.FreeBSD.org[rsync]
+
+| New Zealand icon:envelope[link=mailto:{mirrors-new-zealand-email}, title="mirror contact"]
+| ftp.nz.FreeBSD.org
+| link:http://ftp.nz.FreeBSD.org/pub/FreeBSD[http] link:ftp://ftp.nz.FreeBSD.org/pub/FreeBSD[ftp]
+
+| Norway icon:envelope[link=mailto:{mirrors-norway-email}, title="mirror contact"]
+| ftp.no.FreeBSD.org
+| link:ftp://ftp.no.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.no.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp.no.FreeBSD.org[rsync] link:rsync://ftp.no.FreeBSD.org[rsync_v6]
+
+| Poland icon:envelope[link=mailto:{mirrors-poland-email}, title="mirror contact"]
+| ftp.pl.FreeBSD.org
+| link:http://ftp.pl.FreeBSD.org/pub/FreeBSD[http] link:http://ftp.pl.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp.pl.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp.pl.FreeBSD.org[rsync] link:rsync://ftp.pl.FreeBSD.org[rsync_v6]
+
+| Russia icon:envelope[link=mailto:{mirrors-russia-email}, title="mirror contact"]
+| ftp.ru.FreeBSD.org
+| link:http://ftp.ru.FreeBSD.org/pub/FreeBSD[http] link:http://ftp.ru.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp.ru.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.ru.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp.ru.FreeBSD.org[rsync] link:rsync://ftp.ru.FreeBSD.org[rsync_v6]
+
+|
+| ftp2.ru.FreeBSD.org
+| link:https://ftp2.ru.FreeBSD.org/pub/FreeBSD[https] link:ftp://ftp2.ru.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp2.ru.FreeBSD.org[rsync]
+
+| Slovenia icon:envelope[link=mailto:{mirrors-slovenia-email}, title="mirror contact"]
+| ftp.si.FreeBSD.org
+| link:http://ftp.si.FreeBSD.org/pub/FreeBSD[http] link:http://ftp.si.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp.si.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.si.FreeBSD.org/pub/FreeBSD[ftp_v6]
+
+| South Africa icon:envelope[link=mailto:{mirrors-south-africa-email}, title="mirror contact"]
+| ftp.za.FreeBSD.org
+| link:https://ftp.za.FreeBSD.org/pub/FreeBSD[https] link:https://ftp.za.FreeBSD.org/pub/FreeBSD[https_v6] link:rsync://ftp.za.FreeBSD.org[rsync] link:rsync://ftp.za.FreeBSD.org[rsync_v6]
+
+|
+| ftp2.za.FreeBSD.org
+| link:http://ftp2.za.FreeBSD.org/pub/FreeBSD[http] link:http://ftp2.za.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp2.za.FreeBSD.org/pub/FreeBSD[ftp_v6]
+
+|
+| ftp4.za.FreeBSD.org
+| link:http://ftp4.za.FreeBSD.org/pub/FreeBSD[http] link:ftp://ftp4.za.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp4.za.FreeBSD.org[rsync]
+
+| Sweden icon:envelope[link=mailto:{mirrors-sweden-email}, title="mirror contact"]
+| ftp.se.FreeBSD.org
+| link:http://ftp.se.FreeBSD.org/pub/FreeBSD[http] link:http://ftp.se.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp.se.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.se.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp.se.FreeBSD.org[rsync] link:rsync://ftp.se.FreeBSD.org[rsync_v6]
+
+| Taiwan icon:envelope[link=mailto:{mirrors-taiwan-email}, title="mirror contact"]
+| ftp4.tw.FreeBSD.org
+| link:https://ftp4.tw.FreeBSD.org/pub/FreeBSD[https] link:ftp://ftp4.tw.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp4.tw.FreeBSD.org[rsync]
+
+|
+| ftp5.tw.FreeBSD.org
+| link:http://ftp5.tw.FreeBSD.org/pub/FreeBSD[http] link:ftp://ftp5.tw.FreeBSD.org/pub/FreeBSD[ftp]
+
+| Ukraine icon:envelope[link=mailto:{mirrors-ukraine-email}, title="mirror contact"]
+| ftp.ua.FreeBSD.org
+| link:http://ftp.ua.FreeBSD.org/pub/FreeBSD[http] link:ftp://ftp.ua.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.ua.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp.ua.FreeBSD.org[rsync] link:rsync://ftp.ua.FreeBSD.org[rsync_v6]
+
+| United Kingdom icon:envelope[link=mailto:{mirrors-uk-email}, title="mirror contact"]
+| ftp.uk.FreeBSD.org
+| link:http://ftp.uk.FreeBSD.org/pub/FreeBSD[http] link:http://ftp.uk.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp.uk.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp.uk.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp.uk.FreeBSD.org[rsync] link:rsync://ftp.uk.FreeBSD.org[rsync_v6]
+
+|
+| ftp2.uk.FreeBSD.org
+| link:http://ftp2.uk.FreeBSD.org/pub/FreeBSD[http] link:http://ftp2.uk.FreeBSD.org/pub/FreeBSD[http_v6] link:https://ftp2.uk.FreeBSD.org/pub/FreeBSD[https] link:https://ftp2.uk.FreeBSD.org/pub/FreeBSD[https_v6] link:ftp://ftp2.uk.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp2.uk.FreeBSD.org/pub/FreeBSD[ftp_v6]
+
+| United States of America icon:envelope[link=mailto:{mirrors-us-email}, title="mirror contact"]
+| ftp11.FreeBSD.org
+| link:http://ftp11.FreeBSD.org/pub/FreeBSD[http] link:http://ftp11.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp11.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp11.FreeBSD.org/pub/FreeBSD[ftp_v6] link:rsync://ftp11.FreeBSD.org[rsync] link:rsync://ftp11.FreeBSD.org[rsync_v6]
+
+|
+| ftp14.FreeBSD.org
+| link:ftp://ftp14.FreeBSD.org/pub/FreeBSD[ftp] link:rsync://ftp14.FreeBSD.org[rsync] (Former official tier 1)
+
+|
+| ftp5.FreeBSD.org
+| link:http://ftp5.FreeBSD.org/pub/FreeBSD[http] link:http://ftp5.FreeBSD.org/pub/FreeBSD[http_v6] link:ftp://ftp5.FreeBSD.org/pub/FreeBSD[ftp] link:ftp://ftp5.FreeBSD.org/pub/FreeBSD[ftp_v6]
+|===
+
+커뮤니티 미러에서 지원하는 프로토콜의 현재 목록은 2022-01-31에 마지막으로 업데이트되었으며, 보장하진 않습니다.
+
+[[git]]
+== Git 사용하기
+
+[[git-intro]]
+=== 소개
+
+2020년 12월 현재, FreeBSD는 모든 기본 소스 코드와 문서를 저장하기 위한 기본 버전 관리 시스템으로 git을 사용합니다. 2021년 4월 현재, FreeBSD는 FreeBSD의 모든 포트 컬렉션을 저장하기 위한 유일한 버전 관리 시스템으로 git을 사용합니다.
+
+[NOTE]
+====
+Git은 일반적으로 개발자 도구입니다. 사용자는 `freebsd-update` ( crossref:cutting-edge[updating-upgrading-freebsdupdate,“FreeBSD Update”] )를 사용하여 FreeBSD 기본 시스템을 업데이트하고, `git` ( crossref:ports[ports-using,“Using the Ports Collection”] )을 사용하여 FreeBSD 포트 컬렉션을 업데이트하는 것을 선호할 수 있습니다.
+====
+
+이 섹션에서는 FreeBSD 시스템에 Git을 설치하고 이를 사용하여 FreeBSD 소스 코드 저장소의 로컬 복사본을 만드는 방법을 설명합니다.
+
+[[git-install]]
+=== 설치
+
+Git은 포트 컬렉션에서 설치하거나 패키지로 설치할 수 있습니다:
+
+[source, shell]
+....
+# pkg install git
+....
+
+[[git-usage]]
+=== Git 실행하기
+
+소스의 깨끗한 복사본을 로컬 디렉터리로 가져오려면 `git clone` 을 사용합니다. 이 파일 디렉터리를 _working tree_ 라고 합니다.
+
+Git은 URL을 사용하여 저장소를 지정합니다. 저장소는 세 가지가 있는데, FreeBSD 시스템 소스 코드를 위한 `src`, 문서를 위한 `doc`, FreeBSD 포트 컬렉션을 위한 `ports` 입니다. 세 곳 모두 두 가지 프로토콜을 통해 접근할 수 있습니다: HTTPS와 SSH입니다. 예를 들어, URL `https://git.FreeBSD.org/src.git` 은 `https` 프로토콜을 사용하여 `src` 저장소의 메인 브랜치를 지정합니다.
+
+[[git-url-table]]
+.FreeBSD Git Repository URL Table
+[options="header,footer"]
+|=======================================================
+|Item | Git URL
+| Read-only src repo via HTTPS             | `https://git.FreeBSD.org/src.git`
+| Read-only src repo via anon-ssh          | `ssh://anongit@git.FreeBSD.org/src.git`
+| Read-only doc repo via HTTPS             | `https://git.FreeBSD.org/doc.git`
+| Read-only doc repo via anon-ssh          | `ssh://anongit@git.FreeBSD.org/doc.git`
+| Read-only ports repo via HTTPS           | `https://git.FreeBSD.org/ports.git`
+| Read-only ports repo via anon-ssh        | `ssh://anongit@git.FreeBSD.org/ports.git`
+|=======================================================
+
+프로젝트 멤버가 관리하는 외부 미러도 사용할 수 있으니 <<external-mirrors>> 섹션을 참고하세요.
+
+FreeBSD 시스템 소스 코드 저장소의 사본을 복제하려면:
+
+[source, shell]
+....
+# git clone -o freebsd https://git.FreeBSD.org/src.git /usr/src
+....
+
+`-o freebsd` 옵션은 원본을 지정합니다; FreeBSD 문서의 관례에 따라 원본은 `freebsd` 로 간주됩니다. 초기 체크 아웃은 원격 저장소의 전체 브랜치를 다운로드해야 하므로 시간이 걸릴 수 있습니다. 조금만 기다려주세요.
+
+처음에 작업 트리에는 현재에 해당하는 `main` 브랜치에 대한 소스 코드가 포함되어 있습니다. 대신 13-STABLE로 전환하려면:
+[source, shell]
+....
+# cd /usr/src
+# git checkout stable/13
+....
+
+Working tree는 `git pull` 로 업데이트할 수 있습니다. 위 예제에서 생성한 [.filename]#/usr/src# 을 업데이트하려면 다음을 사용합니다:
+
+[source, shell]
+....
+# cd /usr/src
+# git pull --rebase
+....
+
+업데이트는 변경된 파일만 전송하므로 체크아웃보다 훨씬 빠릅니다.
+
+=== 웹 기반 저장소 브라우저
+
+FreeBSD 프로젝트는 웹 기반 저장소 브라우저로 cgit을 사용합니다: link:https://cgit.FreeBSD.org/[https://cgit.FreeBSD.org/].
+
+=== 개발자용
+
+저장소에 대한 쓰기 권한에 대한 자세한 내용은 extref:{committers-guide}[Committer's Guide, git-mini-primer] 를 참조하세요.
+
+[[external-mirrors]]
+=== 외부 미러
+
+이러한 미러는 FreeBSD.org에서 호스팅하지는 않지만 프로젝트 멤버들에 의해 유지 관리됩니다. 사용자와 개발자는 이러한 미러에서 저장소를 가져오거나 찾아볼 수 있습니다. `doc` 및 `src` GitHub 저장소에 대한 Pull Request가 접수 중이며, 그 외의 미러에 대한 프로젝트 워크플로에 대해서는 아직 논의 중입니다.
+
+Codeberg::
+  - doc: https://codeberg.org/FreeBSD/freebsd-doc
+  - ports: https://codeberg.org/FreeBSD/freebsd-ports
+  - src: https://codeberg.org/FreeBSD/freebsd-src
+
+GitHub::
+  - doc: https://github.com/freebsd/freebsd-doc
+  - ports: https://github.com/freebsd/freebsd-ports
+  - src: https://github.com/freebsd/freebsd-src
+
+GitLab::
+  - doc: https://gitlab.com/FreeBSD/freebsd-doc
+  - ports: https://gitlab.com/FreeBSD/freebsd-ports
+  - src: https://gitlab.com/FreeBSD/freebsd-src
+
+=== 메일링 리스트
+
+FreeBSD 프로젝트에서 git에 대한 일반적인 사용법과 질문을 위한 메인 메일링 리스트는 https://lists.freebsd.org/subscription/freebsd-git[freebsd-git] 입니다. 커밋 메시지 목록을 포함한 자세한 내용은 crossref:handbook/eresources[eresources-mail, Mailing Lists] 장을 참조하세요.
+
+=== SSH host keys
+
+* gitrepo.FreeBSD.org host key fingerprints:
+** ECDSA key fingerprint is `SHA256:seWO5D27ySURcx4bknTNKlC1mgai0whP443PAKEvvZA`
+** ED25519 key fingerprint is `SHA256:lNR6i4BEOaaUhmDHBA1WJsO7H3KtvjE2r5q4sOxtIWo`
+** RSA key fingerprint is `SHA256:f453CUEFXEJAXlKeEHV+ajJfeEfx9MdKQUD7lIscnQI`
+
+* git.FreeBSD.org host key fingerprints:
+** ECDSA key fingerprint is `SHA256:/UlirUAsGiitupxmtsn7f9b7zCWd0vCs4Yo/tpVWP9w`
+** ED25519 key fingerprint is `SHA256:y1ljKrKMD3lDObRUG3xJ9gXwEIuqnh306tSyFd1tuZE`
+** RSA key fingerprint is `SHA256:jBe6FQGoH4HjvrIVM23dcnLZk9kmpdezR/CvQzm7rJM`
+
+DNS에 SSHFP 레코드로도 게시하고 있습니다.
+
+[[svn]]
+== Subversion 사용하기
+
+[[svn-intro]]
+=== 소개
+
+2020년 12월 현재, FreeBSD는 모든 FreeBSD의 소스 코드와 문서를 저장하기 위한 기본 버전 관리 시스템으로 git을 사용합니다. `stable/11`, `stable/12` 및 관련 releng 브랜치에 있는 git 저장소의 변경 사항은 서브버전 저장소로 내보내집니다. 이 내보내기는 해당 브랜치의 수명 동안 계속됩니다. 2012년 7월부터 2021년 3월까지, FreeBSD는 모든 FreeBSD의 포트 컬렉션을 저장하기 위한 유일한 버전 관리 시스템으로 Subversion을 사용했습니다. 2021년 4월 현재, FreeBSD는 모든 FreeBSD의 포트 컬렉션을 저장하기 위한 유일한 버전 관리 시스템으로 git을 사용합니다.
+
+[NOTE]
+====
+Subversion은 일반적으로 개발자 도구입니다. 사용자는 `freebsd-update`( crossref:cutting-edge[updating-upgrading-freebsdupdate,“FreeBSD Update”] )를 사용하여 FreeBSD 기본 시스템을 업데이트하고, `git` ( crossref:ports[ports-using,“Using the Ports Collection”] )을 사용하여 FreeBSD 포트 컬렉션을 업데이트하는 것을 선호할 수 있습니다. 2021년 3월 이후, 서브버전 사용은 레거시 브랜치( `stable/11` 및 `stable/12` )에만 적용됩니다.
+====
+
+이 섹션에서는 FreeBSD 시스템에 Subversion을 설치하고 이를 사용하여 FreeBSD 저장소의 로컬 사본을 만드는 방법을 설명합니다. Subversion 사용에 대한 추가 정보가 포함되어 있습니다.
+
+[[svn-svnlite]]
+=== Svnlite
+
+Subversion의 경량 버전은 이미 FreeBSD에 `svnlite` 로 설치되어 있습니다. Subversion의 포트 또는 패키지 버전은 Python 또는 Perl API가 필요하거나 최신 버전의 Subversion을 원하는 경우에만 필요합니다.
+
+일반적인 Subversion 사용과 유일한 차이점은 명령 이름이 `svnlite` 라는 점입니다.
+
+[[svn-install]]
+=== 설치
+
+`svnlite` 를 사용할 수 없거나 Subversion 정식 버전이 필요한 경우 설치해야 합니다.
+
+Subversion은 포트 컬렉션에서 설치할 수 있습니다:
+
+[source, shell]
+....
+# cd /usr/ports/devel/subversion
+# make install clean
+....
+
+Subversion은 패키지로도 설치할 수 있습니다:
+
+[source, shell]
+....
+# pkg install subversion
+....
+
+[[svn-usage]]
+=== Subversion 실행하기
+
+소스의 깨끗한 복사본을 로컬 디렉터리로 가져오려면 `svn` 을 사용합니다. 이 디렉터리에 있는 파일을 _local working copy_ 이라고 합니다.
+
+[WARNING]
+====
+`checkout` 을 처음 사용하기 전에 기존 대상 디렉터리를 이동하거나 삭제하세요. 기존 `svn` 이 아닌 디렉터리로 체크아웃하면 기존 파일과 저장소에서 가져온 파일 간에 충돌이 발생할 수 있습니다.
+====
+
+Subversion은 URL을 사용하여 저장소를 지정하며, _protocol://hostname/path_ 의 형식을 취합니다. 경로의 첫 번째 구성 요소는 액세스할 FreeBSD 저장소입니다. 저장소에는 세 가지가 있는데, FreeBSD 기본 시스템 소스 코드를 위한 `base`, 포트 컬렉션을 위한 `ports`, 그리고 문서를 위한 `doc` 이 있습니다. 예를 들어, URL `https://svn.FreeBSD.org/base/head/` 는 `https` 프로토콜을 사용하여 src 저장소의 메인 브랜치를 지정합니다.
+
+지정된 저장소에서 체크아웃은 다음과 같은 명령으로 수행됩니다:
+
+[source, shell]
+....
+# svn checkout https://svn.FreeBSD.org/repository/branch lwcdir
+....
+
+여기서:
+
+* _repository_ 는 프로젝트 저장소 중 하나입니다: `base`, `ports`, 또는 `doc`.
+* _branch_ 는 사용하는 저장소에 따라 다릅니다. `ports` 와 `doc` 은 대부분 `head` 브랜치에서 업데이트되는 반면, `base` 는 head` 아래에 있는 -CURRENT의 최신 버전과 `stable/11` (11._x_) 및 `stable/12` (12._x_) 아래에 있는 -STABLE 브랜치의 각 최신 버전을 유지합니다.
+* _lwcdir_ 는 지정한 브랜치의 내용을 저장할 대상 디렉터리입니다. 일반적으로 `ports` 의 경우 [.filename]#/usr/ports#, `base` 의 경우 [.filename]#/usr/src#, `doc` 의 경우 [.filename]#/usr/doc# 입니다.
+
+이 예는 HTTPS 프로토콜을 사용하여 FreeBSD 저장소에서 소스 트리를 체크아웃하고 로컬 작업 복사본을 [.filename]#/usr/src# 에 저장합니다. 만약 [.filename]#/usr/src# 가 이미 존재하지만 `svn` 에 의해 생성되지 않았다면, 체크아웃하기 전에 이름을 바꾸거나 삭제해야 한다는 것을 잊지 마세요.
+
+[source, shell]
+....
+# svn checkout https://svn.FreeBSD.org/base/head /usr/src
+....
+
+초기 체크아웃은 원격 저장소의 전체 브랜치를 다운로드해야 하므로 시간이 걸릴 수 있습니다. 조금만 기다려주세요.
+
+초기 체크아웃 후, 로컬 작업 복사본을 실행하여 업데이트할 수 있습니다:
+
+[source, shell]
+....
+# svn update lwcdir
+....
+
+위 예제에서 만든 [.filename]#/usr/src# 를 업데이트하려면 다음을 사용합니다:
+
+[source, shell]
+....
+# svn update /usr/src
+....
+
+업데이트는 변경된 파일만 전송하므로 체크아웃보다 훨씬 빠릅니다.
+
+체크아웃 후 로컬 작업 복사본을 업데이트하는 다른 방법은 [.filename]#/usr/ports#, [.filename]#/usr/src# 및 [.filename]#/usr/doc# 디렉터리에 있는 [.filename]#Makefile# 을 통해 제공됩니다. `SVN_UPDATE` 를 설정하고 `update` 대상을 사용합니다. 예를 들어, [.filename]#/usr/src# 를 업데이트합니다:
+
+[source, shell]
+....
+# cd /usr/src
+# make update SVN_UPDATE=yes
+....
+
+[[svn-mirrors]]
+=== Subversion 미러 사이트
+
+FreeBSD Subversion 저장소는:
+
+[.programlisting]
+....
+svn.FreeBSD.org
+....
+
+이것은 공개적으로 액세스할 수 있는 미러 네트워크로, GeoDNS를 사용하여 적절한 백엔드 서버를 선택합니다. 브라우저를 통해 FreeBSD Subversion 저장소를 보려면 https://svnweb.FreeBSD.org/[https://svnweb.FreeBSD.org/] 를 사용하세요.
+
+HTTPS가 선호하는 프로토콜이지만 인증서의 유효성을 자동으로 검사하려면 [.filename]#security/ca_root_nss# 패키지를 설치해야 합니다.
+
+=== 추가정보
+
+Subversion 사용에 대한 기타 자세한 내용은 http://svnbook.red-bean.com/[Version Control with Subversion] 또는 http://subversion.apache.org/docs/[Subversion Documentation] 라는 제목의 "Subversion Book"을 참조하세요.
+
+[[mirrors-cdrom]]
+== CD와 DVD 세트
+
+여러 온라인 소매업체에서 FreeBSD CD 및 DVD 세트를 구입할 수 있습니다:
+
+* FreeBSD Mall, Inc. +
+  1164 Claremont Dr +
+  Brentwood, CA +
+  94513 +
+  USA +
+  Phone: +1 925 240-6652 +
+  Fax: +1 925 674-0821 +
+  Email: info@freebsdmall.com +
+  WWW: https://www.freebsdmall.com
+
+* Getlinux +
+  WWW: https://www.getlinux.fr/
+
+* Dr. Hinner EDV +
+  Schäftlarnstr. 10 // 4. Stock +
+  D-81371 München +
+  Germany +
+  Phone: +49 171 417 544 6 +
+  Email: infow@hinner.de +
+  WWW: http://www.hinner.de/linux/freebsd.html
