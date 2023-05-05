@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2023-04-20 20:56-0300\n"
-"PO-Revision-Date: 2023-05-05 06:15+0000\n"
+"PO-Revision-Date: 2023-05-05 12:38+0000\n"
 "Last-Translator: \"Kyung-tak, Yoo\" <stonegaze@me.com>\n"
 "Language-Team: Korean <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookzfs_index/ko/>\n"
@@ -87,9 +87,9 @@ msgid ""
 "storage space from that shared pool. Space is available to all file systems "
 "and volumes, and increases by adding new storage devices to the pool."
 msgstr ""
-"풀 스토리지: 풀에 물리적 스토리지 장치를 추가하고 해당 공유 풀에서 스토리지 "
-"공간을 할당합니다. 모든 파일 시스템과 볼륨에서 공간을 사용할 수 있으며, 풀에 "
-"새 저장 장치를 추가하면 공간이 증가합니다."
+"풀 스토리지 (Pooled storage) : 풀(Pool)에 물리적 스토리지 장치를 추가하고 "
+"해당 공유 풀에서 스토리지 공간을 할당합니다. 모든 파일 시스템과 볼륨에서 "
+"공간을 사용할 수 있으며, 풀에 새 저장 장치를 추가하면 공간이 증가합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:60
@@ -113,7 +113,7 @@ msgstr "기능 및 용어의 전체 목록은 <<zfs-term>>에 나와 있습니�
 #: documentation/content/en/books/handbook/zfs/_index.adoc:64
 #, no-wrap
 msgid "What Makes ZFS Different"
-msgstr ""
+msgstr "ZFS의 차별화 요소"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:77
@@ -138,12 +138,28 @@ msgid ""
 "create separate file systems and datasets instead of a single monolithic "
 "file system."
 msgstr ""
+"ZFS는 파일 시스템 그 이상으로 기존 파일 시스템과 근본적으로 다릅니다.  볼륨 "
+"관리자와 파일 시스템의 전통적으로 분리된 역할을 결합하여 ZFS는 고유한 이점을 "
+"제공합니다.  이제 파일 시스템은 디스크의 기본 구조를 인식합니다.  기존 파일 "
+"시스템은 한 번에 하나의 디스크에만 존재할 수 있었습니다.  디스크가 두 개인 "
+"경우 두 개의 파일 시스템을 별도로 만들어야 했습니다.  기존의 하드웨어 RAID "
+"구성은 운영 체제에 물리적 디스크가 제공하는 공간으로 구성된 단일 논리 "
+"디스크를 제공하고 그 위에 운영 체제가 파일 시스템을 배치함으로써 이 문제를 "
+"방지했습니다.  GEOM에서 제공하는 것과 같은 소프트웨어 RAID 솔루션을 "
+"사용하더라도 RAID 위에 있는 UFS 파일 시스템은 단일 장치를 처리하는 것으로 "
+"간주합니다.  ZFS는 볼륨 관리자와 파일 시스템을 결합하여 이 문제를 해결하고 "
+"사용 가능한 스토리지 풀을 모두 공유하는 파일 시스템을 생성할 수 있습니다.  "
+"물리적 디스크 레이아웃을 인식하는 ZFS의 큰 장점 중 하나는 풀에 디스크를 "
+"추가할 때 기존 파일 시스템이 자동으로 커진다는 점입니다.  그러면 이 새로운 "
+"공간을 파일 시스템에서 사용할 수 있게 됩니다.  또한 ZFS는 각 파일 시스템에 "
+"서로 다른 속성을 적용할 수 있습니다. 따라서 단일 모놀리식 파일 시스템 대신 "
+"별도의 파일 시스템과 데이터 세트를 생성하는 데 유용합니다."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/zfs/_index.adoc:79
 #, no-wrap
 msgid "Quick Start Guide"
-msgstr ""
+msgstr "빠른 시작 가이드"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:83
@@ -151,23 +167,25 @@ msgid ""
 "FreeBSD can mount ZFS pools and datasets during system initialization.  To "
 "enable it, add this line to [.filename]#/etc/rc.conf#:"
 msgstr ""
+"FreeBSD는 시스템 초기화 중에 ZFS 풀과 데이터세트를 마운트할 수 있습니다.  이 "
+"기능을 활성화하려면 [.filename]#/etc/rc.conf# 에 다음 줄을 추가하세요:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:87
 #, no-wrap
 msgid "zfs_enable=\"YES\"\n"
-msgstr ""
+msgstr "zfs_enable=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:90
 msgid "Then start the service:"
-msgstr ""
+msgstr "이제 서비스를 시작합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:94
 #, no-wrap
 msgid "# service zfs start\n"
-msgstr ""
+msgstr "# service zfs start\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:98
@@ -176,28 +194,32 @@ msgid ""
 "filename]#da0#, [.filename]#da1#, and [.filename]#da2#.  Users of SATA "
 "hardware should instead use [.filename]#ada# device names."
 msgstr ""
+"이 섹션의 예제에서는 장치 이름이 [.filename]#da0#, [.filename]#da1#, [."
+"filename]#da2# 인 3개의 SCSI 디스크가 있다고 가정합니다.  SATA 하드웨어 "
+"사용자는 대신 [.filename]#ada# 장치 이름을 사용해야 합니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:100
 #, no-wrap
 msgid "Single Disk Pool"
-msgstr ""
+msgstr "단일 디스크 풀"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:103
 msgid "To create a simple, non-redundant pool using a single disk device:"
-msgstr ""
+msgstr "단일 디스크 장치를 사용하여 간단한 비중복 풀(non-redundant)을 만들려면 "
+"다음과 같이 하세요:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:107
 #, no-wrap
 msgid "# zpool create example /dev/da0\n"
-msgstr ""
+msgstr "# zpool create example /dev/da0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:110
 msgid "To view the new pool, review the output of `df`:"
-msgstr ""
+msgstr "새 풀을 확인하려면 `df` 의 출력을 검토합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:119
@@ -210,6 +232,12 @@ msgid ""
 "/dev/ad0s1d  54098308 1032846 48737598     2%    /usr\n"
 "example      17547136       0 17547136     0%    /example\n"
 msgstr ""
+"# df\n"
+"Filesystem  1K-blocks    Used    Avail Capacity  Mounted on\n"
+"/dev/ad0s1a   2026030  235230  1628718    13%    /\n"
+"devfs               1       1        0   100%    /dev\n"
+"/dev/ad0s1d  54098308 1032846 48737598     2%    /usr\n"
+"example      17547136       0 17547136     0%    /example\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:123
@@ -217,6 +245,8 @@ msgid ""
 "This output shows creating and mounting of the `example` pool, and that is "
 "now accessible as a file system.  Create files for users to browse:"
 msgstr ""
+"이 출력은 이제 파일 시스템으로 액세스할 수 있는 `example` 풀의 생성 및 "
+"마운트를 보여줍니다.  사용자가 찾아볼 수 있는 파일을 생성합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:134
@@ -231,6 +261,14 @@ msgid ""
 "drwxr-xr-x  21 root  wheel  512 Aug 29 23:12 ..\n"
 "-rw-r--r--   1 root  wheel    0 Aug 29 23:15 testfile\n"
 msgstr ""
+"# cd /example\n"
+"# ls\n"
+"# touch testfile\n"
+"# ls -al\n"
+"total 4\n"
+"drwxr-xr-x   2 root  wheel    3 Aug 29 23:15 .\n"
+"drwxr-xr-x  21 root  wheel  512 Aug 29 23:12 ..\n"
+"-rw-r--r--   1 root  wheel    0 Aug 29 23:15 testfile\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:138
@@ -238,6 +276,8 @@ msgid ""
 "This pool is not using any advanced ZFS features and properties yet.  To "
 "create a dataset on this pool with compression enabled:"
 msgstr ""
+"이 풀은 아직 고급 ZFS 기능 및 속성을 사용하고 있지 않습니다.  압축을 "
+"활성화한 상태에서 이 풀에 데이터 집합을 생성하려면 다음과 같이 하세요:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:143
@@ -246,6 +286,8 @@ msgid ""
 "# zfs create example/compressed\n"
 "# zfs set compression=gzip example/compressed\n"
 msgstr ""
+"# zfs create example/compressed\n"
+"# zfs set compression=gzip example/compressed\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:147
@@ -253,22 +295,25 @@ msgid ""
 "The `example/compressed` dataset is now a ZFS compressed file system.  Try "
 "copying some large files to [.filename]#/example/compressed#."
 msgstr ""
+"`example/compressed` 데이터 세트는 이제 ZFS 압축 파일 시스템입니다.  대용량 "
+"파일을 [.filename]#/example/compressed# 에 복사해 보세요."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:149
 msgid "Disable compression with:"
-msgstr ""
+msgstr "다음으로 압축을 비활성화합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:153
 #, no-wrap
 msgid "# zfs set compression=off example/compressed\n"
-msgstr ""
+msgstr "# zfs set compression=off example/compressed\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:156
 msgid "To unmount a file system, use `zfs umount` and then verify with `df`:"
-msgstr ""
+msgstr "파일 시스템을 마운트 해제하려면 `zfs umount` 를 사용한 다음 `df` 로 "
+"확인합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:166
@@ -282,13 +327,21 @@ msgid ""
 "/dev/ad0s1d  54098308 1032864 48737580     2%    /usr\n"
 "example      17547008       0 17547008     0%    /example\n"
 msgstr ""
+"# zfs umount example/compressed\n"
+"# df\n"
+"Filesystem  1K-blocks    Used    Avail Capacity  Mounted on\n"
+"/dev/ad0s1a   2026030  235232  1628716    13%    /\n"
+"devfs               1       1        0   100%    /dev\n"
+"/dev/ad0s1d  54098308 1032864 48737580     2%    /usr\n"
+"example      17547008       0 17547008     0%    /example\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:169
 msgid ""
 "To re-mount the file system to make it accessible again, use `zfs mount` and "
 "verify with `df`:"
-msgstr ""
+msgstr "파일 시스템을 다시 마운트하여 액세스할 수 있도록 하려면 `zfs mount` 를 "
+"사용하고 `df` 로 확인합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:180
@@ -303,11 +356,19 @@ msgid ""
 "example             17547008       0 17547008     0%    /example\n"
 "example/compressed  17547008       0 17547008     0%    /example/compressed\n"
 msgstr ""
+"# zfs mount example/compressed\n"
+"# df\n"
+"Filesystem         1K-blocks    Used    Avail Capacity  Mounted on\n"
+"/dev/ad0s1a          2026030  235234  1628714    13%    /\n"
+"devfs                      1       1        0   100%    /dev\n"
+"/dev/ad0s1d         54098308 1032864 48737580     2%    /usr\n"
+"example             17547008       0 17547008     0%    /example\n"
+"example/compressed  17547008       0 17547008     0%    /example/compressed\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:183
 msgid "Running `mount` shows the pool and file systems:"
-msgstr ""
+msgstr "`mount` 를 실행하면 풀과 파일 시스템이 표시됩니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:192
@@ -320,6 +381,12 @@ msgid ""
 "example on /example (zfs, local)\n"
 "example/compressed on /example/compressed (zfs, local)\n"
 msgstr ""
+"# mount\n"
+"/dev/ad0s1a on / (ufs, local)\n"
+"devfs on /dev (devfs, local)\n"
+"/dev/ad0s1d on /usr (ufs, local, soft-updates)\n"
+"example on /example (zfs, local)\n"
+"example/compressed on /example/compressed (zfs, local)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:198
@@ -329,6 +396,10 @@ msgid ""
 "new file system called `data`.  It assumes the file system contains "
 "important files and configures it to store two copies of each data block."
 msgstr ""
+"생성 후 다른 파일 시스템처럼 ZFS 데이터세트를 사용하세요.  필요한 경우 "
+"데이터세트별로 다른 기능을 설정할 수 있습니다.  아래 예는 `data` 라는 새 "
+"파일 시스템을 생성합니다.  파일 시스템에 중요한 파일이 포함되어 있다고 "
+"가정하고 각 데이터 블록의 사본 두 개를 저장하도록 구성합니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:203
@@ -337,11 +408,13 @@ msgid ""
 "# zfs create example/data\n"
 "# zfs set copies=2 example/data\n"
 msgstr ""
+"# zfs create example/data\n"
+"# zfs set copies=2 example/data\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:206
 msgid "Use `df` to see the data and space usage:"
-msgstr ""
+msgstr "데이터 및 공간 사용량을 확인하려면 `df` 를 사용합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:217
@@ -356,6 +429,14 @@ msgid ""
 "example/compressed  17547008       0 17547008     0%    /example/compressed\n"
 "example/data        17547008       0 17547008     0%    /example/data\n"
 msgstr ""
+"# df\n"
+"Filesystem         1K-blocks    Used    Avail Capacity  Mounted on\n"
+"/dev/ad0s1a          2026030  235234  1628714    13%    /\n"
+"devfs                      1       1        0   100%    /dev\n"
+"/dev/ad0s1d         54098308 1032864 48737580     2%    /usr\n"
+"example             17547008       0 17547008     0%    /example\n"
+"example/compressed  17547008       0 17547008     0%    /example/compressed\n"
+"example/data        17547008       0 17547008     0%    /example/data\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:222
@@ -366,11 +447,15 @@ msgid ""
 "volumes and partitions, and allows several file systems to share the same "
 "pool."
 msgstr ""
+"풀에 있는 모든 파일 시스템의 사용 가능한 공간이 동일하다는 것을 알 수 "
+"있습니다.  이 예제에서 `df` 를 사용하면 파일 시스템이 필요한 공간을 사용하며 "
+"모두 동일한 풀에서 끌어온다는 것을 알 수 있습니다.  ZFS는 볼륨 및 파티션과 "
+"같은 개념을 없애고 여러 파일 시스템이 동일한 풀을 공유할 수 있도록 합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:224
 msgid "To destroy the file systems and then the pool that is no longer needed:"
-msgstr ""
+msgstr "파일 시스템을 삭제한 다음 더 이상 필요하지 않은 풀을 삭제합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:230
@@ -380,12 +465,15 @@ msgid ""
 "# zfs destroy example/data\n"
 "# zpool destroy example\n"
 msgstr ""
+"# zfs destroy example/compressed\n"
+"# zfs destroy example/data\n"
+"# zpool destroy example\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:233
 #, no-wrap
 msgid "RAID-Z"
-msgstr ""
+msgstr "RAID-Z"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:239
@@ -394,18 +482,22 @@ msgid ""
 "ZFS supports this feature in its pool design.  RAID-Z pools require three or "
 "more disks but provide more usable space than mirrored pools."
 msgstr ""
+"디스크 장애.  디스크 장애로 인한 데이터 손실을 방지하는 한 가지 방법은 "
+"RAID를 사용하는 것입니다.  ZFS는 풀 설계에서 이 기능을 지원합니다.  RAID-Z "
+"풀은 3개 이상의 디스크가 필요하지만 미러 풀보다 더 많은 사용 가능한 공간을 "
+"제공합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:241
 msgid ""
 "This example creates a RAID-Z pool, specifying the disks to add to the pool:"
-msgstr ""
+msgstr "이 예에서는 풀에 추가할 디스크를 지정하여 RAID-Z 풀을 생성합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:245
 #, no-wrap
 msgid "# zpool create storage raidz da0 da1 da2\n"
-msgstr ""
+msgstr "# zpool create storage raidz da0 da1 da2\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:253
@@ -416,6 +508,11 @@ msgid ""
 "groups.  If two disks are available, ZFS mirroring provides redundancy if "
 "required.  Refer to man:zpool[8] for more details."
 msgstr ""
+"Sun(TM)에서는 RAID-Z 구성에 사용되는 장치 수를 3개에서 9개 사이로 "
+"권장합니다.  10개 이상의 디스크로 구성된 단일 풀이 필요한 환경에서는 이를 더 "
+"작은 RAID-Z 그룹으로 분할하는 것이 좋습니다.  두 개의 디스크를 사용할 수 "
+"있는 경우, 필요한 경우 ZFS 미러링이 중복성을 제공합니다.  자세한 내용은 "
+"man:zpool[8]을 참조하세요."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:257
@@ -423,17 +520,19 @@ msgid ""
 "The previous example created the `storage` zpool.  This example makes a new "
 "file system called `home` in that pool:"
 msgstr ""
+"이전 예제에서는 `storage` zpool을 생성했습니다.  이 예제에서는 해당 풀에 "
+"`home` 이라는 새 파일 시스템을 만듭니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:261
 #, no-wrap
 msgid "# zfs create storage/home\n"
-msgstr ""
+msgstr "# zfs create storage/home\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:264
 msgid "Enable compression and store an extra copy of directories and files:"
-msgstr ""
+msgstr "압축을 활성화하고 디렉토리와 파일의 추가 복사본을 저장합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:269
@@ -442,13 +541,16 @@ msgid ""
 "# zfs set copies=2 storage/home\n"
 "# zfs set compression=gzip storage/home\n"
 msgstr ""
+"# zfs set copies=2 storage/home\n"
+"# zfs set compression=gzip storage/home\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:272
 msgid ""
 "To make this the new home directory for users, copy the user data to this "
 "directory and create the appropriate symbolic links:"
-msgstr ""
+msgstr "이 디렉터리를 사용자의 새 홈 디렉터리로 설정하려면 사용자 데이터를 이 "
+"디렉터리에 복사하고 적절한 심볼릭 링크를 만듭니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:279
@@ -459,6 +561,10 @@ msgid ""
 "# ln -s /storage/home /home\n"
 "# ln -s /storage/home /usr/home\n"
 msgstr ""
+"# cp -rp /home/* /storage/home\n"
+"# rm -rf /home /usr/home\n"
+"# ln -s /storage/home /home\n"
+"# ln -s /storage/home /usr/home\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:283
@@ -466,22 +572,24 @@ msgid ""
 "Users data is now stored on the freshly-created [.filename]#/storage/home#.  "
 "Test by adding a new user and logging in as that user."
 msgstr ""
+"이제 사용자 데이터가 새로 생성된 [.filename]#/storage/home# 에 저장됩니다.  "
+"새 사용자를 추가하고 해당 사용자로 로그인하여 테스트합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:285
 msgid "Create a file system snapshot to roll back to later:"
-msgstr ""
+msgstr "나중에 롤백할 파일 시스템 스냅샷을 만듭니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:289
 #, no-wrap
 msgid "# zfs snapshot storage/home@08-30-08\n"
-msgstr ""
+msgstr "# zfs snapshot storage/home@08-30-08\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:292
 msgid "ZFS creates snapshots of a dataset, not a single directory or file."
-msgstr ""
+msgstr "ZFS는 단일 디렉토리나 파일이 아닌 데이터 세트의 스냅샷을 생성합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:295
@@ -490,12 +598,15 @@ msgid ""
 "name.  Before deleting an important directory, back up the file system, then "
 "roll back to an earlier snapshot in which the directory still exists:"
 msgstr ""
+"`@` 문자는 파일 시스템 이름 또는 볼륨 이름 사이의 구분 기호입니다.  중요한 "
+"디렉터리를 삭제하기 전에 파일 시스템을 백업한 다음 디렉터리가 아직 존재하는 "
+"이전 스냅샷으로 롤백하세요:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:299
 #, no-wrap
 msgid "# zfs rollback storage/home@08-30-08\n"
-msgstr ""
+msgstr "# zfs rollback storage/home@08-30-08\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:303
@@ -503,12 +614,15 @@ msgid ""
 "To list all available snapshots, run `ls` in the file system's [.filename]#."
 "zfs/snapshot# directory.  For example, to see the snapshot taken:"
 msgstr ""
+"사용 가능한 모든 스냅샷을 나열하려면 파일 시스템의 [.filename]#.zfs/snapshot#"
+" 디렉터리에서 `ls` 를 실행합니다.  예를 들어, 생성된 스냅샷을 확인하려면 "
+"다음과 같이 하세요:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:307
 #, no-wrap
 msgid "# ls /storage/home/.zfs/snapshot\n"
-msgstr ""
+msgstr "# ls /storage/home/.zfs/snapshot\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:312
@@ -517,12 +631,15 @@ msgid ""
 "can use up a lot of disk space.  Remove the previous snapshot using the "
 "command:"
 msgstr ""
+"사용자 데이터의 정기적인 스냅샷을 생성하는 스크립트를 작성하세요.  시간이 "
+"지나면 스냅샷이 디스크 공간을 많이 차지할 수 있습니다.  명령을 사용하여 이전 "
+"스냅샷을 제거하세요:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:316
 #, no-wrap
 msgid "# zfs destroy storage/home@08-30-08\n"
-msgstr ""
+msgstr "# zfs destroy storage/home@08-30-08\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:320
@@ -530,12 +647,14 @@ msgid ""
 "After testing, make [.filename]#/storage/home# the real [.filename]#/home# "
 "with this command:"
 msgstr ""
+"테스트가 끝나면 다음 명령을 사용하여 [.filename]#/storage/home# 을 실제 [."
+"filename]#/home# 으로 만듭니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:324
 #, no-wrap
 msgid "# zfs set mountpoint=/home storage/home\n"
-msgstr ""
+msgstr "# zfs set mountpoint=/home storage/home\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:327
@@ -543,6 +662,8 @@ msgid ""
 "Run `df` and `mount` to confirm that the system now treats the file system "
 "as the real [.filename]#/home#:"
 msgstr ""
+"`df` 및 `mount` 를 실행하여 시스템이 이제 파일 시스템을 실제 [."
+"filename]#/home# 으로 취급하는지 확인합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:343
@@ -562,6 +683,19 @@ msgid ""
 "storage       26320512       0 26320512     0%    /storage\n"
 "storage/home  26320512       0 26320512     0%    /home\n"
 msgstr ""
+"# mount\n"
+"/dev/ad0s1a on / (ufs, local)\n"
+"devfs on /dev (devfs, local)\n"
+"/dev/ad0s1d on /usr (ufs, local, soft-updates)\n"
+"storage on /storage (zfs, local)\n"
+"storage/home on /home (zfs, local)\n"
+"# df\n"
+"Filesystem   1K-blocks    Used    Avail Capacity  Mounted on\n"
+"/dev/ad0s1a    2026030  235240  1628708    13%    /\n"
+"devfs                1       1        0   100%    /dev\n"
+"/dev/ad0s1d   54098308 1032826 48737618     2%    /usr\n"
+"storage       26320512       0 26320512     0%    /storage\n"
+"storage/home  26320512       0 26320512     0%    /home\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:347
@@ -570,18 +704,21 @@ msgid ""
 "created file systems to the nightly man:periodic[8] runs by adding this line "
 "to [.filename]#/etc/periodic.conf#:"
 msgstr ""
+"이것으로 RAID-Z 구성이 완료됩니다.  생성된 파일 시스템에 대한 일일 상태 "
+"업데이트를 [.filename]#/etc/periodic.conf# 에 다음 줄을 추가하여 야간 "
+"man:periodic[8] 작업에 추가합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:351
 #, no-wrap
 msgid "daily_status_zfs_enable=\"YES\"\n"
-msgstr ""
+msgstr "daily_status_zfs_enable=\"YES\"\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:354
 #, no-wrap
 msgid "Recovering RAID-Z"
-msgstr ""
+msgstr "RAID-Z 복구하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:358
@@ -589,25 +726,28 @@ msgid ""
 "Every software RAID has a method of monitoring its `state`.  View the status "
 "of RAID-Z devices using:"
 msgstr ""
+"모든 소프트웨어 RAID에는 `state` 를 모니터링하는 방법이 있습니다.  다음을 "
+"사용하여 RAID-Z 장치의 상태를 확인합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:362
 #, no-wrap
 msgid "# zpool status -x\n"
-msgstr ""
+msgstr "# zpool status -x\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:365
 msgid ""
 "If all pools are <<zfs-term-online,Online>> and everything is normal, the "
 "message shows:"
-msgstr ""
+msgstr "모든 풀이 <<zfs-term-online,Online>> 이고 모든 것이 정상인 경우 메시지가 "
+"표시됩니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:369
 #, no-wrap
 msgid "all pools are healthy\n"
-msgstr ""
+msgstr "all pools are healthy\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:372
@@ -615,6 +755,8 @@ msgid ""
 "If there is a problem, perhaps a disk being in the <<zfs-term-offline,"
 "Offline>> state, the pool state will look like this:"
 msgstr ""
+"디스크에 문제가 있는 경우(예: 디스크가 <<zfs-term-offline,Offline>> 상태인 "
+"경우) 풀 상태는 다음과 같이 표시됩니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:384
@@ -630,6 +772,15 @@ msgid ""
 " scrub: none requested\n"
 "config:\n"
 msgstr ""
+"  pool: storage\n"
+" state: DEGRADED\n"
+"status: One or more devices has been taken offline by the administrator.\n"
+"\tSufficient replicas exist for the pool to continue functioning in a\n"
+"\tdegraded state.\n"
+"action: Online the device using 'zpool online' or replace the device with\n"
+"\t'zpool replace'.\n"
+" scrub: none requested\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:391
@@ -642,6 +793,12 @@ msgid ""
 "\t    da1     OFFLINE      0     0     0\n"
 "\t    da2     ONLINE       0     0     0\n"
 msgstr ""
+"\tNAME        STATE     READ WRITE CKSUM\n"
+"\tstorage     DEGRADED     0     0     0\n"
+"\t  raidz1    DEGRADED     0     0     0\n"
+"\t    da0     ONLINE       0     0     0\n"
+"\t    da1     OFFLINE      0     0     0\n"
+"\t    da2     ONLINE       0     0     0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:393
@@ -663,19 +820,20 @@ msgstr ""
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1144
 #, no-wrap
 msgid "errors: No known data errors\n"
-msgstr ""
+msgstr "errors: No known data errors\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:396
 msgid ""
 "\"OFFLINE\" shows the administrator took [.filename]#da1# offline using:"
-msgstr ""
+msgstr "\"OFFLINE\"은 관리자가 [.filename]#da1# 을 오프라인으로 전환했음을 "
+"나타냅니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:400
 #, no-wrap
 msgid "# zpool offline storage da1\n"
-msgstr ""
+msgstr "# zpool offline storage da1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:404
@@ -683,18 +841,20 @@ msgid ""
 "Power down the computer now and replace [.filename]#da1#.  Power up the "
 "computer and return [.filename]#da1# to the pool:"
 msgstr ""
+"지금 컴퓨터의 전원을 끄고 [.filename]#da1# 을 바꾸세요.  컴퓨터의 전원을 "
+"켜고 [.filename]#da1# 을 풀로 되돌립니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:408
 #, no-wrap
 msgid "# zpool replace storage da1\n"
-msgstr ""
+msgstr "# zpool replace storage da1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:411
 msgid ""
 "Next, check the status again, this time without `-x` to display all pools:"
-msgstr ""
+msgstr "그런 다음 이번에는 `-x` 없이 상태를 다시 확인하여 모든 풀을 표시합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:419
@@ -706,6 +866,11 @@ msgid ""
 " scrub: resilver completed with 0 errors on Sat Aug 30 19:44:11 2008\n"
 "config:\n"
 msgstr ""
+"# zpool status storage\n"
+" pool: storage\n"
+" state: ONLINE\n"
+" scrub: resilver completed with 0 errors on Sat Aug 30 19:44:11 2008\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:426
@@ -719,24 +884,31 @@ msgid ""
 "\t    da1     ONLINE       0     0     0\n"
 "\t    da2     ONLINE       0     0     0\n"
 msgstr ""
+"\tNAME        STATE     READ WRITE CKSUM\n"
+"\tstorage     ONLINE       0     0     0\n"
+"\t  raidz1    ONLINE       0     0     0\n"
+"\t    da0     ONLINE       0     0     0\n"
+"\t    da1     ONLINE       0     0     0\n"
+"\t    da2     ONLINE       0     0     0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:431
 msgid "In this example, everything is normal."
-msgstr ""
+msgstr "이 예에서는 모든 것이 정상입니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:433
 #, no-wrap
 msgid "Data Verification"
-msgstr ""
+msgstr "데이터 검증"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:437
 msgid ""
 "ZFS uses checksums to verify the integrity of stored data.  Creating file "
 "systems automatically enables them."
-msgstr ""
+msgstr "ZFS는 체크섬을 사용하여 저장된 데이터의 무결성을 확인합니다.  파일 시스템을 "
+"생성하면 자동으로 활성화됩니다."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:444
@@ -746,19 +918,24 @@ msgid ""
 "properly with checksums disabled.  Disabling these checksums will not "
 "increase performance noticeably."
 msgstr ""
+"체크섬을 비활성화하는 것은 가능하지만 _권장하지 않습니다!_ 체크섬은 저장 "
+"공간을 거의 차지하지 않고 데이터 무결성을 제공합니다.  체크섬을 비활성화하면 "
+"대부분의 ZFS 기능이 제대로 작동하지 않습니다.  체크섬을 비활성화해도 성능이 "
+"눈에 띄게 향상되지는 않습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:447
 msgid ""
 "Verifying the data checksums (called _scrubbing_) ensures integrity of the "
 "`storage` pool with:"
-msgstr ""
+msgstr "데이터 체크섬 확인( _scrubbing_ 이라고 함)을 하면 `storage` 풀의 무결성이 "
+"보장됩니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:451
 #, no-wrap
 msgid "# zpool scrub storage\n"
-msgstr ""
+msgstr "# zpool scrub storage\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:457
@@ -768,6 +945,10 @@ msgid ""
 "is I/O intensive, ZFS allows a single scrub to run at a time.  After "
 "scrubbing completes, view the status with `zpool status`:"
 msgstr ""
+"스크럽 기간은 저장된 데이터의 양에 따라 다릅니다.  데이터 양이 많을수록 "
+"검증하는 데 비례해 더 오래 걸립니다.  스크러빙은 I/O 집약적이기 때문에, "
+"ZFS에서는 한 번에 하나의 스크러브만 실행할 수 있습니다.  스크러빙이 완료되면 "
+"`zpool status` 로 상태를 확인합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:465
@@ -779,6 +960,11 @@ msgid ""
 " scrub: scrub completed with 0 errors on Sat Jan 26 19:57:37 2013\n"
 "config:\n"
 msgstr ""
+"# zpool status storage\n"
+" pool: storage\n"
+" state: ONLINE\n"
+" scrub: scrub completed with 0 errors on Sat Jan 26 19:57:37 2013\n"
+"config:\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:478
@@ -787,17 +973,20 @@ msgid ""
 "start another.  Routine scrubs help protect data from silent corruption and "
 "ensure the integrity of the pool."
 msgstr ""
+"마지막 스크러빙의 완료 날짜를 표시하면 다른 스크러빙을 시작할 시기를 "
+"결정하는 데 도움이 됩니다.  정기적인 스크러빙은 조용한 손상으로부터 데이터를 "
+"보호하고 풀의 무결성을 보장하는 데 도움이 됩니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:480
 msgid "Refer to man:zfs[8] and man:zpool[8] for other ZFS options."
-msgstr ""
+msgstr "다른 ZFS 옵션은 man:zfs[8] 및 man:zpool[8]을 참조하세요."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/zfs/_index.adoc:482
 #, no-wrap
 msgid "`zpool` Administration"
-msgstr ""
+msgstr "`zpool` 관리"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:487
@@ -808,12 +997,16 @@ msgid ""
 "and managing datasets, both <<zfs-term-filesystem,file systems>> and <<zfs-"
 "term-volume,volumes>>."
 msgstr ""
+"ZFS 관리는 두 가지 주요 유틸리티를 사용합니다.  `zpool` 유틸리티는 풀의 "
+"작동을 제어하고 디스크를 추가, 제거, 교체 및 관리할 수 있습니다.  <<zfs-"
+"zfs,`zfs`>> 유틸리티를 사용하면 <<zfs-term-filesystem,file systems>> 및 "
+"<<zfs-term-volume,volumes>> 데이터 세트를 생성, 삭제 및 관리할 수 있습니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:489
 #, no-wrap
 msgid "Creating and Destroying Storage Pools"
-msgstr ""
+msgstr "스토리지 풀 만들기 및 삭제하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:498
@@ -829,11 +1022,20 @@ msgid ""
 "after pool creation.  Instead, back up the data, destroy the pool, and "
 "recreate it."
 msgstr ""
+"ZFS 스토리지 풀을 생성하려면 풀 구조를 생성한 후에는 변경할 수 없으므로 "
+"영구적 결정이 필요합니다.  가장 중요한 결정은 물리적 디스크를 그룹화할 vdev "
+"유형입니다.  가능한 옵션에 대한 자세한 내용은 <<zfs-term-vdev,vdev types>> "
+"목록을 참조하세요.  풀을 생성한 후에는 대부분의 vdev 유형에서 디스크를 "
+"vdev에 추가할 수 없습니다.  예외적으로 미러는 vdev에 새 디스크를 추가할 수 "
+"있으며, 스트라이프는 vdev에 새 디스크를 연결하여 미러로 업그레이드할 수 "
+"있습니다.  새 vdev를 추가하면 풀이 확장되지만 풀 생성 후에는 풀 레이아웃을 "
+"변경할 수 없습니다.  대신 데이터를 백업하고 풀을 파괴한 다음 다시 생성해야 "
+"합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:500
 msgid "Create a simple mirror pool:"
-msgstr ""
+msgstr "간단한 미러 풀을 만듭니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:509
@@ -846,6 +1048,12 @@ msgid ""
 "  scan: none requested\n"
 "config:\n"
 msgstr ""
+"# zpool create mypool mirror /dev/ada1 /dev/ada2\n"
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: none requested\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:515
@@ -857,6 +1065,11 @@ msgid ""
 "            ada1    ONLINE       0     0     0\n"
 "            ada2    ONLINE       0     0     0\n"
 msgstr ""
+"        NAME        STATE     READ WRITE CKSUM\n"
+"        mypool      ONLINE       0     0     0\n"
+"          mirror-0  ONLINE       0     0     0\n"
+"            ada1    ONLINE       0     0     0\n"
+"            ada2    ONLINE       0     0     0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:520
@@ -864,6 +1077,8 @@ msgid ""
 "To create more than one vdev with a single command, specify groups of disks "
 "separated by the vdev type keyword, `mirror` in this example:"
 msgstr ""
+"단일 명령으로 둘 이상의 vdev를 생성하려면 예제에서 vdev 유형 키워드인 "
+"`mirror` 로 구분된 디스크 그룹을 지정합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:529
@@ -876,6 +1091,12 @@ msgid ""
 "  scan: none requested\n"
 "config:\n"
 msgstr ""
+"# zpool create mypool mirror /dev/ada1 /dev/ada2 mirror /dev/ada3 /dev/ada4\n"
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: none requested\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:538
@@ -890,6 +1111,14 @@ msgid ""
 "            ada3    ONLINE       0     0     0\n"
 "            ada4    ONLINE       0     0     0\n"
 msgstr ""
+"        NAME        STATE     READ WRITE CKSUM\n"
+"        mypool      ONLINE       0     0     0\n"
+"          mirror-0  ONLINE       0     0     0\n"
+"            ada1    ONLINE       0     0     0\n"
+"            ada2    ONLINE       0     0     0\n"
+"          mirror-1  ONLINE       0     0     0\n"
+"            ada3    ONLINE       0     0     0\n"
+"            ada4    ONLINE       0     0     0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:549
@@ -905,11 +1134,20 @@ msgid ""
 "original actually has a slightly smaller capacity, the smaller partition "
 "will still fit, using the replacement disk."
 msgstr ""
+"풀은 전체 디스크가 아닌 파티션 형태로 사용할 수도 있습니다.  ZFS를 별도의 "
+"파티션에 넣으면 동일한 디스크에 다른 용도의 다른 파티션을 만들 수 있습니다.  "
+"특히 부팅에 필요한 부트코드와 파일 시스템이 있는 파티션을 추가할 수 "
+"있습니다.  이렇게 하면 풀의 구성원이기도 한 디스크에서 부팅할 수 있습니다.  "
+"ZFS는 전체 디스크가 아닌 파티션을 사용할 때 FreeBSD에 성능 저하를 주지 "
+"않습니다.  또한 파티션을 사용하면 관리자가 전체 용량보다 적은 용량을 "
+"사용하여 디스크를 _언더 프로비저닝_ 할 수 있습니다.  나중에 원본과 명목상 "
+"동일한 크기의 대체 디스크가 실제로는 약간 더 작은 용량을 가지고 있다면, 대체 "
+"디스크를 사용하기 위해 더 작은 파티션이 적합합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:551
 msgid "Create a <<zfs-term-vdev-raidz,RAID-Z2>> pool using partitions:"
-msgstr ""
+msgstr "파티션을 사용하여 <<zfs-term-vdev-raidz,RAID-Z2>> 풀을 생성합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:560
@@ -922,6 +1160,13 @@ msgid ""
 "  scan: none requested\n"
 "config:\n"
 msgstr ""
+"# zpool create mypool raidz2 /dev/ada0p3 /dev/ada1p3 /dev/ada2p3 /dev/ada3p3 "
+"/dev/ada4p3 /dev/ada5p3\n"
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: none requested\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:570
@@ -939,6 +1184,15 @@ msgid ""
 "            ada4p3  ONLINE       0     0     0\n"
 "            ada5p3  ONLINE       0     0     0\n"
 msgstr ""
+"        NAME        STATE     READ WRITE CKSUM\n"
+"        mypool      ONLINE       0     0     0\n"
+"          raidz2-0  ONLINE       0     0     0\n"
+"            ada0p3  ONLINE       0     0     0\n"
+"            ada1p3  ONLINE       0     0     0\n"
+"            ada2p3  ONLINE       0     0     0\n"
+"            ada3p3  ONLINE       0     0     0\n"
+"            ada4p3  ONLINE       0     0     0\n"
+"            ada5p3  ONLINE       0     0     0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:579
@@ -949,12 +1203,17 @@ msgid ""
 "Force the pool destruction with `-f`.  This can cause undefined behavior in "
 "applications which had open files on those datasets."
 msgstr ""
+"디스크를 재사용하기 위해 더 이상 필요하지 않은 풀을 삭제합니다.  풀을 "
+"삭제하려면 먼저 해당 풀의 파일 시스템을 마운트 해제해야 합니다.  사용 중인 "
+"데이터 세트가 있으면 풀을 파괴하지 않으며 마운트 해제 작업이 실패합니다.  "
+"`-f` 를 사용하여 풀을 강제 삭제합니다.  이로 인해 해당 데이터세트에 파일이 "
+"열려 있는 애플리케이션에서 정의되지 않은 동작이 발생할 수 있습니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:581
 #, no-wrap
 msgid "Adding and Removing Devices"
-msgstr ""
+msgstr "장치 추가 및 제거하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:585
@@ -964,6 +1223,10 @@ msgid ""
 "Some <<zfs-term-vdev,vdev types>> allow adding disks to the vdev after "
 "creation."
 msgstr ""
+"풀에 디스크를 추가하는 방법은 두 가지가 있습니다: `zpool attach` 를 사용하여 "
+"기존 vdev에 디스크를 연결하거나 `zpool add` 를 사용하여 풀에 vdev를 추가하는 "
+"것입니다.  일부 <<zfs-term-vdev,vdev types>> 은 생성 후 디스크를 vdev에 "
+"추가할 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:594
@@ -979,6 +1242,16 @@ msgid ""
 "used for the pool, replicate the layout of the first disk on to the second.  "
 "Use `gpart backup` and `gpart restore` to make this process easier."
 msgstr ""
+"단일 디스크로 생성된 풀은 중복성이 부족합니다.  데이터의 다른 복사본이 없기 "
+"때문에 손상을 감지할 수는 있지만 복구할 수는 없습니다.  <<zfs-term-"
+"copies,copies>> 속성은 불량 섹터와 같은 작은 장애로부터 복구할 수 있지만 "
+"미러링 또는 RAID-Z와 동일한 수준의 보호 기능을 제공하지는 않습니다.  단일 "
+"디스크 vdev로 구성된 풀에서 시작하여 `zpool attach` 를 사용하여 새 디스크를 "
+"vdev에 추가하고 미러를 생성합니다.  또한 `zpool attach` 를 사용하여 미러 "
+"그룹에 새 디스크를 추가하여 중복성 및 읽기 성능을 향상시킬 수 있습니다.  "
+"풀에 사용되는 디스크를 파티션할 때 첫 번째 디스크의 레이아웃을 두 번째 "
+"디스크에 복제합니다.  이 프로세스를 더 쉽게 수행하려면 `gpart backup` 및 `"
+"gpart restore` 을 사용합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:596
@@ -986,6 +1259,8 @@ msgid ""
 "Upgrade the single disk (stripe) vdev [.filename]#ada0p3# to a mirror by "
 "attaching [.filename]#ada1p3#:"
 msgstr ""
+"단일 디스크(스트라이프) vdev [.filename]#ada0p3# 을 [.filename]#ada1p3# 에 "
+"연결하여 미러로 업그레이드합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:604
@@ -998,6 +1273,11 @@ msgid ""
 "  scan: none requested\n"
 "config:\n"
 msgstr ""
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: none requested\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:608
@@ -1007,6 +1287,9 @@ msgid ""
 "        mypool      ONLINE       0     0     0\n"
 "          ada0p3    ONLINE       0     0     0\n"
 msgstr ""
+"        NAME        STATE     READ WRITE CKSUM\n"
+"        mypool      ONLINE       0     0     0\n"
+"          ada0p3    ONLINE       0     0     0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:612
@@ -1016,18 +1299,23 @@ msgid ""
 "# zpool attach mypool ada0p3 ada1p3\n"
 "Make sure to wait until resilvering finishes before rebooting.\n"
 msgstr ""
+"errors: No known data errors\n"
+"# zpool attach mypool ada0p3 ada1p3\n"
+"Make sure to wait until resilvering finishes before rebooting.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:614
 #, no-wrap
 msgid "If you boot from pool 'mypool', you may need to update boot code on newly attached disk _ada1p3_.\n"
-msgstr ""
+msgstr "`mypool` 풀에서 부팅하는 경우, 새로 연결된 디스크 _ada1p3_ 에서 부트 코드를 "
+"업데이트해야 할 수 있습니다.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:616
 #, no-wrap
 msgid "Assuming you use GPT partitioning and _da0_ is your new boot disk you may use the following command:\n"
-msgstr ""
+msgstr "GPT 파티션을 사용하고 _da0_ 이 새 부팅 디스크라고 가정하면 다음 명령을 "
+"사용할 수 있습니다:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:630
@@ -1047,6 +1335,19 @@ msgid ""
 "        527M resilvered, 67.53% done\n"
 "config:\n"
 msgstr ""
+"        gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 da0\n"
+"# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada1\n"
+"bootcode written to ada1\n"
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"status: One or more devices is currently being resilvered.  The pool will\n"
+"        continue to function, possibly in a degraded state.\n"
+"action: Wait for the resilver to complete.\n"
+"  scan: resilver in progress since Fri May 30 08:19:19 2014\n"
+"        527M scanned out of 781M at 47.9M/s, 0h0m to go\n"
+"        527M resilvered, 67.53% done\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:636
@@ -1058,6 +1359,11 @@ msgid ""
 "            ada0p3  ONLINE       0     0     0\n"
 "            ada1p3  ONLINE       0     0     0  (resilvering)\n"
 msgstr ""
+"        NAME        STATE     READ WRITE CKSUM\n"
+"        mypool      ONLINE       0     0     0\n"
+"          mirror-0  ONLINE       0     0     0\n"
+"            ada0p3  ONLINE       0     0     0\n"
+"            ada1p3  ONLINE       0     0     0  (resilvering)\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:643
@@ -1070,6 +1376,12 @@ msgid ""
 "  scan: resilvered 781M in 0h0m with 0 errors on Fri May 30 08:15:58 2014\n"
 "config:\n"
 msgstr ""
+"errors: No known data errors\n"
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: resilvered 781M in 0h0m with 0 errors on Fri May 30 08:15:58 2014\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:649
@@ -1084,6 +1396,11 @@ msgid ""
 "            ada0p3  ONLINE       0     0     0\n"
 "            ada1p3  ONLINE       0     0     0\n"
 msgstr ""
+"        NAME        STATE     READ WRITE CKSUM\n"
+"        mypool      ONLINE       0     0     0\n"
+"          mirror-0  ONLINE       0     0     0\n"
+"            ada0p3  ONLINE       0     0     0\n"
+"            ada1p3  ONLINE       0     0     0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:659
@@ -1097,6 +1414,14 @@ msgid ""
 "Distributing writes means a failure of the non-redundant disk will result in "
 "the loss of a fraction of every block written to the pool."
 msgstr ""
+"RAID-Z와 같이 기존 vdev에 디스크를 추가할 수 없는 경우, 다른 방법으로 풀에 "
+"다른 vdev를 추가할 수 있습니다.  가상 디바이스를 추가하면 가상 디바이스 간에 "
+"쓰기를 분산하여 더 높은 성능을 제공합니다.  각 vdev는 자체 중복성을 "
+"제공합니다.  `mirror` 및 `RAID-Z` 와 같은 vdev 유형을 혼합하는 것은 "
+"가능하지만 권장하지 않습니다.  미러 또는 RAID-Z vdev가 포함된 풀에 중복성이 "
+"없는 vdev를 추가하면 전체 풀의 데이터가 위험해집니다.  쓰기를 분산하면 "
+"중복되지 않은 디스크에 장애가 발생했을 때, 풀에 기록된 모든 블록의 일부분이 "
+"각각 손실될 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:664
@@ -1107,19 +1432,25 @@ msgid ""
 "same time.  Having vdevs with different amounts of free space will lower "
 "performance, as more data writes go to the less full vdev."
 msgstr ""
+"ZFS는 각 가상 디바이스에 걸쳐 데이터를 스트라이핑합니다.  예를 들어, 미러 "
+"가상 디바이스가 2개인 경우, 이는 사실상 두 세트의 미러에 걸쳐 쓰기를 "
+"스트라이핑하는 RAID 10입니다.  ZFS는 각 vdev가 동시에 100%가 되도록 공간을 "
+"할당합니다.  여유 공간의 양이 다른 vdev를 사용하면 용량이 남는 vdev로 더 "
+"많은 데이터 쓰기가 집중되므로 성능이 저하됩니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:666
 msgid ""
 "When attaching new devices to a boot pool, remember to update the bootcode."
-msgstr ""
+msgstr "새 장치를 부트 풀에 연결할 때는 부트코드를 업데이트해야 합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:668
 msgid ""
 "Attach a second mirror group ([.filename]#ada2p3# and [.filename]#ada3p3#) "
 "to the existing mirror:"
-msgstr ""
+msgstr "기존 미러에 두 번째 미러 그룹( [.filename]#ada2p3# 및 [.filename]#ada3p3# )"
+"을 연결합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:676
@@ -1131,6 +1462,11 @@ msgid ""
 "  scan: resilvered 781M in 0h0m with 0 errors on Fri May 30 08:19:35 2014\n"
 "config:\n"
 msgstr ""
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: resilvered 781M in 0h0m with 0 errors on Fri May 30 08:19:35 2014\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:694
@@ -1148,6 +1484,17 @@ msgid ""
 "  scan: scrub repaired 0 in 0h0m with 0 errors on Fri May 30 08:29:51 2014\n"
 "config:\n"
 msgstr ""
+"errors: No known data errors\n"
+"# zpool add mypool mirror ada2p3 ada3p3\n"
+"# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada2\n"
+"bootcode written to ada2\n"
+"# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada3\n"
+"bootcode written to ada3\n"
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: scrub repaired 0 in 0h0m with 0 errors on Fri May 30 08:29:51 2014\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:703
@@ -1162,6 +1509,14 @@ msgid ""
 "            ada2p3  ONLINE       0     0     0\n"
 "            ada3p3  ONLINE       0     0     0\n"
 msgstr ""
+"        NAME        STATE     READ WRITE CKSUM\n"
+"        mypool      ONLINE       0     0     0\n"
+"          mirror-0  ONLINE       0     0     0\n"
+"            ada0p3  ONLINE       0     0     0\n"
+"            ada1p3  ONLINE       0     0     0\n"
+"          mirror-1  ONLINE       0     0     0\n"
+"            ada2p3  ONLINE       0     0     0\n"
+"            ada3p3  ONLINE       0     0     0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:709
@@ -1171,11 +1526,15 @@ msgid ""
 "remains in a mirror group, that group ceases to be a mirror and becomes a "
 "stripe, risking the entire pool if that remaining disk fails."
 msgstr ""
+"풀에서 가상 디바이스를 제거하는 것은 불가능하며, 미러에서 디스크를 제거하는 "
+"것도 중복성이 충분히 남아 있는 경우에만 가능합니다.  미러 그룹에 단일 "
+"디스크가 남아 있으면 해당 그룹은 미러가 아닌 스트라이프가 되어 나머지 "
+"디스크에 장애가 발생했을 때 전체 풀이 위험에 처하게 됩니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:711
 msgid "Remove a disk from a three-way mirror group:"
-msgstr ""
+msgstr "three-way 미러 그룹에서 디스크를 제거합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:719
@@ -1187,6 +1546,11 @@ msgid ""
 "  scan: scrub repaired 0 in 0h0m with 0 errors on Fri May 30 08:29:51 2014\n"
 "config:\n"
 msgstr ""
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: scrub repaired 0 in 0h0m with 0 errors on Fri May 30 08:29:51 2014\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:726
@@ -1199,6 +1563,12 @@ msgid ""
 "            ada1p3  ONLINE       0     0     0\n"
 "            ada2p3  ONLINE       0     0     0\n"
 msgstr ""
+"        NAME        STATE     READ WRITE CKSUM\n"
+"        mypool      ONLINE       0     0     0\n"
+"          mirror-0  ONLINE       0     0     0\n"
+"            ada0p3  ONLINE       0     0     0\n"
+"            ada1p3  ONLINE       0     0     0\n"
+"            ada2p3  ONLINE       0     0     0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:734
@@ -1212,12 +1582,19 @@ msgid ""
 "  scan: scrub repaired 0 in 0h0m with 0 errors on Fri May 30 08:29:51 2014\n"
 "config:\n"
 msgstr ""
+"errors: No known data errors\n"
+"# zpool detach mypool ada2p3\n"
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: scrub repaired 0 in 0h0m with 0 errors on Fri May 30 08:29:51 2014\n"
+"config:\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:745
 #, no-wrap
 msgid "Checking the Status of a Pool"
-msgstr ""
+msgstr "풀의 상태 확인하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:751
@@ -1228,6 +1605,11 @@ msgid ""
 "pool and the status of the entire pool.  Actions to take and details about "
 "the last <<zfs-zpool-scrub,`scrub`>> are also shown."
 msgstr ""
+"풀 상태는 중요합니다.  드라이브가 오프라인 상태가 되거나 ZFS가 읽기, 쓰기 "
+"또는 체크섬 오류를 감지하면 상응하는 오류 카운트가 증가합니다.  `status` "
+"출력에는 풀에 있는 각 장치의 구성 및 상태와 전체 풀의 상태가 표시됩니다.  "
+"수행해야 할 작업과 마지막 <<zfs-zpool-scrub,`scrub`>> 에 대한 세부 정보도 "
+"표시됩니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:759
@@ -1239,12 +1621,17 @@ msgid ""
 "  scan: scrub repaired 0 in 2h25m with 0 errors on Sat Sep 14 04:25:50 2013\n"
 "config:\n"
 msgstr ""
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: scrub repaired 0 in 2h25m with 0 errors on Sat Sep 14 04:25:50 2013\n"
+"config:\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:774
 #, no-wrap
 msgid "Clearing Errors"
-msgstr ""
+msgstr "오류 제거하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:780
@@ -1255,12 +1642,17 @@ msgid ""
 "that alert the administrator when the pool encounters an error.  Without "
 "clearing old errors, the scripts may fail to report further errors."
 msgstr ""
+"오류를 감지하면 ZFS는 읽기, 쓰기 또는 체크섬 오류 카운트를 증가시킵니다.  `"
+"zpool clear _mypool_` 로 오류 메시지를 지우고 횟수를 재설정합니다.  오류 "
+"상태를 지우는 것은 풀에 오류가 발생했을 때 관리자에게 경고하는 자동화된 "
+"스크립트에서 주의해야 할 문제입니다.  하지만 이전 오류를 지우지 않으면 "
+"스크립트에서 추가 오류를 보고하지 못할 수 있습니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:782
 #, no-wrap
 msgid "Replacing a Functioning Device"
-msgstr ""
+msgstr "작동 중인 장치 교체하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:791
@@ -1274,11 +1666,18 @@ msgid ""
 "old disk, it may be possible to grow the zpool, using the new space.  See "
 "<<zfs-zpool-online,Growing a Pool>>."
 msgstr ""
+"하나의 디스크를 다른 디스크로 교체하는 것이 바람직할 수 있습니다.  작동 중인 "
+"디스크를 교체할 때 프로세스는 교체하는 동안 이전 디스크를 온라인 상태로 "
+"유지합니다.  풀은 <<zfs-term-degraded,degraded>> 상태가 되지 않으므로 데이터 "
+"손실의 위험이 줄어듭니다.  `zpool replace` 를 실행하면 이전 디스크의 "
+"데이터가 새 디스크에 복사됩니다.  작업이 완료되면 ZFS는 이전 디스크를 "
+"vdev에서 분리합니다.  새 디스크가 이전 디스크보다 큰 경우 새 공간을 사용하여 "
+"zpool을 늘릴 수 있습니다.  <<zfs-zpool-online,Growing a Pool>> 를 참고합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:793
 msgid "Replace a functioning device in the pool:"
-msgstr ""
+msgstr "풀에서 작동하는 장치를 교체합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:811
@@ -1288,18 +1687,23 @@ msgid ""
 "# zpool replace mypool ada1p3 ada2p3\n"
 "Make sure to wait until resilvering finishes before rebooting.\n"
 msgstr ""
+"errors: No known data errors\n"
+"# zpool replace mypool ada1p3 ada2p3\n"
+"Make sure to wait until resilvering finishes before rebooting.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:813
 #, no-wrap
 msgid "When booting from the pool 'zroot', update the boot code on the newly attached disk 'ada2p3'.\n"
-msgstr ""
+msgstr "풀 `zroot` 에서 부팅할 때 새로 연결한 디스크 `ada2p3` 에서 부팅 코드를 "
+"업데이트합니다.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:815
 #, no-wrap
 msgid "Assuming GPT partitioning is used and [.filename]#da0# is the new boot disk, use the following command:\n"
-msgstr ""
+msgstr "GPT 파티션을 사용하고 [.filename]#da0# 이 새 부팅 디스크라고 가정하면 다음 "
+"명령을 사용합니다:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:828
@@ -1318,6 +1722,18 @@ msgid ""
 "        604M resilvered, 77.39% done\n"
 "config:\n"
 msgstr ""
+"        gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 da0\n"
+"# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada2\n"
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"status: One or more devices is currently being resilvered.  The pool will\n"
+"        continue to function, possibly in a degraded state.\n"
+"action: Wait for the resilver to complete.\n"
+"  scan: resilver in progress since Mon Jun  2 14:21:35 2014\n"
+"        604M scanned out of 781M at 46.5M/s, 0h0m to go\n"
+"        604M resilvered, 77.39% done\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:836
@@ -1331,6 +1747,13 @@ msgid ""
 "              ada1p3     ONLINE       0     0     0\n"
 "              ada2p3     ONLINE       0     0     0  (resilvering)\n"
 msgstr ""
+"        NAME             STATE     READ WRITE CKSUM\n"
+"        mypool           ONLINE       0     0     0\n"
+"          mirror-0       ONLINE       0     0     0\n"
+"            ada0p3       ONLINE       0     0     0\n"
+"            replacing-1  ONLINE       0     0     0\n"
+"              ada1p3     ONLINE       0     0     0\n"
+"              ada2p3     ONLINE       0     0     0  (resilvering)\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:843
@@ -1343,6 +1766,12 @@ msgid ""
 "  scan: resilvered 781M in 0h0m with 0 errors on Mon Jun  2 14:21:52 2014\n"
 "config:\n"
 msgstr ""
+"errors: No known data errors\n"
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: resilvered 781M in 0h0m with 0 errors on Mon Jun  2 14:21:52 2014\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:849
@@ -1355,12 +1784,17 @@ msgid ""
 "            ada0p3  ONLINE       0     0     0\n"
 "            ada2p3  ONLINE       0     0     0\n"
 msgstr ""
+"        NAME        STATE     READ WRITE CKSUM\n"
+"        mypool      ONLINE       0     0     0\n"
+"          mirror-0  ONLINE       0     0     0\n"
+"            ada0p3  ONLINE       0     0     0\n"
+"            ada2p3  ONLINE       0     0     0\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:854
 #, no-wrap
 msgid "Dealing with Failed Devices"
-msgstr ""
+msgstr "고장난 장치 처리하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:862
@@ -1374,6 +1808,14 @@ msgid ""
 "from available redundancy and writes it to the replacement device.  After "
 "completion, the vdev returns to <<zfs-term-online,online>> status."
 msgstr ""
+"풀의 디스크에 장애가 발생하면 해당 디스크가 속한 vdev는 <<zfs-term-"
+"degraded,degraded>> 상태가 됩니다.  데이터는 계속 사용할 수 있지만 ZFS가 "
+"사용 가능한 중복성에서 누락된 데이터를 계산하기 때문에 성능이 저하됩니다.  "
+"vdev를 완전한 상태로 복원하려면 장애가 발생한 물리적 장치를 교체합니다.  "
+"그러면 ZFS가 <<zfs-term-resilver,resilver>> 작업을 시작하라는 지시를 "
+"받습니다.  ZFS는 사용 가능한 중복성에서 장애가 발생한 디바이스의 데이터를 "
+"다시 계산하여 교체 디바이스에 씁니다.  완료 후 vdev는 <<zfs-term-"
+"online,online>> 상태로 돌아갑니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:865
@@ -1383,6 +1825,10 @@ msgid ""
 "faulted,faulted>> state.  Unless enough devices can reconnect the pool "
 "becomes inoperative requiring a data restore from backups."
 msgstr ""
+"vdev에 중복성이 없거나 디바이스에 장애가 발생하고 이를 보완할 충분한 "
+"중복성이 없는 경우 풀은 <<zfs-term-faulted,faulted>> 상태로 전환됩니다.  "
+"충분한 장치를 다시 연결할 수 없으면 풀이 작동하지 않게 되어 백업에서 "
+"데이터를 복원해야 합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:868
@@ -1391,11 +1837,14 @@ msgid ""
 "GUID of the new disk.  A new device name parameter for `zpool replace` is "
 "not required if the replacement device has the same device name."
 msgstr ""
+"장애가 발생한 디스크를 교체할 때 장애가 발생한 디스크의 이름이 새 디스크의 "
+"GUID로 변경됩니다.  교체 장치의 장치 이름이 동일한 경우 `zpool replace` 에 "
+"대한 새 장치 이름 매개 변수가 필요하지 않습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:870
 msgid "Replace a failed disk using `zpool replace`:"
-msgstr ""
+msgstr "`zpool replace` 를 사용하여 고장난 디스크를 교체합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:882
@@ -1411,6 +1860,16 @@ msgid ""
 "  scan: none requested\n"
 "config:\n"
 msgstr ""
+"# zpool status\n"
+"  pool: mypool\n"
+" state: DEGRADED\n"
+"status: One or more devices could not be opened.  Sufficient replicas exist "
+"for\n"
+"        the pool to continue functioning in a degraded state.\n"
+"action: Attach the missing device and online it using 'zpool online'.\n"
+"   see: http://illumos.org/msg/ZFS-8000-2Q\n"
+"  scan: none requested\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:888
@@ -1422,6 +1881,11 @@ msgid ""
 "            ada0p3              ONLINE       0     0     0\n"
 "            316502962686821739  UNAVAIL      0     0     0  was /dev/ada1p3\n"
 msgstr ""
+"        NAME                    STATE     READ WRITE CKSUM\n"
+"        mypool                  DEGRADED     0     0     0\n"
+"          mirror-0              DEGRADED     0     0     0\n"
+"            ada0p3              ONLINE       0     0     0\n"
+"            316502962686821739  UNAVAIL      0     0     0  was /dev/ada1p3\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:901
@@ -1440,6 +1904,18 @@ msgid ""
 "        640M resilvered, 82.04% done\n"
 "config:\n"
 msgstr ""
+"errors: No known data errors\n"
+"# zpool replace mypool 316502962686821739 ada2p3\n"
+"# zpool status\n"
+"  pool: mypool\n"
+" state: DEGRADED\n"
+"status: One or more devices is currently being resilvered.  The pool will\n"
+"        continue to function, possibly in a degraded state.\n"
+"action: Wait for the resilver to complete.\n"
+"  scan: resilver in progress since Mon Jun  2 14:52:21 2014\n"
+"        641M scanned out of 781M at 49.3M/s, 0h0m to go\n"
+"        640M resilvered, 82.04% done\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:909
@@ -1453,6 +1929,15 @@ msgid ""
 "              15732067398082357289  UNAVAIL      0     0     0  was /dev/ada1p3/old\n"
 "              ada2p3                ONLINE       0     0     0  (resilvering)\n"
 msgstr ""
+"        NAME                        STATE     READ WRITE CKSUM\n"
+"        mypool                      DEGRADED     0     0     0\n"
+"          mirror-0                  DEGRADED     0     0     0\n"
+"            ada0p3                  ONLINE       0     0     0\n"
+"            replacing-1             UNAVAIL      0     0     0\n"
+"              15732067398082357289  UNAVAIL      0     0     0  was /dev/"
+"ada1p3/old\n"
+"              ada2p3                ONLINE       0     0     0  (resilvering)"
+"\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:916
@@ -1465,12 +1950,18 @@ msgid ""
 "  scan: resilvered 781M in 0h0m with 0 errors on Mon Jun  2 14:52:38 2014\n"
 "config:\n"
 msgstr ""
+"errors: No known data errors\n"
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: resilvered 781M in 0h0m with 0 errors on Mon Jun  2 14:52:38 2014\n"
+"config:\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:927
 #, no-wrap
 msgid "Scrubbing a Pool"
-msgstr ""
+msgstr "풀 스크러빙하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:932
@@ -1482,6 +1973,11 @@ msgid ""
 "relative priority of the `scrub` to keep it from slowing down other "
 "workloads."
 msgstr ""
+"정기적으로 풀을, 이상적으로는 매월 한 번 이상 <<zfs-term-scrub,scrub>> "
+"합니다.  `scrub` 작업은 디스크 집약적이며 실행 중 성능이 저하됩니다.  `scrub`"
+" 을 예약할 때 수요가 많은 기간을 피하거나, 다른 워크로드의 속도를 늦추지 "
+"않도록 <<zfs-advanced-tuning-scrub_delay,`vfs.zfs.scrub_delay`>> 를 사용하여 "
+"`scrub` 의 상대적 우선순위를 조정합니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:943
@@ -1496,17 +1992,25 @@ msgid ""
 "        0 repaired, 1.32% done\n"
 "config:\n"
 msgstr ""
+"# zpool scrub mypool\n"
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"  scan: scrub in progress since Wed Feb 19 20:52:54 2014\n"
+"        116G scanned out of 8.60T at 649M/s, 3h48m to go\n"
+"        0 repaired, 1.32% done\n"
+"config:\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:958
 msgid "To cancel a scrub operation if needed, run `zpool scrub -s _mypool_`."
-msgstr ""
+msgstr "필요한 경우 스크럽 작업을 취소하려면 `zpool scrub -s _mypool_` 을 실행합니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:960
 #, no-wrap
 msgid "Self-Healing"
-msgstr ""
+msgstr "Self-Healing"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:971
@@ -1526,6 +2030,19 @@ msgid ""
 "with the wrong checksum.  This happens without any interaction from a system "
 "administrator during normal pool operation."
 msgstr ""
+"데이터 블록과 함께 저장된 체크섬은 파일 시스템이 _자가 치유_ 될 수 있도록 "
+"합니다.  이 기능은 체크섬이 스토리지 풀의 일부인 다른 장치에 기록된 체크섬과 "
+"일치하지 않는 데이터를 자동으로 복구합니다.  예를 들어, 두 개의 디스크로 "
+"구성된 미러 구성에서 하나의 드라이브가 오작동하기 시작하여 더 이상 데이터를 "
+"제대로 저장할 수 없는 경우를 들 수 있습니다.  장기 아카이브 스토리지와 같이 "
+"오랫동안 데이터에 액세스하지 않은 경우에는 이러한 문제가 더욱 심각합니다.  "
+"기존 파일 시스템에서는 man:fsck[8]와 같이 데이터를 검사하고 복구하는 명령을 "
+"실행해야 합니다.  이러한 명령은 시간이 걸리며, 심한 경우 관리자가 어떤 복구 "
+"작업을 수행할지 결정해야 합니다.  체크섬이 일치하지 않는 데이터 블록을 "
+"감지하면 ZFS는 미러 디스크에서 데이터를 읽으려고 시도합니다.  해당 디스크가 "
+"올바른 데이터를 제공할 수 있는 경우, ZFS는 해당 데이터를 애플리케이션에 "
+"제공하고 잘못된 체크섬이 있는 디스크의 데이터를 수정합니다.  이는 정상적인 "
+"풀 작동 중에 시스템 관리자의 개입 없이 발생합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:973
@@ -1533,6 +2050,8 @@ msgid ""
 "The next example shows this self-healing behavior by creating a mirrored "
 "pool of disks [.filename]#/dev/ada0# and [.filename]#/dev/ada1#."
 msgstr ""
+"다음 예제에서는 [.filename]#/dev/ada0# 및 [.filename]#/dev/ada1# 디스크의 "
+"미러링된 풀을 생성하여 이러한 자가 복구 동작을 보여 줍니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:982
@@ -1545,6 +2064,12 @@ msgid ""
 "  scan: none requested\n"
 "config:\n"
 msgstr ""
+"# zpool create healer mirror /dev/ada0 /dev/ada1\n"
+"# zpool status healer\n"
+"  pool: healer\n"
+" state: ONLINE\n"
+"  scan: none requested\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:988
@@ -1557,6 +2082,11 @@ msgid ""
 "       ada0     ONLINE       0     0     0\n"
 "       ada1     ONLINE       0     0     0\n"
 msgstr ""
+"    NAME        STATE     READ WRITE CKSUM\n"
+"    healer      ONLINE       0     0     0\n"
+"      mirror-0  ONLINE       0     0     0\n"
+"       ada0     ONLINE       0     0     0\n"
+"       ada1     ONLINE       0     0     0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:993
@@ -1567,6 +2097,12 @@ msgid ""
 "NAME     SIZE  ALLOC   FREE   CKPOINT  EXPANDSZ   FRAG   CAP  DEDUP  HEALTH  ALTROOT\n"
 "healer   960M  92.5K   960M         -         -     0%    0%  1.00x  ONLINE  -\n"
 msgstr ""
+"errors: No known data errors\n"
+"# zpool list\n"
+"NAME     SIZE  ALLOC   FREE   CKPOINT  EXPANDSZ   FRAG   CAP  DEDUP  HEALTH  "
+"ALTROOT\n"
+"healer   960M  92.5K   960M         -         -     0%    0%  1.00x  ONLINE  "
+"-\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:996
@@ -1574,6 +2110,8 @@ msgid ""
 "Copy some important data to the pool to protect from data errors using the "
 "self-healing feature and create a checksum of the pool for later comparison."
 msgstr ""
+"자가 복구 기능을 사용하여 데이터 오류로부터 보호하기 위해 일부 중요한 "
+"데이터를 풀에 복사하고 나중에 비교할 수 있도록 풀의 체크섬을 생성합니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1006
@@ -1587,6 +2125,13 @@ msgid ""
 "# cat checksum.txt\n"
 "SHA1 (/healer) = 2753eff56d77d9a536ece6694bf0a82740344d1f\n"
 msgstr ""
+"# cp /some/important/data /healer\n"
+"# zfs list\n"
+"NAME     SIZE  ALLOC   FREE    CAP  DEDUP  HEALTH  ALTROOT\n"
+"healer   960M  67.7M   892M     7%  1.00x  ONLINE  -\n"
+"# sha1 /healer > checksum.txt\n"
+"# cat checksum.txt\n"
+"SHA1 (/healer) = 2753eff56d77d9a536ece6694bf0a82740344d1f\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1010
@@ -1595,6 +2140,9 @@ msgid ""
 "the disks in the mirror.  To keep ZFS from healing the data when detected, "
 "export the pool before the corruption and import it again afterwards."
 msgstr ""
+"미러에 있는 디스크 중 하나의 시작 부분에 임의의 데이터를 써서 데이터 손상을 "
+"시뮬레이션합니다.  데이터가 손상되었을 때 ZFS가 데이터를 복구하지 못하도록 "
+"하려면 손상되기 전에 풀을 내보내고 나중에 다시 가져오세요."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1018
@@ -1606,6 +2154,12 @@ msgid ""
 "disk device names other than the ones that are part of the pool.  Ensure "
 "proper backups of the pool exist and test them before running the command!"
 msgstr ""
+"이 작업은 중요한 데이터를 파괴할 수 있는 위험한 작업이며, 여기서는 데모로만 "
+"설명합니다.  스토리지 풀이 정상적으로 작동하는 동안에는 *시도하지 마세요*.  "
+"또한 이 의도적인 손상 예제는 다른 파티션에 ZFS를 사용하지 않는 파일 시스템이 "
+"있는 디스크에서 실행해서는 안 됩니다.  풀의 일부인 디스크 장치 이름 외에 "
+"다른 디스크 장치 이름을 사용하지 마세요.  명령을 실행하기 전에 풀의 적절한 "
+"백업이 있는지 확인하고 테스트하세요!"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1028
@@ -1618,6 +2172,12 @@ msgid ""
 "209715200 bytes transferred in 62.992162 secs (3329227 bytes/sec)\n"
 "# zpool import healer\n"
 msgstr ""
+"# zpool export healer\n"
+"# dd if=/dev/random of=/dev/ada1 bs=1m count=200\n"
+"200+0 records in\n"
+"200+0 records out\n"
+"209715200 bytes transferred in 62.992162 secs (3329227 bytes/sec)\n"
+"# zpool import healer\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1034
@@ -1628,6 +2188,10 @@ msgid ""
 "checksums.  To find the device with the wrong checksum, look for one whose "
 "`CKSUM` column contains a nonzero value."
 msgstr ""
+"풀 상태는 한 장치에서 오류가 발생했음을 보여줍니다.  풀에서 데이터를 읽는 "
+"애플리케이션은 잘못된 데이터를 수신하지 않았습니다.  ZFS는 올바른 체크섬을 "
+"가진 [.filename]#ada0# 장치에서 데이터를 제공했습니다.  잘못된 체크섬을 가진 "
+"장치를 찾으려면 `CKSUM` 열에 0이 아닌 값이 포함된 장치를 찾습니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1047
@@ -1644,6 +2208,18 @@ msgid ""
 "    scan: none requested\n"
 "  config:\n"
 msgstr ""
+"# zpool status healer\n"
+"    pool: healer\n"
+"   state: ONLINE\n"
+"  status: One or more devices has experienced an unrecoverable error.  An\n"
+"          attempt was made to correct the error.  Applications are "
+"unaffected.\n"
+"  action: Determine if the device needs to be replaced, and clear the "
+"errors\n"
+"          using 'zpool clear' or replace the device with 'zpool replace'.\n"
+"     see: http://illumos.org/msg/ZFS-8000-4J\n"
+"    scan: none requested\n"
+"  config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1053
@@ -1655,6 +2231,11 @@ msgid ""
 "         ada0     ONLINE       0     0     0\n"
 "         ada1     ONLINE       0     0     1\n"
 msgstr ""
+"      NAME        STATE     READ WRITE CKSUM\n"
+"      healer      ONLINE       0     0     0\n"
+"        mirror-0  ONLINE       0     0     0\n"
+"         ada0     ONLINE       0     0     0\n"
+"         ada1     ONLINE       0     0     1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1059
@@ -1663,6 +2244,9 @@ msgid ""
 "unaffected [.filename]#ada0# mirror disk.  A checksum comparison with the "
 "original one will reveal whether the pool is consistent again."
 msgstr ""
+"ZFS가 오류를 감지하고 영향을 받지 않는 [.filename]#ada0# 미러 디스크에 있는 "
+"중복성을 사용하여 오류를 처리했습니다.  원본과 체크섬을 비교하면 풀이 다시 "
+"일관성이 있는지 확인할 수 있습니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1066
@@ -1673,6 +2257,10 @@ msgid ""
 "SHA1 (/healer) = 2753eff56d77d9a536ece6694bf0a82740344d1f\n"
 "SHA1 (/healer) = 2753eff56d77d9a536ece6694bf0a82740344d1f\n"
 msgstr ""
+"# sha1 /healer >> checksum.txt\n"
+"# cat checksum.txt\n"
+"SHA1 (/healer) = 2753eff56d77d9a536ece6694bf0a82740344d1f\n"
+"SHA1 (/healer) = 2753eff56d77d9a536ece6694bf0a82740344d1f\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1075
@@ -1688,6 +2276,15 @@ msgid ""
 "problem.  A scrub operation is now required to overwrite the corrupted data "
 "on [.filename]#ada1#."
 msgstr ""
+"풀 데이터가 여전히 일치하는 동안 의도적인 변조 전과 후의 체크섬을 "
+"생성합니다.  이는 체크섬이 다를 때 ZFS가 어떻게 자동으로 오류를 감지하고 "
+"수정할 수 있는지 보여줍니다.  이는 풀에 충분한 중복성이 있을 때 가능하다는 "
+"점에 유의하세요.  단일 장치로 구성된 풀은 자체 복구 기능이 없습니다.  이것이 "
+"바로 ZFS에서 체크섬이 중요한 이유이기도 하므로 어떤 이유로든 체크섬을 "
+"비활성화하지 마세요.  ZFS는 이를 감지하고 수정하기 위해 man:fsck[8] 또는 "
+"이와 유사한 파일 시스템 일관성 검사 프로그램이 필요하지 않으며, 문제가 있는 "
+"동안에도 풀을 계속 사용할 수 있도록 유지합니다.  이제 [.filename]#ada1# 의 "
+"손상된 데이터를 덮어쓰려면 스크럽 작업이 필요합니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1091
@@ -1707,6 +2304,20 @@ msgid ""
 "        9.63M repaired, 15.56% done\n"
 "config:\n"
 msgstr ""
+"# zpool scrub healer\n"
+"# zpool status healer\n"
+"  pool: healer\n"
+" state: ONLINE\n"
+"status: One or more devices has experienced an unrecoverable error.  An\n"
+"            attempt was made to correct the error.  Applications are "
+"unaffected.\n"
+"action: Determine if the device needs to be replaced, and clear the errors\n"
+"            using 'zpool clear' or replace the device with 'zpool replace'.\n"
+"   see: http://illumos.org/msg/ZFS-8000-4J\n"
+"  scan: scrub in progress since Mon Dec 10 12:23:30 2012\n"
+"        10.4M scanned out of 67.0M at 267K/s, 0h3m to go\n"
+"        9.63M repaired, 15.56% done\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1097
@@ -1718,6 +2329,11 @@ msgid ""
 "       ada0     ONLINE       0     0     0\n"
 "       ada1     ONLINE       0     0   627  (repairing)\n"
 msgstr ""
+"    NAME        STATE     READ WRITE CKSUM\n"
+"    healer      ONLINE       0     0     0\n"
+"      mirror-0  ONLINE       0     0     0\n"
+"       ada0     ONLINE       0     0     0\n"
+"       ada1     ONLINE       0     0   627  (repairing)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1103
@@ -1727,6 +2343,9 @@ msgid ""
 "output from `zpool status`.  After the operation is complete, the pool "
 "status changes to:"
 msgstr ""
+"스크럽 작업은 [.filename]#ada0# 에서 데이터를 읽고 `zpool status` 의 "
+"'(repairing)` 출력에 표시된 것처럼 [.filename]#ada1# 에 잘못된 체크섬이 있는 "
+"데이터를 다시 씁니다.  작업이 완료되면 풀 상태가 다음과 같이 변경됩니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1116
@@ -1743,6 +2362,19 @@ msgid ""
 "  scan: scrub repaired 66.5M in 0h2m with 0 errors on Mon Dec 10 12:26:25 2012\n"
 "config:\n"
 msgstr ""
+"# zpool status healer\n"
+"  pool: healer\n"
+" state: ONLINE\n"
+"status: One or more devices has experienced an unrecoverable error.  An\n"
+"        attempt was made to correct the error.  Applications are unaffected."
+"\n"
+"action: Determine if the device needs to be replaced, and clear the errors\n"
+"             using 'zpool clear' or replace the device with 'zpool replace'."
+"\n"
+"   see: http://illumos.org/msg/ZFS-8000-4J\n"
+"  scan: scrub repaired 66.5M in 0h2m with 0 errors on Mon Dec 10 12:26:25 "
+"2012\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1122
@@ -1754,6 +2386,11 @@ msgid ""
 "       ada0     ONLINE       0     0     0\n"
 "       ada1     ONLINE       0     0 2.72K\n"
 msgstr ""
+"    NAME        STATE     READ WRITE CKSUM\n"
+"    healer      ONLINE       0     0     0\n"
+"      mirror-0  ONLINE       0     0     0\n"
+"       ada0     ONLINE       0     0     0\n"
+"       ada1     ONLINE       0     0 2.72K\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1127
@@ -1762,6 +2399,9 @@ msgid ""
 "[.filename]#ada0# to [.filename]#ada1#, <<zfs-zpool-clear,clear>> the error "
 "messages from the pool status by running `zpool clear`."
 msgstr ""
+"스크러빙 작업이 완료되어 [.filename]#ada0# 에서 [.filename]#ada1# 로 모든 "
+"데이터가 동기화되면, `zpool clear` 를 실행하여 풀 상태의 오류 메시지를 "
+"삭제합니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1136
@@ -1774,19 +2414,27 @@ msgid ""
 "  scan: scrub repaired 66.5M in 0h2m with 0 errors on Mon Dec 10 12:26:25 2012\n"
 "config:\n"
 msgstr ""
+"# zpool clear healer\n"
+"# zpool status healer\n"
+"  pool: healer\n"
+" state: ONLINE\n"
+"  scan: scrub repaired 66.5M in 0h2m with 0 errors on Mon Dec 10 12:26:25 "
+"2012\n"
+"config:\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1147
 msgid ""
 "The pool is now back to a fully working state, with all error counts now "
 "zero."
-msgstr ""
+msgstr "이제 풀이 완전히 작동하는 상태로 돌아왔으며 모든 오류 카운트가 0이 "
+"되었습니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1149
 #, no-wrap
 msgid "Growing a Pool"
-msgstr ""
+msgstr "풀 확장하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1158
@@ -1800,6 +2448,14 @@ msgid ""
 "process copies the existing data onto the new drive.  As both of the devices "
 "now have 2 TB capacity, the mirror's available space grows to 2 TB."
 msgstr ""
+"각 가상 디바이스에서 가장 작은 디바이스는 중복 풀의 사용 가능한 크기를 "
+"제한합니다.  가장 작은 장치를 더 큰 장치로 교체합니다.  <<zfs-zpool-"
+"replace,replace>> 또는 <<zfs-term-resilver,resilver>> 작업을 완료하면 새 "
+"장치의 용량을 사용하도록 풀을 확장할 수 있습니다.  예를 들어 1TB 드라이브와 "
+"2TB 드라이브의 미러를 생각해 보겠습니다.  사용 가능한 공간은 1TB입니다.  1TB "
+"드라이브를 다른 2TB 드라이브로 교체할 때 복원 프로세스는 기존 데이터를 새 "
+"드라이브에 복사합니다.  이제 두 장치의 용량이 모두 2TB이므로 미러의 사용 "
+"가능한 공간은 2TB로 증가합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1161
@@ -1807,12 +2463,14 @@ msgid ""
 "Start expansion by using `zpool online -e` on each device.  After expanding "
 "all devices, the extra space becomes available to the pool."
 msgstr ""
+"각 장치에서 `zpool online -e` 를 사용하여 확장을 시작하세요.  모든 장치를 "
+"확장하면 풀에서 여분의 공간을 사용할 수 있게 됩니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1163
 #, no-wrap
 msgid "Importing and Exporting Pools"
-msgstr ""
+msgstr "풀 가져오기 및 내보내기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1171
@@ -1827,17 +2485,26 @@ msgid ""
 "unexpected behavior by the applications which had open files on those "
 "datasets."
 msgstr ""
+"풀을 다른 시스템으로 옮기기 전에 _Export_ pool을 하세요.  ZFS는 모든 "
+"데이터세트를 마운트 해제하여 각 장치를 내보낸 것으로 표시하지만 다른 "
+"디스크에서 사용하지 못하도록 여전히 잠궈 둡니다.  이렇게 하면 다른 시스템, "
+"ZFS를 지원하는 다른 운영 체제, 심지어 다른 하드웨어 아키텍처에서도 풀을 "
+"_임포트_할 수 있습니다(몇 가지 주의 사항, man:zpool[8] 참조).  데이터 집합에 "
+"열려 있는 파일이 있는 경우, `zpool export -f` 를 사용하여 풀을 강제로 "
+"내보냅니다.  주의해서 사용하세요.  데이터 세트가 강제로 마운트 해제되므로 "
+"해당 데이터 세트에 열린 파일이 있는 응용 프로그램에서 예기치 않은 동작이 "
+"발생할 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1173
 msgid "Export a pool that is not in use:"
-msgstr ""
+msgstr "사용하지 않는 풀을 내보냅니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1177
 #, no-wrap
 msgid "# zpool export mypool\n"
-msgstr ""
+msgstr "# zpool export mypool\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1185
@@ -1850,11 +2517,18 @@ msgid ""
 "properly exported, force the import using `zpool import -f`.  `zpool import -"
 "a` imports all pools that do not appear to be in use by another system."
 msgstr ""
+"풀을 가져오면 데이터 세트가 자동으로 마운트됩니다.  원치 않는 동작인 경우 `"
+"zpool import -N` 을 사용하여 이를 방지합니다.  `zpool import -o` 는 이 특정 "
+"가져오기에 대한 임시 속성을 설정합니다.  `zpool import altroot=` 를 사용하면 "
+"파일 시스템의 루트 대신 기본 마운트 지점을 사용하여 풀을 가져올 수 "
+"있습니다.  풀이 다른 시스템에서 마지막으로 사용되었고 제대로 내보내지지 않은 "
+"경우 `zpool import -f` 를 사용하여 강제로 가져옵니다.  `zpool import -a` 는 "
+"다른 시스템에서 사용 중인 것으로 보이지 않는 모든 풀을 가져옵니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1187
 msgid "List all available pools for import:"
-msgstr ""
+msgstr "가져올 수 있는 모든 풀을 나열합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1196
@@ -1867,6 +2541,12 @@ msgid ""
 " action: The pool can be imported using its name or numeric identifier.\n"
 " config:\n"
 msgstr ""
+"# zpool import\n"
+"   pool: mypool\n"
+"     id: 9930174748043525076\n"
+"  state: ONLINE\n"
+" action: The pool can be imported using its name or numeric identifier.\n"
+" config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1199
@@ -1875,11 +2555,13 @@ msgid ""
 "        mypool      ONLINE\n"
 "          ada2p3    ONLINE\n"
 msgstr ""
+"        mypool      ONLINE\n"
+"          ada2p3    ONLINE\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1202
 msgid "Import the pool with an alternative root directory:"
-msgstr ""
+msgstr "대체 루트 디렉터리로 풀을 가져옵니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1210
@@ -1891,12 +2573,17 @@ msgid ""
 "NAME                 USED  AVAIL  REFER  MOUNTPOINT\n"
 "mypool               110K  47.0G    31K  /mnt/mypool\n"
 msgstr ""
+"# zpool import -o altroot=/mnt mypool\n"
+"# zfs list\n"
+"zfs list\n"
+"NAME                 USED  AVAIL  REFER  MOUNTPOINT\n"
+"mypool               110K  47.0G    31K  /mnt/mypool\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1213
 #, no-wrap
 msgid "Upgrading a Storage Pool"
-msgstr ""
+msgstr "스토리지 풀 업그레이드하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1219
@@ -1907,11 +2594,16 @@ msgid ""
 "older system before upgrading.  Upgrading is a one-way process.  Upgrade "
 "older pools is possible, but downgrading pools with newer features is not."
 msgstr ""
+"FreeBSD를 업그레이드한 후 또는 이전 버전을 사용하는 시스템에서 풀을 가져오는 "
+"경우, 최신 기능을 지원하려면 풀을 최신 ZFS 버전으로 수동 업그레이드해야 "
+"합니다.  업그레이드하기 전에 이전 시스템에서 풀을 가져와야 하는지 여부를 "
+"고려하세요.  업그레이드는 단방향 프로세스입니다.  이전 풀의 업그레이드는 "
+"가능하지만 최신 기능이 포함된 풀의 다운그레이드는 불가능합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1221
 msgid "Upgrade a v28 pool to support `Feature Flags`:"
-msgstr ""
+msgstr "`Feature Flags` 를 지원하도록 v28 풀을 업그레이드합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1234
@@ -1928,6 +2620,17 @@ msgid ""
 "  scan: none requested\n"
 "config:\n"
 msgstr ""
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"status: The pool is formatted using a legacy on-disk format.  The pool can\n"
+"        still be used, but some features are unavailable.\n"
+"action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the\n"
+"        pool will no longer be accessible on software that does not support "
+"feat\n"
+"        flags.\n"
+"  scan: none requested\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1240
@@ -1940,6 +2643,11 @@ msgid ""
 "\t    ada0    ONLINE       0     0     0\n"
 "\t    ada1    ONLINE       0     0     0\n"
 msgstr ""
+"        NAME        STATE     READ WRITE CKSUM\n"
+"        mypool      ONLINE       0     0     0\n"
+"          mirror-0  ONLINE       0     0     0\n"
+"\t    ada0    ONLINE       0     0     0\n"
+"\t    ada1    ONLINE       0     0     0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1244
@@ -1950,6 +2658,9 @@ msgid ""
 "# zpool upgrade\n"
 "This system supports ZFS pool feature flags.\n"
 msgstr ""
+"errors: No known data errors\n"
+"# zpool upgrade\n"
+"This system supports ZFS pool feature flags.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1247
@@ -1958,6 +2669,10 @@ msgid ""
 "The following pools are formatted with legacy version numbers and are upgraded to use feature flags.\n"
 "After being upgraded, these pools will no longer be accessible by software that does not support feature flags.\n"
 msgstr ""
+"다음 풀은 레거시 버전 번호로 포맷되어 있으며 feature flags를 사용하도록 "
+"업그레이드되었습니다.\n"
+"업그레이드된 후에는 feature flags를 지원하지 않는 소프트웨어에서는 이러한 "
+"풀에 더 이상 액세스할 수 없습니다.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1251
@@ -1967,6 +2682,9 @@ msgid ""
 "---  ------------\n"
 "28   mypool\n"
 msgstr ""
+"VER  POOL\n"
+"---  ------------\n"
+"28   mypool\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1256
@@ -1977,6 +2695,10 @@ msgid ""
 "# zpool upgrade mypool\n"
 "This system supports ZFS pool feature flags.\n"
 msgstr ""
+"Use 'zpool upgrade -v' for a list of available legacy versions.\n"
+"Every feature flags pool has all supported features enabled.\n"
+"# zpool upgrade mypool\n"
+"This system supports ZFS pool feature flags.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1263
@@ -1989,6 +2711,12 @@ msgid ""
 "  lz4_compress\n"
 "  multi_vdev_crash_dump\n"
 msgstr ""
+"Successfully upgraded 'mypool' from version 28 to feature flags.\n"
+"Enabled the following features on 'mypool':\n"
+"  async_destroy\n"
+"  empty_bpobj\n"
+"  lz4_compress\n"
+"  multi_vdev_crash_dump\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1267
@@ -1997,11 +2725,14 @@ msgid ""
 "completed.  Use `zpool upgrade -v` to see what new features the upgrade "
 "provides, as well as which features are already supported."
 msgstr ""
+"ZFS의 최신 기능은 `zpool upgrade` 가 완료될 때까지 사용할 수 없습니다.  "
+"업그레이드가 제공하는 새로운 기능과 이미 지원되는 기능을 확인하려면 `zpool "
+"upgrade -v` 를 사용하세요."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1269
 msgid "Upgrade a pool to support new feature flags:"
-msgstr ""
+msgstr "새로운 feature flags를 지원하도록 풀을 업그레이드합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1282
@@ -2018,12 +2749,23 @@ msgid ""
 "  scan: none requested\n"
 "config:\n"
 msgstr ""
+"# zpool status\n"
+"  pool: mypool\n"
+" state: ONLINE\n"
+"status: Some supported features are not enabled on the pool. The pool can\n"
+"        still be used, but some features are unavailable.\n"
+"action: Enable all features using 'zpool upgrade'. Once this is done,\n"
+"        the pool may no longer be accessible by software that does not "
+"support\n"
+"        the features. See zpool-features(7) for details.\n"
+"  scan: none requested\n"
+"config:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1294
 #, no-wrap
 msgid "All pools are formatted using feature flags.\n"
-msgstr ""
+msgstr "All pools are formatted using feature flags.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1298
@@ -2033,6 +2775,9 @@ msgid ""
 "feature is enabled the pool may become incompatible with software\n"
 "that does not support the feature. See zpool-features(7) for details.\n"
 msgstr ""
+"Some supported features are not enabled on the following pools. Once a\n"
+"feature is enabled the pool may become incompatible with software\n"
+"that does not support the feature. See zpool-features(7) for details.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1311
@@ -2051,6 +2796,18 @@ msgid ""
 "# zpool upgrade mypool\n"
 "This system supports ZFS pool feature flags.\n"
 msgstr ""
+"POOL  FEATURE\n"
+"---------------\n"
+"zstore\n"
+"      multi_vdev_crash_dump\n"
+"      spacemap_histogram\n"
+"      enabled_txg\n"
+"      hole_birth\n"
+"      extensible_dataset\n"
+"      bookmarks\n"
+"      filesystem_limits\n"
+"# zpool upgrade mypool\n"
+"This system supports ZFS pool feature flags.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1319
@@ -2064,6 +2821,13 @@ msgid ""
 "  bookmarks\n"
 "  filesystem_limits\n"
 msgstr ""
+"Enabled the following features on 'mypool':\n"
+"  spacemap_histogram\n"
+"  enabled_txg\n"
+"  hole_birth\n"
+"  extensible_dataset\n"
+"  bookmarks\n"
+"  filesystem_limits\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1326
@@ -2073,41 +2837,46 @@ msgid ""
 "code.  Two types of bootcode are available, depending on way the system "
 "boots: GPT (the most common option) and EFI (for more modern systems)."
 msgstr ""
+"풀에서 부팅하는 시스템의 부트 코드를 업데이트하여 새 풀 버전을 지원하도록 "
+"합니다.  부트 코드가 포함된 파티션에서 `gpart bootcode` 를 사용합니다.  "
+"시스템 부팅 방식에 따라 두 가지 유형의 부트코드를 사용할 수 있습니다: GPT("
+"가장 일반적인 옵션) 및 EFI(최신 시스템용)."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1328
 msgid "For legacy boot using GPT, use the following command:"
-msgstr ""
+msgstr "GPT를 사용하는 레거시 부팅의 경우 다음 명령을 사용합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1332
 #, no-wrap
 msgid "# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada1\n"
-msgstr ""
+msgstr "# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1335
 msgid "For systems using EFI to boot, execute the following command:"
-msgstr ""
+msgstr "EFI를 사용하여 부팅하는 시스템의 경우 다음 명령을 실행합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1339
 #, no-wrap
 msgid "# gpart bootcode -p /boot/boot1.efifat -i 1 ada1\n"
-msgstr ""
+msgstr "# gpart bootcode -p /boot/boot1.efifat -i 1 ada1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1343
 msgid ""
 "Apply the bootcode to all bootable disks in the pool.  See man:gpart[8] for "
 "more information."
-msgstr ""
+msgstr "풀의 모든 부팅 가능한 디스크에 부트 코드를 적용합니다.  자세한 내용은 "
+"man:gpart[8]을 참조하세요."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1346
 #, no-wrap
 msgid "Displaying Recorded Pool History"
-msgstr ""
+msgstr "기록된 풀 기록 표시하기"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1352
@@ -2118,6 +2887,11 @@ msgid ""
 "and when.  History is not kept in a log file, but is part of the pool "
 "itself.  The command to review this history is aptly named `zpool history`:"
 msgstr ""
+"ZFS는 데이터 세트 생성, 속성 변경, 디스크 교체 등 풀을 변경하는 명령을 "
+"기록합니다.  풀 생성에 대한 기록을 검토하는 것은 어떤 사용자가 언제 특정 "
+"작업을 수행했는지 확인하는 것과 마찬가지로 유용합니다.  기록은 로그 파일에 "
+"보관되지 않고 풀 자체의 일부입니다.  이 기록을 검토하는 명령의 이름은 `zpool "
+"history` 입니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1361
@@ -2130,6 +2904,12 @@ msgid ""
 "2013-02-27.18:51:09 zfs set checksum=fletcher4 tank\n"
 "2013-02-27.18:51:18 zfs create tank/backup\n"
 msgstr ""
+"# zpool history\n"
+"History for 'tank':\n"
+"2013-02-26.23:02:35 zpool create tank mirror /dev/ada0 /dev/ada1\n"
+"2013-02-27.18:50:58 zfs set atime=off tank\n"
+"2013-02-27.18:51:09 zfs set checksum=fletcher4 tank\n"
+"2013-02-27.18:51:18 zfs create tank/backup\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1366
@@ -2138,6 +2918,9 @@ msgid ""
 "along with a timestamp.  Commands like `zfs list` are not included.  When "
 "specifying no pool name, ZFS displays history of all pools."
 msgstr ""
+"출력에는 타임스탬프와 함께 어떤 식으로든 풀을 변경하는 `zpool` 및 `zfs` "
+"명령이 표시됩니다.  `zfs list` 와 같은 명령은 포함되지 않습니다.  풀 이름을 "
+"지정하지 않으면 ZFS는 모든 풀의 기록을 표시합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1369
@@ -2146,6 +2929,9 @@ msgid ""
 "i` or `-l`.  `-i` displays user-initiated events as well as internally "
 "logged ZFS events."
 msgstr ""
+"`zpool history` 는 `-i` 또는 `-l` 옵션을 사용하면 더 많은 정보를 표시할 수 "
+"있습니다.  `-i` 는 내부적으로 기록된 ZFS 이벤트뿐만 아니라 사용자가 시작한 "
+"이벤트도 표시합니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1381
@@ -2161,6 +2947,16 @@ msgid ""
 "2013-02-27.18:51:13 [internal create txg:55] dataset = 39\n"
 "2013-02-27.18:51:18 zfs create tank/backup\n"
 msgstr ""
+"# zpool history -i\n"
+"History for 'tank':\n"
+"2013-02-26.23:02:35 [internal pool create txg:5] pool spa 28; zfs spa 28; "
+"zpl 5;uts  9.1-RELEASE 901000 amd64\n"
+"2013-02-27.18:50:53 [internal property set txg:50] atime=0 dataset = 21\n"
+"2013-02-27.18:50:58 zfs set atime=off tank\n"
+"2013-02-27.18:51:04 [internal property set txg:53] checksum=7 dataset = 21\n"
+"2013-02-27.18:51:09 zfs set checksum=fletcher4 tank\n"
+"2013-02-27.18:51:13 [internal create txg:55] dataset = 39\n"
+"2013-02-27.18:51:18 zfs create tank/backup\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1385
@@ -2169,6 +2965,9 @@ msgid ""
 "including information like the name of the user who issued the command and "
 "the hostname on which the change happened."
 msgstr ""
+"`-l` 을 추가하여 자세한 내용을 표시합니다.  명령을 실행한 사용자 이름, "
+"변경이 발생한 호스트 이름 등의 정보를 포함하여 긴 형식의 기록 기록을 "
+"표시합니다."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1394
@@ -2181,6 +2980,16 @@ msgid ""
 "2013-02-27.18:51:09 zfs set checksum=fletcher4 tank [user 0 (root) on myzfsbox:global]\n"
 "2013-02-27.18:51:18 zfs create tank/backup [user 0 (root) on myzfsbox:global]\n"
 msgstr ""
+"# zpool history -l\n"
+"History for 'tank':\n"
+"2013-02-26.23:02:35 zpool create tank mirror /dev/ada0 /dev/ada1 [user 0 "
+"(root) on :global]\n"
+"2013-02-27.18:50:58 zfs set atime=off tank [user 0 (root) on myzfsbox:global]"
+"\n"
+"2013-02-27.18:51:09 zfs set checksum=fletcher4 tank [user 0 (root) on "
+"myzfsbox:global]\n"
+"2013-02-27.18:51:18 zfs create tank/backup [user 0 (root) on myzfsbox:global]"
+"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1400
@@ -2192,6 +3001,11 @@ msgid ""
 "another.  It's possible to distinguish the commands issued on the other "
 "system by the hostname recorded for each command."
 msgstr ""
+"출력에는 `root` 사용자가 [.filename]#/dev/ada0# 및 [.filename]#/dev/ada1# "
+"디스크로 미러링된 풀을 생성했음을 보여줍니다.  풀 생성 후 명령에 호스트 이름 "
+"`myzfsbox` 도 표시됩니다.  호스트 이름 표시는 한 시스템에서 풀을 내보내고 "
+"다른 시스템에서 가져올 때 중요합니다.  각 명령에 대해 기록된 호스트 이름을 "
+"통해 다른 시스템에서 실행된 명령을 구별할 수 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1403
@@ -2201,12 +3015,15 @@ msgid ""
 "information when tracking down the actions performed or when needing more "
 "detailed output for debugging."
 msgstr ""
+"두 옵션을 모두 'zpool history' 로 결합하면 특정 풀에 대해 가능한 가장 자세한 "
+"정보를 얻을 수 있습니다.  풀 히스토리는 수행한 작업을 추적하거나 디버깅을 "
+"위해 더 자세한 출력이 필요할 때 유용한 정보를 제공합니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1405
 #, no-wrap
 msgid "Performance Monitoring"
-msgstr ""
+msgstr "성능 모니터링"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1412
@@ -2217,6 +3034,10 @@ msgid ""
 "monitors and displays all pools in the system.  Provide a pool name to limit "
 "monitoring to that pool.  A basic example:"
 msgstr ""
+"내장된 모니터링 시스템은 풀 I/O 통계를 실시간으로 표시할 수 있습니다.  풀의 "
+"여유 공간과 사용 공간, 초당 수행되는 읽기 및 쓰기 작업, 사용된 I/O 대역폭이 "
+"표시됩니다.  기본적으로 ZFS는 시스템의 모든 풀을 모니터링하고 표시합니다.  "
+"모니터링을 해당 풀로 제한하려면 풀 이름을 입력합니다.  기본 예시입니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1420
@@ -2228,6 +3049,11 @@ msgid ""
 "----------  -----  -----  -----  -----  -----  -----\n"
 "data         288G  1.53T      2     11  11.3K  57.1K\n"
 msgstr ""
+"# zpool iostat\n"
+"               capacity     operations    bandwidth\n"
+"pool        alloc   free   read  write   read  write\n"
+"----------  -----  -----  -----  -----  -----  -----\n"
+"data         288G  1.53T      2     11  11.3K  57.1K\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1426
@@ -2238,6 +3064,10 @@ msgid ""
 "continuous monitoring.  Give a second number on the command line after the "
 "interval to specify the total number of statistics to display."
 msgstr ""
+"I/O 활동을 계속 확인하려면 마지막 매개변수로 숫자를 지정하여 업데이트 사이에 "
+"대기할 간격(초)을 표시합니다.  다음 통계 라인은 각 간격 후에 인쇄됩니다.  이 "
+"연속 모니터링을 중지하려면 kbd:[Ctrl+C]를 누릅니다.  간격 뒤에 명령줄에 두 "
+"번째 숫자를 입력하여 표시할 총 통계 수를 지정합니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1431
@@ -2248,6 +3078,10 @@ msgid ""
 "individual device is slowing down the pool.  This example shows a mirrored "
 "pool with two devices:"
 msgstr ""
+"`-v` 를 사용하면 더 자세한 I/O 통계를 표시할 수 있습니다.  풀의 각 장치가 "
+"통계 라인과 함께 표시됩니다.  이는 각 장치에서 수행되는 읽기 및 쓰기 작업을 "
+"확인하는 데 유용하며, 개별 장치로 인해 풀의 속도가 느려지는지 확인하는 데 "
+"도움이 될 수 있습니다.  이 예는 두 개의 장치가 있는 미러링된 풀을 보여줍니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1443
@@ -2263,12 +3097,21 @@ msgid ""
 "    ada2                     -      -      1      4  5.04K  61.7K\n"
 "-----------------------  -----  -----  -----  -----  -----  -----\n"
 msgstr ""
+"# zpool iostat -v \n"
+"                            capacity     operations    bandwidth\n"
+"pool                     alloc   free   read  write   read  write\n"
+"-----------------------  -----  -----  -----  -----  -----  -----\n"
+"data                      288G  1.53T      2     12  9.23K  61.5K\n"
+"  mirror                  288G  1.53T      2     12  9.23K  61.5K\n"
+"    ada1                     -      -      0      4  5.61K  61.7K\n"
+"    ada2                     -      -      1      4  5.04K  61.7K\n"
+"-----------------------  -----  -----  -----  -----  -----  -----\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1446
 #, no-wrap
 msgid "Splitting a Storage Pool"
-msgstr ""
+msgstr "스토리지 풀 분할하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1453
@@ -2280,12 +3123,18 @@ msgid ""
 "operation without actually performing it.  This helps confirm that the "
 "operation will do what the user intends."
 msgstr ""
+"ZFS는 하나 이상의 미러 vdev로 구성된 풀을 두 개의 풀로 분할할 수 있습니다.  "
+"달리 지정하지 않는 한, ZFS는 각 미러의 마지막 멤버를 분리하고 동일한 "
+"데이터를 포함하는 새 풀을 생성합니다.  먼저 `-n` 을 사용하여 드라이런 작업을 "
+"수행해야 합니다.  이렇게 하면 요청된 작업을 실제로 수행하지 않고도 요청된 "
+"작업의 세부 정보가 표시됩니다.  이렇게 하면 사용자가 의도한 대로 작업이 "
+"수행되는지 확인할 수 있습니다."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1455
 #, no-wrap
 msgid "`zfs` Administration"
-msgstr ""
+msgstr "`zfs` 관리"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1459
@@ -2293,12 +3142,14 @@ msgid ""
 "The `zfs` utility can create, destroy, and manage all existing ZFS datasets "
 "within a pool.  To manage the pool itself, use <<zfs-zpool,`zpool`>>."
 msgstr ""
+"`zfs` 유틸리티는 풀 내의 모든 기존 ZFS 데이터세트를 생성, 삭제 및 관리할 수 "
+"있습니다.  풀 자체를 관리하려면 <<zfs-zpool,`zpool`>> 을 사용합니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1461
 #, no-wrap
 msgid "Creating and Destroying Datasets"
-msgstr ""
+msgstr "데이터 세트 생성 및 삭제하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1471
@@ -2319,13 +3170,28 @@ msgid ""
 "some commands like `zfs list` will be slower, and that mounting of hundreds "
 "or even thousands of datasets will slow the FreeBSD boot process."
 msgstr ""
+"기존 디스크 및 볼륨 관리자와 달리 ZFS의 공간은 _사전 할당되지_ 않습니다.  "
+"기존 파일 시스템에서는 파티션을 나누고 공간을 할당하고 나면 새 디스크를 "
+"추가하지 않고는 새 파일 시스템을 추가할 방법이 없습니다.  ZFS를 사용하면 "
+"언제든지 새 파일 시스템을 만들 수 있습니다.  각 <<zfs-term-"
+"dataset,_dataset_>> 에는 압축, 중복 제거, 캐싱, 할당량 등의 기능과 읽기 "
+"전용, 대소문자 구분, 네트워크 파일 공유, 마운트 지점과 같은 기타 유용한 "
+"속성이 있습니다.  데이터 집합을 서로 중첩할 수 있으며, 자식 데이터 집합은 "
+"상위 데이터 집합으로부터 속성을 상속받습니다.  <<zfs-zfs-allow,Delegate>>, "
+"<<zfs-zfs-send,replicate>>, <<zfs-zfs-snapshot,snapshot>>, <<zfs-zfs-"
+"jail,jail>> 은 각 데이터셋을 하나의 단위로 관리 및 파기할 수 있도록 합니다.  "
+"각기 다른 유형 또는 파일 세트에 대해 별도의 데이터세트를 생성하면 장점이 "
+"있습니다.  데이터 세트가 많으면 `zfs list` 와 같은 일부 명령의 속도가 "
+"느려지고 수백 또는 수천 개의 데이터 세트를 마운트하면 FreeBSD 부팅 "
+"프로세스가 느려질 수 있다는 단점이 있습니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1473
 msgid ""
 "Create a new dataset and enable <<zfs-term-compression-lz4,LZ4 compression>> "
 "on it:"
-msgstr ""
+msgstr "새 데이터 집합을 생성하고 <<zfs-term-compression-lz4,LZ4 compression>> 을 "
+"활성화합니다:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1508
@@ -2364,6 +3230,38 @@ msgid ""
 "mypool/var/mail        144K  93.2G   144K  /var/mail\n"
 "mypool/var/tmp         152K  93.2G   152K  /var/tmp\n"
 msgstr ""
+"# zfs list\n"
+"NAME                  USED  AVAIL  REFER  MOUNTPOINT\n"
+"mypool                781M  93.2G   144K  none\n"
+"mypool/ROOT           777M  93.2G   144K  none\n"
+"mypool/ROOT/default   777M  93.2G   777M  /\n"
+"mypool/tmp            176K  93.2G   176K  /tmp\n"
+"mypool/usr            616K  93.2G   144K  /usr\n"
+"mypool/usr/home       184K  93.2G   184K  /usr/home\n"
+"mypool/usr/ports      144K  93.2G   144K  /usr/ports\n"
+"mypool/usr/src        144K  93.2G   144K  /usr/src\n"
+"mypool/var           1.20M  93.2G   608K  /var\n"
+"mypool/var/crash      148K  93.2G   148K  /var/crash\n"
+"mypool/var/log        178K  93.2G   178K  /var/log\n"
+"mypool/var/mail       144K  93.2G   144K  /var/mail\n"
+"mypool/var/tmp        152K  93.2G   152K  /var/tmp\n"
+"# zfs create -o compress=lz4 mypool/usr/mydataset\n"
+"# zfs list\n"
+"NAME                   USED  AVAIL  REFER  MOUNTPOINT\n"
+"mypool                 781M  93.2G   144K  none\n"
+"mypool/ROOT            777M  93.2G   144K  none\n"
+"mypool/ROOT/default    777M  93.2G   777M  /\n"
+"mypool/tmp             176K  93.2G   176K  /tmp\n"
+"mypool/usr             704K  93.2G   144K  /usr\n"
+"mypool/usr/home        184K  93.2G   184K  /usr/home\n"
+"mypool/usr/mydataset  87.5K  93.2G  87.5K  /usr/mydataset\n"
+"mypool/usr/ports       144K  93.2G   144K  /usr/ports\n"
+"mypool/usr/src         144K  93.2G   144K  /usr/src\n"
+"mypool/var            1.20M  93.2G   610K  /var\n"
+"mypool/var/crash       148K  93.2G   148K  /var/crash\n"
+"mypool/var/log         178K  93.2G   178K  /var/log\n"
+"mypool/var/mail        144K  93.2G   144K  /var/mail\n"
+"mypool/var/tmp         152K  93.2G   152K  /var/tmp\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1511
@@ -2372,6 +3270,8 @@ msgid ""
 "as it does not involve scanning the files and updating the corresponding "
 "metadata."
 msgstr ""
+"데이터 집합을 삭제하는 것은 파일을 스캔하고 해당 메타데이터를 업데이트할 "
+"필요가 없기 때문에 데이터 집합의 파일을 삭제하는 것보다 훨씬 빠릅니다."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/zfs/_index.adoc:1513
