@@ -1,0 +1,2346 @@
+---
+description: 'ZFS는 이전 스토리지 하위 시스템 소프트웨어에서 발견된 주요 문제를 해결하기 위해 설계된 고급 파일 시스템입니다'
+next: books/handbook/filesystems
+part: '파트 III. 시스템 관리'
+path: /books/handbook/
+prev: books/handbook/geom
+showBookMenu: 'true'
+tags: ["ZFS", "filesystem", "administration", "zpool", "features", "terminology", "RAID-Z"]
+title: '21장. Z 파일 시스템(ZFS)'
+weight: 25
+---
+
+[[zfs]]
+= Z 파일 시스템(ZFS)
+:doctype: book
+:toc: macro
+:toclevels: 1
+:icons: font
+:sectnums:
+:sectnumlevels: 6
+:sectnumoffset: 21
+:partnums:
+:source-highlighter: rouge
+:experimental:
+:images-path: books/handbook/zfs/
+
+ifdef::env-beastie[]
+ifdef::backend-html5[]
+:imagesdir: ../../../../images/{images-path}
+endif::[]
+ifndef::book[]
+include::shared/authors.adoc[]
+include::shared/mirrors.adoc[]
+include::shared/releases.adoc[]
+include::shared/attributes/attributes-{{% lang %}}.adoc[]
+include::shared/{{% lang %}}/teams.adoc[]
+include::shared/{{% lang %}}/mailing-lists.adoc[]
+include::shared/{{% lang %}}/urls.adoc[]
+toc::[]
+endif::[]
+ifdef::backend-pdf,backend-epub3[]
+include::../../../../../shared/asciidoctor.adoc[]
+endif::[]
+endif::[]
+
+ifndef::env-beastie[]
+toc::[]
+include::../../../../../shared/asciidoctor.adoc[]
+endif::[]
+
+ZFS는 이전 스토리지 하위 시스템 소프트웨어에서 발견된 주요 문제를 해결하기 위해 설계된 고급 파일 시스템입니다.
+
+원래 Sun(TM)에서 개발되었으나 현재 진행 중인 오픈 소스 ZFS 개발은 http://open-zfs.org[OpenZFS 프로젝트]로 이전되었습니다.
+
+ZFS에는 세 가지 주요 설계 목표가 있습니다:
+
+* 데이터 무결성: 모든 데이터에는 데이터의 <<zfs-term-checksum,checksum>> 이 포함됩니다. ZFS는 체크섬을 계산하여 데이터와 함께 기록합니다. 나중에 해당 데이터를 읽을 때 ZFS는 체크섬을 다시 계산합니다. 체크섬이 일치하지 않는 경우(즉, 하나 이상의 데이터 오류가 감지되는 경우) ZFS는 동일 블록, 미러 블록 또는 패리티 블록을 사용할 수 있을 때 자동으로 오류를 수정하려고 시도합니다.
+* 풀 스토리지 (Pooled storage) : 풀(Pool)에 물리적 스토리지 장치를 추가하고 해당 공유 풀에서 스토리지 공간을 할당합니다. 모든 파일 시스템과 볼륨에서 공간을 사용할 수 있으며, 풀에 새 저장 장치를 추가하면 공간이 증가합니다.
+* 성능: 캐싱 메커니즘은 향상된 성능을 제공합니다. <<zfs-term-arc,ARC>> 는 고급 메모리 기반 읽기 캐시입니다. ZFS는 두 번째 레벨의 디스크 기반 읽기 캐시인 <<zfs-term-l2arc,L2ARC>> 와 <<zfs-term-zil,ZIL>> 이라는 디스크 기반 동기식 쓰기 캐시를 제공합니다.
+
+기능 및 용어의 전체 목록은 <<zfs-term>>에 나와 있습니다.
+
+[[zfs-differences]]
+== ZFS의 차별화 요소
+
+ZFS는 파일 시스템 그 이상으로 기존 파일 시스템과 근본적으로 다릅니다. 볼륨 관리자와 파일 시스템의 전통적으로 분리된 역할을 결합하여 ZFS는 고유한 이점을 제공합니다. 이제 파일 시스템은 디스크의 기본 구조를 인식합니다. 기존 파일 시스템은 한 번에 하나의 디스크에만 존재할 수 있었습니다. 디스크가 두 개인 경우 두 개의 파일 시스템을 별도로 만들어야 했습니다. 기존의 하드웨어 RAID 구성은 운영 체제에 물리적 디스크가 제공하는 공간으로 구성된 단일 논리 디스크를 제공하고 그 위에 운영 체제가 파일 시스템을 배치함으로써 이 문제를 방지했습니다. GEOM에서 제공하는 것과 같은 소프트웨어 RAID 솔루션을 사용하더라도 RAID 위에 있는 UFS 파일 시스템은 단일 장치를 처리하는 것으로 간주합니다. ZFS는 볼륨 관리자와 파일 시스템을 결합하여 이 문제를 해결하고 사용 가능한 스토리지 풀을 모두 공유하는 파일 시스템을 생성할 수 있습니다. 물리적 디스크 레이아웃을 인식하는 ZFS의 큰 장점 중 하나는 풀에 디스크를 추가할 때 기존 파일 시스템이 자동으로 커진다는 점입니다. 그러면 이 새로운 공간을 파일 시스템에서 사용할 수 있게 됩니다. 또한 ZFS는 각 파일 시스템에 서로 다른 속성을 적용할 수 있습니다. 따라서 단일 모놀리식 파일 시스템 대신 별도의 파일 시스템과 데이터 세트를 생성하는 데 유용합니다.
+
+[[zfs-quickstart]]
+== 빠른 시작 가이드
+
+FreeBSD는 시스템 초기화 중에 ZFS 풀과 데이터세트를 마운트할 수 있습니다. 이 기능을 활성화하려면 [.filename]#/etc/rc.conf# 에 다음 줄을 추가하세요:
+
+[.programlisting]
+....
+zfs_enable="YES"
+....
+
+이제 서비스를 시작합니다:
+
+[source, shell]
+....
+# service zfs start
+....
+
+이 섹션의 예제에서는 장치 이름이 [.filename]#da0#, [.filename]#da1#, [.filename]#da2# 인 3개의 SCSI 디스크가 있다고 가정합니다. SATA 하드웨어 사용자는 대신 [.filename]#ada# 장치 이름을 사용해야 합니다.
+
+[[zfs-quickstart-single-disk-pool]]
+=== 단일 디스크 풀
+
+단일 디스크 장치를 사용하여 간단한 비중복 풀(non-redundant)을 만들려면 다음과 같이 하세요:
+
+[source, shell]
+....
+# zpool create example /dev/da0
+....
+
+새 풀을 확인하려면 `df` 의 출력을 검토합니다:
+
+[source, shell]
+....
+# df
+Filesystem  1K-blocks    Used    Avail Capacity  Mounted on
+/dev/ad0s1a   2026030  235230  1628718    13%    /
+devfs               1       1        0   100%    /dev
+/dev/ad0s1d  54098308 1032846 48737598     2%    /usr
+example      17547136       0 17547136     0%    /example
+....
+
+이 출력은 이제 파일 시스템으로 액세스할 수 있는 `example` 풀의 생성 및 마운트를 보여줍니다. 사용자가 찾아볼 수 있는 파일을 생성합니다:
+
+[source, shell]
+....
+# cd /example
+# ls
+# touch testfile
+# ls -al
+total 4
+drwxr-xr-x   2 root  wheel    3 Aug 29 23:15 .
+drwxr-xr-x  21 root  wheel  512 Aug 29 23:12 ..
+-rw-r--r--   1 root  wheel    0 Aug 29 23:15 testfile
+....
+
+이 풀은 아직 고급 ZFS 기능 및 속성을 사용하고 있지 않습니다. 압축을 활성화한 상태에서 이 풀에 데이터 세트를 생성하려면 다음과 같이 하세요:
+
+[source, shell]
+....
+# zfs create example/compressed
+# zfs set compression=gzip example/compressed
+....
+
+`example/compressed` 데이터 세트는 이제 ZFS 압축 파일 시스템입니다. 대용량 파일을 [.filename]#/example/compressed# 에 복사해 보세요.
+
+다음으로 압축을 비활성화합니다:
+
+[source, shell]
+....
+# zfs set compression=off example/compressed
+....
+
+파일 시스템을 마운트 해제하려면 `zfs umount` 를 사용한 다음 `df` 로 확인합니다:
+
+[source, shell]
+....
+# zfs umount example/compressed
+# df
+Filesystem  1K-blocks    Used    Avail Capacity  Mounted on
+/dev/ad0s1a   2026030  235232  1628716    13%    /
+devfs               1       1        0   100%    /dev
+/dev/ad0s1d  54098308 1032864 48737580     2%    /usr
+example      17547008       0 17547008     0%    /example
+....
+
+파일 시스템을 다시 마운트하여 액세스할 수 있도록 하려면 `zfs mount` 를 사용하고 `df` 로 확인합니다:
+
+[source, shell]
+....
+# zfs mount example/compressed
+# df
+Filesystem         1K-blocks    Used    Avail Capacity  Mounted on
+/dev/ad0s1a          2026030  235234  1628714    13%    /
+devfs                      1       1        0   100%    /dev
+/dev/ad0s1d         54098308 1032864 48737580     2%    /usr
+example             17547008       0 17547008     0%    /example
+example/compressed  17547008       0 17547008     0%    /example/compressed
+....
+
+`mount` 를 실행하면 풀과 파일 시스템이 표시됩니다:
+
+[source, shell]
+....
+# mount
+/dev/ad0s1a on / (ufs, local)
+devfs on /dev (devfs, local)
+/dev/ad0s1d on /usr (ufs, local, soft-updates)
+example on /example (zfs, local)
+example/compressed on /example/compressed (zfs, local)
+....
+
+생성 후 다른 파일 시스템처럼 ZFS 데이터세트를 사용하세요. 필요한 경우 데이터세트별로 다른 기능을 설정할 수 있습니다. 아래 예는 `data` 라는 새 파일 시스템을 생성합니다. 파일 시스템에 중요한 파일이 포함되어 있다고 가정하고 각 데이터 블록의 사본 두 개를 저장하도록 구성합니다.
+
+[source, shell]
+....
+# zfs create example/data
+# zfs set copies=2 example/data
+....
+
+데이터 및 공간 사용량을 확인하려면 `df` 를 사용합니다:
+
+[source, shell]
+....
+# df
+Filesystem         1K-blocks    Used    Avail Capacity  Mounted on
+/dev/ad0s1a          2026030  235234  1628714    13%    /
+devfs                      1       1        0   100%    /dev
+/dev/ad0s1d         54098308 1032864 48737580     2%    /usr
+example             17547008       0 17547008     0%    /example
+example/compressed  17547008       0 17547008     0%    /example/compressed
+example/data        17547008       0 17547008     0%    /example/data
+....
+
+풀에 있는 모든 파일 시스템의 사용 가능한 공간이 동일하다는 것을 알 수 있습니다. 이 예제에서 `df` 를 사용하면 파일 시스템이 필요한 공간을 사용하며 모두 동일한 풀에서 끌어온다는 것을 알 수 있습니다. ZFS는 볼륨 및 파티션과 같은 개념을 없애고 여러 파일 시스템이 동일한 풀을 공유할 수 있도록 합니다.
+
+파일 시스템을 삭제한 다음 더 이상 필요하지 않은 풀을 삭제합니다:
+
+[source, shell]
+....
+# zfs destroy example/compressed
+# zfs destroy example/data
+# zpool destroy example
+....
+
+[[zfs-quickstart-raid-z]]
+=== RAID-Z
+
+디스크 장애. 디스크 장애로 인한 데이터 손실을 방지하는 한 가지 방법은 RAID를 사용하는 것입니다. ZFS는 풀 설계에서 이 기능을 지원합니다. RAID-Z 풀은 3개 이상의 디스크가 필요하지만 미러 풀보다 더 많은 사용 가능한 공간을 제공합니다.
+
+이 예에서는 풀에 추가할 디스크를 지정하여 RAID-Z 풀을 생성합니다:
+
+[source, shell]
+....
+# zpool create storage raidz da0 da1 da2
+....
+
+[NOTE]
+====
+Sun(TM)에서는 RAID-Z 구성에 사용되는 장치 수를 3개에서 9개 사이로 권장합니다. 10개 이상의 디스크로 구성된 단일 풀이 필요한 환경에서는 이를 더 작은 RAID-Z 그룹으로 분할하는 것이 좋습니다. 두 개의 디스크를 사용할 수 있는 경우, 필요한 경우 ZFS 미러링이 중복성을 제공합니다. 자세한 내용은 man:zpool[8]을 참조하세요.
+====
+
+이전 예제에서는 `storage` zpool을 생성했습니다. 이 예제에서는 해당 풀에 `home` 이라는 새 파일 시스템을 만듭니다:
+
+[source, shell]
+....
+# zfs create storage/home
+....
+
+압축을 활성화하고 디렉토리와 파일의 추가 복사본을 저장합니다:
+
+[source, shell]
+....
+# zfs set copies=2 storage/home
+# zfs set compression=gzip storage/home
+....
+
+이 디렉터리를 사용자의 새 홈 디렉터리로 설정하려면 사용자 데이터를 이 디렉터리에 복사하고 적절한 심볼릭 링크를 만듭니다:
+
+[source, shell]
+....
+# cp -rp /home/* /storage/home
+# rm -rf /home /usr/home
+# ln -s /storage/home /home
+# ln -s /storage/home /usr/home
+....
+
+이제 사용자 데이터가 새로 생성된 [.filename]#/storage/home# 에 저장됩니다. 새 사용자를 추가하고 해당 사용자로 로그인하여 테스트합니다.
+
+나중에 롤백할 파일 시스템 스냅샷을 만듭니다:
+
+[source, shell]
+....
+# zfs snapshot storage/home@08-30-08
+....
+
+ZFS는 단일 디렉토리나 파일이 아닌 데이터 세트의 스냅샷을 생성합니다.
+
+`@` 문자는 파일 시스템 이름 또는 볼륨 이름 사이의 구분 기호입니다. 중요한 디렉터리를 삭제하기 전에 파일 시스템을 백업한 다음 디렉터리가 아직 존재하는 이전 스냅샷으로 롤백하세요:
+
+[source, shell]
+....
+# zfs rollback storage/home@08-30-08
+....
+
+사용 가능한 모든 스냅샷을 나열하려면 파일 시스템의 [.filename]#.zfs/snapshot# 디렉터리에서 `ls` 를 실행합니다. 예를 들어, 생성된 스냅샷을 확인하려면 다음과 같이 하세요:
+
+[source, shell]
+....
+# ls /storage/home/.zfs/snapshot
+....
+
+사용자 데이터의 정기적인 스냅샷을 생성하는 스크립트를 작성하세요. 시간이 지나면 스냅샷이 디스크 공간을 많이 차지할 수 있습니다. 명령을 사용하여 이전 스냅샷을 제거하세요:
+
+[source, shell]
+....
+# zfs destroy storage/home@08-30-08
+....
+
+테스트가 끝나면 다음 명령을 사용하여 [.filename]#/storage/home# 을 실제 [.filename]#/home# 으로 만듭니다:
+
+[source, shell]
+....
+# zfs set mountpoint=/home storage/home
+....
+
+`df` 및 `mount` 를 실행하여 시스템이 이제 파일 시스템을 실제 [.filename]#/home# 으로 취급하는지 확인합니다:
+
+[source, shell]
+....
+# mount
+/dev/ad0s1a on / (ufs, local)
+devfs on /dev (devfs, local)
+/dev/ad0s1d on /usr (ufs, local, soft-updates)
+storage on /storage (zfs, local)
+storage/home on /home (zfs, local)
+# df
+Filesystem   1K-blocks    Used    Avail Capacity  Mounted on
+/dev/ad0s1a    2026030  235240  1628708    13%    /
+devfs                1       1        0   100%    /dev
+/dev/ad0s1d   54098308 1032826 48737618     2%    /usr
+storage       26320512       0 26320512     0%    /storage
+storage/home  26320512       0 26320512     0%    /home
+....
+
+이것으로 RAID-Z 구성이 완료됩니다. 생성된 파일 시스템에 대한 일일 상태 업데이트를 [.filename]#/etc/periodic.conf# 에 다음 줄을 추가하여 야간 man:periodic[8] 작업에 추가합니다:
+
+[.programlisting]
+....
+daily_status_zfs_enable="YES"
+....
+
+[[zfs-quickstart-recovering-raid-z]]
+=== RAID-Z 복구하기
+
+모든 소프트웨어 RAID에는 `state` 를 모니터링하는 방법이 있습니다. 다음을 사용하여 RAID-Z 장치의 상태를 확인합니다:
+
+[source, shell]
+....
+# zpool status -x
+....
+
+모든 풀이 <<zfs-term-online,Online>> 이고 모든 것이 정상인 경우 메시지가 표시됩니다:
+
+[source, shell]
+....
+all pools are healthy
+....
+
+디스크에 문제가 있는 경우(예: 디스크가 <<zfs-term-offline,Offline>> 상태인 경우) 풀 상태는 다음과 같이 표시됩니다:
+
+[source, shell]
+....
+  pool: storage
+ state: DEGRADED
+status: One or more devices has been taken offline by the administrator.
+	Sufficient replicas exist for the pool to continue functioning in a
+	degraded state.
+action: Online the device using 'zpool online' or replace the device with
+	'zpool replace'.
+ scrub: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	storage     DEGRADED     0     0     0
+	  raidz1    DEGRADED     0     0     0
+	    da0     ONLINE       0     0     0
+	    da1     OFFLINE      0     0     0
+	    da2     ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+"OFFLINE"은 관리자가 [.filename]#da1# 을 오프라인으로 전환했음을 나타냅니다:
+
+[source, shell]
+....
+# zpool offline storage da1
+....
+
+지금 컴퓨터의 전원을 끄고 [.filename]#da1# 을 바꾸세요. 컴퓨터의 전원을 켜고 [.filename]#da1# 을 풀로 되돌립니다:
+
+[source, shell]
+....
+# zpool replace storage da1
+....
+
+그런 다음 이번에는 `-x` 없이 상태를 다시 확인하여 모든 풀을 표시합니다:
+
+[source, shell]
+....
+# zpool status storage
+ pool: storage
+ state: ONLINE
+ scrub: resilver completed with 0 errors on Sat Aug 30 19:44:11 2008
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	storage     ONLINE       0     0     0
+	  raidz1    ONLINE       0     0     0
+	    da0     ONLINE       0     0     0
+	    da1     ONLINE       0     0     0
+	    da2     ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+이 예에서는 모든 것이 정상입니다.
+
+[[zfs-quickstart-data-verification]]
+=== 데이터 검증
+
+ZFS는 체크섬을 사용하여 저장된 데이터의 무결성을 확인합니다. 파일 시스템을 생성하면 자동으로 활성화됩니다.
+
+[WARNING]
+====
+체크섬을 비활성화하는 것은 가능하지만 _권장하지 않습니다!_ 체크섬은 저장 공간을 거의 차지하지 않고 데이터 무결성을 제공합니다. 체크섬을 비활성화하면 대부분의 ZFS 기능이 제대로 작동하지 않습니다. 체크섬을 비활성화해도 성능이 눈에 띄게 향상되지는 않습니다.
+====
+
+데이터 체크섬 확인( _scrubbing_ 이라고 함)을 하면 `storage` 풀의 무결성이 보장됩니다:
+
+[source, shell]
+....
+# zpool scrub storage
+....
+
+스크럽 기간은 저장된 데이터의 양에 따라 다릅니다. 데이터 양이 많을수록 검증하는 데 비례해 더 오래 걸립니다. 스크러빙은 I/O 집약적이기 때문에, ZFS에서는 한 번에 하나의 스크러브만 실행할 수 있습니다. 스크러빙이 완료되면 `zpool status` 로 상태를 확인합니다:
+
+[source, shell]
+....
+# zpool status storage
+ pool: storage
+ state: ONLINE
+ scrub: scrub completed with 0 errors on Sat Jan 26 19:57:37 2013
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	storage     ONLINE       0     0     0
+	  raidz1    ONLINE       0     0     0
+	    da0     ONLINE       0     0     0
+	    da1     ONLINE       0     0     0
+	    da2     ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+마지막 스크러빙의 완료 날짜를 표시하면 다른 스크러빙을 시작할 시기를 결정하는 데 도움이 됩니다. 정기적인 스크러빙은 조용한 손상으로부터 데이터를 보호하고 풀의 무결성을 보장하는 데 도움이 됩니다.
+
+다른 ZFS 옵션은 man:zfs[8] 및 man:zpool[8]을 참조하세요.
+
+[[zfs-zpool]]
+== `zpool` 관리
+
+ZFS 관리는 두 가지 주요 유틸리티를 사용합니다. `zpool` 유틸리티는 풀의 작동을 제어하고 디스크를 추가, 제거, 교체 및 관리할 수 있습니다. <<zfs-zfs,`zfs`>> 유틸리티를 사용하면 <<zfs-term-filesystem,file systems>> 및 <<zfs-term-volume,volumes>> 데이터 세트를 생성, 삭제 및 관리할 수 있습니다.
+
+[[zfs-zpool-create]]
+=== 스토리지 풀 만들기 및 삭제하기
+
+ZFS 스토리지 풀을 생성하려면 풀 구조를 생성한 후에는 변경할 수 없으므로 영구적 결정이 필요합니다. 가장 중요한 결정은 물리적 디스크를 그룹화할 vdev 유형입니다. 가능한 옵션에 대한 자세한 내용은 <<zfs-term-vdev,vdev types>> 목록을 참조하세요. 풀을 생성한 후에는 대부분의 vdev 유형에서 디스크를 vdev에 추가할 수 없습니다. 예외적으로 미러는 vdev에 새 디스크를 추가할 수 있으며, 스트라이프는 vdev에 새 디스크를 연결하여 미러로 업그레이드할 수 있습니다. 새 vdev를 추가하면 풀이 확장되지만 풀 생성 후에는 풀 레이아웃을 변경할 수 없습니다. 대신 데이터를 백업하고 풀을 파괴한 다음 다시 생성해야 합니다.
+
+간단한 미러 풀을 만듭니다:
+
+[source, shell]
+....
+# zpool create mypool mirror /dev/ada1 /dev/ada2
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: none requested
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            ada1    ONLINE       0     0     0
+            ada2    ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+단일 명령으로 둘 이상의 vdev를 생성하려면 예제에서 vdev 유형 키워드인 `mirror` 로 구분된 디스크 그룹을 지정합니다:
+
+[source, shell]
+....
+# zpool create mypool mirror /dev/ada1 /dev/ada2 mirror /dev/ada3 /dev/ada4
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: none requested
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            ada1    ONLINE       0     0     0
+            ada2    ONLINE       0     0     0
+          mirror-1  ONLINE       0     0     0
+            ada3    ONLINE       0     0     0
+            ada4    ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+풀은 전체 디스크가 아닌 파티션 형태로 사용할 수도 있습니다. ZFS를 별도의 파티션에 넣으면 동일한 디스크에 다른 용도의 다른 파티션을 만들 수 있습니다. 특히 부팅에 필요한 부트코드와 파일 시스템이 있는 파티션을 추가할 수 있습니다. 이렇게 하면 풀의 구성원이기도 한 디스크에서 부팅할 수 있습니다. ZFS는 전체 디스크가 아닌 파티션을 사용할 때 FreeBSD에 성능 저하를 주지 않습니다. 또한 파티션을 사용하면 관리자가 전체 용량보다 적은 용량을 사용하여 디스크를 _언더 프로비저닝_ 할 수 있습니다. 나중에 원본과 명목상 동일한 크기의 대체 디스크가 실제로는 약간 더 작은 용량을 가지고 있다면, 대체 디스크를 사용하기 위해 더 작은 파티션이 적합합니다.
+
+파티션을 사용하여 <<zfs-term-vdev-raidz,RAID-Z2>> 풀을 생성합니다:
+
+[source, shell]
+....
+# zpool create mypool raidz2 /dev/ada0p3 /dev/ada1p3 /dev/ada2p3 /dev/ada3p3 /dev/ada4p3 /dev/ada5p3
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: none requested
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          raidz2-0  ONLINE       0     0     0
+            ada0p3  ONLINE       0     0     0
+            ada1p3  ONLINE       0     0     0
+            ada2p3  ONLINE       0     0     0
+            ada3p3  ONLINE       0     0     0
+            ada4p3  ONLINE       0     0     0
+            ada5p3  ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+디스크를 재사용하기 위해 더 이상 필요하지 않은 풀을 삭제합니다. 풀을 삭제하려면 먼저 해당 풀의 파일 시스템을 마운트 해제해야 합니다. 사용 중인 데이터 세트가 있으면 풀을 파괴하지 않으며 마운트 해제 작업이 실패합니다. `-f` 를 사용하여 풀을 강제 삭제합니다. 이로 인해 해당 데이터세트에 파일이 열려 있는 애플리케이션에서 정의되지 않은 동작이 발생할 수 있습니다.
+
+[[zfs-zpool-attach]]
+=== 장치 추가 및 제거하기
+
+풀에 디스크를 추가하는 방법은 두 가지가 있습니다: `zpool attach` 를 사용하여 기존 vdev에 디스크를 연결하거나 `zpool add` 를 사용하여 풀에 vdev를 추가하는 것입니다. 일부 <<zfs-term-vdev,vdev types>> 은 생성 후 디스크를 vdev에 추가할 수 있습니다.
+
+단일 디스크로 생성된 풀은 중복성이 부족합니다. 데이터의 다른 복사본이 없기 때문에 손상을 감지할 수는 있지만 복구할 수는 없습니다. <<zfs-term-copies,copies>> 속성은 불량 섹터와 같은 작은 장애로부터 복구할 수 있지만 미러링 또는 RAID-Z와 동일한 수준의 보호 기능을 제공하지는 않습니다. 단일 디스크 vdev로 구성된 풀에서 시작하여 `zpool attach` 를 사용하여 새 디스크를 vdev에 추가하고 미러를 생성합니다. 또한 `zpool attach` 를 사용하여 미러 그룹에 새 디스크를 추가하여 중복성 및 읽기 성능을 향상시킬 수 있습니다. 풀에 사용되는 디스크를 파티션할 때 첫 번째 디스크의 레이아웃을 두 번째 디스크에 복제합니다. 이 프로세스를 더 쉽게 수행하려면 `gpart backup` 및 `gpart restore` 을 사용합니다.
+
+단일 디스크(스트라이프) vdev [.filename]#ada0p3# 을 [.filename]#ada1p3# 에 연결하여 미러로 업그레이드합니다:
+
+[source, shell]
+....
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: none requested
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          ada0p3    ONLINE       0     0     0
+
+errors: No known data errors
+# zpool attach mypool ada0p3 ada1p3
+Make sure to wait until resilvering finishes before rebooting.
+
+`mypool` 풀에서 부팅하는 경우, 새로 연결된 디스크 _ada1p3_ 에서 부트 코드를 업데이트해야 할 수 있습니다.
+
+GPT 파티션을 사용하고 _da0_ 이 새 부팅 디스크라고 가정하면 다음 명령을 사용할 수 있습니다:
+
+        gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 da0
+# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada1
+bootcode written to ada1
+# zpool status
+  pool: mypool
+ state: ONLINE
+status: One or more devices is currently being resilvered.  The pool will
+        continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+  scan: resilver in progress since Fri May 30 08:19:19 2014
+        527M scanned out of 781M at 47.9M/s, 0h0m to go
+        527M resilvered, 67.53% done
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            ada0p3  ONLINE       0     0     0
+            ada1p3  ONLINE       0     0     0  (resilvering)
+
+errors: No known data errors
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: resilvered 781M in 0h0m with 0 errors on Fri May 30 08:15:58 2014
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            ada0p3  ONLINE       0     0     0
+            ada1p3  ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+RAID-Z와 같이 기존 vdev에 디스크를 추가할 수 없는 경우, 다른 방법으로 풀에 다른 vdev를 추가할 수 있습니다. 가상 디바이스를 추가하면 가상 디바이스 간에 쓰기를 분산하여 더 높은 성능을 제공합니다. 각 vdev는 자체 중복성을 제공합니다. `mirror` 및 `RAID-Z` 와 같은 vdev 유형을 혼합하는 것은 가능하지만 권장하지 않습니다. 미러 또는 RAID-Z vdev가 포함된 풀에 중복성이 없는 vdev를 추가하면 전체 풀의 데이터가 위험해집니다. 쓰기를 분산하면 중복되지 않은 디스크에 장애가 발생했을 때, 풀에 기록된 모든 블록의 일부분이 각각 손실될 수 있습니다.
+
+ZFS는 각 가상 디바이스에 걸쳐 데이터를 스트라이핑합니다. 예를 들어, 미러 가상 디바이스가 2개인 경우, 이는 사실상 두 세트의 미러에 걸쳐 쓰기를 스트라이핑하는 RAID 10입니다. ZFS는 각 vdev가 동시에 100%가 되도록 공간을 할당합니다. 여유 공간의 양이 다른 vdev를 사용하면 용량이 남는 vdev로 더 많은 데이터 쓰기가 집중되므로 성능이 저하됩니다.
+
+새 장치를 부트 풀에 연결할 때는 부트코드를 업데이트해야 합니다.
+
+기존 미러에 두 번째 미러 그룹( [.filename]#ada2p3# 및 [.filename]#ada3p3# )을 연결합니다:
+
+[source, shell]
+....
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: resilvered 781M in 0h0m with 0 errors on Fri May 30 08:19:35 2014
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            ada0p3  ONLINE       0     0     0
+            ada1p3  ONLINE       0     0     0
+
+errors: No known data errors
+# zpool add mypool mirror ada2p3 ada3p3
+# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada2
+bootcode written to ada2
+# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada3
+bootcode written to ada3
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: scrub repaired 0 in 0h0m with 0 errors on Fri May 30 08:29:51 2014
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            ada0p3  ONLINE       0     0     0
+            ada1p3  ONLINE       0     0     0
+          mirror-1  ONLINE       0     0     0
+            ada2p3  ONLINE       0     0     0
+            ada3p3  ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+풀에서 가상 디바이스를 제거하는 것은 불가능하며, 미러에서 디스크를 제거하는 것도 중복성이 충분히 남아 있는 경우에만 가능합니다. 미러 그룹에 단일 디스크가 남아 있으면 해당 그룹은 미러가 아닌 스트라이프가 되어 나머지 디스크에 장애가 발생했을 때 전체 풀이 위험에 처하게 됩니다.
+
+three-way 미러 그룹에서 디스크를 제거합니다:
+
+[source, shell]
+....
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: scrub repaired 0 in 0h0m with 0 errors on Fri May 30 08:29:51 2014
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            ada0p3  ONLINE       0     0     0
+            ada1p3  ONLINE       0     0     0
+            ada2p3  ONLINE       0     0     0
+
+errors: No known data errors
+# zpool detach mypool ada2p3
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: scrub repaired 0 in 0h0m with 0 errors on Fri May 30 08:29:51 2014
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            ada0p3  ONLINE       0     0     0
+            ada1p3  ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+[[zfs-zpool-status]]
+=== 풀의 상태 확인하기
+
+풀 상태는 중요합니다. 드라이브가 오프라인 상태가 되거나 ZFS가 읽기, 쓰기 또는 체크섬 오류를 감지하면 상응하는 오류 카운트가 증가합니다. `status` 출력에는 풀에 있는 각 장치의 구성 및 상태와 전체 풀의 상태가 표시됩니다. 수행해야 할 작업과 마지막 <<zfs-zpool-scrub,`scrub`>> 에 대한 세부 정보도 표시됩니다.
+
+[source, shell]
+....
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: scrub repaired 0 in 2h25m with 0 errors on Sat Sep 14 04:25:50 2013
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          raidz2-0  ONLINE       0     0     0
+            ada0p3  ONLINE       0     0     0
+            ada1p3  ONLINE       0     0     0
+            ada2p3  ONLINE       0     0     0
+            ada3p3  ONLINE       0     0     0
+            ada4p3  ONLINE       0     0     0
+            ada5p3  ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+[[zfs-zpool-clear]]
+=== 오류 제거하기
+
+오류를 감지하면 ZFS는 읽기, 쓰기 또는 체크섬 오류 카운트를 증가시킵니다. `zpool clear _mypool_` 로 오류 메시지를 지우고 횟수를 재설정합니다. 오류 상태를 지우는 것은 풀에 오류가 발생했을 때 관리자에게 경고하는 자동화된 스크립트에서 주의해야 할 문제입니다. 하지만 이전 오류를 지우지 않으면 스크립트에서 추가 오류를 보고하지 못할 수 있습니다.
+
+[[zfs-zpool-replace]]
+=== 작동 중인 장치 교체하기
+
+하나의 디스크를 다른 디스크로 교체하는 것이 바람직할 수 있습니다. 작동 중인 디스크를 교체할 때 프로세스는 교체하는 동안 이전 디스크를 온라인 상태로 유지합니다. 풀은 <<zfs-term-degraded,degraded>> 상태가 되지 않으므로 데이터 손실의 위험이 줄어듭니다. `zpool replace` 를 실행하면 이전 디스크의 데이터가 새 디스크에 복사됩니다. 작업이 완료되면 ZFS는 이전 디스크를 vdev에서 분리합니다. 새 디스크가 이전 디스크보다 큰 경우 새 공간을 사용하여 zpool을 늘릴 수 있습니다. <<zfs-zpool-online,Growing a Pool>> 를 참고합니다.
+
+풀에서 작동하는 장치를 교체합니다:
+
+[source, shell]
+....
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: none requested
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            ada0p3  ONLINE       0     0     0
+            ada1p3  ONLINE       0     0     0
+
+errors: No known data errors
+# zpool replace mypool ada1p3 ada2p3
+Make sure to wait until resilvering finishes before rebooting.
+
+풀 'zroot' 에서 부팅할 때 새로 연결한 디스크 'ada2p3' 에서 부팅 코드를 업데이트합니다.
+
+GPT 파티셔닝이 사용되고 [.filename]#da0# 이 새 부팅 디스크라고 가정하면 다음 명령을 사용합니다:
+
+        gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 da0
+# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada2
+# zpool status
+  pool: mypool
+ state: ONLINE
+status: One or more devices is currently being resilvered.  The pool will
+        continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+  scan: resilver in progress since Mon Jun  2 14:21:35 2014
+        604M scanned out of 781M at 46.5M/s, 0h0m to go
+        604M resilvered, 77.39% done
+config:
+
+        NAME             STATE     READ WRITE CKSUM
+        mypool           ONLINE       0     0     0
+          mirror-0       ONLINE       0     0     0
+            ada0p3       ONLINE       0     0     0
+            replacing-1  ONLINE       0     0     0
+              ada1p3     ONLINE       0     0     0
+              ada2p3     ONLINE       0     0     0  (resilvering)
+
+errors: No known data errors
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: resilvered 781M in 0h0m with 0 errors on Mon Jun  2 14:21:52 2014
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            ada0p3  ONLINE       0     0     0
+            ada2p3  ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+[[zfs-zpool-resilver]]
+=== 고장난 장치 처리하기
+
+풀의 디스크에 장애가 발생하면 해당 디스크가 속한 vdev는 <<zfs-term-degraded,degraded>> 상태가 됩니다. 데이터는 계속 사용할 수 있지만 ZFS가 사용 가능한 중복성에서 누락된 데이터를 계산하기 때문에 성능이 저하됩니다. vdev를 완전한 상태로 복원하려면 장애가 발생한 물리적 장치를 교체합니다. 그러면 ZFS가 <<zfs-term-resilver,resilver>> 작업을 시작하라는 지시를 받습니다. ZFS는 사용 가능한 중복성에서 장애가 발생한 디바이스의 데이터를 다시 계산하여 교체 디바이스에 씁니다. 완료 후 vdev는 <<zfs-term-online,online>> 상태로 돌아갑니다.
+
+vdev에 중복성이 없거나 디바이스에 장애가 발생하고 이를 보완할 충분한 중복성이 없는 경우 풀은 <<zfs-term-faulted,faulted>> 상태로 전환됩니다. 충분한 장치를 다시 연결할 수 없으면 풀이 작동하지 않게 되어 백업에서 데이터를 복원해야 합니다.
+
+장애가 발생한 디스크를 교체할 때 장애가 발생한 디스크의 이름이 새 디스크의 GUID로 변경됩니다. 교체 장치의 장치 이름이 동일한 경우 `zpool replace` 에 대한 새 장치 이름 매개 변수가 필요하지 않습니다.
+
+`zpool replace` 를 사용하여 고장난 디스크를 교체합니다:
+
+[source, shell]
+....
+# zpool status
+  pool: mypool
+ state: DEGRADED
+status: One or more devices could not be opened.  Sufficient replicas exist for
+        the pool to continue functioning in a degraded state.
+action: Attach the missing device and online it using 'zpool online'.
+   see: http://illumos.org/msg/ZFS-8000-2Q
+  scan: none requested
+config:
+
+        NAME                    STATE     READ WRITE CKSUM
+        mypool                  DEGRADED     0     0     0
+          mirror-0              DEGRADED     0     0     0
+            ada0p3              ONLINE       0     0     0
+            316502962686821739  UNAVAIL      0     0     0  was /dev/ada1p3
+
+errors: No known data errors
+# zpool replace mypool 316502962686821739 ada2p3
+# zpool status
+  pool: mypool
+ state: DEGRADED
+status: One or more devices is currently being resilvered.  The pool will
+        continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+  scan: resilver in progress since Mon Jun  2 14:52:21 2014
+        641M scanned out of 781M at 49.3M/s, 0h0m to go
+        640M resilvered, 82.04% done
+config:
+
+        NAME                        STATE     READ WRITE CKSUM
+        mypool                      DEGRADED     0     0     0
+          mirror-0                  DEGRADED     0     0     0
+            ada0p3                  ONLINE       0     0     0
+            replacing-1             UNAVAIL      0     0     0
+              15732067398082357289  UNAVAIL      0     0     0  was /dev/ada1p3/old
+              ada2p3                ONLINE       0     0     0  (resilvering)
+
+errors: No known data errors
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: resilvered 781M in 0h0m with 0 errors on Mon Jun  2 14:52:38 2014
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+            ada0p3  ONLINE       0     0     0
+            ada2p3  ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+[[zfs-zpool-scrub]]
+=== 풀 스크러빙하기
+
+정기적으로 풀을, 이상적으로는 매월 한 번 이상 <<zfs-term-scrub,scrub>> 합니다. `scrub` 작업은 디스크 집약적이며 실행 중 성능이 저하됩니다. `scrub` 을 예약할 때 수요가 많은 기간을 피하거나, 다른 워크로드의 속도를 늦추지 않도록 <<zfs-advanced-tuning-scrub_delay,`vfs.zfs.scrub_delay`>> 를 사용하여 `scrub` 의 상대적 우선순위를 조정합니다.
+
+[source, shell]
+....
+# zpool scrub mypool
+# zpool status
+  pool: mypool
+ state: ONLINE
+  scan: scrub in progress since Wed Feb 19 20:52:54 2014
+        116G scanned out of 8.60T at 649M/s, 3h48m to go
+        0 repaired, 1.32% done
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          raidz2-0  ONLINE       0     0     0
+            ada0p3  ONLINE       0     0     0
+            ada1p3  ONLINE       0     0     0
+            ada2p3  ONLINE       0     0     0
+            ada3p3  ONLINE       0     0     0
+            ada4p3  ONLINE       0     0     0
+            ada5p3  ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+필요한 경우 스크럽 작업을 취소하려면 `zpool scrub -s _mypool_` 을 실행합니다.
+
+[[zfs-zpool-selfheal]]
+=== Self-Healing
+
+데이터 블록과 함께 저장된 체크섬은 파일 시스템이 _자가 치유_ 될 수 있도록 합니다. 이 기능은 체크섬이 스토리지 풀의 일부인 다른 장치에 기록된 체크섬과 일치하지 않는 데이터를 자동으로 복구합니다. 예를 들어, 두 개의 디스크로 구성된 미러 구성에서 하나의 드라이브가 오작동하기 시작하여 더 이상 데이터를 제대로 저장할 수 없는 경우를 들 수 있습니다. 장기 아카이브 스토리지와 같이 오랫동안 데이터에 액세스하지 않은 경우에는 이러한 문제가 더욱 심각합니다. 기존 파일 시스템에서는 man:fsck[8]와 같이 데이터를 검사하고 복구하는 명령을 실행해야 합니다. 이러한 명령은 시간이 걸리며, 심한 경우 관리자가 어떤 복구 작업을 수행할지 결정해야 합니다. 체크섬이 일치하지 않는 데이터 블록을 감지하면 ZFS는 미러 디스크에서 데이터를 읽으려고 시도합니다. 해당 디스크가 올바른 데이터를 제공할 수 있는 경우, ZFS는 해당 데이터를 애플리케이션에 제공하고 잘못된 체크섬이 있는 디스크의 데이터를 수정합니다. 이는 정상적인 풀 작동 중에 시스템 관리자의 개입 없이 발생합니다.
+
+다음 예제에서는 [.filename]#/dev/ada0# 및 [.filename]#/dev/ada1# 디스크의 미러링된 풀을 생성하여 이러한 자가 복구 동작을 보여 줍니다.
+
+[source, shell]
+....
+# zpool create healer mirror /dev/ada0 /dev/ada1
+# zpool status healer
+  pool: healer
+ state: ONLINE
+  scan: none requested
+config:
+
+    NAME        STATE     READ WRITE CKSUM
+    healer      ONLINE       0     0     0
+      mirror-0  ONLINE       0     0     0
+       ada0     ONLINE       0     0     0
+       ada1     ONLINE       0     0     0
+
+errors: No known data errors
+# zpool list
+NAME     SIZE  ALLOC   FREE   CKPOINT  EXPANDSZ   FRAG   CAP  DEDUP  HEALTH  ALTROOT
+healer   960M  92.5K   960M         -         -     0%    0%  1.00x  ONLINE  -
+....
+
+자가 복구 기능을 사용하여 데이터 오류로부터 보호하기 위해 일부 중요한 데이터를 풀에 복사하고 나중에 비교할 수 있도록 풀의 체크섬을 생성합니다.
+
+[source, shell]
+....
+# cp /some/important/data /healer
+# zfs list
+NAME     SIZE  ALLOC   FREE    CAP  DEDUP  HEALTH  ALTROOT
+healer   960M  67.7M   892M     7%  1.00x  ONLINE  -
+# sha1 /healer > checksum.txt
+# cat checksum.txt
+SHA1 (/healer) = 2753eff56d77d9a536ece6694bf0a82740344d1f
+....
+
+미러에 있는 디스크 중 하나의 시작 부분에 임의의 데이터를 써서 데이터 손상을 시뮬레이션합니다. 데이터가 손상되었을 때 ZFS가 데이터를 복구하지 못하도록 하려면 손상되기 전에 풀을 내보내고 나중에 다시 가져오세요.
+
+[WARNING]
+====
+이 작업은 중요한 데이터를 파괴할 수 있는 위험한 작업이며, 여기서는 데모로만 설명합니다. 스토리지 풀이 정상적으로 작동하는 동안에는 *시도하지 마세요*. 또한 이 의도적인 손상 예제는 다른 파티션에 ZFS를 사용하지 않는 파일 시스템이 있는 디스크에서 실행해서는 안 됩니다. 풀의 일부인 디스크 장치 이름 외에 다른 디스크 장치 이름을 사용하지 마세요. 명령을 실행하기 전에 풀의 적절한 백업이 있는지 확인하고 테스트하세요!
+====
+
+[source, shell]
+....
+# zpool export healer
+# dd if=/dev/random of=/dev/ada1 bs=1m count=200
+200+0 records in
+200+0 records out
+209715200 bytes transferred in 62.992162 secs (3329227 bytes/sec)
+# zpool import healer
+....
+
+풀 상태는 한 장치에서 오류가 발생했음을 보여줍니다. 풀에서 데이터를 읽는 애플리케이션은 잘못된 데이터를 수신하지 않았습니다. ZFS는 올바른 체크섬을 가진 [.filename]#ada0# 장치에서 데이터를 제공했습니다. 잘못된 체크섬을 가진 장치를 찾으려면 `CKSUM` 열에 0이 아닌 값이 포함된 장치를 찾습니다.
+
+[source, shell]
+....
+# zpool status healer
+    pool: healer
+   state: ONLINE
+  status: One or more devices has experienced an unrecoverable error.  An
+          attempt was made to correct the error.  Applications are unaffected.
+  action: Determine if the device needs to be replaced, and clear the errors
+          using 'zpool clear' or replace the device with 'zpool replace'.
+     see: http://illumos.org/msg/ZFS-8000-4J
+    scan: none requested
+  config:
+
+      NAME        STATE     READ WRITE CKSUM
+      healer      ONLINE       0     0     0
+        mirror-0  ONLINE       0     0     0
+         ada0     ONLINE       0     0     0
+         ada1     ONLINE       0     0     1
+
+errors: No known data errors
+....
+
+ZFS가 오류를 감지하고 영향을 받지 않는 [.filename]#ada0# 미러 디스크에 있는 중복성을 사용하여 오류를 처리했습니다. 원본과 체크섬을 비교하면 풀이 다시 일관성이 있는지 확인할 수 있습니다.
+
+[source, shell]
+....
+# sha1 /healer >> checksum.txt
+# cat checksum.txt
+SHA1 (/healer) = 2753eff56d77d9a536ece6694bf0a82740344d1f
+SHA1 (/healer) = 2753eff56d77d9a536ece6694bf0a82740344d1f
+....
+
+풀 데이터가 여전히 일치하는 동안 의도적인 변조 전과 후의 체크섬을 생성합니다. 이는 체크섬이 다를 때 ZFS가 어떻게 자동으로 오류를 감지하고 수정할 수 있는지 보여줍니다. 이는 풀에 충분한 중복성이 있을 때 가능하다는 점에 유의하세요. 단일 장치로 구성된 풀은 자체 복구 기능이 없습니다. 이것이 바로 ZFS에서 체크섬이 중요한 이유이기도 하므로 어떤 이유로든 체크섬을 비활성화하지 마세요. ZFS는 이를 감지하고 수정하기 위해 man:fsck[8] 또는 이와 유사한 파일 시스템 일관성 검사 프로그램이 필요하지 않으며, 문제가 있는 동안에도 풀을 계속 사용할 수 있도록 유지합니다. 이제 [.filename]#ada1# 의 손상된 데이터를 덮어쓰려면 스크럽 작업이 필요합니다.
+
+[source, shell]
+....
+# zpool scrub healer
+# zpool status healer
+  pool: healer
+ state: ONLINE
+status: One or more devices has experienced an unrecoverable error.  An
+            attempt was made to correct the error.  Applications are unaffected.
+action: Determine if the device needs to be replaced, and clear the errors
+            using 'zpool clear' or replace the device with 'zpool replace'.
+   see: http://illumos.org/msg/ZFS-8000-4J
+  scan: scrub in progress since Mon Dec 10 12:23:30 2012
+        10.4M scanned out of 67.0M at 267K/s, 0h3m to go
+        9.63M repaired, 15.56% done
+config:
+
+    NAME        STATE     READ WRITE CKSUM
+    healer      ONLINE       0     0     0
+      mirror-0  ONLINE       0     0     0
+       ada0     ONLINE       0     0     0
+       ada1     ONLINE       0     0   627  (repairing)
+
+errors: No known data errors
+....
+
+스크럽 작업은 [.filename]#ada0# 에서 데이터를 읽고 `zpool status` 의 '(repairing)` 출력에 표시된 것처럼 [.filename]#ada1# 에 잘못된 체크섬이 있는 데이터를 다시 씁니다. 작업이 완료되면 풀 상태가 다음과 같이 변경됩니다:
+
+[source, shell]
+....
+# zpool status healer
+  pool: healer
+ state: ONLINE
+status: One or more devices has experienced an unrecoverable error.  An
+        attempt was made to correct the error.  Applications are unaffected.
+action: Determine if the device needs to be replaced, and clear the errors
+             using 'zpool clear' or replace the device with 'zpool replace'.
+   see: http://illumos.org/msg/ZFS-8000-4J
+  scan: scrub repaired 66.5M in 0h2m with 0 errors on Mon Dec 10 12:26:25 2012
+config:
+
+    NAME        STATE     READ WRITE CKSUM
+    healer      ONLINE       0     0     0
+      mirror-0  ONLINE       0     0     0
+       ada0     ONLINE       0     0     0
+       ada1     ONLINE       0     0 2.72K
+
+errors: No known data errors
+....
+
+스크러빙 작업이 완료되어 [.filename]#ada0# 에서 [.filename]#ada1# 로 모든 데이터가 동기화되면, `zpool clear` 를 실행하여 풀 상태의 오류 메시지를 삭제합니다.
+
+[source, shell]
+....
+# zpool clear healer
+# zpool status healer
+  pool: healer
+ state: ONLINE
+  scan: scrub repaired 66.5M in 0h2m with 0 errors on Mon Dec 10 12:26:25 2012
+config:
+
+    NAME        STATE     READ WRITE CKSUM
+    healer      ONLINE       0     0     0
+      mirror-0  ONLINE       0     0     0
+       ada0     ONLINE       0     0     0
+       ada1     ONLINE       0     0     0
+
+errors: No known data errors
+....
+
+이제 풀이 완전히 작동하는 상태로 돌아왔으며 모든 오류 카운트가 0이 되었습니다.
+
+[[zfs-zpool-online]]
+=== 풀 확장하기
+
+각 가상 디바이스에서 가장 작은 디바이스는 중복 풀의 사용 가능한 크기를 제한합니다. 가장 작은 장치를 더 큰 장치로 교체합니다. <<zfs-zpool-replace,replace>> 또는 <<zfs-term-resilver,resilver>> 작업을 완료하면 새 장치의 용량을 사용하도록 풀을 확장할 수 있습니다. 예를 들어 1TB 드라이브와 2TB 드라이브의 미러를 생각해 보겠습니다. 사용 가능한 공간은 1TB입니다. 1TB 드라이브를 다른 2TB 드라이브로 교체할 때 복원 프로세스는 기존 데이터를 새 드라이브에 복사합니다. 이제 두 장치의 용량이 모두 2TB이므로 미러의 사용 가능한 공간은 2TB로 증가합니다.
+
+각 장치에서 `zpool online -e` 를 사용하여 확장을 시작하세요. 모든 장치를 확장하면 풀에서 여분의 공간을 사용할 수 있게 됩니다.
+
+[[zfs-zpool-import]]
+=== 풀 가져오기 및 내보내기
+
+풀을 다른 시스템으로 옮기기 전에 _Export_ pool을 하세요. ZFS는 모든 데이터세트를 마운트 해제하여 각 장치를 내보낸 것으로 표시하지만 다른 디스크에서 사용하지 못하도록 여전히 잠궈 둡니다. 이렇게 하면 다른 시스템, ZFS를 지원하는 다른 운영 체제, 심지어 다른 하드웨어 아키텍처에서도 풀을 _임포트_할 수 있습니다(몇 가지 주의 사항, man:zpool[8] 참조). 데이터 세트에 열려 있는 파일이 있는 경우, `zpool export -f` 를 사용하여 풀을 강제로 내보냅니다. 주의해서 사용하세요. 데이터 세트가 강제로 마운트 해제되므로 해당 데이터 세트에 열린 파일이 있는 응용 프로그램에서 예기치 않은 동작이 발생할 수 있습니다.
+
+사용하지 않는 풀을 내보냅니다:
+
+[source, shell]
+....
+# zpool export mypool
+....
+
+풀을 가져오면 데이터 세트가 자동으로 마운트됩니다. 원치 않는 동작인 경우 `zpool import -N` 을 사용하여 이를 방지합니다. `zpool import -o` 는 이 특정 가져오기에 대한 임시 속성을 설정합니다. `zpool import altroot=` 를 사용하면 파일 시스템의 루트 대신 기본 마운트 지점을 사용하여 풀을 가져올 수 있습니다. 풀이 다른 시스템에서 마지막으로 사용되었고 제대로 내보내지지 않은 경우 `zpool import -f` 를 사용하여 강제로 가져옵니다. `zpool import -a` 는 다른 시스템에서 사용 중인 것으로 보이지 않는 모든 풀을 가져옵니다.
+
+가져올 수 있는 모든 풀을 나열합니다:
+
+[source, shell]
+....
+# zpool import
+   pool: mypool
+     id: 9930174748043525076
+  state: ONLINE
+ action: The pool can be imported using its name or numeric identifier.
+ config:
+
+        mypool      ONLINE
+          ada2p3    ONLINE
+....
+
+대체 루트 디렉터리로 풀을 가져옵니다:
+
+[source, shell]
+....
+# zpool import -o altroot=/mnt mypool
+# zfs list
+zfs list
+NAME                 USED  AVAIL  REFER  MOUNTPOINT
+mypool               110K  47.0G    31K  /mnt/mypool
+....
+
+[[zfs-zpool-upgrade]]
+=== 스토리지 풀 업그레이드하기
+
+FreeBSD를 업그레이드한 후 또는 이전 버전을 사용하는 시스템에서 풀을 가져오는 경우, 최신 기능을 지원하려면 풀을 최신 ZFS 버전으로 수동 업그레이드해야 합니다. 업그레이드하기 전에 이전 시스템에서 풀을 가져와야 하는지 여부를 고려하세요. 업그레이드는 단방향 프로세스입니다. 이전 풀의 업그레이드는 가능하지만 최신 기능이 포함된 풀의 다운그레이드는 불가능합니다.
+
+`Feature Flags` 를 지원하도록 v28 풀을 업그레이드합니다:
+
+[source, shell]
+....
+# zpool status
+  pool: mypool
+ state: ONLINE
+status: The pool is formatted using a legacy on-disk format.  The pool can
+        still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+        pool will no longer be accessible on software that does not support feat
+        flags.
+  scan: none requested
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+	    ada0    ONLINE       0     0     0
+	    ada1    ONLINE       0     0     0
+
+errors: No known data errors
+# zpool upgrade
+This system supports ZFS pool feature flags.
+
+다음 풀은 레거시 버전 번호로 포맷되어 있으며 feature flags를 사용하도록 업그레이드되었습니다.
+업그레이드된 후에는 feature flags를 지원하지 않는 소프트웨어에서는 이러한 풀에 더 이상 액세스할 수 없습니다.
+
+VER  POOL
+---  ------------
+28   mypool
+
+Use 'zpool upgrade -v' for a list of available legacy versions.
+Every feature flags pool has all supported features enabled.
+# zpool upgrade mypool
+This system supports ZFS pool feature flags.
+
+Successfully upgraded 'mypool' from version 28 to feature flags.
+Enabled the following features on 'mypool':
+  async_destroy
+  empty_bpobj
+  lz4_compress
+  multi_vdev_crash_dump
+....
+
+ZFS의 최신 기능은 `zpool upgrade` 가 완료될 때까지 사용할 수 없습니다. 업그레이드가 제공하는 새로운 기능과 이미 지원되는 기능을 확인하려면 `zpool upgrade -v` 를 사용하세요.
+
+새로운 feature flags를 지원하도록 풀을 업그레이드합니다:
+
+[source, shell]
+....
+# zpool status
+  pool: mypool
+ state: ONLINE
+status: Some supported features are not enabled on the pool. The pool can
+        still be used, but some features are unavailable.
+action: Enable all features using 'zpool upgrade'. Once this is done,
+        the pool may no longer be accessible by software that does not support
+        the features. See zpool-features(7) for details.
+  scan: none requested
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        mypool      ONLINE       0     0     0
+          mirror-0  ONLINE       0     0     0
+	    ada0    ONLINE       0     0     0
+	    ada1    ONLINE       0     0     0
+
+errors: No known data errors
+# zpool upgrade
+This system supports ZFS pool feature flags.
+
+All pools are formatted using feature flags.
+
+Some supported features are not enabled on the following pools. Once a
+feature is enabled the pool may become incompatible with software
+that does not support the feature. See zpool-features(7) for details.
+
+POOL  FEATURE
+---------------
+zstore
+      multi_vdev_crash_dump
+      spacemap_histogram
+      enabled_txg
+      hole_birth
+      extensible_dataset
+      bookmarks
+      filesystem_limits
+# zpool upgrade mypool
+This system supports ZFS pool feature flags.
+
+Enabled the following features on 'mypool':
+  spacemap_histogram
+  enabled_txg
+  hole_birth
+  extensible_dataset
+  bookmarks
+  filesystem_limits
+....
+
+[WARNING]
+====
+풀에서 부팅하는 시스템의 부트 코드를 업데이트하여 새 풀 버전을 지원하도록 합니다. 부트 코드가 포함된 파티션에서 `gpart bootcode` 를 사용합니다. 시스템 부팅 방식에 따라 두 가지 유형의 부트코드를 사용할 수 있습니다: GPT(가장 일반적인 옵션) 및 EFI(최신 시스템용).
+
+GPT를 사용하는 레거시 부팅의 경우 다음 명령을 사용합니다:
+
+[source, shell]
+....
+# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada1
+....
+
+EFI를 사용하여 부팅하는 시스템의 경우 다음 명령을 실행합니다:
+
+[source, shell]
+....
+# gpart bootcode -p /boot/boot1.efifat -i 1 ada1
+....
+
+풀의 모든 부팅 가능한 디스크에 부트 코드를 적용합니다. 자세한 내용은 man:gpart[8]을 참조하세요.
+====
+
+[[zfs-zpool-history]]
+=== 기록된 풀 기록 표시하기
+
+ZFS는 데이터 세트 생성, 속성 변경, 디스크 교체 등 풀을 변경하는 명령을 기록합니다. 풀 생성에 대한 기록을 검토하는 것은 어떤 사용자가 언제 특정 작업을 수행했는지 확인하는 것과 마찬가지로 유용합니다. 기록은 로그 파일에 보관되지 않고 풀 자체의 일부입니다. 이 기록을 검토하는 명령의 이름은 `zpool history` 입니다:
+
+[source, shell]
+....
+# zpool history
+History for 'tank':
+2013-02-26.23:02:35 zpool create tank mirror /dev/ada0 /dev/ada1
+2013-02-27.18:50:58 zfs set atime=off tank
+2013-02-27.18:51:09 zfs set checksum=fletcher4 tank
+2013-02-27.18:51:18 zfs create tank/backup
+....
+
+출력에는 타임스탬프와 함께 어떤 식으로든 풀을 변경하는 `zpool` 및 `zfs` 명령이 표시됩니다. `zfs list` 와 같은 명령은 포함되지 않습니다. 풀 이름을 지정하지 않으면 ZFS는 모든 풀의 기록을 표시합니다.
+
+`zpool history` 는 `-i` 또는 `-l` 옵션을 사용하면 더 많은 정보를 표시할 수 있습니다. `-i` 는 내부적으로 기록된 ZFS 이벤트뿐만 아니라 사용자가 시작한 이벤트도 표시합니다.
+
+[source, shell]
+....
+# zpool history -i
+History for 'tank':
+2013-02-26.23:02:35 [internal pool create txg:5] pool spa 28; zfs spa 28; zpl 5;uts  9.1-RELEASE 901000 amd64
+2013-02-27.18:50:53 [internal property set txg:50] atime=0 dataset = 21
+2013-02-27.18:50:58 zfs set atime=off tank
+2013-02-27.18:51:04 [internal property set txg:53] checksum=7 dataset = 21
+2013-02-27.18:51:09 zfs set checksum=fletcher4 tank
+2013-02-27.18:51:13 [internal create txg:55] dataset = 39
+2013-02-27.18:51:18 zfs create tank/backup
+....
+
+`-l` 을 추가하여 자세한 내용을 표시합니다. 명령을 실행한 사용자 이름, 변경이 발생한 호스트 이름 등의 정보를 포함하여 긴 형식의 기록 기록을 표시합니다.
+
+[source, shell]
+....
+# zpool history -l
+History for 'tank':
+2013-02-26.23:02:35 zpool create tank mirror /dev/ada0 /dev/ada1 [user 0 (root) on :global]
+2013-02-27.18:50:58 zfs set atime=off tank [user 0 (root) on myzfsbox:global]
+2013-02-27.18:51:09 zfs set checksum=fletcher4 tank [user 0 (root) on myzfsbox:global]
+2013-02-27.18:51:18 zfs create tank/backup [user 0 (root) on myzfsbox:global]
+....
+
+출력에는 `root` 사용자가 [.filename]#/dev/ada0# 및 [.filename]#/dev/ada1# 디스크로 미러링된 풀을 생성했음을 보여줍니다. 풀 생성 후 명령에 호스트 이름 `myzfsbox` 도 표시됩니다. 호스트 이름 표시는 한 시스템에서 풀을 내보내고 다른 시스템에서 가져올 때 중요합니다. 각 명령에 대해 기록된 호스트 이름을 통해 다른 시스템에서 실행된 명령을 구별할 수 있습니다.
+
+두 옵션을 모두 'zpool history' 로 결합하면 특정 풀에 대해 가능한 가장 자세한 정보를 얻을 수 있습니다. 풀 히스토리는 수행한 작업을 추적하거나 디버깅을 위해 더 자세한 출력이 필요할 때 유용한 정보를 제공합니다.
+
+[[zfs-zpool-iostat]]
+=== 성능 모니터링
+
+내장된 모니터링 시스템은 풀 I/O 통계를 실시간으로 표시할 수 있습니다. 풀의 여유 공간과 사용 공간, 초당 수행되는 읽기 및 쓰기 작업, 사용된 I/O 대역폭이 표시됩니다. 기본적으로 ZFS는 시스템의 모든 풀을 모니터링하고 표시합니다. 모니터링을 해당 풀로 제한하려면 풀 이름을 입력합니다. 기본 예시입니다:
+
+[source, shell]
+....
+# zpool iostat
+               capacity     operations    bandwidth
+pool        alloc   free   read  write   read  write
+----------  -----  -----  -----  -----  -----  -----
+data         288G  1.53T      2     11  11.3K  57.1K
+....
+
+I/O 활동을 계속 확인하려면 마지막 매개변수로 숫자를 지정하여 업데이트 사이에 대기할 간격(초)을 표시합니다. 다음 통계 라인은 각 간격 후에 인쇄됩니다. 이 연속 모니터링을 중지하려면 kbd:[Ctrl+C]를 누릅니다. 간격 뒤에 명령줄에 두 번째 숫자를 입력하여 표시할 총 통계 수를 지정합니다.
+
+`-v` 를 사용하면 더 자세한 I/O 통계를 표시할 수 있습니다. 풀의 각 장치가 통계 라인과 함께 표시됩니다. 이는 각 장치에서 수행되는 읽기 및 쓰기 작업을 확인하는 데 유용하며, 개별 장치로 인해 풀의 속도가 느려지는지 확인하는 데 도움이 될 수 있습니다. 이 예는 두 개의 장치가 있는 미러링된 풀을 보여줍니다:
+
+[source, shell]
+....
+# zpool iostat -v 
+                            capacity     operations    bandwidth
+pool                     alloc   free   read  write   read  write
+-----------------------  -----  -----  -----  -----  -----  -----
+data                      288G  1.53T      2     12  9.23K  61.5K
+  mirror                  288G  1.53T      2     12  9.23K  61.5K
+    ada1                     -      -      0      4  5.61K  61.7K
+    ada2                     -      -      1      4  5.04K  61.7K
+-----------------------  -----  -----  -----  -----  -----  -----
+....
+
+[[zfs-zpool-split]]
+=== 스토리지 풀 분할하기
+
+ZFS는 하나 이상의 미러 vdev로 구성된 풀을 두 개의 풀로 분할할 수 있습니다. 달리 지정하지 않는 한, ZFS는 각 미러의 마지막 멤버를 분리하고 동일한 데이터를 포함하는 새 풀을 생성합니다. 먼저 `-n` 을 사용하여 드라이런 작업을 수행해야 합니다. 이렇게 하면 요청된 작업을 실제로 수행하지 않고도 요청된 작업의 세부 정보가 표시됩니다. 이렇게 하면 사용자가 의도한 대로 작업이 수행되는지 확인할 수 있습니다.
+
+[[zfs-zfs]]
+== `zfs` 관리
+
+`zfs` 유틸리티는 풀 내의 모든 기존 ZFS 데이터세트를 생성, 삭제 및 관리할 수 있습니다. 풀 자체를 관리하려면 <<zfs-zpool,`zpool`>> 을 사용합니다.
+
+[[zfs-zfs-create]]
+=== 데이터 세트 생성 및 삭제하기
+
+기존 디스크 및 볼륨 관리자와 달리 ZFS의 공간은 _사전 할당되지_ 않습니다. 기존 파일 시스템에서는 파티션을 나누고 공간을 할당하고 나면 새 디스크를 추가하지 않고는 새 파일 시스템을 추가할 방법이 없습니다. ZFS를 사용하면 언제든지 새 파일 시스템을 만들 수 있습니다. 각 <<zfs-term-dataset,_dataset_>> 에는 압축, 중복 제거, 캐싱, 할당량 등의 기능과 읽기 전용, 대소문자 구분, 네트워크 파일 공유, 마운트 지점과 같은 기타 유용한 속성이 있습니다. 데이터 세트를 서로 중첩할 수 있으며, 자식 데이터 세트은 상위 데이터 세트으로부터 속성을 상속받습니다. <<zfs-zfs-allow,Delegate>>, <<zfs-zfs-send,replicate>>, <<zfs-zfs-snapshot,snapshot>>, <<zfs-zfs-jail,jail>> 은 각 데이터셋을 하나의 단위로 관리 및 파기할 수 있도록 합니다. 각기 다른 유형 또는 파일 세트에 대해 별도의 데이터세트를 생성하면 장점이 있습니다. 데이터 세트가 많으면 `zfs list` 와 같은 일부 명령의 속도가 느려지고 수백 또는 수천 개의 데이터 세트를 마운트하면 FreeBSD 부팅 프로세스가 느려질 수 있다는 단점이 있습니다.
+
+새 데이터 세트를 생성하고 <<zfs-term-compression-lz4,LZ4 compression>> 을 활성화합니다:
+
+[source, shell]
+....
+# zfs list
+NAME                  USED  AVAIL  REFER  MOUNTPOINT
+mypool                781M  93.2G   144K  none
+mypool/ROOT           777M  93.2G   144K  none
+mypool/ROOT/default   777M  93.2G   777M  /
+mypool/tmp            176K  93.2G   176K  /tmp
+mypool/usr            616K  93.2G   144K  /usr
+mypool/usr/home       184K  93.2G   184K  /usr/home
+mypool/usr/ports      144K  93.2G   144K  /usr/ports
+mypool/usr/src        144K  93.2G   144K  /usr/src
+mypool/var           1.20M  93.2G   608K  /var
+mypool/var/crash      148K  93.2G   148K  /var/crash
+mypool/var/log        178K  93.2G   178K  /var/log
+mypool/var/mail       144K  93.2G   144K  /var/mail
+mypool/var/tmp        152K  93.2G   152K  /var/tmp
+# zfs create -o compress=lz4 mypool/usr/mydataset
+# zfs list
+NAME                   USED  AVAIL  REFER  MOUNTPOINT
+mypool                 781M  93.2G   144K  none
+mypool/ROOT            777M  93.2G   144K  none
+mypool/ROOT/default    777M  93.2G   777M  /
+mypool/tmp             176K  93.2G   176K  /tmp
+mypool/usr             704K  93.2G   144K  /usr
+mypool/usr/home        184K  93.2G   184K  /usr/home
+mypool/usr/mydataset  87.5K  93.2G  87.5K  /usr/mydataset
+mypool/usr/ports       144K  93.2G   144K  /usr/ports
+mypool/usr/src         144K  93.2G   144K  /usr/src
+mypool/var            1.20M  93.2G   610K  /var
+mypool/var/crash       148K  93.2G   148K  /var/crash
+mypool/var/log         178K  93.2G   178K  /var/log
+mypool/var/mail        144K  93.2G   144K  /var/mail
+mypool/var/tmp         152K  93.2G   152K  /var/tmp
+....
+
+데이터 세트를 삭제하는 것은 파일을 스캔하고 해당 메타데이터를 업데이트할 필요가 없기 때문에 데이터 세트의 파일을 삭제하는 것보다 훨씬 빠릅니다.
+
+셍성된 데이터 세트를 삭제합니다:
+
+[source, shell]
+....
+# zfs list
+NAME                   USED  AVAIL  REFER  MOUNTPOINT
+mypool                 880M  93.1G   144K  none
+mypool/ROOT            777M  93.1G   144K  none
+mypool/ROOT/default    777M  93.1G   777M  /
+mypool/tmp             176K  93.1G   176K  /tmp
+mypool/usr             101M  93.1G   144K  /usr
+mypool/usr/home        184K  93.1G   184K  /usr/home
+mypool/usr/mydataset   100M  93.1G   100M  /usr/mydataset
+mypool/usr/ports       144K  93.1G   144K  /usr/ports
+mypool/usr/src         144K  93.1G   144K  /usr/src
+mypool/var            1.20M  93.1G   610K  /var
+mypool/var/crash       148K  93.1G   148K  /var/crash
+mypool/var/log         178K  93.1G   178K  /var/log
+mypool/var/mail        144K  93.1G   144K  /var/mail
+mypool/var/tmp         152K  93.1G   152K  /var/tmp
+# zfs destroy mypool/usr/mydataset
+# zfs list
+NAME                  USED  AVAIL  REFER  MOUNTPOINT
+mypool                781M  93.2G   144K  none
+mypool/ROOT           777M  93.2G   144K  none
+mypool/ROOT/default   777M  93.2G   777M  /
+mypool/tmp            176K  93.2G   176K  /tmp
+mypool/usr            616K  93.2G   144K  /usr
+mypool/usr/home       184K  93.2G   184K  /usr/home
+mypool/usr/ports      144K  93.2G   144K  /usr/ports
+mypool/usr/src        144K  93.2G   144K  /usr/src
+mypool/var           1.21M  93.2G   612K  /var
+mypool/var/crash      148K  93.2G   148K  /var/crash
+mypool/var/log        178K  93.2G   178K  /var/log
+mypool/var/mail       144K  93.2G   144K  /var/mail
+mypool/var/tmp        152K  93.2G   152K  /var/tmp
+....
+
+최신 버전의 ZFS에서 `zfs destroy` 는 비동기식이며, 여유 공간이 풀에 나타나는 데 몇 분 정도 걸릴 수 있습니다. `zpool get freeing _poolname_` 을 사용하면 어떤 데이터 세트가 백그라운드에서 블록을 해제하고 있는지 보여주는 `freeing` 속성을 확인할 수 있습니다. <<zfs-term-snapshot,snapshots>> 또는 다른 데이터 세트와 같은 하위 데이터 세트가 있는 경우, 상위 데이터 세트를 삭제할 수 없습니다. 데이터 세트와 그 자식을 파기하려면 `-r` 을 사용하여 데이터 세트와 그 자식을 재귀적으로 파기해야 합니다. 실제로 아무것도 파괴하지 않고 이 작업으로 파괴된 데이터세트와 스냅샷을 나열하려면 `-n -v` 를 사용합니다. 스냅샷을 파괴하여 회수된 공간도 표시됩니다.
+
+[[zfs-zfs-volume]]
+=== 볼륨 생성 및 삭제하기
+
+볼륨은 특수한 데이터 세트 유형입니다. 파일 시스템으로 마운트하는 대신 [.filename]#/dev/zvol/poolname/dataset# 에서 블록 장치로 노출시키세요. 이렇게 하면 다른 파일 시스템에 볼륨을 사용하거나, 가상 머신의 디스크를 백업하거나, iSCSI 또는 HAST와 같은 프로토콜을 사용하여 다른 네트워크 호스트에서 볼륨을 사용할 수 있습니다.
+
+원시 데이터를 저장하기 위해 파일 시스템을 사용하거나 파일 시스템 없이 볼륨을 포맷합니다. 사용자에게는 볼륨이 일반 디스크로 보입니다. 이러한 _zvols_ 에 일반 파일 시스템을 넣으면 일반 디스크나 파일 시스템에는 없는 기능이 제공됩니다. 예를 들어 250MB 볼륨에 압축 속성을 사용하면 압축된 FAT 파일 시스템을 만들 수 있습니다.
+
+[source, shell]
+....
+# zfs create -V 250m -o compression=on tank/fat32
+# zfs list tank
+NAME USED AVAIL REFER MOUNTPOINT
+tank 258M  670M   31K /tank
+# newfs_msdos -F32 /dev/zvol/tank/fat32
+# mount -t msdosfs /dev/zvol/tank/fat32 /mnt
+# df -h /mnt | grep fat32
+Filesystem           Size Used Avail Capacity Mounted on
+/dev/zvol/tank/fat32 249M  24k  249M     0%   /mnt
+# mount | grep fat32
+/dev/zvol/tank/fat32 on /mnt (msdosfs, local)
+....
+
+볼륨을 삭제하는 것은 일반 파일 시스템 데이터 세트를 삭제하는 것과 거의 동일합니다. 작업은 거의 즉각적으로 이루어지지만 백그라운드에서 여유 공간을 확보하는 데 몇 분 정도 걸릴 수 있습니다.
+
+[[zfs-zfs-rename]]
+=== 데이터 세트 이름 바꾸기
+
+데이터 세트의 이름을 변경하려면 `zfs rename` 을 사용합니다. 데이터 세트의 상위 데이터 세트을 변경하려면 이 명령도 사용합니다. 데이터 세트의 이름을 다른 상위 데이터 세트로 변경하면 상위 데이터 세트에서 상속된 속성 값이 변경됩니다. 데이터 세트의 이름을 바꾸면 마운트가 해제된 후 새 위치(새 상위 데이터 세트에서 상속됨)에 다시 마운트됩니다. 이 동작을 방지하려면 `-u` 를 사용하십시오.
+
+데이터 세트의 이름을 바꾸고 다른 상위 데이터 세트 아래로 이동합니다:
+
+[source, shell]
+....
+# zfs list
+NAME                   USED  AVAIL  REFER  MOUNTPOINT
+mypool                 780M  93.2G   144K  none
+mypool/ROOT            777M  93.2G   144K  none
+mypool/ROOT/default    777M  93.2G   777M  /
+mypool/tmp             176K  93.2G   176K  /tmp
+mypool/usr             704K  93.2G   144K  /usr
+mypool/usr/home        184K  93.2G   184K  /usr/home
+mypool/usr/mydataset  87.5K  93.2G  87.5K  /usr/mydataset
+mypool/usr/ports       144K  93.2G   144K  /usr/ports
+mypool/usr/src         144K  93.2G   144K  /usr/src
+mypool/var            1.21M  93.2G   614K  /var
+mypool/var/crash       148K  93.2G   148K  /var/crash
+mypool/var/log         178K  93.2G   178K  /var/log
+mypool/var/mail        144K  93.2G   144K  /var/mail
+mypool/var/tmp         152K  93.2G   152K  /var/tmp
+# zfs rename mypool/usr/mydataset mypool/var/newname
+# zfs list
+NAME                  USED  AVAIL  REFER  MOUNTPOINT
+mypool                780M  93.2G   144K  none
+mypool/ROOT           777M  93.2G   144K  none
+mypool/ROOT/default   777M  93.2G   777M  /
+mypool/tmp            176K  93.2G   176K  /tmp
+mypool/usr            616K  93.2G   144K  /usr
+mypool/usr/home       184K  93.2G   184K  /usr/home
+mypool/usr/ports      144K  93.2G   144K  /usr/ports
+mypool/usr/src        144K  93.2G   144K  /usr/src
+mypool/var           1.29M  93.2G   614K  /var
+mypool/var/crash      148K  93.2G   148K  /var/crash
+mypool/var/log        178K  93.2G   178K  /var/log
+mypool/var/mail       144K  93.2G   144K  /var/mail
+mypool/var/newname   87.5K  93.2G  87.5K  /var/newname
+mypool/var/tmp        152K  93.2G   152K  /var/tmp
+....
+
+스냅샷 이름 바꾸기는 동일한 명령을 사용합니다. 스냅샷의 특성상 이름을 변경해도 상위 데이터 세트는 변경되지 않습니다. 재귀 스냅샷의 이름을 바꾸려면 `-r` 을 지정하면 하위 데이터 세트에 있는 모든 스냅샷의 이름도 같은 이름으로 바뀝니다.
+
+[source, shell]
+....
+# zfs list -t snapshot
+NAME                                USED  AVAIL  REFER  MOUNTPOINT
+mypool/var/newname@first_snapshot      0      -  87.5K  -
+# zfs rename mypool/var/newname@first_snapshot new_snapshot_name
+# zfs list -t snapshot
+NAME                                   USED  AVAIL  REFER  MOUNTPOINT
+mypool/var/newname@new_snapshot_name      0      -  87.5K  -
+....
+
+[[zfs-zfs-set]]
+=== 데이터 세트 속성 설정하기
+
+각 ZFS 데이터 세트에는 그 동작을 제어하는 속성이 있습니다. 대부분의 속성은 상위 데이터세트에서 자동으로 상속되지만 로컬에서 재정의할 수 있습니다. 데이터 세트의 속성을 설정하려면 `zfs set _property=value dataset_` 를 사용합니다. 대부분의 속성에는 유효한 값의 집합이 제한되어 있으며, `zfs get` 은 가능한 각 속성과 유효한 값을 표시합니다. `zfs inherit` 를 사용하면 대부분의 속성이 상속된 값으로 되돌아갑니다. 사용자 정의 속성도 가능합니다. 이러한 속성은 데이터 세트 구성의 일부가 되며 데이터 세트 또는 그 내용에 대한 추가 정보를 제공합니다. 이러한 사용자 정의 속성을 ZFS의 일부로 제공되는 속성과 구별하려면 콜론( `:` )을 사용하여 속성에 대한 사용자 정의 네임스페이스를 만듭니다.
+
+[source, shell]
+....
+# zfs set custom:costcenter=1234 tank
+# zfs get custom:costcenter tank
+NAME PROPERTY           VALUE SOURCE
+tank custom:costcenter  1234  local
+....
+
+사용자 지정 속성을 제거하려면 `zfs inherit` 에 `-r` 을 사용합니다. 사용자 지정 속성이 상위 데이터 세트에 정의되어 있지 않은 경우 이 옵션을 사용하면 제거되지만 풀의 기록에는 여전히 변경 내용이 기록됩니다.
+
+[source, shell]
+....
+# zfs inherit -r custom:costcenter tank
+# zfs get custom:costcenter tank
+NAME    PROPERTY           VALUE              SOURCE
+tank    custom:costcenter  -                  -
+# zfs get all tank | grep custom:costcenter
+#
+....
+
+[[zfs-zfs-set-share]]
+==== 공유 속성을 얻고 설정하기
+
+일반적으로 사용되며 유용한 두 가지 데이터 세트 속성은 NFS 및 SMB 공유 옵션입니다. 이 설정은 ZFS가 네트워크에서 데이터 세트를 공유할지 여부와 방법을 정의합니다. 현재 FreeBSD는 NFS 공유 설정만 지원합니다. 공유의 현재 상태를 확인하려면 다음을 입력합니다:
+
+[source, shell]
+....
+# zfs get sharenfs mypool/usr/home
+NAME             PROPERTY  VALUE    SOURCE
+mypool/usr/home  sharenfs  on       local
+# zfs get sharesmb mypool/usr/home
+NAME             PROPERTY  VALUE    SOURCE
+mypool/usr/home  sharesmb  off      local
+....
+
+데이터 세트의 공유 옵션을 활성화 하려면:
+
+[source, shell]
+....
+#  zfs set sharenfs=on mypool/usr/home
+....
+
+`-alldirs`, `-maproot`, `-network` 등 NFS를 통해 데이터 세트를 공유하기 위한 다른 옵션을 설정합니다. NFS를 통해 공유되는 데이터 세트에 대한 옵션을 설정하려면 다음을 입력합니다:
+
+[source, shell]
+....
+#  zfs set sharenfs="-alldirs,-maproot=root,-network=192.168.1.0/24" mypool/usr/home
+....
+
+[[zfs-zfs-snapshot]]
+=== 스냅샷 관리하기
+
+<<zfs-term-snapshot,Snapshots>> 은 ZFS의 가장 강력한 기능 중 하나입니다. 스냅샷은 데이터 세트의 읽기 전용, 특정 시점 복사본을 제공합니다. COW(Copy-On-Write)를 사용하면 ZFS는 디스크에 이전 버전의 데이터를 보존하여 스냅샷을 빠르게 생성합니다. 스냅샷이 존재하지 않는 경우, ZFS는 데이터를 다시 쓰거나 삭제할 때 나중에 사용할 수 있도록 공간을 확보합니다. 스냅샷은 현재 데이터 세트와 이전 버전 간의 차이점만 기록하여 디스크 공간을 보존합니다. 개별 파일이나 디렉터리가 아닌 전체 데이터 세트에 대한 스냅샷을 허용합니다. 데이터 세트의 스냅샷은 그 안에 포함된 모든 것을 복제합니다. 여기에는 파일 시스템 속성, 파일, 디렉터리, 권한 등이 포함됩니다. 스냅샷은 처음 만들 때는 추가 공간을 사용하지 않지만 참조하는 블록이 변경되면 공간을 소비합니다. `-r` 로 만든 재귀 스냅샷은 데이터 세트와 하위 데이터 세트에 동일한 이름의 스냅샷을 생성하여 파일 시스템의 일관된 특정 시점의 스냅샷을 제공합니다. 이는 애플리케이션에 관련 데이터 세트에 파일이 있거나 서로 의존하는 파일이 있는 경우 중요할 수 있습니다. 스냅샷이 없으면 백업에는 서로 다른 시점의 파일 사본이 생성됩니다.
+
+ZFS의 스냅샷은 스냅샷 기능이 있는 다른 파일 시스템에도 없는 다양한 기능을 제공합니다. 스냅샷 사용의 일반적인 예는 소프트웨어 설치 또는 시스템 업그레이드와 같은 위험한 작업을 수행할 때 파일 시스템의 현재 상태를 빠르게 백업하는 것입니다. 작업이 실패한 경우 스냅샷으로 롤백하면 시스템이 스냅샷을 만들 때와 동일한 상태로 되돌아갑니다. 업그레이드가 성공했다면 스냅샷을 삭제하여 공간을 확보하세요. 스냅샷이 없으면 업그레이드에 실패하게 되면 백업을 복원해야 하는 경우가 많은데, 이 작업은 지루하고 시간이 오래 걸리며 시스템을 사용할 수 없는 다운타임이 발생할 수 있습니다. 스냅샷으로 롤백하면 시스템이 정상적으로 작동하는 동안에도 다운타임이 거의 또는 전혀 없이 빠르게 롤백할 수 있습니다. 백업에서 데이터를 복사하는 데 필요한 시간을 고려하면, 멀티 테라바이트 스토리지 시스템을 사용하는 것이 시간을 엄청나게 절약할 수 있습니다. 스냅샷은 풀의 전체 백업을 대체하는 것은 아니지만, 특정 시점에 데이터 세트 사본을 빠르고 쉽게 저장할 수 있는 방법을 제공합니다.
+
+[[zfs-zfs-snapshot-creation]]
+==== 스냅샷 생성하기
+
+스냅샷을 생성하려면 `zfs 스냅샷 _데이터셋_@_스냅샷이름_` 을 사용합니다. `-r` 을 추가하면 모든 하위 데이터 세트에 동일한 이름으로 재귀적 스냅샷이 생성됩니다.
+
+전체 풀의 재귀적 스냅샷을 만듭니다:
+
+[source, shell]
+....
+# zfs list -t all
+NAME                                   USED  AVAIL  REFER  MOUNTPOINT
+mypool                                 780M  93.2G   144K  none
+mypool/ROOT                            777M  93.2G   144K  none
+mypool/ROOT/default                    777M  93.2G   777M  /
+mypool/tmp                             176K  93.2G   176K  /tmp
+mypool/usr                             616K  93.2G   144K  /usr
+mypool/usr/home                        184K  93.2G   184K  /usr/home
+mypool/usr/ports                       144K  93.2G   144K  /usr/ports
+mypool/usr/src                         144K  93.2G   144K  /usr/src
+mypool/var                            1.29M  93.2G   616K  /var
+mypool/var/crash                       148K  93.2G   148K  /var/crash
+mypool/var/log                         178K  93.2G   178K  /var/log
+mypool/var/mail                        144K  93.2G   144K  /var/mail
+mypool/var/newname                    87.5K  93.2G  87.5K  /var/newname
+mypool/var/newname@new_snapshot_name      0      -  87.5K  -
+mypool/var/tmp                         152K  93.2G   152K  /var/tmp
+# zfs snapshot -r mypool@my_recursive_snapshot
+# zfs list -t snapshot
+NAME                                        USED  AVAIL  REFER  MOUNTPOINT
+mypool@my_recursive_snapshot                   0      -   144K  -
+mypool/ROOT@my_recursive_snapshot              0      -   144K  -
+mypool/ROOT/default@my_recursive_snapshot      0      -   777M  -
+mypool/tmp@my_recursive_snapshot               0      -   176K  -
+mypool/usr@my_recursive_snapshot               0      -   144K  -
+mypool/usr/home@my_recursive_snapshot          0      -   184K  -
+mypool/usr/ports@my_recursive_snapshot         0      -   144K  -
+mypool/usr/src@my_recursive_snapshot           0      -   144K  -
+mypool/var@my_recursive_snapshot               0      -   616K  -
+mypool/var/crash@my_recursive_snapshot         0      -   148K  -
+mypool/var/log@my_recursive_snapshot           0      -   178K  -
+mypool/var/mail@my_recursive_snapshot          0      -   144K  -
+mypool/var/newname@new_snapshot_name           0      -  87.5K  -
+mypool/var/newname@my_recursive_snapshot       0      -  87.5K  -
+mypool/var/tmp@my_recursive_snapshot           0      -   152K  -
+....
+
+스냅샷은 일반적인 `zfs list` 작업으로는 표시되지 않습니다. 스냅샷을 나열하려면 `-t snapshot` 을 `zfs list` 에 추가합니다. `-t all` 는 파일 시스템과 스냅샷을 모두 표시합니다.
+
+스냅샷은 직접 마운트되지 않으므로 `MOUNTPOINT` 열에 경로가 표시되지 않습니다. 스냅샷은 생성 후 읽기 전용이므로 ZFS는 `AVAIL` 열에 사용 가능한 디스크 공간을 언급하지 않습니다. 스냅샷을 원본 데이터 세트와 비교합니다:
+
+[source, shell]
+....
+# zfs list -rt all mypool/usr/home
+NAME                                    USED  AVAIL  REFER  MOUNTPOINT
+mypool/usr/home                         184K  93.2G   184K  /usr/home
+mypool/usr/home@my_recursive_snapshot      0      -   184K  -
+....
+
+데이터 세트와 스냅샷을 함께 표시하면 스냅샷이 <<zfs-term-cow,COW>> 방식으로 어떻게 작동하는지 알 수 있습니다. 스냅샷은 전체 파일 시스템 내용을 다시 저장하는 것이 아니라 변경된 부분( _델타_ )만 저장합니다. 즉, 스냅샷은 변경을 수행할 때 공간을 거의 차지하지 않습니다. 파일을 데이터 세트에 복사한 다음 두 번째 스냅샷을 생성하여 공간 사용량을 더 자세히 관찰하세요:
+
+[source, shell]
+....
+# cp /etc/passwd /var/tmp
+# zfs snapshot mypool/var/tmp@after_cp
+# zfs list -rt all mypool/var/tmp
+NAME                                   USED  AVAIL  REFER  MOUNTPOINT
+mypool/var/tmp                         206K  93.2G   118K  /var/tmp
+mypool/var/tmp@my_recursive_snapshot    88K      -   152K  -
+mypool/var/tmp@after_cp                   0      -   118K  -
+....
+
+두 번째 스냅샷에는 복사 작업 후 데이터 세트의 변경 사항이 포함됩니다. 이렇게 하면 공간을 크게 절약할 수 있습니다. `USED` 열에서는 `_mypool/var/tmp@my_recursive_snapshot_` 스냅샷 자체의 용량과 이후에 생성된 스냅샷 사이의 변경 사항을 보여줍니다.
+
+[[zfs-zfs-snapshot-diff]]
+==== 스냅샷 비교하기
+
+ZFS는 두 스냅샷 간의 콘텐츠 차이를 비교할 수 있는 기본 명령을 제공합니다. 이 명령은 사용자가 시간이 지남에 따라 파일 시스템이 어떻게 변했는지 확인하고자 할 때, 또는 시간이 지남에 따라 많은 스냅샷을 생성해야할 때 유용합니다. 예를 들어, `zfs diff` 를 사용하면 실수로 삭제한 파일이 여전히 포함된 최신 스냅샷을 찾을 수 있습니다. 이전 섹션에서 만든 두 개의 스냅샷에 대해 이 작업을 수행하면 다음과 같은 출력이 생성됩니다:
+
+[source, shell]
+....
+# zfs list -rt all mypool/var/tmp
+NAME                                   USED  AVAIL  REFER  MOUNTPOINT
+mypool/var/tmp                         206K  93.2G   118K  /var/tmp
+mypool/var/tmp@my_recursive_snapshot    88K      -   152K  -
+mypool/var/tmp@after_cp                   0      -   118K  -
+# zfs diff mypool/var/tmp@my_recursive_snapshot
+M       /var/tmp/
++       /var/tmp/passwd
+....
+
+이 명령은 지정된 스냅샷(이 경우 `_mypool/var/tmp@my_recursive_snapshot_` )과 라이브 파일 시스템 간의 변경 내용을 나열합니다. 첫 번째 열에는 변경 유형이 표시됩니다:
+
+[.informaltable]
+[cols="20%,80%"]
+|===
+
+|+
+|Adding the path or file.
+
+|-
+|Deleting the path or file.
+
+|M
+|Modifying the path or file.
+
+|R
+|Renaming the path or file.
+|===
+
+출력을 표와 비교하면, ZFS가 스냅샷 `_mypool/var/tmp@my_recursive_snapshot_` 을 생성한 후 [.filename]#passwd# 를 추가했음을 알 수 있습니다. 이로 인해 `_/var/tmp_` 에 마운트된 상위 디렉터리도 수정되었습니다.
+
+두 스냅샷을 비교하는 것은 ZFS 복제 기능을 사용하여 백업 목적으로 데이터 세트를 다른 호스트로 전송할 때 유용합니다.
+
+두 데이터 세트의 전체 데이터 세트 이름과 스냅샷 이름을 제공하여 두 스냅샷을 비교합니다:
+
+[source, shell]
+....
+# cp /var/tmp/passwd /var/tmp/passwd.copy
+# zfs snapshot mypool/var/tmp@diff_snapshot
+# zfs diff mypool/var/tmp@my_recursive_snapshot mypool/var/tmp@diff_snapshot
+M       /var/tmp/
++       /var/tmp/passwd
++       /var/tmp/passwd.copy
+# zfs diff mypool/var/tmp@my_recursive_snapshot mypool/var/tmp@after_cp
+M       /var/tmp/
++       /var/tmp/passwd
+....
+
+백업 관리자는 전송 호스트에서 받은 두 개의 스냅샷을 비교하여 데이터 세트의 실제 변경 사항을 확인할 수 있습니다. 자세한 내용은 <<zfs-zfs-send,Replication>> 섹션을 참조하세요.
+
+[[zfs-zfs-snapshot-rollback]]
+==== 스냅샷 롤백
+
+하나 이상의 스냅샷을 사용할 수 있는 경우 언제든지 해당 스냅샷으로 롤백할 수 있습니다. 데이터 세트의 현재 상태가 더 이상 유지되지 않거나 이전 버전을 선호하는 경우가 대부분입니다. 로컬 개발 테스트가 잘못되었거나, 시스템 업데이트가 잘못되어 시스템 기능을 방해하거나, 삭제된 파일이나 디렉터리를 복원해야 하는 등의 시나리오는 너무나 흔하게 발생합니다. 스냅샷을 롤백하려면 `zfs rollback _snapshotname_` 을 사용합니다. 변경 사항이 많으면 작업 시간이 오래 걸립니다. 이 시간 동안 데이터 세트는 항상 일관된 상태로 유지되는데, 이는 ACID 원칙을 준수하는 데이터베이스가 롤백을 수행하는 것과 매우 유사합니다. 이 작업은 다운타임 없이 데이터 세트가 라이브 상태이고 액세스할 수 있는 동안에 이루어집니다. 스냅샷이 롤백되면 데이터 세트는 원래 스냅샷을 만들었을 때와 동일한 상태가 됩니다. 스냅샷으로 롤백하면 해당 데이터 세트의 스냅샷에 포함되지 않은 다른 모든 데이터가 삭제됩니다. 나중에 일부 데이터가 필요할 때 이전 데이터로 롤백하기 전에 데이터 집합의 현재 상태를 스냅샷으로 찍어두는 것이 좋습니다. 이렇게 하면 사용자는 여전히 중요한 데이터를 잃지 않고 스냅샷 간에 롤백할 수 있습니다.
+
+첫 번째 예에서는 부주의한 `rm` 작업으로 인해 의도한 것보다 너무 많은 데이터가 제거되어 스냅샷을 롤백하는 경우입니다.
+
+[source, shell]
+....
+# zfs list -rt all mypool/var/tmp
+NAME                                   USED  AVAIL  REFER  MOUNTPOINT
+mypool/var/tmp                         262K  93.2G   120K  /var/tmp
+mypool/var/tmp@my_recursive_snapshot    88K      -   152K  -
+mypool/var/tmp@after_cp               53.5K      -   118K  -
+mypool/var/tmp@diff_snapshot              0      -   120K  -
+# ls /var/tmp
+passwd          passwd.copy     vi.recover
+# rm /var/tmp/passwd*
+# ls /var/tmp
+vi.recover
+....
+
+이 시점에서 사용자는 여분의 파일이 제거된 것을 알아차리고 이를 되돌리고 싶어합니다. ZFS는 정기적으로 중요한 데이터의 스냅샷을 수행할 때 롤백을 사용하여 파일을 쉽게 되돌릴 수 있는 방법을 제공합니다. 파일을 다시 가져오고 마지막 스냅샷부터 다시 시작하려면 다음 명령을 실행하세요:
+
+[source, shell]
+....
+# zfs rollback mypool/var/tmp@diff_snapshot
+# ls /var/tmp
+passwd          passwd.copy     vi.recover
+....
+
+롤백 작업으로 데이터 세트가 마지막 스냅샷의 상태로 복원되었습니다. 이후에 생성된 다른 스냅샷을 사용하여 훨씬 이전에 생성된 스냅샷으로 롤백할 수도 있습니다. 이 작업을 시도할 때 ZFS는 이 경고를 표시합니다:
+
+[source, shell]
+....
+# zfs list -rt snapshot mypool/var/tmp
+AME                                   USED  AVAIL  REFER  MOUNTPOINT
+mypool/var/tmp@my_recursive_snapshot    88K      -   152K  -
+mypool/var/tmp@after_cp               53.5K      -   118K  -
+mypool/var/tmp@diff_snapshot              0      -   120K  -
+# zfs rollback mypool/var/tmp@my_recursive_snapshot
+cannot rollback to 'mypool/var/tmp@my_recursive_snapshot': more recent snapshots exist
+use '-r' to force deletion of the following snapshots:
+mypool/var/tmp@after_cp
+mypool/var/tmp@diff_snapshot
+....
+
+이 경고는 데이터 집합의 현재 상태와 사용자가 롤백하려는 스냅샷 사이에 스냅샷이 존재한다는 의미입니다. 롤백을 완료하려면 이러한 스냅샷을 삭제합니다. 스냅샷은 읽기 전용이므로 ZFS는 데이터 세트의 여러 상태 간의 모든 변경 사항을 추적할 수 없습니다. 사용자가 `-r` 을 지정하여 원하는 작업임을 확인하지 않는 한 ZFS는 영향을 받는 스냅샷을 삭제하지 않습니다. 이러한 의도가 있고 모든 중간 스냅샷이 손실될 경우의 결과를 이해했다면 명령을 실행하세요:
+
+[source, shell]
+....
+# zfs rollback -r mypool/var/tmp@my_recursive_snapshot
+# zfs list -rt snapshot mypool/var/tmp
+NAME                                   USED  AVAIL  REFER  MOUNTPOINT
+mypool/var/tmp@my_recursive_snapshot     8K      -   152K  -
+# ls /var/tmp
+vi.recover
+....
+
+`zfs list -t snapshot` 의 출력은 `zfs rollback -r` 의 결과로 중간 스냅샷이 제거된 것을 보여줍니다.
+
+[[zfs-zfs-snapshot-snapdir]]
+==== 스냅샷에서 개별 파일 복원하기
+
+스냅샷은 상위 데이터 세트 아래의 숨겨진 디렉터리에 있습니다: [.filename]#.zfs/snapshots/snapshotname#. 기본적으로 이 디렉터리는 표준 `ls -a` 를 실행해도 표시되지 않습니다. 디렉터리가 표시되지 않더라도 일반 디렉터리처럼 액세스할 수 있습니다. `snapdir` 라는 속성은 이러한 숨겨진 디렉터리를 디렉토리 목록에 표시할지 여부를 제어합니다. 이 속성을 `visible` 로 설정하면 `ls` 및 디렉토리 내용을 다루는 다른 명령의 출력에 표시할 수 있습니다.
+
+[source, shell]
+....
+# zfs get snapdir mypool/var/tmp
+NAME            PROPERTY  VALUE    SOURCE
+mypool/var/tmp  snapdir   hidden   default
+# ls -a /var/tmp
+.               ..              passwd          vi.recover
+# zfs set snapdir=visible mypool/var/tmp
+# ls -a /var/tmp
+.               ..              .zfs            passwd          vi.recover
+....
+
+개별 파일을 스냅샷에서 상위 데이터 세트로 다시 복사하여 이전 상태로 복원합니다. [.filename]#.zfs/snapshot# 아래의 디렉토리 구조에는 앞서 만든 스냅샷과 같은 이름의 디렉터리가 있어 쉽게 식별할 수 있습니다. 다음 예제에서는 파일의 최신 버전이 포함된 스냅샷에서 파일을 복사하여 숨겨진 [.filename]#.zfs# 디렉터리에서 파일을 복원하는 방법을 보여 줍니다:
+
+[source, shell]
+....
+# rm /var/tmp/passwd
+# ls -a /var/tmp
+.               ..              .zfs            vi.recover
+# ls /var/tmp/.zfs/snapshot
+after_cp                my_recursive_snapshot
+# ls /var/tmp/.zfs/snapshot/after_cp
+passwd          vi.recover
+# cp /var/tmp/.zfs/snapshot/after_cp/passwd /var/tmp
+....
+
+`snapdir` 속성이 숨김으로 설정되어 있어도 `ls .zfs/snapshot` 을 실행하면 해당 디렉터리의 내용이 나열됩니다. 관리자는 이러한 디렉터리를 표시할지 여부를 결정합니다. 이것은 데이터 세트별 설정입니다. 이 숨겨진 [.filename]#.zfs/snapshot# 에서 파일 또는 디렉터리를 복사하는 것은 매우 간단합니다. 다른 방법으로 시도하면 이 오류가 발생합니다:
+
+[source, shell]
+....
+# cp /etc/rc.conf /var/tmp/.zfs/snapshot/after_cp/
+cp: /var/tmp/.zfs/snapshot/after_cp/rc.conf: Read-only file system
+....
+
+이 오류는 사용자에게 스냅샷이 읽기 전용이며 생성 후에는 변경할 수 없음을 알려줍니다. 스냅샷 디렉터리로 파일을 복사하거나 스냅샷 디렉터리에서 파일을 제거하는 것은 모두 허용되지 않으며, 이는 파일이 나타내는 데이터 세트의 상태를 변경할 수 있기 때문입니다.
+
+스냅샷은 스냅샷 시점 이후 상위 파일 시스템이 얼마나 많이 변경되었는지에 따라 공간을 소비합니다. 스냅샷의 `written` 속성은 스냅샷이 사용하는 공간을 추적합니다.
+
+스냅샷을 삭제하고 공간을 확보하려면 `zfs destroy _dataset_@_snapshot_` 을 사용합니다. `-r` 을 추가하면 상위 데이터세트에서 이름이 같은 모든 스냅샷이 재귀적으로 제거됩니다. 명령에 `-n -v` 를 추가하면 삭제할 스냅샷 목록과 실제 삭제 작업을 수행하지 않고도 회수할 수 있는 공간의 예상치를 표시합니다.
+
+[[zfs-zfs-clones]]
+=== 클론 관리하기
+
+클론은 일반 데이터 세트처럼 취급되는 스냅샷의 복사본입니다. 스냅샷과 달리 복제본은 쓰기 및 마운트가 가능하며 고유한 속성을 가집니다. `zfs clone` 을 사용하여 클론을 생성한 후에는 원본 스냅샷을 삭제할 수 없습니다. 복제본과 스냅샷 간의 자식/부모 관계를 되돌리려면 `zfs promote` 를 사용합니다. 복제본을 승격하면 스냅샷이 원래 부모 데이터 세트가 아닌 복제본의 자식이 됩니다. 이렇게 하면 ZFS가 공간을 차지하는 방식이 변경되지만 실제로 소비되는 공간의 양은 변경되지 않습니다. 스냅샷의 원래 위치 아래뿐만 아니라 ZFS 파일 시스템 계층 구조 내 어디든 클론을 마운트할 수 있습니다.
+
+복제 기능을 표시하려면 이 예제 데이터 세트를 사용합니다:
+
+[source, shell]
+....
+# zfs list -rt all camino/home/joe
+NAME                    USED  AVAIL  REFER  MOUNTPOINT
+camino/home/joe         108K   1.3G    87K  /usr/home/joe
+camino/home/joe@plans    21K      -  85.5K  -
+camino/home/joe@backup    0K      -    87K  -
+....
+
+클론의 일반적인 용도는 특정 데이터 세트를 실험하면서 문제가 발생할 경우 백업할 수 있도록 스냅샷을 보관하는 것입니다. 스냅샷은 변경할 수 없으므로 스냅샷의 읽기/쓰기 복제본을 만듭니다. 복제본에서 원하는 결과를 얻은 후 복제본을 데이터 세트로 승격하고 이전 파일 시스템을 제거합니다. 복제본과 데이터 세트가 문제 없이 공존할 수 있으므로 상위 데이터 세트를 반드시 제거할 필요는 없습니다.
+
+[source, shell]
+....
+# zfs clone camino/home/joe@backup camino/home/joenew
+# ls /usr/home/joe*
+/usr/home/joe:
+backup.txz     plans.txt
+
+/usr/home/joenew:
+backup.txz     plans.txt
+# df -h /usr/home
+Filesystem          Size    Used   Avail Capacity  Mounted on
+usr/home/joe        1.3G     31k    1.3G     0%    /usr/home/joe
+usr/home/joenew     1.3G     31k    1.3G     0%    /usr/home/joenew
+....
+
+복제본을 만들면 스냅샷을 찍을 때 데이터 세트의 상태와 똑같은 복사본이 만들어집니다. 이제 복제본을 원본 데이터세트와 독립적으로 변경할 수 있습니다. 둘 사이의 연결이 바로 스냅샷입니다. ZFS는 이 연결을 `origin` 속성에 기록합니다. `zfs promote` 로 복제본을 승격하면 복제본이 독립적인 데이터 세트가 됩니다. 이렇게 하면 `origin` 속성의 값이 제거되고 스냅샷에서 새로 독립된 데이터 세트의 연결이 끊어집니다. 이 예제는 이를 보여줍니다:
+
+[source, shell]
+....
+# zfs get origin camino/home/joenew
+NAME                  PROPERTY  VALUE                     SOURCE
+camino/home/joenew    origin    camino/home/joe@backup    -
+# zfs promote camino/home/joenew
+# zfs get origin camino/home/joenew
+NAME                  PROPERTY  VALUE   SOURCE
+camino/home/joenew    origin    -       -
+....
+
+예를 들어 승격된 복제본에 [.filename]#loader.conf# 를 복사하는 등의 일부 변경을 수행하면 이 경우 이전 디렉터리는 더 이상 사용되지 않게 됩니다. 대신 승격된 클론이 이를 대체할 수 있습니다. 이렇게 하려면 먼저 이전 데이터세트를 `zfs destroy` 한 다음, 복제본을 이전 데이터세트 이름(또는 완전히 다른 이름으로)으로 `zfs rename` 를 수행합니다.
+
+[source, shell]
+....
+# cp /boot/defaults/loader.conf /usr/home/joenew
+# zfs destroy -f camino/home/joe
+# zfs rename camino/home/joenew camino/home/joe
+# ls /usr/home/joe
+backup.txz     loader.conf     plans.txt
+# df -h /usr/home
+Filesystem          Size    Used   Avail Capacity  Mounted on
+usr/home/joe        1.3G    128k    1.3G     0%    /usr/home/joe
+....
+
+복제된 스냅샷은 이제 일반 데이터 세트입니다. 여기에는 원본 스냅샷의 모든 데이터와 [.filename]#loader.conf# 와 같이 추가한 파일이 포함됩니다. 클론은 다양한 시나리오에서 ZFS 사용자에게 유용한 기능을 제공합니다. 예를 들어, 설치된 애플리케이션의 다른 세트를 포함하는 스냅샷으로 jail을 제공할 수 있습니다. 사용자는 이러한 스냅샷을 복제하고 원하는 대로 애플리케이션을 추가할 수 있습니다. 변경 사항이 만족스러우면 복제본을 전체 데이터 세트로 승격하여 최종 사용자가 실제 데이터 세트에서 작업하는 것처럼 사용할 수 있도록 제공하세요. 이렇게 하면 저장소를 제공할 때 시간과 관리 오버헤드를 절약할 수 있습니다.
+
+[[zfs-zfs-send]]
+=== 복제 (Replication)
+
+한 장소에서 하나의 풀에 데이터를 한 곳에 보관하면 도난, 자연재해 또는 인적 재해와 같은 위험에 노출될 수 있습니다. 따라서 전체 풀을 정기적으로 백업하는 것이 중요합니다. ZFS는 데이터의 스트림 표현을 표준 출력으로 전송할 수 있는 내장 직렬화 기능을 제공합니다. 이 기능을 사용하면 로컬 시스템에 연결된 다른 풀에 데이터를 저장할 수 있으며, 네트워크를 통해 다른 시스템으로 데이터를 전송할 수도 있습니다. 스냅샷은 이 복제의 기본입니다( <<zfs-zfs-snapshot,ZFS snapshots>> 섹션 참조 ). 데이터 복제에 사용되는 명령은 `zfs send` 와 `zfs receive` 입니다.
+
+이 예는 이 두 풀을 사용한 ZFS 복제를 보여줍니다:
+
+[source, shell]
+....
+# zpool list
+NAME    SIZE  ALLOC   FREE   CKPOINT  EXPANDSZ   FRAG   CAP  DEDUP  HEALTH  ALTROOT
+backup  960M    77K   896M         -         -     0%    0%  1.00x  ONLINE  -
+mypool  984M  43.7M   940M         -         -     0%    4%  1.00x  ONLINE  -
+....
+
+_mypool_ 이라는 이름의 풀은 정기적으로 데이터 쓰기와 읽기가 이루어지는 기본 풀입니다. 기본 풀을 사용할 수 없게 될 경우를 대비해 두 번째 대기 풀 _backup_ 을 사용합니다. 이 페일오버는 ZFS에 의해 자동으로 수행되지 않으며, 필요한 경우 시스템 관리자가 수동으로 수행해야 한다는 점에 유의하세요. 스냅샷을 사용하여 복제할 일관된 파일 시스템 버전을 제공하세요. _mypool_ 의 스냅샷을 생성한 후 스냅샷 복제를 통해 _backup_ 풀에 복사합니다. 여기에는 가장 최근 스냅샷 이후 변경된 내용은 포함되지 않습니다.
+
+[source, shell]
+....
+# zfs snapshot mypool@backup1
+# zfs list -t snapshot
+NAME                    USED  AVAIL  REFER  MOUNTPOINT
+mypool@backup1             0      -  43.6M  -
+....
+
+이제 스냅샷이 존재하므로 `zfs send` 를 사용하여 스냅샷의 내용을 출력하는 스트림을 생성합니다. 이 스트림을 파일로 저장하거나 다른 풀에서 수신합니다. 스트림을 표준 출력에 쓰되, 파일이나 파이프로 리디렉션하지 않으면 오류가 발생합니다:
+
+[source, shell]
+....
+# zfs send mypool@backup1
+Error: Stream can not be written to a terminal.
+You must redirect standard output.
+....
+
+`zfs send` 로 데이터 세트를 백업하려면 마운트된 백업 풀에 있는 파일로 리디렉션합니다. 풀에 전송된 스냅샷의 크기, 즉 이전 스냅샷의 변경 사항이 아닌 스냅샷에 포함된 데이터를 수용할 수 있는 충분한 여유 공간이 있는지 확인합니다.
+
+[source, shell]
+....
+# zfs send mypool@backup1 > /backup/backup1
+# zpool list
+NAME    SIZE  ALLOC   FREE   CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP  HEALTH  ALTROOT
+backup  960M  63.7M   896M         -         -     0%     6%  1.00x  ONLINE  -
+mypool  984M  43.7M   940M         -         -     0%     4%  1.00x  ONLINE  -
+....
+
+`zfs send` 는 _backup1_ 이라는 스냅샷의 모든 데이터를 _backup_ 이라는 풀로 전송했습니다. 이러한 스냅샷을 자동으로 생성하고 전송하려면 man:cron[8] 작업을 사용합니다.
+
+ZFS는 백업을 아카이브 파일로 저장하는 대신 라이브 파일 시스템으로 수신하여 백업된 데이터에 직접 액세스할 수 있습니다. 이러한 스트림에 포함된 실제 데이터에 액세스하려면 `zfs receive` 를 사용하여 스트림을 파일 및 디렉터리로 다시 변환합니다. 아래 예는 파이프를 사용하여 `zfs send` 와 `zfs receive` 를 결합하여 한 풀에서 다른 풀로 데이터를 복사하는 예제입니다. 전송이 완료된 후 수신 풀에서 직접 데이터를 사용합니다. 데이터 세트는 빈 데이터 세트로만 복제할 수 있습니다.
+
+[source, shell]
+....
+# zfs snapshot mypool@replica1
+# zfs send -v mypool@replica1 | zfs receive backup/mypool
+send from @ to mypool@replica1 estimated size is 50.1M
+total estimated size is 50.1M
+TIME        SENT   SNAPSHOT
+
+# zpool list
+NAME    SIZE  ALLOC   FREE   CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP  HEALTH  ALTROOT
+backup  960M  63.7M   896M         -         -     0%     6%  1.00x  ONLINE  -
+mypool  984M  43.7M   940M         -         -     0%     4%  1.00x  ONLINE  -
+....
+
+[[zfs-send-incremental]]
+==== 증분 백업
+
+`zfs send` 는 두 스냅샷 간의 차이를 확인하고 두 스냅샷 간의 개별 차이를 전송할 수도 있습니다. 이렇게 하면 디스크 공간과 전송 시간을 절약할 수 있습니다. 예를 들어:
+
+[source, shell]
+....
+# zfs snapshot mypool@replica2
+# zfs list -t snapshot
+NAME                    USED  AVAIL  REFER  MOUNTPOINT
+mypool@replica1         5.72M      -  43.6M  -
+mypool@replica2             0      -  44.1M  -
+# zpool list
+NAME    SIZE  ALLOC   FREE   CKPOINT  EXPANDSZ   FRAG   CAP  DEDUP  HEALTH  ALTROOT
+backup  960M  61.7M   898M         -         -     0%    6%  1.00x  ONLINE  -
+mypool  960M  50.2M   910M         -         -     0%    5%  1.00x  ONLINE  -
+....
+
+_replica2_ 라는 두 번째 스냅샷을 만듭니다. 이 두 번째 스냅샷에는 현재와 이전 스냅샷인 _replica1_ 사이에 파일 시스템에 대한 변경 사항이 포함됩니다. `zfs send -i` 를 사용하여 스냅샷 쌍을 지정하면 변경된 데이터가 포함된 증분 복제 스트림이 생성됩니다. 초기 스냅샷이 수신 측에 이미 존재하는 경우 이 방법은 성공합니다.
+
+[source, shell]
+....
+# zfs send -v -i mypool@replica1 mypool@replica2 | zfs receive /backup/mypool
+send from @replica1 to mypool@replica2 estimated size is 5.02M
+total estimated size is 5.02M
+TIME        SENT   SNAPSHOT
+
+# zpool list
+NAME    SIZE  ALLOC   FREE   CKPOINT  EXPANDSZ   FRAG  CAP  DEDUP  HEALTH  ALTROOT
+backup  960M  80.8M   879M         -         -     0%   8%  1.00x  ONLINE  -
+mypool  960M  50.2M   910M         -         -     0%   5%  1.00x  ONLINE  -
+
+# zfs list
+NAME                         USED  AVAIL  REFER  MOUNTPOINT
+backup                      55.4M   240G   152K  /backup
+backup/mypool               55.3M   240G  55.2M  /backup/mypool
+mypool                      55.6M  11.6G  55.0M  /mypool
+
+# zfs list -t snapshot
+NAME                                         USED  AVAIL  REFER  MOUNTPOINT
+backup/mypool@replica1                       104K      -  50.2M  -
+backup/mypool@replica2                          0      -  55.2M  -
+mypool@replica1                             29.9K      -  50.0M  -
+mypool@replica2                                 0      -  55.0M  -
+....
+
+증분 스트림은 _replica1_ 의 전체가 아닌 변경된 데이터만 복제했습니다. 차이점만 전송하면 매번 전체 풀을 복사하지 않아도 되므로 전송 시간이 훨씬 단축되고 디스크 공간도 절약됩니다. 이 방법은 느린 네트워크를 통해 복제하거나 전송된 바이트당 한 번만 충전할 때 유용합니다.
+
+풀 _mypool_ 의 파일 및 데이터와 함께 새 파일 시스템인 _backup/mypool_ 을 사용할 수 있습니다. `-p` 를 지정하면 압축 설정, 할당량, 마운트 지점을 포함한 데이터 세트 속성을 복사합니다. `-R` 을 지정하면 데이터 세트의 모든 하위 데이터 세트와 해당 속성을 함께 복사합니다. 송수신을 자동화하여 두 번째 풀에 정기적인 백업을 생성합니다.
+
+[[zfs-send-ssh]]
+==== SSH를 통한 백업의 암호화 전송
+
+네트워크를 통해 스트림을 전송하는 것은 원격 백업을 유지하는 좋은 방법이지만 단점이 있습니다. 네트워크 링크를 통해 전송되는 데이터는 암호화되지 않으므로 전송하는 사용자 모르게 누구나 스트림을 가로채서 다시 데이터로 변환할 수 있습니다. 이는 인터넷을 통해 원격 호스트로 스트림을 전송할 때 바람직하지 않습니다. 네트워크 연결을 통해 전송되는 데이터를 안전하게 암호화하려면 SSH를 사용하세요. ZFS는 표준 출력에서 스트림을 리디렉션해야 하므로 SSH를 통해 스트림을 파이프하는 것이 쉽습니다. 전송 중 및 원격 시스템에서 파일 시스템의 콘텐츠를 암호화하여 유지하려면 https://wiki.freebsd.org/PEFS[PEFS] 를 사용하는 것이 좋습니다.
+
+일부 설정을 변경하고 보안 예방 조치를 먼저 취하세요. 여기에서는 `zfs send` 작업에 필요한 단계를 설명합니다. SSH에 대한 자세한 내용은 crossref:security[openssh,”OpenSSH”] 를 참조하세요.
+
+다음과 같이 구성을 변경합니다:
+
+* SSH 키를 사용하여 송신 호스트와 수신 호스트 간 비밀번호 없는 SSH 액세스
+* ZFS는 스트림을 보내고 받으려면 `root` 사용자의 권한이 필요합니다. 이를 위해서는 수신 시스템에 `root` 로 로그인해야 합니다.
+* 보안상의 이유로 인해 `root` 는 기본적으로 로그인할 수 없습니다.
+* 각 시스템에서 `root` 가 아닌 사용자가 각각의 송수신 작업을 수행할 수 있도록 허용하려면 <<zfs-zfs-allow,ZFS Delegation>> 시스템을 사용합니다. 보내는 시스템에서:
++
+[source, shell]
+....
+# zfs allow -u someuser send,snapshot mypool
+....
+
+* 풀을 마운트하려면 권한이 없는 사용자가 디렉터리를 소유해야 하며 일반 사용자는 파일 시스템을 마운트할 수 있는 권한이 있어야 합니다.
+
+수신 시스템에서:
++
+[source, shell]
+....
+# sysctl vfs.usermount=1
+vfs.usermount: 0 -> 1
+# echo vfs.usermount=1 >> /etc/sysctl.conf
+# zfs create recvpool/backup
+# zfs allow -u someuser create,mount,receive recvpool/backup
+# chown someuser /recvpool/backup
+....
+
+권한이 없는 사용자는 이제 데이터 세트를 수신하고 마운트할 수 있으며, _home_ 데이터 세트를 원격 시스템에 복제합니다:
+
+[source, shell]
+....
+% zfs snapshot -r mypool/home@monday
+% zfs send -R mypool/home@monday | ssh someuser@backuphost zfs recv -dvu recvpool/backup
+....
+
+_mypool_ 풀에 파일 시스템 데이터 세트 _home_ 의 _monday_ 라는 재귀 스냅샷을 만듭니다. 그런 다음 `zfs send -R` 에 데이터 세트, 모든 하위 데이터 세트, 스냅샷, 클론 및 설정을 스트림에 포함합니다. SSH를 통해 출력을 원격 호스트 _backuphost_ 의 대기 중인 `zfs receive` 로 파이프합니다. IP 주소나 정규화된 도메인 이름을 사용하는 것이 좋습니다. 수신 머신은 _recvpool_ 풀의 _backup_ 데이터 세트에 데이터를 씁니다. `zfs recv` 에 `-d` 를 추가하면 수신 측의 풀 이름을 스냅샷의 이름으로 덮어씁니다. `-u` 를 사용하면 수신 측에 파일 시스템이 마운트되지 않습니다. `-v` 를 사용하면 경과된 시간 및 전송된 데이터 양을 포함하여 전송에 대한 자세한 정보가 표시됩니다.
+
+[[zfs-zfs-quota]]
+=== 데이터 세트, 사용자, 그리고 그룹 할당량
+
+특정 데이터 세트가 사용하는 공간의 양을 제한하려면 <<zfs-term-quota,Dataset quotas>> 을 사용합니다. <<zfs-term-refquota,Reference Quotas>> 도 거의 같은 방식으로 작동하지만 스냅샷 및 하위 데이터 세트를 제외하고 데이터 세트 자체에서 사용하는 공간을 계산합니다. 마찬가지로, 사용자 또는 그룹이 풀 또는 데이터 집합의 모든 공간을 사용하지 못하도록 하려면 <<zfs-term-userquota,user>> 및 <<zfs-term-groupquota,group>> 할당량을 사용합니다.
+
+다음 예제에서는 사용자가 이미 시스템에 존재한다고 가정합니다. 시스템에 사용자를 추가하기 전에 먼저 홈 데이터 세트를 생성하고 `mountpoint` 를 `/home/_bob_` 로 설정해야 합니다. 그런 다음 사용자를 만들고 홈 디렉터리가 데이터 세트의 `mountpoint` 위치를 가리키도록 합니다. 이렇게 하면 기존에 존재할 수 있는 홈 디렉터리 경로를 섀도잉하지 않고 소유자 및 그룹 권한을 올바르게 설정할 수 있습니다.
+
+[.filename]#storage/home/bob# 에 대해 10GB의 데이터 세트 할당량을 적용하려면:
+
+[source, shell]
+....
+# zfs set quota=10G storage/home/bob
+....
+
+[.filename]#storage/home/bob# 에 대해 10GB의 참조 할당량을 적용하려면:
+
+[source, shell]
+....
+# zfs set refquota=10G storage/home/bob
+....
+
+[.filename]#storage/home/bob#에 대한 할당량 10GB를 제거하려면:
+
+[source, shell]
+....
+# zfs set quota=none storage/home/bob
+....
+
+일반적인 형식은 `userquota@_user_=_size_` 이며, 사용자 이름은 이 형식 중 하나이어야 합니다:
+
+* _joe_ 와 같은 POSIX 호환 이름.
+* _789_ 와 같은 POSIX 숫자 ID.
+* _joe.bloggs@example.com_ 같은 SID 이름.
+* _S-123-456-789_ 같은 SID 숫자 ID.
+
+예를 들어 _joe_ 라는 사용자에 대해 50GB의 사용자 할당량을 적용하려면:
+
+[source, shell]
+....
+# zfs set userquota@joe=50G
+....
+
+모든 할당량을 제거하려면:
+
+[source, shell]
+....
+# zfs set userquota@joe=none
+....
+
+[NOTE]
+====
+사용자 할당량 속성은 `zfs get all` 로 표시되지 않습니다. `root` 가 아닌 사용자는 `userquota` 권한이 부여되지 않는 한 다른 사용자의 할당량을 볼 수 없습니다. 이 권한이 있는 사용자는 모든 사람의 할당량을 보고 설정할 수 있습니다.
+====
+
+그룹 할당량을 설정하는 일반적인 형식은 다음과 같습니다: `groupquota@_group_=_size_`.
+
+_firstgroup_ 에 대한 할당량을 50GB로 설정하려면:
+
+[source, shell]
+....
+# zfs set groupquota@firstgroup=50G
+....
+
+_firstgroup_ 에 대한 할당량을 제거하거나 할당량 설정이 없는지 확인하려면:
+
+[source, shell]
+....
+# zfs set groupquota@firstgroup=none
+....
+
+사용자 할당량 속성과 마찬가지로 `root` 가 아닌 사용자는 자신이 속한 그룹과 관련된 할당량을 볼 수 있습니다. `groupquota` 권한 또는 `root` 권한이 있는 사용자는 모든 그룹의 모든 할당량을 보고 설정할 수 있습니다.
+
+할당량과 함께 파일 시스템 또는 스냅샷에서 각 사용자가 사용하는 공간을 표시하려면 `zfs userspace` 를 사용합니다. 그룹 정보를 보려면 `zfs groupspace` 를 사용합니다. 지원되는 옵션 또는 특정 옵션만 표시하는 방법에 대한 자세한 내용은 man:zfs[1]을 참조하십시오.
+
+권한 있는 사용자와 `root` 는 [.filename]#storage/home/bob# 에 대한 할당량을 다음으로 나열할 수 있습니다:
+
+[source, shell]
+....
+# zfs get quota storage/home/bob
+....
+
+[[zfs-zfs-reservation]]
+=== 예약
+
+<<zfs-term-reservation,Reservations>> 은 데이터 집합에서 항상 사용 가능한 공간을 보장합니다. 예약된 공간은 다른 데이터 세트에서 사용할 수 없습니다. 이 유용한 기능을 사용하면 중요한 데이터 세트나 로그 파일에 여유 공간을 확보할 수 있습니다.
+
+`reservation` 속성의 일반적인 형식은 `reservation=_size_` 이므로 [.filename]#storage/home/bob# 에 10GB의 예약을 설정하려면 다음과 같이 사용합니다:
+
+[source, shell]
+....
+# zfs set reservation=10G storage/home/bob
+....
+
+예약을 삭제하려면:
+
+[source, shell]
+....
+# zfs set reservation=none storage/home/bob
+....
+
+동일한 원칙이 <<zfs-term-refreservation,Reference Reservation>> 을 설정하기 위한 `refreservation` 속성에도 적용되며, 일반적인 형식은 `refreservation=_size_` 입니다.
+
+다음 명령은 [.filename]#storage/home/bob# 에 있는 모든 예약 또는 예약을 표시합니다:
+
+[source, shell]
+....
+# zfs get reservation storage/home/bob
+# zfs get refreservation storage/home/bob
+....
+
+[[zfs-zfs-compression]]
+=== 압축
+
+ZFS는 투명한 압축을 제공합니다. 블록 수준에서 데이터를 압축하면 공간이 절약되고 디스크 처리량도 증가합니다. 데이터가 25% 압축되면 압축된 데이터는 압축되지 않은 버전과 동일한 속도로 디스크에 기록되므로 효과적인 쓰기 속도는 125%에 이릅니다. 압축은 추가 메모리를 필요로 하지 않기 때문에 <<zfs-zfs-deduplication,Deduplication>> 에 대한 훌륭한 대안이 될 수도 있습니다.
+
+ZFS는 각각 다른 장단점을 가진 다양한 압축 알고리즘을 제공합니다. ZFS v5000에 LZ4 압축을 도입하면 다른 알고리즘의 큰 성능 저하 없이 전체 풀을 압축할 수 있습니다. LZ4의 가장 큰 장점은 _조기 중단_ 기능입니다. LZ4가 데이터의 헤더 부분에서 최소 12.5%의 압축률을 달성하지 못하면 ZFS는 이미 압축되었거나 압축할 수 없는 데이터를 압축하기 위해 CPU 사이클을 낭비하지 않도록 해당 블록을 압축되지 않은 상태로 씁니다. ZFS에서 사용할 수 있는 다양한 압축 알고리즘에 대한 자세한 내용은 용어 섹션의 <<zfs-term-compression,Compression>> 항목을 참조하세요.
+
+관리자는 데이터 세트 속성을 사용하여 압축의 효과를 확인할 수 있습니다.
+
+[source, shell]
+....
+# zfs get used,compressratio,compression,logicalused mypool/compressed_dataset
+NAME        PROPERTY          VALUE     SOURCE
+mypool/compressed_dataset  used              449G      -
+mypool/compressed_dataset  compressratio     1.11x     -
+mypool/compressed_dataset  compression       lz4       local
+mypool/compressed_dataset  logicalused       496G      -
+....
+
+데이터 세트는 449GB의 공간(사용된 속성)을 사용하고 있습니다. 압축을 하지 않았다면 496GB의 공간( `logicalused`` 속성 )이 필요했을 것입니다. 그 결과 압축 비율은 1.11:1이 됩니다.
+
+압축은 <<zfs-term-userquota,User Quotas>> 과 함께 사용하면 예기치 않은 부작용이 발생할 수 있습니다. 사용자 할당량은 사용자가 데이터 세트에서 _압축 후_ 실제로 소비하는 공간을 제한합니다. 할당량이 10GB인 사용자가 10GB의 압축 가능한 데이터를 쓰는 경우, 여전히 더 많은 데이터를 저장할 수 있습니다. 나중에 압축 가능한 데이터가 더 많거나 적은 파일(예: 데이터베이스)을 업데이트하면 사용 가능한 공간의 양이 변경됩니다. 이로 인해 사용자가 실제 데이터의 양( `logicalused` 속성 )을 늘리지 않았지만 압축 변경으로 인해 할당량 제한에 도달하는 이상한 상황이 발생할 수 있습니다.
+
+압축은 백업과 비슷한 예기치 않은 상호 작용을 일으킬 수 있습니다. 할당량은 사용 가능한 백업 공간을 충분히 확보하기 위해 데이터 스토리지를 제한하는 데 자주 사용됩니다. 할당량은 압축을 고려하지 않기 때문에 ZFS는 압축되지 않은 백업에 적합한 것보다 더 많은 데이터를 쓸 수 있습니다.
+
+[[zfs-zfs-compression-zstd]]
+=== Zstandard 압축
+
+OpenZFS 2.0에는 새로운 압축 알고리즘이 추가되었습니다. Zstandard(Zstd)는 기본 LZ4보다 높은 압축률을 제공하는 동시에 대체 압축 방식인 gzip보다 훨씬 빠른 속도를 제공합니다. OpenZFS 2.0은 FreeBSD 12.1-RELEASE부터 package:sysutils/openzfs[] 를 통해 사용할 수 있으며, FreeBSD 13.0-RELEASE부터는 기본값이 되었습니다.
+
+Zstd는 다양한 압축 레벨을 제공하여 성능 대비 압축률을 세밀하게 제어할 수 있습니다. 압축 해제 속도가 압축 레벨과 무관하다는 것이 Zstd의 주요 장점 중 하나입니다. 한 번 쓰지만 자주 읽는 데이터의 경우, Zstd를 사용하면 읽기 성능 저하 없이 가장 높은 압축 수준을 사용할 수 있습니다.
+
+데이터를 자주 업데이트하는 경우에도 압축을 활성화하면 성능이 향상되는 경우가 많습니다. 가장 큰 장점 중 하나는 압축된 ARC 기능에서 비롯됩니다. ZFS의 ARC(Adaptive Replacement Cache, 적응형 대체 캐시)는 압축된 버전의 데이터를 RAM에 캐시하여 매번 압축을 해제합니다. 따라서 동일한 양의 RAM에 더 많은 데이터와 메타데이터를 저장할 수 있으므로 캐시 적중률이 높아집니다.
+
+ZFS는 19단계의 Zstd 압축 레벨을 제공하며, 각 레벨은 압축 속도가 느려지는 대신 점진적으로 더 많은 공간을 절약할 수 있습니다. 기본 레벨은 `zstd-3` 이며, LZ4보다 많이 느리지 않으면서도 더 큰 압축률을 제공합니다. 10 이상의 레벨은 각 블록을 압축하는 데 많은 양의 메모리가 필요하므로 16GB 미만의 RAM이 있는 시스템에서는 사용하지 않는 것이 좋습니다. ZFS는 그에 상응하여 더 빠르지만 더 낮은 압축률을 지원하는 Zstd_fast_ 레벨도 사용합니다. ZFS는 `zstd-fast-1` 부터 `zstd-fast-10` 까지, `zstd-fast-20` 부터 `zstd-fast-100` 까지 10 단위로, 최소한의 압축도 제공하지만, 높은 성능을 제공하는 `zstd-fast-500` 및 `zstd-fast-1000` 역시 지원합니다.
+
+ZFS가 Zstd로 블록을 압축하는 데 필요한 메모리를 확보하지 못하면 블록을 압축하지 않은 상태로 저장하는 상태로 되돌아갑니다. 메모리 제약이 있는 시스템에서 가장 높은 수준의 Zstd를 사용하는 경우를 제외하고는 이런 일이 발생할 가능성은 거의 없습니다. ZFS는 `kstat.zfs.misc.zstd.compress_alloc_fail` 로 ZFS 모듈을 로드한 이후 이 문제가 얼마나 자주 발생했는지를 계산합니다.
+
+[[zfs-zfs-deduplication]]
+=== 중복 제거
+
+이 옵션을 활성화하면 <<zfs-term-deduplication,deduplication>> 은 각 블록의 체크섬을 사용하여 중복 블록을 감지합니다. 새 블록이 기존 블록의 중복인 경우, ZFS는 전체 중복 블록 대신 기존 데이터에 대한 새 참조를 씁니다. 데이터에 중복된 파일이나 반복되는 정보가 많이 포함되어 있는 경우 공간을 크게 절약할 수 있습니다. 경고: 중복 제거에는 많은 양의 메모리가 필요하며, 대신 압축을 활성화하면 추가 비용 없이 대부분의 공간을 절약할 수 있습니다.
+
+중복 제거를 활성화하려면 대상 풀에서 `dedup` 속성을 설정합니다:
+
+[source, shell]
+....
+# zfs set dedup=on pool
+....
+
+중복 제거는 풀에 새로 기록되는 데이터에만 영향을 줍니다. 이 옵션을 활성화하는 것만으로는 이미 풀에 기록된 데이터는 중복 제거되지 않습니다. 새로 활성화된 중복 제거 속성이 있는 풀은 이 예시와 같습니다:
+
+[source, shell]
+....
+# zpool list
+NAME  SIZE ALLOC  FREE   CKPOINT  EXPANDSZ   FRAG   CAP   DEDUP   HEALTH   ALTROOT
+pool 2.84G 2.19M 2.83G         -         -     0%    0%   1.00x   ONLINE   -
+....
+
+`DEDUP` 열에는 풀의 실제 중복 제거율이 표시됩니다. 값이 `1.00x` 이면 데이터가 아직 중복 제거되지 않았음을 나타냅니다. 다음 예제는 위에서 생성한 중복 제거 풀의 다른 디렉터리에 일부 시스템 바이너리를 세 번 복사합니다.
+
+[source, shell]
+....
+# for d in dir1 dir2 dir3; do
+> mkdir $d && cp -R /usr/bin $d &
+> done
+....
+
+중복 데이터의 중복 제거를 관찰하려면 다음을 사용하세요:
+
+[source, shell]
+....
+# zpool list
+NAME SIZE  ALLOC  FREE   CKPOINT  EXPANDSZ   FRAG  CAP   DEDUP   HEALTH   ALTROOT
+pool 2.84G 20.9M 2.82G         -         -     0%   0%   3.00x   ONLINE   -
+....
+
+`DEDUP` 열에는 `3.00x` 의 계수가 표시됩니다. 데이터의 복사본을 감지하고 중복 제거하면 1/3의 공간을 사용하게 됩니다. 공간 절약의 잠재력은 엄청날 수 있지만, 중복 제거된 블록을 추적할 수 있는 충분한 메모리를 확보해야 한다는 대가가 따릅니다.
+
+풀의 데이터가 중복되지 않는 경우 중복 제거가 항상 이로운 것은 아닙니다. ZFS는 기존 풀에서 중복 제거를 시뮬레이션하여 잠재적인 공간 절약 효과를 보여줄 수 있습니다:
+
+[source, shell]
+....
+# zdb -S pool
+Simulated DDT histogram:
+
+bucket              allocated                       referenced
+______   ______________________________   ______________________________
+refcnt   blocks   LSIZE   PSIZE   DSIZE   blocks   LSIZE   PSIZE   DSIZE
+------   ------   -----   -----   -----   ------   -----   -----   -----
+     1    2.58M    289G    264G    264G    2.58M    289G    264G    264G
+     2     206K   12.6G   10.4G   10.4G     430K   26.4G   21.6G   21.6G
+     4    37.6K    692M    276M    276M     170K   3.04G   1.26G   1.26G
+     8    2.18K   45.2M   19.4M   19.4M    20.0K    425M    176M    176M
+    16      174   2.83M   1.20M   1.20M    3.33K   48.4M   20.4M   20.4M
+    32       40   2.17M    222K    222K    1.70K   97.2M   9.91M   9.91M
+    64        9     56K   10.5K   10.5K      865   4.96M    948K    948K
+   128        2   9.50K      2K      2K      419   2.11M    438K    438K
+   256        5   61.5K     12K     12K    1.90K   23.0M   4.47M   4.47M
+    1K        2      1K      1K      1K    2.98K   1.49M   1.49M   1.49M
+ Total    2.82M    303G    275G    275G    3.20M    319G    287G    287G
+
+dedup = 1.05, compress = 1.11, copies = 1.00, dedup * compress / copies = 1.16
+....
+
+`zdb -S` 가 풀 분석을 완료한 후 중복 제거를 활성화하면 얻을 수 있는 공간 절감 비율을 보여줍니다. 이 경우 `1.16` 은 주로 압축에 의해 제공되는 낮은 공간 절약 비율입니다. 이 풀에서 중복 제거를 활성화해도 공간을 절약할 수 없으며 중복 제거를 활성화하는 데 필요한 메모리 양에 비해 가치가 없습니다. 시스템 관리자는 _비율 = 중복 제거 * 압축 / 복사본_ 공식을 사용하여 스토리지 할당을 계획하고 워크로드에 메모리 요구 사항을 정당화할 수 있는 충분한 중복 블록이 포함될지 여부를 결정할 수 있습니다. 데이터를 합리적으로 압축할 수 있는 경우 공간을 절약할 수 있습니다. 압축을 사용하면 성능이 크게 향상되므로 압축을 먼저 활성화하는 것이 좋습니다. <<zfs-term-deduplication,DDT>> 에 사용할 수 있는 메모리가 충분하고 절약 효과가 상당한 경우 중복 제거를 활성화합니다.
+
+[[zfs-zfs-jail]]
+=== ZFS와 Jails
+
+`zfs jail` 및 해당 `jailed` 속성을 사용하여 ZFS 데이터 집합을 crossref:jails[jails,Jail] 에 위임합니다. `zfs jail _jailid_` 는 데이터 집합을 지정된 jail에 연결하고, `zfs unjail` 은 데이터 집합을 분리합니다. jail 내에서 데이터 세트를 제어하려면 `jailed` 속성을 설정합니다. ZFS는 호스트의 보안을 손상시킬 수 있는 마운트 지점이 있을 수 있으므로 호스트에 jailed 데이터 세트를 마운트하는 것을 금지합니다.
+
+[[zfs-zfs-allow]]
+== 위임 관리
+
+포괄적인 권한 위임 시스템을 통해 권한이 없는 사용자도 ZFS 관리 기능을 수행할 수 있습니다. 예를 들어, 각 사용자의 홈 디렉터리가 데이터 세트인 경우, 사용자는 홈 디렉터리의 스냅샷을 생성하고 삭제할 수 있는 권한이 필요합니다. 백업을 수행하는 사용자는 복제 기능을 사용할 수 있는 권한을 얻을 수 있습니다. ZFS를 사용하면 모든 사용자의 공간 사용량 데이터에만 액세스하여 사용량 통계 스크립트를 실행할 수 있습니다. 권한을 위임하는 기능도 가능합니다. 각 하위 명령과 대부분의 속성에 대해 권한 위임이 가능합니다.
+
+[[zfs-zfs-allow-create]]
+=== 데이터 세트 생성 위임하기
+
+`zfs allow _someuser_ create _mydataset_` 은 지정된 사용자에게 선택한 상위 데이터 집합 아래에 하위 데이터 집합을 만들 수 있는 권한을 부여합니다. 주의: 새 데이터세트를 생성하려면 마운팅이 필요합니다. 이를 위해서는 루트 사용자가 아닌 사용자가 파일 시스템을 마운트할 수 있도록 FreeBSD `vfs.usermount` man:sysctl[8]을 `1` 로 설정해야 합니다. 악용을 방지하기 위한 또 다른 제한: `root` 가 아닌 사용자는 파일 시스템을 마운트하는 마운트 지점을 소유하고 있어야 합니다.
+
+[[zfs-zfs-allow-allow]]
+=== 권한 위임 위임하기
+
+`zfs allow _someuser_ allow _mydataset_` 은 지정된 사용자에게 대상 데이터셋 또는 그 하위 데이터셋에 대한 모든 권한을 다른 사용자에게 할당할 수 있는 기능을 제공합니다. 사용자에게 `snapshot` 권한과 `allow` 권한이 있는 경우, 해당 사용자는 다른 사용자에게 `snapshot` 권한을 부여할 수 있습니다.
+
+[[zfs-advanced]]
+== 고급 주제
+
+[[zfs-advanced-tuning]]
+=== 튜닝
+
+튜너블을 조정하여 ZFS가 다양한 워크로드에 가장 적합한 성능을 발휘하도록 하세요.
+
+* 13.x에서 [[zfs-advanced-tuning-arc_max]] `_vfs.zfs.arc.max_` 로 시작하기 (12.x의 경우 `vfs.zfs.arc_max`) - <<zfs-term-arc,ARC>>의 상위 크기입니다. 기본값은 1GB를 제외한 모든 RAM 또는 전체 RAM의 5/8 중 더 큰 값입니다. 시스템에서 메모리가 필요할 수 있는 다른 데몬이나 프로세스를 실행하는 경우 더 낮은 값을 사용하세요. 런타임에 man:sysctl[8]을 사용하여 이 값을 조정하고 [.filename]#/boot/loader.conf# 또는 [.filename]#/etc/sysctl.conf# 에서 설정합니다.
+* 13.x에서 [[zfs-advanced-tuning-arc_meta_limit]] `_vfs.zfs.arc.meta_limit_` 로 시작하기 ( 12.x의 경우 `vfs.zfs.arc_meta_limit` ) - 메타데이터 저장에 사용되는 <<zfs-term-arc,ARC>>의 양을 제한합니다. 기본값은 `vfs.zfs.arc.max` 의 4분의 1입니다. 워크로드에 많은 수의 파일 및 디렉터리에 대한 작업 또는 빈번한 메타데이터 작업이 포함된 경우 이 값을 늘리면 <<zfs-term-arc,ARC>> 에 맞는 파일 데이터가 줄어드는 대신 성능이 향상됩니다. 런타임에 [.filename]#/boot/loader.conf# 또는 [.filename]#/etc/sysctl.conf# 에서 man:sysctl[8]을 사용하여 이 값을 조정합니다.
+* 13.x에서 [[zfs-advanced-tuning-arc_min]] `_vfs.zfs.arc.min_` 로 시작하기 ( 12.x의 경우 `vfs.zfs.arc_min` ) - <<zfs-term-arc,ARC>> 의 크기를 낮춥니다. 기본값은 `vfs.zfs.arc.meta_limit` 의 절반입니다. 이 값을 조정하면 다른 응용 프로그램이 전체 <<zfs-term-arc,ARC>> 에 압력을 가하는 것을 방지할 수 있습니다. 런타임에 man:sysctl[8] 및 [.filename]#/boot/loader.conf# 또는 [.filename]#/etc/sysctl.conf# 에서 이 값을 조정합니다.
+* [[zfs-advanced-tuning-vdev-cache-size]] `_vfs.zfs.vdev.cache.size_` - 풀의 각 장치에 대해 캐시로 예약된 사전 할당된 메모리 양입니다. 사용되는 총 메모리 양은 이 값에 장치 수를 곱한 값입니다. 이 값은 부팅 시와 [.filename]#/boot/loader.conf# 에서 설정합니다.
+* [[zfs-advanced-tuning-min-auto-ashift]] `_vfs.zfs.min_auto_ashift_` - 풀 생성 시 자동으로 사용되는 `ashift` (섹터 크기)를 낮춥니다. 이 값은 2의 거듭제곱입니다. 기본값인 `9` 는 512바이트의 섹터 크기인 `2^9 = 512` 를 나타냅니다. 쓰기 증폭을 방지하고 최상의 성능을 얻으려면 이 값을 풀의 장치에서 사용하는 가장 큰 섹터 크기로 설정하십시오.
++
+일반적인 드라이브에는 4KB 섹터가 있습니다. 이러한 드라이브에 기본값인 `ashift` 를 `9` 로 사용하면 이러한 장치에서 쓰기 증폭이 발생합니다. 단일 4KB 쓰기에 포함된 데이터는 대신 8개의 512바이트 쓰기로 기록됩니다. ZFS는 풀을 생성할 때 모든 장치에서 기본 섹터 크기를 읽으려고 시도하지만, 4KB 섹터를 가진 드라이브는 호환성을 위해 섹터가 512바이트라고 보고합니다. 풀을 생성하기 전에 `vfs.zfs.min_auto_ashift` 를 `12` ( `2^12 = 4096` )로 설정하면 이러한 드라이브에서 최상의 성능을 위해 ZFS가 4KB 블록을 사용하도록 강제합니다.
++
+4KB 블록 강제화는 디스크 업그레이드가 계획된 풀에서도 유용합니다. 향후 디스크는 4KB 섹터를 사용하며, 풀을 생성한 후에는 `ashift` 값을 변경할 수 없습니다.
++
+일부 특정 경우에는 더 작은 512바이트 블록 크기가 더 바람직할 수 있습니다. 데이터베이스나 가상 머신의 스토리지로 512바이트 디스크를 사용하면 소규모 랜덤 읽기 시 데이터 전송이 줄어듭니다. 따라서 더 작은 ZFS 레코드 크기를 사용할 때 더 나은 성능을 제공할 수 있습니다.
+* [[zfs-advanced-tuning-prefetch_disable]] `_vfs.zfs.prefetch_disable_` - 프리페치를 비활성화합니다. 값이 `0` 이면 활성화하고 `1` 이면 비활성화합니다. 시스템의 RAM이 4GB 미만인 경우를 제외하고 기본값은 `0` 입니다. 프리페치는 데이터가 곧 필요할 것으로 예상하여 요청된 것보다 더 큰 블록을 <<zfs-term-arc,ARC>> 로 읽어오는 방식으로 작동합니다. 워크로드에 무작위 읽기가 많은 경우, 프리페치를 비활성화하면 불필요한 읽기가 줄어들어 성능이 실제로 향상될 수 있습니다. 이 값은 언제든지 man:sysctl[8]로 조정할 수 있습니다.
+* [[zfs-advanced-tuning-vdev-trim_on_init]] `_vfs.zfs.vdev.trim_on_init_` - 풀에 추가된 새 장치에서 `TRIM` 명령을 실행할지 여부를 제어합니다. 이렇게 하면 SSD의 성능과 수명을 최상으로 유지할 수 있지만 시간이 더 걸립니다. 장치가 이미 보안 삭제된 경우 이 설정을 비활성화하면 새 장치를 더 빠르게 추가할 수 있습니다. 이 값은 언제든지 man:sysctl[8]로 조정할 수 있습니다.
+* [[zfs-advanced-tuning-vdev-max_pending]] `_vfs.zfs.vdev.max_pending_` - 장치당 보류 중인 I/O 요청 수를 제한합니다. 값이 클수록 장치 명령 대기열이 가득 차며 처리량이 높아질 수 있습니다. 값이 낮을수록 지연 시간이 줄어듭니다. 이 값은 언제든지 man:sysctl[8]로 조정할 수 있습니다.
+* [[zfs-advanced-tuning-top_maxinflight]] `_vfs.zfs.top_maxinflight_` - 최상위 레벨 <<zfs-term-vdev,vdev>> 당 미해결 I/O의 상한 수입니다. 높은 대기 시간을 방지하기 위해 명령 대기열의 깊이를 제한합니다. 이 제한은 최상위 vdev별로 적용되므로, 각 <<zfs-term-vdev-mirror,mirror>>, <<zfs-term-vdev-raidz,RAID-Z>> 또는 기타 vdev에 독립적으로 적용됩니다. 이 값은 언제든지 man:sysctl[8]로 조정할 수 있습니다.
+* [[zfs-advanced-tuning-l2arc_write_max]] `_vfs.zfs.l2arc_write_max_` - 초당 <<zfs-term-l2arc,L2ARC>> 에 기록되는 데이터의 양을 제한합니다. 이 튜너블은 장치에 기록되는 데이터의 양을 제한하여 SSD의 수명을 연장합니다. 이 값은 언제든지 man:sysctl[8]로 조정할 수 있습니다.
+* [[zfs-advanced-tuning-l2arc_write_boost]] `_vfs.zfs.l2arc_write_boost_` - 이 튜너블의 값을 <<zfs-advanced-tuning-l2arc_write_max,`vfs.zfs.l2arc_write_max`>> 에 추가하고 <<zfs-term-l2arc,L2ARC>> 에서 첫 블록을 제거할 때까지 SSD에 쓰기 속도를 높입니다. 이 “터보 워밍업 단계”는 재부팅 후 비어 있는 <<zfs-term-l2arc,L2ARC>> 로 인한 성능 손실을 줄여줍니다. 이 값은 man:sysctl[8]로 언제든지 조정할 수 있습니다.
+* [[zfs-advanced-tuning-scrub_delay]]`_vfs.zfs.scrub_delay_` - <<zfs-term-scrub,`scrub`>> 동안 각 I/O 사이에 지연시킬 틱 수입니다. `scrub` 이 풀의 정상적인 작동을 방해하지 않도록 하기 위해, 다른 I/O가 발생하면 `scrub` 은 각 명령 사이에 지연됩니다. 이 값은 `scrub` 에 의해 생성되는 총 IOPS(초당 입출력 횟수)의 제한을 관리합니다. 설정의 세부 단위는 기본값이 초당 1000 틱인 `kern.hz` 값에 의해 결정됩니다. 이 설정을 변경하면 유효 IOPS 제한이 달라집니다. 기본값은 `4` 이며, 그 결과 제한은 다음과 같습니다: 1000 ticks/sec / 4 = 250 IOPS. _20_ 을 사용하면 다음과 같은 제한이 적용됩니다: 1000 ticks/sec / 20 = 50 IOPS. 풀의 최근 활동은 <<zfs-advanced-tuning-scan_idle,`vfs.zfs.scan_idle`>> 에 의해 결정되는 `scrub` 의 속도를 제한합니다. man:sysctl[8]로 언제든지 이 값을 조정할 수 있습니다.
+* [[zfs-advanced-tuning-resilver_delay]] `_vfs.zfs.resilver_delay_` - <<zfs-term-resilver,resilver>> 동안 각 I/O 사이에 삽입되는 지연 시간(밀리초). Resilver가 풀의 정상적인 작동을 방해하지 않도록 하기 위해 다른 I/O가 발생하면 resilver가 각 명령 사이에 지연을 줍니다. 이 값은 resilver가 생성하는 총 IOPS(초당 입출력 횟수)의 한도를 제어합니다. ZFS는 기본값이 초당 1000 틱인 `kern.hz` 값에 따라 설정의 세분성을 결정합니다. 이 설정을 변경하면 유효 IOPS 제한이 달라집니다. 기본값은 2이므로 제한은 다음과 같습니다: 1000 ticks/sec / 2 = 500 IOPS. 다른 장치에 장애가 발생하여 풀이 <<zfs-term-online,Online>> 상태가 되어 데이터가 손실될 수 있는 경우 풀을 <<zfs-term-faulted,Fault>> 상태로 되돌리면 더 중요할 수 있습니다. 값이 0이면 복구 작업에 다른 작업과 동일한 우선순위를 부여하여 복구 프로세스의 속도를 높일 수 있습니다. 풀의 다른 최근 활동은 <<zfs-advanced-tuning-scan_idle,`vfs.zfs.scan_idle`>> 에 의해 결정되는 resilver의 속도를 제한합니다. 이 값은 언제든지 man:sysctl[8]로 조정할 수 있습니다.
+* [[zfs-advanced-tuning-scan_idle]] `_vfs.zfs.scan_idle_` - 풀이 유휴 상태라고 간주하기 전 마지막 작업 이후의 시간(밀리초). ZFS는 풀이 유휴 상태일 때 <<zfs-term-scrub,`scrub`>> 및 <<zfs-term-resilver,resilver>>에 대한 속도 제한을 비활성화합니다. 이 값은 언제든지 man:sysctl[8]로 조정할 수 있습니다.
+* [[zfs-advanced-tuning-txg-timeout]] `_vfs.zfs.txg.timeout_` - <<zfs-term-txg,transaction group>> 사이의 초 단위 상한 시간. 이전 트랜잭션 그룹 이후 이 시간이 경과하면 현재 트랜잭션 그룹이 풀에 쓰고 새로운 트랜잭션 그룹이 시작됩니다. 데이터를 충분히 쓰면 트랜잭션 그룹이 더 일찍 트리거될 수 있습니다. 기본값은 5초입니다. 값이 클수록 비동기 쓰기가 지연되어 읽기 성능이 향상될 수 있지만 트랜잭션 그룹을 쓸 때 성능이 고르지 않을 수 있습니다. 이 값은 언제든지 man:sysctl[8]로 조정할 수 있습니다.
+
+[[zfs-advanced-i386]]
+=== i386에서 ZFS
+
+ZFS에서 제공하는 일부 기능은 메모리를 많이 사용하므로 RAM이 제한된 시스템에서 효율성을 높이기 위해 튜닝이 필요할 수 있습니다.
+
+==== 메모리
+
+더 낮은 값으로, 총 시스템 메모리는 1기가바이트 이상이어야 합니다. 권장 RAM 용량은 풀의 크기와 ZFS에서 사용하는 기능에 따라 다릅니다. 일반적으로 1TB의 스토리지당 1GB의 RAM이 권장됩니다. 중복 제거 기능을 사용하는 경우에는 일반적으로 중복 제거할 스토리지 1TB당 5GB의 RAM이 필요합니다. 일부 사용자는 더 적은 RAM으로 ZFS를 사용하지만, 과부하 상태의 시스템은 메모리 고갈로 인해 당황할 수 있습니다. 권장 RAM 요구 사항보다 적은 시스템에서는 ZFS를 추가로 조정해야 할 수도 있습니다.
+
+==== 커널 구성
+
+i386(TM) 플랫폼의 주소 공간 제한으로 인해 i386(TM) 아키텍처의 ZFS 사용자는 사용자 지정 커널 구성 파일에 이 옵션을 추가하고 커널을 다시 빌드한 후 재부팅해야 합니다:
+
+[.programlisting]
+....
+options        KVA_PAGES=512
+....
+
+이렇게 하면 커널 주소 공간이 확장되어 `vm.kvm_size` 튜너블에 부과된 제한인 1GB 또는 PAE의 경우 제한인 2GB를 초과할 수 있습니다. 이 옵션에 가장 적합한 값을 찾으려면 원하는 주소 공간을 메가바이트 단위에 4로 나누면 됩니다. 이 예에서는 2GB의 경우 `512` 입니다.
+
+==== 로더 튜너블
+
+모든 FreeBSD 아키텍처에서 [.filename]#kmem# 주소 공간을 늘립니다. 1GB의 물리적 메모리가 있는 테스트 시스템에서 [.filename]#/boot/loader.conf# 에 아래의 옵션을 추가한 후 다시 시작하면 이점을 얻을 수 있었습니다:
+
+[.programlisting]
+....
+vm.kmem_size="330M"
+vm.kmem_size_max="330M"
+vfs.zfs.arc.max="40M"
+vfs.zfs.vdev.cache.size="5M"
+....
+
+ZFS 관련 튜닝에 대한 자세한 권장 사항 목록은 https://wiki.freebsd.org/ZFSTuningGuide[]를 참조하세요.
+
+[[zfs-links]]
+== 추가 자료
+
+* https://openzfs.org/[OpenZFS]
+* https://wiki.freebsd.org/ZFSTuningGuide[FreeBSD Wiki - ZFS Tuning]
+* https://calomel.org/zfs_raid_speed_capacity.html[Calomel Blog - ZFS Raidz Performance, Capacity and Integrity]
+
+[[zfs-term]]
+== ZFS 기능 및 용어
+
+ZFS는 파일 시스템 이상의 근본적인 차이가 있습니다. ZFS는 파일 시스템과 볼륨 관리자의 역할을 결합하여 새로운 스토리지 장치를 라이브 시스템에 추가하고 해당 풀의 기존 파일 시스템에서 새 공간을 한 번에 사용할 수 있도록 합니다. 전통적으로 분리되어 있던 역할을 결합함으로써 ZFS는 RAID 그룹을 확장할 수 없었던 이전의 한계를 극복할 수 있습니다. _vdev_ 는 풀의 최상위 장치로, 단순한 디스크일 수도 있고 미러 또는 RAID-Z 어레이와 같은 RAID 변환일 수도 있습니다. _데이터 세트_라고 하는 ZFS 파일 시스템은 각각 전체 풀의 여유 공간을 합친 공간에 액세스할 수 있습니다. 풀에서 사용된 블록은 각 파일 시스템에서 사용할 수 있는 공간을 감소시킵니다. 이 접근 방식은 파티션 전체에 걸쳐 여유 공간이 파편화되는 광범위한 파티셔닝의 일반적인 함정을 피할 수 있습니다.
+
+[.informaltable]
+[cols="10%,90%"]
+|===
+
+|[[zfs-term-pool]]pool
+|A storage _pool_ is the most basic building block of ZFS. A pool consists of one or more vdevs, the underlying devices that store the data. A pool is then used to create one or more file systems (datasets) or block devices (volumes).
+These datasets and volumes share the pool of remaining free space. Each pool is uniquely identified by a name and a GUID. The ZFS version number on the pool determines the features available.
+
+|[[zfs-term-vdev]]vdev Types
+a|A pool consists of one or more vdevs, which themselves are a single disk or a group of disks, transformed to a RAID. When using a lot of vdevs, ZFS spreads data across the vdevs to increase performance and maximize usable space. All vdevs must be at least 128 MB in size. 
+
+* [[zfs-term-vdev-disk]] _Disk_ - The most basic vdev type is a standard block device. This can be an entire disk (such as [.filename]#/dev/ada0# or [.filename]#/dev/da0#) or a partition ([.filename]#/dev/ada0p3#). On FreeBSD, there is no performance penalty for using a partition rather than the entire disk. This differs from recommendations made by the Solaris documentation.
++
+[CAUTION]
+====
+Using an entire disk as part of a bootable pool is strongly discouraged, as this may render the pool unbootable.
+Likewise, you should not use an entire disk as part of a mirror or RAID-Z vdev.
+Reliably determining the size of an unpartitioned disk at boot time is impossible and there's no place to put in boot code.
+====
+
+* [[zfs-term-vdev-file]] _File_ - Regular files may make up ZFS pools, which is useful for testing and experimentation. Use the full path to the file as the device path in `zpool create`.
+* [[zfs-term-vdev-mirror]] _Mirror_ - When creating a mirror, specify the `mirror` keyword followed by the list of member devices for the mirror. A mirror consists of two or more devices, writing all data to all member devices. A mirror vdev will hold as much data as its smallest member. A mirror vdev can withstand the failure of all but one of its members without losing any data.
++
+[NOTE]
+====
+To upgrade a regular single disk vdev to a mirror vdev at any time, use `zpool <<zfs-zpool-attach,attach>>`.
+====
+
+* [[zfs-term-vdev-raidz]] _RAID-Z_ - ZFS uses RAID-Z, a variation on standard RAID-5 that offers better distribution of parity and eliminates the "RAID-5 write hole" in which the data and parity information become inconsistent after an unexpected restart. ZFS supports three levels of RAID-Z which provide varying levels of redundancy in exchange for decreasing levels of usable storage. ZFS uses RAID-Z1 through RAID-Z3 based on the number of parity devices in the array and the number of disks which can fail before the pool stops being operational.
++
+In a RAID-Z1 configuration with four disks, each 1 TB, usable storage is 3 TB and the pool will still be able to operate in degraded mode with one faulted disk. If another disk goes offline before replacing and resilvering the faulted disk would result in losing all pool data.
++
+In a RAID-Z3 configuration with eight disks of 1 TB, the volume will provide 5 TB of usable space and still be able to operate with three faulted disks. Sun(TM) recommends no more than nine disks in a single vdev. If more disks make up the configuration, the recommendation is to divide them into separate vdevs and stripe the pool data across them.
++
+A configuration of two RAID-Z2 vdevs consisting of 8 disks each would create something like a RAID-60 array. A RAID-Z group's storage capacity is about the size of the smallest disk multiplied by the number of non-parity disks. Four 1 TB disks in RAID-Z1 has an effective size of about 3 TB, and an array of eight 1 TB disks in RAID-Z3 will yield 5 TB of usable space.
+* [[zfs-term-vdev-spare]] _Spare_ - ZFS has a special pseudo-vdev type for keeping track of available hot spares. Note that installed hot spares are not deployed automatically; manually configure them to replace the failed device using `zfs replace`.
+* [[zfs-term-vdev-log]] _Log_ - ZFS Log Devices, also known as ZFS Intent Log (<<zfs-term-zil,ZIL>>) move the intent log from the regular pool devices to a dedicated device, typically an SSD. Having a dedicated log device improves the performance of applications with a high volume of synchronous writes like databases. Mirroring of log devices is possible, but RAID-Z is not supported. If using a lot of log devices, writes will be load-balanced across them.
+* [[zfs-term-vdev-cache]] _Cache_ - Adding a cache vdev to a pool will add the storage of the cache to the <<zfs-term-l2arc,L2ARC>>. Mirroring cache devices is impossible. Since a cache device stores only new copies of existing data, there is no risk of data loss. |[[zfs-term-txg]] Transaction Group (TXG) |Transaction Groups are the way ZFS groups blocks changes together and writes them to the pool. Transaction groups are the atomic unit that ZFS uses to ensure consistency. ZFS assigns each transaction group a unique 64-bit consecutive identifier. There can be up to three active transaction groups at a time, one in each of these three states:
+
+* _Open_ - A new transaction group begins in the open state and accepts new writes. There is always a transaction group in the open state, but the transaction group may refuse new writes if it has reached a limit. Once the open transaction group has reached a limit, or reaching the <<zfs-advanced-tuning-txg-timeout,`vfs.zfs.txg.timeout`>>, the transaction group advances to the next state.
+* _Quiescing_ - A short state that allows any pending operations to finish without blocking the creation of a new open transaction group. Once all the transactions in the group have completed, the transaction group advances to the final state.
+* _Syncing_ - Write all the data in the transaction group to stable storage. This process will in turn change other data, such as metadata and space maps, that ZFS will also write to stable storage. The process of syncing involves several passes. On the first and biggest, all the changed data blocks; next come the metadata, which may take several passes to complete. Since allocating space for the data blocks generates new metadata, the syncing state cannot finish until a pass completes that does not use any new space. The syncing state is also where _synctasks_ complete. Synctasks are administrative operations such as creating or destroying snapshots and datasets that complete the uberblock change. Once the sync state completes the transaction group in the quiescing state advances to the syncing state. All administrative functions, such as <<zfs-term-snapshot,`snapshot`>> write as part of the transaction group. ZFS adds a created synctask to the open transaction group, and that group advances as fast as possible to the syncing state to reduce the latency of administrative commands. |[[zfs-term-arc]]Adaptive Replacement Cache (ARC) |ZFS uses an Adaptive Replacement Cache (ARC), rather than a more traditional Least Recently Used (LRU) cache. An LRU cache is a simple list of items in the cache, sorted by how recently object was used, adding new items to the head of the list. When the cache is full, evicting items from the tail of the list makes room for more active objects. An ARC consists of four lists; the Most Recently Used (MRU) and Most Frequently Used (MFU) objects, plus a ghost list for each. These ghost lists track evicted objects to prevent adding them back to the cache. This increases the cache hit ratio by avoiding objects that have a history of occasional use. Another advantage of using both an MRU and MFU is that scanning an entire file system would evict all data from an MRU or LRU cache in favor of this freshly accessed content. With ZFS, there is also an MFU that tracks the most frequently used objects, and the cache of the most commonly accessed blocks remains. |[[zfs-term-l2arc]]L2ARC |L2ARC is the second level of the ZFS caching system. RAM stores the primary ARC. Since the amount of available RAM is often limited, ZFS can also use <<zfs-term-vdev-cache,cache vdevs>>. Solid State Disks (SSDs) are often used as these cache devices due to their higher speed and lower latency compared to traditional spinning disks. L2ARC is entirely optional, but having one will increase read speeds for cached files on the SSD instead of having to read from the regular disks. L2ARC can also speed up <<zfs-term-deduplication,deduplication>> because a deduplication table (DDT) that does not fit in RAM but does fit in the L2ARC will be much faster than a DDT that must read from disk. Limits on the data rate added to the cache devices prevents prematurely wearing out SSDs with extra writes. Until the cache is full (the first block evicted to make room), writes to the L2ARC limit to the sum of the write limit and the boost limit, and afterwards limit to the write limit. A pair of man:sysctl[8] values control these rate limits. <<zfs-advanced-tuning-l2arc_write_max,`vfs.zfs.l2arc_write_max`>> controls the number of bytes written to the cache per second, while <<zfs-advanced-tuning-l2arc_write_boost,`vfs.zfs.l2arc_write_boost`>> adds to this limit during the "Turbo Warmup Phase" (Write Boost). |[[zfs-term-zil]]ZIL |ZIL accelerates synchronous transactions by using storage devices like SSDs that are faster than those used in the main storage pool. When an application requests a synchronous write (a guarantee that the data is stored to disk rather than merely cached for later writes), writing the data to the faster ZIL storage then later flushing it out to the regular disks greatly reduces latency and improves performance. Synchronous workloads like databases will profit from a ZIL alone. Regular asynchronous writes such as copying files will not use the ZIL at all. |[[zfs-term-cow]]Copy-On-Write |Unlike a traditional file system, ZFS writes a different block rather than overwriting the old data in place. When completing this write the metadata updates to point to the new location. When a shorn write (a system crash or power loss in the middle of writing a file) occurs, the entire original contents of the file are still available and ZFS discards the incomplete write. This also means that ZFS does not require a man:fsck[8] after an unexpected shutdown. |[[zfs-term-dataset]]Dataset |_Dataset_ is the generic term for a ZFS file system, volume, snapshot or clone. Each dataset has a unique name in the format _poolname/path@snapshot_. The root of the pool is a dataset as well. Child datasets have hierarchical names like directories. For example, _mypool/home_, the home dataset, is a child of _mypool_ and inherits properties from it. Expand this further by creating _mypool/home/user_. This grandchild dataset will inherit properties from the parent and grandparent. Set properties on a child to override the defaults inherited from the parent and grandparent. Administration of datasets and their children can be <<zfs-zfs-allow,delegated>>. |[[zfs-term-filesystem]]File system |A ZFS dataset is most often used as a file system. Like most other file systems, a ZFS file system mounts somewhere in the systems directory hierarchy and contains files and directories of its own with permissions, flags, and other metadata. |[[zfs-term-volume]]Volume |ZFS can also create volumes, which appear as disk devices. Volumes have a lot of the same features as datasets, including copy-on-write, snapshots, clones, and checksumming. Volumes can be useful for running other file system formats on top of ZFS, such as UFS virtualization, or exporting iSCSI extents. |[[zfs-term-snapshot]]Snapshot |The <<zfs-term-cow,copy-on-write>> (COW) design of ZFS allows for nearly instantaneous, consistent snapshots with arbitrary names. After taking a snapshot of a dataset, or a recursive snapshot of a parent dataset that will include all child datasets, new data goes to new blocks, but without reclaiming the old blocks as free space. The snapshot contains the original file system version and the live file system contains any changes made since taking the snapshot using no other space. New data written to the live file system uses new blocks to store this data. The snapshot will grow as the blocks are no longer used in the live file system, but in the snapshot alone. Mount these snapshots read-only allows recovering of previous file versions. A <<zfs-zfs-snapshot,rollback>> of a live file system to a specific snapshot is possible, undoing any changes that took place after taking the snapshot. Each block in the pool has a reference counter which keeps track of the snapshots, clones, datasets, or volumes use that block. As files and snapshots get deleted, the reference count decreases, reclaiming the free space when no longer referencing a block. Marking snapshots with a <<zfs-zfs-snapshot,hold>> results in any attempt to destroy it will returns an `EBUSY` error. Each snapshot can have holds with a unique name each. The <<zfs-zfs-snapshot,release>> command removes the hold so the snapshot can deleted. Snapshots, cloning, and rolling back works on volumes, but independently mounting does not. |[[zfs-term-clone]]Clone |Cloning a snapshot is also possible. A clone is a writable version of a snapshot, allowing the file system to fork as a new dataset. As with a snapshot, a clone initially consumes no new space. As new data written to a clone uses new blocks, the size of the clone grows. When blocks are overwritten in the cloned file system or volume, the reference count on the previous block decreases. Removing the snapshot upon which a clone bases is impossible because the clone depends on it. The snapshot is the parent, and the clone is the child. Clones can be _promoted_, reversing this dependency and making the clone the parent and the previous parent the child. This operation requires no new space. Since the amount of space used by the parent and child reverses, it may affect existing quotas and reservations. |[[zfs-term-checksum]]Checksum |Every block is also checksummed. The checksum algorithm used is a per-dataset property, see <<zfs-zfs-set,`set`>>. The checksum of each block is transparently validated when read, allowing ZFS to detect silent corruption. If the data read does not match the expected checksum, ZFS will attempt to recover the data from any available redundancy, like mirrors or RAID-Z. Triggering a validation of all checksums with <<zfs-term-scrub,`scrub`>>. Checksum algorithms include:
+
+* `fletcher2`
+* `fletcher4`
+* `sha256`
+The `fletcher` algorithms are faster, but `sha256` is a strong cryptographic hash and has a much lower chance of collisions at the cost of some performance. Deactivating checksums is possible, but strongly discouraged. |[[zfs-term-compression]]Compression |Each dataset has a compression property, which defaults to off. Set this property to an available compression algorithm. This causes compression of all new data written to the dataset. Beyond a reduction in space used, read and write throughput often increases because fewer blocks need reading or writing.
+
+[[zfs-term-compression-lz4]]
+* _LZ4_ - Added in ZFS pool version 5000 (feature flags), LZ4 is now the recommended compression algorithm. LZ4 works about 50% faster than LZJB when operating on compressible data, and is over three times faster when operating on uncompressible data. LZ4 also decompresses about 80% faster than LZJB. On modern CPUs, LZ4 can often compress at over 500 MB/s, and decompress at over 1.5 GB/s (per single CPU core).
+
+[[zfs-term-compression-lzjb]]
+* _LZJB_ - The default compression algorithm. Created by Jeff Bonwick (one of the original creators of ZFS). LZJB offers good compression with less CPU overhead compared to GZIP. In the future, the default compression algorithm will change to LZ4.
+
+[[zfs-term-compression-gzip]]
+* _GZIP_ - A popular stream compression algorithm available in ZFS. One of the main advantages of using GZIP is its configurable level of compression. When setting the `compress` property, the administrator can choose the level of compression, ranging from `gzip1`, the lowest level of compression, to `gzip9`, the highest level of compression. This gives the administrator control over how much CPU time to trade for saved disk space.
+
+[[zfs-term-compression-zle]]
+* _ZLE_ - Zero Length Encoding is a special compression algorithm that compresses continuous runs of zeros alone. This compression algorithm is useful when the dataset contains large blocks of zeros. |[[zfs-term-copies]]Copies |When set to a value greater than 1, the `copies` property instructs ZFS to maintain copies of each block in the <<zfs-term-filesystem,file system>> or <<zfs-term-volume,volume>>. Setting this property on important datasets provides added redundancy from which to recover a block that does not match its checksum. In pools without redundancy, the copies feature is the single form of redundancy. The copies feature can recover from a single bad sector or other forms of minor corruption, but it does not protect the pool from the loss of an entire disk. |[[zfs-term-deduplication]]Deduplication |Checksums make it possible to detect duplicate blocks when writing data. With deduplication, the reference count of an existing, identical block increases, saving storage space. ZFS keeps a deduplication table (DDT) in memory to detect duplicate blocks. The table contains a list of unique checksums, the location of those blocks, and a reference count. When writing new data, ZFS calculates checksums and compares them to the list. When finding a match it uses the existing block. Using the SHA256 checksum algorithm with deduplication provides a secure cryptographic hash. Deduplication is tunable. If `dedup` is `on`, then a matching checksum means that the data is identical. Setting `dedup` to `verify`, ZFS performs a byte-for-byte check on the data ensuring they are actually identical. If the data is not identical, ZFS will note the hash collision and store the two blocks separately. As the DDT must store the hash of each unique block, it consumes a large amount of memory. A general rule of thumb is 5-6 GB of ram per 1 TB of deduplicated data). In situations not practical to have enough RAM to keep the entire DDT in memory, performance will suffer greatly as the DDT must read from disk before writing each new block. Deduplication can use L2ARC to store the DDT, providing a middle ground between fast system memory and slower disks. Consider using compression instead, which often provides nearly as much space savings without the increased memory. |[[zfs-term-scrub]]Scrub |Instead of a consistency check like man:fsck[8], ZFS has `scrub`. `scrub` reads all data blocks stored on the pool and verifies their checksums against the known good checksums stored in the metadata. A periodic check of all the data stored on the pool ensures the recovery of any corrupted blocks before needing them. A scrub is not required after an unclean shutdown, but good practice is at least once every three months. ZFS verifies the checksum of each block during normal use, but a scrub makes certain to check even infrequently used blocks for silent corruption. ZFS improves data security in archival storage situations. Adjust the relative priority of `scrub` with <<zfs-advanced-tuning-scrub_delay,`vfs.zfs.scrub_delay`>> to prevent the scrub from degrading the performance of other workloads on the pool. |[[zfs-term-quota]]Dataset Quota |ZFS provides fast and accurate dataset, user, and group space accounting as well as quotas and space reservations. This gives the administrator fine grained control over space allocation and allows reserving space for critical file systems. ZFS supports different types of quotas: the dataset quota, the <<zfs-term-refquota,reference quota (refquota)>>, the <<zfs-term-userquota,user quota>>, and the <<zfs-term-groupquota,group quota>>. Quotas limit the total size of a dataset and its descendants, including snapshots of the dataset, child datasets, and the snapshots of those datasets.
+
+[NOTE]
+====
+Volumes do not support quotas, as the `volsize` property acts as an implicit quota.
+====
+
+|[[zfs-term-refquota]]Reference Quota |A reference quota limits the amount of space a dataset can consume by enforcing a hard limit. This hard limit includes space referenced by the dataset alone and does not include space used by descendants, such as file systems or snapshots. |[[zfs-term-userquota]]User Quota |User quotas are useful to limit the amount of space used by the specified user. |[[zfs-term-groupquota]]Group Quota |The group quota limits the amount of space that a specified group can consume. |[[zfs-term-reservation]]Dataset Reservation |The `reservation` property makes it possible to guarantee an amount of space for a specific dataset and its descendants. This means that setting a 10 GB reservation on [.filename]#storage/home/bob# prevents other datasets from using up all free space, reserving at least 10 GB of space for this dataset. Unlike a regular <<zfs-term-refreservation,`refreservation`>>, space used by snapshots and descendants is not counted against the reservation. For example, if taking a snapshot of [.filename]#storage/home/bob#, enough disk space other than the `refreservation` amount must exist for the operation to succeed. Descendants of the main data set are not counted in the `refreservation` amount and so do not encroach on the space set. Reservations of any sort are useful in situations such as planning and testing the suitability of disk space allocation in a new system, or ensuring that enough space is available on file systems for audio logs or system recovery procedures and files. |[[zfs-term-refreservation]]Reference Reservation |The `refreservation` property makes it possible to guarantee an amount of space for the use of a specific dataset _excluding_ its descendants. This means that setting a 10 GB reservation on [.filename]#storage/home/bob#, and another dataset tries to use the free space, reserving at least 10 GB of space for this dataset. In contrast to a regular <<zfs-term-reservation,reservation>>, space used by snapshots and descendant datasets is not counted against the reservation. For example, if taking a snapshot of [.filename]#storage/home/bob#, enough disk space other than the `refreservation` amount must exist for the operation to succeed. Descendants of the main data set are not counted in the `refreservation` amount and so do not encroach on the space set. |[[zfs-term-resilver]]Resilver |When replacing a failed disk, ZFS must fill the new disk with the lost data. _Resilvering_ is the process of using the parity information distributed across the remaining drives to calculate and write the missing data to the new drive. |[[zfs-term-online]]Online |A pool or vdev in the `Online` state has its member devices connected and fully operational. Individual devices in the `Online` state are functioning. |[[zfs-term-offline]]Offline |The administrator puts individual devices in an `Offline` state if enough redundancy exists to avoid putting the pool or vdev into a <<zfs-term-faulted,Faulted>> state. An administrator may choose to offline a disk in preparation for replacing it, or to make it easier to identify. |[[zfs-term-degraded]]Degraded |A pool or vdev in the `Degraded` state has one or more disks that disappeared or failed. The pool is still usable, but if other devices fail, the pool may become unrecoverable. Reconnecting the missing devices or replacing the failed disks will return the pool to an <<zfs-term-online,Online>> state after the reconnected or new device has completed the <<zfs-term-resilver,Resilver>> process. |[[zfs-term-faulted]]Faulted |A pool or vdev in the `Faulted` state is no longer operational. Accessing the data is no longer possible. A pool or vdev enters the `Faulted` state when the number of missing or failed devices exceeds the level of redundancy in the vdev. If reconnecting missing devices the pool will return to an <<zfs-term-online,Online>> state. Insufficient redundancy to compensate for the number of failed disks loses the pool contents and requires restoring from backups.
+|===
