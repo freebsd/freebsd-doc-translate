@@ -1,0 +1,438 @@
+---
+description: 'FreeBSD는 Linux와의 바이너리 호환성을 제공하므로 사용자는 바이너리를 수정할 필요 없이 대부분의 Linux 바이너리를 FreeBSD 시스템에서 설치하고 실행할 수 있습니다'
+next: books/handbook/wine
+part: '파트 II. 일반적인 작업'
+path: /books/handbook/
+prev: books/handbook/printing
+showBookMenu: 'true'
+tags: ["linux", "linuxulator", "emulation", "binary", "compatibility"]
+title: '11장. Linux 바이너리 호환성'
+weight: 14
+---
+
+[[linuxemu]]
+= Linux 바이너리 호환성
+:doctype: book
+:toc: macro
+:toclevels: 1
+:icons: font
+:sectnums:
+:sectnumlevels: 6
+:sectnumoffset: 11
+:partnums:
+:source-highlighter: rouge
+:experimental:
+:images-path: books/handbook/linuxemu/
+
+ifdef::env-beastie[]
+ifdef::backend-html5[]
+:imagesdir: ../../../../images/{images-path}
+endif::[]
+ifndef::book[]
+include::shared/authors.adoc[]
+include::shared/mirrors.adoc[]
+include::shared/releases.adoc[]
+include::shared/attributes/attributes-{{% lang %}}.adoc[]
+include::shared/{{% lang %}}/teams.adoc[]
+include::shared/{{% lang %}}/mailing-lists.adoc[]
+include::shared/{{% lang %}}/urls.adoc[]
+toc::[]
+endif::[]
+ifdef::backend-pdf,backend-epub3[]
+include::../../../../../shared/asciidoctor.adoc[]
+endif::[]
+endif::[]
+
+ifndef::env-beastie[]
+toc::[]
+include::../../../../../shared/asciidoctor.adoc[]
+endif::[]
+
+[[linuxemu-synopsis]]
+== 요약
+
+FreeBSD provides *optional* binary compatibility with Linux(R), commonly referred to as Linuxulator, allowing users to install and run unmodified Linux binaries. It is available for the x86 (both 32 and 64 bit) and AArch64 architectures. Some Linux-specific operating system features are not yet supported; this mostly happens with functionality specific to hardware or related to system management, such as cgroups or namespaces.
+
+이 챕터를 읽기 전에 알아두어야 할 사항입니다:
+
+* crossref:ports[ports,additional third-party software]를 설치하는 방법을 알고 있습니다.
+
+이 장을 읽고 나면 다음을 알 수 있습니다:
+
+* FreeBSD 시스템에서 Linux 바이너리 호환성을 활성화하는 방법.
+* Linux 공유 라이브러리를 추가로 설치하는 방법.
+* FreeBSD 시스템에 Linux 애플리케이션을 설치하는 방법.
+* FreeBSD의 Linux 호환성 구현 세부 정보.
+
+[[linuxemu-lbc-install]]
+== Linux 바이너리 호환성 구성하기
+
+By default, man:linux[4] binary compatibility is not enabled.
+
+To enable the Linux ABI at boot time, execute the following command:
+
+[.programlisting]
+....
+# sysrc linux_enable="YES"
+....
+
+Once enabled, it can be started without rebooting executing the following command:
+
+[source, shell]
+....
+# service linux start
+....
+
+This is enough for statically linked Linux binaries to work.
+
+The Linux service will load necessary kernel modules and mount filesystems expected by Linux applications under [.filename]#/compat/linux#. They can be started in the same way native FreeBSD binaries can; they behave almost exactly like native processes and can be traced and debugged the usual way.
+
+The current content of [.filename]#/compat/linux# can be checked executing the following command:
+
+[source, shell]
+....
+# ls -l /compat/linux/
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+total 1
+dr-xr-xr-x  13 root  wheel  512 Apr 11 19:12 dev
+dr-xr-xr-x   1 root  wheel    0 Apr 11 21:03 proc
+dr-xr-xr-x   1 root  wheel    0 Apr 11 21:03 sys
+....
+
+[[linux-userlands]]
+== Linux userlands
+
+Linux software requires more than just an ABI to work. In order to run Linux software a Linux userland must be installed first.
+
+[TIP]
+====
+If all that is wanted is to run some software already included in the Ports tree, it can be installed via package manager and man:pkg[8] will automatically setup the required Linux userland.
+
+For example, to install Sublime Text 4, along with all the Linux libraries it depends on, run this command:
+ 
+[source, shell]
+....
+# pkg install linux-sublime-text4
+....
+====
+
+[[linuxemu-packages]]
+=== FreeBSD 패키지의 CentOS 기본 시스템
+
+To install the CentOS userland execute the following command:
+
+[source, shell]
+....
+# pkg install linux_base-c7
+....
+
+package:emulators/linux_base-c7[] will place the base system derived from CentOS 7 into [.filename]#/compat/linux#.
+
+After installing the package, the contents of [.filename]#/compat/linux# can be verified by running the following command to check that the CentOS userland has been installed:
+
+[source, shell]
+....
+# ls -l /compat/linux/
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+total 30
+lrwxr-xr-x   1 root  wheel    7 Apr 11  2018 bin -> usr/bin
+drwxr-xr-x  13 root  wheel  512 Apr 11 21:10 dev
+drwxr-xr-x  25 root  wheel   64 Apr 11 21:10 etc
+lrwxr-xr-x   1 root  wheel    7 Apr 11  2018 lib -> usr/lib
+lrwxr-xr-x   1 root  wheel    9 Apr 11  2018 lib64 -> usr/lib64
+drwxr-xr-x   2 root  wheel    2 Apr 11 21:10 opt
+dr-xr-xr-x   1 root  wheel    0 Apr 11 21:25 proc
+lrwxr-xr-x   1 root  wheel    8 Feb 18 02:10 run -> /var/run
+lrwxr-xr-x   1 root  wheel    8 Apr 11  2018 sbin -> usr/sbin
+drwxr-xr-x   2 root  wheel    2 Apr 11 21:10 srv
+dr-xr-xr-x   1 root  wheel    0 Apr 11 21:25 sys
+drwxr-xr-x   8 root  wheel    9 Apr 11 21:10 usr
+drwxr-xr-x  16 root  wheel   17 Apr 11 21:10 var
+....
+
+[[linuxemu-debootstrap]]
+=== Debian / Ubuntu Base System with debootstrap
+
+An alternative way of providing Linux shared libraries is by using package:sysutils/debootstrap[]. This has the advantage of providing a full Debian or Ubuntu distribution.
+
+To install debootstrap execute the following command:
+
+[source, shell]
+....
+# pkg install debootstrap
+....
+
+man:debootstrap[8] needs man:linux[4] ABI enabled. Once enabled, execute the following command to install Ubuntu or Debian in [.filename]#/compat/ubuntu#:
+
+[source, shell]
+....
+# debootstrap focal /compat/ubuntu
+....
+
+[NOTE]
+====
+While it is technically possible to install into [.filename]#/compat/linux# instead, it's discouraged due to possible clashes with CentOS-based packages. Instead, derive the directory name from the distribution or version name, e.g., [.filename]#/compat/ubuntu#.
+====
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+I: Retrieving InRelease 
+I: Checking Release signature
+I: Valid Release signature (key id F6ECB3762474EDA9D21B7022871920D1991BC93C)
+I: Retrieving Packages 
+I: Validating Packages 
+I: Resolving dependencies of required packages...
+I: Resolving dependencies of base packages...
+I: Checking component main on http://archive.ubuntu.com/ubuntu...
+[...]
+I: Configuring console-setup...
+I: Configuring kbd...
+I: Configuring ubuntu-minimal...
+I: Configuring libc-bin...
+I: Configuring ca-certificates...
+I: Base system installed successfully.
+....
+
+Then set up mounts in [.filename]#/etc/fstab#.
+
+[TIP]
+====
+If the contents of the home directory should be shared and to be able to run X11 applications, [.filename]#/home# and [.filename]#/tmp# should be mounted in the linux compat area using man:nullfs[5] for loopback.
+
+The following example can be added to [.filename]#/etc/fstab#:
+
+[.programlisting]
+....
+# Device        Mountpoint              FStype          Options                      Dump    Pass#
+devfs           /compat/ubuntu/dev      devfs           rw,late                      0       0
+tmpfs           /compat/ubuntu/dev/shm  tmpfs           rw,late,size=1g,mode=1777    0       0
+fdescfs         /compat/ubuntu/dev/fd   fdescfs         rw,late,linrdlnk             0       0
+linprocfs       /compat/ubuntu/proc     linprocfs       rw,late                      0       0
+linsysfs        /compat/ubuntu/sys      linsysfs        rw,late                      0       0
+/tmp            /compat/ubuntu/tmp      nullfs          rw,late                      0       0
+/home           /compat/ubuntu/home     nullfs          rw,late                      0       0
+....
+
+Then execute man:mount[8]:
+
+[source, shell]
+....
+# mount -al
+....
+====
+
+To access the system using man:chroot[8] execute the following command:
+
+[source, shell]
+....
+# chroot /compat/ubuntu /bin/bash
+....
+
+Then man:uname[1] can be executed to check the Linux environment:
+
+[source, shell]
+....
+# uname -s -r -m
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+Linux 3.17.0 x86_64
+....
+
+Once inside the chroot, the system behaves as in a normal Ubuntu installation While systemd doesn't work, the man:service[8] command works as usual.
+
+[TIP]
+====
+To add the package repositories missing from defaults edit the file [.filename]#/compat/ubuntu/etc/apt/sources.list#.
+
+For amd64 the following example can be used:
+
+[.programlisting]
+....
+deb http://archive.ubuntu.com/ubuntu focal main universe restricted multiverse
+deb http://security.ubuntu.com/ubuntu/ focal-security universe multiverse restricted main
+deb http://archive.ubuntu.com/ubuntu focal-backports universe multiverse restricted main
+deb http://archive.ubuntu.com/ubuntu focal-updates universe multiverse restricted main
+....
+
+For arm64 this other example can be used:
+
+[.programlisting]
+....
+deb http://ports.ubuntu.com/ubuntu-ports bionic main universe restricted multiverse
+....
+====
+
+[[linuxemu-advanced]]
+== 고급 주제
+
+모든 Linux 관련 man:sysctl[8] 노브 목록은 man:linux[4]에서 확인할 수 있습니다.
+
+Some applications require specific filesystems to be mounted.
+
+This is normally handled by the [.filename]#/etc/rc.d/linux# script but can be disabled at boot executing the following command:
+
+[.programlisting]
+....
+sysrc linux_mounts_enable="NO"
+....
+
+rc 스크립트로 마운트한 파일시스템은 chroots 또는 jail 내부의 Linux 프로세스에서는 작동하지 않으므로 필요한 경우 [.filename]#/etc/fstab# 에서 구성하세요:
+
+[.programlisting]
+....
+devfs      /compat/linux/dev      devfs      rw,late                    0  0
+tmpfs      /compat/linux/dev/shm  tmpfs      rw,late,size=1g,mode=1777  0  0
+fdescfs    /compat/linux/dev/fd   fdescfs    rw,late,linrdlnk           0  0
+linprocfs  /compat/linux/proc     linprocfs  rw,late                    0  0
+linsysfs   /compat/linux/sys      linsysfs   rw,late                    0  0
+....
+
+Since the Linux binary compatibility layer has gained support for running both 32- and 64-bit Linux binaries, it is no longer possible to link the emulation functionality statically into a custom kernel.
+
+[[linuxemu-libs-manually]]
+=== 직접 추가 라이브러리 설치하기
+
+[NOTE]
+====
+man:debootstrap[8]으로 만든 기본 시스템 하위 디렉터리의 경우 위의 지침을 대신 사용하세요.
+====
+
+Linux 바이너리 호환성을 구성한 후 Linux 애플리케이션에서 공유 라이브러리가 누락되었다고 불평하는 경우 Linux 바이너리에 필요한 공유 라이브러리를 결정하고 수동으로 설치하세요.
+
+From a Linux system using the same CPU architecture, `ldd` can be used to determine which shared libraries the application needs.
+
+For example, to check which shared libraries `linuxdoom` needs, run this command from a Linux system that has Doom installed:
+
+[source, shell]
+....
+% ldd linuxdoom
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+libXt.so.3 (DLL Jump 3.1) => /usr/X11/lib/libXt.so.3.1.0
+libX11.so.3 (DLL Jump 3.1) => /usr/X11/lib/libX11.so.3.1.0
+libc.so.4 (DLL Jump 4.5pl26) => /lib/libc.so.4.6.29
+....
+
+Then, copy all the files in the last column of the output from the Linux system into [.filename]#/compat/linux# on the FreeBSD system. Once copied, create symbolic links to the names in the first column.
+
+This example will result in the following files on the FreeBSD system:
+
+[.programlisting]
+....
+/compat/linux/usr/X11/lib/libXt.so.3.1.0
+/compat/linux/usr/X11/lib/libXt.so.3 -> libXt.so.3.1.0
+/compat/linux/usr/X11/lib/libX11.so.3.1.0
+/compat/linux/usr/X11/lib/libX11.so.3 -> libX11.so.3.1.0
+/compat/linux/lib/libc.so.4.6.29
+/compat/linux/lib/libc.so.4 -> libc.so.4.6.29
+....
+
+`ldd` 출력의 첫 번째 열에 메이저 리비전 번호가 일치하는 Linux 공유 라이브러리가 이미 존재하는 경우, 기존 라이브러리가 작동하므로 마지막 열에 있는 파일에 복사할 필요가 없습니다. 하지만 공유 라이브러리가 최신 버전인 경우 복사하는 것이 좋습니다. 심볼릭 링크가 새 라이브러리를 가리키고 있다면 이전 라이브러리는 제거할 수 있습니다.
+
+예를 들어, 이 라이브러리는 이미 FreeBSD 시스템에 존재합니다:
+
+[.programlisting]
+....
+/compat/linux/lib/libc.so.4.6.27
+/compat/linux/lib/libc.so.4 -> libc.so.4.6.27
+....
+
+그리고 `ldd` 는 바이너리에 최신 버전이 필요함을 나타냅니다:
+
+[.programlisting]
+....
+libc.so.4 (DLL Jump 4.5pl26) -> libc.so.4.6.29
+....
+
+기존 라이브러리의 마지막 자릿수가 한두 버전 오래되었으므로 프로그램은 여전히 약간 오래된 버전으로 작동해야 합니다. 그러나 기존 [.filename]#libc.so# 를 최신 버전으로 교체하는 것이 안전합니다:
+
+[.programlisting]
+....
+/compat/linux/lib/libc.so.4.6.29
+/compat/linux/lib/libc.so.4 -> libc.so.4.6.29
+....
+
+일반적으로, 리눅스 바이너리가 의존하는 공유 라이브러리는 리눅스 프로그램을 FreeBSD에 처음 설치하는 몇 번만 찾으면 됩니다. 시간이 지나면 시스템에 추가 작업 없이 새로 설치된 Linux 바이너리를 실행할 수 있을 만큼 충분한 Linux 공유 라이브러리 세트가 있을 것입니다.
+
+=== Linux ELF 바이너리 브랜딩하기
+
+The FreeBSD kernel uses several methods to determine if the binary to be executed is a Linux one: it checks the brand in the ELF file header, looks for known ELF interpreter paths and checks ELF notes; finally, by default, unbranded ELF executables are assumed to be Linux anyway.
+
+Should all those methods fail, an attempt to execute the binary might result in error message:
+
+[source, shell]
+....
+% ./my-linux-elf-binary
+....
+
+The output should be similar to the following:
+
+[.programlisting]
+....
+ELF binary type not known
+Abort
+....
+
+FreeBSD 커널이 FreeBSD ELF 바이너리와 리눅스 바이너리를 구별할 수 있도록 하려면, man:brandelf[1]를 사용합니다:
+
+[source, shell]
+....
+% brandelf -t Linux my-linux-elf-binary
+....
+
+=== Linux RPM 기반 애플리케이션 설치하기
+
+Linux RPM 기반 애플리케이션을 설치하려면 먼저 package:archivers/rpm4[] 패키지 또는 포트를 설치합니다. 설치가 완료되면 `root` 는 이 명령을 사용하여 [.filename]#.rpm# 을 설치할 수 있습니다:
+
+[source, shell]
+....
+# cd /compat/linux
+# rpm2cpio < /path/to/linux.archive.rpm | cpio -id
+....
+
+필요한 경우 설치된 ELF 바이너리를`brandelf` 합니다. 이렇게 하면 완전히 제거되지 않습니다.
+
+=== 호스트 네임 리졸버 구성하기
+
+DNS가 작동하지 않거나 이 오류가 표시되는 경우:
+
+[.programlisting]
+....
+resolv+: "bind" is an invalid keyword resolv+:
+"hosts" is an invalid keyword
+....
+
+다음과 같이 [.filename]#/compat/linux/etc/host.conf# 을 구성합니다:
+
+[.programlisting]
+....
+order hosts, bind
+multi on
+....
+
+This specifies that [.filename]#/etc/hosts# is searched first and DNS is searched second. When [.filename]#/compat/linux/etc/host.conf# does not exist, Linux applications use [.filename]#/etc/host.conf# in the host system but they complain since that file does not exist in FreeBSD. Remove `bind` if a name server is not configured using [.filename]#/etc/resolv.conf#.
+
+[[linuxemu-misc]]
+=== 기타
+
+More information on how binary compatibility works with Linux(R) can be found in the article link:{linux-emulation}[Linux emulation in FreeBSD].
