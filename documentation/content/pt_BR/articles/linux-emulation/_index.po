@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2023-05-06 08:19+0000\n"
+"PO-Revision-Date: 2023-05-07 14:21+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articleslinux-emulation_index/pt_BR/>\n"
@@ -2112,12 +2112,16 @@ msgid ""
 "compatibilities with a call to a compat-dependent layer.  Linux(R) "
 "compatibility layer defines `linux_sendsig` routine for this purpose."
 msgstr ""
+"O tratamento de sinais é feito geralmente no kernel do FreeBSD para todas as "
+"compatibilidades binárias com uma chamada a uma camada dependente de "
+"compatibilidade. A camada de compatibilidade do Linux(R) define a rotina "
+"`linux_sendsig` para este propósito."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:753
 #, no-wrap
 msgid "Linux(R) sendsig"
-msgstr ""
+msgstr "Linux(R) sendsig"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:760
@@ -2159,6 +2163,11 @@ msgid ""
 "be merged with a benefit of less code duplication and possibly even faster "
 "execution."
 msgstr ""
+"Esta rotina é semelhante à `linux_sendsig`, mas a preparação do contexto do "
+"sinal é diferente. Ela adiciona `siginfo`, `ucontext` e algumas partes "
+"POSIX(R). Pode valer a pena considerar se essas duas funções não poderiam "
+"ser mescladas com o benefício de menos duplicação de código e possivelmente "
+"até execução mais rápida."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:769
@@ -2220,6 +2229,10 @@ msgid ""
 "consumer) in the Linuxulator environment.  Also `PT_SYSCALL` is not "
 "implemented."
 msgstr ""
+"A implementação man:ptrace[2] no Linuxulator tem algumas fraquezas "
+"conhecidas. Houve panes vistas ao usar `strace` (que é um consumidor "
+"man:ptrace[2]) no ambiente Linuxulator. Além disso, `PT_SYSCALL` não está "
+"implementado."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:799
@@ -2229,6 +2242,11 @@ msgid ""
 "translation.  Linux(R) and FreeBSD differs in opinion on what a trap is so "
 "this is dealt with here.  The code is actually very short:"
 msgstr ""
+"Sempre que um processo Linux(R) executando na camada de emulação sofre uma "
+"interrupção, a própria interrupção é tratada de forma transparente com a "
+"única exceção da tradução da interrupção. O Linux(R) e o FreeBSD diferem em "
+"suas opiniões sobre o que é uma interrupção, então isso é tratado aqui. O "
+"código é realmente muito curto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:805
@@ -2238,6 +2256,9 @@ msgid ""
 "translate_traps(int signal, int trap_code)\n"
 "{\n"
 msgstr ""
+"static int\n"
+"translate_traps(int signal, int trap_code)\n"
+"{\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:808
@@ -2246,12 +2267,14 @@ msgid ""
 "  if (signal != SIGBUS)\n"
 "    return signal;\n"
 msgstr ""
+"  if (signal != SIGBUS)\n"
+"    return signal;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:810
 #, no-wrap
 msgid "  switch (trap_code) {\n"
-msgstr ""
+msgstr "  switch (trap_code) {\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:816
@@ -2263,6 +2286,11 @@ msgid ""
 "    case T_PAGEFLT:\n"
 "      return SIGSEGV;\n"
 msgstr ""
+"    case T_PROTFLT:\n"
+"    case T_TSSFLT:\n"
+"    case T_DOUBLEFLT:\n"
+"    case T_PAGEFLT:\n"
+"      return SIGSEGV;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:821
@@ -2273,6 +2301,10 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+"    default:\n"
+"      return signal;\n"
+"  }\n"
+"}\n"
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:824
@@ -2324,7 +2356,7 @@ msgstr ""
 #: documentation/content/en/articles/linux-emulation/_index.adoc:842
 #, no-wrap
 msgid "Linux(R) emulation layer -MI part"
-msgstr ""
+msgstr "Camada de emulação do Linux(R) - Parte MI"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:847
@@ -2334,6 +2366,10 @@ msgid ""
 "thread local storage (TLS) implementation (on i386) and futexes.  Then we "
 "talk briefly about some syscalls."
 msgstr ""
+"Esta seção aborda a parte independente de máquina do Linuxulator. Ela cobre "
+"a infraestrutura de emulação necessária para a emulação do Linux(R) 2.6, a "
+"implementação do armazenamento local de threads (TLS) (em i386) e futexes. "
+"Em seguida, falamos brevemente sobre algumas syscalls."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:849
