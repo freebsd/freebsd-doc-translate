@@ -1,0 +1,2943 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR The FreeBSD Project
+# This file is distributed under the same license as the FreeBSD Documentation package.
+# Kyung-tak, Yoo <stonegaze@me.com>, 2023.
+# "Kyung-tak, Yoo" <stonegaze@me.com>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: FreeBSD Documentation VERSION\n"
+"POT-Creation-Date: 2023-04-20 20:56-0300\n"
+"PO-Revision-Date: 2023-05-05 06:21+0000\n"
+"Last-Translator: \"Kyung-tak, Yoo\" <stonegaze@me.com>\n"
+"Language-Team: Korean <https://translate-dev.freebsd.org/projects/"
+"documentation/bookshandbookmac_index/ko/>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. type: YAML Front Matter: description
+#: documentation/content/en/books/handbook/mac/_index.adoc:1
+#, no-wrap
+msgid "This chapter focuses on the MAC framework and the set of pluggable security policy modules FreeBSD provides for enabling various security mechanisms"
+msgstr ""
+"이 장에서는 다양한 보안 메커니즘을 활성화하기 위해 FreeBSD가 제공하는 MAC "
+"프레임워크와 플러그 가능한 보안 정책 모듈 세트에 중점을 둡니다"
+
+#. type: YAML Front Matter: part
+#: documentation/content/en/books/handbook/mac/_index.adoc:1
+#, no-wrap
+msgid "Part III. System Administration"
+msgstr "파트 III. 시스템 관리"
+
+#. type: YAML Front Matter: title
+#: documentation/content/en/books/handbook/mac/_index.adoc:1
+#, no-wrap
+msgid "Chapter 17. Mandatory Access Control"
+msgstr "17장. 필수 액세스 제어 (Mandatory Access Control)"
+
+#. type: Title =
+#: documentation/content/en/books/handbook/mac/_index.adoc:14
+#, no-wrap
+msgid "Mandatory Access Control"
+msgstr "Mandatory Access Control"
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/mac/_index.adoc:52
+#, no-wrap
+msgid "Synopsis"
+msgstr "요약"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:61
+msgid ""
+"FreeBSD supports security extensions based on the POSIX(R).1e draft.  These "
+"security mechanisms include file system Access Control Lists (crossref:"
+"security[fs-acl,“Access Control Lists”]) and Mandatory Access Control "
+"(MAC).  MAC allows access control modules to be loaded in order to implement "
+"security policies.  Some modules provide protections for a narrow subset of "
+"the system, hardening a particular service.  Others provide comprehensive "
+"labeled security across all subjects and objects.  The mandatory part of the "
+"definition indicates that enforcement of controls is performed by "
+"administrators and the operating system.  This is in contrast to the default "
+"security mechanism of Discretionary Access Control (DAC) where enforcement "
+"is left to the discretion of users."
+msgstr ""
+"FreeBSD는 POSIX(R).1e 초안에 기반한 보안 확장을 지원합니다.  이러한 보안 "
+"메커니즘에는 파일 시스템 접근 제어 목록(crossref:security[fs-acl,“Access "
+"Control Lists”])과 필수 접근 제어(MAC)가 포함됩니다.  MAC을 사용하면 보안 "
+"정책을 구현하기 위해 액세스 제어 모듈을 로드할 수 있습니다.  일부 모듈은 "
+"시스템의 좁은 하위 집합에 대한 보호 기능을 제공하여 특정 서비스를 "
+"강화합니다.  다른 모듈은 모든 주체와 객체에 대해 포괄적인 레이블이 지정된 "
+"보안을 제공합니다.  정의의 필수 부분은 제어의 시행이 관리자와 운영 체제에 "
+"의해 수행됨을 나타냅니다.  이는 시행이 사용자의 재량에 맡겨지는 DAC(임의 "
+"액세스 제어)의 기본 보안 메커니즘과 대조적입니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:63
+msgid ""
+"This chapter focuses on the MAC framework and the set of pluggable security "
+"policy modules FreeBSD provides for enabling various security mechanisms."
+msgstr ""
+"이 장에서는 MAC 프레임워크와 다양한 보안 메커니즘을 활성화하기 위해 "
+"FreeBSD가 제공하는 플러그 가능한 보안 정책 모듈 세트에 중점을 둡니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:65
+msgid "After reading this chapter, you will know:"
+msgstr "이 장을 읽고 나면 다음을 알 수 있습니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:67
+msgid "The terminology associated with the MAC framework."
+msgstr "MAC 프레임워크와 관련된 용어."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:68
+msgid ""
+"The capabilities of MAC security policy modules as well as the difference "
+"between a labeled and non-labeled policy."
+msgstr "MAC 보안 정책 모듈의 능력과 레이블이 지정된 정책과 레이블이 지정되지 않은 "
+"정책의 차이점."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:69
+msgid ""
+"The considerations to take into account before configuring a system to use "
+"the MAC framework."
+msgstr "MAC 프레임워크를 사용하도록 시스템을 구성하기 전에 고려해야 할 사항."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:70
+msgid ""
+"Which MAC security policy modules are included in FreeBSD and how to "
+"configure them."
+msgstr "FreeBSD에 포함된 MAC 보안 정책 모듈과 이를 구성하는 방법."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:71
+msgid "How to implement a more secure environment using the MAC framework."
+msgstr "MAC 프레임워크를 사용하여 더욱 안전한 환경을 구현하는 방법."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:72
+msgid ""
+"How to test the MAC configuration to ensure the framework has been properly "
+"implemented."
+msgstr "프레임워크가 제대로 구현되었는지 확인하기 위해 MAC 구성을 테스트하는 방법."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:74
+msgid "Before reading this chapter, you should:"
+msgstr "이 챕터를 읽기 전에 알아두어야 할 사항입니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:76
+msgid ""
+"Understand UNIX(R) and FreeBSD basics (crossref:basics[basics,FreeBSD "
+"Basics])."
+msgstr "UNIX(R) 및 FreeBSD 기본 사항을 이해합니다(crossref:basics[basics,FreeBSD "
+"Basics])."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:77
+msgid ""
+"Have some familiarity with security and how it pertains to FreeBSD (crossref:"
+"security[security,Security])."
+msgstr ""
+"보안과 그것이 FreeBSD와 어떻게 관련되어 있는지 어느 정도 알고 있어야 "
+"합니다(crossref:security[security,Security])."
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:84
+msgid ""
+"Improper MAC configuration may cause loss of system access, aggravation of "
+"users, or inability to access the features provided by Xorg.  More "
+"importantly, MAC should not be relied upon to completely secure a system.  "
+"The MAC framework only augments an existing security policy.  Without sound "
+"security practices and regular security checks, the system will never be "
+"completely secure."
+msgstr ""
+"부적절한 MAC 구성은 시스템 액세스 손실, 사용자 성능 저하 또는 Xorg가 "
+"제공하는 기능에 대한 액세스 불능을 초래할 수 있습니다.  더 중요한 것은 MAC이 "
+"시스템을 완전히 보호하는 데 의존해서는 안 된다는 것입니다.  MAC 프레임워크는 "
+"기존 보안 정책을 보강할 뿐입니다.  건전한 보안 관행과 정기적인 보안 점검 "
+"없이는 시스템을 완벽하게 보호할 수 없습니다."
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:87
+msgid ""
+"The examples contained within this chapter are for demonstration purposes "
+"and the example settings should _not_ be implemented on a production "
+"system.  Implementing any security policy takes a good deal of "
+"understanding, proper design, and thorough testing."
+msgstr ""
+"이 장에 포함된 예제는 데모용이며 예제 설정은 프로덕션 시스템에서 구현해서는 "
+"_안 됩니다_ .  보안 정책을 구현하려면 많은 이해와 적절한 설계, 철저한 "
+"테스트가 필요합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:92
+msgid ""
+"While this chapter covers a broad range of security issues relating to the "
+"MAC framework, the development of new MAC security policy modules will not "
+"be covered.  A number of security policy modules included with the MAC "
+"framework have specific characteristics which are provided for both testing "
+"and new module development.  Refer to man:mac_test[4], man:mac_stub[4] and "
+"man:mac_none[4] for more information on these security policy modules and "
+"the various mechanisms they provide."
+msgstr ""
+"이 장에서는 MAC 프레임워크와 관련된 광범위한 보안 문제를 다루지만, 새로운 "
+"MAC 보안 정책 모듈의 개발은 다루지 않습니다.  MAC 프레임워크에 포함된 여러 "
+"보안 정책 모듈에는 테스트와 새 모듈 개발 모두를 위해 제공되는 특성이 "
+"있습니다.  이러한 보안 정책 모듈과 이 모듈이 제공하는 다양한 메커니즘에 대한 "
+"자세한 내용은 man:mac_test[4], man:mac_stub[4] 및 man:mac_none[4]을 "
+"참조하세요."
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/mac/_index.adoc:94
+#, no-wrap
+msgid "Key Terms"
+msgstr "핵심 용어"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:97
+msgid "The following key terms are used when referring to the MAC framework:"
+msgstr "MAC 프레임워크를 언급할 때 사용되는 주요 용어는 다음과 같습니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:99
+msgid ""
+"_compartment_: a set of programs and data to be partitioned or separated, "
+"where users are given explicit access to specific component of a system. A "
+"compartment represents a grouping, such as a work group, department, "
+"project, or topic. Compartments make it possible to implement a need-to-know-"
+"basis security policy."
+msgstr ""
+"_compartment_ : 분할 또는 분리할 프로그램과 데이터의 집합으로, 사용자에게 "
+"시스템의 특정 구성 요소에 대한 명시적 액세스 권한이 부여됩니다. 구획은 작업 "
+"그룹, 부서, 프로젝트 또는 주제와 같은 그룹을 나타냅니다. 구획을 사용하면 "
+"알아야 할 필요 기반 보안 정책을 구현할 수 있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:100
+msgid ""
+"_integrity_: the level of trust which can be placed on data. As the "
+"integrity of the data is elevated, so does the ability to trust that data."
+msgstr "_integrity_ : 데이터에 대해 신뢰할 수 있는 수준. 데이터의 무결성이 "
+"높아질수록 해당 데이터의 신뢰도도 높아집니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:101
+msgid ""
+"_level_: the increased or decreased setting of a security attribute. As the "
+"level increases, its security is considered to elevate as well."
+msgstr "_level_ : 보안 속성의 증가 또는 감소된 설정입니다. 레벨이 높아지면 보안도 "
+"높아지는 것으로 간주합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:102
+msgid ""
+"_label_: a security attribute which can be applied to files, directories, or "
+"other items in the system. It could be considered a confidentiality stamp. "
+"When a label is placed on a file, it describes the security properties of "
+"that file and will only permit access by files, users, and resources with a "
+"similar security setting. The meaning and interpretation of label values "
+"depends on the policy configuration. Some policies treat a label as "
+"representing the integrity or secrecy of an object while other policies "
+"might use labels to hold rules for access."
+msgstr ""
+"_label_ : 시스템의 파일, 디렉터리 또는 기타 항목에 적용할 수 있는 보안 "
+"속성입니다. 기밀성 스탬프로 간주할 수 있습니다. 파일에 레이블을 지정하면 "
+"해당 파일의 보안 속성을 설명하며 유사한 보안 설정을 가진 파일, 사용자 및 "
+"리소스에 대해서만 액세스를 허용합니다. 레이블 값의 의미와 해석은 정책 구성에 "
+"따라 다릅니다. 일부 정책에서는 레이블을 개체의 무결성 또는 기밀성을 나타내는 "
+"것으로 취급하는 반면, 다른 정책에서는 레이블을 사용하여 액세스 규칙을 정할 "
+"수 있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:103
+msgid ""
+"_multilabel_: this property is a file system option which can be set in "
+"single-user mode using man:tunefs[8], during boot using man:fstab[5], or "
+"during the creation of a new file system. This option permits an "
+"administrator to apply different MAC labels on different objects. This "
+"option only applies to security policy modules which support labeling."
+msgstr ""
+"_multilabel_ : 이 속성은 단일 사용자 모드에서 man:tunefs[8]를 사용하거나, "
+"부팅 중에 man:fstab[5]을 사용하거나, 새 파일 시스템을 생성하는 동안 설정할 "
+"수 있는 파일 시스템 옵션입니다. 이 옵션을 사용하면 관리자가 여러 개체에 서로 "
+"다른 MAC 레이블을 적용할 수 있습니다. 이 옵션은 라벨링을 지원하는 보안 정책 "
+"모듈에만 적용됩니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:104
+msgid ""
+"_single label_: a policy where the entire file system uses one label to "
+"enforce access control over the flow of data. Whenever `multilabel` is not "
+"set, all files will conform to the same label setting."
+msgstr ""
+"_single label_ : 전체 파일 시스템에서 하나의 레이블을 사용하여 데이터 흐름에 "
+"대한 액세스 제어를 적용하는 정책입니다. `multilabel` 을 설정하지 않으면 모든 "
+"파일이 동일한 레이블 설정을 따르게 됩니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:105
+msgid ""
+"_object_: an entity through which information flows under the direction of a "
+"_subject_. This includes directories, files, fields, screens, keyboards, "
+"memory, magnetic storage, printers or any other data storage or moving "
+"device. An object is a data container or a system resource. Access to an "
+"object effectively means access to its data."
+msgstr ""
+"_object_ : _주체_ 의 지시에 따라 정보가 흐르는 개체를 말합니다. 여기에는 "
+"디렉터리, 파일, 필드, 화면, 키보드, 메모리, 자기 저장 장치, 프린터 또는 기타 "
+"데이터 저장 또는 이동 장치가 포함됩니다. 객체는 데이터 컨테이너 또는 시스템 "
+"리소스입니다. 객체에 대한 액세스는 사실상 해당 데이터에 대한 액세스를 "
+"의미합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:106
+msgid ""
+"_subject_: any active entity that causes information to flow between "
+"_objects_ such as a user, user process, or system process. On FreeBSD, this "
+"is almost always a thread acting in a process on behalf of a user."
+msgstr ""
+"_subject_ : 사용자, 사용자 프로세스 또는 시스템 프로세스와 같은 _객체_ 간에 "
+"정보를 흐르게 하는 모든 활성 엔티티입니다. FreeBSD에서는 거의 항상 사용자를 "
+"대신하여 프로세스에서 작동하는 스레드가 해당됩니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:107
+msgid ""
+"_policy_: a collection of rules which defines how objectives are to be "
+"achieved. A policy usually documents how certain items are to be handled. "
+"This chapter considers a policy to be a collection of rules which controls "
+"the flow of data and information and defines who has access to that data and "
+"information."
+msgstr ""
+"_policy_ : 목표를 달성하는 방법을 정의하는 규칙 모음입니다. 정책은 "
+"일반적으로 특정 항목을 처리하는 방법을 문서화합니다. 이 장에서는 정책을 "
+"데이터와 정보의 흐름을 제어하고 해당 데이터와 정보에 액세스할 수 있는 "
+"사용자를 정의하는 규칙 모음으로 간주합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:108
+msgid ""
+"_high-watermark_: this type of policy permits the raising of security levels "
+"for the purpose of accessing higher level information. In most cases, the "
+"original level is restored after the process is complete. Currently, the "
+"FreeBSD MAC framework does not include this type of policy."
+msgstr ""
+"_high-watermark_ : 이 유형의 정책은 더 높은 수준의 정보에 액세스할 목적으로 "
+"보안 수준을 높일 수 있도록 허용합니다. 대부분의 경우, 프로세스가 완료된 후 "
+"원래 수준으로 복원됩니다. 현재 FreeBSD MAC 프레임워크에는 이 유형의 정책이 "
+"포함되어 있지 않습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:109
+msgid ""
+"_low-watermark_: this type of policy permits lowering security levels for "
+"the purpose of accessing information which is less secure. In most cases, "
+"the original security level of the user is restored after the process is "
+"complete. The only security policy module in FreeBSD to use this is man:"
+"mac_lomac[4]."
+msgstr ""
+"_low-watermark_ : 이 유형의 정책은 보안 수준이 낮은 정보에 액세스할 목적으로 "
+"보안 수준을 낮추는 것을 허용합니다. 대부분의 경우, 프로세스가 완료된 후 "
+"사용자의 원래 보안 수준이 복원됩니다. 이를 사용할 수 있는 FreeBSD의 유일한 "
+"보안 정책 모듈은 man:mac_lomac[4]입니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:110
+msgid ""
+"_sensitivity_: usually used when discussing Multilevel Security (MLS). A "
+"sensitivity level describes how important or secret the data should be. As "
+"the sensitivity level increases, so does the importance of the secrecy, or "
+"confidentiality, of the data."
+msgstr ""
+"_sensitivity_ : 일반적으로 다단계 보안(Multilevel Security, MLS)을 논의할 때 "
+"사용됩니다. 민감도 수준은 데이터가 얼마나 중요하거나 비밀이어야 하는지를 "
+"설명합니다. 민감도 수준이 높아질수록 데이터의 비밀성 또는 기밀성의 중요성도 "
+"높아집니다."
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/mac/_index.adoc:112
+#, no-wrap
+msgid "Understanding MAC Labels"
+msgstr "MAC 레이블 이해하기"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:117
+msgid ""
+"A MAC label is a security attribute which may be applied to subjects and "
+"objects throughout the system.  When setting a label, the administrator must "
+"understand its implications in order to prevent unexpected or undesired "
+"behavior of the system.  The attributes available on an object depend on the "
+"loaded policy module, as policy modules interpret their attributes in "
+"different ways."
+msgstr ""
+"MAC 레이블은 시스템 전체의 주체와 객체에 적용될 수 있는 보안 속성입니다.  "
+"레이블을 설정할 때 관리자는 시스템의 예기치 않거나 원치 않는 동작을 방지하기 "
+"위해 그 의미를 이해해야 합니다.  정책 모듈은 각기 다른 방식으로 속성을 "
+"해석하므로 개체에 사용할 수 있는 속성은 로드된 정책 모듈에 따라 달라집니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:121
+msgid ""
+"The security label on an object is used as a part of a security access "
+"control decision by a policy.  With some policies, the label contains all of "
+"the information necessary to make a decision.  In other policies, the labels "
+"may be processed as part of a larger rule set."
+msgstr ""
+"개체의 보안 레이블은 정책에 의한 보안 액세스 제어 결정의 일부로 사용됩니다.  "
+"일부 정책에서는 레이블에 결정을 내리는 데 필요한 모든 정보가 포함되어 "
+"있습니다.  다른 정책에서는 레이블이 더 큰 규칙 집합의 일부로 처리될 수 "
+"있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:125
+msgid ""
+"There are two types of label policies: single label and multi label.  By "
+"default, the system will use single label.  The administrator should be "
+"aware of the pros and cons of each in order to implement policies which meet "
+"the requirements of the system's security model."
+msgstr ""
+"레이블 정책에는 단일 레이블과 다중 레이블의 두 가지 유형이 있습니다.  "
+"기본적으로 시스템은 단일 레이블을 사용합니다.  관리자는 시스템 보안 모델의 "
+"요구 사항을 충족하는 정책을 구현하기 위해 각각의 장단점을 알고 있어야 합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:129
+msgid ""
+"A single label security policy only permits one label to be used for every "
+"subject or object.  Since a single label policy enforces one set of access "
+"permissions across the entire system, it provides lower administration "
+"overhead, but decreases the flexibility of policies which support labeling.  "
+"However, in many environments, a single label policy may be all that is "
+"required."
+msgstr ""
+"단일 레이블 보안 정책은 모든 대상 또는 개체에 대해 하나의 레이블만 사용할 수 "
+"있도록 허용합니다.  단일 레이블 정책은 전체 시스템에 하나의 액세스 권한 "
+"세트를 적용하므로 관리 오버헤드가 줄어들지만 레이블을 지원하는 정책의 "
+"유연성이 떨어집니다.  그러나 많은 환경에서는 단일 레이블 정책으로 충분할 "
+"수도 있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:133
+msgid ""
+"A single label policy is somewhat similar to DAC as `root` configures the "
+"policies so that users are placed in the appropriate categories and access "
+"levels.  A notable difference is that many policy modules can also restrict "
+"`root`.  Basic control over objects will then be released to the group, but "
+"`root` may revoke or modify the settings at any time."
+msgstr ""
+"단일 레이블 정책은 사용자가 적절한 카테고리와 액세스 수준에 배치되도록 "
+"정책을 구성하기 때문에 DAC와 다소 유사합니다.  주목할 만한 차이점은 많은 "
+"정책 모듈이 `root` 를 제한할 수도 있다는 것입니다.  그러면 개체에 대한 기본 "
+"제어 권한이 그룹으로 풀리지만 `root` 는 언제든지 설정을 취소하거나 수정할 수 "
+"있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:138
+msgid ""
+"When appropriate, a multi label policy can be set on a UFS file system by "
+"passing `multilabel` to man:tunefs[8].  A multi label policy permits each "
+"subject or object to have its own independent MAC label.  The decision to "
+"use a multi label or single label policy is only required for policies which "
+"implement the labeling feature, such as `biba`, `lomac`, and `mls`.  Some "
+"policies, such as `seeotheruids`, `portacl` and `partition`, do not use "
+"labels at all."
+msgstr ""
+"적절한 경우, man:tunefs[8]에 `multilabel` 을 전달하여 UFS 파일 시스템에 다중 "
+"레이블 정책을 설정할 수 있습니다.  다중 레이블 정책을 사용하면 각 주체 또는 "
+"오브젝트가 독립적인 MAC 레이블을 가질 수 있습니다.  다중 레이블 또는 단일 "
+"레이블 정책을 사용할지 여부는 `biba`, `lomac`, `mls` 와 같은 레이블 기능을 "
+"구현하는 정책에만 필요합니다.  `seeotheruids`, `portacl`, `partition` 과 "
+"같은 일부 정책은 레이블을 전혀 사용하지 않습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:141
+msgid ""
+"Using a multi label policy on a partition and establishing a multi label "
+"security model can increase administrative overhead as everything in that "
+"file system has a label.  This includes directories, files, and even device "
+"nodes."
+msgstr ""
+"파티션에 다중 레이블 정책을 사용하고 다중 레이블 보안 모델을 설정하면 해당 "
+"파일 시스템의 모든 항목에 레이블이 지정되므로 관리 오버헤드가 증가할 수 "
+"있습니다.  여기에는 디렉터리, 파일, 심지어 장치 노드까지 포함됩니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:144
+msgid ""
+"The following command will set `multilabel` on the specified UFS file "
+"system.  This may only be done in single-user mode and is not a requirement "
+"for the swap file system:"
+msgstr ""
+"다음 명령은 지정된 UFS 파일 시스템에 `멀티레이블` 을 설정합니다.  이 작업은 "
+"단일 사용자 모드에서만 수행할 수 있으며 스왑 파일 시스템에 대한 요구 사항은 "
+"아닙니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:148
+#, no-wrap
+msgid "# tunefs -l enable /\n"
+msgstr "# tunefs -l enable /\n"
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:154
+msgid ""
+"Some users have experienced problems with setting the `multilabel` flag on "
+"the root partition.  If this is the case, please review <<mac-troubleshoot>>."
+msgstr ""
+"일부 사용자는 루트 파티션에서 `멀티 레이블` 플래그를 설정하는 데 문제가 "
+"발생했습니다.  이 경우 <<mac-troubleshoot>> 을 검토하세요."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:160
+msgid ""
+"Since the multi label policy is set on a per-file system basis, a multi "
+"label policy may not be needed if the file system layout is well designed.  "
+"Consider an example security MAC model for a FreeBSD web server.  This "
+"machine uses the single label, `biba/high`, for everything in the default "
+"file systems.  If the web server needs to run at `biba/low` to prevent write "
+"up capabilities, it could be installed to a separate UFS [.filename]#/usr/"
+"local# file system set at `biba/low`."
+msgstr ""
+"다중 레이블 정책은 파일 시스템 단위로 설정되므로 파일 시스템 레이아웃이 잘 "
+"설계된 경우 다중 레이블 정책이 필요하지 않을 수 있습니다.  FreeBSD 웹 서버의 "
+"보안 MAC 모델을 예로 들어보겠습니다.  이 머신은 기본 파일 시스템의 모든 "
+"항목에 단일 레이블인 `biba/high` 를 사용합니다.  쓰기 기능을 방지하기 위해 "
+"웹 서버를 `biba/low` 에서 실행해야 하는 경우, `biba/low` 로 설정된 별도의 "
+"UFS [.filename]#/usr/local# 파일 시스템에 웹 서버를 설치할 수 있습니다."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:161
+#, no-wrap
+msgid "Label Configuration"
+msgstr "레이블 구성"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:165
+msgid ""
+"Virtually all aspects of label policy module configuration will be performed "
+"using the base system utilities.  These commands provide a simple interface "
+"for object or subject configuration or the manipulation and verification of "
+"the configuration."
+msgstr ""
+"레이블 정책 모듈 구성의 거의 모든 측면은 기본 시스템 유틸리티를 사용하여 "
+"수행됩니다.  이러한 명령은 개체 또는 대상 구성 또는 구성의 조작 및 확인을 "
+"위한 간단한 인터페이스를 제공합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:168
+msgid ""
+"All configuration may be done using `setfmac`, which is used to set MAC "
+"labels on system objects, and `setpmac`, which is used to set the labels on "
+"system subjects.  For example, to set the `biba` MAC label to `high` on [."
+"filename]#test#:"
+msgstr ""
+"모든 구성은 시스템 개체의 MAC 레이블을 설정하는 데 사용되는 `setfmac` 과 "
+"시스템 주체의 레이블을 설정하는 데 사용되는 `setpmac` 을 사용하여 수행할 수 "
+"있습니다.  예를 들어, [.filename]#test# 에 `biba` MAC 레이블을 `high` 로 "
+"설정합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:172
+#, no-wrap
+msgid "# setfmac biba/high test\n"
+msgstr "# setfmac biba/high test\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:180
+msgid ""
+"If the configuration is successful, the prompt will be returned without "
+"error.  A common error is `Permission denied` which usually occurs when the "
+"label is being set or modified on a restricted object.  Other conditions may "
+"produce different failures.  For instance, the file may not be owned by the "
+"user attempting to relabel the object, the object may not exist, or the "
+"object may be read-only.  A mandatory policy will not allow the process to "
+"relabel the file, maybe because of a property of the file, a property of the "
+"process, or a property of the proposed new label value.  For example, if a "
+"user running at low integrity tries to change the label of a high integrity "
+"file, or a user running at low integrity tries to change the label of a low "
+"integrity file to a high integrity label, these operations will fail."
+msgstr ""
+"구성이 성공하면 오류 없이 프롬프트가 반환됩니다.  일반적인 오류는 `"
+"Permission denied` 로, 일반적으로 제한된 객체에 레이블을 설정하거나 수정할 "
+"때 발생합니다.  다른 조건에서는 다른 오류가 발생할 수 있습니다.  예를 들어, "
+"개체에 레이블을 다시 지정하려는 사용자가 파일을 소유하고 있지 않거나, 개체가 "
+"존재하지 않거나, 개체가 읽기 전용일 수 있습니다.  필수 정책은 파일의 속성, "
+"프로세스의 속성 또는 제안된 새 레이블 값의 속성 때문에 프로세스가 파일에 "
+"레이블을 다시 지정하는 것을 허용하지 않을 수 있습니다.  예를 들어, 낮은 "
+"무결성으로 실행 중인 사용자가 높은 무결성 파일의 레이블을 변경하려고 하거나 "
+"낮은 무결성으로 실행 중인 사용자가 낮은 무결성 파일의 레이블을 높은 무결성 "
+"레이블로 변경하려고 하는 경우 이러한 작업은 실패합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:182
+msgid ""
+"The system administrator may use `setpmac` to override the policy module's "
+"settings by assigning a different label to the invoked process:"
+msgstr ""
+"시스템 관리자는 `setpmac` 을 사용하여 호출된 프로세스에 다른 레이블을 "
+"할당하여 정책 모듈의 설정을 재정의할 수 있습니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:190
+#, no-wrap
+msgid ""
+"# setfmac biba/high test\n"
+"Permission denied\n"
+"# setpmac biba/low setfmac biba/high test\n"
+"# getfmac test\n"
+"test: biba/high\n"
+msgstr ""
+"# setfmac biba/high test\n"
+"Permission denied\n"
+"# setpmac biba/low setfmac biba/high test\n"
+"# getfmac test\n"
+"test: biba/high\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:195
+msgid ""
+"For currently running processes, such as sendmail, `getpmac` is usually used "
+"instead.  This command takes a process ID (PID) in place of a command name.  "
+"If users attempt to manipulate a file not in their access, subject to the "
+"rules of the loaded policy modules, the `Operation not permitted` error will "
+"be displayed."
+msgstr ""
+"sendmail과 같이 현재 실행 중인 프로세스의 경우 일반적으로 `getpmac` 이 대신 "
+"사용됩니다.  이 명령은 명령 이름 대신 프로세스 ID(PID)를 사용합니다.  "
+"사용자가 로드된 정책 모듈의 규칙에 따라 액세스 권한이 없는 파일을 조작하려고 "
+"하면 `Operation not permitted` 오류가 표시됩니다."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:196
+#, no-wrap
+msgid "Predefined Labels"
+msgstr "사전 정의된 레이블"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:199
+msgid ""
+"A few FreeBSD policy modules which support the labeling feature offer three "
+"predefined labels: `low`, `equal`, and `high`, where:"
+msgstr ""
+"라벨링 기능을 지원하는 몇몇 FreeBSD 정책 모듈은 세 가지 사전 정의된 레이블을 "
+"제공합니다: `low`, `equal`, `high` 의 세 가지 레이블을 제공합니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:201
+msgid ""
+"`low` is considered the lowest label setting an object or subject may have. "
+"Setting this on objects or subjects blocks their access to objects or "
+"subjects marked high."
+msgstr ""
+"`low` 은 개체나 주체가 가질 수 있는 가장 낮은 레이블 설정으로 간주됩니다. "
+"개체나 주체에 이 설정을 지정하면 높게 표시된 개체나 주체에 대한 액세스가 "
+"차단됩니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:202
+msgid ""
+"`equal` sets the subject or object to be disabled or unaffected and should "
+"only be placed on objects considered to be exempt from the policy."
+msgstr ""
+"`equal` 은 주체 또는 객체를 비활성화하거나 영향을 받지 않도록 설정하며 "
+"정책에서 제외되는 것으로 간주되는 객체에만 배치해야 합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:203
+msgid ""
+"`high` grants an object or subject the highest setting available in the Biba "
+"and MLS policy modules."
+msgstr "`high` 는 개체 또는 주체에 Biba 및 MLS 정책 모듈에서 사용할 수 있는 가장 "
+"높은 설정을 부여합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:207
+msgid ""
+"Such policy modules include man:mac_biba[4], man:mac_mls[4] and man:"
+"mac_lomac[4].  Each of the predefined labels establishes a different "
+"information flow directive.  Refer to the manual page of the module to "
+"determine the traits of the generic label configurations."
+msgstr ""
+"이러한 정책 모듈에는 man:mac_biba[4], man:mac_mls[4] 및 man:mac_lomac[4]이 "
+"있습니다.  미리 정의된 각 레이블은 서로 다른 정보 흐름 지시문을 설정합니다.  "
+"일반 레이블 구성의 특성을 확인하려면 모듈의 설명서 페이지를 참조하세요."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:208
+#, no-wrap
+msgid "Numeric Labels"
+msgstr "숫자 레이블"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:213
+msgid ""
+"The Biba and MLS policy modules support a numeric label which may be set to "
+"indicate the precise level of hierarchical control.  This numeric level is "
+"used to partition or sort information into different groups of "
+"classification, only permitting access to that group or a higher group "
+"level.  For example:"
+msgstr ""
+"Biba 및 MLS 정책 모듈은 계층적 제어의 정확한 수준을 나타내도록 설정할 수 "
+"있는 숫자 레이블을 지원합니다.  이 숫자 수준은 정보를 여러 분류 그룹으로 "
+"분할하거나 정렬하는 데 사용되며, 해당 그룹 또는 상위 그룹 수준에 대한 "
+"액세스만 허용합니다.  예를 들면 다음과 같습니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:217
+#, no-wrap
+msgid "biba/10:2+3+6(5:2+3-20:2+3+4+5+6)\n"
+msgstr "biba/10:2+3+6(5:2+3-20:2+3+4+5+6)\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:220
+msgid ""
+"may be interpreted as \"Biba Policy Label/Grade 10:Compartments 2, 3 and 6: "
+"(grade 5 ...\")"
+msgstr ""
+"\"Biba Policy Label/Grade 10:Compartments 2, 3 and 6: (grade 5 ...)\"으로 "
+"해석될 수 있습니다"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:223
+msgid ""
+"In this example, the first grade would be considered the effective grade "
+"with effective compartments, the second grade is the low grade, and the last "
+"one is the high grade.  In most configurations, such fine-grained settings "
+"are not needed as they are considered to be advanced configurations."
+msgstr ""
+"이 예에서 첫 번째 등급은 유효 구획이 있는 유효 등급, 두 번째 등급은 낮은 "
+"등급, 마지막 등급은 높은 등급으로 간주됩니다.  대부분의 구성에서는 고급 "
+"구성으로 간주되므로 이러한 세분화된 설정은 필요하지 않습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:226
+msgid ""
+"System objects only have a current grade and compartment.  System subjects "
+"reflect the range of available rights in the system, and network interfaces, "
+"where they are used for access control."
+msgstr ""
+"시스템 객체에는 현재 등급과 구획만 있습니다.  시스템 주체는 시스템에서 사용 "
+"가능한 권한의 범위와 액세스 제어에 사용되는 네트워크 인터페이스를 반영합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:231
+msgid ""
+"The grade and compartments in a subject and object pair are used to "
+"construct a relationship known as _dominance_, in which a subject dominates "
+"an object, the object dominates the subject, neither dominates the other, or "
+"both dominate each other.  The \"both dominate\" case occurs when the two "
+"labels are equal.  Due to the information flow nature of Biba, a user has "
+"rights to a set of compartments that might correspond to projects, but "
+"objects also have a set of compartments.  Users may have to subset their "
+"rights using `su` or `setpmac` in order to access objects in a compartment "
+"from which they are not restricted."
+msgstr ""
+"주제와 객체 쌍의 등급과 구획은 주체가 객체를 지배하거나, 객체가 주체를 "
+"지배하거나, 어느 쪽도 다른 쪽을 지배하지 않거나, 둘 다 서로를 지배하는 "
+"_우위(dominance)_ 라는 관계를 구성하는 데 사용됩니다.  \"both dominate\"의 "
+"경우는 두 레이블이 동일할 때 발생합니다.  Biba의 정보 흐름 특성으로 인해 "
+"사용자는 프로젝트에 해당할 수 있는 일련의 구획에 대한 권한을 가지지만, "
+"객체에도 일련의 구획이 있습니다.  사용자가 제한되지 않는 구획의 개체에 "
+"액세스하려면 `su` 또는 `setpmac` 을 사용하여 권한을 하위 설정해야 할 수 "
+"있습니다."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:232
+#, no-wrap
+msgid "User Labels"
+msgstr "사용자 레이블"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:237
+msgid ""
+"Users are required to have labels so that their files and processes properly "
+"interact with the security policy defined on the system.  This is configured "
+"in [.filename]#/etc/login.conf# using login classes.  Every policy module "
+"that uses labels will implement the user class setting."
+msgstr ""
+"사용자는 파일 및 프로세스가 시스템에 정의된 보안 정책과 올바르게 상호 작용할 "
+"수 있도록 레이블이 있어야 합니다.  이는 로그인 클래스를 사용하여 [."
+"filename]#/etc/login.conf# 에서 구성됩니다.  레이블을 사용하는 모든 정책 "
+"모듈은 사용자 클래스 설정을 구현합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:242
+msgid ""
+"To set the user class default label which will be enforced by MAC, add a "
+"`label` entry.  An example `label` entry containing every policy module is "
+"displayed below.  Note that in a real configuration, the administrator would "
+"never enable every policy module.  It is recommended that the rest of this "
+"chapter be reviewed before any configuration is implemented."
+msgstr ""
+"MAC에서 적용할 사용자 클래스 기본 레이블을 설정하려면 `label` 항목을 "
+"추가합니다.  모든 정책 모듈을 포함하는 `label` 항목의 예가 아래에 나와 "
+"있습니다.  실제 구성에서는 관리자가 모든 정책 모듈을 활성화하지 않을 "
+"것입니다.  구성을 구현하기 전에 이 장의 나머지 부분을 검토하는 것이 좋습니다."
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:268
+#, no-wrap
+msgid ""
+"default:\\\n"
+"\t:copyright=/etc/COPYRIGHT:\\\n"
+"\t:welcome=/etc/motd:\\\n"
+"\t:setenv=MAIL=/var/mail/$,BLOCKSIZE=K:\\\n"
+"\t:path=~/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:\\\n"
+"\t:manpath=/usr/share/man /usr/local/man:\\\n"
+"\t:nologin=/usr/sbin/nologin:\\\n"
+"\t:cputime=1h30m:\\\n"
+"\t:datasize=8M:\\\n"
+"\t:vmemoryuse=100M:\\\n"
+"\t:stacksize=2M:\\\n"
+"\t:memorylocked=4M:\\\n"
+"\t:memoryuse=8M:\\\n"
+"\t:filesize=8M:\\\n"
+"\t:coredumpsize=8M:\\\n"
+"\t:openfiles=24:\\\n"
+"\t:maxproc=32:\\\n"
+"\t:priority=0:\\\n"
+"\t:requirehome:\\\n"
+"\t:passwordtime=91d:\\\n"
+"\t:umask=022:\\\n"
+"\t:ignoretime@:\\\n"
+"\t:label=partition/13,mls/5,biba/10(5-15),lomac/10[2]:\n"
+msgstr ""
+"default:\\\n"
+"\t:copyright=/etc/COPYRIGHT:\\\n"
+"\t:welcome=/etc/motd:\\\n"
+"\t:setenv=MAIL=/var/mail/$,BLOCKSIZE=K:\\\n"
+"\t:path=~/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:\\"
+"\n"
+"\t:manpath=/usr/share/man /usr/local/man:\\\n"
+"\t:nologin=/usr/sbin/nologin:\\\n"
+"\t:cputime=1h30m:\\\n"
+"\t:datasize=8M:\\\n"
+"\t:vmemoryuse=100M:\\\n"
+"\t:stacksize=2M:\\\n"
+"\t:memorylocked=4M:\\\n"
+"\t:memoryuse=8M:\\\n"
+"\t:filesize=8M:\\\n"
+"\t:coredumpsize=8M:\\\n"
+"\t:openfiles=24:\\\n"
+"\t:maxproc=32:\\\n"
+"\t:priority=0:\\\n"
+"\t:requirehome:\\\n"
+"\t:passwordtime=91d:\\\n"
+"\t:umask=022:\\\n"
+"\t:ignoretime@:\\\n"
+"\t:label=partition/13,mls/5,biba/10(5-15),lomac/10[2]:\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:273
+msgid ""
+"While users can not modify the default value, they may change their label "
+"after they login, subject to the constraints of the policy.  The example "
+"above tells the Biba policy that a process's minimum integrity is `5`, its "
+"maximum is `15`, and the default effective label is `10`.  The process will "
+"run at `10` until it chooses to change label, perhaps due to the user using "
+"`setpmac`, which will be constrained by Biba to the configured range."
+msgstr ""
+"사용자는 기본값을 수정할 수 없지만, 로그인 후 정책의 제약 조건에 따라 "
+"레이블을 변경할 수 있습니다.  위의 예는 프로세스의 최소 무결성은 `5`, 최대 "
+"무결성은 `15`, 기본 유효 레이블은 `10` 이라고 Biba 정책에 알려줍니다.  "
+"프로세스는 사용자가 `setpmac` 을 사용하기 때문에 라벨을 변경할 때까지 `10` "
+"에서 실행되며, 이는 Biba에 의해 구성된 범위로 제한됩니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:275
+msgid ""
+"After any change to [.filename]#login.conf#, the login class capability "
+"database must be rebuilt using `cap_mkdb`."
+msgstr ""
+"[.filename]#login.conf# 를 변경한 후에는 `cap_mkdb` 를 사용하여 로그인 "
+"클래스 기능 데이터베이스를 다시 빌드해야 합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:278
+msgid ""
+"Many sites have a large number of users requiring several different user "
+"classes.  In depth planning is required as this can become difficult to "
+"manage."
+msgstr ""
+"많은 장소에는 여러 가지 사용자 클래스가 필요한 많은 사용자가 있습니다.  "
+"관리가 어려워질 수 있으므로 심도 있는 계획이 필요합니다."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:279
+#, no-wrap
+msgid "Network Interface Labels"
+msgstr "네트워크 인터페이스 레이블"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:284
+msgid ""
+"Labels may be set on network interfaces to help control the flow of data "
+"across the network.  Policies using network interface labels function in the "
+"same way that policies function with respect to objects.  Users at high "
+"settings in Biba, for example, will not be permitted to access network "
+"interfaces with a label of `low`."
+msgstr ""
+"네트워크 인터페이스에 레이블을 설정하여 네트워크 전반의 데이터 흐름을 제어할 "
+"수 있습니다.  네트워크 인터페이스 레이블을 사용하는 정책은 객체에 대한 "
+"정책과 동일한 방식으로 작동합니다.  예를 들어, Biba에서 높은 설정의 사용자는 "
+"`low` 라는 레이블이 있는 네트워크 인터페이스에 액세스할 수 없습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:286
+msgid ""
+"When setting the MAC label on network interfaces, `maclabel` may be passed "
+"to `ifconfig`:"
+msgstr "네트워크 인터페이스에서 MAC 레이블을 설정할 때 `maclabel` 을 `ifconfig` 에 "
+"전달할 수 있습니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:290
+#, no-wrap
+msgid "# ifconfig bge0 maclabel biba/equal\n"
+msgstr "# ifconfig bge0 maclabel biba/equal\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:294
+msgid ""
+"This example will set the MAC label of `biba/equal` on the `bge0` "
+"interface.  When using a setting similar to `biba/high(low-high)`, the "
+"entire label should be quoted to prevent an error from being returned."
+msgstr ""
+"이 예는 `bge0` 인터페이스에서 `biba/equal` 의 MAC 레이블을 설정합니다.  biba/"
+"high(low-high)` 와 유사한 설정을 사용하는 경우 오류가 반환되지 않도록 전체 "
+"레이블을 따옴표로 묶어야 합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:298
+msgid ""
+"Each policy module which supports labeling has a tunable which may be used "
+"to disable the MAC label on network interfaces.  Setting the label to "
+"`equal` will have a similar effect.  Review the output of `sysctl`, the "
+"policy manual pages, and the information in the rest of this chapter for "
+"more information on those tunables."
+msgstr ""
+"라벨링을 지원하는 각 정책 모듈에는 네트워크 인터페이스에서 MAC 라벨을 "
+"비활성화하는 데 사용할 수 있는 튜너블이 있습니다.  레이블을 `equal` 로 "
+"설정해도 비슷한 효과가 있습니다.  이러한 튜너블에 대한 자세한 내용은 `sysctl`"
+" 의 출력, 정책 매뉴얼 페이지 및 이 장의 나머지 부분에 있는 정보를 검토하세요."
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/mac/_index.adoc:300
+#, no-wrap
+msgid "Planning the Security Configuration"
+msgstr "보안 구성 계획하기"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:304
+msgid ""
+"Before implementing any MAC policies, a planning phase is recommended.  "
+"During the planning stages, an administrator should consider the "
+"implementation requirements and goals, such as:"
+msgstr ""
+"MAC 정책을 구현하기 전에 계획 단계를 수행하는 것이 좋습니다.  계획 단계에서 "
+"관리자는 다음과 같은 구현 요구 사항 및 목표를 고려해야 합니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:306
+msgid ""
+"How to classify information and resources available on the target systems."
+msgstr "대상 시스템에서 사용 가능한 정보 및 리소스를 분류하는 방법."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:307
+msgid ""
+"Which information or resources to restrict access to along with the type of "
+"restrictions that should be applied."
+msgstr "적용해야 하는 제한 유형과 함께 액세스를 제한할 정보 또는 리소스."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:308
+msgid "Which MAC modules will be required to achieve this goal."
+msgstr "이 목표를 달성하기 위해 어떤 MAC 모듈이 필요할지."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:311
+msgid ""
+"A trial run of the trusted system and its configuration should occur "
+"_before_ a MAC implementation is used on production systems.  Since "
+"different environments have different needs and requirements, establishing a "
+"complete security profile will decrease the need of changes once the system "
+"goes live."
+msgstr ""
+"프로덕션 시스템에서 MAC 구현을 사용하기 전에 신뢰할 수 있는 시스템과 해당 "
+"구성을 시험 실행해야 합니다.  환경마다 필요와 요구 사항이 다르기 때문에 "
+"완전한 보안 프로필을 설정하면 시스템이 가동된 후 변경할 필요성을 줄일 수 "
+"있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:317
+msgid ""
+"Consider how the MAC framework augments the security of the system as a "
+"whole.  The various security policy modules provided by the MAC framework "
+"could be used to protect the network and file systems or to block users from "
+"accessing certain ports and sockets.  Perhaps the best use of the policy "
+"modules is to load several security policy modules at a time in order to "
+"provide a MLS environment.  This approach differs from a hardening policy, "
+"which typically hardens elements of a system which are used only for "
+"specific purposes.  The downside to MLS is increased administrative overhead."
+msgstr ""
+"MAC 프레임워크로 시스템 전반의 보안을 강화하는 방법을 고려하세요.  MAC "
+"프레임워크에서 제공하는 다양한 보안 정책 모듈을 사용하여 네트워크 및 파일 "
+"시스템을 보호하거나 사용자가 특정 포트 및 소켓에 액세스하지 못하도록 차단할 "
+"수 있습니다.  정책 모듈을 가장 잘 활용하는 방법은 한 번에 여러 보안 정책 "
+"모듈을 로드하여 MLS 환경을 제공하는 것입니다.  이 접근 방식은 일반적으로 "
+"특정 용도로만 사용되는 시스템 요소를 강화하는 강화 정책과는 다릅니다.  MLS의 "
+"단점은 관리 오버헤드가 증가한다는 것입니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:321
+msgid ""
+"The overhead is minimal when compared to the lasting effect of a framework "
+"which provides the ability to pick and choose which policies are required "
+"for a specific configuration and which keeps performance overhead down.  The "
+"reduction of support for unneeded policies can increase the overall "
+"performance of the system as well as offer flexibility of choice.  A good "
+"implementation would consider the overall security requirements and "
+"effectively implement the various security policy modules offered by the "
+"framework."
+msgstr ""
+"오버헤드는 특정 구성에 필요한 정책을 선택할 수 있는 기능을 제공하고 성능 "
+"오버헤드를 낮추는 프레임워크의 지속적인 효과와 비교하면 미미합니다.  "
+"불필요한 정책에 대한 지원을 줄이면 시스템의 전반적인 성능이 향상될 뿐만 "
+"아니라 선택의 유연성을 제공할 수 있습니다.  올바른 구현은 전반적인 보안 요구 "
+"사항을 고려하고 프레임워크에서 제공하는 다양한 보안 정책 모듈을 효과적으로 "
+"구현하는 것입니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:324
+msgid ""
+"A system utilizing MAC guarantees that a user will not be permitted to "
+"change security attributes at will.  All user utilities, programs, and "
+"scripts must work within the constraints of the access rules provided by the "
+"selected security policy modules and control of the MAC access rules is in "
+"the hands of the system administrator."
+msgstr ""
+"MAC을 사용하는 시스템은 사용자가 보안 속성을 마음대로 변경할 수 없도록 "
+"보장합니다.  모든 사용자 유틸리티, 프로그램 및 스크립트는 선택한 보안 정책 "
+"모듈에서 제공하는 액세스 규칙의 제약 내에서 작동해야 하며, MAC 액세스 규칙의 "
+"제어는 시스템 관리자의 손에 달려 있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:328
+msgid ""
+"It is the duty of the system administrator to carefully select the correct "
+"security policy modules.  For an environment that needs to limit access "
+"control over the network, the man:mac_portacl[4], man:mac_ifoff[4], and man:"
+"mac_biba[4] policy modules make good starting points.  For an environment "
+"where strict confidentiality of file system objects is required, consider "
+"the man:mac_bsdextended[4] and man:mac_mls[4] policy modules."
+msgstr ""
+"올바른 보안 정책 모듈을 신중하게 선택하는 것은 시스템 관리자의 의무입니다.  "
+"네트워크를 통한 접근 제어를 제한해야 하는 환경의 경우 man:mac_portacl[4], "
+"man:mac_ifoff[4] 및 man:mac_biba[4] 정책 모듈이 좋은 출발점이 될 수 "
+"있습니다.  파일 시스템 개체에 대한 엄격한 기밀성이 필요한 환경에서는 "
+"man:mac_bsdextended[4] 및 man:mac_mls[4] 정책 모듈을 고려하세요."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:335
+msgid ""
+"Policy decisions could be made based on network configuration.  If only "
+"certain users should be permitted access to man:ssh[1], the man:"
+"mac_portacl[4] policy module is a good choice.  In the case of file systems, "
+"access to objects might be considered confidential to some users, but not to "
+"others.  As an example, a large development team might be broken off into "
+"smaller projects where developers in project A might not be permitted to "
+"access objects written by developers in project B.  Yet both projects might "
+"need to access objects created by developers in project C.  Using the "
+"different security policy modules provided by the MAC framework, users could "
+"be divided into these groups and then given access to the appropriate "
+"objects."
+msgstr ""
+"네트워크 구성에 따라 정책을 결정할 수 있습니다.  특정 사용자에게만 man:ssh[1]"
+"에 대한 액세스를 허용해야 하는 경우 man:mac_portacl[4] 정책 모듈을 사용하는 "
+"것이 좋습니다.  파일 시스템의 경우 일부 사용자에게는 개체에 대한 액세스가 "
+"기밀로 간주될 수 있지만 다른 사용자에게는 기밀로 간주되지 않을 수 있습니다.  "
+"예를 들어, 대규모 개발 팀이 소규모 프로젝트로 나뉘어 프로젝트 A의 개발자는 "
+"프로젝트 B의 개발자가 작성한 개체에 액세스할 수 없지만 두 프로젝트 모두 "
+"프로젝트 C의 개발자가 만든 개체에 액세스해야 할 수 있습니다. MAC "
+"프레임워크에서 제공하는 다양한 보안 정책 모듈을 사용하여 사용자를 이러한 "
+"그룹으로 구분한 다음 적절한 개체에 대한 액세스 권한을 부여할 수 있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:339
+msgid ""
+"Each security policy module has a unique way of dealing with the overall "
+"security of a system.  Module selection should be based on a well thought "
+"out security policy which may require revision and reimplementation.  "
+"Understanding the different security policy modules offered by the MAC "
+"framework will help administrators choose the best policies for their "
+"situations."
+msgstr ""
+"각 보안 정책 모듈은 시스템의 전반적인 보안을 처리하는 고유한 방식을 가지고 "
+"있습니다.  모듈 선택은 수정 및 재구현이 필요할 수 있는 신중한 보안 정책을 "
+"기반으로 해야 합니다.  MAC 프레임워크에서 제공하는 다양한 보안 정책 모듈을 "
+"이해하면 관리자가 상황에 가장 적합한 정책을 선택하는 데 도움이 됩니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:341
+msgid ""
+"The rest of this chapter covers the available modules, describes their use "
+"and configuration, and in some cases, provides insight on applicable "
+"situations."
+msgstr ""
+"이 장의 나머지 부분에서는 사용 가능한 모듈을 다루고, 사용 및 구성을 "
+"설명하며, 경우에 따라 적용 가능한 상황에 대한 인사이트를 제공합니다."
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:346
+msgid ""
+"Implementing MAC is much like implementing a firewall since care must be "
+"taken to prevent being completely locked out of the system.  The ability to "
+"revert back to a previous configuration should be considered and the "
+"implementation of MAC over a remote connection should be done with extreme "
+"caution."
+msgstr ""
+"MAC을 구현하는 것은 방화벽을 구현하는 것과 매우 유사하므로 시스템에서 완전히 "
+"잠기지 않도록 주의를 기울여야 합니다.  이전 구성으로 되돌릴 수 있는 기능을 "
+"고려해야 하며 원격 연결을 통한 MAC 구현은 매우 신중하게 수행해야 합니다."
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/mac/_index.adoc:349
+#, no-wrap
+msgid "Available MAC Policies"
+msgstr "사용 가능한 MAC 정책"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:355
+msgid ""
+"The default FreeBSD kernel includes `options MAC`.  This means that every "
+"module included with the MAC framework can be loaded with `kldload` as a run-"
+"time kernel module.  After testing the module, add the module name to [."
+"filename]#/boot/loader.conf# so that it will load during boot.  Each module "
+"also provides a kernel option for those administrators who choose to compile "
+"their own custom kernel."
+msgstr ""
+"기본 FreeBSD 커널에는 `options MAC` 이 포함되어 있습니다.  즉, MAC "
+"프레임워크에 포함된 모든 모듈은 런타임 커널 모듈로 `kldload` 를 사용하여 "
+"로드할 수 있습니다.  모듈을 테스트한 후 부팅 중에 로드될 수 있도록 [."
+"filename]#/boot/loader.conf# 에 모듈 이름을 추가합니다.  각 모듈은 자체 "
+"커널을 컴파일하려는 관리자를 위한 커널 옵션도 제공합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:358
+msgid ""
+"FreeBSD includes a group of policies that will cover most security "
+"requirements. Each policy is summarized below.  The last three policies "
+"support integer settings in place of the three default labels."
+msgstr ""
+"FreeBSD에는 대부분의 보안 요구사항을 충족시킬 수 있는 정책 그룹이 포함되어 "
+"있습니다. 각 정책은 아래에 요약되어 있습니다.  마지막 세 가지 정책은 세 가지 "
+"기본 레이블 대신 정수 설정을 지원합니다."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:360
+#, no-wrap
+msgid "The MAC See Other UIDs Policy"
+msgstr "MAC See Other UIDs 정책"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:363
+msgid "Module name: [.filename]#mac_seeotheruids.ko#"
+msgstr "모듈 이름: [.filename]#mac_seeotheruids.ko#"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:365
+msgid "Kernel configuration line: `options MAC_SEEOTHERUIDS`"
+msgstr "커널 구성 줄: `options MAC_SEEOTHERUIDS`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:367
+msgid "Boot option: `mac_seeotheruids_load=\"YES\"`"
+msgstr "부팅 옵션: `mac_seeotheruids_load=\"YES\"`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:370
+msgid ""
+"The man:mac_seeotheruids[4] module extends the `security.bsd.see_other_uids` "
+"and `security.bsd.see_other_gids sysctl` tunables.  This option does not "
+"require any labels to be set before configuration and can operate "
+"transparently with other modules."
+msgstr ""
+"man:mac_seeotheruids[4] 모듈은 `security.bsd.see_other_uids` 및 `"
+"security.bsd.see_other_gids sysctl` 튜너블을 확장합니다.  이 옵션은 구성 "
+"전에 레이블을 설정할 필요가 없으며 다른 모듈과 함께 투명하게 작동할 수 "
+"있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:372
+msgid ""
+"After loading the module, the following `sysctl` tunables may be used to "
+"control its features:"
+msgstr "모듈을 로드한 후 다음 `sysctl` 튜너블을 사용하여 모듈의 기능을 제어할 수 "
+"있습니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:374
+msgid ""
+"`security.mac.seeotheruids.enabled` enables the module and implements the "
+"default settings which deny users the ability to view processes and sockets "
+"owned by other users."
+msgstr ""
+"`security.mac.seeotheruids.enabled` 는 모듈을 활성화하고 사용자가 다른 "
+"사용자가 소유한 프로세스 및 소켓을 볼 수 없도록 하는 기본 설정을 구현합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:375
+msgid ""
+"`security.mac.seeotheruids.specificgid_enabled` allows specified groups to "
+"be exempt from this policy. To exempt specific groups, use the `security.mac."
+"seeotheruids.specificgid=_XXX_ sysctl` tunable, replacing _XXX_ with the "
+"numeric group ID to be exempted."
+msgstr ""
+"`security.mac.seeotheruids.specificgid_enabled` 를 사용하면 지정된 그룹이 이 "
+"정책에서 면제될 수 있습니다. 특정 그룹을 면제하려면 `"
+"security.mac.seeotheruids.specificgid=_XXX_ sysctl` 튜너블을 사용하여 _XXX_ "
+"를 면제할 숫자 그룹 ID로 바꾸면 됩니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:376
+msgid ""
+"`security.mac.seeotheruids.primarygroup_enabled` is used to exempt specific "
+"primary groups from this policy. When using this tunable, `security.mac."
+"seeotheruids.specificgid_enabled` may not be set."
+msgstr ""
+"`security.mac.seeotheruids.primarygroup_enabled` 는 특정 주 그룹을 이 "
+"정책에서 제외하는 데 사용됩니다. 이 튜너블을 사용하는 경우 `security.mac."
+"seeotheruids.specificgid_enabled` 가 설정되지 않을 수 있습니다."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:378
+#, no-wrap
+msgid "The MAC BSD Extended Policy"
+msgstr "MAC BSD Extended 정책"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:381
+msgid "Module name: [.filename]#mac_bsdextended.ko#"
+msgstr "모듈 이름: [.filename]#mac_bsdextended.ko#"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:383
+msgid "Kernel configuration line: `options MAC_BSDEXTENDED`"
+msgstr "커널 구성 줄: `options MAC_BSDEXTENDED`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:385
+msgid "Boot option: `mac_bsdextended_load=\"YES\"`"
+msgstr "부팅 옵션: `mac_bsdextended_load=\"YES\"`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:391
+msgid ""
+"The man:mac_bsdextended[4] module enforces a file system firewall.  It "
+"provides an extension to the standard file system permissions model, "
+"permitting an administrator to create a firewall-like ruleset to protect "
+"files, utilities, and directories in the file system hierarchy.  When access "
+"to a file system object is attempted, the list of rules is iterated until "
+"either a matching rule is located or the end is reached.  This behavior may "
+"be changed using `security.mac.bsdextended.firstmatch_enabled`.  Similar to "
+"other firewall modules in FreeBSD, a file containing the access control "
+"rules can be created and read by the system at boot time using an man:rc."
+"conf[5] variable."
+msgstr ""
+"man:mac_bsdextended[4] 모듈은 파일 시스템 방화벽에 적용됩니다.  이 모듈은 "
+"표준 파일 시스템 권한 모델에 대한 확장을 제공하여 관리자가 파일 시스템 계층 "
+"구조에서 파일, 유틸리티 및 디렉터리를 보호하기 위해 방화벽과 유사한 규칙 "
+"집합을 만들 수 있도록 합니다.  파일 시스템 개체에 대한 액세스가 시도되면 "
+"일치하는 규칙을 찾거나 끝 부분에 도달할 때까지 규칙 목록이 반복됩니다.  이 "
+"동작은 `security.mac.bsdextended.firstmatch_enabled` 를 사용하여 변경할 수 "
+"있습니다.  FreeBSD의 다른 방화벽 모듈과 유사하게, 접근 제어 규칙이 포함된 "
+"파일은 부팅 시 man:rc.conf[5] 변수를 사용하여 시스템에서 생성하고 읽을 수 "
+"있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:394
+msgid ""
+"The rule list may be entered using man:ugidfw[8] which has a syntax similar "
+"to man:ipfw[8].  More tools can be written by using the functions in the man:"
+"libugidfw[3] library."
+msgstr ""
+"규칙 목록은 man:ipfw[8]와 유사한 구문을 가진 man:ugidfw[8]를 사용하여 입력할 "
+"수 있습니다.  man:libugidfw[3] 라이브러리에 있는 함수를 사용하여 더 많은 "
+"도구를 작성할 수 있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:396
+msgid ""
+"After the man:mac_bsdextended[4] module has been loaded, the following "
+"command may be used to list the current rule configuration:"
+msgstr "man:mac_bsdextended[4] 모듈을 로드한 후 다음 명령을 사용하여 현재 규칙 "
+"구성을 나열할 수 있습니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:401
+#, no-wrap
+msgid ""
+"# ugidfw list\n"
+"0 slots, 0 rules\n"
+msgstr ""
+"# ugidfw list\n"
+"0 slots, 0 rules\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:405
+msgid ""
+"By default, no rules are defined and everything is completely accessible.  "
+"To create a rule which blocks all access by users but leaves `root` "
+"unaffected:"
+msgstr ""
+"기본적으로 규칙이 정의되어 있지 않으며 모든 항목에 완전히 액세스할 수 "
+"있습니다.  사용자의 모든 액세스를 차단하지만 `root` 는 영향을 받지 않는 "
+"규칙을 만들려면 다음과 같이 하세요:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:409
+#, no-wrap
+msgid "# ugidfw add subject not uid root new object not uid root mode n\n"
+msgstr "# ugidfw add subject not uid root new object not uid root mode n\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:413
+msgid ""
+"While this rule is simple to implement, it is a very bad idea as it blocks "
+"all users from issuing any commands.  A more realistic example blocks "
+"`user1` all access, including directory listings, to ``_user2_``'s home "
+"directory:"
+msgstr ""
+"이 규칙은 구현하기는 간단하지만 모든 사용자가 명령을 실행하지 못하도록 "
+"차단하므로 매우 나쁜 아이디어입니다.  보다 현실적인 예는 ``_user1`` 의 홈 "
+"디렉터리에 대한 디렉토리 목록을 포함한 모든 액세스를 ``_user2_`` 에서 "
+"차단하는 것입니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:418
+#, no-wrap
+msgid ""
+"# ugidfw set 2 subject uid user1 object uid user2 mode n\n"
+"# ugidfw set 3 subject uid user1 object gid user2 mode n\n"
+msgstr ""
+"# ugidfw set 2 subject uid user1 object uid user2 mode n\n"
+"# ugidfw set 3 subject uid user1 object gid user2 mode n\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:422
+msgid ""
+"Instead of `user1`, `not uid _user2_` could be used in order to enforce the "
+"same access restrictions for all users.  However, the `root` user is "
+"unaffected by these rules."
+msgstr ""
+"모든 사용자에게 동일한 접근 제한을 적용하기 위해 `user1` 대신 `not uid "
+"_user2_` 를 사용할 수 있습니다.  그러나 `root` 사용자는 이러한 규칙의 영향을 "
+"받지 않습니다."
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:426
+msgid ""
+"Extreme caution should be taken when working with this module as incorrect "
+"use could block access to certain parts of the file system."
+msgstr ""
+"이 모듈을 잘못 사용하면 파일 시스템의 특정 부분에 대한 액세스가 차단될 수 "
+"있으므로 이 모듈로 작업할 때는 각별한 주의를 기울여야 합니다."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:429
+#, no-wrap
+msgid "The MAC Interface Silencing Policy"
+msgstr "MAC Interface Silencing 정책"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:432
+msgid "Module name: [.filename]#mac_ifoff.ko#"
+msgstr "모듈 이름: [.filename]#mac_ifoff.ko#"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:434
+msgid "Kernel configuration line: `options MAC_IFOFF`"
+msgstr "커널 구성 줄: `options MAC_IFOFF`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:436
+msgid "Boot option: `mac_ifoff_load=\"YES\"`"
+msgstr "부팅 옵션: `mac_ifoff_load=\"YES\"`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:439
+msgid ""
+"The man:mac_ifoff[4] module is used to disable network interfaces on the fly "
+"and to keep network interfaces from being brought up during system boot.  It "
+"does not use labels and does not depend on any other MAC modules."
+msgstr ""
+"man:mac_ifoff[4] 모듈은 네트워크 인터페이스를 즉시 비활성화하고 시스템 부팅 "
+"중에 네트워크 인터페이스가 나타나지 않도록 하는 데 사용됩니다.  이 모듈은 "
+"레이블을 사용하지 않으며 다른 MAC 모듈에 의존하지 않습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:441
+msgid ""
+"Most of this module's control is performed through these `sysctl` tunables:"
+msgstr "이 모듈의 제어는 대부분 이 `sysctl` 튜너블을 통해 수행됩니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:443
+msgid ""
+"`security.mac.ifoff.lo_enabled` enables or disables all traffic on the "
+"loopback, man:lo[4], interface."
+msgstr ""
+"`security.mac.ifoff.lo_enabled` 는 루프백, man:lo[4], 인터페이스의 모든 "
+"트래픽을 활성화 또는 비활성화합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:444
+msgid ""
+"`security.mac.ifoff.bpfrecv_enabled` enables or disables all traffic on the "
+"Berkeley Packet Filter interface, man:bpf[4]."
+msgstr ""
+"`security.mac.ifoff.bpfrecv_enabled` 는 버클리 패킷 필터 인터페이스의 모든 "
+"트래픽을 활성화 또는 비활성화합니다(man:bpf[4])."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:445
+msgid ""
+"`security.mac.ifoff.other_enabled` enables or disables traffic on all other "
+"interfaces."
+msgstr "`security.mac.ifoff.other_enabled` 는 다른 모든 인터페이스의 트래픽을 활성화 "
+"또는 비활성화합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:448
+msgid ""
+"One of the most common uses of man:mac_ifoff[4] is network monitoring in an "
+"environment where network traffic should not be permitted during the boot "
+"sequence.  Another use would be to write a script which uses an application "
+"such as package:security/aide[] to automatically block network traffic if it "
+"finds new or altered files in protected directories."
+msgstr ""
+"man:mac_ifoff[4]의 가장 일반적인 용도 중 하나는 부팅 시퀀스 중에 네트워크 "
+"트래픽이 허용되지 않아야 하는 환경에서 네트워크 모니터링입니다.  또 다른 "
+"용도로는 package:security/aide[] 같은 애플리케이션을 사용하여 보호된 "
+"디렉터리에서 새 파일이나 변경된 파일을 발견하면 네트워크 트래픽을 자동으로 "
+"차단하는 스크립트를 작성할 수 있습니다."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:450
+#, no-wrap
+msgid "The MAC Port Access Control List Policy"
+msgstr "MAC Port Access Control List 정책"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:453
+msgid "Module name: [.filename]#mac_portacl.ko#"
+msgstr "모듈 이름: [.filename]#mac_portacl.ko#"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:455
+msgid "Kernel configuration line: `MAC_PORTACL`"
+msgstr "커널 구성 줄: `MAC_PORTACL`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:457
+msgid "Boot option: `mac_portacl_load=\"YES\"`"
+msgstr "부팅 옵션: `mac_portacl_load=\"YES\"`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:459
+msgid ""
+"The man:mac_portacl[4] module is used to limit binding to local TCP and UDP "
+"ports, making it possible to allow non-`root` users to bind to specified "
+"privileged ports below 1024."
+msgstr ""
+"man:mac_portacl[4] 모듈은 로컬 TCP 및 UDP 포트로 바인딩을 제한하는 데 "
+"사용되며, `root` 가 아닌 사용자가 1024 미만의 지정된 권한 포트에 "
+"바인딩하도록 허용할 수 있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:462
+msgid ""
+"Once loaded, this module enables the MAC policy on all sockets.  The "
+"following tunables are available:"
+msgstr "이 모듈이 로드되면 모든 소켓에서 MAC 정책을 활성화합니다.  다음과 같은 "
+"튜너블을 사용할 수 있습니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:464
+msgid ""
+"`security.mac.portacl.enabled` enables or disables the policy completely."
+msgstr "`security.mac.portacl.enabled` 는 정책을 완전히 활성화 또는 비활성화합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:465
+msgid ""
+"`security.mac.portacl.port_high` sets the highest port number that man:"
+"mac_portacl[4] protects."
+msgstr ""
+"`security.mac.portacl.port_high` 는 man:mac_portacl[4]이 보호하는 가장 높은 "
+"포트 번호를 설정합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:466
+msgid ""
+"`security.mac.portacl.suser_exempt`, when set to a non-zero value, exempts "
+"the `root` user from this policy."
+msgstr ""
+"`security.mac.portacl.suser_exempt` 를 0이 아닌 값으로 설정하면 이 정책에서 "
+"`root` 사용자를 면제합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:467
+msgid ""
+"`security.mac.portacl.rules` specifies the policy as a text string of the "
+"form `rule[,rule,...]`, with as many rules as needed, and where each rule is "
+"of the form `idtype:id:protocol:port`. The `idtype` is either `uid` or "
+"`gid`. The `protocol` parameter can be `tcp` or `udp`. The `port` parameter "
+"is the port number to allow the specified user or group to bind to. Only "
+"numeric values can be used for the user ID, group ID, and port parameters."
+msgstr ""
+"`security.mac.portacl.rules` 는 정책을 `규칙[,규칙,...]` 형식의 텍스트 "
+"문자열로 지정하며, 필요한 만큼의 규칙을 포함하며, 각 규칙은 "
+"`idtype:id:protocol:port` 형식입니다. `idtype` 은 `uid` 또는 `gid` 입니다. "
+"`protocol` 매개변수는 `tcp` 또는 `udp` 일 수 있습니다. `port` 매개변수는 "
+"지정된 사용자 또는 그룹이 바인딩할 수 있는 포트 번호입니다. 사용자 ID, 그룹 "
+"ID 및 포트 매개변수에는 숫자 값만 사용할 수 있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:470
+msgid ""
+"By default, ports below 1024 can only be used by privileged processes which "
+"run as `root`.  For man:mac_portacl[4] to allow non-privileged processes to "
+"bind to ports below 1024, set the following tunables as follows:"
+msgstr ""
+"기본적으로 1024 미만의 포트는 `root` 로 실행되는 권한 있는 프로세스만 사용할 "
+"수 있습니다.  권한이 없는 프로세스가 1024 미만의 포트에 바인딩할 수 있게 "
+"하려면 man:mac_portacl[4]에 다음과 같이 튜너블을 설정하세요:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:476
+#, no-wrap
+msgid ""
+"# sysctl security.mac.portacl.port_high=1023\n"
+"# sysctl net.inet.ip.portrange.reservedlow=0\n"
+"# sysctl net.inet.ip.portrange.reservedhigh=0\n"
+msgstr ""
+"# sysctl security.mac.portacl.port_high=1023\n"
+"# sysctl net.inet.ip.portrange.reservedlow=0\n"
+"# sysctl net.inet.ip.portrange.reservedhigh=0\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:479
+msgid ""
+"To prevent the `root` user from being affected by this policy, set `security."
+"mac.portacl.suser_exempt` to a non-zero value."
+msgstr ""
+"`root` 사용자가 이 정책의 영향을 받지 않도록 하려면 `security.mac.portacl."
+"suser_exempt` 를 0이 아닌 값으로 설정하세요."
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:483
+#, no-wrap
+msgid "# sysctl security.mac.portacl.suser_exempt=1\n"
+msgstr "# sysctl security.mac.portacl.suser_exempt=1\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:486
+msgid ""
+"To allow the `www` user with UID 80 to bind to port 80 without ever needing "
+"`root` privilege:"
+msgstr "UID 80을 가진 `www` 사용자가 `root` 권한 없이도 포트 80에 바인딩할 수 있도록 "
+"허용합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:490
+#, no-wrap
+msgid "# sysctl security.mac.portacl.rules=uid:80:tcp:80\n"
+msgstr "# sysctl security.mac.portacl.rules=uid:80:tcp:80\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:493
+msgid ""
+"This next example permits the user with the UID of 1001 to bind to TCP ports "
+"110 (POP3) and 995 (POP3s):"
+msgstr ""
+"다음 예에서는 UID가 1001인 사용자가 TCP 포트 110(POP3) 및 995(POP3s)에 "
+"바인딩할 수 있도록 허용합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:497
+#, no-wrap
+msgid "# sysctl security.mac.portacl.rules=uid:1001:tcp:110,uid:1001:tcp:995\n"
+msgstr "# sysctl security.mac.portacl.rules=uid:1001:tcp:110,uid:1001:tcp:995\n"
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:500
+#, no-wrap
+msgid "The MAC Partition Policy"
+msgstr "MAC Partition 정책"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:503
+msgid "Module name: [.filename]#mac_partition.ko#"
+msgstr "모듈 이름: [.filename]#mac_partition.ko#"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:505
+msgid "Kernel configuration line: `options MAC_PARTITION`"
+msgstr "커널 구성 줄: `options MAC_PARTITION`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:507
+msgid "Boot option: `mac_partition_load=\"YES\"`"
+msgstr "부팅 옵션: `mac_partition_load=\"YES\"`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:511
+msgid ""
+"The man:mac_partition[4] policy drops processes into specific \"partitions\" "
+"based on their MAC label.  Most configuration for this policy is done using "
+"man:setpmac[8].  One `sysctl` tunable is available for this policy:"
+msgstr ""
+"man:mac_partition[4] 정책은 프로세스를 MAC 레이블에 따라 특정 \"파티션\"으로 "
+"드롭합니다.  이 정책에 대한 대부분의 구성은 man:setpmac[8]을 사용하여 "
+"수행됩니다.  이 정책에는 하나의 `sysctl` 튜너블을 사용할 수 있습니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:513
+msgid ""
+"`security.mac.partition.enabled` enables the enforcement of MAC process "
+"partitions."
+msgstr "`security.mac.partition.enabled` 는 MAC 프로세스 파티션의 적용을 "
+"활성화합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:516
+msgid ""
+"When this policy is enabled, users will only be permitted to see their "
+"processes, and any others within their partition, but will not be permitted "
+"to work with utilities outside the scope of this partition.  For instance, a "
+"user in the `insecure` class will not be permitted to access `top` as well "
+"as many other commands that must spawn a process."
+msgstr ""
+"이 정책을 활성화하면 사용자는 자신의 프로세스와 파티션 내의 다른 프로세스를 "
+"볼 수 있지만 이 파티션의 범위를 벗어난 유틸리티로 작업할 수 없습니다.  예를 "
+"들어, `insecure` 클래스의 사용자는 프로세스를 생성해야 하는 다른 많은 "
+"명령뿐만 아니라 `top` 에도 액세스할 수 없습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:519
+msgid ""
+"This example adds `top` to the label set on users in the `insecure` class.  "
+"All processes spawned by users in the `insecure` class will stay in the "
+"`partition/13` label."
+msgstr ""
+"이 예에서는 `insecure` 클래스의 사용자에 설정된 레이블에 `top` 을 "
+"추가합니다.  `insecure` 클래스의 사용자에 의해 생성된 모든 프로세스는 `"
+"partition/13` 레이블에 유지됩니다."
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:523
+#, no-wrap
+msgid "# setpmac partition/13 top\n"
+msgstr "# setpmac partition/13 top\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:526
+msgid "This command displays the partition label and the process list:"
+msgstr "이 명령은 파티션 레이블과 프로세스 목록을 표시합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:530
+#, no-wrap
+msgid "# ps Zax\n"
+msgstr "# ps Zax\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:533
+msgid ""
+"This command displays another user's process partition label and that user's "
+"currently running processes:"
+msgstr "이 명령은 다른 사용자의 프로세스 파티션 레이블과 해당 사용자의 현재 실행 "
+"중인 프로세스를 표시합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:537
+#, no-wrap
+msgid "# ps -ZU trhodes\n"
+msgstr "# ps -ZU trhodes\n"
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:542
+msgid ""
+"Users can see processes in ``root``'s label unless the man:"
+"mac_seeotheruids[4] policy is loaded."
+msgstr ""
+"man:mac_seeotheruids[4] 정책이 로드되지 않는 한 사용자는 ``root`` 의 "
+"레이블에서 프로세스를 볼 수 있습니다."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:545
+#, no-wrap
+msgid "The MAC Multi-Level Security Module"
+msgstr "MAC Multi-Level Security 모듈"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:548
+msgid "Module name: [.filename]#mac_mls.ko#"
+msgstr "모듈 이름: [.filename]#mac_mls.ko#"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:550
+msgid "Kernel configuration line: `options MAC_MLS`"
+msgstr "커널 구성 줄: `options MAC_MLS`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:552
+msgid "Boot option: `mac_mls_load=\"YES\"`"
+msgstr "부팅 옵션: `mac_mls_load=\"YES\"`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:554
+msgid ""
+"The man:mac_mls[4] policy controls access between subjects and objects in "
+"the system by enforcing a strict information flow policy."
+msgstr "man:mac_mls[4] 정책은 엄격한 정보 흐름 정책을 적용하여 시스템에서 주체와 "
+"객체 간의 액세스를 제어합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:558
+msgid ""
+"In MLS environments, a \"clearance\" level is set in the label of each "
+"subject or object, along with compartments.  Since these clearance levels "
+"can reach numbers greater than several thousand, it would be a daunting task "
+"to thoroughly configure every subject or object.  To ease this "
+"administrative overhead, three labels are included in this policy: `mls/"
+"low`, `mls/equal`, and `mls/high`, where:"
+msgstr ""
+"MLS 환경에서는 구획과 함께 각 주체 또는 개체의 라벨에 \"클리어런스\" 레벨이 "
+"설정됩니다.  이러한 클리어런스 수준은 수천 개가 넘는 숫자에 달할 수 있으므로 "
+"모든 주체 또는 개체를 철저하게 구성하는 것은 어려운 작업입니다.  이러한 관리 "
+"부담을 덜어주기 위해 이 정책에는 세 가지 레이블이 포함되어 있습니다: 'mls/"
+"low', 'mls/equal', 'mls/high' 입니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:560
+msgid ""
+"Anything labeled with `mls/low` will have a low clearance level and not be "
+"permitted to access information of a higher level. This label also prevents "
+"objects of a higher clearance level from writing or passing information to a "
+"lower level."
+msgstr ""
+"`mls/low` 로 레이블이 지정된 모든 항목은 낮은 권한 수준을 가지며 더 높은 "
+"수준의 정보에 액세스할 수 없습니다. 또한 이 레이블은 더 높은 수준의 개체가 "
+"더 낮은 수준의 개체에 정보를 쓰거나 전달할 수 없도록 차단합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:561
+msgid ""
+"`mls/equal` should be placed on objects which should be exempt from the "
+"policy."
+msgstr "정책에서 제외되어야 하는 객체에는 `mls/equal` 을 설정해야 합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:562
+msgid ""
+"`mls/high` is the highest level of clearance possible. Objects assigned this "
+"label will hold dominance over all other objects in the system; however, "
+"they will not permit the leaking of information to objects of a lower class."
+msgstr ""
+"`mls/high` 는 가능한 가장 높은 수준의 클리어런스입니다. 이 레이블이 할당된 "
+"개체는 시스템의 다른 모든 개체보다 우월한 권한을 갖지만, 하위 클래스의 "
+"개체에 대한 정보 유출은 허용하지 않습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:564
+msgid "MLS provides:"
+msgstr "MLS는 다음을 제공합니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:566
+msgid ""
+"A hierarchical security level with a set of non-hierarchical categories."
+msgstr "계층적 보안 수준과 비계층적 카테고리 집합이 포함된 계층적 보안 수준."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:567
+msgid ""
+"Fixed rules of `no read up, no write down`. This means that a subject can "
+"have read access to objects on its own level or below, but not above. "
+"Similarly, a subject can have write access to objects on its own level or "
+"above, but not beneath."
+msgstr ""
+"'상향 읽기 금지, 하향 쓰기 금지'의 고정된 규칙. 즉, 주체는 자신의 레벨 "
+"이하에 있는 객체에 대한 읽기 액세스 권한을 가질 수 있지만 그 위에는 액세스할 "
+"수 없습니다. 마찬가지로, 주체는 자신의 레벨 또는 그 위에 있는 객체에 대한 "
+"쓰기 액세스 권한을 가질 수 있지만 그 아래에는 액세스할 수 없습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:568
+msgid "Secrecy, or the prevention of inappropriate disclosure of data."
+msgstr "비밀 유지 또는 부적절한 데이터 공개 방지."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:569
+msgid ""
+"A basis for the design of systems that concurrently handle data at multiple "
+"sensitivity levels without leaking information between secret and "
+"confidential."
+msgstr "비밀과 기밀 사이의 정보 유출 없이 여러 민감도 수준의 데이터를 동시에 "
+"처리하는 시스템 설계를 위한 기반."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:571
+msgid "The following `sysctl` tunables are available:"
+msgstr "다음과 같은 `sysctl` 튜너블을 사용할 수 있습니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:573
+msgid "`security.mac.mls.enabled` is used to enable or disable the MLS policy."
+msgstr "`security.mac.mls.enabled` 는 MLS 정책을 활성화 또는 비활성화하는 데 "
+"사용됩니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:574
+msgid ""
+"`security.mac.mls.ptys_equal` labels all man:pty[4] devices as `mls/equal` "
+"during creation."
+msgstr ""
+"`security.mac.mls.ptys_equal` 은 생성하는 동안 모든 man:pty[4] 디바이스를 `"
+"mls/equal` 로 레이블을 지정합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:575
+msgid ""
+"`security.mac.mls.revocation_enabled` revokes access to objects after their "
+"label changes to a label of a lower grade."
+msgstr ""
+"`security.mac.mls.revocation_enabled` 는 레이블이 더 낮은 등급의 레이블로 "
+"변경시킨 후 개체에 대한 액세스를 취소합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:576
+msgid ""
+"`security.mac.mls.max_compartments` sets the maximum number of compartment "
+"levels allowed on a system."
+msgstr "`security.mac.mls.max_compartments` 는 시스템에서 허용되는 최대 구획 레벨 "
+"수를 설정합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:578
+msgid ""
+"To manipulate MLS labels, use man:setfmac[8]. To assign a label to an object:"
+msgstr "MLS 레이블을 조작하려면 man:setfmac[8]을 사용합니다. 객체에 레이블을 "
+"할당하려면:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:582
+#, no-wrap
+msgid "# setfmac mls/5 test\n"
+msgstr "# setfmac mls/5 test\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:585
+msgid "To get the MLS label for the file [.filename]#test#:"
+msgstr "[.filename]#test# 파일에 대한 MLS 레이블을 가져오려면:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:589
+#, no-wrap
+msgid "# getfmac test\n"
+msgstr "# getfmac test\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:592
+msgid ""
+"Another approach is to create a master policy file in [.filename]#/etc/# "
+"which specifies the MLS policy information and to feed that file to "
+"`setfmac`."
+msgstr ""
+"또 다른 접근 방식은 [.filename]#/etc/# 에 MLS 정책 정보를 지정하는 마스터 "
+"정책 파일을 만들고 해당 파일을 `setfmac` 에 제공하는 것입니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:596
+msgid ""
+"When using the MLS policy module, an administrator plans to control the flow "
+"of sensitive information.  The default `block read up block write down` sets "
+"everything to a low state.  Everything is accessible and an administrator "
+"slowly augments the confidentiality of the information."
+msgstr ""
+"MLS 정책 모듈을 사용할 때 관리자는 민감한 정보의 흐름을 제어할 계획을 "
+"합니다.  기본 '블록 읽기 블록 쓰기' 는 모든 것을 낮은 상태로 설정합니다.  "
+"모든 항목에 액세스할 수 있으며 관리자는 정보의 기밀성을 서서히 강화합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:601
+msgid ""
+"Beyond the three basic label options, an administrator may group users and "
+"groups as required to block the information flow between them.  It might be "
+"easier to look at the information in clearance levels using descriptive "
+"words, such as classifications of `Confidential`, `Secret`, and `Top "
+"Secret`.  Some administrators instead create different groups based on "
+"project levels.  Regardless of the classification method, a well thought out "
+"plan must exist before implementing a restrictive policy."
+msgstr ""
+"세 가지 기본 라벨 옵션 외에도 관리자는 필요에 따라 사용자 및 그룹을 "
+"그룹화하여 사용자 간의 정보 흐름을 차단할 수 있습니다.  `Confidential`, "
+"`Secret`, `Top Secret` 과 같은 분류를 사용하면 정보를 등급별로 보기가 더 "
+"쉬워질 수 있습니다.  대신 일부 관리자는 프로젝트 레벨에 따라 다른 그룹을 "
+"만들기도 합니다.  어떤 분류 방법을 사용하든, 제한적인 정책을 시행하기 전에 "
+"신중한 계획이 있어야 합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:603
+msgid ""
+"Some example situations for the MLS policy module include an e-commerce web "
+"server, a file server holding critical company information, and financial "
+"institution environments."
+msgstr ""
+"MLS 정책 모듈의 몇 가지 예시 상황에는 전자상거래 웹 서버, 중요한 회사 정보를 "
+"보관하는 파일 서버, 금융 기관 환경 등이 있습니다."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:605
+#, no-wrap
+msgid "The MAC Biba Module"
+msgstr "MAC Biba 모듈"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:608
+msgid "Module name: [.filename]#mac_biba.ko#"
+msgstr "모듈 이름: [.filename]#mac_biba.ko#"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:610
+msgid "Kernel configuration line: `options MAC_BIBA`"
+msgstr "커널 구성 줄: `options MAC_BIBA`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:612
+msgid "Boot option: `mac_biba_load=\"YES\"`"
+msgstr "부팅 옵션: `mac_biba_load=\"YES\"`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:616
+msgid ""
+"The man:mac_biba[4] module loads the MAC Biba policy.  This policy is "
+"similar to the MLS policy with the exception that the rules for information "
+"flow are slightly reversed.  This is to prevent the downward flow of "
+"sensitive information whereas the MLS policy prevents the upward flow of "
+"sensitive information."
+msgstr ""
+"man:mac_biba[4] 모듈은 MAC Biba 정책을 로드합니다.  이 정책은 정보 흐름에 "
+"대한 규칙이 약간 뒤바뀐다는 점을 제외하면 MLS 정책과 유사합니다.  이는 MLS "
+"정책이 민감한 정보의 하향 흐름을 방지하는 반면, 민감한 정보의 상향 흐름을 "
+"방지하기 위한 것입니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:620
+msgid ""
+"In Biba environments, an \"integrity\" label is set on each subject or "
+"object.  These labels are made up of hierarchical grades and non-"
+"hierarchical components.  As a grade ascends, so does its integrity."
+msgstr ""
+"Biba 환경에서는 각 주제 또는 객체에 \"integrity\" 레이블이 설정됩니다.  "
+"이러한 레이블은 계층적 성적과 비계층적 구성 요소로 구성됩니다.  등급이 "
+"올라갈수록 무결성도 높아집니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:622
+msgid "Supported labels are `biba/low`, `biba/equal`, and `biba/high`, where:"
+msgstr "지원되는 레이블은 `biba/low`, `biba/equal`, `biba/high` 이며, 여기서:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:624
+msgid ""
+"`biba/low` is considered the lowest integrity an object or subject may have. "
+"Setting this on objects or subjects blocks their write access to objects or "
+"subjects marked as `biba/high`, but will not prevent read access."
+msgstr ""
+"`biba/low` 는 객체 또는 주체가 가질 수 있는 가장 낮은 무결성으로 간주됩니다. "
+"객체 또는 주체에 이 값을 설정하면 `biba/high` 로 표시된 객체 또는 주체에 "
+"대한 쓰기 액세스가 차단되지만 읽기 액세스는 차단되지 않습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:625
+msgid ""
+"`biba/equal` should only be placed on objects considered to be exempt from "
+"the policy."
+msgstr "`biba/equal` 는 정책에서 제외되는 것으로 간주되는 객체에만 배치해야 합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:626
+msgid ""
+"`biba/high` permits writing to objects set at a lower label, but does not "
+"permit reading that object. It is recommended that this label be placed on "
+"objects that affect the integrity of the entire system."
+msgstr ""
+"`biba/high` 는 하위 레이블로 설정된 개체에 대한 쓰기는 허용하지만 해당 "
+"개체에 대한 읽기는 허용하지 않습니다. 이 레이블은 전체 시스템의 무결성에 "
+"영향을 미치는 개체에 설정하는 것이 좋습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:628
+msgid "Biba provides:"
+msgstr "Biba는 다음을 제공합니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:630
+msgid ""
+"Hierarchical integrity levels with a set of non-hierarchical integrity "
+"categories."
+msgstr "계층적 무결성 수준과 비계층적 무결성 카테고리가 포함된 계층적 무결성 수준."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:631
+msgid ""
+"Fixed rules are `no write up, no read down`, the opposite of MLS. A subject "
+"can have write access to objects on its own level or below, but not above. "
+"Similarly, a subject can have read access to objects on its own level or "
+"above, but not below."
+msgstr ""
+"'상향 쓰기 금지, 하향 읽기 금지'의 고정된 규칙, MLS와 반대입니다. 주체는 "
+"자신의 수준 이하에 있는 개체에 대한 쓰기 권한을 가질 수 있지만 그 위에는 "
+"접근할 수 없습니다. 마찬가지로 주체는 자신의 수준 또는 그 위에 있는 객체에 "
+"대한 읽기 액세스 권한을 가질 수 있지만 그 아래에는 액세스할 수 없습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:632
+msgid "Integrity by preventing inappropriate modification of data."
+msgstr "데이터의 부적절한 수정을 방지하여 무결성을 유지."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:633
+msgid "Integrity levels instead of MLS sensitivity levels."
+msgstr "MLS 민감도 수준 대신 무결성 수준."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:635
+msgid "The following tunables can be used to manipulate the Biba policy:"
+msgstr "다음 튜너블을 사용하여 Biba 정책을 조작할 수 있습니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:637
+msgid ""
+"`security.mac.biba.enabled` is used to enable or disable enforcement of the "
+"Biba policy on the target machine."
+msgstr "`security.mac.biba.enabled` 는 대상 머신에서 비바 정책의 적용을 활성화 또는 "
+"비활성화하는 데 사용됩니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:638
+msgid ""
+"`security.mac.biba.ptys_equal` is used to disable the Biba policy on man:"
+"pty[4] devices."
+msgstr ""
+"`security.mac.biba.ptys_equal` 은 man:pty[4] 장치에서 Biba 정책을 "
+"비활성화하는 데 사용됩니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:639
+msgid ""
+"`security.mac.biba.revocation_enabled` forces the revocation of access to "
+"objects if the label is changed to dominate the subject."
+msgstr ""
+"`security.mac.biba.revocation_enabled` 는 레이블이 주체를 지배하도록 변경한 "
+"경우 개체에 대한 액세스 권한을 강제로 취소합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:641
+msgid ""
+"To access the Biba policy setting on system objects, use `setfmac` and "
+"`getfmac`:"
+msgstr "시스템 개체의 Biba 정책 설정에 액세스하려면 `setfmac` 및 `getfmac` 을 "
+"사용합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:647
+#, no-wrap
+msgid ""
+"# setfmac biba/low test\n"
+"# getfmac test\n"
+"test: biba/low\n"
+msgstr ""
+"# setfmac biba/low test\n"
+"# getfmac test\n"
+"test: biba/low\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:653
+msgid ""
+"Integrity, which is different from sensitivity, is used to guarantee that "
+"information is not manipulated by untrusted parties.  This includes "
+"information passed between subjects and objects.  It ensures that users will "
+"only be able to modify or access information they have been given explicit "
+"access to.  The man:mac_biba[4] security policy module permits an "
+"administrator to configure which files and programs a user may see and "
+"invoke while assuring that the programs and files are trusted by the system "
+"for that user."
+msgstr ""
+"민감도와는 다른 무결성은, 신뢰할 수 없는 당사자가 정보를 조작하지 못하도록 "
+"보장하는 데 사용됩니다.  여기에는 주체와 객체 간에 전달되는 정보가 "
+"포함됩니다.  이는 사용자가 명시적으로 액세스 권한이 부여된 정보만 수정하거나 "
+"액세스할 수 있도록 보장합니다.  관리자는 man:mac_biba[4] 보안 정책 모듈을 "
+"사용하여 사용자가 보고 호출할 수 있는 파일과 프로그램을 구성하는 동시에 해당 "
+"사용자를 위해 시스템에서 해당 프로그램과 파일을 신뢰할 수 있도록 보장할 수 "
+"있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:659
+msgid ""
+"During the initial planning phase, an administrator must be prepared to "
+"partition users into grades, levels, and areas.  The system will default to "
+"a high label once this policy module is enabled, and it is up to the "
+"administrator to configure the different grades and levels for users.  "
+"Instead of using clearance levels, a good planning method could include "
+"topics.  For instance, only allow developers modification access to the "
+"source code repository, source code compiler, and other development "
+"utilities.  Other users would be grouped into other categories such as "
+"testers, designers, or end users and would only be permitted read access."
+msgstr ""
+"초기 계획 단계에서 관리자는 사용자를 등급, 수준 및 영역으로 분할할 준비가 "
+"되어 있어야 합니다.  이 정책 모듈이 활성화되면 시스템은 기본적으로 높은 "
+"레이블로 설정되며, 사용자에 대한 다양한 등급 및 레벨을 구성하는 것은 "
+"관리자의 몫입니다.  권한 수준을 사용하는 대신 주제를 포함하는 것도 좋은 계획 "
+"방법이 될 수 있습니다.  예를 들어 개발자에게만 소스 코드 리포지토리, 소스 "
+"코드 컴파일러 및 기타 개발 유틸리티에 대한 수정 액세스 권한을 허용할 수 "
+"있습니다.  다른 사용자는 테스터, 디자이너 또는 최종 사용자와 같은 다른 "
+"카테고리로 그룹화하여 읽기 액세스 권한만 허용할 수 있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:664
+msgid ""
+"A lower integrity subject is unable to write to a higher integrity subject "
+"and a higher integrity subject cannot list or read a lower integrity "
+"object.  Setting a label at the lowest possible grade could make it "
+"inaccessible to subjects.  Some prospective environments for this security "
+"policy module would include a constrained web server, a development and test "
+"machine, and a source code repository.  A less useful implementation would "
+"be a personal workstation, a machine used as a router, or a network firewall."
+msgstr ""
+"무결성이 낮은 주체는 무결성이 높은 주체에 쓰기를 할 수 없으며, 무결성이 높은 "
+"주체는 무결성이 낮은 객체를 나열하거나 읽을 수 없습니다.  레이블을 가능한 "
+"가장 낮은 등급으로 설정하면 주체가 해당 레이블에 접근할 수 없게 될 수 "
+"있습니다.  이 보안 정책 모듈을 구현할 수 있는 환경으로는 제한된 웹 서버, "
+"개발 및 테스트 머신, 소스 코드 리포지토리 등이 있습니다.  덜 유용한 "
+"구현으로는 개인 워크스테이션, 라우터로 사용되는 컴퓨터 또는 네트워크 "
+"방화벽이 있습니다."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:666
+#, no-wrap
+msgid "The MAC Low-watermark Module"
+msgstr "MAC Low-watermark 모듈"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:669
+msgid "Module name: [.filename]#mac_lomac.ko#"
+msgstr "모듈 이름: [.filename]#mac_lomac.ko#"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:671
+msgid "Kernel configuration line: `options MAC_LOMAC`"
+msgstr "커널 구성 줄: `options MAC_LOMAC`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:673
+msgid "Boot option: `mac_lomac_load=\"YES\"`"
+msgstr "부팅 옵션: `mac_lomac_load=\"YES\"`"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:675
+msgid ""
+"Unlike the MAC Biba policy, the man:mac_lomac[4] policy permits access to "
+"lower integrity objects only after decreasing the integrity level to not "
+"disrupt any integrity rules."
+msgstr ""
+"MAC Biba 정책과 달리, man:mac_lomac[4] 정책은 무결성 규칙을 방해하지 않도록 "
+"무결성 수준을 낮춘 후에만 낮은 무결성 개체에 대한 액세스를 허용합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:679
+msgid ""
+"The Low-watermark integrity policy works almost identically to Biba, with "
+"the exception of using floating labels to support subject demotion via an "
+"auxiliary grade compartment.  This secondary compartment takes the form "
+"`[auxgrade]`.  When assigning a policy with an auxiliary grade, use the "
+"syntax `lomac/10[2]`, where `2` is the auxiliary grade."
+msgstr ""
+"Low-watermark 무결성 정책은 보조 등급 칸을 통해 주체 강등을 지원하기 위한 "
+"플로팅 레이블을 사용하는 것을 제외하고는 Biba와 거의 동일하게 작동합니다.  "
+"이 보조 구획은 `[auxgrade]` 형식을 취합니다.  보조 등급이 있는 정책을 할당할 "
+"때는 `lomac/10[2]` 구문을 사용하며, 여기서 `2` 는 보조 등급입니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:682
+msgid ""
+"This policy relies on the ubiquitous labeling of all system objects with "
+"integrity labels, permitting subjects to read from low integrity objects and "
+"then downgrading the label on the subject to prevent future writes to high "
+"integrity objects using `[auxgrade]`.  The policy may provide greater "
+"compatibility and require less initial configuration than Biba."
+msgstr ""
+"이 정책은 모든 시스템 개체에 무결성 레이블을 유비쿼터스 레이블로 지정하여 "
+"주체가 낮은 무결성 개체를 읽을 수 있도록 허용한 다음 주체의 레이블을 "
+"다운그레이드하여 향후 '[auxgrade]` 를 사용하여 높은 무결성 오브젝트에 쓰지 "
+"못하도록 하는 방식입니다.  이 정책은 Biba보다 호환성이 더 뛰어나고 초기 "
+"구성이 덜 필요할 수 있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:684
+msgid ""
+"Like the Biba and MLS policies, `setfmac` and `setpmac` are used to place "
+"labels on system objects:"
+msgstr "Biba 및 MLS 정책과 마찬가지로 `setfmac` 및 `setpmac` 은 시스템 개체에 "
+"레이블을 배치하는 데 사용됩니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:689
+#, no-wrap
+msgid ""
+"# setfmac /usr/home/trhodes lomac/high[low]\n"
+"# getfmac /usr/home/trhodes lomac/high[low]\n"
+msgstr ""
+"# setfmac /usr/home/trhodes lomac/high[low]\n"
+"# getfmac /usr/home/trhodes lomac/high[low]\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:692
+msgid ""
+"The auxiliary grade `low` is a feature provided only by the MACLOMAC policy."
+msgstr "보조 등급 `low` 은 MACLOMAC 정책으로만 제공되는 기능입니다."
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/mac/_index.adoc:694
+#, no-wrap
+msgid "User Lock Down"
+msgstr "사용자 잠금"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:698
+msgid ""
+"This example considers a relatively small storage system with fewer than "
+"fifty users.  Users will have login capabilities and are permitted to store "
+"data and access resources."
+msgstr ""
+"이 예에서는 사용자가 50명 미만인 비교적 작은 스토리지 시스템을 고려합니다.  "
+"사용자에게는 로그인 기능이 있으며 데이터를 저장하고 리소스에 액세스할 수 "
+"있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:700
+msgid ""
+"For this scenario, the man:mac_bsdextended[4] and man:mac_seeotheruids[4] "
+"policy modules could co-exist and block access to system objects while "
+"hiding user processes."
+msgstr ""
+"이 시나리오의 경우, 사용자 프로세스를 숨기면서 시스템 오브젝트에 대한 "
+"액세스를 차단하는 man:mac_bsdextended[4] 및 man:mac_seeotheruids[4] 정책 "
+"모듈이 공존하여 시스템 오브젝트에 대한 액세스를 차단할 수 있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:702
+msgid "Begin by adding the following line to [.filename]#/boot/loader.conf#:"
+msgstr "[.filename]#/boot/loader.conf# 에 다음 줄을 추가하여 시작합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:706
+#, no-wrap
+msgid "mac_seeotheruids_load=\"YES\"\n"
+msgstr "mac_seeotheruids_load=\"YES\"\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:709
+msgid ""
+"The man:mac_bsdextended[4] security policy module may be activated by adding "
+"this line to [.filename]#/etc/rc.conf#:"
+msgstr ""
+"man:mac_bsdextended[4] 보안 정책 모듈은 [.filename]#/etc/rc.conf# 에 이 줄을 "
+"추가하여 활성화할 수 있습니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:713
+#, no-wrap
+msgid "ugidfw_enable=\"YES\"\n"
+msgstr "ugidfw_enable=\"YES\"\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:718
+msgid ""
+"Default rules stored in [.filename]#/etc/rc.bsdextended# will be loaded at "
+"system initialization.  However, the default entries may need modification.  "
+"Since this machine is expected only to service users, everything may be left "
+"commented out except the last two lines in order to force the loading of "
+"user owned system objects by default."
+msgstr ""
+"[.filename]#/etc/rc.bsdextended# 에 저장된 기본 규칙은 시스템 초기화 시 "
+"로드됩니다.  그러나 기본 항목은 수정이 필요할 수 있습니다.  이 머신은 "
+"사용자에게만 서비스를 제공할 것으로 예상되므로 기본적으로 사용자 소유의 "
+"시스템 객체를 강제로 로드하기 위해 마지막 두 줄을 제외한 모든 항목을 주석 "
+"처리하지 않을 수 있습니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:723
+msgid ""
+"Add the required users to this machine and reboot.  For testing purposes, "
+"try logging in as a different user across two consoles.  Run `ps aux` to see "
+"if processes of other users are visible.  Verify that running man:ls[1] on "
+"another user's home directory fails."
+msgstr ""
+"이 머신에 필요한 사용자를 추가하고 재부팅합니다.  테스트를 위해 두 콘솔에서 "
+"다른 사용자로 로그인해 보세요.  `ps aux` 를 실행하여 다른 사용자의 "
+"프로세스가 표시되는지 확인합니다.  다른 사용자의 홈 디렉터리에서 man:ls[1]를 "
+"실행해도 실패하는지 확인합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:725
+msgid ""
+"Do not try to test with the `root` user unless the specific ``sysctl``s have "
+"been modified to block super user access."
+msgstr "슈퍼 유저의 접근을 차단하기 위해 특정 ``sysctl`` 을 수정하지 않는 한 `root` "
+"사용자로 테스트하지 마세요."
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:730
+msgid ""
+"When a new user is added, their man:mac_bsdextended[4] rule will not be in "
+"the ruleset list.  To update the ruleset quickly, unload the security policy "
+"module and reload it again using man:kldunload[8] and man:kldload[8]."
+msgstr ""
+"새 사용자가 추가되면 해당 사용자의 man:mac_bsdextended[4] 규칙은 규칙 집합 "
+"목록에 없습니다.  규칙 집합을 빠르게 업데이트하려면 보안 정책 모듈을 "
+"언로드한 후 man:kldunload[8] 및 man:kldload[8]을 사용하여 다시 로드하세요."
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/mac/_index.adoc:733
+#, no-wrap
+msgid "Nagios in a MAC Jail"
+msgstr "MAC Jail안의 Nagios"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:737
+msgid ""
+"This section demonstrates the steps that are needed to implement the Nagios "
+"network monitoring system in a MAC environment.  This is meant as an example "
+"which still requires the administrator to test that the implemented policy "
+"meets the security requirements of the network before using in a production "
+"environment."
+msgstr ""
+"이 섹션에서는 MAC 환경에서 Nagios 네트워크 모니터링 시스템을 구현하는 데 "
+"필요한 단계를 설명합니다.  이는 프로덕션 환경에서 사용하기 전에 구현된 "
+"정책이 네트워크의 보안 요구 사항을 충족하는지 관리자가 테스트해야 하는 "
+"예시입니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:740
+msgid ""
+"This example requires `multilabel` to be set on each file system.  It also "
+"assumes that package:net-mgmt/nagios-plugins[], package:net-mgmt/nagios[], "
+"and package:www/apache22[] are all installed, configured, and working "
+"correctly before attempting the integration into the MAC framework."
+msgstr ""
+"이 예제에서는 각 파일 시스템에 `multilabel` 을 설정해야 합니다.  또한 MAC "
+"프레임워크에 통합을 시도하기 전에 package:net-mgmt/nagios-plugins[], package"
+":net-mgmt/nagios[] 및 package:www/apache22[]가 모두 설치, 구성 및 올바르게 "
+"작동하고 있다고 가정합니다."
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:741
+#, no-wrap
+msgid "Create an Insecure User Class"
+msgstr "Insecure 사용자 클래스 생성"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:744
+msgid ""
+"Begin the procedure by adding the following user class to [.filename]#/etc/"
+"login.conf#:"
+msgstr "다음 사용자 클래스를 [.filename]#/etc/login.conf# 에 추가하여 절차를 "
+"시작합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:770
+#, no-wrap
+msgid ""
+"insecure:\\\n"
+":copyright=/etc/COPYRIGHT:\\\n"
+":welcome=/etc/motd:\\\n"
+":setenv=MAIL=/var/mail/$,BLOCKSIZE=K:\\\n"
+":path=~/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin\n"
+":manpath=/usr/share/man /usr/local/man:\\\n"
+":nologin=/usr/sbin/nologin:\\\n"
+":cputime=1h30m:\\\n"
+":datasize=8M:\\\n"
+":vmemoryuse=100M:\\\n"
+":stacksize=2M:\\\n"
+":memorylocked=4M:\\\n"
+":memoryuse=8M:\\\n"
+":filesize=8M:\\\n"
+":coredumpsize=8M:\\\n"
+":openfiles=24:\\\n"
+":maxproc=32:\\\n"
+":priority=0:\\\n"
+":requirehome:\\\n"
+":passwordtime=91d:\\\n"
+":umask=022:\\\n"
+":ignoretime@:\\\n"
+":label=biba/10(10-10):\n"
+msgstr ""
+"insecure:\\\n"
+":copyright=/etc/COPYRIGHT:\\\n"
+":welcome=/etc/motd:\\\n"
+":setenv=MAIL=/var/mail/$,BLOCKSIZE=K:\\\n"
+":path=~/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin\n"
+":manpath=/usr/share/man /usr/local/man:\\\n"
+":nologin=/usr/sbin/nologin:\\\n"
+":cputime=1h30m:\\\n"
+":datasize=8M:\\\n"
+":vmemoryuse=100M:\\\n"
+":stacksize=2M:\\\n"
+":memorylocked=4M:\\\n"
+":memoryuse=8M:\\\n"
+":filesize=8M:\\\n"
+":coredumpsize=8M:\\\n"
+":openfiles=24:\\\n"
+":maxproc=32:\\\n"
+":priority=0:\\\n"
+":requirehome:\\\n"
+":passwordtime=91d:\\\n"
+":umask=022:\\\n"
+":ignoretime@:\\\n"
+":label=biba/10(10-10):\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:773
+msgid "Then, add the following line to the default user class section:"
+msgstr "그런 다음 기본 사용자 클래스 섹션에 다음 줄을 추가합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:777
+#, no-wrap
+msgid ":label=biba/high:\n"
+msgstr ":label=biba/high:\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:780
+msgid "Save the edits and issue the following command to rebuild the database:"
+msgstr "편집 내용을 저장하고 다음 명령을 실행하여 데이터베이스를 다시 빌드합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:784
+#, no-wrap
+msgid "# cap_mkdb /etc/login.conf\n"
+msgstr "# cap_mkdb /etc/login.conf\n"
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:786
+#, no-wrap
+msgid "Configure Users"
+msgstr "사용자 구성"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:789
+msgid "Set the `root` user to the default class using:"
+msgstr "다음을 사용하여 `root` 사용자를 기본 클래스로 설정합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:793
+#, no-wrap
+msgid "# pw usermod root -L default\n"
+msgstr "# pw usermod root -L default\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:798
+msgid ""
+"All user accounts that are not `root` will now require a login class.  The "
+"login class is required, otherwise users will be refused access to common "
+"commands.  The following `sh` script should do the trick:"
+msgstr ""
+"이제 `root` 가 아닌 모든 사용자 계정에 로그인 클래스가 필요합니다.  로그인 "
+"클래스가 필요하지 않으면 사용자는 일반 명령에 대한 액세스가 거부됩니다.  "
+"다음 `sh` 스크립트를 사용하면 됩니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:803
+#, no-wrap
+msgid ""
+"# for x in `awk -F: '($3 >= 1001) && ($3 != 65534) { print $1 }' \\\n"
+"\t/etc/passwd`; do pw usermod $x -L default; done;\n"
+msgstr ""
+"# for x in `awk -F: '($3 >= 1001) && ($3 != 65534) { print $1 }' \\\n"
+"\t/etc/passwd`; do pw usermod $x -L default; done;\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:806
+msgid "Next, drop the `nagios` and `www` accounts into the insecure class:"
+msgstr "다음으로, `nagios` 및 `www` 계정을 안전하지 않은 클래스로 드롭합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:811
+#, no-wrap
+msgid ""
+"# pw usermod nagios -L insecure\n"
+"# pw usermod www -L insecure\n"
+msgstr ""
+"# pw usermod nagios -L insecure\n"
+"# pw usermod www -L insecure\n"
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:813
+#, no-wrap
+msgid "Create the Contexts File"
+msgstr "컨텍스트 파일 생성"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:816
+msgid ""
+"A contexts file should now be created as [.filename]#/etc/policy.contexts#:"
+msgstr "컨텍스트 파일은 이제 [.filename]#/etc/policy.contexts# 형태로 만들어집니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:820
+#, no-wrap
+msgid "# This is the default BIBA policy for this system.\n"
+msgstr "# This is the default BIBA policy for this system.\n"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:823
+#, no-wrap
+msgid ""
+"# System:\n"
+"/var/run(/.*)?\t\t\tbiba/equal\n"
+msgstr ""
+"# System:\n"
+"/var/run(/.*)?\t\t\tbiba/equal\n"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:825
+#, no-wrap
+msgid "/dev/(/.*)?\t\t\tbiba/equal\n"
+msgstr "/dev/(/.*)?\t\t\tbiba/equal\n"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:828
+#, no-wrap
+msgid ""
+"/var\t\t\t\tbiba/equal\n"
+"/var/spool(/.*)?\t\tbiba/equal\n"
+msgstr ""
+"/var\t\t\t\tbiba/equal\n"
+"/var/spool(/.*)?\t\tbiba/equal\n"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:830
+#, no-wrap
+msgid "/var/log(/.*)?\t\t\tbiba/equal\n"
+msgstr "/var/log(/.*)?\t\t\tbiba/equal\n"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:833
+#, no-wrap
+msgid ""
+"/tmp(/.*)?\t\t\tbiba/equal\n"
+"/var/tmp(/.*)?\t\t\tbiba/equal\n"
+msgstr ""
+"/tmp(/.*)?\t\t\tbiba/equal\n"
+"/var/tmp(/.*)?\t\t\tbiba/equal\n"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:836
+#, no-wrap
+msgid ""
+"/var/spool/mqueue\t\tbiba/equal\n"
+"/var/spool/clientmqueue\t\tbiba/equal\n"
+msgstr ""
+"/var/spool/mqueue\t\tbiba/equal\n"
+"/var/spool/clientmqueue\t\tbiba/equal\n"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:839
+#, no-wrap
+msgid ""
+"# For Nagios:\n"
+"/usr/local/etc/nagios(/.*)?\tbiba/10\n"
+msgstr ""
+"# For Nagios:\n"
+"/usr/local/etc/nagios(/.*)?\tbiba/10\n"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:841
+#, no-wrap
+msgid "/var/spool/nagios(/.*)?\t\tbiba/10\n"
+msgstr "/var/spool/nagios(/.*)?\t\tbiba/10\n"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:844
+#, no-wrap
+msgid ""
+"# For apache\n"
+"/usr/local/etc/apache(/.*)?\tbiba/10\n"
+msgstr ""
+"# For apache\n"
+"/usr/local/etc/apache(/.*)?\tbiba/10\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:849
+msgid ""
+"This policy enforces security by setting restrictions on the flow of "
+"information.  In this specific configuration, users, including `root`, "
+"should never be allowed to access Nagios.  Configuration files and processes "
+"that are a part of Nagios will be completely self contained or jailed."
+msgstr ""
+"이 정책은 정보 흐름에 제한을 설정하여 보안을 강화합니다.  이 특정 구성에서는 "
+"`root` 를 포함한 사용자가 Nagios에 액세스할 수 있도록 해서는 안 됩니다.  "
+"Nagios의 일부인 구성 파일 및 프로세스는 완전히 자체적으로 포함되거나 jail화 "
+"됩니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:852
+msgid ""
+"This file will be read after running `setfsmac` on every file system.  This "
+"example sets the policy on the root file system:"
+msgstr ""
+"이 파일은 모든 파일 시스템에서 `setfsmac` 을 실행한 후에 읽습니다.  이 "
+"예에서는 루트 파일 시스템에 대한 정책을 설정합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:856
+#, no-wrap
+msgid "# setfsmac -ef /etc/policy.contexts /\n"
+msgstr "# setfsmac -ef /etc/policy.contexts /\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:859
+msgid ""
+"Next, add these edits to the main section of [.filename]#/etc/mac.conf#:"
+msgstr "그런 다음 [.filename]#/etc/mac.conf# 의 기본 섹션에 이러한 편집 내용을 "
+"추가합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:866
+#, no-wrap
+msgid ""
+"default_labels file ?biba\n"
+"default_labels ifnet ?biba\n"
+"default_labels process ?biba\n"
+"default_labels socket ?biba\n"
+msgstr ""
+"default_labels file ?biba\n"
+"default_labels ifnet ?biba\n"
+"default_labels process ?biba\n"
+"default_labels socket ?biba\n"
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:868
+#, no-wrap
+msgid "Loader Configuration"
+msgstr "로더 구성"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:871
+msgid ""
+"To finish the configuration, add the following lines to [.filename]#/boot/"
+"loader.conf#:"
+msgstr "구성을 완료하려면 [.filename]#/boot/loader.conf# 에 다음 줄을 추가합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:877
+#, no-wrap
+msgid ""
+"mac_biba_load=\"YES\"\n"
+"mac_seeotheruids_load=\"YES\"\n"
+"security.mac.biba.trust_all_interfaces=1\n"
+msgstr ""
+"mac_biba_load=\"YES\"\n"
+"mac_seeotheruids_load=\"YES\"\n"
+"security.mac.biba.trust_all_interfaces=1\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:881
+msgid ""
+"And the following line to the network card configuration stored in [."
+"filename]#/etc/rc.conf#.  If the primary network configuration is done via "
+"DHCP, this may need to be configured manually after every system boot:"
+msgstr ""
+"그리고 [.filename]#/etc/rc.conf# 파일의 저장된 네트워크 카드 구성에 다음 "
+"줄을 추가합니다.  기본 네트워크 구성이 DHCP를 통해 수행되는 경우 시스템을 "
+"부팅할 때마다 수동으로 구성해야 할 수 있습니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:885
+#, no-wrap
+msgid "maclabel biba/equal\n"
+msgstr "maclabel biba/equal\n"
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/mac/_index.adoc:887
+#, no-wrap
+msgid "Testing the Configuration"
+msgstr "구성 테스트하기"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:893
+msgid ""
+"First, ensure that the web server and Nagios will not be started on system "
+"initialization and reboot.  Ensure that `root` cannot access any of the "
+"files in the Nagios configuration directory.  If `root` can list the "
+"contents of [.filename]#/var/spool/nagios#, something is wrong.  Instead, a "
+"\"permission denied\" error should be returned."
+msgstr ""
+"먼저, 시스템 초기화 및 재부팅 시 웹 서버와 Nagios가 시작되지 않도록 합니다.  "
+"`root` 가 Nagios 구성 디렉터리에 있는 파일에 액세스할 수 없는지 확인합니다.  "
+"`root` 가 [.filename]#/var/spool/nagios# 의 내용을 나열할 수 있다면 문제가 "
+"있는 것입니다.  대신 \"permission denied\" 오류가 반환되어야 합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:895
+msgid "If all seems well, Nagios, Apache, and Sendmail can now be started:"
+msgstr "모든 것이 정상이면 이제 Nagios, Apache 및 Sendmail을 시작할 수 있습니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:901
+#, no-wrap
+msgid ""
+"# cd /etc/mail && make stop && \\\n"
+"setpmac biba/equal make start && setpmac biba/10\\(10-10\\) apachectl start && \\\n"
+"setpmac biba/10\\(10-10\\) /usr/local/etc/rc.d/nagios.sh forcestart\n"
+msgstr ""
+"# cd /etc/mail && make stop && \\\n"
+"setpmac biba/equal make start && setpmac biba/10\\(10-10\\) apachectl start "
+"&& \\\n"
+"setpmac biba/10\\(10-10\\) /usr/local/etc/rc.d/nagios.sh forcestart\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:906
+msgid ""
+"Double check to ensure that everything is working properly.  If not, check "
+"the log files for error messages.  If needed, use man:sysctl[8] to disable "
+"the man:mac_biba[4] security policy module and try starting everything again "
+"as usual."
+msgstr ""
+"모든 것이 제대로 작동하는지 다시 확인하세요.  그렇지 않은 경우 로그 파일에서 "
+"오류 메시지를 확인하세요.  필요한 경우 man:sysctl[8]을 사용하여 "
+"man:mac_biba[4] 보안 정책 모듈을 비활성화하고 평소와 같이 모든 것을 다시 "
+"시작하세요."
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:911
+msgid ""
+"The `root` user can still change the security enforcement and edit its "
+"configuration files.  The following command will permit the degradation of "
+"the security policy to a lower grade for a newly spawned shell:"
+msgstr ""
+"`root` 사용자는 여전히 보안 적용을 변경하고 구성 파일을 편집할 수 있습니다.  "
+"다음 명령은 새로 생성된 셸에 대해 보안 정책을 더 낮은 등급으로 낮출 수 "
+"있도록 허용합니다:"
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:915
+#, no-wrap
+msgid "# setpmac biba/10 csh\n"
+msgstr "# setpmac biba/10 csh\n"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:920
+msgid ""
+"To block this from happening, force the user into a range using man:login."
+"conf[5].  If man:setpmac[8] attempts to run a command outside of the "
+"compartment's range, an error will be returned and the command will not be "
+"executed.  In this case, set root to `biba/high(high-high)`."
+msgstr ""
+"이런 일이 발생하지 않도록 차단하려면 man:login.conf[5]를 사용하여 사용자를 "
+"강제로 범위 안에 넣으세요.  man:setpmac[8]이 구획의 범위를 벗어난 명령을 "
+"실행하려고 하면 오류가 반환되고 명령이 실행되지 않습니다.  이 경우 루트를 `"
+"biba/high(high-high)` 로 설정하세요."
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/mac/_index.adoc:923
+#, no-wrap
+msgid "Troubleshooting the MAC Framework"
+msgstr "MAC 프레임워크 문제 해결"
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:926
+msgid ""
+"This section discusses common configuration errors and how to resolve them."
+msgstr "이 섹션에서는 일반적인 구성 오류와 이를 해결하는 방법에 대해 설명합니다."
+
+#. type: Labeled list
+#: documentation/content/en/books/handbook/mac/_index.adoc:927
+#, no-wrap
+msgid "The `multilabel` flag does not stay enabled on the root ([.filename]#/#) partition"
+msgstr "`multilabel` 플래그가 루트( [.filename]#/# ) 파티션에서 활성화된 상태로 "
+"유지되지 않습니다"
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:929
+msgid "The following steps may resolve this transient error:"
+msgstr "다음 단계를 수행하면 이 일시적인 오류를 해결할 수 있습니다:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:933
+msgid ""
+"Edit [.filename]#/etc/fstab# and set the root partition to `ro` for read-"
+"only."
+msgstr "[.filename]#/etc/fstab# 을 편집하고 루트 파티션을 읽기 전용인 `ro` 로 "
+"설정합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:934
+msgid "Reboot into single user mode."
+msgstr "단일 사용자 모드로 재부팅합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:935
+msgid "Run `tunefs -l enable` on [.filename]#/#."
+msgstr "[.filename]#/# 에서 `tunefs -l enable` 을 실행합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:936
+msgid "Reboot the system."
+msgstr "시스템을 재부팅합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:937
+msgid ""
+"Run `mount -urw`[.filename]#/# and change the `ro` back to `rw` in [."
+"filename]#/etc/fstab# and reboot the system again."
+msgstr ""
+"`mount -urw` [.filename]#/# 를 실행하고 [.filename]#/etc/fstab# 에서 `ro` 를 "
+"다시 `rw` 로 변경한 후 시스템을 다시 부팅합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:938
+msgid ""
+"Double-check the output from `mount` to ensure that `multilabel` has been "
+"properly set on the root file system."
+msgstr "`mount` 의 출력을 다시 확인하여 `multilabel` 이 루트 파일 시스템에 올바르게 "
+"설정되었는지 확인합니다."
+
+#. type: Labeled list
+#: documentation/content/en/books/handbook/mac/_index.adoc:940
+#, no-wrap
+msgid "After establishing a secure environment with MAC, Xorg no longer starts"
+msgstr "MAC으로 보안 환경을 설정한 후 Xorg가 더 이상 시작되지 않습니다"
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:943
+msgid ""
+"This could be caused by the MAC `partition` policy or by a mislabeling in "
+"one of the MAC labeling policies.  To debug, try the following:"
+msgstr ""
+"이는 MAC `partition` 정책 또는 MAC 레이블링 정책 중 하나에서 잘못된 "
+"레이블링으로 인해 발생할 수 있습니다.  디버그하려면 다음을 시도해 보세요:"
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:947
+msgid ""
+"Check the error message. If the user is in the `insecure` class, the "
+"`partition` policy may be the culprit. Try setting the user's class back to "
+"the `default` class and rebuild the database with `cap_mkdb`. If this does "
+"not alleviate the problem, go to step two."
+msgstr ""
+"오류 메시지를 확인합니다. 사용자가 `insecure` 클래스에 속하는 경우 "
+"`partition` 정책이 원인일 수 있습니다. 사용자의 클래스를 `default` 클래스로 "
+"다시 설정하고 `cap_mkdb` 로 데이터베이스를 다시 빌드해 보세요. 그래도 문제가 "
+"해결되지 않으면 2단계로 이동합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:948
+msgid ""
+"Double-check that the label policies are set correctly for the user, Xorg, "
+"and the [.filename]#/dev# entries."
+msgstr "레이블 정책이 사용자, Xorg 및 [.filename]#/dev# 항목에 대해 올바르게 "
+"설정되었는지 다시 확인합니다."
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/mac/_index.adoc:949
+msgid ""
+"If neither of these resolve the problem, send the error message and a "
+"description of the environment to the {freebsd-questions}."
+msgstr ""
+"이 두 가지 방법으로도 문제가 해결되지 않으면 오류 메시지와 환경에 대한 "
+"설명을 {freebsd-questions} 로 보내세요."
+
+#. type: Labeled list
+#: documentation/content/en/books/handbook/mac/_index.adoc:951
+#, no-wrap
+msgid "The `_secure_path: unable to stat .login_conf` error appears"
+msgstr "`_secure_path: unable to stat .login_conf` 오류가 나타납니다"
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:956
+msgid ""
+"This error can appear when a user attempts to switch from the `root` user to "
+"another user in the system.  This message usually occurs when the user has a "
+"higher label setting than that of the user they are attempting to become.  "
+"For instance, if `joe` has a default label of `biba/low` and `root` has a "
+"label of `biba/high`, `root` cannot view ``joe``'s home directory.  This "
+"will happen whether or not `root` has used `su` to become `joe` as the Biba "
+"integrity model will not permit `root` to view objects set at a lower "
+"integrity level."
+msgstr ""
+"이 오류는 사용자가 시스템에서 `root` 사용자에서 다른 사용자로 전환하려고 할 "
+"때 나타날 수 있습니다.  이 메시지는 일반적으로 사용자가 변경하려는 "
+"사용자보다 더 높은 레이블 설정을 가지고 있을 때 발생합니다.  예를 들어, `joe`"
+" 의 기본 레이블이 `biba/low` 이고 `root` 의 레이블이 `biba/high` 인 경우, "
+"`root` 는 `joe` 의 홈 디렉터리를 볼 수 없습니다.  이는 `root` 가 `su` 를 "
+"사용하여 `joe` 가 되었는지 여부에 관계없이 발생하며, Biba 무결성 모델은 "
+"`root` 가 더 낮은 무결성 수준으로 설정된 개체를 볼 수 있도록 허용하지 않기 "
+"때문입니다."
+
+#. type: Labeled list
+#: documentation/content/en/books/handbook/mac/_index.adoc:957
+#, no-wrap
+msgid "The system no longer recognizes `root`"
+msgstr "시스템이 더 이상 `root` 를 인식하지 못합니다"
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:959
+msgid "When this occurs, `whoami` returns `0` and `su` returns `who are you?`."
+msgstr "이 경우 `whoami` 는 `0` 을 반환하고 `su` 는 `who are you?` 를 반환합니다."
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:963
+msgid ""
+"This can happen if a labeling policy has been disabled by man:sysctl[8] or "
+"the policy module was unloaded.  If the policy is disabled, the login "
+"capabilities database needs to be reconfigured.  Double check [.filename]#/"
+"etc/login.conf# to ensure that all `label` options have been removed and "
+"rebuild the database with `cap_mkdb`."
+msgstr ""
+"이 문제는 man:sysctl[8]에 의해 라벨링 정책이 비활성화되었거나 정책 모듈이 "
+"언로드된 경우에 발생할 수 있습니다.  정책이 비활성화되어 있으면 로그인 기능 "
+"데이터베이스를 다시 구성해야 합니다.  [.filename]#/etc/login.conf# 에서 모든 "
+"`label` 옵션이 제거되었는지 다시 확인하고 `cap_mkd b`로 데이터베이스를 다시 "
+"빌드하세요."
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/mac/_index.adoc:967
+msgid ""
+"This may also happen if a policy restricts access to [.filename]#master."
+"passwd#.  This is usually caused by an administrator altering the file under "
+"a label which conflicts with the general policy being used by the system.  "
+"In these cases, the user information would be read by the system and access "
+"would be blocked as the file has inherited the new label.  Disable the "
+"policy using man:sysctl[8] and everything should return to normal."
+msgstr ""
+"정책에서 [.filename]#master.passwd# 에 대한 액세스를 제한하는 경우에도 이 "
+"문제가 발생할 수 있습니다.  이는 일반적으로 관리자가 시스템에서 사용 중인 "
+"일반 정책과 충돌하는 레이블로 파일을 변경했기 때문에 발생합니다.  이 경우 "
+"시스템에서 사용자 정보를 읽고 파일이 새 레이블을 상속받았으므로 액세스가 "
+"차단됩니다.  man:sysctl[8]을 사용하여 정책을 비활성화하면 모든 것이 정상으로 "
+"돌아옵니다."
