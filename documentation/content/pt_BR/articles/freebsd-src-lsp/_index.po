@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2023-04-20 20:56-0300\n"
-"PO-Revision-Date: 2023-05-08 19:10+0000\n"
+"PO-Revision-Date: 2023-05-08 19:21+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlesfreebsd-src-lsp_index/pt_BR/>\n"
@@ -286,7 +286,7 @@ msgstr ""
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:188
 #, no-wrap
 msgid "For clangd"
-msgstr ""
+msgstr "Para o clangd"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:138
@@ -299,6 +299,13 @@ msgid ""
 "    \\ 'initialization_options': {},\n"
 "    \\ })\n"
 msgstr ""
+"au User lsp_setup call lsp#register_server({\n"
+"    \\ 'name': 'clangd',\n"
+"    \\ 'cmd': {server_info->['clangd15', '--background-index', '--header-"
+"insertion=never']},\n"
+"    \\ 'allowlist': ['c', 'cpp', 'objc'],\n"
+"    \\ 'initialization_options': {},\n"
+"    \\ })\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:141
@@ -306,6 +313,8 @@ msgid ""
 "Depending on the version that you installed for `clangd` you might need to "
 "update the `server-info` to point to the correct binary."
 msgstr ""
+"Dependendo da versão que você instalou para o `clangd`, pode ser necessário "
+"atualizar o `server-info` para apontar para o binário correto."
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:144
@@ -316,6 +325,11 @@ msgid ""
 "org[], and the repository link of ccls is link:https://github.com/MaskRay/"
 "ccls/[]."
 msgstr ""
+"Por favor, consulte link:https://github.com/prabirshrestha/vim-lsp/blob/"
+"master/README.md#registering-servers[] para aprender sobre como configurar "
+"atalhos e as funções para autocompletar o código. O site oficial do clangd é "
+"link:https://clangd.llvm.org[], e o repositório do ccls é link:https://github"
+".com/MaskRay/ccls/[]."
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:147
@@ -324,6 +338,10 @@ msgid ""
 "the following snippet into [.filepath]#~/.config/nvim/init.vim#, or [."
 "filepath]#~/.vim/vimrc# for Vim users to use it:"
 msgstr ""
+"Abaixo estão as configurações de referência para atalhos de teclado e o "
+"autocomplemento de código. Insira o seguinte trecho em [.filepath]#~/.config/"
+"nvim/init.vim# ou [.filepath]#~/.vim/vimrc# para que usuários do Vim possam "
+"utilizá-las:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:154
@@ -334,6 +352,10 @@ msgid ""
 "    setlocal completeopt-=preview\n"
 "    setlocal keywordprg=:LspHover\n"
 msgstr ""
+"function! s:on_lsp_buffer_enabled() abort\n"
+"    setlocal omnifunc=lsp#complete\n"
+"    setlocal completeopt-=preview\n"
+"    setlocal keywordprg=:LspHover\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:168
@@ -353,6 +375,19 @@ msgid ""
 "    nmap <buffer> gm <plug>(lsp-signature-help)\n"
 "endfunction\n"
 msgstr ""
+"    nmap <buffer> <C-]> <plug>(lsp-definition)\n"
+"    nmap <buffer> <C-W>] <plug>(lsp-peek-definition)\n"
+"    nmap <buffer> <C-W><C-]> <plug>(lsp-peek-definition)\n"
+"    nmap <buffer> gr <plug>(lsp-references)\n"
+"    nmap <buffer> <C-n> <plug>(lsp-next-reference)\n"
+"    nmap <buffer> <C-p> <plug>(lsp-previous-reference)\n"
+"    nmap <buffer> gI <plug>(lsp-implementation)\n"
+"    nmap <buffer> go <plug>(lsp-document-symbol)\n"
+"    nmap <buffer> gS <plug>(lsp-workspace-symbol)\n"
+"    nmap <buffer> ga <plug>(lsp-code-action)\n"
+"    nmap <buffer> gR <plug>(lsp-rename)\n"
+"    nmap <buffer> gm <plug>(lsp-signature-help)\n"
+"endfunction\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:173
@@ -363,12 +398,16 @@ msgid ""
 "    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()\n"
 "augroup END\n"
 msgstr ""
+"augroup lsp_install\n"
+"    au!\n"
+"    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()\n"
+"augroup END\n"
 
 #. type: Title ===
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:176
 #, no-wrap
 msgid "VSCode"
-msgstr ""
+msgstr "VSCode"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:183
@@ -378,6 +417,10 @@ msgid ""
 "code-extensions.vscode-clangd` when running clangd, or `ccls-project.ccls` "
 "when running ccls."
 msgstr ""
+"Plugins de cliente LSP são necessários para iniciar o daemon do servidor de "
+"linguagem. Pressione `Ctrl+Shift+X` para exibir o painel de pesquisa de "
+"extensões online. Digite `llvm-vs-code-extensions.vscode-clangd` quando "
+"estiver usando o clangd, ou `ccls-project.ccls` quando estiver usando o ccls."
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:187
@@ -388,6 +431,11 @@ msgid ""
 "implementations, put one of the following JSON key/value pairs in [."
 "filepath]#settings.json#:"
 msgstr ""
+"Em seguida, pressione `Ctrl+Shift+P` para exibir a paleta de comandos do "
+"editor. Digite `Preferences: Open Settings (JSON)` na paleta e pressione "
+"`Enter` para abrir o [.filepath]#settings.json#. Dependendo das "
+"implementações do servidor de linguagem, adicione um dos seguintes pares "
+"chave/valor JSON em [.filepath]#settings.json#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:201
@@ -404,6 +452,16 @@ msgid ""
 "    \"clangd.path\": \"clangd12\"\n"
 "]\n"
 msgstr ""
+"[\n"
+"    /* Begin of your existing configurations */\n"
+"    ...\n"
+"    /* End of your existing configurations */\n"
+"    \"clangd.arguments\": [\n"
+"        \"--background-index\",\n"
+"        \"--header-insertion=never\"\n"
+"    ],\n"
+"    \"clangd.path\": \"clangd12\"\n"
+"]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:212
@@ -416,12 +474,18 @@ msgid ""
 "    \"ccls.cache.hierarchicalPath\": true\n"
 "]\n"
 msgstr ""
+"[\n"
+"    /* Begin of your existing configurations */\n"
+"    ...\n"
+"    /* End of your existing configurations */\n"
+"    \"ccls.cache.hierarchicalPath\": true\n"
+"]\n"
 
 #. type: Title ==
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:215
 #, no-wrap
 msgid "Compilation database"
-msgstr ""
+msgstr "Banco de dados de compilação"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:221
@@ -431,6 +495,11 @@ msgid ""
 "file is usually [.filename]#compile_commands.json#.  The database is used by "
 "language server implementations for indexing purpose."
 msgstr ""
+"Um banco de dados de compilação contém um array de objetos de comando de "
+"compilação. Cada objeto especifica uma maneira de compilar um arquivo de "
+"origem. O arquivo de banco de dados de compilação geralmente é chamado de [."
+"filename]#compile_commands.json#. O banco de dados é usado por "
+"implementações de servidores de linguagem para fins de indexação."
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:223
@@ -438,24 +507,27 @@ msgid ""
 "Please refer to link:https://clang.llvm.org/docs/JSONCompilationDatabase."
 "html#format[] for details on the format of the compilation database file."
 msgstr ""
+"Por favor, consulte link:https://clang.llvm.org/docs/JSONCompilationDatabase."
+"html#format[] para obter detalhes sobre o formato do arquivo do banco de "
+"dados de compilação."
 
 #. type: Title ===
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:225
 #, no-wrap
 msgid "Generators"
-msgstr ""
+msgstr "Geradores"
 
 #. type: Title ====
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:228
 #, no-wrap
 msgid "Using scan-build-py"
-msgstr ""
+msgstr "Usando scan-build-py"
 
 #. type: Title =====
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:230
 #, no-wrap
 msgid "Installation"
-msgstr ""
+msgstr "Instalação"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:234
