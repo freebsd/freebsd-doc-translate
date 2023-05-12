@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2023-01-21 20:00-0300\n"
-"PO-Revision-Date: 2023-05-12 18:30+0000\n"
+"PO-Revision-Date: 2023-05-12 18:47+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articlesnanobsd_index/pt_BR/>\n"
@@ -885,12 +885,18 @@ msgid ""
 "place through it.  Be sure to check the relevant parameters of the serial "
 "port, as setting a bad parameter value can make it useless."
 msgstr ""
+"Bom saber: a variável `NANO_BOOT2CFG` é usada apenas na rotina "
+"`cust_comconsole`, que pode ser chamada no passo `NANO_CUSTOMIZE` se o "
+"aparelho tiver uma porta serial e toda a entrada e saída do console tiver "
+"que ser feita por meio dela. Certifique-se de verificar os parâmetros "
+"relevantes da porta serial, pois definir um valor incorreto pode torná-la "
+"inútil."
 
 #. type: Title =====
 #: documentation/content/en/articles/nanobsd/_index.adoc:264
 #, no-wrap
 msgid "Disk Image Creation"
-msgstr ""
+msgstr "Criação da Imagem do Disco"
 
 #. type: Plain text
 #: documentation/content/en/articles/nanobsd/_index.adoc:268
@@ -899,6 +905,10 @@ msgid ""
 "the NanoBSD script provides a file that can simply be copied onto a disk for "
 "the appliance, and that will make it boot and start."
 msgstr ""
+"No final do processo de inicialização está a criação da imagem do disco. Com "
+"essa etapa, o script do NanoBSD fornece um arquivo que pode ser simplesmente "
+"copiado para um disco do aparelho, e isso fará com que ele seja inicializado "
+"e iniciado."
 
 #. type: Plain text
 #: documentation/content/en/articles/nanobsd/_index.adoc:270
@@ -906,6 +916,8 @@ msgid ""
 "There are many variable that need to be set just right for the script to "
 "produce a usable disk image."
 msgstr ""
+"Existem muitas variáveis que precisam ser configuradas corretamente para que "
+"o script produza uma imagem de disco utilizável."
 
 #. type: Plain text
 #: documentation/content/en/articles/nanobsd/_index.adoc:272
@@ -916,6 +928,11 @@ msgid ""
 "a different type of storage could also be used - like a USB key, in which "
 "case, it would rather be da0."
 msgstr ""
+"A variável `NANO_DRIVE` deve ser definida como o nome da unidade de mídia em "
+"tempo de execução. Geralmente, o valor padrão `ada0`, que representa o "
+"primeiro dispositivo `IDE`/`ATA`/`SATA` no aparelho, é esperado como o "
+"correto, mas um tipo diferente de armazenamento também pode ser usado - como "
+"uma chave USB, nesse caso seria `da0`."
 
 #. type: Plain text
 #: documentation/content/en/articles/nanobsd/_index.adoc:273
@@ -925,6 +942,11 @@ msgid ""
 "that the NanoBSD image will not boot at all, and a message at boot time will "
 "be warning about incorrect disk geometry."
 msgstr ""
+"A variável `NANO_MEDIASIZE` deve ser definida como o tamanho (em setores de "
+"512 bytes) da mídia de armazenamento que será usada. Se você definir isso "
+"incorretamente, é possível que a imagem do NanoBSD não inicialize e uma "
+"mensagem durante a inicialização avisará sobre a geometria de disco "
+"incorreta."
 
 #. type: Plain text
 #: documentation/content/en/articles/nanobsd/_index.adoc:275
@@ -941,6 +963,19 @@ msgid ""
 "especially [.filename]#/tmp# can grow much larger if not careful about it. "
 "For memory constrained systems, smaller filesystem sizes may be chosen."
 msgstr ""
+"Os diretórios [.filename]#/etc#, [.filename]#/var# e [.filename]#/tmp# são "
+"alocados como discos man:md[4] (malloc) durante a inicialização; portanto, "
+"seus tamanhos podem ser ajustados para atender às necessidades do aparelho. "
+"A variável `NANO_RAM_ETCSIZE` define o tamanho do [.filename]#/etc# e a "
+"variável `NANO_RAM_TMPVARSIZE` define o tamanho tanto do diretório [."
+"filename]#/var# quanto do diretório [.filename]#/tmp#, já que [."
+"filename]#/tmp# está simbolicamente vinculado a [.filename]#/var/tmp#. Por "
+"padrão, ambos os tamanhos dos discos malloc são definidos em 20MB cada. Eles "
+"podem ser alterados, mas geralmente o [.filename]#/etc# não cresce muito em "
+"tamanho, portanto, 20MB é um bom ponto de partida, enquanto o [."
+"filename]#/var# e especialmente o [.filename]#/tmp# podem aumentar muito de "
+"tamanho se não tiver cuidado. Para sistemas com restrição de memória, "
+"tamanhos menores de sistema de arquivos podem ser escolhidos."
 
 #. type: Plain text
 #: documentation/content/en/articles/nanobsd/_index.adoc:276
@@ -954,6 +989,16 @@ msgid ""
 "filesystem has Soft Updates enabled. The extref:{handbook}[FreeBSD Handbook] "
 "can be checked about this."
 msgstr ""
+"Como o NanoBSD é projetado principalmente para criar uma imagem de sistema "
+"para um aparelho, presume-se que a mídia de armazenamento usada seja "
+"relativamente pequena. Por esse motivo, o sistema de arquivos que é "
+"organizado é configurado com um tamanho de bloco pequeno (4Kb) e um tamanho "
+"de fragmento pequeno (512b). As opções de configuração do sistema de "
+"arquivos podem ser modificadas por meio da variável `NANO_NEWFS`, mas a "
+"sintaxe deve respeitar o formato do comando man:newfs[8]. Além disso, por "
+"padrão, o sistema de arquivos tem Soft Updates ativado. O extref:{handbook}["
+"Handbook do FreeBSD] pode ser consultado para obter mais informações sobre "
+"isso."
 
 #. type: Plain text
 #: documentation/content/en/articles/nanobsd/_index.adoc:277
@@ -969,6 +1014,17 @@ msgid ""
 "an optional partition, that can be used on the appliance. The last partition "
 "can be used, for example, to keep files created on the fly on disk."
 msgstr ""
+"Os diferentes tamanhos das partições podem ser definidos por meio do uso de "
+"`NANO_CODESIZE`, `NANO_CONFSIZE` e `NANO_DATASIZE` como múltiplos de setores "
+"de 512 bytes. `NANO_CODESIZE` define o tamanho das duas primeiras partições "
+"da imagem: `code#1` e `code#2`. Elas devem ser grandes o suficiente para "
+"armazenar todos os arquivos que serão produzidos como resultado dos "
+"processos `buildworld` e `buildkernel`. `NANO_CONFSIZE` define o tamanho da "
+"partição do arquivo de configuração, portanto, não precisa ser muito grande, "
+"mas não a faça tão pequena que não possa armazenar todos os arquivos de "
+"configuração. Por fim, `NANO_DATASIZE` define o tamanho de uma partição "
+"opcional que pode ser usada no aparelho. A última partição pode ser usada, "
+"por exemplo, para manter arquivos criados dinamicamente no disco."
 
 #. type: Title ====
 #: documentation/content/en/articles/nanobsd/_index.adoc:278
@@ -983,6 +1039,9 @@ msgid ""
 "configuration file.  The following example illustrates the basic model of "
 "custom functions:"
 msgstr ""
+"É possível ajustar o NanoBSD usando funções de shell no arquivo de "
+"configuração. O exemplo a seguir ilustra o modelo básico de funções "
+"personalizadas:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/nanobsd/_index.adoc:290
@@ -994,21 +1053,24 @@ msgid ""
 ")\n"
 "customize_cmd cust_foo\n"
 msgstr ""
+"cust_foo () (\n"
+"\techo \"bar=baz\" > \\\n"
+"\t\t${NANO_WORLDDIR}/etc/foo\n"
+")\n"
+"customize_cmd cust_foo\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/nanobsd/_index.adoc:293
-#, fuzzy
 msgid ""
 "A more useful example of a customization function is the following, which "
 "changes the default size of the [.filename]#/etc# directory from 5MB to 30MB:"
 msgstr ""
-"Um exemplo mais útil de uma função de customização é o seguinte, o qual "
-"altera o tamanho padrão do diretório <filename>/etc</filename> de 5MB para "
-"30MB:"
+"Um exemplo mais útil de uma função de personalização é o seguinte, que "
+"altera o tamanho padrão do diretório [.filename]#/etc# de 5MB para 30MB:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/nanobsd/_index.adoc:301
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "cust_etc_size () (\n"
 "\tcd ${NANO_WORLDDIR}/conf\n"
@@ -1018,7 +1080,7 @@ msgid ""
 msgstr ""
 "cust_etc_size () (\n"
 "\tcd ${NANO_WORLDDIR}/conf\n"
-"\techo 30000 &gt; default/etc/md_size\n"
+"\techo 30000 > default/etc/md_size\n"
 ")\n"
 "customize_cmd cust_etc_size\n"
 
@@ -1037,11 +1099,16 @@ msgid ""
 "filename]#/dev/ttyv*# device nodes) and enables the use of the COM1 serial "
 "port as the system console."
 msgstr ""
+"`cust_comconsole` - Desabilita o man:getty[8] nos dispositivos VGA (os nós "
+"de dispositivo [.filename]#/dev/ttyv*#) e habilita o uso da porta serial "
+"COM1 como console do sistema."
 
 #. type: Plain text
 #: documentation/content/en/articles/nanobsd/_index.adoc:307
 msgid "`cust_allow_ssh_root` - Allow `root` to login via man:sshd[8]."
 msgstr ""
+"`cust_allow_ssh_root` - Permite que o usuário `root` faça login via "
+"man:sshd[8]."
 
 #. type: Plain text
 #: documentation/content/en/articles/nanobsd/_index.adoc:308
