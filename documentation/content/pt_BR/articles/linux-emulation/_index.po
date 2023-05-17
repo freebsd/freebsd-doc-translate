@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2023-05-16 19:13+0000\n"
+"PO-Revision-Date: 2023-05-17 19:43+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articleslinux-emulation_index/pt_BR/>\n"
@@ -3115,6 +3115,8 @@ msgid ""
 "This operation takes a futex at `uaddr` and wakes up `val` first futexes "
 "queued on this futex."
 msgstr ""
+"Essa operação pega um futex em `uaddr` e acorda os primeiros `val` futexes "
+"na fila desse futex."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1176
@@ -3140,6 +3142,9 @@ msgid ""
 "This operation takes `val` threads queued on futex at `uaddr`, wakes them "
 "up, and takes `val2` next threads and requeues them on futex at `uaddr2`."
 msgstr ""
+"Essa operação pega `val` threads na fila do futex em `uaddr`, acorda-as e "
+"pega `val2` threads seguintes e as coloca novamente na fila do futex em "
+"`uaddr2`."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1186
@@ -3153,6 +3158,8 @@ msgid ""
 "This operation does the same as `FUTEX_REQUEUE` but it checks that `val3` "
 "equals to `val` first."
 msgstr ""
+"Essa operação faz o mesmo que `FUTEX_REQUEUE`, mas verifica primeiro se "
+"`val3` é igual a `val`."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1191
@@ -3168,36 +3175,40 @@ msgid ""
 "`uaddr` and if the atomic operation returned a positive number it wakes up "
 "`val2` threads on futex at `uaddr2`."
 msgstr ""
+"Essa operação realiza uma operação atômica em `val3` (que contém codificado "
+"algum outro valor) e `uaddr`. Em seguida, acorda `val` threads no futex em "
+"`uaddr` e, se a operação atômica retornar um número positivo, acorda `val2` "
+"threads no futex em `uaddr2`."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1197
 msgid "The operations implemented in `FUTEX_WAKE_OP`:"
-msgstr ""
+msgstr "As operações implementadas em FUTEX_WAKE_OP são:"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1199
 msgid "`FUTEX_OP_SET`"
-msgstr ""
+msgstr "`FUTEX_OP_SET`"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1200
 msgid "`FUTEX_OP_ADD`"
-msgstr ""
+msgstr "`FUTEX_OP_ADD`"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1201
 msgid "`FUTEX_OP_OR`"
-msgstr ""
+msgstr "`FUTEX_OP_OR`"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1202
 msgid "`FUTEX_OP_AND`"
-msgstr ""
+msgstr "`FUTEX_OP_AND`"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1203
 msgid "`FUTEX_OP_XOR`"
-msgstr ""
+msgstr "`FUTEX_OP_XOR`"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1208
@@ -3206,6 +3217,9 @@ msgid ""
 "from the `struct timespec *timeout` parameter for operations "
 "`FUTEX_REQUEUE`, `FUTEX_CMP_REQUEUE` and `FUTEX_WAKE_OP`."
 msgstr ""
+"Não há parâmetro `val2` no protótipo do futex. O `val2` é obtido do "
+"parâmetro `struct timespec *timeout` para as operações `FUTEX_REQUEUE`, "
+"`FUTEX_CMP_REQUEUE` e `FUTEX_WAKE_OP`."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1211
@@ -3220,6 +3234,9 @@ msgid ""
 "us.  It is placed in `linux_futex.c` and [.filename]#linux_futex.h# files.  "
 "The `futex` structure looks like:"
 msgstr ""
+"A emulação de futex no FreeBSD é baseada no NetBSD e posteriormente "
+"estendida por nós. Ela é implementada nos arquivos `linux_futex.c` e [."
+"filename]#linux_futex.h#. A estrutura `futex` se parece com:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1222
@@ -3229,12 +3246,15 @@ msgid ""
 "  void *f_uaddr;\n"
 "  int f_refcount;\n"
 msgstr ""
+"struct futex {\n"
+"  void *f_uaddr;\n"
+"  int f_refcount;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1224
 #, no-wrap
 msgid "  LIST_ENTRY(futex) f_list;\n"
-msgstr ""
+msgstr "  LIST_ENTRY(futex) f_list;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1227
@@ -3243,29 +3263,31 @@ msgid ""
 "  TAILQ_HEAD(lf_waiting_paroc, waiting_proc) f_waiting_proc;\n"
 "};\n"
 msgstr ""
+"  TAILQ_HEAD(lf_waiting_paroc, waiting_proc) f_waiting_proc;\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1230
 msgid "And the structure `waiting_proc` is:"
-msgstr ""
+msgstr "E a estrutura `waiting_proc` é:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1234
 #, no-wrap
 msgid "struct waiting_proc {\n"
-msgstr ""
+msgstr "struct waiting_proc {\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1236
 #, no-wrap
 msgid "  struct thread *wp_t;\n"
-msgstr ""
+msgstr "  struct thread *wp_t;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1238
 #, no-wrap
 msgid "  struct futex *wp_new_futex;\n"
-msgstr ""
+msgstr "  struct futex *wp_new_futex;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1241
@@ -3274,6 +3296,8 @@ msgid ""
 "  TAILQ_ENTRY(waiting_proc) wp_list;\n"
 "};\n"
 msgstr ""
+"  TAILQ_ENTRY(waiting_proc) wp_list;\n"
+"};\n"
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1244
@@ -3808,7 +3832,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1436
 msgid "https://www.kernel.org[https://www.kernel.org]"
-msgstr ""
+msgstr "https://www.kernel.org[https://www.kernel.org]"
 
 #~ msgid ""
 #~ "include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
