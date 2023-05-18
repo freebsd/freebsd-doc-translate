@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2023-05-18 20:23+0000\n"
+"PO-Revision-Date: 2023-05-18 20:47+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articleslinux-emulation_index/pt_BR/>\n"
@@ -288,6 +288,13 @@ msgid ""
 "thread group in one process and managing the threading in userspace (1:N "
 "threading).  Comparing main features of each approach:"
 msgstr ""
+"No traditional UNIX(R), não é definida nenhuma API nem implementação para "
+"threads, enquanto o POSIX(R) define sua API de threads, mas a implementação "
+"é indefinida. Tradicionalmente, havia duas maneiras de implementar threads. "
+"Tratá-los como processos separados (threading 1:1) ou envolver todo o grupo "
+"de threads em um único processo e gerenciar as threads no espaço do usuário ("
+"threading 1:N). Vamos comparar as principais características de cada "
+"abordagem:"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:147
@@ -589,6 +596,12 @@ msgid ""
 "searching of PID space.  Every thread in a process receives the same PID "
 "number as result of the man:getpid[2] call."
 msgstr ""
+"O sistema operacional FreeBSD adere ao esquema tradicional do UNIX(R), onde "
+"cada processo possui um número de identificação exclusivo, chamado de _PID_ ("
+"Process ID). Os números de PID são alocados linearmente ou aleatoriamente, "
+"variando de `0` a `PID_MAX`. A alocação dos números de PID é feita usando "
+"busca linear no espaço de PID. Cada thread em um processo recebe o mesmo "
+"número de PID como resultado da chamada do man:getpid[2]."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:249
@@ -654,6 +667,12 @@ msgid ""
 "development pace, full hardware support and benevolent dictator model of "
 "organization."
 msgstr ""
+"O Linux(R) é um kernel semelhante ao UNIX(R) originalmente desenvolvido por "
+"Linus Torvalds e que agora recebe contribuições de uma grande comunidade de "
+"programadores ao redor do mundo. Desde os seus humildes começos até os dias "
+"de hoje, com amplo suporte de empresas como IBM e Google, o Linux(R) é "
+"associado à sua rápida velocidade de desenvolvimento, suporte completo de "
+"hardware e modelo de organização com um ditador benevolente."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:267
@@ -951,7 +970,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:378
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "#define CLONE_SIGNAL (CLONE_SIGHAND | CLONE_THREAD)\n"
 msgstr "#define CLONE_SIGNAL (CLONE_SIGHAND | CLONE_THREAD)\n"
 
@@ -1973,7 +1992,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:695
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "...\n"
 "\tAUE_FORK STD\t\t{ int linux_fork(void); }\n"
@@ -2012,7 +2031,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:716
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "...\n"
 "#define LINUX_SYS_linux_fork 2\n"
@@ -2028,17 +2047,16 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:719
-#, fuzzy
 msgid ""
 "The [.filename]#linux_proto.h# contains structure definitions of arguments "
 "to every syscall, e.g.:"
 msgstr ""
-"O <filename>linux_proto.h</filename> contém definições de estrutura de "
-"argumentos para cada syscall, por exemplo:"
+"O [.filename]#linux_proto.h# contém definições de estrutura de argumentos "
+"para cada syscall, por exemplo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:725
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "struct linux_fork_args {\n"
 "  register_t dummy;\n"
@@ -2050,24 +2068,24 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:728
-#, fuzzy
 msgid ""
 "And finally, [.filename]#linux_sysent.c# contains structure describing the "
 "system entry table, used to actually dispatch a syscall, e.g.:"
 msgstr ""
-"E finalmente, <filename>linux_sysent.c</filename> contém uma estrutura "
-"descrevendo a tabela de entrada do sistema, usada para realmente enviar um "
-"syscall, por exemplo:"
+"E finalmente, o [.filename]#linux_sysent.c# contém uma estrutura descrevendo "
+"a tabela de entrada do sistema, usada para realmente enviar um syscall, por "
+"exemplo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:733
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "{ 0, (sy_call_t *)linux_fork, AUE_FORK, NULL, 0, 0 }, /* 2 = linux_fork */\n"
 "{ AS(close_args), (sy_call_t *)close, AUE_CLOSE, NULL, 0, 0 }, /* 6 = close */\n"
 msgstr ""
 "{ 0, (sy_call_t *)linux_fork, AUE_FORK, NULL, 0, 0 }, /* 2 = linux_fork */\n"
-"{ AS(close_args), (sy_call_t *)close, AUE_CLOSE, NULL, 0, 0 }, /* 6 = close */\n"
+"{ AS(close_args), (sy_call_t *)close, AUE_CLOSE, NULL, 0, 0 }, /* 6 = close "
+"*/\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:737
@@ -2594,9 +2612,9 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:948
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "struct linux_emuldata *em_find(struct proc *, int locked);\n"
-msgstr "struct linux_emuldata * em_find (struct proc *, int bloqueado);\n"
+msgstr "struct linux_emuldata *em_find(struct proc *, int locked);\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:953
@@ -2647,7 +2665,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:977
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "int linux_clone(l_int flags, void *stack, void *parent_tidptr, int dummy,\n"
 "void * child_tidptr);\n"
@@ -2797,7 +2815,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1053
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "mov %edx,%gs:0x10\n"
 msgstr "mov %edx,%gs:0x10\n"
 
@@ -3034,9 +3052,11 @@ msgstr "A syscall do futex é assim:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1150
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "int futex(void *uaddr, int op, int val, struct timespec *timeout, void *uaddr2, int val3);\n"
-msgstr "int futex(void *uaddr, int op, int val, struct timespec *timeout, void *uaddr2, int val3);\n"
+msgstr ""
+"int futex(void *uaddr, int op, int val, struct timespec *timeout, void *"
+"uaddr2, int val3);\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1153
@@ -3053,39 +3073,33 @@ msgstr "Futexes implementam as seguintes operações:"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1157
-#, fuzzy
 msgid "`FUTEX_WAIT`"
-msgstr "FUTEX_WAIT"
+msgstr "`FUTEX_WAIT`"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1158
-#, fuzzy
 msgid "`FUTEX_WAKE`"
-msgstr "FUTEX_WAKE"
+msgstr "`FUTEX_WAKE`"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1159
-#, fuzzy
 msgid "`FUTEX_FD`"
-msgstr "FUTEX_FD"
+msgstr "`FUTEX_FD`"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1160
-#, fuzzy
 msgid "`FUTEX_REQUEUE`"
-msgstr "FUTEX_REQUEUE"
+msgstr "`FUTEX_REQUEUE`"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1161
-#, fuzzy
 msgid "`FUTEX_CMP_REQUEUE`"
-msgstr "FUTEX_CMP_REQUEUE"
+msgstr "`FUTEX_CMP_REQUEUE`"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1162
-#, fuzzy
 msgid "`FUTEX_WAKE_OP`"
-msgstr "FUTEX_WAKE_OP"
+msgstr "`FUTEX_WAKE_OP`"
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1164
@@ -3397,7 +3411,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1287
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "oldval = *uaddr2\n"
 "*uaddr2 = oldval OP oparg\n"
@@ -3718,16 +3732,15 @@ msgstr "Trabalho futuro"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1402
-#, fuzzy
 msgid ""
 "Future work should focus on fixing the remaining issues with futexes, "
 "implement the rest of the *at family of syscalls, fix the signal delivery "
 "and possibly implement the `epoll` and `inotify` facilities."
 msgstr ""
-"O trabalho futuro deve focar na correção dos problemas remanescentes com "
-"futexes, implementar o restante da família de syscalls, corrigir a entrega "
-"de sinal e possivelmente implementar os recursos de <function>epoll</"
-"function> e <function>inotify</function>."
+"O trabalho futuro deve se concentrar em corrigir os problemas restantes com "
+"futexes, implementar o restante da família de chamadas de sistema *at, "
+"corrigir a entrega de sinais e possivelmente implementar as facilidades "
+"`epoll` e `inotify`."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1404
