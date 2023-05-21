@@ -9,7 +9,7 @@
 Hello and thank you for your interest — FreeBSD Doc is being translated using
 Weblate, a web tool designed to ease translating for both developers and
 translators. More information on the [Wiki Translate FreeBSD on
-Weblate](https://wiki.freebsd.org/DocTranslationOnWeblate).
+Weblate](https://wiki.freebsd.org/Doc/Translation/Weblate).
 
 
 Access the project's Weblate Platform
