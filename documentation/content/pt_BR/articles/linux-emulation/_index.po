@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2023-05-21 10:16+0000\n"
+"PO-Revision-Date: 2023-05-21 10:24+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articleslinux-emulation_index/pt_BR/>\n"
@@ -2049,6 +2049,13 @@ msgid ""
 "structures), it does not work with hardlinks, etc.  This routine is used in "
 "several places in the Linuxulator."
 msgstr ""
+"A função man:vn_fullpath[9] faz o melhor esforço para percorrer o cache de "
+"nomes do VFS e retorna um caminho para um vnode específico (bloqueado). Esse "
+"processo é não confiável, mas funciona muito bem na maioria dos casos "
+"comuns. A falta de confiabilidade ocorre porque ela depende do cache do VFS ("
+"não percorre as estruturas no meio físico) e não funciona com links rígidos, "
+"entre outras limitações. Essa rotina é usada em vários lugares no "
+"Linuxulator."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:636
@@ -2068,7 +2075,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:640
 msgid "man:vn_lock[9] - locks a vnode"
-msgstr ""
+msgstr "man:vn_lock[9] - bloqueia um vnode"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:641
@@ -2078,7 +2085,7 @@ msgstr "`vn_unlock` - desbloqueia um vnode"
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:642
 msgid "man:VOP_READDIR[9] - reads a directory referenced by a vnode"
-msgstr ""
+msgstr "man:VOP_READDIR[9] - lê um diretório referenciado por um vnode"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:643
@@ -2086,26 +2093,28 @@ msgid ""
 "man:VOP_GETATTR[9] - gets attributes of a file or a directory referenced by "
 "a vnode"
 msgstr ""
+"man:VOP_GETATTR[9] - obtém atributos de um arquivo ou diretório referenciado "
+"por um vnode"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:644
 msgid "man:VOP_LOOKUP[9] - looks up a path to a given directory"
-msgstr ""
+msgstr "man:VOP_LOOKUP[9] - busca um caminho para um diretório específico"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:645
 msgid "man:VOP_OPEN[9] - opens a file referenced by a vnode"
-msgstr ""
+msgstr "man:VOP_OPEN[9] - abre um arquivo referenciado por um vnode"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:646
 msgid "man:VOP_CLOSE[9] - closes a file referenced by a vnode"
-msgstr ""
+msgstr "man:VOP_CLOSE[9] - fecha um arquivo referenciado por um vnode"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:647
 msgid "man:vput[9] - decrements the use count for a vnode and unlocks it"
-msgstr ""
+msgstr "man:vput[9] - decrementa a contagem de uso de um vnode e desbloqueia"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:648
@@ -2129,22 +2138,24 @@ msgid ""
 "`fget` - given a thread and a file descriptor number it returns associated "
 "file handler and references it"
 msgstr ""
+"`fget` - dado um thread e um número de descritor de arquivo, ele retorna o "
+"file handler associado e o referencia"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:655
 msgid "`fdrop` - drops a reference to a file handler"
-msgstr ""
+msgstr "`fdrop` - remove uma referência a um file handler"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:656
 msgid "`fhold` - references a file handler"
-msgstr ""
+msgstr "`fhold` - referencia um file handler"
 
 #. type: Title ==
 #: documentation/content/en/articles/linux-emulation/_index.adoc:658
 #, no-wrap
 msgid "Linux(R) emulation layer -MD part"
-msgstr ""
+msgstr "A camada de emulação do Linux(R) - parte MD"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:666
@@ -2158,6 +2169,14 @@ msgid ""
 "of the Linuxulator.  This section only covers i386 and ELF handling. A.OUT "
 "is obsolete and untested."
 msgstr ""
+"Esta seção trata da implementação da camada de emulação do Linux(R) no "
+"sistema operacional FreeBSD. Ela descreve primeiramente a parte dependente "
+"da máquina, abordando como e onde a interação entre o espaço do usuário e o "
+"kernel é implementada. Ela fala sobre syscalls, sinais, ptrace, traps e "
+"ajuste de pilha. Essa parte discute o i386, mas é escrita de forma geral, "
+"então outras arquiteturas não devem diferir muito. A próxima parte é a parte "
+"independente da máquina do Linuxulator. Esta seção aborda apenas o i386 e o "
+"tratamento de arquivos ELF. O formato A.OUT está obsoleto e não foi testado."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:668
@@ -2173,12 +2192,17 @@ msgid ""
 "a Linux(R) process running on FreeBSD issues a syscall, the general syscall "
 "routine calls linux prepsyscall routine for the Linux(R) ABI."
 msgstr ""
+"O tratamento de syscalls é principalmente escrito em [.filename]#linux_sysvec"
+".c#, que abrange a maioria das rotinas apontadas na estrutura `sysentvec`. "
+"Quando um processo do Linux(R) em execução no FreeBSD faz uma syscall, a "
+"rotina geral de syscall chama a rotina linux prepsyscall para a ABI do "
+"Linux(R)."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:674
 #, no-wrap
 msgid "Linux(R) prepsyscall"
-msgstr ""
+msgstr "Linux(R) prepsyscall"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:681
