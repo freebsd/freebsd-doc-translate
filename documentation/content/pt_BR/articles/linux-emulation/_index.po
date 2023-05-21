@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2023-05-21 09:59+0000\n"
+"PO-Revision-Date: 2023-05-21 10:16+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articleslinux-emulation_index/pt_BR/>\n"
@@ -1290,6 +1290,12 @@ msgid ""
 "exit[3], man:socket[2] API) hence it is easy to emulate because their "
 "semantics is shared among all UNIX(R)es, which exist todays."
 msgstr ""
+"O mesmo acontece com a API do UNIX(R). A maioria dos programas pode "
+"funcionar com um conjunto muito limitado de syscalls. Essas syscalls tendem "
+"a ser as mais antigas (man:read[2]/man:write[2], família man:fork[2], "
+"manipulação de man:signal[3], man:exit[3], API man:socket[2]), o que torna "
+"mais fácil a emulação, pois sua semântica é compartilhada entre todos os "
+"sistemas UNIX(R) existentes hoje em dia."
 
 #. type: Title ==
 #: documentation/content/en/articles/linux-emulation/_index.adoc:422
@@ -1311,6 +1317,12 @@ msgid ""
 "execution class loader.  This wedges into the man:execve[2] syscall, so when "
 "man:execve[2] is about to execute a binary it examines its type."
 msgstr ""
+"Como mencionado anteriormente, o FreeBSD suporta a execução de binários de "
+"vários outros sistemas UNIX(R). Isso é possível porque o FreeBSD possui uma "
+"abstração chamada de \"execução do carregador de classe\" (execution class "
+"loader). Isso é inserido na chamada de sistema man:execve[2], então quando o "
+"man:execve[2] está prestes a executar um binário, ele examina o tipo do "
+"binário."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:435
@@ -1347,6 +1359,15 @@ msgid ""
 "one.  This effectively provides a very elegant and easy way of supporting "
 "execution of various binary formats."
 msgstr ""
+"Cada ABI de sistema operacional deve ser registrada no kernel do FreeBSD. "
+"Isso também se aplica à ABI nativa do FreeBSD. Portanto, quando o "
+"man:execve[2] executa um binário, ele itera pela lista de APIs registradas "
+"e, quando encontra a correspondente, começa a usar as informações contidas "
+"na descrição da ABI do sistema operacional (sua tabela de syscalls, tabela "
+"de tradução de `errno`, etc.). Portanto, cada vez que o processo chama uma "
+"syscall, ele usa seu próprio conjunto de syscalls em vez de um conjunto "
+"global. Isso fornece uma maneira muito elegante e fácil de oferecer suporte "
+"à execução de vários formatos binários."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:446
@@ -1374,6 +1395,9 @@ msgid ""
 "emulation infrastructure and in fact these are basically the only things "
 "necessary to implement the Linux(R) emulation layer."
 msgstr ""
+"Essas facilidades simples fornecem basicamente tudo o que é necessário para "
+"a infraestrutura de emulação e, na verdade, são basicamente as únicas coisas "
+"necessárias para implementar a camada de emulação do Linux(R)."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:450
@@ -1400,7 +1424,7 @@ msgstr "Primitivas de Bloqueio"
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:459
 msgid "Contributed by: `{attilio}`"
-msgstr ""
+msgstr "Contribuído por: `{attilio}`"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:461
@@ -1648,6 +1672,12 @@ msgid ""
 "events, they do not do any form of priority propagation.  They must be "
 "implemented through the man:sleepqueue[9] interface."
 msgstr ""
+"As travas de suspensão (sleep locks) permitem que os processos em espera "
+"sejam despachados (descheduled ) e adormeçam até que o detentor da trava a "
+"solte e acorde um ou mais processos em espera. Como as travas de suspensão "
+"são projetadas para proteger grandes trechos de código e lidar com eventos "
+"assíncronos, elas não realizam qualquer forma de propagação de prioridade. "
+"Elas devem ser implementadas por meio da interface man:sleepqueue[9]."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:533
@@ -1696,7 +1726,7 @@ msgstr "Sleep mutex - bloqueio - man:mutex[9]"
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:539
 msgid "pool mutex - blocking - man:mtx[pool]"
-msgstr ""
+msgstr "pool mutex - blocking - man:mtx[pool]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:540
@@ -1704,31 +1734,33 @@ msgid ""
 "sleep family - sleeping - man:sleep[9] pause tsleep msleep msleep spin "
 "msleep rw msleep sx"
 msgstr ""
+"A família de funções de suspensão (sleep family) - sleeping - man:sleep[9] "
+"pause tsleep msleep msleep spin msleep rw msleep sx"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:541
 msgid "condvar - sleeping - man:condvar[9]"
-msgstr ""
+msgstr "condvar - sleeping - man:condvar[9]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:542
 msgid "rwlock - blocking - man:rwlock[9]"
-msgstr ""
+msgstr "rwlock - blocking - man:rwlock[9]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:543
 msgid "sxlock - sleeping - man:sx[9]"
-msgstr ""
+msgstr "sxlock - sleeping - man:sx[9]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:544
 msgid "lockmgr - sleeping - man:lockmgr[9]"
-msgstr ""
+msgstr "lockmgr - sleeping - man:lockmgr[9]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:545
 msgid "semaphores - sleeping - man:sema[9]"
-msgstr ""
+msgstr "semáforos - sleeping - man:sema[9]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:547
@@ -1780,6 +1812,10 @@ msgid ""
 "the diagnose of simple eventual problems with locking debugging tools (as "
 "man:witness[4])."
 msgstr ""
+"Em geral, esses devem ser usados apenas em um contexto específico e, mesmo "
+"que possam substituir bloqueios em muitos casos, eles devem ser evitados "
+"porque não permitem diagnosticar problemas simples com ferramentas de "
+"depuração de bloqueio (como man:witness[4])."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:561
@@ -1962,6 +1998,15 @@ msgid ""
 "a pointer to its vnode.  More then one file handler can point to the same "
 "vnode."
 msgstr ""
+"O subsistema VFS do FreeBSD é muito complexo, mas a camada de emulação do "
+"Linux(R) utiliza apenas um pequeno subconjunto por meio de uma API bem "
+"definida. Ela pode operar em vnodes ou manipuladores de arquivo. Vnode "
+"representa um vnode virtual, ou seja, uma representação de um nó no VFS. "
+"Outra representação é um manipulador de arquivo, que representa um arquivo "
+"aberto do ponto de vista de um processo. Um manipulador de arquivo pode "
+"representar um socket ou um arquivo comum. Um manipulador de arquivo contém "
+"um ponteiro para seu vnode. Mais de um manipulador de arquivo pode apontar "
+"para o mesmo vnode."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:619
@@ -1980,6 +2025,13 @@ msgid ""
 "behavior can be suppressed.  This routine is used all over the kernel and "
 "its performance is very critical."
 msgstr ""
+"A rotina man:namei[9] é um ponto de entrada central para a pesquisa e "
+"tradução de caminhos de nomes. Ela percorre o caminho ponto a ponto, do "
+"ponto de partida ao ponto final, usando a função de pesquisa, que é interna "
+"ao VFS. A chamada man:namei[9] pode lidar com links simbólicos, caminhos "
+"absolutos e relativos. Quando um caminho é pesquisado usando man:namei[9], "
+"ele é inserido no cache de nomes. Esse comportamento pode ser suprimido. "
+"Essa rotina é usada em todo o kernel e seu desempenho é muito crítico."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:628
