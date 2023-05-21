@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2023-05-21 10:35+0000\n"
+"PO-Revision-Date: 2023-05-21 12:49+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articleslinux-emulation_index/pt_BR/>\n"
@@ -2669,6 +2669,15 @@ msgid ""
 "the stuff necessary for loading Linux(R) A.OUT binaries is in [."
 "filename]#imgact_linux.c# file."
 msgstr ""
+"A camada de emulação do Linux(R) no i386 também suporta binários A.OUT do "
+"Linux(R). Praticamente tudo o que foi descrito nas seções anteriores deve "
+"ser implementado para oferecer suporte ao formato A.OUT (exceto a tradução "
+"de traps e o envio de sinais). O suporte para binários A.OUT não é mais "
+"mantido, especialmente a emulação 2.6 não funciona com esse formato. No "
+"entanto, isso não causa nenhum problema, já que o linux-base nos ports "
+"provavelmente não suporta binários A.OUT. Esse suporte provavelmente será "
+"removido no futuro. A maior parte do necessário para carregar binários A.OUT "
+"do Linux(R) está no arquivo [.filename]#imgact_linux.c#."
 
 #. type: Title ==
 #: documentation/content/en/articles/linux-emulation/_index.adoc:842
@@ -2710,6 +2719,18 @@ msgid ""
 "etc.) so to overcome these problems a new threading system was developed and "
 "named NPTL."
 msgstr ""
+"Um dos principais avanços no desenvolvimento do Linux(R) 2.6 foi a "
+"implementação de threads. Antes do 2.6, o suporte a threading no Linux(R) "
+"era implementado na biblioteca linuxthreads. Essa biblioteca era uma "
+"implementação parcial da threading POSIX(R). A threading era implementada "
+"usando processos separados para cada thread, usando a syscall `clone` para "
+"permitir que compartilhassem o espaço de endereçamento (e outras coisas). As "
+"principais fraquezas dessa abordagem eram que cada thread tinha um PID "
+"diferente, o tratamento de sinais era problemático (do ponto de vista do "
+"pthreads), etc. Além disso, o desempenho não era muito bom (uso de sinais "
+"`SIGUSR` para sincronização de threads, consumo de recursos do kernel, etc.)"
+", então, para superar esses problemas, um novo sistema de threading foi "
+"desenvolvido e chamado de NPTL."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:863
@@ -2722,6 +2743,14 @@ msgid ""
 "performance and standards conformance.  NPTL is a standard threading library "
 "in Linux(R) systems these days."
 msgstr ""
+"A biblioteca NPTL concentrou-se em duas coisas, mas uma terceira acabou "
+"sendo incluída e é geralmente considerada parte do NPTL. Essas duas coisas "
+"eram a incorporação de threads em uma estrutura de processo e futexes. A "
+"terceira coisa adicional foi TLS (Thread-Local Storage), que não é "
+"diretamente exigida pelo NPTL, mas toda a biblioteca NPTL do espaço do "
+"usuário depende dela. Essas melhorias resultaram em um desempenho muito "
+"melhorado e conformidade com padrões. O NPTL é uma biblioteca padrão de "
+"threading em sistemas Linux(R) nos dias de hoje."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:867
@@ -2730,12 +2759,16 @@ msgid ""
 "areas.  The TLS, futexes and PID mangling, which is meant to simulate the "
 "Linux(R) threads.  Further sections describe each of these areas."
 msgstr ""
+"A implementação do Linuxulator no FreeBSD aborda o NPTL em três áreas "
+"principais. O TLS (Thread-Local Storage), os futexes e a manipulação de PID, "
+"que tem como objetivo simular as threads do Linux(R). Seções adicionais "
+"descrevem cada uma dessas áreas em detalhes."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:869
 #, no-wrap
 msgid "Linux(R) 2.6 emulation infrastructure"
-msgstr ""
+msgstr "Infraestrutura de emulação do Linux(R) 2.6"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:872
@@ -2743,6 +2776,8 @@ msgid ""
 "These sections deal with the way Linux(R) threads are managed and how we "
 "simulate that in FreeBSD."
 msgstr ""
+"Essas seções lidam com a forma como as threads do Linux(R) são gerenciadas e "
+"como simulamos isso no FreeBSD."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:874
@@ -2764,12 +2799,24 @@ msgid ""
 "processes.  The man:sysctl[8] should not be changed when running any "
 "Linux(R) binary as it might harm things."
 msgstr ""
+"A camada de emulação do Linux(R) no FreeBSD suporta a configuração em tempo "
+"de execução da versão emulada. Isso é feito por meio do man:sysctl[8], mais "
+"especificamente através do parâmetro `compat.linux.osrelease`. Configurar "
+"esse man:sysctl[8] afeta o comportamento em tempo de execução da camada de "
+"emulação. Ao definir para 2.6.x, ele define o valor de `linux_use_linux26`, "
+"enquanto definir para qualquer outro valor mantém esse valor como "
+"indefinido. Essa variável (juntamente com as variáveis específicas de cada "
+"prisão) determina se a infraestrutura 2.6 (principalmente o processo de "
+"manipulação de PID) é usada no código ou não. A configuração da versão é "
+"feita em todo o sistema e isso afeta todos os processos do Linux(R). O "
+"man:sysctl[8] não deve ser alterado ao executar qualquer binário do Linux(R)"
+", pois isso pode causar problemas."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:885
 #, no-wrap
 msgid "Linux(R) processes and thread identifiers"
-msgstr ""
+msgstr "Processos e Identificadores de Thread no Linux(R)"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:892
@@ -2780,6 +2827,13 @@ msgid ""
 "a process ID but it is a thread ID.  The TGID identifies a thread group in "
 "other words a process.  For single-threaded process the PID equals the TGID."
 msgstr ""
+"A semântica de threading no Linux(R) é um pouco confusa e utiliza uma "
+"nomenclatura completamente diferente do FreeBSD. Em um processo no Linux(R), "
+"há uma estrutura chamada `struct task` que contém dois campos de "
+"identificação - PID e TGID. O PID _não_ é um identificador de processo, mas "
+"sim um identificador de thread. O TGID identifica um grupo de threads, ou "
+"seja, um processo. Para processos com apenas uma thread, o PID é igual ao "
+"TGID."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:898
@@ -2793,6 +2847,15 @@ msgid ""
 "information in some places and task information elsewhere and it is really "
 "not very consistent and looks error-prone."
 msgstr ""
+"No NPTL, uma thread é apenas um processo comum que tem o TGID diferente do "
+"PID e tem um líder de grupo diferente de si mesmo (além de compartilhar a "
+"memória virtual, é claro). Todo o resto acontece da mesma maneira que em um "
+"processo comum. Não há separação de um status compartilhado em uma estrutura "
+"externa, como no FreeBSD. Isso cria alguma duplicação de informações e "
+"possíveis inconsistências de dados. O kernel do Linux(R) parece usar "
+"informações de tarefa -> grupo em alguns lugares e informações de tarefa em "
+"outros lugares, e isso realmente não é muito consistente e parece propenso a "
+"erros."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:901
@@ -2826,6 +2889,8 @@ msgid ""
 "struct linux_emuldata {\n"
 "  pid_t pid;\n"
 msgstr ""
+"struct linux_emuldata {\n"
+"  pid_t pid;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:911
@@ -2834,18 +2899,20 @@ msgid ""
 "  int *child_set_tid; /* in clone(): Child.s TID to set on clone */\n"
 "  int *child_clear_tid;/* in clone(): Child.s TID to clear on exit */\n"
 msgstr ""
+"  int *child_set_tid; /* in clone(): Child.s TID to set on clone */\n"
+"  int *child_clear_tid;/* in clone(): Child.s TID to clear on exit */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:913
 #, no-wrap
 msgid "  struct linux_emuldata_shared *shared;\n"
-msgstr ""
+msgstr "  struct linux_emuldata_shared *shared;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:915
 #, no-wrap
 msgid "  int pdeath_signal; /* parent death signal */\n"
-msgstr ""
+msgstr "  int pdeath_signal; /* parent death signal */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:918
@@ -2854,6 +2921,8 @@ msgid ""
 "  LIST_ENTRY(linux_emuldata) threads; /* list of linux threads */\n"
 "};\n"
 msgstr ""
+"  LIST_ENTRY(linux_emuldata) threads; /* list of linux threads */\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:925
