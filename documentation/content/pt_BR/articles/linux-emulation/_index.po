@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2023-05-21 14:32+0000\n"
+"PO-Revision-Date: 2023-05-21 15:08+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articleslinux-emulation_index/pt_BR/>\n"
@@ -1803,7 +1803,6 @@ msgstr "Seções críticas"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:569
-#, fuzzy
 msgid ""
 "The FreeBSD kernel has been made preemptive basically to deal with interrupt "
 "threads.  In fact, in order to avoid high interrupt latency, time-sharing "
@@ -1818,21 +1817,19 @@ msgid ""
 "effectively but should be used carefully in order to not lose the whole "
 "advantage that preemption brings."
 msgstr ""
-"O kernel do FreeBSD foi feito basicamente para lidar com threads de "
-"interrupção. De fato, para evitar latência de interrupção alta, os segmentos "
-"de prioridade de compartilhamento de tempo podem ser precedidos por threads "
-"de interrupção (dessa forma, eles não precisam aguardar para serem agendados "
-"como as visualizações de caminho normais). Preempção, no entanto, introduz "
-"novos pontos de corrida que precisam ser manipulados também. Muitas vezes, "
-"para lidar com a preempção, a coisa mais simples a fazer é desativá-la "
-"completamente. Uma seção crítica define um pedaço de código (delimitado pelo "
-"par de funções <citerefentry><refentrytitle>critical_enter</"
-"refentrytitle><manvolnum>9</manvolnum> </citerefentry> e "
-"<citerefentry><refentrytitle>critical_exit</refentrytitle><manvolnum>9</"
-"manvolnum></citerefentry>, onde é garantido que a preempção não aconteça "
-"(até que o código protegido seja totalmente executado) Isso pode substituir "
-"um bloqueio efetivamente, mas deve ser usado com cuidado para não perder "
-"toda a vantagem essa preempção traz."
+"O kernel do FreeBSD foi tornado preemptivo principalmente para lidar com "
+"threads de interrupção. Na verdade, para evitar latência alta de "
+"interrupção, threads de prioridade de tempo compartilhado podem ser "
+"preemptadas por threads de interrupção (assim, elas não precisam esperar "
+"para serem agendadas como no caminho normal). No entanto, a preempção "
+"introduz novos pontos de corrida que também precisam ser tratados. "
+"Frequentemente, para lidar com a preempção, a coisa mais simples a se fazer "
+"é desabilitá-la completamente. Uma seção crítica define um trecho de código ("
+"delimitado pelo par de funções `critical_enter` e `critical_exit`) onde a "
+"preempção é garantida de não ocorrer (até que o código protegido seja "
+"totalmente executado). Isso muitas vezes pode substituir efetivamente um "
+"bloqueio, mas deve ser usado com cuidado para não perder todas as vantagens "
+"que a preempção traz."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:571
@@ -1842,7 +1839,6 @@ msgstr "sched_pin/sched_unpin"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:577
-#, fuzzy
 msgid ""
 "Another way to deal with preemption is the `sched_pin()` interface.  If a "
 "piece of code is closed in the `sched_pin()` and `sched_unpin()` pair of "
@@ -1852,14 +1848,14 @@ msgid ""
 "we assume other threads will not change those data.  The latter condition "
 "will determine a critical section as a too strong condition for our code."
 msgstr ""
-"Outra maneira de lidar com a preempção é a interface <function>sched_pin()</"
-"function>. Se um trecho de código é fechado no par de funções "
-"<function>sched_pin()</function> e <function>sched_unpin()</function>, é "
-"garantido que a respectiva thread, mesmo que possa ser antecipada, sempre "
-"ser executada na mesma CPU. Fixar é muito eficaz no caso particular quando "
-"temos que acessar por dados do cpu e assumimos que outras threads não irão "
-"alterar esses dados. A última condição determinará uma seção crítica como "
-"uma condição muito forte para o nosso código."
+"Outra forma de lidar com a preempção é a interface `sched_pin()`. Se um "
+"trecho de código é envolvido pelas funções `sched_pin()` e `sched_unpin()`, "
+"é garantido que a respectiva thread, mesmo que possa ser preemptada, será "
+"sempre executada na mesma CPU. Fixar (pinning) é muito efetivo no caso "
+"particular em que precisamos acessar dados específicos de cada CPU e "
+"assumimos que outras threads não alterarão esses dados. A última condição "
+"determinará uma seção crítica como uma condição muito rigorosa para nosso "
+"código."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:579
@@ -1869,7 +1865,6 @@ msgstr "sched_bind/sched_unbind"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:584
-#, fuzzy
 msgid ""
 "`sched_bind` is an API used in order to bind a thread to a particular CPU "
 "for all the time it executes the code, until a `sched_unbind` function call "
@@ -1879,15 +1874,14 @@ msgid ""
 "`sched_bind` and `sched_unbind` manipulate internal scheduler structures, "
 "they need to be enclosed in `sched_lock` acquisition/releasing when used."
 msgstr ""
-"<function>sched_bind</function> é uma API usada para vincular uma thread a "
-"uma CPU em particular durante todo o tempo em que ele executa o código, até "
-"que uma chamada de função <function>sched_unbind</function> não a "
-"desvincule. Esse recurso tem um papel importante em situações em que você "
-"não pode confiar no estado atual das CPUs (por exemplo, em estágios iniciais "
-"de inicialização), já que você deseja evitar que sua thread migre em CPUs "
-"inativas. Como <function>sched_bind</function> e <function>sched_unbind</"
-"function> manipulam as estruturas internas do agendador, elas precisam estar "
-"entre a aquisição/liberação de <function>sched_lock</function> quando usadas."
+"O `sched_bind` é uma API usada para vincular uma thread a uma CPU específica "
+"durante todo o tempo em que ela executa o código, até que uma chamada da "
+"função `sched_unbind` a desvincule. Essa funcionalidade desempenha um papel "
+"importante em situações em que você não pode confiar no estado atual das "
+"CPUs (por exemplo, nas primeiras etapas de inicialização), pois deseja "
+"evitar que sua thread migre para CPUs inativas. Como o `sched_bind` e o "
+"`sched_unbind` manipulam estruturas internas do escalonador, eles devem ser "
+"envolvidos na aquisição/liberação do `sched_lock` ao serem usados."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:586
@@ -1897,7 +1891,6 @@ msgstr "Estrutura Proc"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:592
-#, fuzzy
 msgid ""
 "Various emulation layers sometimes require some additional per-process "
 "data.  It can manage separate structures (a list, a tree etc.) containing "
@@ -1906,17 +1899,16 @@ msgid ""
 "`p_emuldata`, which is a void pointer to some emulation layer specific "
 "data.  This `proc` entry is protected by the proc mutex."
 msgstr ""
-"Várias camadas de emulação exigem alguns dados adicionais por processo. Ele "
-"pode gerenciar estruturas separadas (uma lista, uma árvore etc.) contendo "
-"esses dados para cada processo, mas isso tende a ser lento e consumir "
-"memória. Para resolver este problema, a estrutura <literal>proc</literal> do "
-"FreeBSD contém <literal>p_emuldata</literal>, que é um ponteiro vazio para "
-"alguns dados específicos da camada de emulação. Esta entrada <literal>proc</"
-"literal> é protegida pelo mutex proc."
+"Em algumas camadas de emulação, às vezes é necessário ter dados adicionais "
+"específicos para cada processo. Pode-se gerenciar estruturas separadas (como "
+"uma lista, uma árvore etc.) que contenham esses dados para cada processo, "
+"mas isso pode ser lento e consumir muita memória. Para resolver esse "
+"problema, a estrutura `proc` do FreeBSD contém o campo `p_emuldata`, que é "
+"um ponteiro vazio para dados específicos da camada de emulação. Essa entrada "
+"`proc` é protegida pelo mutex do processo."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:597
-#, fuzzy
 msgid ""
 "The FreeBSD `proc` structure contains a `p_sysent` entry that identifies, "
 "which ABI this process is running.  In fact, it is a pointer to the "
@@ -1925,13 +1917,12 @@ msgid ""
 "effectively determine whether the process belongs to our emulation layer.  "
 "The code typically looks like:"
 msgstr ""
-"A estrutura <literal>proc</literal> do FreeBSD contém uma entrada "
-"<literal>p_sysent</literal> que identifica, qual ABI este processo está "
-"executando. Na verdade, é um ponteiro para o <literal>sysentvec</literal> "
-"descrito acima. Portanto, comparando esse ponteiro com o endereço em que a "
-"estrutura <literal>sysentvec</literal> da ABI especificada está armazenada, "
-"podemos efetivamente determinar se o processo pertence à nossa camada de "
-"emulação. O código normalmente se parece com:"
+"A estrutura `proc` do FreeBSD contém uma entrada `p_sysent` que identifica "
+"qual ABI esse processo está executando. Na verdade, é um ponteiro para a "
+"estrutura `sysentvec` descrita anteriormente. Portanto, ao comparar esse "
+"ponteiro com o endereço onde a estrutura `sysentvec` para a ABI específica "
+"está armazenada, podemos determinar efetivamente se o processo pertence à "
+"nossa camada de emulação. O código geralmente se parece com:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:602
@@ -2210,13 +2201,13 @@ msgstr "Escrevendo syscall"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:687
-#, fuzzy
 msgid ""
 "Every syscall implemented in the Linuxulator must have its prototype with "
 "various flags in [.filename]#syscalls.master#.  The form of the file is:"
 msgstr ""
-"Cada syscall implementada no Linuxulator deve ter seu protótipo com vários "
-"flags no <filename>syscalls.master</filename>. A forma do arquivo é:"
+"Cada chamada de sistema implementada no Linuxulator deve ter seu protótipo "
+"com várias flags no arquivo `syscalls.master`. A estrutura do arquivo é a "
+"seguinte:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:695
@@ -2401,7 +2392,6 @@ msgstr "Linux(R) sendsig"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:760
-#, fuzzy
 msgid ""
 "This routine first checks whether the signal has been installed with a "
 "`SA_SIGINFO` in which case it calls `linux_rt_sendsig` routine instead.  "
@@ -2413,16 +2403,16 @@ msgid ""
 "Finally, it copies out the signal context to the userspace and prepares "
 "context for the actual signal handler to run."
 msgstr ""
-"Esta rotina primeiro verifica se o signal foi instalado com um "
-"<literal>SA_SIGINFO</literal>, caso em que chama a rotina "
-"<function>linux_rt_sendsig</function>. Além disso, ele aloca (ou reutiliza "
-"um contexto de identificador de sinal já existente) e cria uma lista de "
-"argumentos para o manipulador de signal. Ele traduz o número do signal "
-"baseado na tabela de tradução do signal, atribui um manipulador, traduz o "
-"sigset. Em seguida, ele salva o contexto para a rotina <function>sigreturn</"
-"function> (vários registradores, número da trap traduzida e máscara de "
-"signal). Finalmente, copia o contexto do signal para o espaço do usuário e "
-"prepara o contexto para que o manipulador de sinal real seja executado."
+"Essa rotina primeiro verifica se o sinal foi instalado com `SA_SIGINFO`, "
+"caso contrário, ela chama a rotina `linux_rt_sendsig`. Além disso, aloca (ou "
+"reutiliza um já existente) o contexto do manipulador de sinal, em seguida, "
+"constrói uma lista de argumentos para o manipulador de sinal. Traduz o "
+"número do sinal com base na tabela de tradução de sinais, atribui um "
+"manipulador e traduz o conjunto de sinais. Em seguida, salva o contexto para "
+"a rotina `sigreturn` (diversos registradores, número de interrupção "
+"traduzido e máscara de sinais). Por fim, copia o contexto do sinal para o "
+"espaço do usuário e prepara o contexto para a execução real do manipulador "
+"de sinal."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:762
@@ -2453,15 +2443,14 @@ msgstr "linux_sigreturn"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:774
-#, fuzzy
 msgid ""
 "This syscall is used for return from the signal handler.  It does some "
 "security checks and restores the original process context.  It also unmasks "
 "the signal in process signal mask."
 msgstr ""
-"Esta syscall é usada para retornar do manipulador de sinal. Ela faz algumas "
-"verificações de segurança e restaura o contexto do processo original. Também "
-"desmascara o sinal na máscara de sinal do processo."
+"Essa chamada de sistema é usada para retornar do manipulador de sinal. Ela "
+"realiza algumas verificações de segurança e restaura o contexto original do "
+"processo. Além disso, desativa o sinal na máscara de sinais do processo."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:776
@@ -2610,7 +2599,6 @@ msgstr "Correção de pilha"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:831
-#, fuzzy
 msgid ""
 "The RTLD run-time link-editor expects so called AUX tags on stack during an "
 "`execve` so a fixup must be done to ensure this.  Of course, every RTLD "
@@ -2619,14 +2607,15 @@ msgid ""
 "copies out AUX tags to the stack and adjusts the stack of the user space "
 "process to point right after those tags.  So RTLD works in a smart way."
 msgstr ""
-"O editor de links em tempo de execução do RTLD espera as chamadas tags AUX "
-"na pilha durante uma <function>execve</function>, portanto, uma correção "
-"deve ser feita para garantir isso. Naturalmente, cada sistema RTLD é "
-"diferente, portanto, a camada de emulação deve fornecer sua própria rotina "
-"de correção de pilha para fazer isso. O mesmo acontece com o Linuxulator. O "
-"<function>elf_linux_fixup</function> simplesmente copia tags AUX para a "
-"pilha e ajusta a pilha do processo de espaço do usuário para apontar logo "
-"após essas tags. Então, a RTLD funciona de maneira inteligente."
+"O link-editor em tempo de execução RTLD espera que as chamadas AUX estejam "
+"presentes na pilha durante um `execve`, então é necessário fazer um ajuste "
+"para garantir isso. Naturalmente, cada sistema RTLD é diferente, então a "
+"camada de emulação deve fornecer sua própria rotina de ajuste da pilha para "
+"realizar isso. Isso também se aplica ao Linuxulator. A função "
+"`elf_linux_fixup` simplesmente copia as chamadas AUX para a pilha e ajusta o "
+"ponteiro da pilha do processo de espaço de usuário para apontar "
+"imediatamente após essas chamadas. Dessa forma, o RTLD funciona de maneira "
+"inteligente."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:833
@@ -2837,15 +2826,14 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:901
-#, fuzzy
 msgid ""
 "Every NPTL thread is created by a call to the `clone` syscall with a "
 "specific set of flags (more in the next subsection).  The NPTL implements "
 "strict 1:1 threading."
 msgstr ""
-"Cada threading NPTL é criada por uma chamada a syscall <function>clone</"
-"function> com um conjunto específico de flags (mais na próxima subseção). O "
-"NPTL implementa segmentação rígida de 1:1."
+"Cada thread NPTL é criado por meio de uma chamada ao syscall `clone` com um "
+"conjunto específico de flags (mais detalhes na próxima subseção). O NPTL "
+"implementa uma estrita relação de threading 1:1."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:903
