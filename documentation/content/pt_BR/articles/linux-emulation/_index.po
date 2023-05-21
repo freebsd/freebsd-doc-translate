@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2023-05-21 09:46+0000\n"
+"PO-Revision-Date: 2023-05-21 09:59+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articleslinux-emulation_index/pt_BR/>\n"
@@ -940,6 +940,18 @@ msgid ""
 "implementation.  The semantic is a bit fuzzy as there is no single flag "
 "telling the syscall to create a thread."
 msgstr ""
+"Na versão 2.6, o sistema operacional Linux(R) redefiniu algumas das "
+"primitivas tradicionais do UNIX(R), principalmente PID, TID e thread. O PID "
+"não é mais definido como único para cada processo, portanto, para alguns "
+"processos (threads), a função man:getppid[2] retorna o mesmo valor. A "
+"identificação única de um processo é fornecida pelo TID. Isso ocorre porque "
+"o _NPTL_ (New POSIX(R) Thread Library) define threads como processos normais "
+"(chamados de 1:1 threading). A criação de um novo processo no Linux(R) 2.6 "
+"ocorre usando a chamada de sistema `clone` (as variantes de fork são "
+"reimplementadas usando essa chamada). Essa chamada clone define um conjunto "
+"de flags que afetam o comportamento do processo clonado em relação à "
+"implementação de threads. A semântica é um pouco complexa, pois não há uma "
+"única flag que indique à chamada de sistema para criar uma thread."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:329
@@ -1019,6 +1031,15 @@ msgid ""
 "TLS handling.  The `CLONE_*_*TID` set of flags sets/clears user supplied "
 "address to TID or 0."
 msgstr ""
+"A `CLONE_PARENT` define o pai real como o pai do chamador. Isso é útil para "
+"threads, porque se a thread A cria a thread B, queremos que a thread B tenha "
+"o mesmo pai do grupo de threads inteiro. A `CLONE_THREAD` faz exatamente a "
+"mesma coisa que `CLONE_PARENT`, `CLONE_VM` e `CLONE_SIGHAND`, reescreve o "
+"PID para ser o mesmo do chamador, define o sinal de saída como nenhum (none) "
+"e entra no grupo de threads. A `CLONE_SETTLS` configura as entradas do GDT ("
+"Global Descriptor Table) para manipulação de TLS (Thread Local Storage). O "
+"conjunto de flags `CLONE_*_*TID` define ou limpa o endereço fornecido pelo "
+"usuário para o TID ou 0."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:352
@@ -1050,6 +1071,11 @@ msgid ""
 "is passed in) also parent is shared for all processes forming this threaded "
 "program."
 msgstr ""
+"Para programas não-threaded, o PID e TID são os mesmos. Para programas "
+"threaded, o PID e TID da primeira thread são os mesmos, e cada thread criada "
+"compartilha o mesmo PID e recebe um TID único (porque `CLONE_THREAD` é "
+"passado), também o pai é compartilhado por todos os processos que formam "
+"esse programa threaded."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:357
@@ -1057,18 +1083,20 @@ msgid ""
 "The code that implements man:pthread_create[3] in NPTL defines the clone "
 "flags like this:"
 msgstr ""
+"O código que implementa o man:pthread_create[3] em NPTL define as flags de "
+"clone da seguinte forma:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:361
 #, no-wrap
 msgid "int clone_flags = (CLONE_VM | CLONE_FS | CLONE_FILES | CLONE_SIGNAL\n"
-msgstr ""
+msgstr "int clone_flags = (CLONE_VM | CLONE_FS | CLONE_FILES | CLONE_SIGNAL\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:363
 #, no-wrap
 msgid " | CLONE_SETTLS | CLONE_PARENT_SETTID\n"
-msgstr ""
+msgstr " | CLONE_SETTLS | CLONE_PARENT_SETTID\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:366
@@ -1077,6 +1105,8 @@ msgid ""
 "| CLONE_CHILD_CLEARTID | CLONE_SYSVSEM\n"
 "#if __ASSUME_NO_CLONE_DETACHED == 0\n"
 msgstr ""
+"| CLONE_CHILD_CLEARTID | CLONE_SYSVSEM\n"
+"#if __ASSUME_NO_CLONE_DETACHED == 0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:369
@@ -1085,17 +1115,19 @@ msgid ""
 "| CLONE_DETACHED\n"
 "#endif\n"
 msgstr ""
+"| CLONE_DETACHED\n"
+"#endif\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:371
 #, no-wrap
 msgid "| 0);\n"
-msgstr ""
+msgstr "| 0);\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:374
 msgid "The `CLONE_SIGNAL` is defined like"
-msgstr ""
+msgstr "A `CLONE_SIGNAL` é definida como"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:378
@@ -1216,6 +1248,11 @@ msgid ""
 "provide full emulation.  The UNIX(R) API consists of a set of syscalls, "
 "which are usually self contained and do not affect some global kernel state."
 msgstr ""
+"Esta tese de mestrado trata da emulação do UNIX(R) em UNIX(R), que é "
+"exatamente o caso em que apenas uma camada fina de tradução é suficiente "
+"para fornecer uma emulação completa. A API do UNIX(R) consiste em um "
+"conjunto de syscalls, que geralmente são autônomas e não afetam algum estado "
+"global do kernel."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:412
