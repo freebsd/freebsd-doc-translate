@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2023-05-21 12:49+0000\n"
+"PO-Revision-Date: 2023-05-21 13:27+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articleslinux-emulation_index/pt_BR/>\n"
@@ -2935,24 +2935,31 @@ msgid ""
 "this structure to the list of threads.  The `linux_emuldata_shared` "
 "structure looks like:"
 msgstr ""
+"O PID é usado para identificar o processo FreeBSD que se conecta a esta "
+"estrutura. Os campos `child_se_tid` e `child_clear_tid` são usados para "
+"copiar o endereço TID quando um processo termina ou é criado. O ponteiro "
+"`shared` aponta para uma estrutura compartilhada entre as threads. A "
+"variável `pdeath_signal` identifica o sinal de término do pai e o ponteiro "
+"`threads` é usado para vincular essa estrutura à lista de threads. A "
+"estrutura `linux_emuldata_shared` se parece com:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:929
 #, no-wrap
 msgid "struct linux_emuldata_shared {\n"
-msgstr ""
+msgstr "struct linux_emuldata_shared {\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:931
 #, no-wrap
 msgid "  int refs;\n"
-msgstr ""
+msgstr "  int refs;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:933
 #, no-wrap
 msgid "  pid_t group_pid;\n"
-msgstr ""
+msgstr "  pid_t group_pid;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:936
@@ -2961,6 +2968,8 @@ msgid ""
 "  LIST_HEAD(, linux_emuldata) threads; /* head of list of linux threads */\n"
 "};\n"
 msgstr ""
+"  LIST_HEAD(, linux_emuldata) threads; /* head of list of linux threads */\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:941
@@ -2970,6 +2979,11 @@ msgid ""
 "TGID) of the whole process ( = thread group).  The `threads` pointer is the "
 "head of the list of threads in the process."
 msgstr ""
+"O campo `refs` é um contador de referências usado para determinar quando "
+"podemos liberar a estrutura para evitar vazamentos de memória. O campo "
+"`group_pid` é usado para identificar o PID ( = TGID) do processo completo ( "
+"= grupo de threads). O ponteiro `threads` é a cabeça da lista de threads no "
+"processo."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:944
@@ -2977,6 +2991,8 @@ msgid ""
 "The `linux_emuldata` structure can be obtained from the process using "
 "`em_find`.  The prototype of the function is:"
 msgstr ""
+"A estrutura `linux_emuldata` pode ser obtida do processo usando `em_find`. O "
+"protótipo da função é:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:948
@@ -2991,6 +3007,10 @@ msgid ""
 "locked parameter determines whether we want to lock or not.  The accepted "
 "values are `EMUL_DOLOCK` and `EMUL_DOUNLOCK`.  More about locking later."
 msgstr ""
+"Aqui, `proc` é o processo do qual queremos obter a estrutura emuldata e o "
+"parâmetro `locked` determina se queremos realizar o bloqueio ou não. Os "
+"valores aceitos são `EMUL_DOLOCK` e `EMUL_DOUNLOCK`. Mais sobre bloqueio "
+"será explicado posteriormente."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:955
@@ -3009,6 +3029,14 @@ msgid ""
 "to userland we present `PID = shared -> group_pid` and `TID = proc -> "
 "p_pid`.  The PID member of `linux_emuldata structure` is a FreeBSD PID."
 msgstr ""
+"Devido à diferença na interpretação do conceito de PID e TID entre o FreeBSD "
+"e o Linux(R), precisamos fazer uma tradução para conciliar essas visões. "
+"Fazemos isso através da manipulação de PIDs. Isso significa que simulamos o "
+"que seria um PID (=TGID) e TID (=PID) entre o kernel e o espaço do usuário. "
+"A regra geral é que, no kernel (no Linuxulator), PID = PID e TGID = shared-"
+">group_pid, e no espaço do usuário apresentamos `PID = shared->group_pid` e `"
+"TID = proc->p_pid`. O membro PID da estrutura `linux_emuldata` é um PID do "
+"FreeBSD."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:966
@@ -3017,6 +3045,9 @@ msgid ""
 "TGID respectively.  In copyout of TIDs in `child_clear_tid` and "
 "`child_set_tid` we copy out FreeBSD PID."
 msgstr ""
+"A situação acima afeta principalmente as chamadas de sistema getpid, getppid "
+"e gettid. Nelas, utilizamos o PID/TGID respectivamente. Na cópia de TIDs em "
+"`child_clear_tid` e `child_set_tid`, copiamos o PID do FreeBSD."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:968
