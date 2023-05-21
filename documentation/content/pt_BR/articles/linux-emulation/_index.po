@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-08-07 10:21-0300\n"
-"PO-Revision-Date: 2023-05-21 15:08+0000\n"
+"PO-Revision-Date: 2023-05-21 15:24+0000\n"
 "Last-Translator: Edson Brandi <ebrandi@freebsd.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/articleslinux-emulation_index/pt_BR/>\n"
@@ -3278,7 +3278,6 @@ msgstr "mov %edx,%gs:0x10\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1062
-#, fuzzy
 msgid ""
 "This will load the content of the `%edx` register into memory location "
 "0x1244.  Some segment registers have a special use, for example `%cs` is "
@@ -3288,15 +3287,14 @@ msgid ""
 "can store more types of segments.  LDT can be per process.  Both tables "
 "define up to 8191 entries."
 msgstr ""
-"Isso carregará o conteúdo do registro <varname>% edx</varname> na "
-"localização da memória 0x1244. Alguns registradores de segmento têm um uso "
-"especial, por exemplo <varname>% cs</varname> é usado para segmento de "
-"código e <varname>% ss</varname> é usado para o segmento de pilha, mas "
-"<varname>% fs</varname> e <varname>% gs</varname> geralmente não são usados. "
-"Os segmentos são armazenados em uma tabela GDT global ou em uma tabela LDT "
-"local. O LDT é acessado por meio de uma entrada no GDT. O LDT pode armazenar "
-"mais tipos de segmentos. LDT pode ser por processo. Ambas as tabelas definem "
-"até 8191 entradas."
+"Isso irá carregar o conteúdo do registro `%edx` no endereço de memória "
+"0x1244. Alguns registradores de segmento têm um uso especial, por exemplo, "
+"`%cs` é usado para o segmento de código e `%ss` é usado para o segmento de "
+"pilha, mas `%fs` e `%gs` geralmente não são usados. Os segmentos são "
+"armazenados em uma tabela global GDT ou em uma tabela local LDT. A LDT é "
+"acessada por meio de uma entrada na GDT. A LDT pode armazenar mais tipos de "
+"segmentos. A LDT pode ser por processo. Ambas as tabelas definem até 8191 "
+"entradas."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1064
@@ -3405,7 +3403,6 @@ msgstr "amd64"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1101
-#, fuzzy
 msgid ""
 "The amd64 implementation is similar to the i386 one but there was initially "
 "no 32bit segment descriptor used for this purpose (hence not even native "
@@ -3416,12 +3413,13 @@ msgid ""
 "slightly."
 msgstr ""
 "A implementação do amd64 é semelhante à do i386, mas inicialmente não havia "
-"um descritor de segmento de 32 bits usado para esse propósito (por isso nem "
-"usuários nativos de TLB de 32 bits trabalhavam), então tivemos que adicionar "
-"esse segmento e implementar seu carregamento em cada troca de contexto "
-"(quando a flag sinalizando uso de 32 bits está definida). Além disso, o "
-"carregamento de TLS é exatamente o mesmo, apenas os números de segmento são "
-"diferentes e o formato do descritor e o carregamento diferem ligeiramente."
+"um descritor de segmento de 32 bits usado para esse propósito (portanto, nem "
+"mesmo os usuários nativos de TLS de 32 bits funcionavam), então tivemos que "
+"adicionar esse segmento e implementar seu carregamento em cada troca de "
+"contexto (quando uma flag sinalizando o uso de 32 bits é definida). Além "
+"disso, o carregamento de TLS é exatamente o mesmo, apenas os números de "
+"segmento são diferentes e o formato do descritor e o carregamento diferem um "
+"pouco."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1103
@@ -3437,7 +3435,6 @@ msgstr "Introdução à sincronização"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1116
-#, fuzzy
 msgid ""
 "Threads need some kind of synchronization and POSIX(R) provides some of "
 "them: mutexes for mutual exclusion, read-write locks for mutual exclusion "
@@ -3458,27 +3455,27 @@ msgid ""
 "user), this is in-kernel stuff but it shows clearly how important the "
 "performance of synchronization primitives is."
 msgstr ""
-"Threads precisam de algum tipo de sincronização e <trademark class="
-"\"registered\">POSIX</trademark> fornece alguns deles: mutexes para exclusão "
-"mútua, bloqueios de leitura/gravação para exclusão mútua com relação de "
-"polarização de leituras e gravações e variáveis de condição para sinalizar "
-"um mudança de status. É interessante observar que a API de thread <trademark "
-"class=\"registered\">POSIX</trademark> não tem suporte para semáforos. Essas "
-"implementações de rotinas de sincronização são altamente dependentes do tipo "
-"de suporte a threading que temos. No modelo puro 1:M (espaço de usuário), a "
-"implementação pode ser feita apenas no espaço do usuário e, portanto, ser "
-"muito rápida (as variáveis de condição provavelmente serão implementadas "
-"usando sinais, ou seja, não rápido) e simples. No modelo 1:1, a situação "
-"também é bastante clara - as threading devem ser sincronizadas usando as "
-"facilidades do kernel (o que é muito lento porque uma syscall deve ser "
-"executada). O cenário M:N misto combina apenas a primeira e a segunda "
-"abordagem ou depende apenas do kernel. A sincronização de threads é uma "
-"parte vital da programação ativada por threads e seu desempenho pode afetar "
-"muito o programa resultante. Benchmarks recentes no sistema operacional "
-"FreeBSD mostraram que uma implementação sx_lock melhorada gerou 40% de "
-"aceleração no <firstterm>ZFS</firstterm> (um usuário sx pesado), isso é algo "
-"in-kernel, mas mostra claramente quão importante é o desempenho das "
-"primitivas de sincronização. ."
+"As threads necessitam de algum tipo de sincronização, o POSIX(R) fornece "
+"alguns mecanismos de sincronização, como mutexes para exclusão mútua, read-"
+"write locks para exclusão mútua com uma proporção enviesada de leituras e "
+"escritas, e variáveis de condição para sinalizar mudanças de status. É "
+"interessante notar que a API de threads POSIX(R) não oferece suporte para "
+"semáforos. A implementação dessas rotinas de sincronização depende "
+"fortemente do tipo de suporte a threading disponível. Em um modelo puro 1:M "
+"(userspace), a implementação pode ser feita exclusivamente no espaço de "
+"usuário, resultando em uma abordagem rápida e simples (embora as variáveis "
+"de condição possam ser implementadas usando sinais, o que pode ser mais "
+"lento). Em um modelo 1:1, as threads devem ser sincronizadas usando recursos "
+"do kernel, o que pode ser mais lento devido à necessidade de chamadas de "
+"sistema. O cenário misto M:N combina as abordagens anteriormente mencionadas "
+"ou depende exclusivamente do kernel. A sincronização de threads é uma parte "
+"vital da programação com threads, e seu desempenho pode afetar "
+"significativamente o programa resultante. Testes recentes no sistema "
+"operacional FreeBSD demonstraram um aumento de desempenho de 40% na "
+"implementação aprimorada do sx_lock no _ZFS_ (que faz uso intensivo de "
+"primitivas de sincronização). Embora esse exemplo se refira a operações no "
+"kernel, ele destaca a importância de primitivas de sincronização eficientes "
+"para o desempenho geral."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1120
@@ -3841,7 +3838,6 @@ msgstr "futex_get / futex_put"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1248
-#, fuzzy
 msgid ""
 "A futex is obtained using the `futex_get` function, which searches a linear "
 "list of futexes and returns the found one or creates a new futex.  When "
@@ -3849,11 +3845,10 @@ msgid ""
 "decreases a reference counter of the futex and if the refcount reaches zero "
 "it is released."
 msgstr ""
-"Um futex é obtido usando a função <function>futex_get</function>, que busca "
-"uma lista linear de futexes e retorna o encontrado ou cria um novo futex. Ao "
-"liberar um futex do uso, chamamos a função <function>futex_put</function>, "
-"que diminui um contador de referência do futex e, se o refcount chegar a "
-"zero, ele é liberado."
+"Um futex é obtido usando a função `futex_get`, que busca em uma lista linear "
+"de futexes e retorna o encontrado ou cria um novo futex. Ao liberar um futex "
+"do uso, chamamos a função `futex_put`, que diminui um contador de referência "
+"do futex e, se o contador de referência chegar a zero, ele é liberado."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1250
@@ -3939,17 +3934,16 @@ msgstr "operação atômica futex"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1282
-#, fuzzy
 msgid ""
 "The atomic operation takes two parameters `encoded_op` and `uaddr`.  The "
 "encoded operation encodes the operation itself, comparing value, operation "
 "argument, and comparing argument.  The pseudocode for the operation is like "
 "this one:"
 msgstr ""
-"A operação atômica usa dois parâmetros <varname>encoded_op</varname> e "
-"<varname>uaddr</varname>. A operação codificada, codifica a operação em si, "
-"comparando valor, argumento de operação e argumento de comparação. O "
-"pseudocódigo da operação é como este:"
+"A operação atômica recebe dois parâmetros: `encoded_op` e `uaddr`. A "
+"operação codificada codifica a própria operação, o valor de comparação, o "
+"argumento da operação e o argumento de comparação. O pseudocódigo para a "
+"operação é semelhante a este:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1287
@@ -3982,16 +3976,14 @@ msgstr "Bloqueio Futex"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1297
-#, fuzzy
 msgid ""
 "Futex implementation uses two lock lists protecting `sx_lock` and global "
 "locks (either Giant or another `sx_lock`).  Every operation is performed "
 "locked from the start to the very end."
 msgstr ""
-"A implementação do Futex usa duas listas de lock que protegndo "
-"<function>sx_lock</function> e locks globais (Giant ou outra "
-"<function>sx_lock</function>). Cada operação é executada bloqueada desde o "
-"início até o final."
+"A implementação do futex utiliza duas listas de bloqueio para proteger o "
+"`sx_lock` e os bloqueios globais (seja Giant ou outro `sx_lock`). Cada "
+"operação é realizada com bloqueio desde o início até o final."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1299
@@ -4146,7 +4138,6 @@ msgstr "openat() --> kern_openat() --> vn_open() -> namei()\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1354
-#, fuzzy
 msgid ""
 "For this reason `kern_open` and `vn_open` must be altered to incorporate the "
 "additional `dirfd` parameter.  No compat layer is created for those because "
@@ -4154,12 +4145,12 @@ msgid ""
 "This general implementation enables FreeBSD to implement their own *at "
 "syscalls.  This is being discussed right now."
 msgstr ""
-"Por esse motivo, <function>kern_open</function> e <function>vn_open</"
-"function> devem ser alterados para incorporar o parâmetro <varname>dirfd</"
-"varname> adicional. Nenhuma camada de compatibilidade é criada para esses, "
-"porque não há muitos usuários disso e os usuários podem ser facilmente "
-"convertidos. Esta implementação geral permite ao FreeBSD implementar suas "
-"próprias *at syscalls. Isso está sendo discutido agora."
+"Por esse motivo, `kern_open` e `vn_open` devem ser alterados para incorporar "
+"o parâmetro adicional `dirfd`. Nenhuma camada de compatibilidade é criada "
+"para essas funções porque não há muitos usuários desse recurso e os usuários "
+"existentes podem ser facilmente convertidos. Essa implementação geral "
+"permite que o FreeBSD implemente seus próprios syscalls *at. Isso está sendo "
+"discutido atualmente."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1356
@@ -4169,7 +4160,6 @@ msgstr "Ioctl"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1370
-#, fuzzy
 msgid ""
 "The ioctl interface is quite fragile due to its generality.  We have to bear "
 "in mind that devices differ between Linux(R) and FreeBSD so some care must "
@@ -4191,30 +4181,28 @@ msgid ""
 "plan is to port those from NetBSD.  The trend is to use Linux(R) ioctls even "
 "in the native FreeBSD drivers because of the easy porting of applications."
 msgstr ""
-"A interface ioctl é bastante frágil devido à sua generalidade. Nós temos que "
-"ter em mente que os dispositivos diferem entre <trademark class=\"registered"
-"\">Linux</trademark> e FreeBSD, então alguns cuidados devem ser aplicados "
-"para fazer o trabalho de emulação de ioctl corretamente. O manuseio ioctl é "
-"implementado em <filename>linux_ioctl.c</filename>, onde a função "
-"<function>linux_ioctl</function> é definida. Esta função simplesmente itera "
-"sobre conjuntos de manipuladores ioctl para encontrar um manipulador que "
-"implementa um dado comando. A syscall ioctl tem três parâmetros, o file "
-"descriptor, comando e um argumento. O comando é um número de 16 bits, que, "
-"em teoria, é dividido em alta classe determinante de 8 bits do comando ioctl "
-"e 8 bits baixos, que são o comando real dentro do conjunto dado. A emulação "
-"aproveita essa divisão. Implementamos manipuladores para cada conjunto, como "
-"<function>sound_handler</function> ou <function>disk_handler</function>. "
-"Cada manipulador tem um comando máximo e um comando mínimo definido, que é "
-"usado para determinar qual manipulador é usado. Existem pequenos problemas "
-"com esta abordagem porque <trademark class=\"registered\">Linux</trademark> "
-"não usa a divisão definida consistentemente, por isso as ioctls para um "
-"conjunto diferente estão dentro de um conjunto ao qual não devem pertencer "
-"(ioctls genéricos SCSI dentro do cdrom conjunto, etc.). O FreeBSD atualmente "
-"não implementa muitos ioctls do <trademark class=\"registered\">Linux</"
-"trademark> (comparado ao NetBSD, por exemplo), mas o plano é portar os do "
-"NetBSD. A tendência é usar o ioctls <trademark class=\"registered\">Linux</"
-"trademark> mesmo nos drivers nativos do FreeBSD, devido à fácil "
-"portabilidade dos aplicativos."
+"A interface ioctl é bastante frágil devido à sua generalidade. Devemos ter "
+"em mente que os dispositivos diferem entre o Linux(R) e o FreeBSD, então é "
+"necessário ter cuidado para garantir que a emulação do ioctl funcione "
+"corretamente. O tratamento do ioctl é implementado em [.filename]#linux_ioctl"
+".c#, onde a função `linux_ioctl` é definida. Essa função simplesmente itera "
+"sobre conjuntos de manipuladores de ioctl para encontrar um manipulador que "
+"implemente um determinado comando. A chamada de sistema ioctl possui três "
+"parâmetros: o descritor de arquivo, o comando e um argumento. O comando é um "
+"número de 16 bits, que teoricamente é dividido em 8 bits superiores que "
+"determinam a classe do comando ioctl e 8 bits inferiores, que são o comando "
+"real dentro do conjunto dado. A emulação aproveita essa divisão. "
+"Implementamos manipuladores para cada conjunto, como `sound_handler` ou "
+"`disk_handler`. Cada manipulador possui um comando máximo e um comando "
+"mínimo definido, que é usado para determinar qual manipulador será usado. "
+"Existem pequenos problemas com essa abordagem porque o Linux(R) não usa a "
+"divisão de conjunto de forma consistente, então às vezes os ioctl de um "
+"conjunto diferente estão dentro de um conjunto ao qual não deveriam "
+"pertencer (ioctl genéricos do SCSI dentro do conjunto de cdrom, etc.). "
+"Atualmente, o FreeBSD não implementa muitos ioctl do Linux(R) (em comparação "
+"com o NetBSD, por exemplo), mas o plano é portá-los do NetBSD. A tendência é "
+"usar os ioctl do Linux(R) mesmo nos drivers nativos do FreeBSD devido à "
+"facilidade de portar aplicativos."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1372
@@ -4224,7 +4212,6 @@ msgstr "Depuração"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1379
-#, fuzzy
 msgid ""
 "Every syscall should be debuggable.  For this purpose we introduce a small "
 "infrastructure.  We have the ldebug facility, which tells whether a given "
@@ -4232,11 +4219,12 @@ msgid ""
 "LMSG and ARGS macros.  Those are used for altering a printable string for "
 "uniform debugging messages."
 msgstr ""
-"Cada syscall deve ser debugável. Para isso, introduzimos uma pequena infra-"
-"estrutura. Nós temos o recurso ldebug, que informa se uma dada syscall deve "
-"ser depurada (configurável através de um sysctl). Para impressão, temos as "
-"macros LMSG e ARGS. Essas são usadas para alterar uma string imprimível para "
-"mensagens uniformes de depuração."
+"Cada chamada de sistema deve ser passível de depuração. Para esse propósito, "
+"introduzimos uma pequena infraestrutura. Temos a facilidade ldebug, que "
+"indica se uma determinada chamada de sistema deve ser depurada (configurável "
+"através de um sysctl). Para impressão, temos as macros LMSG e ARGS. Essas "
+"macros são usadas para modificar uma string imprimível para mensagens de "
+"depuração uniformes."
 
 #. type: Title ==
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1381
@@ -4297,17 +4285,16 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1397
-#, fuzzy
 msgid ""
 "We hope to enable 2.6.16 emulation by default some time after FreeBSD 7.0 is "
 "released at least to expose the 2.6 emulation parts for some wider testing.  "
 "Once this is done we can switch to Fedora Core 6 linux_base, which is the "
 "ultimate plan."
 msgstr ""
-"Esperamos habilitar a emulação 2.6.16 por padrão algum tempo depois que o "
-"FreeBSD 7.0 for lançado pelo menos para expor as partes da emulação 2.6 para "
-"alguns testes mais amplos. Feito isso, podemos mudar para o Fedora Core 6 "
-"linux_base, que é o plano final."
+"Esperamos habilitar a emulação do 2.6.16 como padrão algum tempo depois do "
+"lançamento do FreeBSD 7.0, pelo menos para expor as partes de emulação 2.6 "
+"para um teste mais amplo. Uma vez feito isso, podemos mudar para o "
+"linux_base do Fedora Core 6, que é o plano final."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1399
@@ -4342,17 +4329,16 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1408
-#, fuzzy
 msgid ""
 "The other possible goal is to share our code with NetBSD and DragonflyBSD.  "
 "NetBSD has some support for 2.6 emulation but its far from finished and not "
 "really tested.  DragonflyBSD has expressed some interest in porting the 2.6 "
 "improvements."
 msgstr ""
-"O outro objetivo possível é compartilhar nosso código com o NetBSD e o "
+"Outro objetivo possível é compartilhar nosso código com o NetBSD e o "
 "DragonflyBSD. O NetBSD tem algum suporte para emulação 2.6, mas está longe "
-"de ser concluído e não foi realmente testado. O DragonflyBSD manifestou "
-"algum interesse em portar as melhorias do 2.6."
+"de estar completo e não foi realmente testado. O DragonflyBSD mostrou "
+"interesse em portar as melhorias do 2.6."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1413
@@ -4383,7 +4369,6 @@ msgstr "Eu colaborei neste projeto com (em ordem alfabética):"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1420
-#, fuzzy
 msgid "`{jhb}`"
 msgstr "`{jhb}`"
 
