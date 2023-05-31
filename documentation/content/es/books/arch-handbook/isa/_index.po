@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-09-03 21:28-0300\n"
-"PO-Revision-Date: 2023-04-23 20:23+0000\n"
+"PO-Revision-Date: 2023-05-31 21:16+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookisa_index/es/>\n"
@@ -2242,7 +2242,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:591
 msgid "B_WRITE - write from the memory to the ISA bus"
-msgstr ""
+msgstr "B_WRITE - escribe desde memoria hacia el bus ISA"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:592
@@ -2259,7 +2259,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:594
 msgid "addr - virtual address of the buffer"
-msgstr ""
+msgstr "addr - dirección virtual del búfer"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:595
@@ -2271,16 +2271,22 @@ msgid ""
 "transfer 2 bytes at a time. In case of an odd length the last byte will not "
 "be transferred."
 msgstr ""
+"nbytes - longitud del búfer. Debe ser menor o igual a 64KB. La longitud 0 no "
+"está permitida: el controlador DMA lo entenderá como 64KB mientras que el "
+"código del núcleo lo entenderá como 0 y eso tendría efectos impredecibles. "
+"Para los canales número 4 y superiores la longitud debe ser par porque estos "
+"canales transfieren 2 bytes cada vez. En caso de una longitud impar no se "
+"transmitirá el último byte."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:596
 msgid "chan - channel number"
-msgstr ""
+msgstr "chan - número de canal"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:597
 msgid "`void isa_dmadone(int flags, caddr_t addr, int nbytes, int chan)`"
-msgstr ""
+msgstr "`void isa_dmadone(int flags, caddr_t addr, int nbytes, int chan)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:599
@@ -2291,11 +2297,16 @@ msgid ""
 "`isa_dmastart()`. Flag B_RAW is permitted but it does not affect "
 "`isa_dmadone()` in any way."
 msgstr ""
+"Sincroniza la memoria después de que el dispositivo informe de que la "
+"transferencia ha finalizado. Si era una operación de lectura con un búfer de "
+"amortiguación entonces los datos se copiarán desde el búfer de amortiguación "
+"al búfer original. Los argumentos son los mismos que para `isa_dmastart()`. "
+"Se permite el flag B_RAW pero no afecta a `isa_dmadone()` en modo alguno."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:600
 msgid "`int isa_dmastatus(int channel_number)`"
-msgstr ""
+msgstr "`int isa_dmastatus(int channel_number)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:602
