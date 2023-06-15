@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-09-03 21:28-0300\n"
-"PO-Revision-Date: 2023-06-14 22:52+0000\n"
+"PO-Revision-Date: 2023-06-15 20:34+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookisa_index/es/>\n"
@@ -2409,6 +2409,8 @@ msgstr ""
 msgid ""
 "A typical probe routine starts with getting the device descriptor and unit:"
 msgstr ""
+"Una rutina de sondeo típica comienza obteniendo el descriptor y la unidad "
+"del dispositivo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:625
@@ -2419,6 +2421,10 @@ msgid ""
 "          int pnperror;\n"
 "          int error = 0;\n"
 msgstr ""
+"         struct xxx_softc *sc = device_get_softc(dev);\n"
+"          int unit = device_get_unit(dev);\n"
+"          int pnperror;\n"
+"          int error = 0;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:628
@@ -2427,6 +2433,8 @@ msgid ""
 "          sc->dev = dev; /* link it back */\n"
 "          sc->unit = unit;\n"
 msgstr ""
+"          sc->dev = dev; /* link it back */\n"
+"          sc->unit = unit;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:631
@@ -2435,6 +2443,10 @@ msgid ""
 "containing the list of PnP IDs supported by this driver and human-readable "
 "descriptions of the device models corresponding to these IDs."
 msgstr ""
+"Después comprueba los dispositivos PnP. La comprobación se realiza con una "
+"tabla que contiene la lista de IDs PnP soportados por el controlador y unas "
+"descripciones en formato legible de los modelos de dispositivo que "
+"corresponden con esos IDs."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:637
@@ -2443,6 +2455,8 @@ msgid ""
 "        pnperror=ISA_PNP_PROBE(device_get_parent(dev), dev,\n"
 "        xxx_pnp_ids); if(pnperror == ENXIO) return ENXIO;\n"
 msgstr ""
+"        pnperror=ISA_PNP_PROBE(device_get_parent(dev), dev,\n"
+"        xxx_pnp_ids); if(pnperror == ENXIO) return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:640
@@ -2454,12 +2468,19 @@ msgid ""
 "table, 0 is returned and the appropriate description from the table is set "
 "by `device_set_desc()`."
 msgstr ""
+"La lógica de ISA_PNP_PROBE es la siguiente: si la tarjeta (unidad de "
+"dispositivo) no se detectó como PnP, entonces se devuelve ENOENT. Si se "
+"detectó como PnP pero su ID no corresponde con ninguno de los IDs de la "
+"tabla entonces se devuelve ENXIO. Por último, si tiene soporte PnP y "
+"concuerda con un ID de la tabla, se devuelve 0 y se establece la descripción "
+"correspondiente de la tabla en la función `device_set_desc()`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:642
 msgid ""
 "If a driver supports only PnP devices then the condition would look like:"
 msgstr ""
+"Si un controlador sólo soporta dispositivos PnP entonces la condición sería:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:647
@@ -2468,6 +2489,8 @@ msgid ""
 "          if(pnperror != 0)\n"
 "              return pnperror;\n"
 msgstr ""
+"          if(pnperror != 0)\n"
+"              return pnperror;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:650
@@ -2476,6 +2499,9 @@ msgid ""
 "because they pass an empty PnP ID table and will always get ENXIO if called "
 "on a PnP card."
 msgstr ""
+"No se requiere un tratamiento especial para los controladores que no "
+"soportan PnP porque pasan un ID vacío a la tabla y siempre obtendrán ENXIO "
+"si se llama sobre una tarjeta PnP."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:652
