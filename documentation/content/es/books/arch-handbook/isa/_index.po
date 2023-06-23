@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-09-03 21:28-0300\n"
-"PO-Revision-Date: 2023-06-15 20:34+0000\n"
+"PO-Revision-Date: 2023-06-23 04:45+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookisa_index/es/>\n"
@@ -2608,6 +2608,10 @@ msgid ""
 "               */\n"
 "               xxx_allports[i].used = 1;\n"
 msgstr ""
+"              /* mark as used - even if we find nothing at this port\n"
+"               * at least we won't probe it in future\n"
+"               */\n"
+"               xxx_allports[i].used = 1;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:711
@@ -2620,6 +2624,12 @@ msgid ""
 "          /* probed all possible addresses, none worked */\n"
 "          return ENXIO;\n"
 msgstr ""
+"              error = xxx_really_probe(dev, xxx_allports[i].port);\n"
+"              if(error == 0) /* found a device at that port */\n"
+"                  return 0;\n"
+"          }\n"
+"          /* probed all possible addresses, none worked */\n"
+"          return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:714
@@ -2632,6 +2642,14 @@ msgid ""
 "later. But the `identify()` routines are called before any probes, so they "
 "show no respect to the sensitive devices and may upset them."
 msgstr ""
+"Por supuesto, normalmente se debería usar la rutina `identify()` de los "
+"controladores para estas cosas. Pero podría haber alguna razón válida para "
+"que fuera mejor hacerlo en `probe()`: si este sondeo hace enloquecer a algún "
+"otro dispositivo que sea sensible. Las rutinas de sondeo se ordenan conforme "
+"al flag `sensitive`: los dispositivos sensibles se prueban primero y luego "
+"van los demás dispositivos. Pero las rutinas `identify()` se llaman antes "
+"que ningún sondeo, de forma que no respetan a los dispositivos sensibles y "
+"podrían ponerlos tristes."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:716
@@ -2640,6 +2658,9 @@ msgid ""
 "for PnP devices) because the kernel does not have this information in the "
 "configuration file."
 msgstr ""
+"Ahora, después de tener el puerto de inicio necesitamos establecer el número "
+"de puertos (excepto para los dispositivos PnP) porque el kernel no tiene "
+"esta información en el fichero de configuración."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:724
@@ -2650,6 +2671,10 @@ msgid ""
 "         XXX_PORT_COUNT)<0)\n"
 "             return ENXIO;\n"
 msgstr ""
+"         if(pnperror /* only for non-PnP devices */\n"
+"         && bus_set_resource(dev, SYS_RES_IOPORT, 0, sc->port0,\n"
+"         XXX_PORT_COUNT)<0)\n"
+"             return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:727
@@ -2657,6 +2682,9 @@ msgid ""
 "Finally allocate and activate a piece of port address space (special values "
 "of start and end mean \"use those we set by ``bus_set_resource()``\"):"
 msgstr ""
+"Por último reservar y activar una parte del espacio de direcciones del "
+"puerto (valores especiales de start y end significan \"usa aquellos "
+"establecidos por ``bus_set_resource()``\"):"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:735
@@ -2667,6 +2695,10 @@ msgid ""
 "          &sc->port0_rid,\n"
 "              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 msgstr ""
+"          sc->port0_rid = 0;\n"
+"          sc->port0_r = bus_alloc_resource(dev, SYS_RES_IOPORT,\n"
+"          &sc->port0_rid,\n"
+"              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:738
@@ -2675,6 +2707,8 @@ msgid ""
 "          if(sc->port0_r == NULL)\n"
 "              return ENXIO;\n"
 msgstr ""
+"          if(sc->port0_r == NULL)\n"
+"              return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:741
