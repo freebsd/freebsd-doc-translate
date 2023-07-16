@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-09-03 21:28-0300\n"
-"PO-Revision-Date: 2023-06-23 04:45+0000\n"
+"PO-Revision-Date: 2023-07-16 15:32+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookisa_index/es/>\n"
@@ -2797,6 +2797,11 @@ msgid ""
 "          if(sc->mem0_p == 0) { /* nope, not specified by user */\n"
 "              sc->mem0_p = xxx_read_mem0_from_device_config(sc);\n"
 msgstr ""
+"          /* try to find out the config address first */\n"
+"          sc->mem0_p = bus_get_resource_start(dev, SYS_RES_MEMORY, 0 "
+"/*rid*/);\n"
+"          if(sc->mem0_p == 0) { /* nope, not specified by user */\n"
+"              sc->mem0_p = xxx_read_mem0_from_device_config(sc);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:781
@@ -2810,6 +2815,13 @@ msgid ""
 "                  goto bad; /* device does not support that address */\n"
 "          }\n"
 msgstr ""
+"          if(sc->mem0_p == 0)\n"
+"                  /* can't get it from device config registers either */\n"
+"                  goto bad;\n"
+"          } else {\n"
+"              if(xxx_set_mem0_address_on_device(sc) < 0)\n"
+"                  goto bad; /* device does not support that address */\n"
+"          }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:793
@@ -2827,6 +2839,22 @@ msgid ""
 "              if(sc->mem0_size == 0) /* not specified by user */\n"
 "                  sc->mem0_size = xxx_read_mem0_size_from_device_config(sc);\n"
 msgstr ""
+"          /* just like the port, set the memory size,\n"
+"           * for some devices the memory size would not be constant\n"
+"           * but should be read from the device configuration registers "
+"instead\n"
+"           * to accommodate different models of devices. Another option "
+"would\n"
+"           * be to let the user set the memory size as \"msize\" "
+"configuration\n"
+"           * resource which will be automatically handled by the ISA bus.\n"
+"           */\n"
+"           if(pnperror) { /* only for non-PnP devices */\n"
+"              sc->mem0_size = bus_get_resource_count(dev, SYS_RES_MEMORY, 0 "
+"/*rid*/);\n"
+"              if(sc->mem0_size == 0) /* not specified by user */\n"
+"                  sc->mem0_size = xxx_read_mem0_size_from_device_config(sc);"
+"\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:802
@@ -2841,6 +2869,15 @@ msgid ""
 "                  sc->mem0_size = 8*1024;\n"
 "              }\n"
 msgstr ""
+"              if(sc->mem0_size == 0) {\n"
+"                  /* suppose this is a very old model of device without\n"
+"                   * auto-configuration features and the user gave no "
+"preference,\n"
+"                   * so assume the minimalistic case\n"
+"                   * (of course, the real value will vary with the driver)\n"
+"                   */\n"
+"                  sc->mem0_size = 8*1024;\n"
+"              }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:805
@@ -2849,6 +2886,8 @@ msgid ""
 "              if(xxx_set_mem0_size_on_device(sc) < 0)\n"
 "                  goto bad; /* device does not support that size */\n"
 msgstr ""
+"              if(xxx_set_mem0_size_on_device(sc) < 0)\n"
+"                  goto bad; /* device does not support that size */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:812
@@ -2861,16 +2900,24 @@ msgid ""
 "              sc->mem0_size = bus_get_resource_count(dev, SYS_RES_MEMORY, 0 /*rid*/);\n"
 "          }\n"
 msgstr ""
+"              if(bus_set_resource(dev, SYS_RES_MEMORY, /*rid*/0,\n"
+"                      sc->mem0_p, sc->mem0_size)<0)\n"
+"                  goto bad;\n"
+"          } else {\n"
+"              sc->mem0_size = bus_get_resource_count(dev, SYS_RES_MEMORY, 0 "
+"/*rid*/);\n"
+"          }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:815
 msgid "Resources for IRQ and DRQ are easy to check by analogy."
 msgstr ""
+"Los recursos para las IRQ y DRQ son fáciles de comprobar de forma análoga."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:817
 msgid "If all went well then release all the resources and return success."
-msgstr ""
+msgstr "Si todo fue bien entonces libera todos los recursos y devuelve éxito."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:822
@@ -2880,6 +2927,8 @@ msgid ""
 "          xxx_free_resources(sc);\n"
 "          return 0;\n"
 msgstr ""
+"          xxx_free_resources(sc);\n"
+"          return 0;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:825
@@ -2889,13 +2938,18 @@ msgid ""
 "structure softc is passed to us it gets zeroed out, so we can find out if "
 "some resource was allocated: then its descriptor is non-zero."
 msgstr ""
+"Por último, maneja las situaciones problemáticas. Todos los recursos se "
+"deberían liberar antes de volver. Utilizamos el echo de que la estructura "
+"softc que se nos pasa está inicializada a cero, de forma que podemos "
+"averiguar si algún recurso ha sido reservado: entonces su descriptor es "
+"distinto de cero."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:829
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1046
 #, no-wrap
 msgid "          bad:\n"
-msgstr ""
+msgstr "          bad:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:835
@@ -2907,6 +2961,11 @@ msgid ""
 "          else /* exact error is unknown */\n"
 "              return ENXIO;\n"
 msgstr ""
+"          xxx_free_resources(sc);\n"
+"          if(error)\n"
+"                return error;\n"
+"          else /* exact error is unknown */\n"
+"              return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:838
@@ -2914,6 +2973,9 @@ msgid ""
 "That would be all for the probe routine. Freeing of resources is done from "
 "multiple places, so it is moved to a function which may look like:"
 msgstr ""
+"Eso sería todo para la rutina de comprobación. La liberación de los recursos "
+"se hace desde distintos sitios, de forma que se mueve a una función que "
+"podría parecerse a esta:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:846
@@ -2925,6 +2987,11 @@ msgid ""
 "          {\n"
 "              /* check every resource and free if not zero */\n"
 msgstr ""
+"static void\n"
+"           xxx_free_resources(sc)\n"
+"              struct xxx_softc *sc;\n"
+"          {\n"
+"              /* check every resource and free if not zero */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:854
@@ -2938,6 +3005,13 @@ msgid ""
 "                  sc->intr_r = 0;\n"
 "              }\n"
 msgstr ""
+"              /* interrupt handler */\n"
+"              if(sc->intr_r) {\n"
+"                  bus_teardown_intr(sc->dev, sc->intr_r, sc->intr_cookie);\n"
+"                  bus_release_resource(sc->dev, SYS_RES_IRQ, sc->intr_rid,\n"
+"                      sc->intr_r);\n"
+"                  sc->intr_r = 0;\n"
+"              }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:869
@@ -2958,12 +3032,27 @@ msgid ""
 "                  sc->data_tag = 0;\n"
 "              }\n"
 msgstr ""
+"              /* all kinds of memory maps we could have allocated */\n"
+"              if(sc->data_p) {\n"
+"                  bus_dmamap_unload(sc->data_tag, sc->data_map);\n"
+"                  sc->data_p = 0;\n"
+"              }\n"
+"               if(sc->data) { /* sc->data_map may be legitimately equal to 0 "
+"*/\n"
+"                  /* the map will also be freed */\n"
+"                  bus_dmamem_free(sc->data_tag, sc->data, sc->data_map);\n"
+"                  sc->data = 0;\n"
+"              }\n"
+"              if(sc->data_tag) {\n"
+"                  bus_dma_tag_destroy(sc->data_tag);\n"
+"                  sc->data_tag = 0;\n"
+"              }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:871
 #, no-wrap
 msgid "              ... free other maps and tags if we have them ...\n"
-msgstr ""
+msgstr "              ... free other maps and tags if we have them ...\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:876
@@ -2974,6 +3063,10 @@ msgid ""
 "                  sc->parent_tag = 0;\n"
 "              }\n"
 msgstr ""
+"              if(sc->parent_tag) {\n"
+"                  bus_dma_tag_destroy(sc->parent_tag);\n"
+"                  sc->parent_tag = 0;\n"
+"              }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:890
@@ -2993,12 +3086,27 @@ msgid ""
 "              }\n"
 "          }\n"
 msgstr ""
+"              /* release all the bus resources */\n"
+"              if(sc->mem0_r) {\n"
+"                  bus_release_resource(sc->dev, SYS_RES_MEMORY, sc->mem0_rid,"
+"\n"
+"                      sc->mem0_r);\n"
+"                  sc->mem0_r = 0;\n"
+"              }\n"
+"              ...\n"
+"              if(sc->port0_r) {\n"
+"                  bus_release_resource(sc->dev, SYS_RES_IOPORT, "
+"sc->port0_rid,\n"
+"                      sc->port0_r);\n"
+"                  sc->port0_r = 0;\n"
+"              }\n"
+"          }\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:893
 #, no-wrap
 msgid "xxx_isa_attach"
-msgstr ""
+msgstr "xxx_isa_attach"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:896
@@ -3012,6 +3120,14 @@ msgid ""
 "routine returns a negative value then the driver may make none of these "
 "assumptions."
 msgstr ""
+"La rutina de adjuntar conecta el controlador al sistema si la rutina de "
+"sondeo devolvió éxito y si el sistema ha escogido adjuntar el controlar. Si "
+"la rutina de sondeo devolvió 0 entonces la rutina puede esperar recibir una "
+"estructura de dispositivo softc intacta, tal como ha sido configurada por la "
+"rutina de sondeo. Además si la rutina de sondeo devuelve 0 puede esperar que "
+"la rutina de adjuntar para este dispositivo se llame en algún momento en el "
+"futuro. Si la rutina de sondeo devuelve un valor negativo entonces el "
+"controlador no puede asumir ninguna de estas cosas."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:898
@@ -3019,6 +3135,8 @@ msgid ""
 "The attach routine returns 0 if it completed successfully or error code "
 "otherwise."
 msgstr ""
+"La rutina de adjuntar devuelve 0 si ha finalizado correctamente y devuelve "
+"un error en caso contrario."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:900
@@ -3026,6 +3144,9 @@ msgid ""
 "The attach routine starts just like the probe routine, with getting some "
 "frequently used data into more accessible variables."
 msgstr ""
+"La rutina de adjuntar comienza como cualquier otra rutina de comprobación, "
+"obteniendo datos accedidos frecuentemente y guardándolos en variables más "
+"accesibles."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:906
@@ -3035,6 +3156,9 @@ msgid ""
 "          int unit = device_get_unit(dev);\n"
 "          int error = 0;\n"
 msgstr ""
+"          struct xxx_softc *sc = device_get_softc(dev);\n"
+"          int unit = device_get_unit(dev);\n"
+"          int error = 0;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:909
@@ -3046,6 +3170,13 @@ msgid ""
 "had left some resource allocated then it does not need to be allocated again "
 "(which would be considered an error)."
 msgstr ""
+"Después reserva y activa todos los recursos necesarios. Como en general el "
+"rango de puertos será liberado antes de volver del sondeo, tiene que ser "
+"reservado de nuevo. Esperamos que la rutina de sondeo haya establecido "
+"correctamente todos los rangos de recursos, así como haberlos salvado en la "
+"estructura softc. Si la rutina de sondeo ha dejado algunos recursos "
+"reservados entonces no tiene que reservarlos de nuevo (lo que sería "
+"considerado un error)."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:915
