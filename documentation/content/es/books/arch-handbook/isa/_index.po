@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-09-03 21:28-0300\n"
-"PO-Revision-Date: 2023-07-18 04:45+0000\n"
+"PO-Revision-Date: 2023-07-18 08:07+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookisa_index/es/>\n"
@@ -3257,6 +3257,13 @@ msgid ""
 "so allocation and check of functionality of the rest of resources (besides "
 "the ports) would be better left to the attach routine."
 msgstr ""
+"Después la rutina de sondeo debería descubrir los rangos de todos los "
+"recursos mediante la lectura de los registros de configuración del "
+"dispositivo o asegurarse de que fueron configurados explícitamente por el "
+"usuario. Lo consideraremos con el ejemplo de una memoria. La rutina de "
+"sondeo debería ser lo menos intrusiva posible, de forma que la reserva y "
+"comprobación de funcionalidad y resto de recursos (aparte de los puertos) "
+"sería mejor dejarlos para la rutina de adjuntar."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:765
@@ -3268,6 +3275,13 @@ msgid ""
 "kernel configuration file they know what they are doing and this one should "
 "take precedence. An example of implementation could be:"
 msgstr ""
+"La dirección de memoria puede ser especificada en el fichero de "
+"configuración del núcleo o en algunos dispositivos puede estar "
+"preconfigurada en registros de configuración no volátiles. Si ambas fuentes "
+"están disponibles y son distintas, ¿cuál se debería usar? Probablemente si "
+"el usuario se ha molestado en establecer la dirección explícitamente en el "
+"fichero de configuración del núcleo entonces sabe lo que está haciendo y "
+"éste debería tomar precedencia. Un ejemplo de implementación podría ser:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:773
@@ -3667,6 +3681,10 @@ msgid ""
 "          sc->port0_r = bus_alloc_resource(dev, SYS_RES_IOPORT,  &sc->port0_rid,\n"
 "              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 msgstr ""
+"          sc->port0_rid = 0;\n"
+"          sc->port0_r = bus_alloc_resource(dev, SYS_RES_IOPORT,  "
+"&sc->port0_rid,\n"
+"              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:918
@@ -3675,6 +3693,8 @@ msgid ""
 "          if(sc->port0_r == NULL)\n"
 "               return ENXIO;\n"
 msgstr ""
+"          if(sc->port0_r == NULL)\n"
+"               return ENXIO;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:923
@@ -3685,6 +3705,11 @@ msgid ""
 "          sc->mem0_r = bus_alloc_resource(dev, SYS_RES_MEMORY,  &sc->mem0_rid,\n"
 "              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 msgstr ""
+"          /* on-board memory */\n"
+"          sc->mem0_rid = 0;\n"
+"          sc->mem0_r = bus_alloc_resource(dev, SYS_RES_MEMORY,  "
+"&sc->mem0_rid,\n"
+"              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:926
@@ -3693,6 +3718,8 @@ msgid ""
 "          if(sc->mem0_r == NULL)\n"
 "                goto bad;\n"
 msgstr ""
+"          if(sc->mem0_r == NULL)\n"
+"                goto bad;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:929
@@ -3701,6 +3728,8 @@ msgid ""
 "          /* get its virtual address */\n"
 "          sc->mem0_v = rman_get_virtual(sc->mem0_r);\n"
 msgstr ""
+"          /* get its virtual address */\n"
+"          sc->mem0_v = rman_get_virtual(sc->mem0_r);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:932
@@ -3708,11 +3737,13 @@ msgid ""
 "The DMA request channel (DRQ) is allocated likewise. To initialize it use "
 "functions of the `isa_dma*()` family. For example:"
 msgstr ""
+"El canal de peticiones de DMA (DRQ) se reserva del mismo modo. Para "
+"inicializarlo utiliza funciones de la familia de `isa_dma*()`. Por ejemplo:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:934
 msgid "`isa_dmacascade(sc->drq0);`"
-msgstr ""
+msgstr "`isa_dmacascade(sc->drq0);`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:936
@@ -3729,6 +3760,19 @@ msgid ""
 "detach and other bus-specific routines while the bulk of the driver code may "
 "be shared among them."
 msgstr ""
+"La línea de petición de interrupción (IRQ) es un poco especial. Además de la "
+"asignación el manejador de interrupción del controlador debería estar "
+"asociado a ella. Históricamente en los controladores ISA antiguos el "
+"argumento que el sistema pasaba al manejador de interrupción era el número "
+"de unidad del dispositivo. Pero en controladores modernos la convención "
+"sugiere pasar un puntero a la estructura softc. La razón importante es que "
+"cuando las structuras softc son asignadas dinámicamente obtener el número a "
+"partir de softc es fácil mientras que obtener softc a partir del número de "
+"unidad es difícil. Además esta convención hace que los controladores de los "
+"diferentes buses parezcan más uniformes y les permite compartir código: cada "
+"bus tiene su propio sondeo, adjuntar, liberar y otras rutinas de bus "
+"específicas mientras que el grueso del código del controlador puede estar "
+"compartido entre ellos."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:943
@@ -3738,6 +3782,10 @@ msgid ""
 "          sc->intr_r = bus_alloc_resource(dev, SYS_RES_MEMORY,  &sc->intr_rid,\n"
 "                /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 msgstr ""
+"          sc->intr_rid = 0;\n"
+"          sc->intr_r = bus_alloc_resource(dev, SYS_RES_MEMORY,  "
+"&sc->intr_rid,\n"
+"                /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:946
@@ -3746,6 +3794,8 @@ msgid ""
 "          if(sc->intr_r == NULL)\n"
 "              goto bad;\n"
 msgstr ""
+"          if(sc->intr_r == NULL)\n"
+"              goto bad;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:955
@@ -3760,6 +3810,15 @@ msgid ""
 "          if(error)\n"
 "              goto bad;\n"
 msgstr ""
+"          /*\n"
+"           * XXX_INTR_TYPE is supposed to be defined depending on the type "
+"of\n"
+"           * the driver, for example as INTR_TYPE_CAM for a CAM driver\n"
+"           */\n"
+"          error = bus_setup_intr(dev, sc->intr_r, XXX_INTR_TYPE,\n"
+"              (driver_intr_t *) xxx_intr, (void *) sc, &sc->intr_cookie);\n"
+"          if(error)\n"
+"              goto bad;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:958
@@ -3767,6 +3826,8 @@ msgid ""
 "If the device needs to make DMA to the main memory then this memory should "
 "be allocated like described before:"
 msgstr ""
+"Si el dispositivo necesita hacer DMA a la memoria principal entonces esta "
+"memoria se debería asignar como se describe anteriormente:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:970
@@ -3782,6 +3843,16 @@ msgid ""
 "          if(error)\n"
 "              goto bad;\n"
 msgstr ""
+"          error=bus_dma_tag_create(NULL, /*alignment*/ 4,\n"
+"              /*boundary*/ 0, /*lowaddr*/ BUS_SPACE_MAXADDR_24BIT,\n"
+"              /*highaddr*/ BUS_SPACE_MAXADDR, /*filter*/ NULL, /*filterarg*/ "
+"NULL,\n"
+"              /*maxsize*/ BUS_SPACE_MAXSIZE_24BIT,\n"
+"              /*nsegments*/ BUS_SPACE_UNRESTRICTED,\n"
+"              /*maxsegsz*/ BUS_SPACE_MAXSIZE_24BIT, /*flags*/ 0,\n"
+"              &sc->parent_tag);\n"
+"          if(error)\n"
+"              goto bad;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:987
@@ -3804,6 +3875,23 @@ msgid ""
 "          if(error)\n"
 "              goto bad;\n"
 msgstr ""
+"          /* many things get inherited from the parent tag\n"
+"           * sc->data is supposed to point to the structure with the shared "
+"data,\n"
+"           * for example for a ring buffer it could be:\n"
+"           * struct {\n"
+"           *   u_short rd_pos;\n"
+"           *   u_short wr_pos;\n"
+"           *   char    bf[XXX_RING_BUFFER_SIZE]\n"
+"           * } *data;\n"
+"           */\n"
+"          error=bus_dma_tag_create(sc->parent_tag, 1,\n"
+"              0, BUS_SPACE_MAXADDR, 0, /*filter*/ NULL, /*filterarg*/ NULL,\n"
+"              /*maxsize*/ sizeof(* sc->data), /*nsegments*/ 1,\n"
+"              /*maxsegsz*/ sizeof(* sc->data), /*flags*/ 0,\n"
+"              &sc->data_tag);\n"
+"          if(error)\n"
+"              goto bad;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:992
@@ -3814,6 +3902,10 @@ msgid ""
 "          if(error)\n"
 "               goto bad;\n"
 msgstr ""
+"          error = bus_dmamem_alloc(sc->data_tag, &sc->data, /* flags*/ 0,\n"
+"              &sc->data_map);\n"
+"          if(error)\n"
+"               goto bad;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1008
@@ -3835,6 +3927,22 @@ msgid ""
 "              sizeof (* sc->data), xxx_alloc_callback, (void *) &sc->data_p,\n"
 "              /*flags*/0);\n"
 msgstr ""
+"          /* xxx_alloc_callback() just saves the physical address at\n"
+"           * the pointer passed as its argument, in this case &sc->data_p.\n"
+"           * See details in the section on bus memory mapping.\n"
+"           * It can be implemented like:\n"
+"           *\n"
+"           * static void\n"
+"           * xxx_alloc_callback(void *arg, bus_dma_segment_t *seg,\n"
+"           *     int nseg, int error)\n"
+"           * {\n"
+"           *    *(bus_addr_t *)arg = seg[0].ds_addr;\n"
+"           * }\n"
+"           */\n"
+"          bus_dmamap_load(sc->data_tag, sc->data_map, (void *)sc->data,\n"
+"              sizeof (* sc->data), xxx_alloc_callback, (void *) &sc->data_p,"
+"\n"
+"              /*flags*/0);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1011
@@ -3843,6 +3951,9 @@ msgid ""
 "initialized. The initialization may include testing that all the expected "
 "features are functional."
 msgstr ""
+"Después de que todos los recursos necesarios estén asignados el dispositivo "
+"se debería inicializar. La inicialización podría incluir la comprobación de "
+"que todas las características esperadas son funcionales."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1016
@@ -3851,6 +3962,8 @@ msgid ""
 "          if(xxx_initialize(sc) < 0)\n"
 "               goto bad;\n"
 msgstr ""
+"          if(xxx_initialize(sc) < 0)\n"
+"               goto bad;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1019
@@ -3859,12 +3972,18 @@ msgid ""
 "description set by probe. But if the driver wants to print some extra "
 "information about the device it may do so, for example:"
 msgstr ""
+"El subsistema del bus imprimirá automáticamente en la consola la descripción "
+"del dispositivo establecida mediante el sondeo. Pero si un controlador "
+"quiere imprimir información extra acerca del dispositivo puede hacerlo, por "
+"ejemplo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1024
 #, no-wrap
 msgid "        device_printf(dev, \"has on-card FIFO buffer of %d bytes\\n\", sc->fifosize);\n"
 msgstr ""
+"        device_printf(dev, \"has on-card FIFO buffer of %d bytes\\n"
+"\", sc->fifosize);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1027
@@ -3872,6 +3991,8 @@ msgid ""
 "If the initialization routine experiences any problems then printing "
 "messages about them before returning error is also recommended."
 msgstr ""
+"Si la rutina de inicialización sufre algún problema entonces también es "
+"recomendable imprimir mensajes sobre ellos antes de devolver error."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1029
@@ -3881,11 +4002,15 @@ msgid ""
 "type of the driver: a character device, a block device, a network device, a "
 "CAM SCSI bus device and so on."
 msgstr ""
+"El paso final de la rutina de adjuntar es adjuntar el dispositivo al su "
+"subsistema funcional en el núcleo. La forma exacta de hacerlo depende del "
+"tipo de controlador: un dispositivo de caracteres, un dispositivo de "
+"bloques, un dispositivo de red, un dispositivo de bus CAM SCSI y así."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1031
 msgid "If all went well then return success."
-msgstr ""
+msgstr "Si todo ha ido bien entonces devuelve éxito."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1037
@@ -3895,12 +4020,15 @@ msgid ""
 "          if(error)\n"
 "              goto bad;\n"
 msgstr ""
+"          error = xxx_attach_subsystem(sc);\n"
+"          if(error)\n"
+"              goto bad;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1039
 #, no-wrap
 msgid "          return 0;\n"
-msgstr ""
+msgstr "          return 0;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1042
@@ -3910,6 +4038,11 @@ msgid ""
 "the structure softc is passed to us it gets zeroed out, so we can find out "
 "if some resource was allocated: then its descriptor is non-zero."
 msgstr ""
+"Por último, maneja las situaciones problemáticas. Todos los recursos "
+"deberían ser desasignados antes de devolver un error. Utilizamos el hecho de "
+"que la estructura softc se pone a cero antes de que se nos pase, de forma "
+"que podemos averiguar si se ha asignado algún recurso: entonces su "
+"descriptor no es cero."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1052
@@ -3921,17 +4054,22 @@ msgid ""
 "          else /* exact error is unknown */\n"
 "              return ENXIO;\n"
 msgstr ""
+"          xxx_free_resources(sc);\n"
+"          if(error)\n"
+"              return error;\n"
+"          else /* exact error is unknown */\n"
+"              return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1055
 msgid "That would be all for the attach routine."
-msgstr ""
+msgstr "Eso sería todo para la rutina de adjuntar."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1057
 #, no-wrap
 msgid "xxx_isa_detach"
-msgstr ""
+msgstr "xxx_isa_detach"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1060
@@ -3951,6 +4089,21 @@ msgid ""
 "the system is running in secure mode). Still, the detach routine may be "
 "provided for the sake of completeness."
 msgstr ""
+"Si esta función está presente en el controlador y éste está compilado como "
+"un módulo cargable entonces el controlador tiene la habilidad de ser "
+"descargado. Esta es una característica importante si el hardware soporta ser "
+"enchufado en caliente. Pero el bus ISA no soporta enchufes en caliente, así "
+"que esta característica no es particularmente importante para los "
+"dispositivos ISA. La habilidad para descargar un controlador podría ser útil "
+"al depurar, pero en muchos casos la instalación de una nueva versión del "
+"controlador sólo sería requerida si de algún modo la antigua versión del "
+"hace que se necesite reiniciar, de forma que los esfuerzos en escribir la "
+"rutina de desadjuntar podrían no merecer la pena. Argumentar que la descarga "
+"permitiría actualizar los controladores en una máquina de producción parece "
+"más bien teórico. Instalar una nueva versión de un controlador es una "
+"operación peligrosa que nunca se debería hacer en una máquina en producción ("
+"y que no se permite cuando el sistema está corriendo en modo seguro). Aún "
+"así, la rutina de desadjuntar podría proporcionarse por consistencia."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1062
@@ -3958,6 +4111,8 @@ msgid ""
 "The detach routine returns 0 if the driver was successfully detached or the "
 "error code otherwise."
 msgstr ""
+"La rutina de desadjuntar devuelve 0 si el controlador se desadjuntó "
+"correctamente o el código de error en caso contrario."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1064
@@ -3970,6 +4125,13 @@ msgid ""
 "the driver's author. Generally the forced close seems to be the preferred "
 "alternative."
 msgstr ""
+"La lógica para desadjuntar es un espejo de la de adjuntar. Lo primero que se "
+"hace es desconectar el controlador del subsistema del núcleo. Si el "
+"dispositivo está abierto el controlador tiene dos opciones: oponerse a ser "
+"desconectado o forzar que se cierre y proseguir. La opción depende de la "
+"habilidad de un subsistema particular del núcleo para hacer un cierre "
+"forzado según las preferencias del autor del controlador. Normalmente forzar "
+"el cierre parece ser la alternativa preferida."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1069
@@ -3978,6 +4140,8 @@ msgid ""
 "          struct xxx_softc *sc = device_get_softc(dev);\n"
 "          int error;\n"
 msgstr ""
+"          struct xxx_softc *sc = device_get_softc(dev);\n"
+"          int error;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1073
@@ -3987,6 +4151,9 @@ msgid ""
 "          if(error)\n"
 "              return error;\n"
 msgstr ""
+"          error = xxx_detach_subsystem(sc);\n"
+"          if(error)\n"
+"              return error;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1076
@@ -3997,22 +4164,28 @@ msgid ""
 "this is exactly what the shutdown routine does, so if it is included in the "
 "driver we can just call it."
 msgstr ""
+"Después el controlador puede querer resetear el hardware a un estado "
+"consistente. Esto incluye parar cualquier transferencia en curso, "
+"deshabilitar los canales DMA y las interrupciones para evitar corrupciones "
+"de memoria por parte del dispositivo. Para la mayoría de los controladores "
+"esto es exactamente lo que hace la rutina de parada, de forma que si se "
+"incluye en el controlador simplemente podemos llamarla."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1078
 msgid "`xxx_isa_shutdown(dev);`"
-msgstr ""
+msgstr "`xxx_isa_shutdown(dev);`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1080
 msgid "And finally release all the resources and return success."
-msgstr ""
+msgstr "Y finalmente libera todos los recursos y devuelve éxito."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1088
 #, no-wrap
 msgid "xxx_isa_shutdown"
-msgstr ""
+msgstr "xxx_isa_shutdown"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1091
@@ -4028,12 +4201,23 @@ msgid ""
 "ongoing transfers is a good idea. The exact action depends on the hardware, "
 "so we do not consider it here in any detail."
 msgstr ""
+"Esta rutina se llama cuando el sistema está a punto de apagarse. Se espera "
+"que lleve el hardware a un estado consistente. Para la mayoría de los "
+"dispositivos ISA no se requiere ninguna acción especial, así que la función "
+"no es realmente necesaria ya que el dispositivo se reinicializará al "
+"reiniciar de todas formas. Pero algunos dispositivos tienen que apagarse con "
+"un procedimiento especial, para asegurarse de que serán detectados después "
+"de un reinicio suave (esto es especialmente cierto para muchos dispositivos "
+"con protocolos de identificación propietarios). En cualquier caso desactivar "
+"DMA y las interrupciones en los registros del dispositivo y parar las "
+"transferencias en curso es una buena idea. La acción exacta depende del "
+"hardware, así que no la consideramos aquí con detalle."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1093
 #, no-wrap
 msgid "xxx_intr"
-msgstr ""
+msgstr "xxx_intr"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1096
@@ -4045,6 +4229,13 @@ msgid ""
 "interrupt handler must poll the device registers and make sure that the "
 "interrupt was generated by its device. If not it should just return."
 msgstr ""
+"El manejador de interrupción se llama cuando se recibe una interrupción que "
+"podría ser de este dispositivo particular. El bus ISA no tiene soporte para "
+"compartir interrupciones (excepto en algunos casos especiales) así que en la "
+"práctica el manejador de interrupción se llama cuando la interrupción casi "
+"seguro que proviene de este dispositivo. Aún así, el manejador de "
+"interrupción debe sondear los registros del dispositivo y asegurarse que la "
+"interrupción vino de él. Si no es así simplemente debe retornar."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1098
@@ -4055,6 +4246,12 @@ msgid ""
 "`bus_setup_intr()`. By the new convention it should be the pointer to the "
 "structure softc. So the interrupt handler commonly starts as:"
 msgstr ""
+"La antigua convención para los controladores ISA era obtener el número de "
+"unidad del dispositivo como un argumento. Esto está obsoleto, y los nuevos "
+"controladores reciben cualquier argumento que se haya especificado en la "
+"rutina de adjuntar cuando se llama a `bus_setup_intr()`. Según la nueva "
+"convención debería ser un puntero a la estructura softc. De forma que el "
+"manejador de interrupción normalmente comienza así:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1105
@@ -4064,6 +4261,9 @@ msgid ""
 "          xxx_intr(struct xxx_softc *sc)\n"
 "          {\n"
 msgstr ""
+"          static void\n"
+"          xxx_intr(struct xxx_softc *sc)\n"
+"          {\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1108
@@ -4072,11 +4272,15 @@ msgid ""
 "parameter of `bus_setup_intr()`. That means that all the other interrupts of "
 "the same type as well as all the software interrupts are disabled."
 msgstr ""
+"Se ejecuta en el nivel de prioridad de la interrupción especificado por el "
+"parámetro tipo de interrupción de `bus_setup_intr()`. Eso significa que las "
+"demás interrupciones del mismo tipo así como las interrupciones software "
+"están deshabilitadas."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1110
 msgid "To avoid races it is commonly written as a loop:"
-msgstr ""
+msgstr "Pare evitar carreras se suele escribir como un bucle:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1118
@@ -4087,6 +4291,10 @@ msgid ""
 "              xxx_acknowledge_interrupt(sc);\n"
 "          }\n"
 msgstr ""
+"          while(xxx_interrupt_pending(sc)) {\n"
+"              xxx_process_interrupt(sc);\n"
+"              xxx_acknowledge_interrupt(sc);\n"
+"          }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1120
@@ -4094,6 +4302,9 @@ msgid ""
 "The interrupt handler has to acknowledge interrupt to the device only but "
 "not to the interrupt controller, the system takes care of the latter."
 msgstr ""
+"El manejador de interrupción tiene que reconocer la interrupción ante el "
+"dispositivo pero no ante el controlador, el sistema se encarga de esto "
+"último."
 
 #~ msgid ""
 #~ "include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
