@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-09-03 21:28-0300\n"
-"PO-Revision-Date: 2023-07-16 15:32+0000\n"
+"PO-Revision-Date: 2023-07-18 04:45+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookisa_index/es/>\n"
@@ -1273,6 +1273,11 @@ msgid ""
 "argument, the new (recommended) convention is using a pointer to the device "
 "softc structure."
 msgstr ""
+"_arg_ - el argumento pasado al menejador para identificar este dispositivo "
+"en particular. El manejador lo transforma desde void* a cualquier tipo real. "
+"La antigua convención para los menejadores de interrupción ISA era usar el "
+"número de unidad como argumento, la nueva (recomendada) convención es usar "
+"un puntero a la estructura softc del dispositivo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:311
@@ -1280,6 +1285,8 @@ msgid ""
 "_cookie[p]_ - the value received from `setup()` is used to identify the "
 "handler when passed to `teardown()`"
 msgstr ""
+"_cookie[p]_ - el valor recibido desde `setup()` se usa para identificar el "
+"manejador cuando se pasa a `teardown()`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:313
@@ -1287,6 +1294,9 @@ msgid ""
 "A number of methods are defined to operate on the resource handlers (struct "
 "resource *). Those of interest to the device driver writers are:"
 msgstr ""
+"Un cierto número de métodos se definen para operar sobre los manejadores de "
+"recursos (struct resource *). Aquellos de interés para los creadores de "
+"controladores de dispositivos son:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:315
@@ -1294,6 +1304,8 @@ msgid ""
 "`u_long rman_get_start(r) u_long rman_get_end(r)` Get the start and end of "
 "allocated resource range."
 msgstr ""
+"`u_long rman_get_start(r) u_long rman_get_end(r)` Obtener el comienzo y el "
+"final de un rango de recursos reservados."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:316
@@ -1301,12 +1313,14 @@ msgid ""
 "`void *rman_get_virtual(r)` Get the virtual address of activated memory "
 "resource."
 msgstr ""
+"`void *rman_get_virtual(r)` Obtener la dirección virtual de un recurso de "
+"memoria activado."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:318
 #, no-wrap
 msgid "Bus Memory Mapping"
-msgstr ""
+msgstr "Mapeo de Memoria del Bus"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:321
@@ -1314,16 +1328,18 @@ msgid ""
 "In many cases data is exchanged between the driver and the device through "
 "the memory. Two variants are possible:"
 msgstr ""
+"En muchos casos los datos se intercambian entre el controlador y el "
+"dispositivo a través de memoria. Hay dos posibles variantes:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:323
 msgid "(a) memory is located on the device card"
-msgstr ""
+msgstr "(a) la memoria está reservada en la tarjeta del dispositivo"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:325
 msgid "(b) memory is the main memory of the computer"
-msgstr ""
+msgstr "(b) la memoria está en la memoria principal del ordenador"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:327
@@ -1337,6 +1353,16 @@ msgid ""
 "for this purpose, which should not be used directly any more. Now it is one "
 "of the internal steps of resource activation."
 msgstr ""
+"En el caso (a) el controlador siempre copia los datos a y desde la memoria "
+"de la tarjeta y la memoria principal cuando sea necesario. Para mapear la "
+"memoria de la tarjeta en el espacio de direcciones virtuales del núcleo la "
+"dirección física y la longitud de la memoria de la tarjeta se tiene que "
+"definir como un recurso `SYS_RES_MEMORY`. Después el recurso puede ser "
+"reservado y activado, y su dirección virtual obtenida utilizando "
+"`rman_get_virtual()`. Los controladores antiguos usaban la función "
+"`pmap_mapdev()` para este propósito, que ya no debería ser usada "
+"directamente. Ahora es uno de los pasos internos de la activación de los "
+"recursos."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:329
@@ -1351,6 +1377,17 @@ msgid ""
 "14MB or 15MB. FreeBSD can handle the memory holes properly if the BIOS "
 "reports them properly (this feature may be broken on old BIOSes)."
 msgstr ""
+"La mayoría de las tarjetas ISA tendrán su memoria configurada para la "
+"dirección física en algún punto en el rango 640KB-1MB. Algunas tarjetas ISA "
+"requieren rangos de memoria más amplios que deberían situarse en algún punto "
+"por debajo de 16MB (por la limitación de los 24-bit de direccionamiento en "
+"el bus ISA). En ese caso si la máquina tiene más memoria que la dirección de "
+"inicio de la memoria del dispositivo (en otras palabras, se superponen) se "
+"tiene que configurar un agujero de memoria en el rango de direcciones usado "
+"por los dispositivos. Muchas BIOS permiten configurar un agujero de memoria "
+"de 1MB empezando en 14MB o 15 MB. FreeBSD puede manejar los agujeros de "
+"memoria de forma adecuada si la BIOS los reporta de forma apropiada (esta "
+"característica podría estar rota en BIOS antiguas)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:331
@@ -1363,6 +1400,15 @@ msgid ""
 "operations. The bus subsystem provides ready solutions for some of these "
 "problems, the rest has to be done by the drivers themselves."
 msgstr ""
+"En el caso (b) sólo se pasa al dispositivo la dirección del dato, y el "
+"dispositivo utiliza DMA para acceder a los datos en la memoria principal. "
+"Hay dos limitaciones: Primero, las tarjetas ISA sólo pueden acceder a la "
+"memoria por debajo de 16MB. Segundo, las páginas que son contiguas en el "
+"espacio virtual de direcciones podrían no serlo en el espacio físico de "
+"direcciones, por lo que el dispositivo tiene que realizar operaciones "
+"scatter/gather. El subsistema del bus proporciona soluciones para algunos de "
+"estos problemas, el resto tienen que ser realizadas por los controladores "
+"mismos."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:333
@@ -1372,6 +1418,11 @@ msgid ""
 "Map represents a memory block allocated according to these properties. "
 "Multiple maps may be associated with the same tag."
 msgstr ""
+"Se usan dos estructuras para realizar la reserva de memoria de DMA, "
+"`bus_dma_tag_t` y `bus_dmamap_t`. La etiqueta describe las propiedades "
+"requeridas para la memoria DMA. El mapa representa un bloque de memoria "
+"reservado conforme a esas propiedades. Se pueden asociar múltiples mapas con "
+"la misma etiqueta."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:335
@@ -1380,6 +1431,9 @@ msgid ""
 "properties. A child tag inherits all the requirements of its parent tag, and "
 "may make them more strict but never more loose."
 msgstr ""
+"Las etiquetas se organizan en una jerarquía tipo árbol con herencia de "
+"propiedades. Una etiqueta hija hereda todos los requisitos de su etiqueta "
+"padre, y puede hacerlas más estrictas pero nunca más relajadas."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:337
@@ -1389,11 +1443,15 @@ msgid ""
 "device then a tag for each of them may be created as a child of the parent "
 "tag."
 msgstr ""
+"Normalmente se crea una etiqueta de primer nivel (sin padre) para cada "
+"unidad de dispositivo. Si se necesitan múltiples áreas de memoria con "
+"diferentes requisitos para cada dispositivo entonces se puede crear una "
+"etiqueta para cada uno de ellos como hijas de la etiqueta padre."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:339
 msgid "The tags can be used to create a map in two ways."
-msgstr ""
+msgstr "Las etiquetas se pueden usar para crear mapas de dos formas."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:341
@@ -1404,6 +1462,12 @@ msgid ""
 "Loading of such memory into a map is trivial: it is always considered as one "
 "chunk in the appropriate physical memory range."
 msgstr ""
+"Primero, se reserva un bloque contiguo de memoria (que luego puede ser "
+"liberado) que cumple con los requisitos de la etiqueta. Esto normalmente se "
+"usa para reservar áreas de memoria que van a tener una vida relativamente "
+"larga para comunicarse con el dispositivo. La carga de esa memoria en un "
+"mapa es trivial: siempre se considera como un sólo bloque en el rango físico "
+"de memoria apropiado."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:343
@@ -1420,11 +1484,23 @@ msgid ""
 "synchronization. This is normally used on a per-transfer basis: buffer for "
 "each transfer would be loaded, transfer done and buffer unloaded."
 msgstr ""
+"Segundo, se puede cargar en un mapa un área arbitraria de memoria virtual. "
+"Cada página de esta memoria se comprobará para ver si cumple con los "
+"requisitos del mapa. Si lo hace entonces se deja en su situación original. "
+"Si no entonces se reserva una página \"bounce\" que cumpla los requisitos y "
+"se usa como almacenamiento intermedio. Cuando se escriben datos desde las "
+"páginas originales se copiarán primero a las páginas \"bounce\" y luego "
+"serán transferidos de estas hasta el dispositivo. Cuando se lee los datos "
+"irían desde el dispositivo hasta las páginas \"bounce\" y después se "
+"copiarían a las páginas originales. El proceso de copiado entre las páginas "
+"originales y las páginas \"bounce\" se llama sincronización. Normalmente "
+"esto se usa en cada transferencia: se cargaría el búfer de cada "
+"transferencia, se realiza la transferencia y se descarga el búfer."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:345
 msgid "The functions working on the DMA memory are:"
-msgstr ""
+msgstr "Las funciones que trabajan con la memoria DMA son:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:347
@@ -1434,16 +1510,23 @@ msgid ""
 "bus_dma_filter_t *filter, void *filterarg, bus_size_t maxsize, int "
 "nsegments, bus_size_t maxsegsz, int flags, bus_dma_tag_t *dmat)`"
 msgstr ""
+"`int bus_dma_tag_create(bus_dma_tag_t parent, bus_size_t alignment, "
+"bus_size_t boundary, bus_addr_t lowaddr, bus_addr_t highaddr, "
+"bus_dma_filter_t *filter, void *filterarg, bus_size_t maxsize, int "
+"nsegments, bus_size_t maxsegsz, int flags, bus_dma_tag_t *dmat)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:349
 msgid "Create a new tag. Returns 0 on success, the error code otherwise."
 msgstr ""
+"Crea una nueva etiqueta. Devuelve 0 en caso de éxito, el código de error en "
+"caso contrario."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:351
 msgid "_parent_ - parent tag, or NULL to create a top-level tag."
 msgstr ""
+"_parent_ - la etiqueta padre, o NULL para crear una etiqueta de primer nivel."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:352
@@ -1452,6 +1535,10 @@ msgid ""
 "for this tag. Use value 1 for \"no specific alignment\". Applies only to the "
 "future `bus_dmamem_alloc()` but not `bus_dmamap_create()` calls."
 msgstr ""
+"_alignment_ - alineamiento físico requerido para el área de memoria que va a "
+"ser reservado para esta etiqueta. Usa el valor 1 para \"ningún alineamiento "
+"específico\". Sólo aplica para las llamadas a `bus_dmamem_alloc()` pero no a "
+"las de `bus_dmamap_create()`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:353
@@ -1464,6 +1551,13 @@ msgid ""
 "ISA DMA controller) then the boundary must be no larger than 64KB (64*1024) "
 "due to the limitations of the DMA hardware."
 msgstr ""
+"_boundary_ - límite de memoria físico que no se debe sobrepasar cuando se "
+"reserva la memoria. Usa el valor 0 para \"sin límite\". Aplica sólo a las "
+"llamadas a `bus_dmamem_alloc()` pero no a `bus_dmamap_create()`. Debe ser "
+"una potencia de 2. Si la memoria se va a usar en modo DMA sin cascada (es "
+"decir, las direcciones DMA serán proporcionadas no por el dispositivo sino "
+"por el controlador ISA DMA) entonces el límite no debe ser mayor de 64KB "
+"(64*1024) debido a las limitaciones del hardware DMA."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:354
@@ -1472,6 +1566,10 @@ msgid ""
 "used to limit the permitted range of physical addresses used to allocate the "
 "memory. The exact meaning varies depending on the planned future use:"
 msgstr ""
+"_lowaddr, highaddr_ - los nombres son un poco confusos; estos valores se "
+"usan para limitar el rango permitido de direcciones físicas usadas para "
+"reservar la memoria. El significado exacto depende del uso que se le vaya a "
+"dar:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:356
@@ -1479,6 +1577,8 @@ msgid ""
 "For `bus_dmamem_alloc()` all the addresses from 0 to lowaddr-1 are "
 "considered permitted, the higher ones are forbidden."
 msgstr ""
+"Para `bus_dmamem_alloc()` se consideran como permitidas todas las "
+"direcciones desde 0 a lowaddr-1, las más altas están prohibidas."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:357
@@ -1489,21 +1589,27 @@ msgid ""
 "accessible. If no filter function is supplied then all the range is "
 "considered unaccessible."
 msgstr ""
+"Para `bus_dmamap_create()` todas las direcciones fuera del rango cerrado "
+"[lowaddr; highaddr] se consideran accesibles. Las direcciones de las páginas "
+"dentro del rango se pasan a la función de filtrado que decide si son "
+"accesibles. Si no se proporciona una función de filtrado entonces todo el "
+"rango se considera inaccesible."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:358
 msgid "For the ISA devices the normal values (with no filter function) are:"
 msgstr ""
+"Para los dispositivos ISA los valores normales (sin función de filtrado) son:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:360
 msgid "lowaddr = BUS_SPACE_MAXADDR_24BIT"
-msgstr ""
+msgstr "lowaddr = BUS_SPACE_MAXADDR_24BIT"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:362
 msgid "highaddr = BUS_SPACE_MAXADDR"
-msgstr ""
+msgstr "highaddr = BUS_SPACE_MAXADDR"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:364
@@ -1516,6 +1622,13 @@ msgid ""
 "filter function is: `int filterfunc(void *arg, bus_addr_t paddr)`. It must "
 "return 0 if the page is accessible, non-zero otherwise."
 msgstr ""
+"_filter, filterarg_ - la función de filtrado y su argumento. Si se pasa NULL "
+"como filtro entonces todo el rango [lowaddr, highaddr] se considera "
+"inaccesible cuando se llama a `bus_dmamap_create()`. De lo contrario la "
+"dirección física de cada página en el rango [lowaddr; highaddr] es pasada a "
+"la función de filtrado que decide si es accesible. El prototipo de esta "
+"función es: `int filterfunc(void *arg, bus_addr_t paddr)`. Debe devolver 0 "
+"si la página es accesible, distinto de cero en caso contrario."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:365
@@ -1525,6 +1638,10 @@ msgid ""
 "arbitrarily big, the value for ISA devices would be "
 "`BUS_SPACE_MAXSIZE_24BIT`."
 msgstr ""
+"_maxsize_ - el tamaño máximo de memoria (en bytes) que podría ser reservado "
+"a través de esta etiqueta. En caso de que se difícil de estimar o que "
+"pudiera ser arbitrariamente grande, el valor para los dispositivos ISA sería "
+"`BUS_SPACE_MAXSIZE_24BIT`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:366
@@ -1538,6 +1655,15 @@ msgid ""
 "about 250-300, higher values will cause kernel stack overflow (the hardware "
 "can not normally support that many scatter-gather buffers anyway)."
 msgstr ""
+"_nsegments_ - máximo número de segmentos scatter-gather soportados por el "
+"dispositivo. Si no hay restricciones entonces se debería usar el valor "
+"`BUS_SPACE_UNRESTRICTED`. Este valor es el recomentado para etiquetas padre, "
+"la restricción real sería especificada después por las etiquetas "
+"descendientes. Las etiquetas con nsegments igual a `BUS_SPACE_UNRESTRICTED` "
+"no se deben usar para cargar mapas, sólo se deben usar como etiquetas padre. "
+"El límite práctico para nsegments parece ser alrededor de 250-300, valores "
+"más altos provocarán un desbordamiento de pila en el núcleo (el hardware "
+"normalmente no puede soportar tantos buffers scatter-gather de todas formas)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:367
@@ -1545,11 +1671,14 @@ msgid ""
 "_maxsegsz_ - maximal size of a scatter-gather segment supported by the "
 "device. The maximal value for ISA device would be `BUS_SPACE_MAXSIZE_24BIT`."
 msgstr ""
+"_maxsegsz_ - máximo tamaño de un segmento scatter-gather soportado por el "
+"dispositivo. El valor máximo para un dispositivo ISA sería "
+"`BUS_SPACE_MAXSIZE_24BIT`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:368
 msgid "_flags_ - a bitmap of flags. The only interesting flag is:"
-msgstr ""
+msgstr "_flags_ - un mapa de bits de flags. El único flag interesante es:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:370
@@ -1557,26 +1686,31 @@ msgid ""
 "_BUS_DMA_ALLOCNOW_ - requests to allocate all the potentially needed bounce "
 "pages when creating the tag."
 msgstr ""
+"_BUS_DMA_ALLOCNOW_ - solicita reservar todas las páginas \"bounce\" "
+"potencialmente necesarias cuando se crea la etiqueta."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:372
 msgid "_dmat_ - pointer to the storage for the new tag to be returned."
 msgstr ""
+"_dmat_ - puntero al almacenamiento que se devolverá para la nueva etiqueta."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:374
 msgid "`int bus_dma_tag_destroy(bus_dma_tag_t dmat)`"
-msgstr ""
+msgstr "`int bus_dma_tag_destroy(bus_dma_tag_t dmat)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:376
 msgid "Destroy a tag. Returns 0 on success, the error code otherwise."
 msgstr ""
+"Destruye una etiqueta. Devuelve 0 en caso de éxito, el código de error en "
+"caso contrario."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:378
 msgid "dmat - the tag to be destroyed."
-msgstr ""
+msgstr "dmat - la etiqueta a destruir."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:379
@@ -1584,6 +1718,8 @@ msgid ""
 "`int bus_dmamem_alloc(bus_dma_tag_t dmat, void** vaddr, int flags, "
 "bus_dmamap_t *mapp)`"
 msgstr ""
+"`int bus_dmamem_alloc(bus_dma_tag_t dmat, void** vaddr, int flags, "
+"bus_dmamap_t *mapp)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:381
@@ -1593,6 +1729,11 @@ msgid ""
 "code otherwise. The result still has to be loaded by `bus_dmamap_load()` "
 "before being used to get the physical address of the memory."
 msgstr ""
+"Reserva un área contigua de memoria descrita por la etiqueta. El tamaño de "
+"la memoria a reservar es el maxsize de la etiqueta. Devuelve 0 en caso de "
+"éxito, el código de error en caso contrario. El resultado todavía tiene que "
+"ser cargado con `bus_dmamap_load()` antes de ser usado para obtener la "
+"dirección física de la memoria."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:383
@@ -1600,7 +1741,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:403
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:418
 msgid "_dmat_ - the tag"
-msgstr ""
+msgstr "_dmat_ - la etiqueta"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:384
@@ -1608,11 +1749,13 @@ msgid ""
 "_vaddr_ - pointer to the storage for the kernel virtual address of the "
 "allocated area to be returned."
 msgstr ""
+"_vaddr_ - puntero al almacenamiento para la dirección virtual del núcleo del "
+"área reservada que será devuelta."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:385
 msgid "flags - a bitmap of flags. The only interesting flag is:"
-msgstr ""
+msgstr "flags - un mapa de bits de flags. El único flag interesante es:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:387
@@ -1621,17 +1764,22 @@ msgid ""
 "error. If this flag is not set then the routine is allowed to sleep until "
 "the memory becomes available."
 msgstr ""
+"_BUS_DMA_NOWAIT_ - si la memoria no está disponible inmediatamente devuelve "
+"el error. Si este flag no se usa entonces se permite dormir a la rutina "
+"hasta que la memoria esté disponible."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:389
 msgid "_mapp_ - pointer to the storage for the new map to be returned."
 msgstr ""
+"_mapp_ - puntero al almacenamiento para el nuevo mapa que será devuelto."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:391
 msgid ""
 "`void bus_dmamem_free(bus_dma_tag_t dmat, void *vaddr, bus_dmamap_t map)`"
 msgstr ""
+"`void bus_dmamem_free(bus_dma_tag_t dmat, void *vaddr, bus_dmamap_t map)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:393
@@ -1643,22 +1791,29 @@ msgid ""
 "it again. That does not mean that `bus_dmamem_free()` should not be used at "
 "all: hopefully it will be properly implemented soon."
 msgstr ""
+"Libera la memoria reservada por `bus_dmamem_alloc()`. En este momento, "
+"liberar la memoria reservada con restricciones ISA no está implementado. "
+"Debido a esto el modo de uso recomendado es mantener y reutilizar las áreas "
+"reservadas tanto tiempo como sea posible. No liberes áreas alegremente y "
+"luego vuelvas a reservarlas. Eso no significa que `bus_dmamem_free()`no deba "
+"usarse nunca: con suerte será implementada pronto."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:396
 msgid "_vaddr_ - the kernel virtual address of the memory"
-msgstr ""
+msgstr "_vaddr_ - la dirección virtual del núcleo para la memoria"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:397
 msgid "_map_ - the map of the memory (as returned from `bus_dmamem_alloc()`)"
-msgstr ""
+msgstr "_map_ - el mapa de memoria (como lo devuelve `bus_dmamem_alloc()`)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:399
 msgid ""
 "`int bus_dmamap_create(bus_dma_tag_t dmat, int flags, bus_dmamap_t *mapp)`"
 msgstr ""
+"`int bus_dmamap_create(bus_dma_tag_t dmat, int flags, bus_dmamap_t *mapp)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:401
@@ -1666,6 +1821,8 @@ msgid ""
 "Create a map for the tag, to be used in `bus_dmamap_load()` later. Returns 0 "
 "on success, the error code otherwise."
 msgstr ""
+"Crea un mapa para la etiqueta, para ser usado después en `bus_dmamap_load()`"
+". Devuelve 0 en caso de éxito, el código de error en caso contrario."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:404
@@ -1673,31 +1830,35 @@ msgid ""
 "_flags_ - theoretically, a bit map of flags. But no flags are defined yet, "
 "so at present it will be always 0."
 msgstr ""
+"_flags_ - en teoría, un mapa de bits de flags. Pero no hay flags definidos "
+"todavía, así que actualmente será siempre 0."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:405
 msgid "_mapp_ - pointer to the storage for the new map to be returned"
-msgstr ""
+msgstr "_mapp_ - puntero al almacenamiento para el nuevo mapa que será devuelto"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:407
 msgid "`int bus_dmamap_destroy(bus_dma_tag_t dmat, bus_dmamap_t map)`"
-msgstr ""
+msgstr "`int bus_dmamap_destroy(bus_dma_tag_t dmat, bus_dmamap_t map)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:409
 msgid "Destroy a map. Returns 0 on success, the error code otherwise."
 msgstr ""
+"Destruye un mapa. Devuelve 0 en caso de éxito, el código de error en caso "
+"contrario."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:411
 msgid "dmat - the tag to which the map is associated"
-msgstr ""
+msgstr "dmat - la etiqueta a la que está asociado el mapa"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:412
 msgid "map - the map to be destroyed"
-msgstr ""
+msgstr "map - el mapa a destruir"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:414
@@ -1706,6 +1867,9 @@ msgid ""
 "bus_size_t buflen, bus_dmamap_callback_t *callback, void *callback_arg, int "
 "flags)`"
 msgstr ""
+"`int bus_dmamap_load(bus_dma_tag_t dmat, bus_dmamap_t map, void *buf, "
+"bus_size_t buflen, bus_dmamap_callback_t *callback, void *callback_arg, int "
+"flags)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:416
@@ -1723,26 +1887,38 @@ msgid ""
 "for future execution. In the latter case the synchronization with queued "
 "callback routine is the responsibility of the driver."
 msgstr ""
+"Carga un búfer en el mapa (el mapa debe haber sido creado previamente con "
+"`bus_dmamap_create()` o `bus_dmamem_alloc()`). Se comprueban todos los "
+"búfers para asegurar que siguen los requisitos de la etiqueta y para "
+"aquellos que no lo hacen se reservan páginas \"bounce\". Un array de "
+"descriptores de segmentos físicos es construido y pasado a la rutina de "
+"callback. Se espera que esta rutina de callback lo maneje de alguna forma. "
+"El número de búfers \"bounce\" en el sistema está limitado, así que si los "
+"búfers \"bounce\" son necesarios pero no están disponibles inmediatamente se "
+"encolará la solicitud y el callback se llamará cuando estén disponibles. "
+"Devuelve 0 si el callback se ejecutó inmediatamente o `EINPROGRESS` si la "
+"solicitud fue encolada para ejecutarse más tarde. En este último caso la "
+"sincronización con la rutina de callback es responsabilidad del controlador."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:419
 msgid "_map_ - the map"
-msgstr ""
+msgstr "_map_ - el mapa"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:420
 msgid "_buf_ - kernel virtual address of the buffer"
-msgstr ""
+msgstr "_buf_ - dirección virtual del núcleo para el búfer"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:421
 msgid "_buflen_ - length of the buffer"
-msgstr ""
+msgstr "_buflen_ - longitud del búfer"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:422
 msgid "_callback_, `callback_arg` - the callback function and its argument"
-msgstr ""
+msgstr "_callback_, `callback_arg` - la función de callback y su argumento"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:424
@@ -1750,21 +1926,23 @@ msgid ""
 "The prototype of callback function is: `void callback(void *arg, "
 "bus_dma_segment_t *seg, int nseg, int error)`"
 msgstr ""
+"El prototipo de la función de callback es: `void callback(void *arg, "
+"bus_dma_segment_t *seg, int nseg, int error)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:426
 msgid "_arg_ - the same as callback_arg passed to `bus_dmamap_load()`"
-msgstr ""
+msgstr "_arg_ - el mismo que callback_arg que se pasa a `bus_dmamap_load()`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:427
 msgid "_seg_ - array of the segment descriptors"
-msgstr ""
+msgstr "_seg_ - array de descriptores de segmento"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:428
 msgid "_nseg_ - number of descriptors in array"
-msgstr ""
+msgstr "_nseg_ - número de descriptores en el array"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:429
@@ -1776,43 +1954,50 @@ msgid ""
 "desired semantics it can either consider this an error or split the buffer "
 "in two and handle the second part separately"
 msgstr ""
+"_error_ - indicación de desbordamiento del número de segmento: si se "
+"establece a `EFBIG` entonces el búfer no entró dentro del máximo número de "
+"segmentos permitido por la etiqueta. En este caso sólo el número de "
+"descriptores permitidos estará en el array. Manejar esta situación es cosa "
+"del controlador: dependiendo de la semántica que se quiere se puede "
+"considerar un error o partir el búfer en dos y manejar la segunda parte de "
+"forma separada"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:431
 msgid "Each entry in the segments array contains the fields:"
-msgstr ""
+msgstr "Cada entrada en el array de segmentos contiene los campos:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:433
 msgid "_ds_addr_ - physical bus address of the segment"
-msgstr ""
+msgstr "_ds_addr_ - dirección física del bus para el segmento"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:434
 msgid "_ds_len_ - length of the segment"
-msgstr ""
+msgstr "_ds_len_ - longitud del segmento"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:436
 msgid "`void bus_dmamap_unload(bus_dma_tag_t dmat, bus_dmamap_t map)`"
-msgstr ""
+msgstr "`void bus_dmamap_unload(bus_dma_tag_t dmat, bus_dmamap_t map)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:438
 msgid "unload the map."
-msgstr ""
+msgstr "descarga un mapa."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:440
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:447
 msgid "_dmat_ - tag"
-msgstr ""
+msgstr "_dmat_ - etiqueta"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:441
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:448
 msgid "_map_ - loaded map"
-msgstr ""
+msgstr "_map_ - mapa cargado"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:443
@@ -1820,6 +2005,8 @@ msgid ""
 "`void bus_dmamap_sync (bus_dma_tag_t dmat, bus_dmamap_t map, "
 "bus_dmasync_op_t op)`"
 msgstr ""
+"`void bus_dmamap_sync (bus_dma_tag_t dmat, bus_dmamap_t map, "
+"bus_dmasync_op_t op)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:445
@@ -1829,31 +2016,39 @@ msgid ""
 "copying of data between the original buffer and its mapped version. The "
 "buffers must be synchronized both before and after doing the transfer."
 msgstr ""
+"Sincroniza un búfer cargado con sus páginas \"bounce\" antes y después de "
+"una transferencia física a o desde el dispositivo. Esta es la función que "
+"hace todas las copias de datos necesarias entre el búfer original y su "
+"versión mapeada. Los búfers deben ser sincronizados tanto antes como después "
+"de la transferencia."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:449
 msgid "_op_ - type of synchronization operation to perform:"
-msgstr ""
+msgstr "_op_ - la operación de sincronización a realizar:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:451
 msgid "`BUS_DMASYNC_PREREAD` - before reading from device into buffer"
 msgstr ""
+"`BUS_DMASYNC_PREREAD` - antes de leer desde el dispositivo y hacia el búfer"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:452
 msgid "`BUS_DMASYNC_POSTREAD` - after reading from device into buffer"
 msgstr ""
+"`BUS_DMASYNC_POSTREAD` - después de leer desde el dispositivo hacia el búfer"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:453
 msgid "`BUS_DMASYNC_PREWRITE` - before writing the buffer to device"
-msgstr ""
+msgstr "`BUS_DMASYNC_PREWRITE` - antes de escribir el búfer en el dispositivo"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:454
 msgid "`BUS_DMASYNC_POSTWRITE` - after writing the buffer to device"
 msgstr ""
+"`BUS_DMASYNC_POSTWRITE` - después de escribir el búfer en el dispositivo"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:456
@@ -1862,6 +2057,10 @@ msgid ""
 "the future, so they must not be ignored in the driver. Synchronization is "
 "not needed for the memory obtained from `bus_dmamem_alloc()`."
 msgstr ""
+"Actualmente PREREAD y POSTWRITE son operaciones null pero esto podría "
+"cambiar en el futuro, de forma que no deben ignorarse en el controlador. La "
+"sincronización no es necesaria para la memoria obtenida mediante "
+"`bus_dmamem_alloc()`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:458
@@ -1879,6 +2078,18 @@ msgid ""
 "portions: load part of the buffer, transfer it to the device, load next part "
 "of the buffer, and so on."
 msgstr ""
+"Antes de llamar a la función de callback desde `bus_dmamap_load()` se "
+"almacena el array de segmentos en la pila. Y se pre-reserva para el número "
+"máximo de segmentos permitidos por la etiqueta. Como resultado el límite "
+"práctico para el número de segmentos en arquitectura i386 es de cerca de 250-"
+"300 (la pila del núcleo es 4KB menos el tamaño de la estructura de usuario, "
+"tamaño de una entrada del array de segmentos es 8 btytes, y se debe dejar "
+"algo de espacio). Como el array se reserva basándose en el número máximo "
+"este valor no se debe configurar más alto de lo necesario. Afortunadamente, "
+"para la mayoría del hardware el máximo soportado es mucho menor. Pero si el "
+"controlador quiere manejar búfers con un número muy grande de segmentos "
+"scatter-gather debería hacerlo por trozos: carga parte del búfer, lo "
+"transfiere al dispositivo, carga la siguiente parte del búfer, etc."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:460
@@ -1891,6 +2102,13 @@ msgid ""
 "size would be 40K. If a higher size is desired then special tricks should be "
 "used in the driver."
 msgstr ""
+"Otra consecuencia práctica es que el número de segmentos podría limitar el "
+"tamaño del búfer. Si todas las páginas en el búfer no son contiguas "
+"físicamente entonces el tamaño máximo de búfer soportado para ese caso "
+"fragmentado sería de (nsegments * page_size). Por ejemplo, si se soporta un "
+"número máximo de 10 segmentos entonces en i386 el tamaño máximo de búfer "
+"soportado garantizado sería de 40K. Si se desea un tamaño mayor se deben "
+"usar trucos especiales en el controlador."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:462
@@ -1900,6 +2118,10 @@ msgid ""
 "solution is to allocate a contiguous buffer in the driver and use it as "
 "intermediate storage if the original buffer does not fit."
 msgstr ""
+"Si el hardware no soporta scatter-gather en absoluto o si el controlador "
+"quiere soportador un tamaño de búfer incluso si está muy fragmentado "
+"entonces la solución es reservar un búfer contiguo en el controlador y "
+"usarlo como almacenamiento intermedio si el búfer original no cabe."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:464
@@ -1907,6 +2129,9 @@ msgid ""
 "Below are the typical call sequences when using a map depend on the use of "
 "the map. The characters -> are used to show the flow of time."
 msgstr ""
+"Abajo están las secuencias de llamadas típicas cuando se usa un mapa "
+"dependiendo del uso del mismo. Los caracteres -> se usan para mostrar el "
+"flujo de tiempo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:466
@@ -1914,6 +2139,8 @@ msgid ""
 "For a buffer which stays practically fixed during all the time between "
 "attachment and detachment of a device:"
 msgstr ""
+"Para un búfer que permanece prácticamente fijo durante todo el tiempo desde "
+"que se adjunta hasta que se libera de un dispositivo:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:468
@@ -1921,12 +2148,16 @@ msgid ""
 "bus_dmamem_alloc -> bus_dmamap_load -> ...use buffer... -> -> "
 "bus_dmamap_unload -> bus_dmamem_free"
 msgstr ""
+"bus_dmamem_alloc -> bus_dmamap_load -> ...use buffer... -> -> "
+"bus_dmamap_unload -> bus_dmamem_free"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:470
 msgid ""
 "For a buffer that changes frequently and is passed from outside the driver:"
 msgstr ""
+"Para un búfer que cambia frecuentemente y que es pasado desde fuera del "
+"controlador:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:479
@@ -1940,6 +2171,13 @@ msgid ""
 "          -> bus_dmamap_sync(POST...) -> bus_dmamap_unload ->\n"
 "          -> bus_dmamap_destroy\n"
 msgstr ""
+"          bus_dmamap_create ->\n"
+"          -> bus_dmamap_load -> bus_dmamap_sync(PRE...) -> do transfer ->\n"
+"          -> bus_dmamap_sync(POST...) -> bus_dmamap_unload ->\n"
+"          ...\n"
+"          -> bus_dmamap_load -> bus_dmamap_sync(PRE...) -> do transfer ->\n"
+"          -> bus_dmamap_sync(POST...) -> bus_dmamap_unload ->\n"
+"          -> bus_dmamap_destroy\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:482
@@ -1951,11 +2189,17 @@ msgid ""
 "executed immediately (EINPROGRESS will never be returned). All the callback "
 "needs to do in this case is to save the physical address."
 msgstr ""
+"Cuando se carga un mapa creado por `bus_dmamem_alloc()` la dirección pasada "
+"y el tamaño del búfer deben ser los mismos usados en `bus_dmamem_alloc()`. "
+"En este caso se garantiza que todo el búfer se mapeará como un sólo segmente "
+"(de forma que el callback puede asumir esto) y la solicitud se ejecutará "
+"inmediatamente (nunca se devolverá EINPROGRESS). Todo lo que necesita hacer "
+"el callback en este caso es guardar la dirección física."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:484
 msgid "A typical example would be:"
-msgstr ""
+msgstr "Un ejemplo típico sería:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:492
@@ -1967,6 +2211,12 @@ msgid ""
 "          *(bus_addr_t *)arg = seg[0].ds_addr;\n"
 "        }\n"
 msgstr ""
+"          static void\n"
+"        alloc_callback(void *arg, bus_dma_segment_t *seg, int nseg, int "
+"error)\n"
+"        {\n"
+"          *(bus_addr_t *)arg = seg[0].ds_addr;\n"
+"        }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:503
@@ -1983,6 +2233,16 @@ msgid ""
 "          bus_dmamap_t map_somedata;\n"
 "          ...\n"
 msgstr ""
+"          ...\n"
+"          int error;\n"
+"          struct somedata {\n"
+"            ....\n"
+"          };\n"
+"          struct somedata *vsomedata; /* virtual address */\n"
+"          bus_addr_t psomedata; /* physical bus-relative address */\n"
+"          bus_dma_tag_t tag_somedata;\n"
+"          bus_dmamap_t map_somedata;\n"
+"          ...\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:511
@@ -1996,6 +2256,14 @@ msgid ""
 "          if(error)\n"
 "          return error;\n"
 msgstr ""
+"          error=bus_dma_tag_create(parent_tag, alignment,\n"
+"           boundary, lowaddr, highaddr, /*filter*/ NULL, /*filterarg*/ NULL,"
+"\n"
+"           /*maxsize*/ sizeof(struct somedata), /*nsegments*/ 1,\n"
+"           /*maxsegsz*/ sizeof(struct somedata), /*flags*/ 0,\n"
+"           &tag_somedata);\n"
+"          if(error)\n"
+"          return error;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:516
@@ -2006,6 +2274,10 @@ msgid ""
 "          if(error)\n"
 "             return error;\n"
 msgstr ""
+"          error = bus_dmamem_alloc(tag_somedata, &vsomedata, /* flags*/ 0,\n"
+"             &map_somedata);\n"
+"          if(error)\n"
+"             return error;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:520
@@ -2015,6 +2287,9 @@ msgid ""
 "             sizeof (struct somedata), alloc_callback,\n"
 "             (void *) &psomedata, /*flags*/0);\n"
 msgstr ""
+"          bus_dmamap_load(tag_somedata, map_somedata, (void *)vsomedata,\n"
+"             sizeof (struct somedata), alloc_callback,\n"
+"             (void *) &psomedata, /*flags*/0);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:523
@@ -2024,6 +2299,10 @@ msgid ""
 "would be a really good idea to combine them all into one structure and "
 "allocate as one (if the alignment and boundary limitations permit)."
 msgstr ""
+"Parece un poco largo y complicado pero es la forma de hacerlo. La "
+"consecuencia práctica es: si se reservan múltiples áreas de memoria siempre "
+"juntas sería una buena idea combinarlas en una sola estructura y reservarlas "
+"como una sola (si el alineamiento y los límites lo permiten)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:525
@@ -2032,6 +2311,10 @@ msgid ""
 "`bus_dmamap_create()` special measures must be taken to synchronize with the "
 "callback in case it would be delayed. The code would look like:"
 msgstr ""
+"Cuando se carga un búfer arbitrario en el mapa creado por "
+"`bus_dmamap_create()` se tienen que tomar medidas especiales para "
+"sincronizar el callback en caso de que se retrasara. El código se parecería "
+"a :"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:531
@@ -2041,6 +2324,9 @@ msgid ""
 "           int s;\n"
 "           int error;\n"
 msgstr ""
+"          {\n"
+"           int s;\n"
+"           int error;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:550
@@ -2065,11 +2351,29 @@ msgid ""
 "           splx(s);\n"
 "          }\n"
 msgstr ""
+"           s = splsoftvm();\n"
+"           error = bus_dmamap_load(\n"
+"               dmat,\n"
+"               dmamap,\n"
+"               buffer_ptr,\n"
+"               buffer_len,\n"
+"               callback,\n"
+"               /*callback_arg*/ buffer_descriptor,\n"
+"               /*flags*/0);\n"
+"           if (error == EINPROGRESS) {\n"
+"               /*\n"
+"                * Do whatever is needed to ensure synchronization\n"
+"                * with callback. Callback is guaranteed not to be started\n"
+"                * until we do splx() or tsleep().\n"
+"                */\n"
+"              }\n"
+"           splx(s);\n"
+"          }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:553
 msgid "Two possible approaches for the processing of requests are:"
-msgstr ""
+msgstr "Dos posibles aproximaciones para el procesamiento de peticiones son:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:555
@@ -2081,6 +2385,12 @@ msgid ""
 "may be a good idea to freeze the request queue until this request gets "
 "completed."
 msgstr ""
+"Si las peticiones se completan marcándolas explícitamente como terminadas ("
+"como las peticiones CAM) entonces sería más sencillo poner todo el "
+"procesamiento siguiente en el callback del controlador que marcaría la "
+"petición cuando estuviera hecha. Entonces no se necesita mucha "
+"sincronización. Con motivo del flujo de control sería una buena idea "
+"congelar la cola de peticiones hasta que la petición se complete."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:557
@@ -2095,12 +2405,23 @@ msgid ""
 "Then after callback completes the calling function could use this saved "
 "segments array and do all the processing."
 msgstr ""
+"Si las peticiones se completan cuando la función retorna (como una petición "
+"clásica de lectura o escritura en un dispositivo de caracteres) entonces se "
+"debería establecer un flag de sincronización en el descriptor del búfer y "
+"después llamar a `tsleep()`. Más tarde cuando se llama al callback hará el "
+"procesamiento que le toque y comprobará el flag de sincronización. Si está "
+"establecido entonces el callback debería hacer un wakeup. En esta "
+"aproximación la función de callback podría hacer todo el procesamiento "
+"necesario (como en el caso anterior) o simplemente guardar el array de "
+"segmentos en el descriptor de búfer. Después de que el callback termine la "
+"función llamante podría usar este array de segmentos guardado y hacer todo "
+"el procesamiento."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:559
 #, no-wrap
 msgid "DMA"
-msgstr ""
+msgstr "DMA"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:562
@@ -2112,6 +2433,13 @@ msgid ""
 "FreeBSD provides a set of functions that mostly hide the annoying details of "
 "the DMA controller from the device drivers."
 msgstr ""
+"El Acceso Director a Memoria (DMA) se implementa en el bus ISA mediante el "
+"controlador DMA (en realidad, dos de ellos pero es un detalle irrelevante). "
+"Para hacer los primeros dispositivos ISA simples y baratos la lógica del bus "
+"de control y de generación de direcciones se concentró en el controlador "
+"DMA. Afortunadamente, FreeBSD proporciona un conjunto de funciones que "
+"ocultan mayoritariamente los detalles molestos del controlador DMA desde el "
+"punto de vista de los controladores de dispositivo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:564
@@ -2124,11 +2452,18 @@ msgid ""
 "enable the cascaded mode on a DMA channel by calling the following function "
 "when attaching the driver:"
 msgstr ""
+"El caso más simple es para los dispositivos medianamente inteligentes. Como "
+"los dispositivos maestros del bus PCI pueden generar los ciclos del bus y "
+"las direcciones de memoria por ellos mismos. Lo único que necesitan "
+"realmente del controlador DMA es arbitraje del bus. Para este propósito "
+"fingen ser controladores DMA esclavos en cascada. Y lo único que necesitan "
+"del controlador DMA es activa el modo en cascada en un canal DMA llamando a "
+"la siguiente función cuando se adjunta el controlador:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:566
 msgid "`void isa_dmacascade(int channel_number)`"
-msgstr ""
+msgstr "`void isa_dmacascade(int channel_number)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:568
@@ -2136,17 +2471,21 @@ msgid ""
 "All the further activity is done by programming the device. When detaching "
 "the driver no DMA-related functions need to be called."
 msgstr ""
+"El resto de la actividad se hace programando el dispositivo. Cuando se "
+"descarga un controlador no se necesita llamar a funciones de DMA."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:570
 msgid ""
 "For the simpler devices things get more complicated. The functions used are:"
 msgstr ""
+"Para los dispositivos más simples las cosas son más complicadas. Las "
+"funciones utilizadas son:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:572
 msgid "`int isa_dma_acquire(int chanel_number)`"
-msgstr ""
+msgstr "`int isa_dma_acquire(int chanel_number)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:574
@@ -2158,11 +2497,18 @@ msgid ""
 "interface of bus resources but still must be used in addition to the latter. "
 "If not used then later, other DMA routines will panic."
 msgstr ""
+"Reserva un canal DMA. Devuelve 0 en caso de éxito o EBUSY si el cana ya "
+"estaba reservado por este u otro controlador. De todos modos la mayoría de "
+"los dispositivos ISA no son capaces de compartir canales DMA, así que "
+"normalmente esta función se llama cuando se adjunta un dispositivo. Esta "
+"reserva se hizo redundante con el interfaz moderno de recursos del bus pero "
+"todavía puede ser utilizado con el anterior. Si no se usa, otras rutinas DMA "
+"fallarán."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:575
 msgid "`int isa_dma_release(int chanel_number)`"
-msgstr ""
+msgstr "`int isa_dma_release(int chanel_number)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:577
@@ -2171,11 +2517,14 @@ msgid ""
 "when the channel is released (in addition the device must not try to "
 "initiate transfer after the channel is released)."
 msgstr ""
+"Libera un canal DMA reservado anteriormente. No debe haber transferencias en "
+"curso cuando se libera el canal (además el dispositivo no debe intentar "
+"iniciar transferencias después de que el canal haya sido liberado)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:578
 msgid "`void isa_dmainit(int chan, u_int bouncebufsize)`"
-msgstr ""
+msgstr "`void isa_dmainit(int chan, u_int bouncebufsize)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:580
@@ -2191,16 +2540,26 @@ msgid ""
 "controller. The bounce buffer will automatically care of the scatter-gather "
 "issues."
 msgstr ""
+"Reserva un búfer \"bounce\" para usarse con el canal especificado. El tamaño "
+"solicitado del búfer no puede exceder los 64KB. Este búfer \"bounce\" se "
+"usará automáticamente si un búfer para una transferencia no es físicamente "
+"contiguo o está fuera de la memoria accesible por el bus ISA o cruza el "
+"límite de los 64KB. Si las transferencias siempre se van a hacer desde "
+"búfers que cumplen estas condiciones (como aquellos reservados por "
+"`bus_dmamem_alloc()`con los límites adecuados) entonces no se necesita "
+"llamar a `isa_dmainit()`. Pero es muy útil para transferir datos arbitrarios "
+"usando el controlador DMA. El búfer \"bounce\" se encargará automáticamente "
+"de los problemas de scatter-gather."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:582
 msgid "_chan_ - channel number"
-msgstr ""
+msgstr "_chan_ - número de canal"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:583
 msgid "_bouncebufsize_ - size of the bounce buffer in bytes"
-msgstr ""
+msgstr "_bouncebufsize_ - tamaño en bytes del búfer \"bounce\""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:585
@@ -2233,11 +2592,13 @@ msgid ""
 "flags - a bitmask determining the type of operation to be done. The "
 "direction bits B_READ and B_WRITE are mutually exclusive."
 msgstr ""
+"flags - un mapa de bits que determina el tipo de operación a realizar. Los "
+"bits de dirección B_READ y B_WRITE son mutuamente excluyentes."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:590
 msgid "B_READ - read from the ISA bus into memory"
-msgstr ""
+msgstr "B_READ - lee desde el bus ISA hacia memoria"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:591
@@ -2255,6 +2616,14 @@ msgid ""
 "will have to be called again before initiating the next transfer. Using "
 "B_RAW makes sense only if the bounce buffer is not used."
 msgstr ""
+"B_RAW - si se establece entonces el controlador DMA recordará el búfer y "
+"después de la transferencia se reiniciará a sí mismo automáticamente para "
+"repetir la transferencia del mismo búfer (por supuesto, el controlador puede "
+"cambiar los datos en el búfer antes de iniciar otra transferencia en el "
+"dispositivo). Si no se establece entonces los parámetros funcionarán sólo "
+"para una transferencia, y se tendrá que llamar de nuevo a `isa_dmastart()` "
+"antes de iniciar la siguiente transferencia. Usar B_RAW sólo tiene sentido "
+"si no se usa un búfer \"bounce\"."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:594
@@ -2319,11 +2688,18 @@ msgid ""
 "number of bytes is not 0 then something probably went wrong with that "
 "transfer."
 msgstr ""
+"Devuelve el número de bytes que faltan por transferir en la transferencia "
+"actual. En caso de que se estableciera el flag B_READ en `isa_dmastart()` el "
+"número devuelto nunca será cero. Al final de la transferencia se reseteará "
+"automáticamente al tamaño del búfer. El uso normal es comprobar el número de "
+"bytes pendientes después de que el dispositivo señalice que la transferencia "
+"se ha completado. Si el número de bytes no es 0 entonces algo ha ido mal con "
+"la transferencia."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:603
 msgid "`int isa_dmastop(int channel_number)`"
-msgstr ""
+msgstr "`int isa_dmastop(int channel_number)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:605
@@ -2331,12 +2707,14 @@ msgid ""
 "Aborts the current transfer and returns the number of bytes left "
 "untransferred."
 msgstr ""
+"Aborta la transferencia actual y devuelve el número de bytes que quedan por "
+"transferir."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:607
 #, no-wrap
 msgid "xxx_isa_probe"
-msgstr ""
+msgstr "xxx_isa_probe"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:610
@@ -2345,6 +2723,10 @@ msgid ""
 "detection of some part of device configuration (such as interrupt vector or "
 "memory address) this auto-detection must be done in this routine."
 msgstr ""
+"Esta función sondea si un dispositivo está presente. Si el controlador "
+"soporta auto-detección de alguna parte de la configuración (como un vector "
+"de interrupción o dirección de memoria) esta auto-detección se debe hacer en "
+"esta rutina."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:612
@@ -2355,6 +2737,12 @@ msgid ""
 "not present. Other error values may mean other conditions. Zero or negative "
 "values mean success. Most of the drivers return zero as success."
 msgstr ""
+"Como en cualquier otro bus, si el dispositivo no puede ser detectado o es "
+"detectado pero falla en el auto chequeo o hay algún otro problema entonces "
+"devuelve un valor de error positivo. El valor `ENXIO` se debe devolver si el "
+"dispositivo no está presente. Otros valores pueden significar otras "
+"condiciones. Cero o valores negativos significan éxito. La mayoría de los "
+"controladores devuelven cero como éxito."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:614
@@ -2403,6 +2791,22 @@ msgid ""
 "resources between returning 0 from the probe routine and execution of the "
 "attach routine."
 msgstr ""
+"El descriptor de dispositivo struct xxx_softc es reservado por el sistema "
+"antes de llamar a la rutina de sondeo. Si la rutina de sondeo devuelve error "
+"el sistema libera el descriptor automáticamente. De forma que si ocurre un "
+"error de sondeo el controlador debe asegurarse de que todos los recursos "
+"usados durante el sondeo son liberados y que nada impide que el descriptor "
+"pueda ser liberado con seguridad. Si el sondeo termina con éxito el sistema "
+"guardará el descriptor y lo pasará posteriormente a la rutina "
+"`xxx_isa_attach()`. Si un controlador devuelve un valor negativo no puede "
+"estar seguro de que tendrá la máxima prioridad y se llamará a su rutina de "
+"adjuntar. En este caso también debe liberar los recursos antes de regresar y "
+"si es necesario reservarlos de nuevo en la rutina de adjuntar. Cuando "
+"`xxx_isa_probe()` devuelve 0 también es buena idea liberar los recursos "
+"antes de volver y un buen controlador debería hacerlo. Pero en casos donde "
+"hay algún problema liberando recursos se permite al controlador mantenerlos "
+"entre que devuelve 0 desde la rutina de sondeo y la ejecución de la rutina "
+"de adjuntar."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:618
@@ -2512,6 +2916,12 @@ msgid ""
 "automatically. The PnP devices have all the resources pre-set by the PnP "
 "subsystem, so the driver does not need to discover them by itself."
 msgstr ""
+"Normalmente la rutina de sondeo necesita al menos un conjunto mínimo de "
+"recursos, como números de puerto de I/O para encontrar la tarjeta y "
+"sondearla. Dependiendo del hardware el controlador puede ser capaz de "
+"descubrir otros recursos automáticamente. Los dispositivos PnP tienen todos "
+"los recursos preestablecidos por el subsistema PnP, así que el controlador "
+"no necesita descubrirlos por él mismo."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:654
@@ -2521,6 +2931,11 @@ msgid ""
 "from the device configuration registers (though not all devices do that). So "
 "first we try to get the port start value:"
 msgstr ""
+"Típicamente la información mínima necesaria para acceder al dispositivo es "
+"el número de puerto de I/O. Después algunos dispositivos permiten obtener el "
+"resto de la información de los registros de configuración del dispositivo ("
+"aunque no todos los dispositivos lo hacen). Así que primero intentamos "
+"obtener el valor de inicio del puerto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:659
@@ -2529,6 +2944,8 @@ msgid ""
 " sc->port0 = bus_get_resource_start(dev,\n"
 "        SYS_RES_IOPORT, 0 /*rid*/); if(sc->port0 == 0) return ENXIO;\n"
 msgstr ""
+" sc->port0 = bus_get_resource_start(dev,\n"
+"        SYS_RES_IOPORT, 0 /*rid*/); if(sc->port0 == 0) return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:662
@@ -2539,6 +2956,11 @@ msgid ""
 "device drivers can instead be clever and try to probe all the possible "
 "ports, like this:"
 msgstr ""
+"La dirección base del puerto se salva en la estructura softc para su uso "
+"posterior. Se fuera a usarse muy a menudo llamar a la función del recurso "
+"cada vez sería muy lento. Si no obtenemos un puerto simplemente devolvemos "
+"un error. Algunos controladores de dispositivo pueden intentar ser listos y "
+"probar a sondear todos los puertos posibles, de esta forma:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:676
@@ -2555,6 +2977,18 @@ msgid ""
 "              { 0, 0 } /* end of table */\n"
 "          };\n"
 msgstr ""
+"          /* table of all possible base I/O port addresses for this device */"
+"\n"
+"          static struct xxx_allports {\n"
+"              u_short port; /* port address */\n"
+"              short used; /* flag: if this port is already used by some unit "
+"*/\n"
+"          } xxx_allports = {\n"
+"              { 0x300, 0 },\n"
+"              { 0x320, 0 },\n"
+"              { 0x340, 0 },\n"
+"              { 0, 0 } /* end of table */\n"
+"          };\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:680
@@ -2564,6 +2998,9 @@ msgid ""
 "          int port, i;\n"
 "          ...\n"
 msgstr ""
+"          ...\n"
+"          int port, i;\n"
+"          ...\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:686
@@ -2575,6 +3012,11 @@ msgid ""
 "                  if(xxx_allports[i].used || xxx_allports[i].port != port)\n"
 "                      continue;\n"
 msgstr ""
+"          port =  bus_get_resource_start(dev, SYS_RES_IOPORT, 0 /*rid*/);\n"
+"          if(port !=0 ) {\n"
+"              for(i=0; xxx_allports[i].port!=0; i++) {\n"
+"                  if(xxx_allports[i].used || xxx_allports[i].port != port)\n"
+"                      continue;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:694
@@ -2588,6 +3030,13 @@ msgid ""
 "              return ENXIO; /* port is unknown or already used */\n"
 "          }\n"
 msgstr ""
+"                  /* found it */\n"
+"                  xxx_allports[i].used = 1;\n"
+"                  /* do probe on a known port */\n"
+"                  return xxx_really_probe(dev, port);\n"
+"              }\n"
+"              return ENXIO; /* port is unknown or already used */\n"
+"          }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:699
@@ -2598,6 +3047,10 @@ msgid ""
 "              if(xxx_allports[i].used)\n"
 "                  continue;\n"
 msgstr ""
+"          /* we get here only if we need to guess the port */\n"
+"          for(i=0; xxx_allports[i].port!=0; i++) {\n"
+"              if(xxx_allports[i].used)\n"
+"                  continue;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:704
@@ -2717,6 +3170,10 @@ msgid ""
 "some way and check if it reacts like it is expected to. If it does not then "
 "there is probably some other device or no device at all at this address."
 msgstr ""
+"Ahora que tenemos acceso a los registros de los puertos mapeados podemos "
+"mirar en el dispositivo y comprobar si reacciona como se supone que debería "
+"hacerlo. Si no lo hace entonces probablemente haya otro dispositivo o no "
+"haya dispositivo en absoluto en esta dirección."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:743
@@ -2731,6 +3188,16 @@ msgid ""
 "supposed to delay for the same amount of time on any machine it has some "
 "margin of error, depending on the exact CPU."
 msgstr ""
+"Normalmente los controladores con configuran manejadores de interrupción "
+"hasta la rutina de adjuntar. En su lugar sondean en modo encuesta usando la "
+"función `DELAY()` como timeout. La rutina de sondeo nunca debe esperar para "
+"siempre, todas las esperas del dispositivo deben hacerse con timeouts. Si el "
+"dispositivo no responde dentro del tiempo está probablemente roto o mal "
+"configurado y el controlador debe devolver error. Cuando determines el "
+"intervalo de timeout concede algo de tiempo extra el dispositivo para "
+"asegurarte: aunque se supone que `DELAY()` debe esperar la misma cantidad de "
+"tiempo en cualquier máquina tiene algo de margen de error, dependiendo de la "
+"CPU exacta."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:745
@@ -2738,6 +3205,9 @@ msgid ""
 "If the probe routine really wants to check that the interrupts really work "
 "it may configure and probe the interrupts too. But that is not recommended."
 msgstr ""
+"Si la rutina de sondeo realmente quiere comprobar que las interrupciones "
+"funcionan puede configurar y sondear las interrupciones. Pero no se "
+"recomienda."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:752
@@ -2747,6 +3217,10 @@ msgid ""
 "          if(error = xxx_probe_ports(sc))\n"
 "              goto bad; /* will deallocate the resources before returning */\n"
 msgstr ""
+"          /* implemented in some very device-specific way */\n"
+"          if(error = xxx_probe_ports(sc))\n"
+"              goto bad; /* will deallocate the resources before returning */"
+"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:755
@@ -2757,6 +3231,11 @@ msgid ""
 "course, for the PnP devices the PnP support sets the description from the "
 "table automatically."
 msgstr ""
+"La función `xxx_probe_ports()`también puede establecer la descripción del "
+"dispositivo dependiendo del modelo exacto que descubre. Pero si sólo hay un "
+"modelo de dispositivo soportado también se puede establecer estáticamente. "
+"Por supuesto, para los dispositivos PnP el soporte de PnP establece la "
+"descripción desde la tabla automáticamente."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:760
@@ -2765,6 +3244,8 @@ msgid ""
 "          if(pnperror)\n"
 "              device_set_desc(dev, \"Our device model 1234\");\n"
 msgstr ""
+"          if(pnperror)\n"
+"              device_set_desc(dev, \"Our device model 1234\");\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:763
