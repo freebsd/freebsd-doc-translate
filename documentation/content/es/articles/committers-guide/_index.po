@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2023-07-15 16:42-0300\n"
-"PO-Revision-Date: 2023-07-21 04:45+0000\n"
+"PO-Revision-Date: 2023-07-24 08:11+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/articlescommitters-guide_index/es/>\n"
@@ -2757,6 +2757,7 @@ msgstr ""
 "Si ese fuera el caso (y todavía no hemos encontrado ninguno), cambiarías lo "
 "de arriba por '-m 2' para escoger el padre adecuado.\n"
 "Simplemente haz:\n"
+"[source,shell]\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:980
@@ -3776,9 +3777,9 @@ msgid ""
 msgstr ""
 "[NOTE]\n"
 "====\n"
-"Todavía no hemos conectado `glorbnitz` a la construcción. Hacerlo es "
-"específico al software que se importa y está fuera del alcance de este "
-"tutorial.\n"
+"Todavía no hemos conectado `glorbnitz` a la construcción.\n"
+"Hacerlo es específico al software que se importa y está fuera del alcance de "
+"este tutorial.\n"
 "====\n"
 
 #. type: Title =====
@@ -3886,7 +3887,8 @@ msgid ""
 "https://docs.github.com/en/free-pro-team@latest/github/using-git/resolving-merge-conflicts-after-a-git-rebase[This github document] can help you navigate this process.\n"
 msgstr ""
 "Esto traerá un pantalla interactiva para cambiar los valores por defecto.\n"
-"Por ahora, simplemente sal del editor. Todo debería aplicar.\n"
+"Por ahora, simplemente sal del editor.\n"
+"Todo debería aplicar.\n"
 "Si no, necesitarás resolver los diffs.\n"
 "https://docs.github.com/en/free-pro-team@latest/github/using-git/resolving-"
 "merge-conflicts-after-a-git-rebase[Este documento de github] te puede ayudar "
@@ -5689,13 +5691,96 @@ msgid ""
 "Subscribers to {dev-commits-doc-all}, {dev-commits-ports-all} or {dev-commits-src-all} might wish to unsubscribe to avoid receiving duplicate copies of commit messages and followups.\n"
 "====\n"
 msgstr ""
+". Añade una Entidad de Autor\n"
+"+\n"
+"[.filename]#doc/shared/authors.adoc# - Añade una entidad de autor. Los pasos "
+"posteriores dependen de esta entidad, y saltarse este paso provocará que la "
+"construcción de [.filename]#doc/# falle. Esta es una tarea relativamente "
+"sencilla, pero sigue siendo una buena primera tarea de prueba de las "
+"habilidades de control de versiones.\n"
+". Actualiza la Lista de Desarrolladores y Colaboradores\n"
+"+\n"
+"[.filename]#doc/shared/contrib-committers.adoc# - Añade una entrada, la cual "
+"aparecerá en la sección \"Developers\" de la ection of the "
+"extref:{contributors}[Lista de Colaboradores, staff-committers]. Las "
+"entradas están ordenadas por apellido.\n"
+"+\n"
+"[.filename]#doc/shared/contrib-additional.adoc# - _Elimina_ la entrada. Las "
+"entradas están ordenadas por nombre.\n"
+". Añade un Ítem a las Noticias\n"
+"+\n"
+"[.filename]#doc/website/data/en/news/news.toml# - Añade una entrada. Busca "
+"otras entradas que anuncien nuevos committers y sigue el formato. Usa la "
+"fecha del correo de aprobación del commit bit.\n"
+". Añade una Clave PGP\n"
+"+\n"
+"`{des}` ha escrito un shell script ([.filename]#doc/documentation/tools/"
+"addkey.sh#) para hacerlos más fácil. Lee el fichero https://cgit.freebsd.org/"
+"doc/plain/documentation/static/pgpkeys/README[README] para más información.\n"
+"+\n"
+"Usa [.filename]#doc/documentation/tools/checkkey.sh# para verificar que la "
+"clave cumple con el mínimo de las buenas prácticas estándar.\n"
+"+\n"
+"Después de añadir y comprobar la clave, añade ambos ficheros actualizados al "
+"control de código y luego haz commit. Las entradas en este fichero están "
+"ordenadas por apellido.\n"
+"+\n"
+"[NOTE]\n"
+"======\n"
+"Es muy importante tener una clave PGP/GnuPG actualizada en el repositorio. "
+"Se podría requerir la clave para identificar a un committer. Por ejemplo, el "
+"`{admins}` podría necesitarlo para recuperar una cuenta. Hay un llavero "
+"completo de usuarios de `FreeBSD.org` disponible para descarga desde "
+"link:https://docs.FreeBSD.org/pgpkeys/pgpkeys.txt[https://docs.FreeBSD.org/"
+"pgpkeys/pgpkeys.txt].\n"
+"======\n"
+". Actualiza la información del Mentor y el Alumno\n"
+"+\n"
+"[.filename]#src/share/misc/committers-<repository>.dot# - Añade una entrada "
+"a la sección de committers actuales, donde _repository_ es `doc`, `ports`, o "
+"`src`, dependiendo de los privilegios de commit concedidos.\n"
+"+\n"
+"Añade una entrada para cada relación mentor/alumno individual al final de la "
+"sección.\n"
+". Genera una Contraseña de Kerberos\n"
+"+\n"
+"Lee <<kerberos-ldap>> para generar o establecer una cuenta de Kerberos para "
+"utilizarla con otros servicios de FreeBSD como la link:https://bugs.freebsd."
+"org/bugzilla/[base de datos de bugs] (obtienes una cuenta en la base de "
+"datos como parte de ese paso).\n"
+". Opcional: Activa la Cuenta de la Wiki\n"
+"+\n"
+"link:https://wiki.freebsd.org[FreeBSD Wiki] Account - Una cuenta en la wiki "
+"permite compartir proyectos e ideas.\n"
+"Aquellos que todavía no tienen una cuenta pueden seguir las instrucciones en "
+"link:https://wiki.freebsd.org/Wiki/About[Wiki/About page] para obtener una.\n"
+"Contacta con mailto:wiki-admin@FreeBSD.org[wiki-admin@FreeBSD.org] si "
+"necesitas ayuda con tu cuenta Wiki.\n"
+". Opcional: Actualiza la Información de la Wiki\n"
+"+\n"
+"Información en la Wiki - Después de obtener acceso a la wiki, algunas "
+"personas añaden entradas a las páginas https://wiki.freebsd.org/HowWeGotHere["
+"Cómo Hemos Llegado Aquí], https://wiki.freebsd.org/IRC/Nicknames[Nicks de "
+"IRC], https://wiki.freebsd.org/Community/Dogs[Perros de FreeBSD], y o "
+"https://wiki.freebsd.org/Community/Cats[Gatos de FreeBSD].\n"
+". Opcional: Actualiza los Ports con Información Personal\n"
+"+\n"
+"[.filename]#ports/astro/xearth/files/freebsd.committers.markers# y [."
+"filename]#src/usr.bin/calendar/calendars/calendar.freebsd# - Algunas "
+"personas añaden entradas para ellos mismos a estos ficheros para mostrar "
+"dónde viven o su fecha de cumpleaños.\n"
+". Opcional: Evita Correos Duplicados\n"
+"+\n"
+"Los subscriptores de {dev-commits-doc-all}, {dev-commits-ports-all} o {dev-"
+"commits-src-all} podrían querer darse de baja para evitar recibir copias "
+"duplicadas de los mensajes de commit y de sus continuaciones.\n"
+"====\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2128
-#, fuzzy, no-wrap
-#| msgid "<<conventions-everyone>>"
+#, no-wrap
 msgid "[[conventions-everyone]]\n"
-msgstr "<<conventions-everyone>>"
+msgstr "[[conventions-everyone]]\n"
 
 #. type: Title ===
 #: documentation/content/en/articles/committers-guide/_index.adoc:2128
@@ -5731,11 +5816,38 @@ msgid ""
 "will not be subscribed to the committers or developers mailing lists. The "
 "subscriptions are derived from the access rights.  ====== ===="
 msgstr ""
+"[[conventions-everyone-steps]] [.procedure] ==== . Preséntate ante los otros "
+"desarrolladores, de otro modo nadie tendrá ni idea de quién eres o en qué "
+"trabajas. La presentación no tiene que ser una biografía completa, tan sólo "
+"escribe un párrafo o dos acerca de quién eres, en qué piensas trabajar como "
+"desarrollador de FreeBSD, y quién será tu mentor. Envía este correo a "
+"{developers-name} y habrás terminado. Entra en `freefall.FreeBSD.org` y crea "
+"un fichero [.filename]#/var/forward/usuario# (donde _usuario_ es tu nombre "
+"de usuario) que contenga la dirección de correo donde quieres que se "
+"reenvíen los correos dirigidos a _tunombredeusuario_@FreeBSD.org. Esto "
+"incluye todos los mensajes de commit así como cualquier otro correo enviado "
+"a {committers-name} y a {developers-name}. Los buzones de correo realmente "
+"grandes que están en `freefall` podrían ser truncados sin previo aviso si se "
+"necesita liberar espacio, así que reenvíalo o sálvalo en otra parte. + [NOTE]"
+" ======  Si tu sistema de correo electrónico usa SPF con reglas estrictas, "
+"deberías excluir `mx2.FreeBSD.org` de las comprobaciones de SPF.  ====== + "
+"Debido a la severa carga que tratar con SPAM produce en los servidores "
+"centrales de correo que hacen el procesamiento de las listas de correo, el "
+"servidor front-end hace algunas comprobaciones básicas y eliminará algunos "
+"mensajes basándose en estas comprobaciones. En este momento sólo se "
+"comprueba la que la información de DNS para el host que se conecta es la "
+"adecuada, pero esto podría cambiar. Algunas personas culpan a estas "
+"comprobaciones de bloquear correo válido. Para deshabilitar estas "
+"comprobaciones para tu correo, crea un fichero llamado [.filename]#~/."
+"spam_lover# en `freefall.FreeBSD.org`.  + [NOTE] ====== Aquellos que sean "
+"desarrolladores pero no committers no estarán suscritos a las listas de "
+"committers o desarrolladores. Las suscripciones se derivan de los permisos "
+"de acceso.  ====== ===="
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2150
 msgid "[[smtp-setup]]"
-msgstr ""
+msgstr "[[smtp-setup]]"
 
 #. type: Title ====
 #: documentation/content/en/articles/committers-guide/_index.adoc:2150
@@ -5768,11 +5880,23 @@ msgid ""
 "_username_`).  * Host has various rate limits in place to cut down on brute "
 "force attempts.  ====== ===="
 msgstr ""
+"[.procedure] ==== . Apunta tu cliente de correo a `smtp.FreeBSD.org:587`.  "
+"Activa STATTLS. Asegúrate de que tu dirección `From:` está establecida a "
+"`_tunombredeusuario_@FreeBSD.org`. Para la autenticación puedes usar tu "
+"nombre de usuario de Kerberos y tu contraseña (lee <<kerberos-ldap>>). Se "
+"prefiere el `_tunombredeusuario_/mail` principal, ya que sólo se usa para "
+"validar recursos de correo + [NOTE] ====== No incluyas `FreeBSD.org` cuando "
+"introduzcas tu nombre de usuario ====== + . Notas adicionales [NOTE] ====== *"
+" Sólo se aceptará correo desde `_tunombredeusuario_@FreeBSD.org`. Si estás "
+"autenticado como un usuario, no se te permite enviar correo como otro. * Se "
+"añadirá una cabecera con el nombre de usuario SASL: (`Authenticated sender: "
+"_username_`). * La máquina tiene varios límites de velocidad para cortar los "
+"intentos de fuerza bruta. ====== ===="
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2176
 msgid "[[smtp-setup-local-mta]]"
-msgstr ""
+msgstr "[[smtp-setup-local-mta]]"
 
 #. type: Title =====
 #: documentation/content/en/articles/committers-guide/_index.adoc:2176
@@ -5792,7 +5916,7 @@ msgstr ""
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2184
 msgid "[[smtp-setup-local-postfix]] .Using Postfix [example] ===="
-msgstr ""
+msgstr "[[smtp-setup-local-postfix]] .Usando Postfix [ejemplo] ===="
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2186
@@ -5808,37 +5932,28 @@ msgstr ""
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2188
 msgid "[.programlisting]"
-msgstr ""
+msgstr "[.programlisting]"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2194
-#, fuzzy
-#| msgid ""
-#| "sender_dependent_relayhost_maps = hash:/usr/local/etc/postfix/"
-#| "relayhost_maps\n"
-#| "smtp_sasl_auth_enable = yes\n"
-#| "smtp_sasl_security_options = noanonymous\n"
-#| "smtp_sasl_password_maps = hash:/usr/local/etc/postfix/sasl_passwd\n"
-#| "smtp_use_tls = yes\n"
 msgid ""
 "sender_dependent_relayhost_maps = hash:/usr/local/etc/postfix/relayhost_maps "
 "smtp_sasl_auth_enable = yes smtp_sasl_security_options = noanonymous "
 "smtp_sasl_password_maps = hash:/usr/local/etc/postfix/sasl_passwd "
 "smtp_use_tls = yes"
 msgstr ""
-"sender_dependent_relayhost_maps = hash:/usr/local/etc/postfix/"
-"relayhost_maps\n"
-"smtp_sasl_auth_enable = yes\n"
-"smtp_sasl_security_options = noanonymous\n"
-"smtp_sasl_password_maps = hash:/usr/local/etc/postfix/sasl_passwd\n"
-"smtp_use_tls = yes\n"
+"sender_dependent_relayhost_maps = hash:/usr/local/etc/postfix/relayhost_maps "
+"smtp_sasl_auth_enable = yes smtp_sasl_security_options = noanonymous "
+"smtp_sasl_password_maps = hash:/usr/local/etc/postfix/sasl_passwd "
+"smtp_use_tls = yes"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2197
-#, fuzzy, no-wrap
-#| msgid "Create [.filename]#/usr/local/etc/postfix/relayhost_maps# with the following content:"
+#, no-wrap
 msgid "Create [.filename]#/usr/local/etc/postfix/relayhost_maps# with the following content:\n"
-msgstr "Crea [.filename]#/usr/local/etc/postfix/relayhost_maps# con el siguiente contenido:"
+msgstr ""
+"Crea [.filename]#/usr/local/etc/postfix/relayhost_maps# con el siguiente "
+"contenido:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2199
@@ -5851,21 +5966,20 @@ msgstr "Crea [.filename]#/usr/local/etc/postfix/relayhost_maps# con el siguiente
 #: documentation/content/en/articles/committers-guide/_index.adoc:2290
 #, no-wrap
 msgid "[.programlisting]\n"
-msgstr ""
+msgstr "[.programlisting]\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2201
-#, fuzzy
-#| msgid "yourusername@FreeBSD.org  [smtp.freebsd.org]:587\n"
 msgid "yourusername@FreeBSD.org [smtp.freebsd.org]:587"
-msgstr "tunombredeusuario@FreeBSD.org  [smtp.freebsd.org]:587\n"
+msgstr "tunombredeusuario@FreeBSD.org [smtp.freebsd.org]:587"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2204
-#, fuzzy, no-wrap
-#| msgid "Create [.filename]#/usr/local/etc/postfix/sasl_passwd# with the following content:"
+#, no-wrap
 msgid "Create [.filename]#/usr/local/etc/postfix/sasl_passwd# with the following content:\n"
-msgstr "Crea [.filename]#/usr/local/etc/postfix/sasl_passwd# con el siguiente contenido:"
+msgstr ""
+"Crea [.filename]#/usr/local/etc/postfix/sasl_passwd# con el siguiente "
+"contenido:\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2208
@@ -5875,46 +5989,45 @@ msgstr "[smtp.freebsd.org]:587          tunombredeusuario:tucontraseña\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2211
-#, fuzzy, no-wrap
-#| msgid "If the email server is used by other people, you may want to prevent them from sending e-mails from your address. To achieve this, add this to your [.filename]#main.cf#:"
+#, no-wrap
 msgid "If the email server is used by other people, you may want to prevent them from sending e-mails from your address. To achieve this, add this to your [.filename]#main.cf#:\n"
-msgstr "Si otras personas utilizan el servidor de correo electrónico, es posible que quieras evitar que envíen correos electrónicos desde tu dirección. Para lograr esto, agrega esto a tu [.filename]#main.cf#:"
+msgstr ""
+"Si otras personas utilizan el servidor de correo electrónico, es posible que "
+"quieras evitar que envíen correos electrónicos desde tu dirección. Para "
+"lograr esto, agrega esto a tu [.filename]#main.cf#:\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2216
-#, fuzzy
-#| msgid ""
-#| "smtpd_sender_login_maps = hash:/usr/local/etc/postfix/sender_login_maps\n"
-#| "smtpd_sender_restrictions = reject_known_sender_login_mismatch\n"
 msgid ""
 "smtpd_sender_login_maps = hash:/usr/local/etc/postfix/sender_login_maps "
 "smtpd_sender_restrictions = reject_known_sender_login_mismatch"
 msgstr ""
-"smtpd_sender_login_maps = hash:/usr/local/etc/postfix/sender_login_maps\n"
-"smtpd_sender_restrictions = reject_known_sender_login_mismatch\n"
+"smtpd_sender_login_maps = hash:/usr/local/etc/postfix/sender_login_maps "
+"smtpd_sender_restrictions = reject_known_sender_login_mismatch"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2219
-#, fuzzy, no-wrap
-#| msgid "Create [.filename]#/usr/local/etc/postfix/sender_login_maps# with the following content:"
+#, no-wrap
 msgid "Create [.filename]#/usr/local/etc/postfix/sender_login_maps# with the following content:\n"
-msgstr "Crea [.filename]#/usr/local/etc/postfix/sender_login_maps# con el siguiente contenido:"
+msgstr ""
+"Crea [.filename]#/usr/local/etc/postfix/sender_login_maps# con el siguiente "
+"contenido:\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2223
-#, fuzzy
-#| msgid "yourusername@FreeBSD.org yourlocalusername\n"
 msgid "yourusername@FreeBSD.org yourlocalusername"
-msgstr "tunombredeusuario@FreeBSD.org tunombredeusuariolocal\n"
+msgstr "tunombredeusuario@FreeBSD.org tunombredeusuariolocal"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2227
-#, fuzzy, no-wrap
-#| msgid "Where _yourlocalusername_ is the SASL username used to connect to the local instance of Postfix."
+#, no-wrap
 msgid ""
 "Where _yourlocalusername_ is the SASL username used to connect to the local instance of Postfix.\n"
 "====\n"
-msgstr "Donde _tunombredeusuario_local es el nombre de usuario SASL utilizado para conectar a la instancia local de Postfix."
+msgstr ""
+"Donde _tunombredeusuariolocal_ es el nombre de usuario SASL utilizado para "
+"conectar a la instancia local de Postfix.\n"
+"====\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2232
@@ -5925,52 +6038,50 @@ msgid ""
 "[example]\n"
 "====\n"
 msgstr ""
+"[[smtp-setup-local-opensmtpd]]\n"
+".Usando OpenSMTPD\n"
+"[ejemplo]\n"
+"====\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2234
-#, fuzzy, no-wrap
-#| msgid "To tell a local OpenSMTPD instance that anything from `_yourusername_@FreeBSD.org` should be forwarded to the FreeBSD.org servers, add this to your [.filename]#smtpd.conf#:"
+#, no-wrap
 msgid "To tell a local OpenSMTPD instance that anything from `_yourusername_@FreeBSD.org` should be forwarded to the FreeBSD.org servers, add this to your [.filename]#smtpd.conf#:\n"
-msgstr "Para decirle a una instancia local de OpenSMTPD que se debería reenviar a los sevidores FreeBSD.ORG cualquier cosa que venga de `_tunombredeusuario_@FreeBSD.org`, añade esto a tu [.filename]#smtpd.conf#:"
+msgstr ""
+"Para decirle a una instancia local de OpenSMTPD que se debería reenviar a "
+"los sevidores FreeBSD.org cualquier cosa que venga de "
+"`_tunombredeusuario_@FreeBSD.org`, añade esto a tu [.filename]#smtpd.conf#:\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2239
-#, fuzzy
-#| msgid ""
-#| "action \"freebsd\" relay host smtp+tls://freebsd@smtp.freebsd.org:587 "
-#| "auth <secrets>\n"
-#| "match from any auth yourlocalusername mail-from \"_yourusername_@freebsd."
-#| "org\" for any action \"freebsd\"\n"
 msgid ""
 "action \"freebsd\" relay host smtp+tls://freebsd@smtp.freebsd.org:587 auth "
 "<secrets> match from any auth yourlocalusername mail-from "
 "\"_yourusername_@freebsd.org\" for any action \"freebsd\""
 msgstr ""
 "action \"freebsd\" relay host smtp+tls://freebsd@smtp.freebsd.org:587 auth "
-"<secrets>\n"
-"match from any auth tunombredeusuariolocal mail-from "
-"\"_tunombredeusuario_@freebsd.org\" for any action \"freebsd\"\n"
+"<secrets> match from any auth yourlocalusername mail-from \"_yourusername_"
+"@freebsd.org\" for any action \"freebsd\""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2242
-#, fuzzy, no-wrap
-#| msgid "Where _yourlocalusername_ is the SASL username used to connect to the local instance of OpenSMTPD."
+#, no-wrap
 msgid "Where _yourlocalusername_ is the SASL username used to connect to the local instance of OpenSMTPD.\n"
-msgstr "Donde _tunombredeusuario_local es el nombre de usuario SASL utilizado para conectar a la instancia local de OpenSMTPD."
+msgstr ""
+"Donde _tunombredeusuario_local es el nombre de usuario SASL utilizado para "
+"conectar a la instancia local de OpenSMTPD.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2244
-#, fuzzy, no-wrap
-#| msgid "Create [.filename]#/usr/local/etc/mail/secrets# with the following content:"
+#, no-wrap
 msgid "Create [.filename]#/usr/local/etc/mail/secrets# with the following content:\n"
-msgstr "Crea [.filename]#/usr/local/etc/mail/secrets# con el siguiente contenido:"
+msgstr ""
+"Crea [.filename]#/usr/local/etc/mail/secrets# con el siguiente contenido:\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2248
-#, fuzzy
-#| msgid "freebsd\tyourusername:yourpassword\n"
 msgid "freebsd\tyourusername:yourpassword"
-msgstr "freebsd\ttunombredeusuario:tucontraseña\n"
+msgstr "freebsd\ttunombredeusuario:tucontraseña"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2255
@@ -5982,6 +6093,11 @@ msgid ""
 "[example]\n"
 "====\n"
 msgstr ""
+"====\n"
+"[[smtp-setup-local-exim]]\n"
+".Usando Exim\n"
+"[ejemplo]\n"
+"====\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2258
@@ -6057,30 +6173,28 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2288
-#, fuzzy, no-wrap
-#| msgid "Create [.filename]#/usr/local/etc/exim/freebsd_send# with the following content:"
+#, no-wrap
 msgid "Create [.filename]#/usr/local/etc/exim/freebsd_send# with the following content:\n"
-msgstr "Crea [.filename]#/usr/local/etc/exim/freebsd_send# con el siguiente contenido:"
+msgstr ""
+"Crea [.filename]#/usr/local/etc/exim/freebsd_send# con el siguiente "
+"contenido:\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2292
-#, fuzzy
-#| msgid "example@freebsd.org:smtp.freebsd.org::587\n"
 msgid "example@freebsd.org:smtp.freebsd.org::587"
-msgstr "example@freebsd.org:smtp.freebsd.org::587\n"
+msgstr "example@freebsd.org:smtp.freebsd.org::587"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2295
 #, no-wrap
 msgid "====\n"
-msgstr ""
+msgstr "====\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2297
-#, fuzzy, no-wrap
-#| msgid "Mentors"
+#, no-wrap
 msgid "[[mentors]]\n"
-msgstr "Mentores"
+msgstr "[[mentors]]\n"
 
 #. type: Title ===
 #: documentation/content/en/articles/committers-guide/_index.adoc:2297
@@ -6131,10 +6245,8 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2311
-#, fuzzy
-#| msgid "Pre-Commit Review"
 msgid "[[pre-commit-review]]"
-msgstr "Revisión previa al commit"
+msgstr "[[pre-commit-review]]"
 
 #. type: Title ==
 #: documentation/content/en/articles/committers-guide/_index.adoc:2311
@@ -6144,13 +6256,6 @@ msgstr "Revisión previa al commit"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2316
-#, fuzzy
-#| msgid ""
-#| "Code review is one way to increase the quality of software.  The "
-#| "following guidelines apply to commits to the `head` (-CURRENT) branch of "
-#| "the `src` repository.  Other branches and the `ports` and `docs` trees "
-#| "have their own review policies, but these guidelines generally apply to "
-#| "commits requiring review:"
 msgid ""
 "Code review is one way to increase the quality of software.  The following "
 "guidelines apply to commits to the `main` (-CURRENT) branch of the `src` "
@@ -6159,29 +6264,43 @@ msgid ""
 "review:"
 msgstr ""
 "La revisión de código es una forma de incrementar la calidad del software. "
-"Las siguientes guías aplican a los commits a la rama `head`(-CURREN) del "
+"Las siguientes guías aplican a los commits a la rama `main`(-CURREN) del "
 "repositorio `src`. Otras ramas y los árboles `ports` y `docs` tienen sus "
 "propias políticas, pero estas directrices aplican generalmente a commits que "
 "necesitan revisión:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2322
-#, fuzzy, no-wrap
-#| msgid "Code review can be an iterative process, which continues until the patch is ready to be committed. Specifically, once a patch is sent out for review, it should receive an explicit \"looks good\" before it is committed. So long as it is explicit, this can take whatever form makes sense for the review method."
+#, no-wrap
 msgid ""
 "* All non-trivial changes should be reviewed before they are committed to the repository.\n"
 "* Reviews may be conducted by email, in Bugzilla, in Phabricator, or by another mechanism. Where possible, reviews should be public.\n"
 "* The developer responsible for a code change is also responsible for making all necessary review-related changes.\n"
 "* Code review can be an iterative process, which continues until the patch is ready to be committed. Specifically, once a patch is sent out for review, it should receive an explicit \"looks good\" before it is committed. So long as it is explicit, this can take whatever form makes sense for the review method.\n"
 "* Timeouts are not a substitute for review.\n"
-msgstr "La revisión de código puede ser un proceso iterativo, que continúa hasta que el parche está listo para ser comprometido. Específicamente, una vez que se envía un parche para su revisión, debes recibir un \"looks good\" explícito antes de hacer commit. Siempre que sea explícito, esto puede tomar cualquier forma que tenga sentido para el método de revisión."
+msgstr ""
+"* Todos los cambios no triviales deberían ser revisados antes de hacer "
+"commit en el repositorio.\n"
+"* Las revisiones se pueden realizar por email, en Bugzilla, en Phabricator, "
+"o por otro mecanismo. Cuando sea posible, las revisiones deberían ser "
+"públicas.\n"
+"* El desarrollador responsable de un cambio de código también es responsable "
+"de hacer todos los cambios relacionados con la revisión.\n"
+"* La revisión de código puede ser un proceso iterativo, que continúa hasta "
+"que el parche está listo para ser comprometido. Específicamente, una vez que "
+"se envía un parche para su revisión, debes recibir un \"looks good\" "
+"explícito antes de hacer commit. Siempre que sea explícito, esto puede tomar "
+"cualquier forma que tenga sentido para el método de revisión.\n"
+"* Los timeouts no sustituyen una revisión.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2324
-#, fuzzy, no-wrap
-#| msgid "Sometimes code reviews will take longer than you would hope for, especially for larger features. Accepted ways to speed up review times for your patches are:"
+#, no-wrap
 msgid "Sometimes code reviews will take longer than you would hope for, especially for larger features. Accepted ways to speed up review times for your patches are:\n"
-msgstr "A veces las revisiones de los códigos tardan más de lo que se espera, especialmente para las funciones más grandes. Las formas aceptadas de acelerar los tiempos de revisión de tus parches son:"
+msgstr ""
+"A veces las revisiones de los códigos tardan más de lo que se espera, "
+"especialmente para las funciones más grandes. Las formas aceptadas de "
+"acelerar los tiempos de revisión de tus parches son:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2331
@@ -6194,33 +6313,58 @@ msgid ""
 "+\n"
 "When making large changes, it is helpful to keep this in mind from the beginning of the effort as breaking large changes into smaller ones is often difficult after the fact.\n"
 msgstr ""
+"* Revisa los parches de otras personas. Si tú ayudas, todo el mundo estará "
+"más dispuesto a hacer lo mismo por ti; la buena voluntad es nuestra moneda.\n"
+"* Avisa del parche. Si es urgente, proporciona razones por las que es "
+"importante que este parche sea incluido y avisa cada dos días. Si no es "
+"urgente, la cortesía habitual es llamar la atención sobre el parche una vez "
+"a la semana. Recuerda que estás pidiendo tiempo valioso de otro "
+"desarrollador profesional.\n"
+"* Pide ayuda en las listas de correo, IRC, etc. Otros podrían ser capaces de "
+"ayudarte directamente, o de sugerir un revisor.\n"
+"* Parte tu parche en varios parches más pequeños que se apliquen uno sobre "
+"otro. Cuanto más pequeño sea tu parche, más alta será la probabilidad de que "
+"alguien le eche un vistazo.\n"
+"+\n"
+"Cuando hagas cambios grandes, es útil tener en cuenta esto desde el comienzo "
+"ya que romper cambios en trozos más pequeños es normalmente difícil al "
+"hacerlo más tarde.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2336
-#, fuzzy, no-wrap
-#| msgid "Developers should participate in code reviews as both reviewers and reviewees.  If someone is kind enough to review your code, you should return the favor for someone else.  Note that while anyone is welcome to review and give feedback on a patch, only an appropriate subject-matter expert can approve a change.  This will usually be a committer who works with the code in question on a regular basis."
+#, no-wrap
 msgid ""
 "Developers should participate in code reviews as both reviewers and reviewees.\n"
 "If someone is kind enough to review your code, you should return the favor for someone else.\n"
 "Note that while anyone is welcome to review and give feedback on a patch, only an appropriate subject-matter expert can approve a change.\n"
 "This will usually be a committer who works with the code in question on a regular basis.\n"
-msgstr "Los desarrolladores deben participar en las revisiones de código como revisores y revisados. Si alguien tiene la amabilidad de revisar tu código, deberías devolverle el favor a otra persona. Ten en cuenta que aunque cualquiera es bienvenido a revisar y dar su opinión sobre un parche, sólo un experto en la materia puede aprobar un cambio. Normalmente será un especialista que trabaje con el código en cuestión de forma regular."
+msgstr ""
+"Los desarrolladores deben participar en las revisiones de código como "
+"revisores y revisados.\n"
+"Si alguien tiene la amabilidad de revisar tu código, deberías devolverle el "
+"favor a otra persona.\n"
+"Ten en cuenta que aunque cualquiera es bienvenido a revisar y dar su opinión "
+"sobre un parche, sólo un experto en la materia puede aprobar un cambio.\n"
+"Normalmente será un especialista que trabaje con el código en cuestión de "
+"forma regular.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2339
-#, fuzzy, no-wrap
-#| msgid "In some cases, no subject-matter expert may be available.  In those cases, a review by an experienced developer is sufficient when coupled with appropriate testing."
+#, no-wrap
 msgid ""
 "In some cases, no subject-matter expert may be available.\n"
 "In those cases, a review by an experienced developer is sufficient when coupled with appropriate testing.\n"
-msgstr "En algunos casos, es posible que no se disponga de un experto en la materia. En esos casos, basta con un examen por parte de un desarrollador experimentado cuando se combina con las pruebas apropiadas."
+msgstr ""
+"En algunos casos, es posible que no se disponga de un experto en la materia."
+"\n"
+"En esos casos, basta con un examen por parte de un desarrollador "
+"experimentado cuando se combina con las pruebas apropiadas.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2341
-#, fuzzy, no-wrap
-#| msgid "Commit Log Messages"
+#, no-wrap
 msgid "[[commit-log-message]]\n"
-msgstr "Mensajes de Commit"
+msgstr "[[commit-log-message]]\n"
 
 #. type: Title ==
 #: documentation/content/en/articles/committers-guide/_index.adoc:2341
@@ -6289,8 +6433,7 @@ msgstr "Los mensajes de commit sirven al menos tres propósitos:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2364
-#, fuzzy, no-wrap
-#| msgid "FreeBSD commits generate email to various mailing lists.  These include the commit message along with a copy of the patch itself.  Commit messages are also viewed through commands like git log.  These serve to make other developers aware of changes that are ongoing; that other developer may want to test the change, may have an interest in the topic and will want to review in more detail, or may have their own projects underway that would benefit from interaction."
+#, no-wrap
 msgid ""
 "* Communicating with other developers\n"
 "+\n"
@@ -6298,45 +6441,71 @@ msgid ""
 "These include the commit message along with a copy of the patch itself.\n"
 "Commit messages are also viewed through commands like git log.\n"
 "These serve to make other developers aware of changes that are ongoing; that other developer may want to test the change, may have an interest in the topic and will want to review in more detail, or may have their own projects underway that would benefit from interaction.\n"
-msgstr "Los commits en FreeBSD generan emails en varias listas de correo. Estos incluyen el mensaje de commit junto con una copia del propio parche. Los mensajes de commit también se visualizan a través de comandos como git log. Esto sirve para que otros desarrolladores sean conscientes de los cambios que se están produciendo; que otro desarrollador podría querer probar el cambio, podría tener un interés en el asunto en cuestión y querrá revisarlo en más detalle, o que podría tener sus propios proyectos en curso que se beneficiarían de una posible interacción entre ambos."
+msgstr ""
+"* Comunicándote con otros desarrolladores\n"
+"+\n"
+"Los commits en FreeBSD generan emails en varias listas de correo.\n"
+"Estos incluyen el mensaje de commit junto con una copia del propio parche.\n"
+"Los mensajes de commit también se visualizan a través de comandos como git "
+"log.\n"
+"Esto sirve para que otros desarrolladores sean conscientes de los cambios "
+"que se están produciendo; que otro desarrollador podría querer probar el "
+"cambio, podría tener un interés en el asunto en cuestión y querrá revisarlo "
+"en más detalle, o que podría tener sus propios proyectos en curso que se "
+"beneficiarían de una posible interacción entre ambos.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2370
-#, fuzzy, no-wrap
-#| msgid "In a large project with a long history it may be difficult to find changes of interest when investigating an issue or change in behaviour.  Verbose, detailed commit messages allow searches for changes that might be relevant.  For example, `git log --since 1year --grep 'USB timeout'`."
+#, no-wrap
 msgid ""
 "* Making Changes Discoverable\n"
 "+\n"
 "In a large project with a long history it may be difficult to find changes of interest when investigating an issue or change in behaviour.\n"
 "Verbose, detailed commit messages allow searches for changes that might be relevant.\n"
 "For example, `git log --since 1year --grep 'USB timeout'`.\n"
-msgstr "En un proyecto largo con mucha historia podría ser difícil encontrar cambios de interés cuando se está investigando un problema o un cambio de comportamiento. Los mensajes de commit largos y detallados permiten buscar cambios que podrían ser relevantes. Por ejemplo, `git log --since 1year --grep 'USB timeout'`."
+msgstr ""
+"* Haciendo que los Cambios sean Descubribles\n"
+"+\n"
+"En un proyecto grande con mucha historia podría ser difícil encontrar "
+"cambios de interés cuando se está investigando un problema o un cambio de "
+"comportamiento.\n"
+"Los mensajes de commit largos y detallados permiten buscar cambios que "
+"podrían ser relevantes.\n"
+"Por ejemplo, `git log --since 1year --grep 'USB timeout'`.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2376
-#, fuzzy, no-wrap
-#| msgid "Commit messages serve to document changes for future developers, perhaps years or decades later.  This future developer may even be you, the original author.  A change that seems obvious today may be decidedly not so much later on."
+#, no-wrap
 msgid ""
 "* Providing historical documentation\n"
 "+\n"
 "Commit messages serve to document changes for future developers, perhaps years or decades later.\n"
 "This future developer may even be you, the original author.\n"
 "A change that seems obvious today may be decidedly not so much later on.\n"
-msgstr "Los mensajes de commit se utilizan para documentar los cambios para los futuros desarrolladores, quizás años o décadas más tardes. Este desarrollador futuro podrías ser tú, el autor original. Un cambio que hoy podría resultar obvio, podría no serlo mucho tiempo después."
+msgstr ""
+"* Proporcionando documentación histórica\n"
+"+\n"
+"Los mensajes de commit se utilizan para documentar los cambios para los "
+"futuros desarrolladores, quizás años o décadas más tardes.\n"
+"Este desarrollador futuro podrías ser tú, el autor original.\n"
+"Un cambio que hoy podría resultar obvio, podría no serlo mucho tiempo "
+"después.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2378
-#, fuzzy, no-wrap
-#| msgid "The `git blame` command annotates each line of a source file with the change (hash and subject line) that brought it in."
+#, no-wrap
 msgid "The `git blame` command annotates each line of a source file with the change (hash and subject line) that brought it in.\n"
-msgstr "El comando `git blame` anota cada línea de un fichero fuente con el cambio (hash y línea de título) que lo incorporó."
+msgstr ""
+"El comando `git blame` anota cada línea de un fichero fuente con el cambio ("
+"hash y línea de título) que lo incorporó.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:2380
-#, fuzzy, no-wrap
-#| msgid "Having established the importance, here are elements of a good FreeBSD commit message:"
+#, no-wrap
 msgid "Having established the importance, here are elements of a good FreeBSD commit message:\n"
-msgstr "Habiendo establecido su importancia, aquí hay algunos ejemplos de buenos mensajes de commit en FreeBSD:"
+msgstr ""
+"Habiendo establecido su importancia, aquí hay algunos ejemplos de buenos "
+"mensajes de commit en FreeBSD:\n"
 
 #. type: Title ===
 #: documentation/content/en/articles/committers-guide/_index.adoc:2381
@@ -6667,6 +6836,8 @@ msgid ""
 "[.informaltable]\n"
 "[cols=\"20%,80%\", frame=\"none\"]"
 msgstr ""
+"[.informaltable]\n"
+"[cols=\"20%,80%\", frame=\"none\"]"
 
 #. type: Table
 #: documentation/content/en/articles/committers-guide/_index.adoc:2477
@@ -6700,12 +6871,13 @@ msgstr ""
 
 #. type: Table
 #: documentation/content/en/articles/committers-guide/_index.adoc:2486
-#, fuzzy, no-wrap
-#| msgid "`Submitted by:`"
+#, no-wrap
 msgid ""
 "`Submitted by:` +\n"
 "(deprecated)"
-msgstr "`Submitted by:`"
+msgstr ""
+"`Submitted by:` +\n"
+"(deprecated)"
 
 #. type: Table
 #: documentation/content/en/articles/committers-guide/_index.adoc:2488
@@ -6771,30 +6943,7 @@ msgstr "`Approved by:`"
 
 #. type: Table
 #: documentation/content/en/articles/committers-guide/_index.adoc:2534
-#, fuzzy, no-wrap
-#| msgid ""
-#| "The name and e-mail address of the person or people that approved the change; for developers, just the username on the FreeBSD cluster.\n"
-#| "\n"
-#| "There are several cases where approval is customary:\n"
-#| "\n"
-#| "* while a new committer is under mentorship\n"
-#| "* commits to an area of the tree covered by the LOCKS file (src)\n"
-#| "* during a release cycle\n"
-#| "* committing to a repo where you do not hold a commit bit (e.g. src committer committing to docs)\n"
-#| "\n"
-#| "While under mentorship, get mentor approval before the commit. Enter the mentor's username in this field, and note that they are a mentor:\n"
-#| "\n"
-#| "[source,shell]\n"
-#| "....\n"
-#| "Approved by: username-of-mentor (mentor)\n"
-#| "....\n"
-#| "\n"
-#| "If a team approved these commits then include the team name followed by the username of the approver in parentheses. For example:\n"
-#| "\n"
-#| "[source,shell]\n"
-#| "....\n"
-#| "Approved by: re (username)\n"
-#| "...."
+#, no-wrap
 msgid ""
 "The name and e-mail address of the person or people that approved the change; for developers, just the username on the FreeBSD cluster.\n"
 "\n"
@@ -6820,23 +6969,29 @@ msgid ""
 "Approved by: re (username)\n"
 "...."
 msgstr ""
-"El nombre y la dirección de correo de la persona o personas que aprobaron el cambio; para desarrolladores el nombre de usuario en el clúster de FreeBSD.\n"
+"El nombre y la dirección de correo de la persona o personas que aprobaron el "
+"cambio; para desarrolladores el nombre de usuario en el clúster de FreeBSD.\n"
 "\n"
 "Hay varios casos donde se suele necesitar aprobación:\n"
 "\n"
 "* cuando un committer todavía está bajo tutorización\n"
 "* commits en un are del árbol cubierto bajo el fichero LOCKS (srv)\n"
 "* durante el ciclo de liberación\n"
-"* hacer commit a un repo en el que no tienes commit bit (por ejemplo un committer de src haciendo commit en docs)\n"
+"* hacer commit a un repo en el que no tienes commit bit (por ejemplo un "
+"committer de src haciendo commit en docs)\n"
+"* hacer commit a un port que mantenga otra persona\n"
 "\n"
-"Mientras estés aprendiendo, obtén aprobación de tu mentor antes de hacer commit. Introduce el nombre de usuario del mentor en este cambio y haz referencia a que es un mentor:\n"
+"Mientras estés aprendiendo, obtén aprobación de tu mentor antes de hacer "
+"commit. Introduce el nombre de usuario del mentor en este cambio y haz "
+"referencia a que es un mentor:\n"
 "\n"
 "[source,shell]\n"
 "....\n"
 "Approved by: username-of-mentor (mentor)\n"
 "....\n"
 "\n"
-"Si los commits los aprueba un grupo incluye el nombre del grupo seguido del nombre de usuario entre paréntesis de la persona que aprobó. Por ejemplo:\n"
+"Si los commits los aprueba un grupo incluye el nombre del grupo seguido del "
+"nombre de usuario entre paréntesis de la persona que aprobó. Por ejemplo:\n"
 "\n"
 "[source,shell]\n"
 "....\n"
@@ -7293,14 +7448,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2728
-#, fuzzy
-#| msgid ""
-#| "The FreeBSD project discourages completely new licenses and variations on "
-#| "the standard licenses.  New licenses require the approval of the {core-"
-#| "email} to reside in the main repository.  The more different licenses "
-#| "that are used in the tree, the more problems that this causes to those "
-#| "wishing to utilize this code, typically from unintended consequences from "
-#| "a poorly worded license."
 msgid ""
 "The FreeBSD project discourages completely new licenses and variations on "
 "the standard licenses.  New licenses require the approval of {core-email} to "
@@ -7311,10 +7458,10 @@ msgid ""
 msgstr ""
 "El proyecto FreeBSD desaconseja licencias completamente nuevas y variaciones "
 "de las licencias estándar. Las nuevas licencias requieren la aprobación del "
-"{core-email} para que se añadan al repositorio principal. Cuantas más "
-"licencias diferentes se utilicen en el árbol, más problemas ocasionará a "
-"quienes deseen utilizar este código, por lo general debido a las "
-"consecuencias no deseadas de una licencia mal redactada."
+"{core-email} para que se añadan al repositorio `src`. Cuantas más licencias "
+"diferentes se utilicen en el árbol, más problemas ocasionará a quienes "
+"deseen utilizar este código, por lo general debido a las consecuencias no "
+"deseadas de una licencia mal redactada."
 
 #. type: Plain text
 #: documentation/content/en/articles/committers-guide/_index.adoc:2732
@@ -8717,19 +8864,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:3089
-#, fuzzy
-#| msgid ""
-#| "This may sound obvious, but if it really were so obvious then we probably "
-#| "would not see so many cases of people clearly not doing this.  If your "
-#| "changes are to the kernel, make sure you can still compile both GENERIC "
-#| "and LINT.  If your changes are anywhere else, make sure you can still "
-#| "make world.  If your changes are to a branch, make sure your testing "
-#| "occurs with a machine which is running that code.  If you have a change "
-#| "which also may break another architecture, be sure and test on all "
-#| "supported architectures.  Please refer to the https://www.FreeBSD.org/"
-#| "internal/[FreeBSD Internal Page] for a list of available resources.  As "
-#| "other architectures are added to the FreeBSD supported platforms list, "
-#| "the appropriate shared testing resources will be made available."
 msgid ""
 "If your changes are to the kernel, make sure you can still compile both "
 "GENERIC and LINT.  If your changes are anywhere else, make sure you can "
@@ -8742,18 +8876,17 @@ msgid ""
 "are added to the FreeBSD supported platforms list, the appropriate shared "
 "testing resources will be made available."
 msgstr ""
-"Esto puede parecer obvio, pero si realmente fuera tan obvio, probablemente "
-"no veríamos tantos casos de personas que claramente no lo hacen. Si tus "
-"cambios son en el kernel, asegúrate de que aún puedes compilar tanto GENERIC "
-"como LINT. Si tus cambios están en cualquier otro lugar, asegúrate de que "
-"aún puedes compilar el resto del sistema (make world). Si tus cambios son en "
-"una rama, asegúrate de que la prueba se realice con una máquina que ejecute "
-"ese código. Si tienes un cambio que también puede romper otra arquitectura, "
-"asegúrate de probar en todas las arquitecturas compatibles. Por favor "
-"dirígete a https://www.FreeBSD.org/internal/[FreeBSD Internal Page] para "
-"obtener una lista de los recursos disponibles. A medida que se agregan otras "
-"arquitecturas a la lista de plataformas compatibles con FreeBSD, los "
-"recursos de prueba compartidos apropiados estarán disponibles."
+"Si tus cambios son en el kernel, asegúrate de que aún puedes compilar tanto "
+"GENERIC como LINT. Si tus cambios están en cualquier otro lugar, asegúrate "
+"de que aún puedes compilar el resto del sistema (make world). Si tus cambios "
+"son en una rama, asegúrate de que la prueba se realice con una máquina que "
+"ejecute ese código. Si tienes un cambio que también puede romper otra "
+"arquitectura, asegúrate de probar en todas las arquitecturas compatibles. "
+"Por favor asegúrate de que tu cambio funciona para <<compilers,supported "
+"toolchains>>. Por favor dirígete a https://www.FreeBSD.org/internal/[FreeBSD "
+"Internal Page] para obtener una lista de los recursos disponibles. A medida "
+"que se agregan otras arquitecturas a la lista de plataformas compatibles con "
+"FreeBSD, los recursos de prueba compartidos apropiados estarán disponibles."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:3092
@@ -8867,10 +9000,9 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/articles/committers-guide/_index.adoc:3119
-#, fuzzy, no-wrap
-#| msgid "Policy on Multiple Architectures"
+#, no-wrap
 msgid "Policy on Multiple Compilers"
-msgstr "Política sobre arquitecturas múltiples"
+msgstr "Política sobre Múltiples Compiladores"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:3133
@@ -8897,6 +9029,30 @@ msgid ""
 "compilers for a carefully selected range of modern compilers.  This section "
 "documents where we use different compilers, and the expectations around that."
 msgstr ""
+"FreeBSD compila tanto con Clang como con GCC. El proyecto hace esto de forma "
+"cuidadosa y controlada para maximizar los beneficios de este trabajo extra, "
+"a la vez que mantiene el trabajo extra en mínimos. Suportar tanto Clang como "
+"GCC mejora la flexibilidad que tienen nuestros usuarios. Estos compiladores "
+"tienen distintas fortalezas y debilidades, y soportar ambos permite a los "
+"usuarios escoger el que mejor se adapta a sus necesidades. Clang y GCC "
+"soportan dialectos similares de C y C++, necesitándose una cantidad "
+"relativamente pequeña de código condicional. El proyecto gana más cobertura "
+"de código y mejora la calidad del código usando características de ambos "
+"compiladores. El proyecto es capaz de compilar en más entornos de usuario y "
+"aprovechar más entornos de CI al soportar este rango, incrementando las "
+"ventajas para los usuarios y dándoles más herramientas con las que probar. "
+"Mediante la restricción cuidadosa de las versiones modernas soportadas en "
+"estos compiladores, el proyecto evita incrementar la matriz de pruebas sin "
+"necesidad. Los compiladores más viejos y oscuros, así como dialectos más "
+"antiguos de los lenguajes, tienen un soporte extremadamente limitado que "
+"permite a los programas de usuarios compilar con ellos, pero sin limitar a "
+"que el sistema base se compile con ellos. El equilibro exacto está en "
+"constante evolución para asegurar que los beneficios del trabajo extra son "
+"mayores que la carga que imponen. El proyecto solía soportar compiladores de "
+"Intel realmente antiguos o versiones antiguas de GCC, pero cambiamos "
+"soportar esos compiladores obsoletos por una selección cuidadosas de "
+"compiladores modernos. Esta sección documenta dónde usamos los diferentes "
+"compiladores, y las expectativas al respecto."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:3138
@@ -8906,6 +9062,10 @@ msgid ""
 "compile with it, prior to commit.  Complete testing, as appropriate for the "
 "change, should be done with this compiler."
 msgstr ""
+"El proyecto FreeBSD incorpora el compilador Clang. Debido a que está en el "
+"árbol, este es el compilador mejor soportado. Todos los cambios tienen que "
+"compilar con él, antes de hacer el commit. Las comprobaciones completas, "
+"como sean apropiadas para el cambio, se deberían hacer con este compilador."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:3146
@@ -8921,6 +9081,17 @@ msgid ""
 "example `CROSS_TOOLCHAIN=aarch64-gcc12` or `CROSS_TOOLCHAIN=llvm15` where "
 "necessary."
 msgstr ""
+"En cualquier momento, el proyecto FreeBSD también soporta uno o más "
+"compiladores fuera del árbol. En este momento, esto es GCC 12.x. "
+"Idealemente, los committers deberían compilar con este compilador, "
+"especialmente para cambios grandes o arriesgados. El compilador está "
+"disponible como el paquete `${TARGET_ARCH}-gcc${VERSION}` como package:devel/"
+"freebsd-gcc12@aarch64[aarch64-gcc12] o package:devel/freebsd-"
+"gcc12@riscv64[riscv64-gcc12]. El proyecto ejecuta trabajos automáticos de CI "
+"para compilar todo con estos compiladores. Se espera que los committers "
+"arreglen los trabajos que se rompan con sus cambios. Los committers pueden "
+"probar la compilación con, por ejemplo `CROSS_TOOLCHAIN=aarch64-gcc12` o "
+"`CROSS_TOOLCHAIN=llvm15` cuando sea necesario."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:3150
@@ -8930,6 +9101,11 @@ msgid ""
 "compilation jobs run.  These test FreeBSD building using a version of Clang "
 "that sometimes lags the in-tree compiler by a major version for a time."
 msgstr ""
+"El proyecto FreeBSD también tiene algunos pipelines de CI en github. Para "
+"las pull requests en github y algunas ramas empujadas a los forks de github, "
+"se ejecutan algunos trabajos de compilación cruzada. Estos comprueba la "
+"compilación de FreeBSD usando una versión de Clang que a veces durante un "
+"tiempo está una versión por delante de la versión incluida en el árbol."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:3156
@@ -8943,6 +9119,15 @@ msgid ""
 "version hits the tree, people may need to compile things with the old "
 "version if there was an undetected regression suspected."
 msgstr ""
+"El proyecto FreeBSD también actualiza los compiladores. Tanto Clang como GCC "
+"se cambian constantemente. Algunos cambios en el árbol, por ejemplo "
+"eliminando las declaraciones y definiciones de funciones en estilo antiguo "
+"K&R, se introducirán en el árbol antes de cambiar el compilador. Los "
+"committers deberían tratar de ser conscientes de esto y ser receptivos a la "
+"hora de analizar problemas con su código o cambios con estos nuevos "
+"compiladores. Además, justo después de que se ha introducido una nueva "
+"versión del compilador en el árbol, la gente necesita compilar con la "
+"versión antigua si se sospecha que ha habido una regresión no detectada."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:3160
@@ -8953,6 +9138,11 @@ msgid ""
 "These components will be tested as part of FreeBSD's CI jobs for Clang or "
 "GCC."
 msgstr ""
+"Además del compilador, el compilador usa directamente LDD de LLVM y las "
+"binutils de GNU. Los committers deberían ser conscientes de las diferencias "
+"en la sintaxis de ensamblador y las características de los enlazadores y "
+"asegurarse de que ambas variantes funcionan. Estos componentes se "
+"comprobarán como parte de los trabajos de CI de FreeBSD para Clang o GCC."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:3166
@@ -8968,6 +9158,17 @@ msgid ""
 "cause packages in the ports collection to fail, so should be avoided where "
 "possible, and promptly fixed when it is easy to do so."
 msgstr ""
+"El proyecto FreeBSD proporciona cabeceras y librerías que permiten que se "
+"puedan usar otros compiladores que no estén en el sistema base. Estas "
+"cabeceras tienen soporte para hacer que el entorno sea tan estricto como el "
+"estándar, soportando dialectos anteriores a ANSI-C hasta C89, y otros casos "
+"esquina que la colección de ports ha dejado al descubierto Este soporte "
+"limita la retirada de estándares antiguos en sitios como ficheros de "
+"cabecera, pero no limitan la actualización del sistema base a nuevos "
+"dialectos. Tampoco requiere que el sistema base compile con estos estándares "
+"antiguos. Romper el soporte causaría fallos en los paquetes de la colección "
+"de ports, de forma que se debería evitar en la medida de lo posible, y "
+"arreglarlo rápidamente cuando sea fácil hacerlo."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/committers-guide/_index.adoc:3171
@@ -8980,6 +9181,13 @@ msgid ""
 "mindful of this, and ensure any compiler specific flags are properly "
 "conditionalized."
 msgstr ""
+"El sistema de compilación de FreeBSD actualmente soporta estos entornos "
+"diferentes. Conforme se añaden nuevos avisos a los compiladores, el proyecto "
+"intenta arreglarlos. Sin embargo, a veces estos avisos requieren un trabajo "
+"extensivo, de forma que se silencian de alguna forma usando variables que "
+"evalúen a lo que sea apropiado dependiendo de la versión del compilador. Los "
+"desarrolladores deberían ser conscientes de esto, y asegurar que cualquier "
+"flag específico de un compilador debería ser usado condicionalmente."
 
 #. type: Title ====
 #: documentation/content/en/articles/committers-guide/_index.adoc:3172
