@@ -1,12 +1,12 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR The FreeBSD Project
 # This file is distributed under the same license as the FreeBSD Documentation package.
-# Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021.
+# Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:20-0300\n"
-"PO-Revision-Date: 2021-11-11 07:33+0000\n"
+"PO-Revision-Date: 2023-07-28 04:45+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookjail_index/es/>\n"
@@ -15,20 +15,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. type: Title =
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:1
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:13
 #, no-wrap
 msgid "The Jail Subsystem"
-msgstr "El subsistema de la cárcel"
+msgstr "El Subsistema de Jails"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:1
 #, no-wrap
 msgid "Chapter 4. The Jail Subsystem"
-msgstr ""
+msgstr "Chapter 4. El Subsistema de Jails"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:51
@@ -44,6 +44,17 @@ msgid ""
 "jailed process cannot affect processes outside the jail, utilize certain "
 "system calls, or inflict any damage on the host environment."
 msgstr ""
+"En la mayoría de sistemas UNIX(R), `root` tiene un poder omnipotente. Esto "
+"promueve la inseguridad. Si un atacante obtiene acceso `root` en un sistema, "
+"tendría cualquier función disponible. En FreeBSD hay sysctls que diluyen el "
+"poder de `root`, para minimizar el daño ocasionado por un atacante. "
+"Específicamente, una de estas funciones se llama `secure levels`. De forma "
+"similar, otra función que está presente a partir de FreeBSD 4.0, es una "
+"utilidad llamada man:jail[8]. Los jails crean un chroot para un entorno y "
+"establecen ciertas restricciones en los procesos que son creados dentro del "
+"jail. Por ejemplo, un proceso en un jail no puede afectar a procesos que "
+"estén fuera del jail, utilizar ciertas llamadas al sistem, o infligir algún "
+"tipo de daño en el entorno anfitrión."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:53
@@ -55,6 +66,13 @@ msgid ""
 "code) of jail. For information on how to set up a jail see the extref:"
 "{handbook}[handbook entry on jails, jails]."
 msgstr ""
+"Los jails se están convirtiendo en el nuevo modelo de seguridad. La gente "
+"está corriendo servidores potencialmente vulnerables como Apache, BIND, y "
+"sendmail dentro de jails, de forma que si un atacante obtiene acceso `root` "
+"dentro del jail, sólo es una molestia, y no una devastación. Este artículo "
+"se centra principalmente en las interioridades (código fuente) de los jails. "
+"Para información sobre cómo configurar un jail lee la extref:{handbook}["
+"entrada sobre jails en el manual, jails]."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:55
@@ -70,12 +88,16 @@ msgid ""
 "restrictions. I will be discussing the userland program and then how jail is "
 "implemented within the kernel."
 msgstr ""
+"Un jail consiste en dos partes: el programa de usuario, man:jail[8], y el "
+"código implementado en el núcleo: la llamada al sistema man:jail[2] y las "
+"restricciones asociadas. Discutiré el programa de usuario y cómo están los "
+"jails implementados dentro del núcleo."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:59
 #, no-wrap
 msgid "Userland Code"
-msgstr "Código de usuario"
+msgstr "Código de Usuario"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:62
@@ -85,12 +107,16 @@ msgid ""
 "arguments: the path of the jail, hostname, IP address, and the command to be "
 "executed."
 msgstr ""
+"El código fuente de la parte de usuario del jail se encuentra en [."
+"filename]#/usr/src/usr.sbin/jail#, y consisten en un fichero, [."
+"filename]#jail.c#. El programa acepta estos argumentos: la ruta al jail, el "
+"nombre del host, la dirección IP, y el comando que se va a ejecutar."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:63
 #, no-wrap
 msgid "Data Structures"
-msgstr "Estructuras de datos"
+msgstr "Estructuras de Datos"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:66
@@ -99,17 +125,20 @@ msgid ""
 "an important structure `struct jail j;` which was included from [.filename]#/"
 "usr/include/sys/jail.h#."
 msgstr ""
+"En [.filename]#jail.c#, la primera cosa a tener en cuenta es la declaración "
+"de una estructura importante `struct jail j;` que se incluye desde [."
+"filename]#/usr/include/sys/jail.h#."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:68
 msgid "The definition of the `jail` structure is:"
-msgstr ""
+msgstr "La definición de la estructura `jail` es:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:72
 #, no-wrap
 msgid "/usr/include/sys/jail.h:\n"
-msgstr ""
+msgstr "/usr/include/sys/jail.h:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:79
@@ -122,6 +151,12 @@ msgid ""
 "        u_int32_t       ip_number;\n"
 "};\n"
 msgstr ""
+"struct jail {\n"
+"        u_int32_t       version;\n"
+"        char            *path;\n"
+"        char            *hostname;\n"
+"        u_int32_t       ip_number;\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:82
@@ -129,6 +164,8 @@ msgid ""
 "As you can see, there is an entry for each of the arguments passed to the "
 "man:jail[8] program, and indeed, they are set during its execution."
 msgstr ""
+"Como puedes ver, hay una entrada por cada argumento pasado al programa "
+"man:jail[8], y de hecho, son establecidas durante su ejecución."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:96
@@ -146,6 +183,17 @@ msgid ""
 "j.path = path;\n"
 "j.hostname = argv[1];\n"
 msgstr ""
+"/usr/src/usr.sbin/jail/jail.c\n"
+"char path[PATH_MAX];\n"
+"...\n"
+"if (realpath(argv[0], path) == NULL)\n"
+"    err(1, \"realpath: %s\", argv[0]);\n"
+"if (chdir(path) != 0)\n"
+"    err(1, \"chdir: %s\", path);\n"
+"memset(&j, 0, sizeof(j));\n"
+"j.version = 0;\n"
+"j.path = path;\n"
+"j.hostname = argv[1];\n"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:98
@@ -161,6 +209,10 @@ msgid ""
 "IP address given into host byte order and then stores it in `j` (the `jail` "
 "structure)."
 msgstr ""
+"Uno de los argumentos pasados al programa man:jail[8] es una dirección IP "
+"con la cual se puede acceder al jail desde la red. man:jail[8] traduces la "
+"dirección IP data a orden de bytes de host y después la almacena en `j` (la "
+"estructura `jail`)."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:110
@@ -173,6 +225,12 @@ msgid ""
 "    errx(1, \"Could not make sense of ip-number: %s\", argv[2]);\n"
 "j.ip_number = ntohl(in.s_addr);\n"
 msgstr ""
+"/usr/src/usr.sbin/jail/jail.c:\n"
+"struct in_addr in;\n"
+"...\n"
+"if (inet_aton(argv[2], &in) == 0)\n"
+"    errx(1, \"Could not make sense of ip-number: %s\", argv[2]);\n"
+"j.ip_number = ntohl(in.s_addr);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:113
@@ -183,12 +241,18 @@ msgid ""
 "placed onto the `in` structure by man:inet_aton[3] is translated into host "
 "byte order by man:ntohl[3]."
 msgstr ""
+"La función man:inet_aton[4] \"interpreta la cadena de caracteres "
+"especificada como una dirección de Internet, guardando la dirección en la "
+"estructura proporcionada\". El miembro `ip_number` en la estructura `jail` "
+"sólo se establece cuando la dirección IP guardada en la estructura `in`por "
+"parte de man:inet_aton[3] es traducida a orden de byte de host por "
+"man:ntohl[3]."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:114
 #, no-wrap
 msgid "Jailing the Process"
-msgstr "Encarcelar el proceso"
+msgstr "Enjaulando el Proceso"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:117
@@ -197,6 +261,9 @@ msgid ""
 "imprisoned process itself and then executes the command given using man:"
 "execv[3]."
 msgstr ""
+"Por último, el programa de espacio de usuario enjaula el proceso. El jail se "
+"convierte en un proceso enjaulado también y luego ejecuta el comando dado "
+"utilizando man:execv[3]."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:125
@@ -208,6 +275,11 @@ msgid ""
 "if (execv(argv[3], argv + 3) != 0)\n"
 "    err(1, \"execv: %s\", argv[3]);\n"
 msgstr ""
+"/usr/src/usr.sbin/jail/jail.c\n"
+"i = jail(&j);\n"
+"...\n"
+"if (execv(argv[3], argv + 3) != 0)\n"
+"    err(1, \"execv: %s\", argv[3]);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:128
@@ -217,12 +289,16 @@ msgid ""
 "program. Finally, the program you specify is executed. I will now discuss "
 "how jail is implemented within the kernel."
 msgstr ""
+"Como puedes ver, se llama a la función `jail()`, y su argumento es la "
+"estructura `jail` que se ha rellenado con los argumentos pasados al "
+"programa. Por último, se ejecuta el programa que has especificado. Ahora "
+"discutiré cómo se implementa un jail en el núcleo."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:129
 #, no-wrap
 msgid "Kernel Space"
-msgstr "Espacio Kernel"
+msgstr "Espacio del Núcleo"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:132
@@ -231,17 +307,20 @@ msgid ""
 "c#. This is the file where the man:jail[2] system call, appropriate sysctls, "
 "and networking functions are defined."
 msgstr ""
+"Ahora echaremos un vistazo a [.filename]#/usr/src/sys/kern/kern_jail.c#. "
+"Este es el fichero donde se definen la llamada al sistema man:jail[2], las "
+"sysctls apropiadas, y las funciones de red."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:133
 #, no-wrap
 msgid "Sysctls"
-msgstr ""
+msgstr "Sysctls"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:136
 msgid "In [.filename]#kern_jail.c#, the following sysctls are defined:"
-msgstr ""
+msgstr "En [.filename]#kern_jail.c#, se definen las siguientes sysctls:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:144
@@ -253,6 +332,11 @@ msgid ""
 "    &jail_set_hostname_allowed, 0,\n"
 "    \"Processes in jail can set their hostnames\");\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c:\n"
+"int     jail_set_hostname_allowed = 1;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, set_hostname_allowed, CTLFLAG_RW,\n"
+"    &jail_set_hostname_allowed, 0,\n"
+"    \"Processes in jail can set their hostnames\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:149
@@ -263,6 +347,11 @@ msgid ""
 "    &jail_socket_unixiproute_only, 0,\n"
 "    \"Processes in jail are limited to creating UNIX/IPv4/route sockets only\");\n"
 msgstr ""
+"int     jail_socket_unixiproute_only = 1;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, socket_unixiproute_only, CTLFLAG_RW,\n"
+"    &jail_socket_unixiproute_only, 0,\n"
+"    \"Processes in jail are limited to creating UNIX/IPv4/route sockets "
+"only\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:154
@@ -273,6 +362,10 @@ msgid ""
 "    &jail_sysvipc_allowed, 0,\n"
 "    \"Processes in jail can use System V IPC primitives\");\n"
 msgstr ""
+"int     jail_sysvipc_allowed = 0;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, sysvipc_allowed, CTLFLAG_RW,\n"
+"    &jail_sysvipc_allowed, 0,\n"
+"    \"Processes in jail can use System V IPC primitives\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:159
@@ -283,6 +376,10 @@ msgid ""
 "    &jail_enforce_statfs, 0,\n"
 "    \"Processes in jail cannot see all mounted file systems\");\n"
 msgstr ""
+"static int jail_enforce_statfs = 2;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, enforce_statfs, CTLFLAG_RW,\n"
+"    &jail_enforce_statfs, 0,\n"
+"    \"Processes in jail cannot see all mounted file systems\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:164
@@ -293,6 +390,10 @@ msgid ""
 "    &jail_allow_raw_sockets, 0,\n"
 "    \"Prison root can create raw sockets\");\n"
 msgstr ""
+"int    jail_allow_raw_sockets = 0;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, allow_raw_sockets, CTLFLAG_RW,\n"
+"    &jail_allow_raw_sockets, 0,\n"
+"    \"Prison root can create raw sockets\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:169
@@ -303,6 +404,10 @@ msgid ""
 "    &jail_chflags_allowed, 0,\n"
 "    \"Processes in jail can alter system file flags\");\n"
 msgstr ""
+"int    jail_chflags_allowed = 0;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, chflags_allowed, CTLFLAG_RW,\n"
+"    &jail_chflags_allowed, 0,\n"
+"    \"Processes in jail can alter system file flags\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:174
@@ -313,6 +418,10 @@ msgid ""
 "    &jail_mount_allowed, 0,\n"
 "    \"Processes in jail can mount/unmount jail-friendly file systems\");\n"
 msgstr ""
+"int     jail_mount_allowed = 0;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, mount_allowed, CTLFLAG_RW,\n"
+"    &jail_mount_allowed, 0,\n"
+"    \"Processes in jail can mount/unmount jail-friendly file systems\");\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:177
@@ -322,12 +431,16 @@ msgid ""
 "their name. For example, the name of the first sysctl is `security.jail."
 "set_hostname_allowed`."
 msgstr ""
+"Se puede acceder a cada una de estas sysctls mediante el programa "
+"man:sysctl[8]. En el núcleo, estas sysctls específicas son reconocidas por "
+"su nombre. Por ejemplo, el nombre de la primera sysctl es `security.jail."
+"set_hostname_allowed`."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:178
 #, no-wrap
 msgid "man:jail[2] System Call"
-msgstr ""
+msgstr "La Llamada al Sistema man:jail[2]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:181
@@ -340,6 +453,13 @@ msgid ""
 "described the userland program before, you saw that the man:jail[2] system "
 "call was given a `jail` structure as its own argument."
 msgstr ""
+"Como todas las llamadas al sistema, la llamada al sistema man:jail[2] acepta "
+"dos argumentos, `struct thread *td` y `struct jail_args *uap`. `td` es un "
+"puntero a la estructura `thread` que describe al hilo llamante. En este "
+"contexto, `uap` es un puntero a la estructura que un puntero a la estructura "
+"`jail` pasada por [.filename]#jail.c# desde espacio de usuario. Cuando antes "
+"describí el programa de usuario, viste que se pasaba una estructura `jail`"
+"como argumento la llamada al sistema man:jail[2]."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:192
@@ -354,6 +474,14 @@ msgid ""
 "int\n"
 "jail(struct thread *td, struct jail_args *uap)\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c:\n"
+"/*\n"
+" * struct jail_args {\n"
+" *  struct jail *jail;\n"
+" * };\n"
+" */\n"
+"int\n"
+"jail(struct thread *td, struct jail_args *uap)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:195
@@ -366,6 +494,14 @@ msgid ""
 "`jail` structure pointed by `uap->jail` is copied into kernel space and is "
 "stored in another `jail` structure, `j`."
 msgstr ""
+"Por lo tanto, se puede usar `uap->jail` para acceder a la estructura `jail` "
+"que se le ha pasado a la llamada al sistema. Después la llamada al sistema "
+"copia la estructura `jail` al espacio del núcleo usando la función "
+"man:copyin[9]. man:copyin[9] acepta tres argumentos: la dirección del dato "
+"que se va a copiar a espacio del núcleo, `uap->jail`, dónde almacenarlo, `j` "
+"y el tamaño del almacenamiento. La estructura `jail` a la que apunta "
+"`uap->jail` se copia al espacio del núcleo y se almacena en otra estructura "
+"`jail`, `j`."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:200
@@ -374,6 +510,8 @@ msgid ""
 "/usr/src/sys/kern/kern_jail.c:\n"
 "error = copyin(uap->jail, &j, sizeof(j));\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c:\n"
+"error = copyin(uap->jail, &j, sizeof(j));\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:203
@@ -382,6 +520,9 @@ msgid ""
 "the `prison` structure. The `prison` structure is used exclusively within "
 "kernel space. Here is the definition of the `prison` structure."
 msgstr ""
+"En [.filename]#jail.h# hay definida otra estructura importante. Es la "
+"estructura `prison`. La estructura `prison` se usa exclusivamente en espacio "
+"del núcleo. Aquí está la definición de la estructura `prison`."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:221
@@ -403,6 +544,29 @@ msgid ""
 "      void            **pr_slots;                     /* (p) additional data */\n"
 "};\n"
 msgstr ""
+"/usr/include/sys/jail.h:\n"
+"struct prison {\n"
+"        LIST_ENTRY(prison) pr_list;                     /* (a) all prisons */"
+"\n"
+"        int              pr_id;                         /* (c) prison id */\n"
+"        int              pr_ref;                        /* (p) refcount */\n"
+"        char             pr_path[MAXPATHLEN];           /* (c) chroot path */"
+"\n"
+"        struct vnode    *pr_root;                       /* (c) vnode to rdir "
+"*/\n"
+"        char             pr_host[MAXHOSTNAMELEN];       /* (p) jail hostname "
+"*/\n"
+"        u_int32_t        pr_ip;                         /* (c) ip addr host "
+"*/\n"
+"        void            *pr_linux;                      /* (p) linux abi */\n"
+"        int              pr_securelevel;                /* (p) securelevel */"
+"\n"
+"        struct task      pr_task;                       /* (d) destroy task "
+"*/\n"
+"        struct mtx       pr_mtx;\n"
+"      void            **pr_slots;                     /* (p) additional data "
+"*/\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:224
@@ -410,6 +574,9 @@ msgid ""
 "The man:jail[2] system call then allocates memory for a `prison` structure "
 "and copies data between the `jail` and `prison` structure."
 msgstr ""
+"Después la llamada al sistema man:jail[2] reserva memoria para una "
+"estructura `prison` y copia los datos entre la estructura `jail` y la "
+"estructura `prison`."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:238
@@ -427,6 +594,17 @@ msgid ""
 "     goto e_dropvnref;\n"
 "pr->pr_ip = j.ip_number;\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c:\n"
+"MALLOC(pr, struct prison *, sizeof(*pr), M_PRISON, M_WAITOK | M_ZERO);\n"
+"...\n"
+"error = copyinstr(j.path, &pr->pr_path, sizeof(pr->pr_path), 0);\n"
+"if (error)\n"
+"    goto e_killmtx;\n"
+"...\n"
+"error = copyinstr(j.hostname, &pr->pr_host, sizeof(pr->pr_host), 0);\n"
+"if (error)\n"
+"     goto e_dropvnref;\n"
+"pr->pr_ip = j.ip_number;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:241
@@ -434,6 +612,8 @@ msgid ""
 "Next, we will discuss another important system call man:jail_attach[2], "
 "which implements the function to put a process into the jail."
 msgstr ""
+"Después, discutiremos otra llamada al sistema importante, man:jail_attach[2]"
+", que implementa la función de introducir un proceso en el jail."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:252
@@ -448,6 +628,14 @@ msgid ""
 "int\n"
 "jail_attach(struct thread *td, struct jail_attach_args *uap)\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c:\n"
+"/*\n"
+" * struct jail_attach_args {\n"
+" *      int jid;\n"
+" * };\n"
+" */\n"
+"int\n"
+"jail_attach(struct thread *td, struct jail_attach_args *uap)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:255
@@ -456,6 +644,10 @@ msgid ""
 "from those unjailed ones. To understand what man:jail_attach[2] does for us, "
 "certain background information is needed."
 msgstr ""
+"Esta llamada al sistema hace los cambios que permiten distinguir entre un "
+"proceso que esté dentro de un jail y otro que no lo esté. Para entender lo "
+"que man:jail_attach[2] hace por nosotros, se necesita cierta información "
+"previa."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:257
@@ -473,6 +665,19 @@ msgid ""
 "pointed by `p_ucred` member in the `proc` structure, there is a pointer to "
 "the `prison` structure(`cr_prison`)."
 msgstr ""
+"En FreeBSD, cada hilo visible por el núcleo se identifica por su estructura "
+"`thread`, mientras que los procesos se describen mediante sus estructuras "
+"`proc`. Puedes encontrar las definiciones de las estructuras `thread` y "
+"`proc` en [.filename]#/usr/include/sys/proc.h#. Por ejemplo, el argumento "
+"`td` en cualquier llamada al sistema es en realidad un puntero a la "
+"estructura `thread` del hilo llamante, como se ha mencionado antes. El "
+"miembro `td_proc` en la estructura `thread` apuntada por `td` es un puntero "
+"a la estructura `proc` que representa el proceso que contiene el hilo "
+"representado por `td`. La estructura `proc` contiene miembros que pueden "
+"describir la identidad del propietario (`p_ucred`), los límites de recursos "
+"del proceso (`p_limit`), y demás. En la estructura `ucred` apuntada por el "
+"miembro `p_ucred` en la estructura `proc`, hay un puntero a la estructura "
+"`prison` (`cr_prison`)."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:277
@@ -496,6 +701,23 @@ msgid ""
 "    ...\n"
 "};\n"
 msgstr ""
+"/usr/include/sys/proc.h:\n"
+"struct thread {\n"
+"    ...\n"
+"    struct proc *td_proc;\n"
+"    ...\n"
+"};\n"
+"struct proc {\n"
+"    ...\n"
+"    struct ucred *p_ucred;\n"
+"    ...\n"
+"};\n"
+"/usr/include/sys/ucred.h\n"
+"struct ucred {\n"
+"    ...\n"
+"    struct prison *cr_prison;\n"
+"    ...\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:280
@@ -515,6 +737,20 @@ msgid ""
 "property of its parent's `ucred` structure, therefore it has a jailed "
 "`ucred` structure."
 msgstr ""
+"En [.filename]#kern_jail.c#, la función `jail()` llama a la función "
+"`jail_attach()` con un `jid` dado. Y `jail_attach()` llama a la función "
+"`change_root()` para cambiar el directorio raíz del proceso llamante. "
+"Después `jail_attach()` crea una nueva estructura `ucred`, y adjunta la "
+"nueva estructura `ucred` al proceso llamante después de que se haya "
+"adjuntado de forma exitosa la estructura `prison` a la estructura `ucred`. A "
+"partir de este momento, se reconoce que el proceso llamante está dentro de "
+"un jail. Cuando se llama a la rutina del núcleo `jailed()` con una "
+"estructura `ucred` de nueva creación como argumento, devuelve 1 para indicar "
+"que la credencial está conectada con un jail. El proceso ascendiente público "
+"de todos los procesos creados dentro de un jail, es el proceso que ejecuta "
+"man:jail[8], ya que invoca a la llamada al sistema man:jail[2]. Cuando se "
+"ejecuta un programa mediante man:execve[2], hereda la propiedad jailed de la "
+"estructura `ucred` de su padre, por lo tanto tiene una estrucutra `ucred`."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:295
@@ -533,6 +769,18 @@ msgid ""
 "...\n"
 "}\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c\n"
+"int\n"
+"jail(struct thread *td, struct jail_args *uap)\n"
+"{\n"
+"...\n"
+"    struct jail_attach_args jaa;\n"
+"...\n"
+"    error = jail_attach(td, &jaa);\n"
+"    if (error)\n"
+"        goto e_dropprref;\n"
+"...\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:313
@@ -556,6 +804,23 @@ msgid ""
 "...\n"
 "}\n"
 msgstr ""
+"int\n"
+"jail_attach(struct thread *td, struct jail_attach_args *uap)\n"
+"{\n"
+"    struct proc *p;\n"
+"    struct ucred *newcred, *oldcred;\n"
+"    struct prison *pr;\n"
+"...\n"
+"    p = td->td_proc;\n"
+"...\n"
+"    pr = prison_find(uap->jid);\n"
+"...\n"
+"    change_root(pr->pr_root, td);\n"
+"...\n"
+"    newcred->cr_prison = pr;\n"
+"    p->p_ucred = newcred;\n"
+"...\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:316
@@ -565,6 +830,11 @@ msgid ""
 "process. It inherently keep the newly forked child's credential consistent "
 "with its parent, so the child process is also jailed."
 msgstr ""
+"Cuando un proceso se bifurca (fork) de uno de sus padres, la llamada al "
+"sistema man:fork[2] utiliza `crhold()` para mantener la credencial para el "
+"nuevo proceso creado. Mantiene la credencial del nuevo hijo creado "
+"consistente con la de su padre, de forma que el proceso hijo también está "
+"dentro del jail."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:323
@@ -575,6 +845,10 @@ msgid ""
 "...\n"
 "td2->td_ucred = crhold(p2->p_ucred);\n"
 msgstr ""
+"/usr/src/sys/kern/kern_fork.c:\n"
+"p2->p_ucred = crhold(td->td_ucred);\n"
+"...\n"
+"td2->td_ucred = crhold(p2->p_ucred);\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:326
@@ -589,9 +863,9 @@ msgid ""
 "processes. Usually, these restrictions only check whether the process is "
 "jailed, and if so, returns an error. For example:"
 msgstr ""
-"En todo el kernel existen restricciones de acceso relacionadas con los "
-"procesos encarcelados. Por lo general, estas restricciones solo verifican si "
-"el proceso está encarcelado y, de ser así, devuelve un error. Por ejemplo:"
+"En todo el núcleo existen restricciones de acceso relacionadas con los "
+"procesos enjaulados. Por lo general, estas restricciones solo verifican si "
+"el proceso está enjaulado y, de ser así, devuelve un error. Por ejemplo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:334
@@ -600,12 +874,14 @@ msgid ""
 "if (jailed(td->td_ucred))\n"
 "    return (EPERM);\n"
 msgstr ""
+"if (jailed(td->td_ucred))\n"
+"    return (EPERM);\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:336
 #, no-wrap
 msgid "SysV IPC"
-msgstr ""
+msgstr "SysV IPC"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:339
@@ -621,11 +897,21 @@ msgid ""
 "environment. The difference between a message and a signal is that the "
 "message only consists of the signal number."
 msgstr ""
+"System V IPC está basado en mensajes. Los procesos pueden mandarse mensajes "
+"unos a otros que les dicen cómo tienen que actuar. Las funciones que tratan "
+"estos mensajes son: man:msgctl[3], man:msgget[3], man:msgsnd[3] y "
+"man:msgrcv[3]. Antes, mencioné que había ciertas sysctls que podías activar "
+"o desactivar para afectar el comportamiento del jail. Una de esas sysctls "
+"era `security.jail.sysvipc_allowed`. Por defecto, esta sysctl está a 0. Si "
+"estuviera a 1, derrotaría por completo el propósito de tener un jail; los "
+"usuarios privilegiados del jail serían capaces de afectar a procesos fuera "
+"del entorno del jail. La diferencia entre un mensaje y una señal es que el "
+"mensaje sólo consiste en el número de señal."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:341
 msgid "[.filename]#/usr/src/sys/kern/sysv_msg.c#:"
-msgstr ""
+msgstr "[.filename]#/usr/src/sys/kern/sysv_msg.c#:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:343
@@ -633,6 +919,8 @@ msgid ""
 "`msgget(key, msgflg)`: `msgget` returns (and possibly creates) a message "
 "descriptor that designates a message queue for use in other functions."
 msgstr ""
+"`msgget(key, msgflg)`: `msgget` devuelve (y posiblemente crea) un descriptor "
+"de mensaje que designa una cola de mensajes para usar en otras funciones."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:344
@@ -640,12 +928,15 @@ msgid ""
 "`msgctl(msgid, cmd, buf)`: Using this function, a process can query the "
 "status of a message descriptor."
 msgstr ""
+"`msgctl(msgid, cmd, buf)`: Usando esta función, un proceso puede consultar "
+"el estado de un descriptor de mensaje."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:345
 msgid ""
 "`msgsnd(msgid, msgp, msgsz, msgflg)`: `msgsnd` sends a message to a process."
 msgstr ""
+"`msgsnd(msgid, msgp, msgsz, msgflg)`: `msgsnd` envía un mensaje a un proceso."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:346
@@ -653,6 +944,8 @@ msgid ""
 "`msgrcv(msgid, msgp, msgsz, msgtyp, msgflg)`: a process receives messages "
 "using this function"
 msgstr ""
+"`msgrcv(msgid, msgp, msgsz, msgtyp, msgflg)`: usando esta función un proceso "
+"recibe un mensaje"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:348
@@ -671,6 +964,9 @@ msgid ""
 "if (!jail_sysvipc_allowed && jailed(td->td_ucred))\n"
 "    return (ENOSYS);\n"
 msgstr ""
+"/usr/src/sys/kern/sysv_msg.c:\n"
+"if (!jail_sysvipc_allowed && jailed(td->td_ucred))\n"
+"    return (ENOSYS);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:357
@@ -682,11 +978,18 @@ msgid ""
 "relinquished. The following semaphore system calls are blocked inside a "
 "jail: man:semget[2], man:semctl[2] and man:semop[2]."
 msgstr ""
+"Las llamadas al sistema de semáforos permiten a los procesos sincronizar su "
+"ejecución al realizar un conjunto de operaciones atómicas sobre un conjunto "
+"de semáforos. Básicamente los semáforos proporcionan a los procesos otra "
+"forma de bloquear recursos. Sin embargo, los procesos que esperan en un "
+"semáforo, que está siendo utilizado, dormirán hasta que se libere el "
+"recurso. Las siguientes llamadas al sistema de semáforos están bloqueadas "
+"dentro de un jail: man:semget[2], man:semctl[2] y man:semop[2]."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:359
 msgid "[.filename]#/usr/src/sys/kern/sysv_sem.c#:"
-msgstr ""
+msgstr "[.filename]#/usr/src/sys/kern/sysv_sem.c#:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:361
@@ -694,6 +997,8 @@ msgid ""
 "`semctl(semid, semnum, cmd, ...)`: `semctl` does the specified `cmd` on the "
 "semaphore queue indicated by `semid`."
 msgstr ""
+"`semctl(semid, semnum, cmd, ...)`: `semctl` ejecuta el comando `cmd` en la "
+"cola de semáforo indicada mediante `semid`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:362
@@ -701,11 +1006,13 @@ msgid ""
 "`semget(key, nsems, flag)`: `semget` creates an array of semaphores, "
 "corresponding to `key`."
 msgstr ""
+"`semget(key, nsems, flag)`: `semget` crea un array de semáforos, "
+"correspondientes a `key`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:364
 msgid "`key and flag take on the same meaning as they do in msgget.`"
-msgstr ""
+msgstr "`key y flag tienen el mismo significado que en msgget.`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:365
@@ -713,6 +1020,8 @@ msgid ""
 "`semop(semid, array, nops)`: `semop` performs a group of operations "
 "indicated by `array`, to the set of semaphores identified by `semid`."
 msgstr ""
+"`semop(semid, array, nops)`: `semop` ejecuta un grupo de operaciones "
+"indicado por `array`, en el conjunto de semáforos indicado por `semid`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:367
@@ -723,11 +1032,16 @@ msgid ""
 "calls are blocked within a jailed environment: man:shmdt[2], man:shmat[2], "
 "man:shmctl[2] and man:shmget[2]."
 msgstr ""
+"System V IPC permite a los procesos compartir memoria. Los procesos se "
+"pueden comunicar directamente entre ellos compartiendo partes de su espacio "
+"de direcciones virtual y después leyendo y escribiendo datos almacenados en "
+"la memoria compartida. Estas llamadas al sistema están bloqueadas dentro de "
+"un jail: man:shmdt[2], man:shmat[2], man:shmctl[2] y man:shmget[2]."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:369
 msgid "[.filename]#/usr/src/sys/kern/sysv_shm.c#:"
-msgstr ""
+msgstr "[.filename]#/usr/src/sys/kern/sysv_shm.c#:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:371
@@ -735,6 +1049,8 @@ msgid ""
 "`shmctl(shmid, cmd, buf)`: `shmctl` does various control operations on the "
 "shared memory region identified by `shmid`."
 msgstr ""
+"`shmctl(shmid, cmd, buf)`: `shmctl` realiza varias operaciones de control en "
+"la región de memoria compartida identificada mediante `shmid`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:372
@@ -742,6 +1058,8 @@ msgid ""
 "`shmget(key, size, flag)`: `shmget` accesses or creates a shared memory "
 "region of `size` bytes."
 msgstr ""
+"`shmget(key, size, flag)`: `shmget` accede o crea una región de memoria "
+"compartida de `size` bytes de tamaño."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:373
@@ -749,6 +1067,8 @@ msgid ""
 "`shmat(shmid, addr, flag)`: `shmat` attaches a shared memory region "
 "identified by `shmid` to the address space of a process."
 msgstr ""
+"`shmat(shmid, addr, flag)`: `shmat` adjunta al espacio de direcciones de un "
+"proceso una región de memoria compartida identificada mediante `shmid`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:374
@@ -756,12 +1076,14 @@ msgid ""
 "`shmdt(addr)`: `shmdt` detaches the shared memory region previously attached "
 "at `addr`."
 msgstr ""
+"`shmdt(addr)`: `shmdt` elimina una región de memoria compartida previamente "
+"adjuntada en `addr`."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:375
 #, no-wrap
 msgid "Sockets"
-msgstr "Enchufes"
+msgstr "Sockets"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:378
@@ -773,6 +1095,12 @@ msgid ""
 "allowed to be created if the family specified is either `PF_LOCAL`, "
 "`PF_INET` or `PF_ROUTE`. Otherwise, it returns an error."
 msgstr ""
+"Los jail tratan la llamada al sistema man:socket[2] y otras funciones de "
+"bajo nivel relacionadas de una forma especial. Para determinar si se permite "
+"crear un cierto socket, lo primero es comprobar si la sysctl `security.jail."
+"socket_unixiproute_only` está activada. Si lo está, sólo se permite crear "
+"sockets si la familia especificada es `PF_LOCAL`, `PF_INET` o `PF_ROUTE`. De "
+"lo contrario, devuelve un error."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:396
@@ -794,12 +1122,27 @@ msgid ""
 "...\n"
 "}\n"
 msgstr ""
+"/usr/src/sys/kern/uipc_socket.c:\n"
+"int\n"
+"socreate(int dom, struct socket **aso, int type, int proto,\n"
+"    struct ucred *cred, struct thread *td)\n"
+"{\n"
+"    struct protosw *prp;\n"
+"...\n"
+"    if (jailed(cred) && jail_socket_unixiproute_only &&\n"
+"        prp->pr_domain->dom_family != PF_LOCAL &&\n"
+"        prp->pr_domain->dom_family != PF_INET &&\n"
+"        prp->pr_domain->dom_family != PF_ROUTE) {\n"
+"        return (EPROTONOSUPPORT);\n"
+"    }\n"
+"...\n"
+"}\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:398
 #, no-wrap
 msgid "Berkeley Packet Filter"
-msgstr "Filtro de paquetes Berkeley"
+msgstr "Filtro de Paquetes Berkeley"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:401
@@ -808,6 +1151,9 @@ msgid ""
 "protocol independent fashion. BPF is now controlled by the man:devfs[8] "
 "whether it can be used in a jailed environment."
 msgstr ""
+"El Filtro de Paquetes de Berkeley proporciona una interfaz en crudo a las "
+"capas de enlaces de datos mediante un protocolo independiente. BPF está "
+"controlado por man:devfs[8] si se puede usar dentro de un jail."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:402
@@ -817,7 +1163,6 @@ msgstr "Protocolos"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:405
-#, fuzzy
 msgid ""
 "There are certain protocols which are very common, such as TCP, UDP, IP and "
 "ICMP. IP and ICMP are on the same level: the network layer 2. There are "
@@ -835,18 +1180,16 @@ msgstr ""
 "Hay ciertos protocolos que son muy comunes, como TCP, UDP, IP e ICMP. IP e "
 "ICMP están en el mismo nivel: la capa de red 2. Hay ciertas precauciones que "
 "se toman para evitar que un proceso encerrado vincule un protocolo a una "
-"determinada dirección solo si el <literal>nam</literal> el parámetro está "
-"configurado. <literal>nam</literal>Es un puntero a un <literal>sockaddr</"
-"literal> estructura, que describe la dirección a la que enlazar el servicio. "
-"Una definición más exacta es que <literal>sockaddr</literal> \"se puede "
-"utilizar como plantilla para hacer referencia a la etiqueta de "
+"determinada dirección solo si el `nam` el parámetro está configurado. `nam` "
+"es un puntero a una estructura `sockaddr`, que describe la dirección a la "
+"que enlazar el servicio. Una definición más exacta es que `sockaddr` \"se "
+"puede utilizar como plantilla para hacer referencia a la etiqueta de "
 "identificación y la longitud de cada dirección \". En la función "
-"<literal>in_pcbbind_setup()</literal>, <literal>sin</literal> Es un puntero "
-"a un <literal>sockaddr_in</literal> estructura, que contiene el puerto, la "
-"dirección, la longitud y la familia de dominio del socket que se va a "
-"vincular. Básicamente, esto no permite ningún proceso de <application>jail</"
-"application>para poder especificar la dirección que no pertenece al "
-"<application>jail</application>en el que existe el proceso de llamada."
+"`in_pcbbind_setup()`, `sin`es un puntero a una estructura `sockaddr_in`, que "
+"contiene el puerto, la dirección, la longitud y la familia de dominio del "
+"socket que se va a vincular. Básicamente, esto no permite que un proceso "
+"dentro de un `jail` especifique una dirección que no pertenece al `jail` en "
+"el que está encerrado el proceso llamante."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:442
@@ -887,6 +1230,41 @@ msgid ""
 "...\n"
 "}\n"
 msgstr ""
+"/usr/src/sys/netinet/in_pcb.c:\n"
+"int\n"
+"in_pcbbind_setup(struct inpcb *inp, struct sockaddr *nam, in_addr_t *laddrp,"
+"\n"
+"    u_short *lportp, struct ucred *cred)\n"
+"{\n"
+"    ...\n"
+"    struct sockaddr_in *sin;\n"
+"    ...\n"
+"    if (nam) {\n"
+"        sin = (struct sockaddr_in *)nam;\n"
+"        ...\n"
+"        if (sin->sin_addr.s_addr != INADDR_ANY)\n"
+"            if (prison_ip(cred, 0, &sin->sin_addr.s_addr))\n"
+"                return(EINVAL);\n"
+"        ...\n"
+"        if (lport) {\n"
+"            ...\n"
+"            if (prison && prison_ip(cred, 0, &sin->sin_addr.s_addr))\n"
+"                return (EADDRNOTAVAIL);\n"
+"            ...\n"
+"        }\n"
+"    }\n"
+"    if (lport == 0) {\n"
+"        ...\n"
+"        if (laddr.s_addr != INADDR_ANY)\n"
+"            if (prison_ip(cred, 0, &laddr.s_addr))\n"
+"                return (EINVAL);\n"
+"        ...\n"
+"    }\n"
+"...\n"
+"    if (prison_ip(cred, 0, &laddr.s_addr))\n"
+"        return (EINVAL);\n"
+"...\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:445
@@ -898,6 +1276,12 @@ msgid ""
 "IP address not belonging to the jail, the protocol is not allowed to bind to "
 "that address."
 msgstr ""
+"Puedes estar preguntándonte qué es lo que hace la función `prison_ip()`. "
+"`prison_ip()` recibe tres argumentos, un puntero a la credencial ("
+"representado por `cred`), unos flags, y una dirección IP. Devuelve 1 si la "
+"dirección IP NO pertenece al jail o 0 en caso contrario. Como puedes ver en "
+"el código, si la dirección IP no pertenece al jail, no se permite al "
+"protocolo enlazarse a esa dirección."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:453
@@ -909,6 +1293,11 @@ msgid ""
 "{\n"
 "    u_int32_t tmp;\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c:\n"
+"int\n"
+"prison_ip(struct ucred *cred, int flag, u_int32_t *ip)\n"
+"{\n"
+"    u_int32_t tmp;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:478
@@ -939,6 +1328,30 @@ msgid ""
 "    return (0);\n"
 "}\n"
 msgstr ""
+"    if (!jailed(cred))\n"
+"        return (0);\n"
+"    if (flag)\n"
+"        tmp = *ip;\n"
+"    else\n"
+"        tmp = ntohl(*ip);\n"
+"    if (tmp == INADDR_ANY) {\n"
+"        if (flag)\n"
+"            *ip = cred->cr_prison->pr_ip;\n"
+"        else\n"
+"            *ip = htonl(cred->cr_prison->pr_ip);\n"
+"        return (0);\n"
+"    }\n"
+"    if (tmp == INADDR_LOOPBACK) {\n"
+"        if (flag)\n"
+"            *ip = cred->cr_prison->pr_ip;\n"
+"        else\n"
+"            *ip = htonl(cred->cr_prison->pr_ip);\n"
+"        return (0);\n"
+"    }\n"
+"    if (cred->cr_prison->pr_ip != tmp)\n"
+"        return (1);\n"
+"    return (0);\n"
+"}\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:480
@@ -953,6 +1366,9 @@ msgid ""
 "file flags, such as immutable, append-only, and undeleteable flags, if the "
 "securelevel is greater than 0."
 msgstr ""
+"Ni siquiera a los usuarios `root` de un jail se les permite cambiar ningún "
+"flag de fichero, como el flag de sólo lectura, sólo añadir, y flags de no "
+"borrado, si el securelevel es mayor que 0."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:528
@@ -1001,6 +1417,48 @@ msgid ""
 "    ...\n"
 "}\n"
 msgstr ""
+"/usr/src/sys/ufs/ufs/ufs_vnops.c:\n"
+"static int\n"
+"ufs_setattr(ap)\n"
+"    ...\n"
+"{\n"
+"    ...\n"
+"        if (!priv_check_cred(cred, PRIV_VFS_SYSFLAGS, 0)) {\n"
+"            if (ip->i_flags\n"
+"                & (SF_NOUNLINK | SF_IMMUTABLE | SF_APPEND)) {\n"
+"                    error = securelevel_gt(cred, 0);\n"
+"                    if (error)\n"
+"                        return (error);\n"
+"            }\n"
+"            ...\n"
+"        }\n"
+"}\n"
+"/usr/src/sys/kern/kern_priv.c\n"
+"int\n"
+"priv_check_cred(struct ucred *cred, int priv, int flags)\n"
+"{\n"
+"    ...\n"
+"    error = prison_priv_check(cred, priv);\n"
+"    if (error)\n"
+"        return (error);\n"
+"    ...\n"
+"}\n"
+"/usr/src/sys/kern/kern_jail.c\n"
+"int\n"
+"prison_priv_check(struct ucred *cred, int priv)\n"
+"{\n"
+"    ...\n"
+"    switch (priv) {\n"
+"    ...\n"
+"    case PRIV_VFS_SYSFLAGS:\n"
+"        if (jail_chflags_allowed)\n"
+"            return (0);\n"
+"        else\n"
+"            return (EPERM);\n"
+"    ...\n"
+"    }\n"
+"    ...\n"
+"}\n"
 
 #~ msgid ""
 #~ "include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"

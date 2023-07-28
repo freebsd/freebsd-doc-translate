@@ -1,12 +1,12 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR The FreeBSD Project
 # This file is distributed under the same license as the FreeBSD Documentation package.
-# Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021.
+# Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:20-0300\n"
-"PO-Revision-Date: 2021-11-11 07:33+0000\n"
+"PO-Revision-Date: 2023-07-28 04:45+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookkobj_index/es/>\n"
@@ -15,35 +15,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. type: Title =
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:1
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:13
 #, no-wrap
 msgid "Kernel Objects"
-msgstr "Objetos del kernel"
+msgstr "Objetos del Kernel"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:1
 #, no-wrap
 msgid "Chapter 3. Kernel Objects"
-msgstr ""
+msgstr "Chapter 3. Objetos del Kernel"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:53
-#, fuzzy
 msgid ""
 "Kernel Objects, or _Kobj_ provides an object-oriented C programming system "
 "for the kernel.  As such the data being operated on carries the description "
 "of how to operate on it.  This allows operations to be added and removed "
 "from an interface at run time and without breaking binary compatibility."
 msgstr ""
-"Objetos del núcleo, o <firstterm>Kobj</firstterm> proporciona un sistema de "
-"programación C orientado a objetos para el kernel. Como tal, los datos con "
-"los que se opera llevan la descripción de cómo operar con ellos. Esto "
-"permite agregar y eliminar operaciones de una interfaz en tiempo de "
-"ejecución y sin romper la compatibilidad binaria."
+"Los Objetos del núcleo, o _Kobj_ proporciona un sistema de programación C "
+"orientado a objetos para el kernel. Como tal, los datos con los que se opera "
+"llevan la descripción de cómo operar con ellos. Esto permite agregar y "
+"eliminar operaciones de una interfaz en tiempo de ejecución y sin romper la "
+"compatibilidad binaria."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:55
@@ -55,7 +54,7 @@ msgstr "Terminología"
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:57
 #, no-wrap
 msgid "Object"
-msgstr "Objecto"
+msgstr "Objeto"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:59
@@ -103,7 +102,6 @@ msgstr "Operación Kobj"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:75
-#, fuzzy
 msgid ""
 "Kobj works by generating descriptions of methods.  Each description holds a "
 "unique id as well as a default function.  The description's address is used "
@@ -116,7 +114,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:84
-#, fuzzy
 msgid ""
 "A class is built by creating a method table associating one or more "
 "functions with method descriptions.  Before use the class is compiled.  The "
@@ -150,13 +147,13 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:86
 msgid "These indirections can be visualized as the following:"
-msgstr "Estas in direcciones se pueden visualizar de la siguiente manera:"
+msgstr "Estas indirecciones se pueden visualizar de la siguiente manera:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:90
 #, no-wrap
 msgid "object->cache<->class\n"
-msgstr ""
+msgstr "object->cache<->class\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:93
@@ -172,9 +169,9 @@ msgstr "Estructuras"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:100
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "struct kobj_method\n"
-msgstr "método kobj_method\n"
+msgstr "estructura kobj_method\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:102
@@ -193,12 +190,19 @@ msgid ""
 "void kobj_init(kobj_t obj, kobj_class_t cls);\n"
 "void kobj_delete(kobj_t obj, struct malloc_type *mtype);\n"
 msgstr ""
+"void kobj_class_compile(kobj_class_t cls);\n"
+"void kobj_class_compile_static(kobj_class_t cls, kobj_ops_t ops);\n"
+"void kobj_class_free(kobj_class_t cls);\n"
+"kobj_t kobj_create(kobj_class_t cls, struct malloc_type *mtype, int mflags);"
+"\n"
+"void kobj_init(kobj_t obj, kobj_class_t cls);\n"
+"void kobj_delete(kobj_t obj, struct malloc_type *mtype);\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:114
 #, no-wrap
 msgid "Macros"
-msgstr ""
+msgstr "Macros"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:122
@@ -209,6 +213,10 @@ msgid ""
 "DEFINE_CLASS(name, methods, size)\n"
 "KOBJMETHOD(NAME, FUNC)\n"
 msgstr ""
+"KOBJ_CLASS_FIELDS\n"
+"KOBJ_FIELDS\n"
+"DEFINE_CLASS(name, methods, size)\n"
+"KOBJMETHOD(NAME, FUNC)\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:124
@@ -223,25 +231,26 @@ msgid ""
 "<sys/param.h>\n"
 "<sys/kobj.h>\n"
 msgstr ""
+"<sys/param.h>\n"
+"<sys/kobj.h>\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:132
 #, no-wrap
 msgid "Creating an Interface Template"
-msgstr "Crear una plantilla de interfaz"
+msgstr "Crear una Plantilla de Interfaz"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:136
-#, fuzzy
 msgid ""
 "The first step in using Kobj is to create an Interface.  Creating the "
 "interface involves creating a template that the script [.filename]#src/sys/"
 "kern/makeobjops.pl# can use to generate the header and code for the method "
 "declarations and method lookup functions."
 msgstr ""
-"El primer paso para utilizar Kobj es crear una interfaz. Crear la interfaz "
-"implica crear una plantilla que el script <filename>src/sys/kern/makeobjops."
-"pl</filename> puede utilizar para generar el encabezado y el código para las "
+"El primer paso para utilizar Kobj es crear una Interfaz. Crear la interfaz "
+"implica crear una plantilla que el script [.filename]#src/sys/kern/makeobjops"
+".pl# pueda utilizar para generar el encabezado y el código para las "
 "declaraciones de métodos y las funciones de búsqueda de métodos."
 
 #. type: Plain text
@@ -251,6 +260,9 @@ msgid ""
 "`INTERFACE`, `CODE`, `EPILOG`, `HEADER`, `METHOD`, `PROLOG`, `STATICMETHOD`, "
 "and `DEFAULT`."
 msgstr ""
+"Dentro de esta plantilla se usan las siguientes palabras clave: `#include`, "
+"`INTERFACE`, `CODE`, `EPILOG`, `HEADER`, `METHOD`, `PROLOG`, `STATICMETHOD`, "
+"y `DEFAULT`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:140
@@ -258,6 +270,8 @@ msgid ""
 "The `#include` statement and what follows it is copied verbatim to the head "
 "of the generated code file."
 msgstr ""
+"La sentencia `#include` y lo que le sigue se copia de forma literal en el "
+"encabezado del fichero de código generado."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:142
@@ -274,7 +288,7 @@ msgstr "Por ejemplo:"
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:146
 #, no-wrap
 msgid "#include <sys/foo.h>\n"
-msgstr ""
+msgstr "#include <sys/foo.h>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:151
@@ -283,12 +297,16 @@ msgid ""
 "concatenated with each method name as [interface name]_[method name].  Its "
 "syntax is INTERFACE [interface name];."
 msgstr ""
+"La palabra reservada `INTERFACE` se usa para definir el nombre de la "
+"interfaz. Este nombre se concatena con el nombre de cada método como [nombre "
+"de interfaz]_[nombre de método]. Su sintaxis es INTERFACE [nombre de la "
+"interfaz];."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:157
 #, no-wrap
 msgid "INTERFACE foo;\n"
-msgstr ""
+msgstr "INTERFACE foo;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:161
@@ -296,6 +314,8 @@ msgid ""
 "The `CODE` keyword copies its arguments verbatim into the code file.  Its "
 "syntax is `CODE { [whatever] };`"
 msgstr ""
+"La palabra clave `CODE` copia sus argumentos de forma literal en el fichero. "
+"Su sintaxis es `CODE { [lo que sea] };`"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:172
@@ -308,6 +328,12 @@ msgid ""
 "\t}\n"
 "};\n"
 msgstr ""
+"CODE {\n"
+"\tstruct foo * foo_alloc_null(struct bar *)\n"
+"\t{\n"
+"\t\treturn NULL;\n"
+"\t}\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:176
@@ -315,6 +341,8 @@ msgid ""
 "The `HEADER` keyword copies its arguments verbatim into the header file.  "
 "Its syntax is `HEADER { [whatever] };`"
 msgstr ""
+"La palabra clave `HEADER` copia sus argumentos de forma literal en el "
+"fichero de cabecera. Si sintaxis es `HEADER { [lo que sea] };`"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:185
@@ -325,6 +353,10 @@ msgid ""
 "        struct grumble;\n"
 "};\n"
 msgstr ""
+"HEADER {\n"
+"        struct mumble;\n"
+"        struct grumble;\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:189
@@ -332,6 +364,8 @@ msgid ""
 "The `METHOD` keyword describes a method.  Its syntax is `METHOD [return "
 "type] [method name] { [object [, arguments]] };`"
 msgstr ""
+"La palabra clave `METHOD`describe un método. Su sintaxis es `METHOD [tipo "
+"devuelto] [nombre del método] { [objeto [, argumentos]] };`"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:199
@@ -343,6 +377,11 @@ msgid ""
 "\tstruct bar;\n"
 "};\n"
 msgstr ""
+"METHOD int bar {\n"
+"\tstruct object *;\n"
+"\tstruct foo *;\n"
+"\tstruct bar;\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:204
@@ -352,6 +391,10 @@ msgid ""
 "syntax is `METHOD [return type] [method name] { [object; [other arguments]] }"
 "DEFAULT [default function];`"
 msgstr ""
+"La palabra clave `DEFAULT` puede seguir a la palabra clave `METHOD`. "
+"Extiende la palabra clave `METHOD`para incluir la función por defecto para "
+"el método. La sintaxis extendida es `METHOD [tipo devuelto] [nombre del "
+"método] { [objeto; [otros argumentos]] }DEFAULT [función por defecto];`"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:214
@@ -363,6 +406,11 @@ msgid ""
 "\tint bar;\n"
 "} DEFAULT foo_hack;\n"
 msgstr ""
+"METHOD int bar {\n"
+"\tstruct object *;\n"
+"\tstruct foo *;\n"
+"\tint bar;\n"
+"} DEFAULT foo_hack;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:219
@@ -373,6 +421,12 @@ msgid ""
 "referenced as 'ops'.  This is also useful for calling methods directly out "
 "of a class's method table."
 msgstr ""
+"La palabra clave `STATICMETHOD` se usa como la palabra clave `METHOD` "
+"excepto que los datos del kobj no están al comienzo de la estructura del "
+"objeto de modo que hacer un cast a kobj_t sería incorrecto. En su lugar "
+"`STATICMETHOD` depende de que los datos del Kobj se referencien como 'ops'. "
+"Esto también es útil para llamar métodos directamente a partir de la tabla "
+"de métodos de una clase."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:222
@@ -382,6 +436,10 @@ msgid ""
 "primarily for profiling situations where it's difficult to obtain the "
 "information in another way."
 msgstr ""
+"Los conjuntos de palabras clave `PROLOG` y `EPILOG` insertan código "
+"inmediatamente antes o inmediatamente después del `METHOD` al que están "
+"adjuntados. Esta característica se usa principalmente para perfilar "
+"situaciones en las que de otra forma es difícil conseguir la información."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:224
@@ -395,16 +453,17 @@ msgid ""
 "src/sys/kern/bus_if.m\n"
 "src/sys/kern/device_if.m\n"
 msgstr ""
+"src/sys/kern/bus_if.m\n"
+"src/sys/kern/device_if.m\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:231
 #, no-wrap
 msgid "Creating a Class"
-msgstr "Crear una clase"
+msgstr "Crear una Clase"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:238
-#, fuzzy
 msgid ""
 "The second step in using Kobj is to create a class.  A class consists of a "
 "name, a table of methods, and the size of objects if Kobj's object handling "
@@ -416,15 +475,15 @@ msgstr ""
 "El segundo paso para usar Kobj es crear una clase. Una clase consta de un "
 "nombre, una tabla de métodos y el tamaño de los objetos si se utilizan las "
 "funciones de manejo de objetos de Kobj. Para crear la clase usa la macro "
-"<function>DEFINE_CLASS()</function>. Para crear la tabla de métodos, cree "
-"una matriz de kobj_method_t terminado por una entrada NULL. Cada entrada que "
-"no sea NULL se puede crear usando la macro <function>KOBJMETHOD()</function>."
+"`DEFINE_CLASS()`. Para crear la tabla de métodos, crea una matriz de "
+"kobj_method_t terminada por una entrada NULL. Cada entrada que no sea NULL "
+"se puede crear usando la macro `KOBJMETHOD()`."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:244
 #, no-wrap
 msgid "DEFINE_CLASS(fooclass, foomethods, sizeof(struct foodata));\n"
-msgstr ""
+msgstr "DEFINE_CLASS(fooclass, foomethods, sizeof(struct foodata));\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:250
@@ -436,6 +495,11 @@ msgid ""
 "\t{ NULL, NULL}\n"
 "};\n"
 msgstr ""
+"kobj_method_t foomethods[] = {\n"
+"\tKOBJMETHOD(bar_doo, foo_doo),\n"
+"\tKOBJMETHOD(bar_foo, foo_foo),\n"
+"\t{ NULL, NULL}\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:255
@@ -446,16 +510,20 @@ msgid ""
 "kobj_ops` and using `kobj_class_compile_static();` otherwise, "
 "`kobj_class_compile()` should be used."
 msgstr ""
+"La clase se tiene que \"compilar\". Dependiendo del estado del sistema en el "
+"momento en que la clase va a ser inicializada, una caché estática, \"ops "
+"table\", tendrá que ser usada. Esto se puede conseguir declarando un ``"
+"struct kobj_ops` y usando `kobj_class_compile_static();` de lo contrario, se "
+"debería usar `kobj_class_compile()`."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:256
 #, no-wrap
 msgid "Creating an Object"
-msgstr "Crear un objeto"
+msgstr "Crear un Objeto"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:262
-#, fuzzy
 msgid ""
 "The third step in using Kobj involves how to define the object.  Kobj object "
 "creation routines assume that Kobj data is at the head of an object.  If "
@@ -466,18 +534,17 @@ msgid ""
 "object uses."
 msgstr ""
 "El tercer paso para utilizar Kobj implica cómo definir el objeto. Las "
-"rutinas de creación de objetos de Kobj asumen que los datos de Kobj están a "
-"la cabeza de un objeto. Si esto no es apropiado, tendrá que asignar el "
-"objeto usted mismo y luego usar <function>kobj_init()</function> en la "
-"porción de Kobj; de lo contrario, puede usar <function>kobj_create()</"
-"function> para asignar e inicializar la parte Kobj del objeto "
-"automáticamente. <function>kobj_init()</function> también se puede usar para "
+"rutinas de creación de objetos de Kobj asumen que los datos de Kobj están al "
+"comienzo de un objeto. Si esto no es apropiado, tendrás que asignar el "
+"objeto tú mismo y luego usar `kobj_init()` en la porción de Kobj; de lo "
+"contrario, puedes usar `kobj_create()` para asignar e inicializar la parte "
+"Kobj del objeto automáticamente. `kobj_init()` también se puede usar para "
 "cambiar la clase que usa un objeto."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:264
 msgid "To integrate Kobj into the object you should use the macro KOBJ_FIELDS."
-msgstr "Para integrar Kobj en el objeto, debe utilizar la macro KOBJ_FIELDS."
+msgstr "Para integrar Kobj en el objeto, debes utilizar la macro KOBJ_FIELDS."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:266
@@ -494,16 +561,20 @@ msgid ""
 "\tfoo_bar;\n"
 "};\n"
 msgstr ""
+"struct foo_data {\n"
+"\tKOBJ_FIELDS;\n"
+"\tfoo_foo;\n"
+"\tfoo_bar;\n"
+"};\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:276
 #, no-wrap
 msgid "Calling Methods"
-msgstr "Métodos de llamada"
+msgstr "Llamando a Métodos"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:281
-#, fuzzy
 msgid ""
 "The last step in using Kobj is to simply use the generated functions to use "
 "the desired method within the object's class.  This is as simple as using "
@@ -530,7 +601,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:287
 #, no-wrap
 msgid "[return value = ] FOO_BAR(object [, other parameters]);\n"
-msgstr ""
+msgstr "[valor de retorno = ] FOO_BAR(objeto [, otros parámetros]);\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/kobj/_index.adoc:289
@@ -545,6 +616,9 @@ msgid ""
 "`kobj_delete()` may be called on it, and when a class is no longer being "
 "used `kobj_class_free()` may be called on it."
 msgstr ""
+"Cuando un objeto creado con `kobj_create()` ya no es necesario se puede "
+"llamar `kobj_delete()` sobre él, y cuando una clase ya no se va a usar más "
+"se puede llamar `kobj_class_free()` sobre ella."
 
 #~ msgid ""
 #~ "include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"

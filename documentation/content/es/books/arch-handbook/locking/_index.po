@@ -1,12 +1,12 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR The FreeBSD Project
 # This file is distributed under the same license as the FreeBSD Documentation package.
-# Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021, 2022.
+# Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 10:28-0300\n"
-"PO-Revision-Date: 2022-01-19 10:24+0000\n"
+"PO-Revision-Date: 2023-07-28 04:45+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbooklocking_index/es/>\n"
@@ -15,26 +15,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. type: Title =
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:1
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:13
 #, no-wrap
 msgid "Locking Notes"
-msgstr "Notas de bloqueo"
+msgstr "Notas sobre Bloqueos"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:1
 #, no-wrap
 msgid "Chapter 2. Locking Notes"
-msgstr ""
+msgstr "Chapter 2. Notas sobre Bloqueos"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:51
 msgid ""
 "_This chapter is maintained by the FreeBSD SMP Next Generation Project._"
 msgstr ""
+"_Este capítulo está mantenido por el FreeBSD SMP Next Generation Project._"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:53
@@ -45,12 +46,18 @@ msgid ""
 "locks. A few variables are protected simply by always using atomic "
 "operations to access them."
 msgstr ""
+"Este documento resume los bloqueos utilizados en el núcleo de FreeBSD para "
+"permitir un multiprocesamiento efectivo dentro del núcleo. Los bloqueos se "
+"pueden conseguir de distintas formas. Las estructuras de datos se pueden "
+"proteger con mutex o co locks man:lockmgr[9]. Unas pocas variables "
+"simplemente están protegidas usando operaciones atómicas para acceder a "
+"ellas."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:55
 #, no-wrap
 msgid "Mutexes"
-msgstr ""
+msgstr "Mutexes"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:58
@@ -62,8 +69,8 @@ msgid ""
 msgstr ""
 "Un mutex es simplemente un bloqueo que se utiliza para garantizar la "
 "exclusión mutua. Específicamente, un mutex solo puede ser propiedad de una "
-"entidad a la vez. Si otra entidad desea obtener un mutex que ya es de su "
-"propiedad, debe esperar hasta que se libere el mutex. En el kernel de "
+"entidad a la vez. Si otra entidad desea obtener un mutex que ya tiene "
+"propietario, debe esperar hasta que se libere el mutex. En el núcleo de "
 "FreeBSD, las exclusiones mutuas son propiedad de los procesos."
 
 #. type: Plain text
@@ -73,6 +80,10 @@ msgid ""
 "short period of time. Specifically, one may not sleep while holding a mutex. "
 "If you need to hold a lock across a sleep, use a man:lockmgr[9] lock."
 msgstr ""
+"Los mutexes se pueden adquirir de forma recursiva, pero están pensados para "
+"ser mantenidos durante un corto periodo de tiempo. Específicamente, uno no "
+"debería dormir mientras se mantiene un mutex. Si necesitas mantener un "
+"bloqueo mientras duermes usa un bloqueo man:lockmgr[9]."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:62
@@ -85,7 +96,7 @@ msgstr "Cada mutex tiene varias propiedades de interés:"
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:130
 #, no-wrap
 msgid "Variable Name"
-msgstr "Nombre de la variable"
+msgstr "Nombre de la Variable"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:65
