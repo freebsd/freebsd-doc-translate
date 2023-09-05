@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2023-05-21 14:43-0300\n"
-"PO-Revision-Date: 2023-08-11 04:45+0000\n"
+"PO-Revision-Date: 2023-09-05 04:45+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookmac_index/es/>\n"
@@ -2406,12 +2406,19 @@ msgid ""
 "long-lived operations.  This entry point is permitted to fail resulting in "
 "the failure to allocate the mbuf header."
 msgstr ""
+"Inicializa la etiqueta en una cabecera de paquete mbuf recién instanciada "
+"(`mbuf`). El campo `flag`puede ser M_WAITOK o M_NOWAIT, y se debería emplear "
+"para evitar dormir en man:malloc[9] durante esta llamada de inicialización. "
+"La reserva de mbuf ocurre frecuentemente en entornos sensibles al "
+"rendimiento, y la implementación debería tener cuidado y evitar dormir en "
+"operaciones que duren mucho. Se permite que este punto de entrada falle "
+"resultando en el fallo de reserva de la cabecera mbuf."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:643
 #, no-wrap
 msgid "`mpo_init_mount_label`"
-msgstr ""
+msgstr "`mpo_init_mount_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:651
@@ -2422,6 +2429,10 @@ msgid ""
 "struct label *mntlabel;\n"
 "struct label *fslabel;\n"
 msgstr ""
+"void mpo_init_mount_label(\tmntlabel,\n"
+" \tfslabel);\n"
+"struct label *mntlabel;\n"
+"struct label *fslabel;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:661
@@ -2429,13 +2440,13 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:2134
 #, no-wrap
 msgid "`mntlabel`"
-msgstr ""
+msgstr "`mntlabel`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:662
 #, no-wrap
 msgid "Policy label to be initialized for the mount itself"
-msgstr ""
+msgstr "Etiqueta de política que será inicializada por el propio montaje"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:665
@@ -2446,32 +2457,28 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:2138
 #, no-wrap
 msgid "`fslabel`"
-msgstr ""
+msgstr "`fslabel`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:666
 #, no-wrap
 msgid "Policy label to be initialized for the file system"
-msgstr ""
+msgstr "Etiqueta de política que será inicializada por el sistema de ficheros"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:671
-#, fuzzy
-#| msgid ""
-#| "Initialize the labels on a newly instantiated mount point. Sleeping is "
-#| "permitted."
 msgid ""
 "Initialize the labels on a newly instantiated mount point.  Sleeping is "
 "permitted."
 msgstr ""
-"Inicialice las etiquetas en un punto de montaje recién instan ciado. Está "
+"Inicializa las etiquetas en un punto de montaje recién instanciado. Está "
 "permitido dormir."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:673
 #, no-wrap
 msgid "`mpo_init_mount_fs_label`"
-msgstr ""
+msgstr "`mpo_init_mount_fs_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:679
@@ -2480,29 +2487,28 @@ msgid ""
 "void mpo_init_mount_fs_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_init_mount_fs_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:690
 #, no-wrap
 msgid "Label to be initialized"
-msgstr ""
+msgstr "Etiqueta a inicializar"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:695
-#, fuzzy
-#| msgid ""
-#| "Initialize the label on a newly mounted file system. Sleeping is permitted"
 msgid ""
 "Initialize the label on a newly mounted file system.  Sleeping is permitted"
 msgstr ""
-"Inicialice la etiqueta en un sistema de archivos recién montado. Se permite "
+"Inicializa la etiqueta en un sistema de archivos recién montado. Se permite "
 "dormir"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:697
 #, no-wrap
 msgid "`mpo_init_pipe_label`"
-msgstr ""
+msgstr "`mpo_init_pipe_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:703
@@ -2511,6 +2517,8 @@ msgid ""
 "void mpo_init_pipe_label(\tlabel);\n"
 "struct label*label;\n"
 msgstr ""
+"void mpo_init_pipe_label(\tlabel);\n"
+"struct label*label;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:714
@@ -2521,24 +2529,21 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1705
 #, no-wrap
 msgid "Label to be filled in"
-msgstr ""
+msgstr "Etiqueta para ser rellenada"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:719
-#, fuzzy
-#| msgid ""
-#| "Initialize a label for a newly instantiated pipe. Sleeping is permitted."
 msgid ""
 "Initialize a label for a newly instantiated pipe.  Sleeping is permitted."
 msgstr ""
-"Inicialice una etiqueta para una tubería recién instanciada. Está permitido "
+"Inicializa una etiqueta para una tubería recién instanciada. Está permitido "
 "dormir."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:721
 #, no-wrap
 msgid "`mpo_init_socket_label`"
-msgstr ""
+msgstr "`mpo_init_socket_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:729
@@ -2549,13 +2554,17 @@ msgid ""
 "struct label *label;\n"
 "int flag;\n"
 msgstr ""
+"void mpo_init_socket_label(\tlabel,\n"
+" \tflag);\n"
+"struct label *label;\n"
+"int flag;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:744
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:774
 #, no-wrap
 msgid "man:malloc[9] flags"
-msgstr ""
+msgstr "flags de man:malloc[9]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:749
@@ -2564,12 +2573,15 @@ msgid ""
 "one of M_WAITOK and M_NOWAIT, and should be employed to avoid performing a "
 "sleeping man:malloc[9] during this initialization call."
 msgstr ""
+"Inicializa una etiqueta para un socket recién creado. El campo `flag` puede "
+"ser M_WAITOK o M_NOWAIT, y debería emplearse para evitar dormir en "
+"man:malloc[9] durante esta llamada de inicialización."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:751
 #, no-wrap
 msgid "`mpo_init_socket_peer_label`"
-msgstr ""
+msgstr "`mpo_init_socket_peer_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:759
@@ -2580,6 +2592,10 @@ msgid ""
 "struct label *label;\n"
 "int flag;\n"
 msgstr ""
+"void mpo_init_socket_peer_label(\tlabel,\n"
+" \tflag);\n"
+"struct label *label;\n"
+"int flag;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:779
@@ -2588,12 +2604,15 @@ msgid ""
 "may be one of M_WAITOK and M_NOWAIT, and should be employed to avoid "
 "performing a sleeping man:malloc[9] during this initialization call."
 msgstr ""
+"Inicializa la etiqueta peer para un socket reción creado. El campo `flag` "
+"puede ser M_WAITOK o M_NOWAIT, y debería emplearse para evitar dormir en "
+"man:malloc[9] durante esta llamada de inicialización."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:781
 #, no-wrap
 msgid "`mpo_init_proc_label`"
-msgstr ""
+msgstr "`mpo_init_proc_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:787
@@ -2602,25 +2621,23 @@ msgid ""
 "void mpo_init_proc_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_init_proc_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:803
-#, fuzzy
-#| msgid ""
-#| "Initialize the label for a newly instantiated process. Sleeping is "
-#| "permitted."
 msgid ""
 "Initialize the label for a newly instantiated process.  Sleeping is "
 "permitted."
 msgstr ""
-"Inicialice la etiqueta para un proceso recién instanciado. Está permitido "
+"Inicializa la etiqueta para un proceso recién instanciado. Está permitido "
 "dormir."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:805
 #, no-wrap
 msgid "`mpo_init_vnode_label`"
-msgstr ""
+msgstr "`mpo_init_vnode_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:811
@@ -2629,23 +2646,21 @@ msgid ""
 "void mpo_init_vnode_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_init_vnode_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:827
-#, fuzzy
-#| msgid ""
-#| "Initialize the label on a newly instantiated vnode. Sleeping is permitted."
 msgid ""
 "Initialize the label on a newly instantiated vnode.  Sleeping is permitted."
 msgstr ""
-"Inicialice la etiqueta en un vnode recién instan ciado. Está permitido "
-"dormir."
+"Inicializa la etiqueta en un vnode recién instanciado. Está permitido dormir."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:829
 #, no-wrap
 msgid "`mpo_destroy_bpfdesc_label`"
-msgstr ""
+msgstr "`mpo_destroy_bpfdesc_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:835
@@ -2654,12 +2669,14 @@ msgid ""
 "void mpo_destroy_bpfdesc_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_destroy_bpfdesc_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:846
 #, no-wrap
 msgid "bpfdesc label"
-msgstr ""
+msgstr "etiqueta bpfdesc"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:851
@@ -2668,12 +2685,15 @@ msgid ""
 "free any internal storage associated with `label` so that it may be "
 "destroyed."
 msgstr ""
+"Destruye la etiqueta en el descriptor BPF. En este punto de entrada la "
+"política debería liberar cualquier almacenamiento interno asociado con "
+"`label` de forma que pueda ser destruido."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:853
 #, no-wrap
 msgid "`mpo_destroy_cred_label`"
-msgstr ""
+msgstr "`mpo_destroy_cred_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:859
@@ -2682,6 +2702,8 @@ msgid ""
 "void mpo_destroy_cred_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_destroy_cred_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:870
@@ -2691,7 +2713,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:966
 #, no-wrap
 msgid "Label being destroyed"
-msgstr ""
+msgstr "Etiqueta que está siendo destruida"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:875
@@ -2700,12 +2722,15 @@ msgid ""
 "should free any internal storage associated with `label` so that it may be "
 "destroyed."
 msgstr ""
+"Destruye la etiqueta de una credencial. En este punto de entrada, el módulo "
+"de la política debería liberar cualquier almacenamiento interno asociado con "
+"`label` de forma que pueda ser destruida."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:877
 #, no-wrap
 msgid "`mpo_destroy_devfsdirent_label`"
-msgstr ""
+msgstr "`mpo_destroy_devfsdirent_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:883
@@ -2714,6 +2739,8 @@ msgid ""
 "void mpo_destroy_devfsdirent_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_destroy_devfsdirent_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:899
@@ -2722,12 +2749,15 @@ msgid ""
 "should free any internal storage associated with `label` so that it may be "
 "destroyed."
 msgstr ""
+"Destruye la etiqueta en una entrada devfs. En este punto de entrada, el "
+"módulo de la política debería liberar cualquier almacenamiento interno "
+"asociado con `label` de forma que pueda ser destruida."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:901
 #, no-wrap
 msgid "`mpo_destroy_ifnet_label`"
-msgstr ""
+msgstr "`mpo_destroy_ifnet_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:907
@@ -2736,6 +2766,8 @@ msgid ""
 "void mpo_destroy_ifnet_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_destroy_ifnet_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:923
@@ -2744,12 +2776,15 @@ msgid ""
 "module should free any internal storage associated with `label` so that it "
 "may be destroyed."
 msgstr ""
+"Destruye la etiqueta en un interfaz eliminado.  En este punto de entrada, el "
+"módulo de la política debería liberar cualquier almacenamiento interno "
+"asociado con `label` de forma que pueda ser destruida."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:925
 #, no-wrap
 msgid "`mpo_destroy_ipq_label`"
-msgstr ""
+msgstr "`mpo_destroy_ipq_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:931
@@ -2758,6 +2793,8 @@ msgid ""
 "void mpo_destroy_ipq_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_destroy_ipq_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:947
@@ -2766,12 +2803,15 @@ msgid ""
 "module should free any internal storage associated with `label` so that it "
 "may be destroyed."
 msgstr ""
+"Destruye la etiqueta en una cola de fragmentos IP.  En este punto de "
+"entrada, el módulo de la política debería liberar cualquier almacenamiento "
+"interno asociado con `label` de forma que pueda ser destruida."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:949
 #, no-wrap
 msgid "`mpo_destroy_mbuf_label`"
-msgstr ""
+msgstr "`mpo_destroy_mbuf_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:955
@@ -2780,6 +2820,8 @@ msgid ""
 "void mpo_destroy_mbuf_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_destroy_mbuf_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:971
@@ -2788,13 +2830,16 @@ msgid ""
 "should free any internal storage associated with `label` so that it may be "
 "destroyed."
 msgstr ""
+"Destruye la etiqueta en una cabecera mbuf.  En este punto de entrada, el "
+"módulo de la política debería liberar cualquier almacenamiento interno "
+"asociado con `label` de forma que pueda ser destruida."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:973
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:997
 #, no-wrap
 msgid "`mpo_destroy_mount_label`"
-msgstr ""
+msgstr "`mpo_destroy_mount_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:979
@@ -2803,13 +2848,15 @@ msgid ""
 "void mpo_destroy_mount_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_destroy_mount_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:990
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1016
 #, no-wrap
 msgid "Mount point label being destroyed"
-msgstr ""
+msgstr "Etiqueta de punto de montaje siendo destruida"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:995
@@ -2818,6 +2865,9 @@ msgid ""
 "should free the internal storage associated with `mntlabel` so that they may "
 "be destroyed."
 msgstr ""
+"Destruye las etiquetas de un punto de montaje.  En este punto de entrada, el "
+"módulo de la política debería liberar cualquier almacenamiento interno "
+"asociado con `mntlabel` de forma que pueda ser destruida."
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1005
@@ -2828,13 +2878,16 @@ msgid ""
 "struct label *mntlabel;\n"
 "struct label *fslabel;\n"
 msgstr ""
+"void mpo_destroy_mount_label(\tmntlabel,\n"
+" \tfslabel);\n"
+"struct label *mntlabel;\n"
+"struct label *fslabel;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1020
-#, fuzzy, no-wrap
-#| msgid "File System Object Labeling Event Operations"
+#, no-wrap
 msgid "File system label being destroyed>"
-msgstr "Operaciones de eventos de etiquetado de objetos del sistema de archivos"
+msgstr "Etiqueta del sistema de ficheros siendo destruida"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1025
@@ -2843,12 +2896,15 @@ msgid ""
 "should free the internal storage associated with `mntlabel` and `fslabel` so "
 "that they may be destroyed."
 msgstr ""
+"Destruye las etiquetas de un punto de montaje. En este punto de entrada, el "
+"módulo de la política debería liberar cualquier almacenamiento interno "
+"asociado con `mntlabel` y `fslabel` de forma que puedan ser destruidas."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1027
 #, no-wrap
 msgid "`mpo_destroy_socket_label`"
-msgstr ""
+msgstr "`mpo_destroy_socket_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1033
@@ -2857,12 +2913,14 @@ msgid ""
 "void mpo_destroy_socket_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_destroy_socket_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1044
 #, no-wrap
 msgid "Socket label being destroyed"
-msgstr ""
+msgstr "Etiqueta de socket siendo destruida"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1049
@@ -2871,12 +2929,15 @@ msgid ""
 "free any internal storage associated with `label` so that it may be "
 "destroyed."
 msgstr ""
+"Destruye la etiqueta de un socket. En este punto de entrada, el módulo de la "
+"política debería liberar cualquier almacenamiento interno asociado con "
+"`label` de forma que pueda ser destruida."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1051
 #, no-wrap
 msgid "`mpo_destroy_socket_peer_label`"
-msgstr ""
+msgstr "`mpo_destroy_socket_peer_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1057
@@ -2885,18 +2946,20 @@ msgid ""
 "void mpo_destroy_socket_peer_label(\tpeerlabel);\n"
 "struct label *peerlabel;\n"
 msgstr ""
+"void mpo_destroy_socket_peer_label(\tpeerlabel);\n"
+"struct label *peerlabel;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1067
 #, no-wrap
 msgid "`peerlabel`"
-msgstr ""
+msgstr "`peerlabel`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1068
 #, no-wrap
 msgid "Socket peer label being destroyed"
-msgstr ""
+msgstr "Etiqueta peer del socket siendo destruida"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1073
@@ -2905,12 +2968,15 @@ msgid ""
 "should free any internal storage associated with `label` so that it may be "
 "destroyed."
 msgstr ""
+"Destruye la etiqueta peer de un socket. En este punto de entrada, el módulo "
+"de la política debería liberar cualquier almacenamiento interno asociado con "
+"`label` de forma que pueda ser destruida."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1075
 #, no-wrap
 msgid "`mpo_destroy_pipe_label`"
-msgstr ""
+msgstr "`mpo_destroy_pipe_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1081
@@ -2919,12 +2985,14 @@ msgid ""
 "void mpo_destroy_pipe_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_destroy_pipe_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1092
 #, no-wrap
 msgid "Pipe label"
-msgstr ""
+msgstr "Etiqueta de tubería"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1097
@@ -2933,12 +3001,15 @@ msgid ""
 "free any internal storage associated with `label` so that it may be "
 "destroyed."
 msgstr ""
+"Destruye la etiqueta en una tubería. En este punto de entrada, el módulo de "
+"la política debería liberar cualquier almacenamiento interno asociado con "
+"`label` de forma que pueda ser destruida."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1099
 #, no-wrap
 msgid "`mpo_destroy_proc_label`"
-msgstr ""
+msgstr "`mpo_destroy_proc_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1105
@@ -2947,13 +3018,15 @@ msgid ""
 "void mpo_destroy_proc_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_destroy_proc_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1116
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1140
 #, no-wrap
 msgid "Process label"
-msgstr ""
+msgstr "Etiqueta de proceso"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1121
@@ -2962,12 +3035,15 @@ msgid ""
 "free any internal storage associated with `label` so that it may be "
 "destroyed."
 msgstr ""
+"Destruye la etiqueta de un proceso. En este punto de entrada, el módulo de "
+"la política debería liberar cualquier almacenamiento interno asociado con "
+"`label` de forma que pueda ser destruida."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1123
 #, no-wrap
 msgid "`mpo_destroy_vnode_label`"
-msgstr ""
+msgstr "`mpo_destroy_vnode_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1129
@@ -2976,6 +3052,8 @@ msgid ""
 "void mpo_destroy_vnode_label(\tlabel);\n"
 "struct label *label;\n"
 msgstr ""
+"void mpo_destroy_vnode_label(\tlabel);\n"
+"struct label *label;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1145
@@ -2984,12 +3062,15 @@ msgid ""
 "free any internal storage associated with `label` so that it may be "
 "destroyed."
 msgstr ""
+"Destruye la etiqueta de un vnode. En este punto de entrada, el módulo de la "
+"política debería liberar cualquier almacenamiento interno asociado con "
+"`label` de forma que pueda ser destruida."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1147
 #, no-wrap
 msgid "`mpo_copy_mbuf_label`"
-msgstr ""
+msgstr "`mpo_copy_mbuf_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1155
@@ -3000,6 +3081,10 @@ msgid ""
 "struct label *src;\n"
 "struct label *dest;\n"
 msgstr ""
+"void mpo_copy_mbuf_label(\tsrc,\n"
+" \tdest);\n"
+"struct label *src;\n"
+"struct label *dest;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1165
@@ -3007,7 +3092,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1223
 #, no-wrap
 msgid "`src`"
-msgstr ""
+msgstr "`src`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1166
@@ -3015,7 +3100,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1224
 #, no-wrap
 msgid "Source label"
-msgstr ""
+msgstr "Etiqueta fuente"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1169
@@ -3023,7 +3108,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1227
 #, no-wrap
 msgid "`dest`"
-msgstr ""
+msgstr "`dest`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1170
@@ -3031,20 +3116,20 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1228
 #, no-wrap
 msgid "Destination label"
-msgstr ""
+msgstr "Etiqueta destino"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1174
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1203
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1232
 msgid "Copy the label information in `src` into `dest`."
-msgstr ""
+msgstr "Copia la información de la etiqueta `src` en `dest`."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1176
 #, no-wrap
 msgid "`mpo_copy_pipe_label`"
-msgstr ""
+msgstr "`mpo_copy_pipe_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1184
@@ -3055,12 +3140,16 @@ msgid ""
 "struct label *src;\n"
 "struct label *dest;\n"
 msgstr ""
+"void mpo_copy_pipe_label(\tsrc,\n"
+" \tdest);\n"
+"struct label *src;\n"
+"struct label *dest;\n"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1205
 #, no-wrap
 msgid "`mpo_copy_vnode_label`"
-msgstr ""
+msgstr "`mpo_copy_vnode_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1213
@@ -3071,12 +3160,16 @@ msgid ""
 "struct label *src;\n"
 "struct label *dest;\n"
 msgstr ""
+"void mpo_copy_vnode_label(\tsrc,\n"
+" \tdest);\n"
+"struct label *src;\n"
+"struct label *dest;\n"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1234
 #, no-wrap
 msgid "`mpo_externalize_cred_label`"
-msgstr ""
+msgstr "`mpo_externalize_cred_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1246
@@ -3091,6 +3184,14 @@ msgid ""
 "struct sbuf *sb;\n"
 "int *claimed;\n"
 msgstr ""
+"int mpo_externalize_cred_label(\tlabel,\n"
+" \telement_name,\n"
+" \tsb,\n"
+" \t*claimed);\n"
+"struct label *label;\n"
+"char *element_name;\n"
+"struct sbuf *sb;\n"
+"int *claimed;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1257
@@ -3101,7 +3202,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1487
 #, no-wrap
 msgid "Label to be externalized"
-msgstr ""
+msgstr "Etiqueta a ser externalizada"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1260
@@ -3117,7 +3218,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1708
 #, no-wrap
 msgid "`element_name`"
-msgstr ""
+msgstr "`element_name`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1261
@@ -3128,7 +3229,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1491
 #, no-wrap
 msgid "Name of the policy whose label should be externalized"
-msgstr ""
+msgstr "Nombre de la política cuya etiqueta debería ser externalizada"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1264
@@ -3139,7 +3240,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1494
 #, no-wrap
 msgid "`sb`"
-msgstr ""
+msgstr "`sb`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1265
@@ -3151,6 +3252,8 @@ msgstr ""
 #, no-wrap
 msgid "String buffer to be filled with a text representation of label"
 msgstr ""
+"Búfer de cadena a ser rellenado con una representación de la cadena en "
+"formato texto"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1268
@@ -3166,7 +3269,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1716
 #, no-wrap
 msgid "`claimed`"
-msgstr ""
+msgstr "`claimed`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1269
@@ -3177,7 +3280,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1499
 #, no-wrap
 msgid "Should be incremented when `element_data` can be filled in."
-msgstr ""
+msgstr "Debería incrementarse cuando se pueda rellenar `element_data`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1278
@@ -3197,12 +3300,22 @@ msgid ""
 "the label data.  Once the policy fills in `element_data`, `*claimed` should "
 "be incremented."
 msgstr ""
+"Produce una etiqueta externalizada basada en la estructura de la etiqueta "
+"pasada. Una etiqueta externalizada consiste en una representación textual de "
+"los contenidos de la etiqueta que puede ser usada con aplicaciones de "
+"espacio de usuario y leídas por el usuario. Actualmente, se llamará a todos "
+"los puntos de entrada `externalize` de las políticas, de forma que la "
+"implementación debería comprobar el contenido de `element_name`antes de "
+"intentar rellenar `sb`. Si `element_name` no concuerda con el nombre de tu "
+"política, simplemente devuelve 0. Devuelve distinto de cero sólo si ocurre "
+"un error mientras se externalizan los datos de la etiqueta. Una vez que la "
+"política rellena `element_data` se debería incrementar `*claimed`."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1280
 #, no-wrap
 msgid "`mpo_externalize_ifnet_label`"
-msgstr ""
+msgstr "`mpo_externalize_ifnet_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1292
@@ -3217,12 +3330,20 @@ msgid ""
 "struct sbuf *sb;\n"
 "int *claimed;\n"
 msgstr ""
+"int mpo_externalize_ifnet_label(\tlabel,\n"
+" \telement_name,\n"
+" \tsb,\n"
+" \t*claimed);\n"
+"struct label *label;\n"
+"char *element_name;\n"
+"struct sbuf *sb;\n"
+"int *claimed;\n"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1326
 #, no-wrap
 msgid "`mpo_externalize_pipe_label`"
-msgstr ""
+msgstr "`mpo_externalize_pipe_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1338
@@ -3237,12 +3358,20 @@ msgid ""
 "struct sbuf *sb;\n"
 "int *claimed;\n"
 msgstr ""
+"int mpo_externalize_pipe_label(\tlabel,\n"
+" \telement_name,\n"
+" \tsb,\n"
+" \t*claimed);\n"
+"struct label *label;\n"
+"char *element_name;\n"
+"struct sbuf *sb;\n"
+"int *claimed;\n"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1372
 #, no-wrap
 msgid "`mpo_externalize_socket_label`"
-msgstr ""
+msgstr "`mpo_externalize_socket_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1384
@@ -3257,12 +3386,20 @@ msgid ""
 "struct sbuf *sb;\n"
 "int *claimed;\n"
 msgstr ""
+"int mpo_externalize_socket_label(\tlabel,\n"
+" \telement_name,\n"
+" \tsb,\n"
+" \t*claimed);\n"
+"struct label *label;\n"
+"char *element_name;\n"
+"struct sbuf *sb;\n"
+"int *claimed;\n"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1418
 #, no-wrap
 msgid "`mpo_externalize_socket_peer_label`"
-msgstr ""
+msgstr "`mpo_externalize_socket_peer_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1430
@@ -3277,12 +3414,20 @@ msgid ""
 "struct sbuf *sb;\n"
 "int *claimed;\n"
 msgstr ""
+"int mpo_externalize_socket_peer_label(\tlabel,\n"
+" \telement_name,\n"
+" \tsb,\n"
+" \t*claimed);\n"
+"struct label *label;\n"
+"char *element_name;\n"
+"struct sbuf *sb;\n"
+"int *claimed;\n"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1464
 #, no-wrap
 msgid "`mpo_externalize_vnode_label`"
-msgstr ""
+msgstr "`mpo_externalize_vnode_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1476
@@ -3297,12 +3442,20 @@ msgid ""
 "struct sbuf *sb;\n"
 "int *claimed;\n"
 msgstr ""
+"int mpo_externalize_vnode_label(\tlabel,\n"
+" \telement_name,\n"
+" \tsb,\n"
+" \t*claimed);\n"
+"struct label *label;\n"
+"char *element_name;\n"
+"struct sbuf *sb;\n"
+"int *claimed;\n"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1510
 #, no-wrap
 msgid "`mpo_internalize_cred_label`"
-msgstr ""
+msgstr "`mpo_internalize_cred_label`"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1522
@@ -3317,6 +3470,14 @@ msgid ""
 "char *element_data;\n"
 "int *claimed;\n"
 msgstr ""
+"int mpo_internalize_cred_label(\tlabel,\n"
+" \telement_name,\n"
+" \telement_data,\n"
+" \tclaimed);\n"
+"struct label *label;\n"
+"char *element_name;\n"
+"char *element_data;\n"
+"int *claimed;\n"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1537
@@ -3326,7 +3487,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1709
 #, no-wrap
 msgid "Name of the policy whose label should be internalized"
-msgstr ""
+msgstr "Nombre de la política cuyas etiquetas deberían ser internalizadas"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1540
@@ -3336,7 +3497,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1712
 #, no-wrap
 msgid "`element_data`"
-msgstr ""
+msgstr "`element_data`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1541
@@ -3346,7 +3507,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1713
 #, no-wrap
 msgid "Text data to be internalized"
-msgstr ""
+msgstr "Datos de texto para ser internalizados"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1545
@@ -3357,6 +3518,7 @@ msgstr ""
 #, no-wrap
 msgid "Should be incremented when data can be successfully internalized."
 msgstr ""
+"Debería incrementarse cuando los datos han sido internalizados con éxito."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1551
