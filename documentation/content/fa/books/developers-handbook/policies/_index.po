@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2022-02-01 09:20-0300\n"
+"POT-Creation-Date: 2024-01-17 20:34-0300\n"
 "PO-Revision-Date: 2021-06-18 04:07+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Persian <https://translate-dev.freebsd.org/projects/"
@@ -158,60 +158,39 @@ msgstr "نرم‌افزارهای اعطا شده"
 msgid ""
 "Some parts of the FreeBSD distribution consist of software that is actively "
 "being maintained outside the FreeBSD project.  For historical reasons, we "
-"call this _contributed_ software.  Some examples are sendmail, gcc and patch."
+"call this _contributed_ software.  Some examples are LLVM, man:zlib[3], and "
+"man:awk[1]."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:94
-#, fuzzy
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:95
 msgid ""
-"Over the last couple of years, various methods have been used in dealing "
-"with this type of software and all have some number of advantages and "
-"drawbacks.  No clear winner has emerged."
+"The accepted procedure for managing contributed software involves creating a "
+"_vendor branch_, where the software can be imported cleanly (without "
+"modification) and updates can be tracked in a versioned manner.  Then, the "
+"content of the vendor branch is applied to the source tree, possibly with "
+"local modifications.  FreeBSD-specific build glue is maintained in the "
+"source tree, not in the vendor branch."
 msgstr ""
-"طی سال‌های اخیر، روش‌های گوناگونی در مواجه با اینگونه نرم‌افزارها به‌کار رفته "
-"است و تمامی آنها دارای تعدادی برتری‌ها و ایراداتی هستند. هیچ برنده‌ای به‌طور "
-"مشخص پدیدار نشده است."
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:98
-#, fuzzy
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:99
 msgid ""
-"Since this is the case, after some debate one of these methods has been "
-"selected as the \"official\" method and will be required for future imports "
-"of software of this kind.  Furthermore, it is strongly suggested that "
-"existing contributed software converge on this model over time, as it has "
-"significant advantages over the old method, including the ability to easily "
-"obtain diffs relative to the \"official\" versions of the source by everyone "
-"(even without direct repository access).  This will make it significantly "
-"easier to return changes to the primary developers of the contributed "
-"software."
+"Depending on their needs and complexity, individual software projects may "
+"deviate from this procedure, at the discretion of the maintainer.  The exact "
+"steps required to update a particular piece of contributed software should "
+"be recorded in a file named `FREEBSD-upgrade`; for example, link:https://"
+"cgit.freebsd.org/src/tree/contrib/libarchive/FREEBSD-upgrade[libarchive's "
+"FREEBSD-upgrade file]."
 msgstr ""
-"نظر به اینکه مورد ما چنین است، پس از کمی گفت و گو یکی از همین روش‌ها به‌عنوان "
-"روش <quote>رسمی</quote> انتخاب شده و برای درون‌بُرد‌های بعدی نرم‌افزارهای از این "
-"دست مورد استفاده قرار می‌گیرد. افزون بر این، به‌شدت توصیه می‌شود نرم‌افزارهای "
-"اعطا شدهٔ فعلی با گذر زمان بر روی همین نمونه همگرا شوند، زیرا نسبت به روش "
-"قدیمی دارای امتیازات قابل توجهی هست، مانند امکان به‌دست آوردن diff ها نسبت به "
-"نسخه‌های <quote>رسمی</quote> منبع توسط همه (حتی بدون دسترسی مستقیم به مخزن). "
-"این کار به‌طور قابل توجهی برگرداندن تغییرات به توسعه‌‌دهندگان اصلی نرم‌افزارهای "
-"اعطا شده را آسان‌تر می‌کند."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/policies/_index.adoc:102
-#, fuzzy
 msgid ""
-"Ultimately, however, it comes down to the people actually doing the work.  "
-"If using this model is particularly unsuited to the package being dealt "
-"with, exceptions to these rules may be granted only with the approval of the "
-"core team and with the general consensus of the other developers.  The "
-"ability to maintain the package in the future will be a key issue in the "
-"decisions."
+"Contributed software is usually placed in the [.filepath]#contrib/# "
+"subdirectory of the source tree, with some exceptions.  Contributed software "
+"used only by the kernel lives under [.filepath]#sys/contrib/#."
 msgstr ""
-"در نهایت، به‌هر حال، این برمی‌گردد به افرادی که در حقیقت کار را انجام می‌دهند. "
-"چنانچه استفاده از این نمونه به‌ویژه برای بسته‌ای که با آن سر و کار داریم "
-"نامناسب باشد، ممکن است تنها با موافقت تیم اصلی و با موافقت عمومی دیگر "
-"توسعه‌دهندگان استثنائاتی برای این قوائد صورت گیرد. امکان حفظ بسته در آینده یک "
-"مسئلهٔ کلیدی در تصمیمات خواهد بود."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/policies/_index.adoc:106
@@ -223,398 +202,27 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/policies/_index.adoc:109
-#, no-wrap
-msgid "Vendor Imports with SVN"
+#, fuzzy, no-wrap
+#| msgid "Vendor Imports with SVN"
+msgid "Vendor Imports"
 msgstr "درون‌بُردهای توزیع‌کننده با SVN"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/policies/_index.adoc:112
 msgid ""
-"This section describes the vendor import procedure with Subversion in "
-"details."
+"The standard process for managing contributed software and vendor branches "
+"is described in detail by the extref:{committers-guide}#vendor-import-"
+"git[Committer's Guide]."
 msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:115
-#, fuzzy, no-wrap
-msgid "*Preparing the Tree*\n"
-msgstr "آماده‌سازی درخت\n"
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:118
-#, fuzzy
-msgid ""
-"If this is your first import after the switch to SVN, you will have to "
-"flatten and clean up the vendor tree, and bootstrap merge history in the "
-"main tree.  If not, you can safely omit this step."
-msgstr ""
-"اگر این اولین درون‌بُرد شما پس از تغییر به <acronym>SVN</acronym> هست، شما "
-"باید درخت توزیع را پالایش و تمیز کنید، و تاریخ ادغام را در درخت اصلی "
-"بوت‌استرپ کنید. اگر چنین نیست، می‌توانید به‌راحتی این مرحله را نادیده بگیرید."
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:122
-msgid ""
-"During the conversion from CVS to SVN, vendor branches were imported with "
-"the same layout as the main tree.  For example, the foo vendor sources ended "
-"up in [.filename]#vendor/foo/dist/contrib/foo#, but it is pointless and "
-"rather inconvenient.  What we really want is to have the vendor source "
-"directly in [.filename]#vendor/foo/dist#, like this:"
-msgstr ""
-
-#. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:131
-#, no-wrap
-msgid ""
-"% cd vendor/foo/dist/contrib/foo\n"
-"% svn move $(svn list) ../..\n"
-"% cd ../..\n"
-"% svn remove contrib\n"
-"% svn propdel -R svn:mergeinfo\n"
-"% svn commit\n"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:135
-#, fuzzy
-msgid ""
-"Note that, the `propdel` bit is necessary because starting with 1.5, "
-"Subversion will automatically add `svn:mergeinfo` to any directory you copy "
-"or move.  In this case, you will not need this information, since you are "
-"not going to merge anything from the tree you deleted."
-msgstr ""
-"توجه داشته باشید، بخش <literal>propdel</literal> ضروری است زیرا پس از نسخهٔ "
-"1.5، Subversion به‌طور خودکار <literal>svn:mergeinfo</literal> را به هر مسیری "
-"که شما کپی یا انتقال می‌دهید اضافه می‌کند. در این مورد، شما به این اطلاعات "
-"نیازی نخواهید داشت، از آنجا که نمی‌خواهید چیزی را از درختی که پاک کرده‌اید "
-"ادغام کنید."
-
-#. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:141
-#, fuzzy
-msgid ""
-"You may want to flatten the tags as well.  The procedure is exactly the "
-"same.  If you do this, put off the commit until the end."
-msgstr ""
-"ممکن است شما بخواهید برچسب‌ها را هم پالایش و تمیز کنید. روش دقیقاً یکسان است. "
-"اگر این کار را انجام دادید، ثبت را تا آخر به‌تعویق بیندازید."
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:146
-#, fuzzy
-msgid ""
-"Check the [.filename]#dist# tree and perform any cleanup that is deemed to "
-"be necessary.  You may want to disable keyword expansion, as it makes no "
-"sense on unmodified vendor code.  In some cases, it can be even be harmful."
-msgstr ""
-"درخت <filename>dist</filename> را بررسی کنید و هر پالایشی که به‌نظر لازم است "
-"را انجام دهید. شاید بخواهید انبساط واژهٔ کلیدی را غیرفعال کنید، زیرا در کدهای "
-"اصلاح‌نشده هیچ منطقی ندارد، حتی می‌تواند زیان‌آور هم باشد."
-
-#. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:151
-#, no-wrap
-msgid ""
-"% svn propdel svn:keywords -R .\n"
-"% svn commit\n"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:154
-#, fuzzy
-msgid ""
-"Bootstrapping of `svn:mergeinfo` on the target directory (in the main tree) "
-"to the revision that corresponds to the last change was made to the vendor "
-"tree prior to importing new sources is also needed:"
-msgstr ""
-"بوت‌استرپ از <literal>svn:mergeinfo</literal> بر روی مسیر مورد نظر (در درخت "
-"اصلی) به بازبینی که منطبق با آخرین تغییر است که پیش از وارد کردن منابع جدید "
-"در درخت vendor ایجاد شده نیز مورد نیاز است:"
-
-#. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:160
-#, no-wrap
-msgid ""
-"% cd head/contrib/foo\n"
-"% svn merge --record-only ^/vendor/foo/dist@12345678 .\n"
-"% svn commit\n"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:163
-msgid ""
-"With some shells, the `^` in the above command may need to be escaped with a "
-"backslash."
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:164
-#, fuzzy, no-wrap
-msgid "*Importing New Sources*\n"
-msgstr "وارد کردن منابع جدید\n"
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:168
-#, fuzzy
-msgid ""
-"Prepare a full, clean tree of the vendor sources.  With SVN, we can keep a "
-"full distribution in the vendor tree without bloating the main tree.  Import "
-"everything but merge only what is needed."
-msgstr ""
-"یک درخت کامل و تمیز از منابع vendor را آماده کنید. با <acronym>SVN</acronym> "
-"می‌توانیم یک توزیع کامل در درخت vendor نگه داریم، بی‌آنکه درخت اصلی را باد "
-"کنیم. همه چیز را وارد کنید اما فقط آنچه که لازم است را ادغام کنید."
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:171
-#, fuzzy
-msgid ""
-"Note that you will need to add any files that were added since the last "
-"vendor import, and remove any that were removed.  To facilitate this, you "
-"should prepare sorted lists of the contents of the vendor tree and of the "
-"sources you are about to import:"
-msgstr ""
-"توجه کنید که شما نیاز دارید هر پرونده‌ای را که از زمان آخرین ورود vendor "
-"اضافه شده‌اند را اضافه کنید، و هر آنچه که حذف شده است را حذف کنید. برای تسهیل "
-"این امر، شما باید فهرست‌های مرتب‌شده‌ای از محتویات درخت vendor و از منابعی که "
-"قرار است وارد کنید را تهیه کنید:"
-
-#. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:178
-#, no-wrap
-msgid ""
-"% cd vendor/foo/dist\n"
-"% svn list -R | grep -v '/$' | sort > ../old\n"
-"% cd ../foo-9.9\n"
-"% find . -type f | cut -c 3- | sort > ../new\n"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:181
-msgid ""
-"With these two files, the following command will list removed files (files "
-"only in [.filename]#old#):"
-msgstr ""
-
-#. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:185
-#, no-wrap
-msgid "% comm -23 ../old ../new\n"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:188
-msgid ""
-"While the command below will list added files (files only in [."
-"filename]#new#):"
-msgstr ""
-
-#. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:192
-#, no-wrap
-msgid "% comm -13 ../old ../new\n"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:195
-msgid "Let us put this together:"
-msgstr "بگذارید این را در کنار هم قرار دهیم:"
-
-#. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:203
-#, no-wrap
-msgid ""
-"% cd vendor/foo/foo-9.9\n"
-"% tar cf - . | tar xf - -C ../dist\n"
-"% cd ../dist\n"
-"% comm -23 ../old ../new | xargs svn remove\n"
-"% comm -13 ../old ../new | xargs svn add\n"
-msgstr ""
-
-#. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:210
-#, fuzzy
-msgid ""
-"If there are new directories in the new distribution, the last command will "
-"fail.  You will have to add the directories, and run it again.  Conversely, "
-"if any directories were removed, you will have to remove them manually."
-msgstr ""
-"اگر در توزیع جدید مسیرهای جدیدی وجود داشته باشند، دستور آخر شکست می‌خورد. "
-"ناچار خواهید بود مسیر‌ها را اضافه کنید، و دستور را دوباره اجرا کنید. اگر هم "
-"برعکس، مسیری حذف شده باشد، باید آن‌ها را دستی حذف کنید."
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:213
-msgid "Check properties on any new files:"
-msgstr "خصایص پرونده‌های جدید را بررسی کنید:"
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:215
-msgid "All text files should have `svn:eol-style` set to `native`."
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:216
-msgid ""
-"All binary files should have `svn:mime-type` set to `application/octet-"
-"stream`, unless there is a more appropriate media type."
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:217
-msgid "Executable files should have `svn:executable` set to `*`."
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:218
-msgid "There should be no other properties on any file in the tree."
-msgstr "هیچ خاصیت دیگری بر روی دیگر پرونده‌های درخت نباید باشد."
-
-#. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:222
-msgid ""
-"You are ready to commit, but you should first check the output of `svn stat` "
-"and `svn diff` to make sure everything is in order."
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:226
-#, fuzzy
-msgid ""
-"Once you have committed the new vendor release, you should tag it for future "
-"reference.  The best and quickest way is to do it directly in the repository:"
-msgstr ""
-"پس از آنکه توزیع vendor جدید را ثبت کردید، لازم است آن را برای ارجاعات بعدی "
-"برچسب‌گذاری کنید. بهترین و سریع‌ترین راه انجام مستقیم آن در مخزن است:"
-
-#. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:230
-#, no-wrap
-msgid "% svn copy ^/vendor/foo/dist svn_base/vendor/foo/9.9\n"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:233
-msgid ""
-"To get the new tag, you can update your working copy of [.filename]#vendor/"
-"foo#."
-msgstr ""
-
-#. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:237
-msgid ""
-"If you choose to do the copy in the checkout instead, do not forget to "
-"remove the generated `svn:mergeinfo` as described above."
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:240
-#, no-wrap
-msgid "*Merging to __-HEAD__*\n"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:243
-#, fuzzy
-msgid ""
-"After you have prepared your import, it is time to merge.  Option `--"
-"accept=postpone` tells SVN not to handle merge conflicts yet, because they "
-"will be taken care of manually:"
-msgstr ""
-"پس از آنکه درون‌بُرد خود را آماده کردید، زمان ادغام کردن فرا می‌رسد. گزینهٔ "
-"<option>--accept=postpone</option> به <acronym>SVN</acronym> می‌گوید که هنوز "
-"به تداخل‌های ادغام کردن رسیدگی نکند، زیرا آنها به‌طور دستی انجام نمی‌گیرند:"
-
-#. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:249
-#, no-wrap
-msgid ""
-"% cd head/contrib/foo\n"
-"% svn update\n"
-"% svn merge --accept=postpone ^/vendor/foo/dist\n"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:252
-msgid ""
-"Resolve any conflicts, and make sure that any files that were added or "
-"removed in the vendor tree have been properly added or removed in the main "
-"tree. It is always a good idea to check differences against the vendor "
-"branch:"
-msgstr ""
-"هرگونه تعارضی را حل کنید و اطمینان حاصل کنید که پرونده‌های اضافه یا حذف شده "
-"در درخت vendor به درستی در درخت اصلی اضافه یا حذف شده باشند. همیشه فکر خوبی "
-"است که تفاوت‌ها در شاخه vendor را بررسی کنید:"
-
-#. type: delimited block . 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:256
-#, no-wrap
-msgid "% svn diff --no-diff-deleted --old=^/vendor/foo/dist --new=.\n"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:259
-msgid ""
-"`--no-diff-deleted` tells SVN not to check files that are in the vendor tree "
-"but not in the main tree."
-msgstr ""
-
-#. type: delimited block = 4
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:265
-#, fuzzy
-msgid ""
-"With SVN, there is no concept of on or off the vendor branch.  If a file "
-"that previously had local modifications no longer does, just remove any left-"
-"over cruft, such as FreeBSD version tags, so it no longer shows up in diffs "
-"against the vendor tree."
-msgstr ""
-"با <acronym>SVN</acronym>، هیچ مفهموی از ماندن یا نماندن در شاخهٔ vendor وجود "
-"ندارد. اگر پرونده‌ای که پیش‌تر اصلاحات بومی داشته است دیگر فاقد آنها باشد، "
-"تنها تکه‌کدهای باقی‌مانده را حدف کنید، مانند برچسب‌های نسخهٔ FreeBSD، در نتیجه "
-"دیگر در diff ها در تقابل با درخت vendor حاضر نمی‌شود."
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:268
-#, fuzzy
-msgid ""
-"If any changes are required for the world to build with the new sources, "
-"make them now - and test until you are satisfied that everything build and "
-"runs correctly."
-msgstr ""
-"چنانچه هر تغییری برای ساخت world با منابع جدید ضروری باشد، آنها را همین حالا "
-"بسازید — و تا زمانی‌که متقاعد شده‌اید همه‌چیز به‌درستی build و اجرا می‌شود "
-"بیازمایید."
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:269
-#, no-wrap
-msgid "*Commit*\n"
-msgstr ""
-
-#. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:275
-#, fuzzy
-msgid ""
-"Now, you are ready to commit.  Make sure you get everything in one go.  "
-"Ideally, you would have done all steps in a clean tree, in which case you "
-"can just commit from the top of that tree.  That is the best way to avoid "
-"surprises.  If you do it properly, the tree will move atomically from a "
-"consistent state with the old code to a consistent state with the new code."
-msgstr ""
-"اکنون، شما آمادهٔ ثبت‌کردن هستید. مطمئن شوید که همه چیز را در یک حرکت انجام "
-"دهید. در حالت ایده‌آل، تمامی مراحل را در یک درخت تمیز انجام می‌دادید، که "
-"بتوانید از بالای آن درخت ثبت کنید. این بهترین راه برای جلوگیری از غافلگیری "
-"است. اگر به درستی انجامش دهید، درخت به‌طور خودکار از یک حالت ثابت با کد قدیم "
-"به یک حالت ثابت با کد جدید تغییر خواهد کرد."
 
 #. type: Title ==
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:277
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:114
 #, no-wrap
 msgid "Encumbered Files"
 msgstr "پرونده‌های محدود"
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:283
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:120
 #, fuzzy
 msgid ""
 "It might occasionally be necessary to include an encumbered file in the "
@@ -631,7 +239,7 @@ msgstr ""
 "درخت منبع FreeBSD اعمال می‌شود."
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:285
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:122
 msgid ""
 "Any file which is interpreted or executed by the system CPU(s) and not in "
 "source format is encumbered."
@@ -640,12 +248,12 @@ msgstr ""
 "قالب منبع نباشد محدودشده است."
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:286
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:123
 msgid "Any file with a license more restrictive than BSD or GNU is encumbered."
 msgstr "هر فایلی با پرونده‌ای محدودتر از BSD یا GNU محدود خوانده می‌شود."
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:287
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:124
 #, fuzzy
 #| msgid ""
 #| "A file which contains downloadable binary data for use by the hardware is "
@@ -660,7 +268,7 @@ msgstr ""
 "معماری خنثی ذخیره شود (file2c یا uuencoding پیشنهاد می‌شود)."
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:288
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:125
 msgid ""
 "Any encumbered file requires specific approval from the link:https://www."
 "FreeBSD.org/administration/#t-core[Core Team] before it is added to the "
@@ -668,14 +276,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:289
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:126
 msgid ""
 "Encumbered files go in [.filename]#src/contrib# or [.filename]#src/sys/"
 "contrib#."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:290
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:127
 msgid ""
 "The entire module should be kept together. There is no point in splitting "
 "it, unless there is code-sharing with non-encumbered code."
@@ -684,7 +292,7 @@ msgstr ""
 "نیست، مگر آنکه اشتراک‌گذاری کد با کد محدود نشده وجود داشته باشد."
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:292
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:129
 msgid ""
 "In the past binary files were typically uuencoded, and named [."
 "filename]#arch/filename.o.uu#.  This is no longer necessary, and binary "
@@ -692,12 +300,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:293
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:130
 msgid "Kernel files:"
 msgstr "پرونده‌های هسته:"
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:294
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:131
 #, fuzzy
 msgid ""
 "Should always be referenced in [.filename]#conf/files.*# (for build "
@@ -707,7 +315,7 @@ msgstr ""
 "شوند."
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:295
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:132
 msgid ""
 "Should always be in [.filename]#LINT#, but the link:https://www.FreeBSD.org/"
 "administration/#t-core[Core Team] decides per case if it should be commented "
@@ -716,37 +324,37 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:296
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:133
 msgid "The _Release Engineer_ decides whether or not it goes into the release."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:298
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:135
 msgid "User-land files:"
 msgstr "پرونده‌های محیط کاربر:"
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:299
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:136
 msgid ""
 "The link:https://www.FreeBSD.org/administration/#t-core[Core team] decides "
 "if the code should be part of `make world`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:300
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:137
 msgid ""
 "The link:https://www.FreeBSD.org/administration/#t-re[Release Engineering] "
 "decides if it goes into the release."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:302
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:139
 #, no-wrap
 msgid "Shared Libraries"
 msgstr "کتابخانه‌های اشتراکی"
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:306
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:143
 #, fuzzy
 msgid ""
 "If you are adding shared library support to a port or other piece of "
@@ -759,51 +367,51 @@ msgstr ""
 "کلی، شماره‌های بدست‌آمده ربطی به شماره نسخهٔ نرم‌افزار ندارند."
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:308
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:145
 msgid "For ports:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:310
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:147
 msgid "Prefer using the number already selected by upstream"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:311
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:148
 msgid "If upstream provides symbol versioning, ensure that we use their script"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:313
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:150
 msgid "For the base system:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:315
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:152
 msgid "Start library version from 1"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:316
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:153
 msgid "It is strongly recommended to add symbol versioning to the new library"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:317
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:154
 msgid ""
 "If there is an incompatible change, handle it with symbol versioning, "
 "maintaining backward ABI compatibility"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:318
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:155
 msgid ""
 "If this is impossible, or the library does not use symbol versioning, bump "
 "the library version"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:319
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:156
 msgid ""
 "Before even considering bumping library version for symbol-versioned "
 "library, consult with Release Engineering team, providing reasons why the "
@@ -811,7 +419,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:321
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:158
 #, fuzzy
 #| msgid ""
 #| "For instance, added functions and bugfixes result in the minor version "
@@ -828,14 +436,14 @@ msgstr ""
 "غیره ... شماره نسخهٔ اصلی را مجبور به تغییر می‌کنند."
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:323
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:160
 msgid ""
 "It is the duty of the committer making the change to handle library "
 "versioning."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/developers-handbook/policies/_index.adoc:328
+#: documentation/content/en/books/developers-handbook/policies/_index.adoc:165
 msgid ""
 "The ELF dynamic linker matches library names literally.  There is a popular "
 "convention where library version is written in the form `libexample.so.x.y`, "
@@ -848,6 +456,222 @@ msgid ""
 "right library.  Almost all popular build systems use this scheme "
 "automatically."
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "Over the last couple of years, various methods have been used in dealing "
+#~ "with this type of software and all have some number of advantages and "
+#~ "drawbacks.  No clear winner has emerged."
+#~ msgstr ""
+#~ "طی سال‌های اخیر، روش‌های گوناگونی در مواجه با اینگونه نرم‌افزارها به‌کار رفته "
+#~ "است و تمامی آنها دارای تعدادی برتری‌ها و ایراداتی هستند. هیچ برنده‌ای به‌طور "
+#~ "مشخص پدیدار نشده است."
+
+#, fuzzy
+#~ msgid ""
+#~ "Since this is the case, after some debate one of these methods has been "
+#~ "selected as the \"official\" method and will be required for future "
+#~ "imports of software of this kind.  Furthermore, it is strongly suggested "
+#~ "that existing contributed software converge on this model over time, as "
+#~ "it has significant advantages over the old method, including the ability "
+#~ "to easily obtain diffs relative to the \"official\" versions of the "
+#~ "source by everyone (even without direct repository access).  This will "
+#~ "make it significantly easier to return changes to the primary developers "
+#~ "of the contributed software."
+#~ msgstr ""
+#~ "نظر به اینکه مورد ما چنین است، پس از کمی گفت و گو یکی از همین روش‌ها "
+#~ "به‌عنوان روش <quote>رسمی</quote> انتخاب شده و برای درون‌بُرد‌های بعدی "
+#~ "نرم‌افزارهای از این دست مورد استفاده قرار می‌گیرد. افزون بر این، به‌شدت "
+#~ "توصیه می‌شود نرم‌افزارهای اعطا شدهٔ فعلی با گذر زمان بر روی همین نمونه همگرا "
+#~ "شوند، زیرا نسبت به روش قدیمی دارای امتیازات قابل توجهی هست، مانند امکان "
+#~ "به‌دست آوردن diff ها نسبت به نسخه‌های <quote>رسمی</quote> منبع توسط همه "
+#~ "(حتی بدون دسترسی مستقیم به مخزن). این کار به‌طور قابل توجهی برگرداندن "
+#~ "تغییرات به توسعه‌‌دهندگان اصلی نرم‌افزارهای اعطا شده را آسان‌تر می‌کند."
+
+#, fuzzy
+#~ msgid ""
+#~ "Ultimately, however, it comes down to the people actually doing the "
+#~ "work.  If using this model is particularly unsuited to the package being "
+#~ "dealt with, exceptions to these rules may be granted only with the "
+#~ "approval of the core team and with the general consensus of the other "
+#~ "developers.  The ability to maintain the package in the future will be a "
+#~ "key issue in the decisions."
+#~ msgstr ""
+#~ "در نهایت، به‌هر حال، این برمی‌گردد به افرادی که در حقیقت کار را انجام "
+#~ "می‌دهند. چنانچه استفاده از این نمونه به‌ویژه برای بسته‌ای که با آن سر و کار "
+#~ "داریم نامناسب باشد، ممکن است تنها با موافقت تیم اصلی و با موافقت عمومی "
+#~ "دیگر توسعه‌دهندگان استثنائاتی برای این قوائد صورت گیرد. امکان حفظ بسته در "
+#~ "آینده یک مسئلهٔ کلیدی در تصمیمات خواهد بود."
+
+#, fuzzy, no-wrap
+#~ msgid "*Preparing the Tree*\n"
+#~ msgstr "آماده‌سازی درخت\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "If this is your first import after the switch to SVN, you will have to "
+#~ "flatten and clean up the vendor tree, and bootstrap merge history in the "
+#~ "main tree.  If not, you can safely omit this step."
+#~ msgstr ""
+#~ "اگر این اولین درون‌بُرد شما پس از تغییر به <acronym>SVN</acronym> هست، شما "
+#~ "باید درخت توزیع را پالایش و تمیز کنید، و تاریخ ادغام را در درخت اصلی "
+#~ "بوت‌استرپ کنید. اگر چنین نیست، می‌توانید به‌راحتی این مرحله را نادیده بگیرید."
+
+#, fuzzy
+#~ msgid ""
+#~ "Note that, the `propdel` bit is necessary because starting with 1.5, "
+#~ "Subversion will automatically add `svn:mergeinfo` to any directory you "
+#~ "copy or move.  In this case, you will not need this information, since "
+#~ "you are not going to merge anything from the tree you deleted."
+#~ msgstr ""
+#~ "توجه داشته باشید، بخش <literal>propdel</literal> ضروری است زیرا پس از "
+#~ "نسخهٔ 1.5، Subversion به‌طور خودکار <literal>svn:mergeinfo</literal> را به "
+#~ "هر مسیری که شما کپی یا انتقال می‌دهید اضافه می‌کند. در این مورد، شما به این "
+#~ "اطلاعات نیازی نخواهید داشت، از آنجا که نمی‌خواهید چیزی را از درختی که پاک "
+#~ "کرده‌اید ادغام کنید."
+
+#, fuzzy
+#~ msgid ""
+#~ "You may want to flatten the tags as well.  The procedure is exactly the "
+#~ "same.  If you do this, put off the commit until the end."
+#~ msgstr ""
+#~ "ممکن است شما بخواهید برچسب‌ها را هم پالایش و تمیز کنید. روش دقیقاً یکسان "
+#~ "است. اگر این کار را انجام دادید، ثبت را تا آخر به‌تعویق بیندازید."
+
+#, fuzzy
+#~ msgid ""
+#~ "Check the [.filename]#dist# tree and perform any cleanup that is deemed "
+#~ "to be necessary.  You may want to disable keyword expansion, as it makes "
+#~ "no sense on unmodified vendor code.  In some cases, it can be even be "
+#~ "harmful."
+#~ msgstr ""
+#~ "درخت <filename>dist</filename> را بررسی کنید و هر پالایشی که به‌نظر لازم "
+#~ "است را انجام دهید. شاید بخواهید انبساط واژهٔ کلیدی را غیرفعال کنید، زیرا "
+#~ "در کدهای اصلاح‌نشده هیچ منطقی ندارد، حتی می‌تواند زیان‌آور هم باشد."
+
+#, fuzzy
+#~ msgid ""
+#~ "Bootstrapping of `svn:mergeinfo` on the target directory (in the main "
+#~ "tree) to the revision that corresponds to the last change was made to the "
+#~ "vendor tree prior to importing new sources is also needed:"
+#~ msgstr ""
+#~ "بوت‌استرپ از <literal>svn:mergeinfo</literal> بر روی مسیر مورد نظر (در "
+#~ "درخت اصلی) به بازبینی که منطبق با آخرین تغییر است که پیش از وارد کردن "
+#~ "منابع جدید در درخت vendor ایجاد شده نیز مورد نیاز است:"
+
+#, fuzzy, no-wrap
+#~ msgid "*Importing New Sources*\n"
+#~ msgstr "وارد کردن منابع جدید\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Prepare a full, clean tree of the vendor sources.  With SVN, we can keep "
+#~ "a full distribution in the vendor tree without bloating the main tree.  "
+#~ "Import everything but merge only what is needed."
+#~ msgstr ""
+#~ "یک درخت کامل و تمیز از منابع vendor را آماده کنید. با <acronym>SVN</"
+#~ "acronym> می‌توانیم یک توزیع کامل در درخت vendor نگه داریم، بی‌آنکه درخت "
+#~ "اصلی را باد کنیم. همه چیز را وارد کنید اما فقط آنچه که لازم است را ادغام "
+#~ "کنید."
+
+#, fuzzy
+#~ msgid ""
+#~ "Note that you will need to add any files that were added since the last "
+#~ "vendor import, and remove any that were removed.  To facilitate this, you "
+#~ "should prepare sorted lists of the contents of the vendor tree and of the "
+#~ "sources you are about to import:"
+#~ msgstr ""
+#~ "توجه کنید که شما نیاز دارید هر پرونده‌ای را که از زمان آخرین ورود vendor "
+#~ "اضافه شده‌اند را اضافه کنید، و هر آنچه که حذف شده است را حذف کنید. برای "
+#~ "تسهیل این امر، شما باید فهرست‌های مرتب‌شده‌ای از محتویات درخت vendor و از "
+#~ "منابعی که قرار است وارد کنید را تهیه کنید:"
+
+#~ msgid "Let us put this together:"
+#~ msgstr "بگذارید این را در کنار هم قرار دهیم:"
+
+#, fuzzy
+#~ msgid ""
+#~ "If there are new directories in the new distribution, the last command "
+#~ "will fail.  You will have to add the directories, and run it again.  "
+#~ "Conversely, if any directories were removed, you will have to remove them "
+#~ "manually."
+#~ msgstr ""
+#~ "اگر در توزیع جدید مسیرهای جدیدی وجود داشته باشند، دستور آخر شکست می‌خورد. "
+#~ "ناچار خواهید بود مسیر‌ها را اضافه کنید، و دستور را دوباره اجرا کنید. اگر "
+#~ "هم برعکس، مسیری حذف شده باشد، باید آن‌ها را دستی حذف کنید."
+
+#~ msgid "Check properties on any new files:"
+#~ msgstr "خصایص پرونده‌های جدید را بررسی کنید:"
+
+#~ msgid "There should be no other properties on any file in the tree."
+#~ msgstr "هیچ خاصیت دیگری بر روی دیگر پرونده‌های درخت نباید باشد."
+
+#, fuzzy
+#~ msgid ""
+#~ "Once you have committed the new vendor release, you should tag it for "
+#~ "future reference.  The best and quickest way is to do it directly in the "
+#~ "repository:"
+#~ msgstr ""
+#~ "پس از آنکه توزیع vendor جدید را ثبت کردید، لازم است آن را برای ارجاعات "
+#~ "بعدی برچسب‌گذاری کنید. بهترین و سریع‌ترین راه انجام مستقیم آن در مخزن است:"
+
+#, fuzzy
+#~ msgid ""
+#~ "After you have prepared your import, it is time to merge.  Option `--"
+#~ "accept=postpone` tells SVN not to handle merge conflicts yet, because "
+#~ "they will be taken care of manually:"
+#~ msgstr ""
+#~ "پس از آنکه درون‌بُرد خود را آماده کردید، زمان ادغام کردن فرا می‌رسد. گزینهٔ "
+#~ "<option>--accept=postpone</option> به <acronym>SVN</acronym> می‌گوید که "
+#~ "هنوز به تداخل‌های ادغام کردن رسیدگی نکند، زیرا آنها به‌طور دستی انجام "
+#~ "نمی‌گیرند:"
+
+#~ msgid ""
+#~ "Resolve any conflicts, and make sure that any files that were added or "
+#~ "removed in the vendor tree have been properly added or removed in the "
+#~ "main tree. It is always a good idea to check differences against the "
+#~ "vendor branch:"
+#~ msgstr ""
+#~ "هرگونه تعارضی را حل کنید و اطمینان حاصل کنید که پرونده‌های اضافه یا حذف "
+#~ "شده در درخت vendor به درستی در درخت اصلی اضافه یا حذف شده باشند. همیشه "
+#~ "فکر خوبی است که تفاوت‌ها در شاخه vendor را بررسی کنید:"
+
+#, fuzzy
+#~ msgid ""
+#~ "With SVN, there is no concept of on or off the vendor branch.  If a file "
+#~ "that previously had local modifications no longer does, just remove any "
+#~ "left-over cruft, such as FreeBSD version tags, so it no longer shows up "
+#~ "in diffs against the vendor tree."
+#~ msgstr ""
+#~ "با <acronym>SVN</acronym>، هیچ مفهموی از ماندن یا نماندن در شاخهٔ vendor "
+#~ "وجود ندارد. اگر پرونده‌ای که پیش‌تر اصلاحات بومی داشته است دیگر فاقد آنها "
+#~ "باشد، تنها تکه‌کدهای باقی‌مانده را حدف کنید، مانند برچسب‌های نسخهٔ FreeBSD، "
+#~ "در نتیجه دیگر در diff ها در تقابل با درخت vendor حاضر نمی‌شود."
+
+#, fuzzy
+#~ msgid ""
+#~ "If any changes are required for the world to build with the new sources, "
+#~ "make them now - and test until you are satisfied that everything build "
+#~ "and runs correctly."
+#~ msgstr ""
+#~ "چنانچه هر تغییری برای ساخت world با منابع جدید ضروری باشد، آنها را همین "
+#~ "حالا بسازید — و تا زمانی‌که متقاعد شده‌اید همه‌چیز به‌درستی build و اجرا "
+#~ "می‌شود بیازمایید."
+
+#, fuzzy
+#~ msgid ""
+#~ "Now, you are ready to commit.  Make sure you get everything in one go.  "
+#~ "Ideally, you would have done all steps in a clean tree, in which case you "
+#~ "can just commit from the top of that tree.  That is the best way to avoid "
+#~ "surprises.  If you do it properly, the tree will move atomically from a "
+#~ "consistent state with the old code to a consistent state with the new "
+#~ "code."
+#~ msgstr ""
+#~ "اکنون، شما آمادهٔ ثبت‌کردن هستید. مطمئن شوید که همه چیز را در یک حرکت انجام "
+#~ "دهید. در حالت ایده‌آل، تمامی مراحل را در یک درخت تمیز انجام می‌دادید، که "
+#~ "بتوانید از بالای آن درخت ثبت کنید. این بهترین راه برای جلوگیری از "
+#~ "غافلگیری است. اگر به درستی انجامش دهید، درخت به‌طور خودکار از یک حالت ثابت "
+#~ "با کد قدیم به یک حالت ثابت با کد جدید تغییر خواهد کرد."
 
 #~ msgid "The three principles of shared library building are:"
 #~ msgstr "سه اصل ساختمان کتابخانهٔ مشترک چنین هستند:"
