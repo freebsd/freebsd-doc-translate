@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2023-07-15 16:42-0300\n"
-"PO-Revision-Date: 2024-02-18 04:45+0000\n"
+"PO-Revision-Date: 2024-03-06 04:45+0000\n"
 "Last-Translator: Christos Longros <chris.longros@gmail.com>\n"
 "Language-Team: Greek <https://translate-dev.freebsd.org/projects/"
 "documentation/articlessolid-state_index/el/>\n"
@@ -21,14 +21,14 @@ msgstr ""
 #: documentation/content/en/articles/solid-state/_index.adoc:1
 #, no-wrap
 msgid "The use of solid state disk devices in FreeBSD"
-msgstr ""
+msgstr "Η χρήση συσκευών SSD στο FreeBSD"
 
 #. type: Title =
 #: documentation/content/en/articles/solid-state/_index.adoc:1
 #: documentation/content/en/articles/solid-state/_index.adoc:12
 #, no-wrap
 msgid "FreeBSD and Solid State Devices"
-msgstr ""
+msgstr "FreeBSD και δίσκοι στερεάς κατάστασης"
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:45
@@ -41,6 +41,8 @@ msgid ""
 "This article covers the use of solid state disk devices in FreeBSD to create "
 "embedded systems."
 msgstr ""
+"Αυτό το άρθρο καλύπτει τη χρήση δίσκων στερεάς κατάστασης στο FreeBSD για τη "
+"δημιουργία ενσωματωμένων συστημάτων."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:50
@@ -50,6 +52,10 @@ msgid ""
 "the generally low disk space available in the system and the durability of "
 "the storage medium."
 msgstr ""
+"Τα ενσωματωμένα συστήματα έχουν το πλεονέκτημα της αυξημένης σταθερότητας "
+"λόγω της έλλειψης ενσωματωμένων κινητών τμημάτων (σκληροί δίσκοι). Ωστόσο, "
+"πρέπει να ληφθεί υπόψη ο γενικά χαμηλός διαθέσιμος χώρος στο δίσκο στο "
+"σύστημα και η ανθεκτικότητα του αποθηκευτικού μέσου."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:53
@@ -62,6 +68,14 @@ msgid ""
 "conclude with some general strategies for small and read-only FreeBSD "
 "environments."
 msgstr ""
+"Τα συγκεκριμένα θέματα που θα καλυφθούν περιλαμβάνουν τους τύπους και τα "
+"χαρακτηριστικά των μέσων στερεάς κατάστασης που είναι κατάλληλα ως "
+"αποθηκευτικά μέσα στο FreeBSD, τις επιλογές πυρήνα που σχετίζονται με ένα "
+"τέτοιο περιβάλλον, τους [.filename]#rc.initdiskless# μηχανισμούς που "
+"αυτοματοποιούν την προετοιμασία τέτοιων συστημάτων και την ανάγκη για "
+"συστήματα αρχείων μόνο για ανάγνωση και την κατασκευή συστημάτων αρχείων από "
+"την αρχή. Το άρθρο θα ολοκληρωθεί με ορισμένες γενικές στρατηγικές για μικρά "
+"και μόνο για ανάγνωση περιβάλλοντα FreeBSD."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:55
@@ -72,7 +86,7 @@ msgstr "'''"
 #: documentation/content/en/articles/solid-state/_index.adoc:59
 #, no-wrap
 msgid "Solid State Disk Devices"
-msgstr ""
+msgstr "Δίσκοι στερεάς κατάστασης"
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:69
@@ -95,6 +109,24 @@ msgid ""
 "their specification.  This figure varies due to the temperature of the "
 "environment."
 msgstr ""
+"Το πεδίο εφαρμογής αυτού του άρθρου θα περιοριστεί σε συσκευές δίσκου "
+"στερεάς κατάστασης που κατασκευάζονται από μνήμη flash. Η μνήμη flash είναι "
+"μια μνήμη στερεάς κατάστασης (χωρίς κινούμενα μέρη) που δεν είναι πτητική (η "
+"μνήμη διατηρεί δεδομένα ακόμα και μετά την αποσύνδεση όλων των πηγών "
+"τροφοδοσίας). Η μνήμη flash μπορεί να αντέξει τεράστιο φυσικό σοκ και είναι "
+"αρκετά γρήγορη (οι λύσεις μνήμης flash που καλύπτονται σε αυτό το άρθρο "
+"είναι ελαφρώς πιο αργές από έναν σκληρό δίσκο EIDE για λειτουργίες εγγραφής "
+"και πολύ πιο γρήγορες για λειτουργίες ανάγνωσης). Μια πολύ σημαντική πτυχή "
+"της μνήμης flash, οι συνέπειες της οποίας θα συζητηθούν αργότερα σε αυτό το "
+"άρθρο, είναι ότι κάθε τομέας έχει περιορισμένη ικανότητα επανεγγραφής. "
+"Μπορείτε να γράψετε, να διαγράψετε και να ξαναγράψετε σε έναν τομέα μνήμης "
+"flash μόνο ορισμένες φορές πριν ο τομέας καταστεί μόνιμα άχρηστος. Παρόλο "
+"που πολλά προϊόντα μνήμης flash αντιστοιχίζουν αυτόματα τα κακά μπλοκ, και "
+"παρόλο που ορισμένα κατανέμουν ακόμη και τις λειτουργίες εγγραφής ομοιόμορφα "
+"σε όλη τη μονάδα, το γεγονός παραμένει ότι υπάρχει ένα όριο στην ποσότητα "
+"εγγραφής που μπορεί να γίνει στη συσκευή. Οι ανταγωνιστικές μονάδες έχουν "
+"από 1.000.000 έως 10.000.000 εγγραφές ανά τομέα στις προδιαγραφές τους. "
+"Αυτός ο αριθμός ποικίλλει λόγω της θερμοκρασίας του περιβάλλοντος."
 
 #. type: Plain text
 #: documentation/content/en/articles/solid-state/_index.adoc:74
