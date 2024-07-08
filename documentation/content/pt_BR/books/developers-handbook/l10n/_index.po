@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:21-0300\n"
-"PO-Revision-Date: 2024-07-07 04:45+0000\n"
+"PO-Revision-Date: 2024-07-08 04:45+0000\n"
 "Last-Translator: George Mendes Marra <george.mendes@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/booksdevelopers-handbookl10n_index/pt_BR/>\n"
@@ -198,7 +198,7 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:103
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "$set 1\n"
 msgstr "$set 1\n"
 
@@ -214,9 +214,11 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:111
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "15 \"File not found: %s\\n\"\n"
-msgstr "15 \"File not found: %s\\n\"\n"
+msgstr ""
+"15 \"File not found: %s\\n"
+"\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:117
@@ -255,6 +257,16 @@ msgid ""
 "`catname` is the catalog name being discussed.  The second parameter is a "
 "constant, which can have two values:"
 msgstr ""
+"Usar os arquivos de catálogo é simples. Para usar as funções relacionadas, [."
+"filename]#nl_types.h# deve ser incluído. Antes de usar um catálogo, ele deve "
+"ser aberto com man:catopen[3]. A função leva dois argumentos. O primeiro "
+"parâmetro é o nome do catálogo instalado e compilado. Normalmente, é usado o "
+"nome do programa, como grep. Este nome será utilizado ao procurar o arquivo "
+"de catálogo compilado. A chamada man:catopen[3] procura este arquivo em [."
+"filename]#/usr/share/nls/locale/catname# e em [.filename]#/usr/local/share/"
+"nls/locale/catname#, onde `locale` é o conjunto de localidade e `catname` é "
+"o nome do catálogo. O segundo parâmetro é uma constante, que pode ter dois "
+"valores:"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:132
@@ -262,11 +274,15 @@ msgid ""
 "`NL_CAT_LOCALE`, which means that the used catalog file will be based on "
 "`LC_MESSAGES`."
 msgstr ""
+"`NL_CAT_LOCALE`, o que significa que o arquivo de catálogo utilizado será "
+"baseado em `LC_MESSAGES`."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:133
 msgid "`0`, which means that `LANG` has to be used to open the proper catalog."
 msgstr ""
+"`0`, o que significa que `LANG` deve ser usado para abrir o catálogo "
+"adequado."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:136
@@ -274,6 +290,9 @@ msgid ""
 "The man:catopen[3] call returns a catalog identifier of type `nl_catd`.  "
 "Please refer to the manual page for a list of possible returned error codes."
 msgstr ""
+"A chamada man:catopen[3] retorna um identificador de catálogo do tipo "
+"`nl_catd`. Consulte a página do manual para obter uma lista de possíveis "
+"códigos de erro retornados."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:139
@@ -284,6 +303,11 @@ msgid ""
 "messages, and the fourth one is a fallback message, which will be returned "
 "if the requested message cannot be retrieved from the catalog file."
 msgstr ""
+"Depois de abrir um catálogo, man:catgets[3] pode ser usado para recuperar "
+"uma mensagem. O primeiro parâmetro é o identificador do catálogo retornado "
+"por man:catopen[3], o segundo é o número do conjunto, o terceiro é o número "
+"de mensagens e o quarto é uma mensagem substituta, que será retornada se a "
+"mensagem solicitada não puder ser recuperada do arquivo de catálogo."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:141
@@ -291,12 +315,14 @@ msgid ""
 "After using the catalog file, it must be closed by calling man:catclose[3], "
 "which has one argument, the catalog id."
 msgstr ""
+"Após utilizar o arquivo de catálogo, ele deve ser fechado chamando "
+"man:catclose[3], que possui um argumento, o id do catálogo."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:143
 #, no-wrap
 msgid "A Practical Example"
-msgstr ""
+msgstr "Um exemplo prático"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:146
@@ -304,6 +330,8 @@ msgid ""
 "The following example will demonstrate an easy solution on how to use NLS "
 "catalogs in a flexible way."
 msgstr ""
+"O exemplo a seguir demonstrará uma solução fácil sobre como usar catálogos "
+"NLS de maneira flexível."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:148
@@ -312,6 +340,9 @@ msgid ""
 "which is included into all source files where localized messages are "
 "necessary:"
 msgstr ""
+"As linhas abaixo precisam ser colocadas em um arquivo de cabeçalho comum do "
+"programa, que é incluído em todos os arquivos fonte onde mensagens "
+"localizadas são necessárias:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:155
@@ -322,6 +353,10 @@ msgid ""
 "#else\n"
 "#include nl_types.h\n"
 msgstr ""
+"#ifdef WITHOUT_NLS\n"
+"#define getstr(n)\t nlsstr[n]\n"
+"#else\n"
+"#include nl_types.h\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:159
@@ -331,12 +366,15 @@ msgid ""
 "#define getstr(n)\t catgets(catalog, 1, n, nlsstr[n])\n"
 "#endif\n"
 msgstr ""
+"extern nl_catd\t\t catalog;\n"
+"#define getstr(n)\t catgets(catalog, 1, n, nlsstr[n])\n"
+"#endif\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:161
 #, no-wrap
 msgid "extern char\t\t*nlsstr[];\n"
-msgstr ""
+msgstr "extern char\t\t*nlsstr[];\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:164
@@ -344,6 +382,8 @@ msgid ""
 "Next, put these lines into the global declaration part of the main source "
 "file:"
 msgstr ""
+"A seguir, coloque estas linhas na parte da declaração global do arquivo "
+"fonte principal:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:171
@@ -354,6 +394,10 @@ msgid ""
 "nl_catd\t catalog;\n"
 "#endif\n"
 msgstr ""
+"#ifndef WITHOUT_NLS\n"
+"#include nl_types.h\n"
+"nl_catd catalog;\n"
+"#endif\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:181
@@ -369,12 +413,22 @@ msgid ""
 "/* 2*/  \"some other message\"\n"
 "};\n"
 msgstr ""
+"/*\n"
+" * Default messages to use when NLS is disabled or no catalog\n"
+" * is found.\n"
+" */\n"
+"char    *nlsstr[] = {\n"
+"        \"\",\n"
+"/* 1*/  \"some random message\",\n"
+"/* 2*/  \"some other message\"\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:184
 msgid ""
 "Next come the real code snippets, which open, read, and close the catalog:"
 msgstr ""
+"A seguir vêm os trechos de código reais, que abrem, leem e fecham o catálogo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:190
@@ -384,19 +438,22 @@ msgid ""
 "\tcatalog = catopen(\"myapp\", NL_CAT_LOCALE);\n"
 "#endif\n"
 msgstr ""
+"#ifndef WITHOUT_NLS\n"
+"\tcatalog = catopen(\"myapp\", NL_CAT_LOCALE);\n"
+"#endif\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:192
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:196
 #, no-wrap
 msgid "...\n"
-msgstr ""
+msgstr "...\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:194
 #, no-wrap
 msgid "printf(getstr(1));\n"
-msgstr ""
+msgstr "printf(getstr(1));\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:200
@@ -406,12 +463,15 @@ msgid ""
 "\tcatclose(catalog);\n"
 "#endif\n"
 msgstr ""
+"#ifndef WITHOUT_NLS\n"
+"\tcatclose(catalog);\n"
+"#endif\n"
 
 #. type: Title ====
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:202
 #, no-wrap
 msgid "Reducing Strings to Localize"
-msgstr ""
+msgstr "Reduzindo Strings para Localizar"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:206
@@ -421,11 +481,15 @@ msgid ""
 "and provide consistent error messages for the common errors that can be "
 "encountered by a great many of programs."
 msgstr ""
+"Existe uma boa maneira de reduzir as strings que precisam ser localizadas "
+"usando mensagens de erro da libc. Isso também é útil para evitar duplicação "
+"e fornecer mensagens de erro consistentes para os erros comuns que podem ser "
+"encontrados por muitos programas."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:208
 msgid "First, here is an example that does not use libc error messages:"
-msgstr ""
+msgstr "Primeiro, aqui está um exemplo que não usa mensagens de erro da libc:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:215
@@ -436,6 +500,10 @@ msgid ""
 "if (!S_ISDIR(st.st_mode))\n"
 "\terrx(1, \"argument is not a directory\");\n"
 msgstr ""
+"#include err.h\n"
+"...\n"
+"if (!S_ISDIR(st.st_mode))\n"
+"\terrx(1, \"argument is not a directory\");\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:218
@@ -443,6 +511,8 @@ msgid ""
 "This can be transformed to print an error message by reading `errno` and "
 "printing an error message accordingly:"
 msgstr ""
+"Isso pode ser transformado para imprimir uma mensagem de erro lendo `errno` "
+"e imprimindo uma mensagem de erro de acordo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:228
@@ -456,6 +526,13 @@ msgid ""
 "\terr(1, NULL);\n"
 "}\n"
 msgstr ""
+"#include err.h\n"
+"#include errno.h\n"
+"...\n"
+"if (!S_ISDIR(st.st_mode)) {\n"
+"\terrno = ENOTDIR;\n"
+"\terr(1, NULL);\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:233
@@ -466,6 +543,11 @@ msgid ""
 "probably seem more familiar to them.  Please note that it was necessary to "
 "include [.filename]#errno.h# in order to directly access `errno`."
 msgstr ""
+"Neste exemplo, a string personalizada é eliminada, portanto os tradutores "
+"terão menos trabalho ao localizar o programa e os usuários verão a mensagem "
+"de erro usual \"Não é um diretório\" quando encontrarem esse erro. Esta "
+"mensagem provavelmente lhes parecerá mais familiar. Observe que foi "
+"necessário incluir [.filename]#errno.h# para acessar diretamente `errno`."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:235
@@ -473,6 +555,8 @@ msgid ""
 "It is worth to note that there are cases when `errno` is set automatically "
 "by a preceding call, so it is not necessary to set it explicitly:"
 msgstr ""
+"Vale a pena notar que há casos em que `errno` é definido automaticamente por "
+"uma chamada anterior, portanto não é necessário defini-lo explicitamente:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:242
@@ -483,12 +567,16 @@ msgid ""
 "if ((p = malloc(size)) == NULL)\n"
 "\terr(1, NULL);\n"
 msgstr ""
+"#include err.h\n"
+"...\n"
+"if ((p = malloc(size)) == NULL)\n"
+"\terr(1, NULL);\n"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:245
 #, no-wrap
 msgid "Making use of [.filename]#bsd.nls.mk#"
-msgstr ""
+msgstr "Fazendo uso de [.filename]#bsd.nls.mk#"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:250
@@ -500,6 +588,12 @@ msgid ""
 "in from the common Makefiles, such as [.filename]#bsd.prog.mk# or [."
 "filename]#bsd.lib.mk#."
 msgstr ""
+"O uso dos arquivos de catálogo requer algumas etapas repetíveis, como "
+"compilar os catálogos e instalá-los no local adequado. Para simplificar "
+"ainda mais este processo, [.filename]#bsd.nls.mk# introduz algumas macros. "
+"Não é necessário incluir [.filename]#bsd.nls.mk# explicitamente, ele é "
+"extraído dos Makefiles comuns, como [.filename]#bsd.prog.mk# ou [.filename]#"
+"bsd.lib .mk#."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:254
@@ -511,10 +605,16 @@ msgid ""
 "`WITHOUT_NLS` man:make[1] variable has to be defined in order to build the "
 "program without NLS support."
 msgstr ""
+"Normalmente basta definir `NLSNAME`, que deve ter o nome do catálogo "
+"mencionado como primeiro argumento de man:catopen[3] e listar os arquivos do "
+"catálogo em `NLS` sem a extensão `.msg`. Aqui está um exemplo que torna "
+"possível desabilitar o NLS quando usado com os exemplos de código "
+"anteriores. A variável `WITHOUT_NLS` man:make[1] deve ser definida para "
+"construir o programa sem suporte NLS."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/l10n/_index.adoc:264
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 ".if !defined(WITHOUT_NLS)\n"
 "NLS=\tes_ES.ISO8859-1\n"
@@ -525,11 +625,11 @@ msgid ""
 ".endif\n"
 msgstr ""
 ".if !defined(WITHOUT_NLS)\n"
-"NLS=\tes_ES.ISO8859-1\n"
-"NLS+=\thu_HU.ISO8859-2\n"
-"NLS+=\tpt_BR.ISO8859-1\n"
+"NLS= es_ES.ISO8859-1\n"
+"NLS+= hu_HU.ISO8859-2\n"
+"NLS+= pt_BR.ISO8859-1\n"
 ".else\n"
-"CFLAGS+=\t-DWITHOUT_NLS\n"
+"CFLAGS+= -DWITHOUT_NLS\n"
 ".endif\n"
 
 #. type: Plain text
@@ -546,6 +646,16 @@ msgid ""
 "filename]#bsd.nls.mk#, please refer to the file itself, it is short and easy "
 "to understand."
 msgstr ""
+"Convencionalmente, os arquivos de catálogo são colocados no subdiretório [."
+"filename]#nls# e este é o comportamento padrão de [.filename]#bsd.nls.mk#. É "
+"possível, entretanto, substituir a localização dos catálogos pela variável "
+"`NLSSRCDIR` man:make[1]. O nome padrão dos arquivos de catálogo pré-"
+"compilados também segue a convenção de nomenclatura mencionada "
+"anteriormente. Pode ser substituído definindo a variável `NLSNAME`. Existem "
+"outras opções para ajustar o processamento dos arquivos de catálogo, mas "
+"geralmente não são necessárias e, portanto, não são descritas aqui. Para "
+"mais informações sobre [.filename]#bsd.nls.mk#, consulte o próprio arquivo, "
+"ele é curto e fácil de entender."
 
 #~ msgid ""
 #~ "include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"
