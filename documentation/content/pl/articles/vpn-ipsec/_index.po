@@ -208,8 +208,8 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vpn-ipsec/_index.adoc:99
 msgid ""
-"Once complete, both internal IP addresses should be reachable using "
-"man:ping[8]:"
+"Once complete, both internal IP addresses should be reachable using man:"
+"ping[8]:"
 msgstr ""
 
 #. type: delimited block . 4
@@ -302,19 +302,17 @@ msgstr ""
 msgid ""
 "At this point, traffic is flowing between the networks encapsulated in a gif "
 "tunnel but without any encryption.  Next, use IPSec to encrypt traffic using "
-"pre-shared keys (PSK).  Other than the IP addresses, "
-"[.filename]#/usr/local/etc/racoon/racoon.conf# on both gateways will be "
-"identical and look similar to:"
+"pre-shared keys (PSK).  Other than the IP addresses, [.filename]#/usr/local/"
+"etc/racoon/racoon.conf# on both gateways will be identical and look similar "
+"to:"
 msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vpn-ipsec/_index.adoc:168
 #, no-wrap
 msgid ""
-"path    pre_shared_key  \"/usr/local/etc/racoon/psk.txt\"; #location of "
-"pre-shared key file\n"
-"log     debug;\t#log verbosity setting: set to 'notify' when testing and "
-"debugging is complete\n"
+"path    pre_shared_key  \"/usr/local/etc/racoon/psk.txt\"; #location of pre-shared key file\n"
+"log     debug;\t#log verbosity setting: set to 'notify' when testing and debugging is complete\n"
 msgstr ""
 
 #. type: delimited block . 4
@@ -392,11 +390,8 @@ msgstr ""
 #: documentation/content/en/articles/vpn-ipsec/_index.adoc:223
 #, no-wrap
 msgid ""
-"sainfo  (address 10.246.38.0/24 any address 10.0.0.0/24 any)\t# address "
-"$network/$netmask $type address $network/$netmask $type ( $type being any or "
-"esp)\n"
-"{\t\t\t\t\t\t\t\t# $network must be the two internal networks you are "
-"joining.\n"
+"sainfo  (address 10.246.38.0/24 any address 10.0.0.0/24 any)\t# address $network/$netmask $type address $network/$netmask $type ( $type being any or esp)\n"
+"{\t\t\t\t\t\t\t\t# $network must be the two internal networks you are joining.\n"
 "        pfs_group       1;\n"
 "        lifetime        time    36000 sec;\n"
 "        encryption_algorithm    blowfish,3des;\n"
@@ -408,16 +403,15 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vpn-ipsec/_index.adoc:226
 msgid ""
-"For descriptions of each available option, refer to the manual page for "
-"[.filename]#racoon.conf#."
+"For descriptions of each available option, refer to the manual page for [."
+"filename]#racoon.conf#."
 msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/vpn-ipsec/_index.adoc:228
 msgid ""
 "The Security Policy Database (SPD) needs to be configured so that FreeBSD "
-"and racoon are able to encrypt and decrypt network traffic between the "
-"hosts."
+"and racoon are able to encrypt and decrypt network traffic between the hosts."
 msgstr ""
 
 #. type: Plain text
@@ -435,10 +429,8 @@ msgid ""
 "flush;\n"
 "spdflush;\n"
 "# To the home network\n"
-"spdadd 10.246.38.0/24 10.0.0.0/24 any -P out ipsec "
-"esp/tunnel/172.16.5.4-192.168.1.12/use;\n"
-"spdadd 10.0.0.0/24 10.246.38.0/24 any -P in ipsec "
-"esp/tunnel/192.168.1.12-172.16.5.4/use;\n"
+"spdadd 10.246.38.0/24 10.0.0.0/24 any -P out ipsec esp/tunnel/172.16.5.4-192.168.1.12/use;\n"
+"spdadd 10.0.0.0/24 10.246.38.0/24 any -P in ipsec esp/tunnel/192.168.1.12-172.16.5.4/use;\n"
 msgstr ""
 
 #. type: Plain text
@@ -451,9 +443,7 @@ msgstr ""
 #. type: delimited block . 4
 #: documentation/content/en/articles/vpn-ipsec/_index.adoc:246
 #, no-wrap
-msgid ""
-"# /usr/local/sbin/racoon -F -f /usr/local/etc/racoon/racoon.conf -l "
-"/var/log/racoon.log\n"
+msgid "# /usr/local/sbin/racoon -F -f /usr/local/etc/racoon/racoon.conf -l /var/log/racoon.log\n"
 msgstr ""
 
 #. type: Plain text
@@ -470,20 +460,13 @@ msgid ""
 "2006-01-30 01:35:47: INFO: begin Identity Protection mode.\n"
 "2006-01-30 01:35:48: INFO: received Vendor ID: KAME/racoon\n"
 "2006-01-30 01:35:55: INFO: received Vendor ID: KAME/racoon\n"
-"2006-01-30 01:36:04: INFO: ISAKMP-SA established "
-"172.16.5.4[500]-192.168.1.12[500] spi:623b9b3bd2492452:7deab82d54ff704a\n"
-"2006-01-30 01:36:05: INFO: initiate new phase 2 negotiation: "
-"172.16.5.4[0]192.168.1.12[0]\n"
-"2006-01-30 01:36:09: INFO: IPsec-SA established: ESP/Tunnel "
-"192.168.1.12[0]->172.16.5.4[0] spi=28496098(0x1b2d0e2)\n"
-"2006-01-30 01:36:09: INFO: IPsec-SA established: ESP/Tunnel "
-"172.16.5.4[0]->192.168.1.12[0] spi=47784998(0x2d92426)\n"
-"2006-01-30 01:36:13: INFO: respond new phase 2 negotiation: "
-"172.16.5.4[0]192.168.1.12[0]\n"
-"2006-01-30 01:36:18: INFO: IPsec-SA established: ESP/Tunnel "
-"192.168.1.12[0]->172.16.5.4[0] spi=124397467(0x76a279b)\n"
-"2006-01-30 01:36:18: INFO: IPsec-SA established: ESP/Tunnel "
-"172.16.5.4[0]->192.168.1.12[0] spi=175852902(0xa7b4d66)\n"
+"2006-01-30 01:36:04: INFO: ISAKMP-SA established 172.16.5.4[500]-192.168.1.12[500] spi:623b9b3bd2492452:7deab82d54ff704a\n"
+"2006-01-30 01:36:05: INFO: initiate new phase 2 negotiation: 172.16.5.4[0]192.168.1.12[0]\n"
+"2006-01-30 01:36:09: INFO: IPsec-SA established: ESP/Tunnel 192.168.1.12[0]->172.16.5.4[0] spi=28496098(0x1b2d0e2)\n"
+"2006-01-30 01:36:09: INFO: IPsec-SA established: ESP/Tunnel 172.16.5.4[0]->192.168.1.12[0] spi=47784998(0x2d92426)\n"
+"2006-01-30 01:36:13: INFO: respond new phase 2 negotiation: 172.16.5.4[0]192.168.1.12[0]\n"
+"2006-01-30 01:36:18: INFO: IPsec-SA established: ESP/Tunnel 192.168.1.12[0]->172.16.5.4[0] spi=124397467(0x76a279b)\n"
+"2006-01-30 01:36:18: INFO: IPsec-SA established: ESP/Tunnel 172.16.5.4[0]->192.168.1.12[0] spi=175852902(0xa7b4d66)\n"
 msgstr ""
 
 #. type: Plain text
@@ -511,12 +494,9 @@ msgstr ""
 #: documentation/content/en/articles/vpn-ipsec/_index.adoc:282
 #, no-wrap
 msgid ""
-"01:47:32.021683 IP corporatenetwork.com > 192.168.1.12.privatenetwork.com: "
-"ESP(spi=0x02acbf9f,seq=0xa)\n"
-"01:47:33.022442 IP corporatenetwork.com > 192.168.1.12.privatenetwork.com: "
-"ESP(spi=0x02acbf9f,seq=0xb)\n"
-"01:47:34.024218 IP corporatenetwork.com > 192.168.1.12.privatenetwork.com: "
-"ESP(spi=0x02acbf9f,seq=0xc)\n"
+"01:47:32.021683 IP corporatenetwork.com > 192.168.1.12.privatenetwork.com: ESP(spi=0x02acbf9f,seq=0xa)\n"
+"01:47:33.022442 IP corporatenetwork.com > 192.168.1.12.privatenetwork.com: ESP(spi=0x02acbf9f,seq=0xb)\n"
+"01:47:34.024218 IP corporatenetwork.com > 192.168.1.12.privatenetwork.com: ESP(spi=0x02acbf9f,seq=0xc)\n"
 msgstr ""
 
 #. type: Plain text
@@ -582,7 +562,6 @@ msgstr ""
 msgid ""
 "ipsec_enable=\"YES\"\n"
 "ipsec_program=\"/usr/local/sbin/setkey\"\n"
-"ipsec_file=\"/usr/local/etc/racoon/setkey.conf\" # allows setting up spd "
-"policies on boot\n"
+"ipsec_file=\"/usr/local/etc/racoon/setkey.conf\" # allows setting up spd policies on boot\n"
 "racoon_enable=\"yes\"\n"
 msgstr ""

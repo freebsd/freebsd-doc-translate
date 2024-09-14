@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2022-02-01 09:20-0300\n"
+"POT-Creation-Date: 2024-09-14 14:59-0300\n"
 "PO-Revision-Date: 2023-03-28 16:54+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
@@ -161,8 +161,8 @@ msgid ""
 "for the public ioctl interface definitions, found in [.filename]#/usr/src/"
 "sys/sys/soundcard.h#"
 msgstr ""
-"Todo el código relevante se encuentra en [.filename]#/usr/src/sys/dev/sound/#"
-", excepto las definiciones públicas de la interfaz ioctl, que se encuentran "
+"Todo el código relevante se encuentra en [.filename]#/usr/src/sys/dev/sound/"
+"#, excepto las definiciones públicas de la interfaz ioctl, que se encuentran "
 "en [.filename]#/usr/src/sys/sys/soundcard.h#"
 
 #. type: Plain text
@@ -174,8 +174,8 @@ msgid ""
 "USB audio devices."
 msgstr ""
 "En [.filename]#/usr/src/sys/dev/sound/#, el directorio [.filename]#pcm/# "
-"contiene el código central, mientras que los directorios [.filename]#pci/#, ["
-".filename]#isa/# y [.filename]#usb/# tienen los controladores para placas "
+"contiene el código central, mientras que los directorios [.filename]#pci/#, "
+"[.filename]#isa/# y [.filename]#usb/# tienen los controladores para placas "
 "PCI e ISA, y para dispositivos de audio USB."
 
 #. type: Title ==
@@ -193,8 +193,8 @@ msgid ""
 msgstr ""
 "Los controladores de sonido sondean y se conectan casi de la misma forma que "
 "cualquier módulo controlador de hardware. Es posible que desee consultar las "
-"secciones específicas crossref:isa-driver[isa-driver,ISA] o "
-"crossref:pci[pci,PCI] del manual para obtener más información."
+"secciones específicas crossref:isa-driver[isa-driver,ISA] o crossref:pci[pci,"
+"PCI] del manual para obtener más información."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:83
@@ -234,8 +234,7 @@ msgid ""
 "          MODULE_DEPEND(snd_xxxpci, snd_pcm, PCM_MINVER, PCM_PREFVER,PCM_MAXVER);\n"
 msgstr ""
 "          DRIVER_MODULE(snd_xxxpci, pci, xxx_driver, pcm_devclass, 0, 0);\n"
-"          MODULE_DEPEND(snd_xxxpci, snd_pcm, PCM_MINVER, "
-"PCM_PREFVER,PCM_MAXVER);\n"
+"          MODULE_DEPEND(snd_xxxpci, snd_pcm, PCM_MINVER, PCM_PREFVER,PCM_MAXVER);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:99
@@ -254,19 +253,25 @@ msgstr ""
 "las llamadas a las interfaces del controlador de sonido."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:100
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:102
+#, fuzzy
+#| msgid ""
+#| "The sound driver attach routine should declare its MIXER or AC97 "
+#| "interface to [.filename]#pcm# by calling `mixer_init()`. For a MIXER "
+#| "interface, this causes in turn a call to <<xxxmixer-init,"
+#| "`xxxmixer_init()`>>."
 msgid ""
 "The sound driver attach routine should declare its MIXER or AC97 interface "
 "to [.filename]#pcm# by calling `mixer_init()`. For a MIXER interface, this "
-"causes in turn a call to <<xxxmixer-init,`xxxmixer_init()`>>."
+"causes in turn a call to crossref:sound[xxxmixer-init,`xxxmixer_init()`]."
 msgstr ""
 "La rutina de conexión del controlador de sonido debe declarar su interfaz "
 "MIXER o AC97 a [.filename]#pcm# llamando a `mixer_init()`. Para una interfaz "
-"MIXER, esto provoca a su vez una llamada a <<xxxmixer-"
-"init,`xxxmixer_init()`>>."
+"MIXER, esto provoca a su vez una llamada a <<xxxmixer-init,"
+"`xxxmixer_init()`>>."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:101
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:103
 msgid ""
 "The sound driver attach routine declares its general CHANNEL configuration "
 "to [.filename]#pcm# by calling `pcm_register(dev, sc, nplay, nrec)`, where "
@@ -275,25 +280,32 @@ msgid ""
 "record channels."
 msgstr ""
 "La rutina attach del controlador de sonido declara su configuración general "
-"de CHANNEL a [.filename]#pcm# llamando a `pcm_register(dev, sc, nplay, nrec)`"
-", donde `sc` es la dirección para la estructura de datos del dispositivo, "
-"utilizada en posteriores llamadas desde [.filename]#pcm#, y `nplay` y `nrec` "
-"son el número de canales de reproducción y grabación."
+"de CHANNEL a [.filename]#pcm# llamando a `pcm_register(dev, sc, nplay, "
+"nrec)`, donde `sc` es la dirección para la estructura de datos del "
+"dispositivo, utilizada en posteriores llamadas desde [.filename]#pcm#, y "
+"`nplay` y `nrec` son el número de canales de reproducción y grabación."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:102
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:106
+#, fuzzy
+#| msgid ""
+#| "The sound driver attach routine declares each of its channel objects by "
+#| "calls to `pcm_addchan()`. This sets up the channel glue in [."
+#| "filename]#pcm# and causes in turn a call to <<xxxchannel-init,"
+#| "`xxxchannel_init()`>>."
 msgid ""
 "The sound driver attach routine declares each of its channel objects by "
 "calls to `pcm_addchan()`. This sets up the channel glue in [.filename]#pcm# "
-"and causes in turn a call to <<xxxchannel-init,`xxxchannel_init()`>>."
+"and causes in turn a call to crossref:sound[xxxchannel-init,"
+"`xxxchannel_init()`]."
 msgstr ""
 "La rutina attach del controlador de sonido declara cada uno de sus objetos "
 "canal mediante llamadas a `pcm_addchan()`. Esto configura la cola de canales "
-"en [.filename]#pcm# y provoca a su vez una llamada a <<xxxchannel-"
-"init,`xxxchannel_init()`>>."
+"en [.filename]#pcm# y provoca a su vez una llamada a <<xxxchannel-init,"
+"`xxxchannel_init()`>>."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:103
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:107
 msgid ""
 "The sound driver detach routine should call `pcm_unregister()` before "
 "releasing its resources."
@@ -302,12 +314,12 @@ msgstr ""
 "`pcm_unregister()` antes de liberar sus recursos."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:105
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:109
 msgid "There are two possible methods to handle non-PnP devices:"
 msgstr "Hay dos métodos posibles para manejar dispositivos no-PnP:"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:107
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:111
 msgid ""
 "Use a `device_identify()` method (example: [.filename]#sound/isa/es1888.c#). "
 "The `device_identify()` method probes for the hardware at known addresses "
@@ -320,7 +332,7 @@ msgstr ""
 "dispositivo pcm que se pasa a probe/attach."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:108
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:112
 msgid ""
 "Use a custom kernel configuration with appropriate hints for pcm devices "
 "(example: [.filename]#sound/isa/mss.c#)."
@@ -329,7 +341,7 @@ msgstr ""
 "adecuadas para los dispositivos pcm (ejemplo: [.filename]#sound/isa/mss.c#)."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:110
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:114
 msgid ""
 "[.filename]#pcm# drivers should implement `device_suspend`, `device_resume` "
 "and `device_shutdown` routines, so that power management and module "
@@ -340,22 +352,26 @@ msgstr ""
 "descarga de módulos funcionen correctamente."
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:112
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:116
 #, no-wrap
 msgid "Interfaces"
 msgstr "Interfaces"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:115
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:120
+#, fuzzy
+#| msgid ""
+#| "The interface between the [.filename]#pcm# core and the sound drivers is "
+#| "defined in terms of <<kernel-objects,kernel objects>>."
 msgid ""
 "The interface between the [.filename]#pcm# core and the sound drivers is "
-"defined in terms of <<kernel-objects,kernel objects>>."
+"defined in terms of crossref:kobj[kernel-objects,kernel objects]."
 msgstr ""
 "La interfaz entre el núcleo [.filename]#pcm# y los controladores de sonido "
 "se define en términos de <<kernel-objects,kernel objects>>."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:117
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:122
 msgid ""
 "There are two main interfaces that a sound driver will usually provide: "
 "_CHANNEL_ and either _MIXER_ or _AC97_."
@@ -364,32 +380,32 @@ msgstr ""
 "proporcionar: _CHANNEL_ y _MIXER_ o _AC97_."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:119
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:124
 msgid ""
 "The _AC97_ interface is a very small hardware access (register read/write) "
 "interface, implemented by drivers for hardware with an AC97 codec. In this "
 "case, the actual MIXER interface is provided by the shared AC97 code in [."
 "filename]#pcm#."
 msgstr ""
-"La interfaz _AC97_ es una interfaz muy pequeña de acceso al hardware ("
-"lectura/escritura de registros), implementada por controladores para "
+"La interfaz _AC97_ es una interfaz muy pequeña de acceso al hardware "
+"(lectura/escritura de registros), implementada por controladores para "
 "hardware con un códec AC97. En este caso, la interfaz MIXER real es "
 "proporcionada por el código AC97 compartido en [.filename]#pcm#."
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:120
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:125
 #, no-wrap
 msgid "The CHANNEL Interface"
 msgstr "La interfaz CHANNEL"
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:122
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:127
 #, no-wrap
 msgid "Common Notes for Function Parameters"
 msgstr "Notas comunes para los parámetros de función"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:125
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:130
 msgid ""
 "Sound drivers usually have a private data structure to describe their "
 "device, and one structure for each play and record data channel that it "
@@ -400,7 +416,7 @@ msgstr ""
 "reproducción y grabación que soporta."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:127
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:132
 msgid ""
 "For all CHANNEL interface functions, the first parameter is an opaque "
 "pointer."
@@ -409,7 +425,7 @@ msgstr ""
 "puntero opaco."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:129
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:134
 msgid ""
 "The second parameter is a pointer to the private channel data structure, "
 "except for `channel_init()` which has a pointer to the private device "
@@ -422,13 +438,13 @@ msgstr ""
 "posterior por [.filename]#pcm#)."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:130
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:135
 #, no-wrap
 msgid "Overview of Data Transfer Operations"
 msgstr "Visión general de las operaciones de transferencia de datos"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:133
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:138
 msgid ""
 "For sound data transfers, the [.filename]#pcm# core and the sound drivers "
 "communicate through a shared memory area, described by a `struct snd_dbuf`."
@@ -438,7 +454,7 @@ msgstr ""
 "compartida, descrita por una `struct snd_dbuf`."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:135
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:140
 msgid ""
 "`struct snd_dbuf` is private to [.filename]#pcm#, and sound drivers obtain "
 "values of interest by calls to accessor functions (`sndbuf_getxxx()`)."
@@ -448,7 +464,7 @@ msgstr ""
 "acceso (`sndbuf_getxxx()`)."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:137
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:142
 msgid ""
 "The shared memory area has a size of `sndbuf_getsize()` and is divided into "
 "fixed size blocks of `sndbuf_getblksz()` bytes."
@@ -457,27 +473,32 @@ msgstr ""
 "divide en bloques de tamaño fijo de `sndbuf_getblksz()` bytes."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:139
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:144
 msgid ""
 "When playing, the general transfer mechanism is as follows (reverse the idea "
 "for recording):"
 msgstr ""
-"Al reproducir, el mecanismo general de transferencia es el siguiente ("
-"invierta la idea para grabar):"
+"Al reproducir, el mecanismo general de transferencia es el siguiente "
+"(invierta la idea para grabar):"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:141
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:147
+#, fuzzy
+#| msgid ""
+#| "[.filename]#pcm# initially fills up the buffer, then calls the sound "
+#| "driver's <<channel-trigger,`xxxchannel_trigger()`>> function with a "
+#| "parameter of PCMTRIG_START."
 msgid ""
 "[.filename]#pcm# initially fills up the buffer, then calls the sound "
-"driver's <<channel-trigger,`xxxchannel_trigger()`>> function with a "
-"parameter of PCMTRIG_START."
+"driver's crossref:sound[channel-trigger,`xxxchannel_trigger()`] function "
+"with a parameter of PCMTRIG_START."
 msgstr ""
 "[.filename]#pcm# inicialmente llena el buffer, luego llama a la función "
 "<<channel-trigger,`xxxchannel_trigger()`>> del controlador de sonido con un "
 "parámetro de PCMTRIG_START."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:142
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:148
 msgid ""
 "The sound driver then arranges to repeatedly transfer the whole memory area "
 "(`sndbuf_getbuf()`, `sndbuf_getsize()`) to the device, in blocks of "
@@ -492,7 +513,7 @@ msgstr ""
 "ocurrirá típicamente en tiempo de interrupción)."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:143
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:149
 msgid ""
 "`chn_intr()` arranges to copy new data to the area that was transferred to "
 "the device (now free), and make appropriate updates to the `snd_dbuf` "
@@ -503,17 +524,22 @@ msgstr ""
 "oportunas en la estructura `snd_dbuf`."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:145
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:151
 #, no-wrap
 msgid "channel_init"
 msgstr "channel_init"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:148
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:155
+#, fuzzy
+#| msgid ""
+#| "`xxxchannel_init()` is called to initialize each of the play or record "
+#| "channels. The calls are initiated from the sound driver attach routine. "
+#| "(See the <<pcm-probe-and-attach,probe and attach section>>)."
 msgid ""
 "`xxxchannel_init()` is called to initialize each of the play or record "
-"channels. The calls are initiated from the sound driver attach routine. (See "
-"the <<pcm-probe-and-attach,probe and attach section>>)."
+"channels.  The calls are initiated from the sound driver attach routine. "
+"(See the crossref:sound[pcm-probe-and-attach,probe and attach section)."
 msgstr ""
 "Se llama a `xxxchannel_init()` para inicializar cada uno de los canales de "
 "reproducción o grabación. Las llamadas se inician desde la rutina attach del "
@@ -521,7 +547,7 @@ msgstr ""
 "attach>>)."
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:160
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:167
 #, no-wrap
 msgid ""
 "          static void *\n"
@@ -545,7 +571,7 @@ msgstr ""
 "           }\n"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:163
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:170
 msgid ""
 "`b` is the address for the channel `struct snd_dbuf`. It should be "
 "initialized in the function by calling `sndbuf_alloc()`. The buffer size to "
@@ -565,7 +591,7 @@ msgstr ""
 "dirección del canal (`PCMDIR_PLAY` o `PCMDIR_REC`)."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:165
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:172
 msgid ""
 "The function should return a pointer to the private area used to control "
 "this channel. This will be passed as a parameter to other channel interface "
@@ -576,13 +602,13 @@ msgstr ""
 "canal."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:166
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:173
 #, no-wrap
 msgid "channel_setformat"
 msgstr "channel_setformat"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:169
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:176
 msgid ""
 "`xxxchannel_setformat()` should set up the hardware for the specified "
 "channel for the specified sound format."
@@ -591,7 +617,7 @@ msgstr ""
 "para el formato de sonido especificado."
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:179
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:186
 #, no-wrap
 msgid ""
 "          static int\n"
@@ -603,8 +629,7 @@ msgid ""
 "           }\n"
 msgstr ""
 "          static int\n"
-"          xxxchannel_setformat(kobj_t obj, void *data, u_int32_t format) <.>"
-"\n"
+"          xxxchannel_setformat(kobj_t obj, void *data, u_int32_t format) <.>\n"
 "          {\n"
 "              struct xxx_chinfo *ch = data;\n"
 "               ...\n"
@@ -612,20 +637,20 @@ msgstr ""
 "           }\n"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:182
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:189
 msgid ""
 "`format` is specified as an `AFMT_XXX value` ([.filename]#soundcard.h#)."
 msgstr ""
 "`format` se especifica como un `AFMT_XXX value` ([.filename]#soundcard.h#)."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:183
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:190
 #, no-wrap
 msgid "channel_setspeed"
 msgstr "channel_setspeed"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:186
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:193
 msgid ""
 "`xxxchannel_setspeed()` sets up the channel hardware for the specified "
 "sampling speed, and returns the possibly adjusted speed."
@@ -634,7 +659,7 @@ msgstr ""
 "muestreo especificada, y devuelve la velocidad posiblemente ajustada."
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:196
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:203
 #, no-wrap
 msgid ""
 "          static int\n"
@@ -654,13 +679,13 @@ msgstr ""
 "           }\n"
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:198
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:205
 #, no-wrap
 msgid "channel_setblocksize"
 msgstr "channel_setblocksize"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:201
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:208
 msgid ""
 "`xxxchannel_setblocksize()` sets the block size, which is the size of unit "
 "transactions between [.filename]#pcm# and the sound driver, and between the "
@@ -678,7 +703,7 @@ msgstr ""
 "transferido."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:203
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:210
 msgid ""
 "Most sound drivers only take note of the block size here, to be used when an "
 "actual transfer will be started."
@@ -687,7 +712,7 @@ msgstr ""
 "bloque aquí, que se utilizará cuando se inicie una transferencia real."
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:213
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:220
 #, no-wrap
 msgid ""
 "          static int\n"
@@ -699,8 +724,7 @@ msgid ""
 "           }\n"
 msgstr ""
 "          static int\n"
-"          xxxchannel_setblocksize(kobj_t obj, void *data, u_int32_t "
-"blocksize)\n"
+"          xxxchannel_setblocksize(kobj_t obj, void *data, u_int32_t blocksize)\n"
 "          {\n"
 "              struct xxx_chinfo *ch = data;\n"
 "                ...\n"
@@ -708,7 +732,7 @@ msgstr ""
 "           }\n"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:216
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:223
 msgid ""
 "The function returns the possibly adjusted block size. In case the block "
 "size is indeed changed, `sndbuf_resize()` should be called to adjust the "
@@ -719,13 +743,13 @@ msgstr ""
 "para ajustar el búfer."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:218
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:225
 #, no-wrap
 msgid "channel_trigger"
 msgstr "channel_trigger"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:221
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:228
 msgid ""
 "`xxxchannel_trigger()` is called by [.filename]#pcm# to control data "
 "transfer operations in the driver."
@@ -734,7 +758,7 @@ msgstr ""
 "operaciones de transferencia de datos en el controlador."
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:231
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:238
 #, no-wrap
 msgid ""
 "          static int\n"
@@ -754,12 +778,13 @@ msgstr ""
 "           }\n"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:234
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:241
 msgid "`go` defines the action for the current call. The possible values are:"
-msgstr "`go` define la acción para la llamada actual. Los valores posibles son:"
+msgstr ""
+"`go` define la acción para la llamada actual. Los valores posibles son:"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:238
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:245
 msgid ""
 "If the driver uses ISA DMA, `sndbuf_isadma()` should be called before "
 "performing actions on the device, and will take care of the DMA chip side of "
@@ -770,13 +795,13 @@ msgstr ""
 "DMA."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:240
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:247
 #, no-wrap
 msgid "channel_getptr"
 msgstr "channel_getptr"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:243
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:250
 msgid ""
 "`xxxchannel_getptr()` returns the current offset in the transfer buffer. "
 "This will typically be called by `chn_intr()`, and this is how [."
@@ -787,13 +812,13 @@ msgstr ""
 "filename]#pcm# sabe dónde puede transferir nuevos datos."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:244
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:251
 #, no-wrap
 msgid "channel_free"
 msgstr "channel_free"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:247
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:254
 msgid ""
 "`xxxchannel_free()` is called to free up channel resources, for example when "
 "the driver is unloaded, and should be implemented if the channel data "
@@ -806,13 +831,13 @@ msgstr ""
 "`sndbuf_alloc()` no fue usada para la asignación de buffers."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:248
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:255
 #, no-wrap
 msgid "channel_getcaps"
 msgstr "channel_getcaps"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:257
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:264
 #, no-wrap
 msgid ""
 "          struct pcmchan_caps *\n"
@@ -828,7 +853,7 @@ msgstr ""
 "           }\n"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:260
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:267
 msgid ""
 "The routine returns a pointer to a (usually statically-defined) "
 "`pcmchan_caps` structure (defined in [.filename]#sound/pcm/channel.h#. The "
@@ -836,19 +861,19 @@ msgid ""
 "accepted sound formats. Look at any sound driver for an example."
 msgstr ""
 "La rutina devuelve un puntero a una estructura (normalmente definida "
-"estáticamente) `pcmchan_caps` (definida en [..filename]#sound/pcm/channel.h#"
-". La estructura contiene las frecuencias de muestreo mínima y máxima, y los "
-"formatos de sonido aceptados. Mira cualquier controlador de sonido para ver "
-"un ejemplo."
+"estáticamente) `pcmchan_caps` (definida en [..filename]#sound/pcm/channel."
+"h#. La estructura contiene las frecuencias de muestreo mínima y máxima, y "
+"los formatos de sonido aceptados. Mira cualquier controlador de sonido para "
+"ver un ejemplo."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:261
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:268
 #, no-wrap
 msgid "More Functions"
 msgstr "Más funciones"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:264
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:271
 msgid ""
 "`channel_reset()`, `channel_resetdone()`, and `channel_notify()` are for "
 "special purposes and should not be implemented in a driver without "
@@ -859,24 +884,24 @@ msgstr ""
 "discutirlo en el {freebsd-multimedia}."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:266
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:273
 msgid "`channel_setdir()` is deprecated."
 msgstr "La función `channel_setdir()` está obsoleta."
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:267
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:274
 #, no-wrap
 msgid "The MIXER Interface"
 msgstr "La interfaz MIXER"
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:270
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:277
 #, no-wrap
 msgid "mixer_init"
 msgstr "mixer_init"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:273
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:280
 msgid ""
 "`xxxmixer_init()` initializes the hardware and tells [.filename]#pcm# what "
 "mixer devices are available for playing and recording"
@@ -885,7 +910,7 @@ msgstr ""
 "dispositivos de mezcla están disponibles para reproducir y grabar"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:281
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:288
 #, no-wrap
 msgid ""
 "          static int\n"
@@ -901,13 +926,13 @@ msgstr ""
 "              u_int32_t v;\n"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:283
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:290
 #, no-wrap
 msgid "              [Initialize hardware]\n"
 msgstr "              [Initialize hardware]\n"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:288
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:295
 #, no-wrap
 msgid ""
 "              [Set appropriate bits in v for play mixers] <.>\n"
@@ -921,7 +946,7 @@ msgstr ""
 "              mix_setrecdevs(m, v)\n"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:291
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:298
 #, no-wrap
 msgid ""
 "              return 0;\n"
@@ -931,7 +956,7 @@ msgstr ""
 "          }\n"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:294
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:301
 msgid ""
 "Set bits in an integer value and call `mix_setdevs()` and `mix_setrecdevs()` "
 "to tell [.filename]#pcm# what devices exist."
@@ -940,7 +965,7 @@ msgstr ""
 "`mix_setrecdevs()` para decirle a [.filename]#pcm# qué dispositivos existen."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:296
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:303
 msgid ""
 "Mixer bits definitions can be found in [.filename]#soundcard.h# "
 "(`SOUND_MASK_XXX` values and `SOUND_MIXER_XXX` bit shifts)."
@@ -950,19 +975,19 @@ msgstr ""
 "`SOUND_MIXER_XXX`)."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:297
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:304
 #, no-wrap
 msgid "mixer_set"
 msgstr "mixer_set"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:300
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:307
 msgid "`xxxmixer_set()` sets the volume level for one mixer device."
 msgstr ""
 "`xxxmixer_set()` establece el nivel de volumen de un dispositivo mezclador."
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:311
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:318
 #, no-wrap
 msgid ""
 "          static int\n"
@@ -984,7 +1009,7 @@ msgstr ""
 "          }\n"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:314
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:321
 msgid ""
 "The device is specified as a `SOUND_MIXER_XXX` value. The volume values are "
 "specified in range [0-100]. A value of zero should mute the device."
@@ -994,7 +1019,7 @@ msgstr ""
 "el dispositivo."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:315
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:322
 msgid ""
 "As the hardware levels probably will not match the input scale, and some "
 "rounding will occur, the routine returns the actual level values (in range "
@@ -1005,18 +1030,18 @@ msgstr ""
 "nivel reales (en el rango 0-100) como se muestra."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:316
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:323
 #, no-wrap
 msgid "mixer_setrecsrc"
 msgstr "mixer_setrecsrc"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:319
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:326
 msgid "`xxxmixer_setrecsrc()` sets the recording source device."
 msgstr "`xxxmixer_setrecsrc()` establece el dispositivo fuente de grabación."
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:326
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:333
 #, no-wrap
 msgid ""
 "          static int\n"
@@ -1030,13 +1055,13 @@ msgstr ""
 "              struct xxx_info *sc = mix_getdevinfo(m);\n"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:328
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:335
 #, no-wrap
 msgid "              [look for non zero bit(s) in src, set up hardware]\n"
 msgstr "              [look for non zero bit(s) in src, set up hardware]\n"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:332
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:339
 #, no-wrap
 msgid ""
 "              [update src to reflect actual action]\n"
@@ -1048,13 +1073,13 @@ msgstr ""
 "           }\n"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:335
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:342
 msgid "The desired recording devices are specified as a bit field"
 msgstr ""
 "Los dispositivos de grabación deseados se especifican como un campo de bits"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:336
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:343
 msgid ""
 "The actual devices set for recording are returned. Some drivers can only set "
 "one device for recording. The function should return -1 if an error occurs."
@@ -1064,13 +1089,13 @@ msgstr ""
 "función debe devolver -1 si se produce un error."
 
 #. type: Title ====
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:337
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:344
 #, no-wrap
 msgid "mixer_uninit, mixer_reinit"
 msgstr "mixer_uninit, mixer_reinit"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:340
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:347
 msgid ""
 "`xxxmixer_uninit()` should ensure that all sound is muted and if possible "
 "mixer hardware should be powered down."
@@ -1079,7 +1104,7 @@ msgstr ""
 "posible el hardware del mezclador debe ser apagado."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:342
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:349
 msgid ""
 "`xxxmixer_reinit()` should ensure that the mixer hardware is powered up and "
 "any settings not controlled by `mixer_set()` or `mixer_setrecsrc()` are "
@@ -1090,13 +1115,13 @@ msgstr ""
 "`mixer_set()` o `mixer_setrecsrc()`."
 
 #. type: Title ===
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:343
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:350
 #, no-wrap
 msgid "The AC97 Interface"
 msgstr "La interfaz AC97"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:346
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:353
 msgid ""
 "The _AC97_ interface is implemented by drivers with an AC97 codec. It only "
 "has three methods:"
@@ -1105,17 +1130,18 @@ msgstr ""
 "tiene tres métodos:"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:348
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:355
 msgid "`xxxac97_init()` returns the number of ac97 codecs found."
 msgstr "`xxxac97_init()` devuelve el número de codecs ac97 encontrados."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:349
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:356
 msgid "`ac97_read()` and `ac97_write()` read or write a specified register."
-msgstr "ac97_read()` y `ac97_write()` leen o escriben un registro especificado."
+msgstr ""
+"ac97_read()` y `ac97_write()` leen o escriben un registro especificado."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/sound/_index.adoc:350
+#: documentation/content/en/books/arch-handbook/sound/_index.adoc:357
 msgid ""
 "The _AC97_ interface is used by the AC97 code in [.filename]#pcm# to perform "
 "higher level operations. Look at [.filename]#sound/pci/maestro3.c# or many "
