@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2024-09-14 14:59-0300\n"
+"POT-Creation-Date: 2024-12-29 08:30-0500\n"
 "PO-Revision-Date: 2021-06-12 18:24+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Chinese (Simplified) <https://translate-dev.freebsd.org/"
@@ -251,11 +251,11 @@ msgstr ""
 #: documentation/content/en/books/handbook/ports/_index.adoc:100
 #, fuzzy
 msgid ""
-"In some cases, multiple packages will exist for the same application to "
-"specify certain settings. For example, NGINX(R) is available as a `nginx` "
-"package and a `nginx-lite` package, depending on whether or not Xorg is "
-"installed. Creating multiple packages rapidly becomes impossible if an "
-"application has more than one or two different compile-time options."
+"In some cases, multiple packages will exist for the same application with "
+"different settings. For example, NGINX(R) is available as a `nginx` package "
+"and a `nginx-lite` package, the former has many more options enabled, but "
+"this in turn requires many things to be installed as dependencies for it to "
+"work, thus increasing space consumption and attack surface."
 msgstr ""
 "在一些例子中，一个软件有不同的配置存在多个package。 例如， "
 "<application>Ghostscript</application>存在 <filename>ghostscript</filename> "
@@ -264,7 +264,17 @@ msgstr ""
 "用程序有超过一个或两个不同的编译时间选项时， 就不行了。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:101
+#: documentation/content/en/books/handbook/ports/_index.adoc:102
+msgid ""
+"The transitive dependencies can grow quite large, for example the full "
+"`nginx` package will pull in several X libraries which can be quite "
+"surprising, so building from ports allow you to choose only the options you "
+"need without a \"kitchen sink\" approach.In some cases, multiple packages "
+"will exist for the same application to specify certain settings."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/ports/_index.adoc:103
 msgid ""
 "The licensing conditions of some software forbid binary distribution. Such "
 "software must be distributed as source code which must be compiled by the "
@@ -272,7 +282,7 @@ msgid ""
 msgstr "一些软件的许可条件禁止采用二进制形式发行。 它们必须带上源代码。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:102
+#: documentation/content/en/books/handbook/ports/_index.adoc:104
 msgid ""
 "Some people do not trust binary distributions or prefer to read through "
 "source code in order to look for potential problems."
@@ -281,33 +291,33 @@ msgstr ""
 "在的问题。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:103
+#: documentation/content/en/books/handbook/ports/_index.adoc:105
 msgid "Source code is needed in order to apply custom patches."
 msgstr "如果您要自己对软件打补丁，您就需要有源代码。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:105
+#: documentation/content/en/books/handbook/ports/_index.adoc:107
 msgid ""
 "To keep track of updated ports, subscribe to the {freebsd-ports} and the "
 "{freebsd-ports-bugs}."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:109
+#: documentation/content/en/books/handbook/ports/_index.adoc:111
 msgid ""
 "Before installing an application, check https://vuxml.freebsd.org/[] for "
 "related security issues."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:111
+#: documentation/content/en/books/handbook/ports/_index.adoc:113
 msgid ""
 "To audit installed packages against known vulnerabilities, run `pkg audit -"
 "F`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:114
+#: documentation/content/en/books/handbook/ports/_index.adoc:116
 msgid ""
 "The remainder of this chapter explains how to use packages and ports to "
 "install and manage third-party software on FreeBSD."
@@ -316,13 +326,13 @@ msgstr ""
 "方软件。"
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/ports/_index.adoc:116
+#: documentation/content/en/books/handbook/ports/_index.adoc:118
 #, no-wrap
 msgid "Finding Software"
 msgstr "寻找您要的应用程序"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:120
+#: documentation/content/en/books/handbook/ports/_index.adoc:122
 #, fuzzy
 #| msgid ""
 #| "FreeBSD's list of available applications is growing all the time. There "
@@ -334,7 +344,7 @@ msgstr ""
 "FreeBSD中可用的应用程序正在不断地增长着。有许多方法可以找到您所需要的软件:"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:122
+#: documentation/content/en/books/handbook/ports/_index.adoc:124
 msgid ""
 "The FreeBSD web site maintains an up-to-date searchable list of all the "
 "available applications, at link:https://ports.FreeBSD.org[Ports Portal]. The "
@@ -342,7 +352,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:123
+#: documentation/content/en/books/handbook/ports/_index.adoc:125
 #, fuzzy
 msgid ""
 "Dan Langille maintains https://www.freshports.org/[FreshPorts] which "
@@ -357,7 +367,7 @@ msgstr ""
 "email 提醒您。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:124
+#: documentation/content/en/books/handbook/ports/_index.adoc:126
 msgid ""
 "If finding a particular application becomes challenging, try searching a "
 "site like https://sourceforge.net/[SourceForge] or https://github.com/"
@@ -366,7 +376,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:125
+#: documentation/content/en/books/handbook/ports/_index.adoc:127
 #, fuzzy
 #| msgid "To search the binary package repository for an application:"
 msgid ""
@@ -375,34 +385,34 @@ msgid ""
 msgstr "使用下列命令搜索 pkg 中的软件包："
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/ports/_index.adoc:127
+#: documentation/content/en/books/handbook/ports/_index.adoc:129
 #, no-wrap
 msgid "Using pkg for Binary Package Management"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:130
+#: documentation/content/en/books/handbook/ports/_index.adoc:132
 msgid ""
 "man:pkg[8] provides an interface for manipulating\tpackages: registering, "
 "adding, removing and upgrading packages."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:132
+#: documentation/content/en/books/handbook/ports/_index.adoc:134
 msgid ""
 "For sites wishing to only use prebuilt binary packages from the FreeBSD "
 "mirrors, managing packages with man:pkg[8] can be sufficient."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:135
+#: documentation/content/en/books/handbook/ports/_index.adoc:137
 msgid ""
 "However, for those sites building from source a separate crossref:"
 "ports[ports-upgrading-tools, port management tool] will be needed."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:138
+#: documentation/content/en/books/handbook/ports/_index.adoc:140
 msgid ""
 "Since man:pkg[8] only works with binary packages, it is not a replacement "
 "for such tools.  Those tools can be used to install software from both "
@@ -411,13 +421,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:140
+#: documentation/content/en/books/handbook/ports/_index.adoc:142
 #, no-wrap
 msgid "Getting Started with pkg"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:144
+#: documentation/content/en/books/handbook/ports/_index.adoc:146
 msgid ""
 "All supported versions of FreeBSD now contain `/usr/sbin/pkg` a.k.a man:"
 "pkg[7].  This is a small placeholder that has just the minimum functionality "
@@ -425,7 +435,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:148
+#: documentation/content/en/books/handbook/ports/_index.adoc:150
 #, fuzzy
 #| msgid ""
 #| "You must have a working Internet connection for the bootstrap process to "
@@ -438,35 +448,35 @@ msgstr ""
 "功。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:151
+#: documentation/content/en/books/handbook/ports/_index.adoc:153
 msgid "Run man:pkg[8] command line:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:155
+#: documentation/content/en/books/handbook/ports/_index.adoc:157
 #, no-wrap
 msgid "# pkg\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:158
-#: documentation/content/en/books/handbook/ports/_index.adoc:243
-#: documentation/content/en/books/handbook/ports/_index.adoc:275
-#: documentation/content/en/books/handbook/ports/_index.adoc:310
-#: documentation/content/en/books/handbook/ports/_index.adoc:337
-#: documentation/content/en/books/handbook/ports/_index.adoc:382
-#: documentation/content/en/books/handbook/ports/_index.adoc:437
-#: documentation/content/en/books/handbook/ports/_index.adoc:464
-#: documentation/content/en/books/handbook/ports/_index.adoc:494
-#: documentation/content/en/books/handbook/ports/_index.adoc:519
-#: documentation/content/en/books/handbook/ports/_index.adoc:537
+#: documentation/content/en/books/handbook/ports/_index.adoc:160
+#: documentation/content/en/books/handbook/ports/_index.adoc:245
+#: documentation/content/en/books/handbook/ports/_index.adoc:277
+#: documentation/content/en/books/handbook/ports/_index.adoc:312
+#: documentation/content/en/books/handbook/ports/_index.adoc:339
+#: documentation/content/en/books/handbook/ports/_index.adoc:384
+#: documentation/content/en/books/handbook/ports/_index.adoc:439
+#: documentation/content/en/books/handbook/ports/_index.adoc:466
+#: documentation/content/en/books/handbook/ports/_index.adoc:496
+#: documentation/content/en/books/handbook/ports/_index.adoc:521
+#: documentation/content/en/books/handbook/ports/_index.adoc:539
 #, fuzzy
 #| msgid "The result should be similar to the following:"
 msgid "The output should be similar to the following:"
 msgstr "输出像这样："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:163
+#: documentation/content/en/books/handbook/ports/_index.adoc:165
 #, no-wrap
 msgid ""
 "The package management tool is not yet installed on your system.\n"
@@ -474,7 +484,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:166
+#: documentation/content/en/books/handbook/ports/_index.adoc:168
 msgid ""
 "man:pkg[7] will intercept the command, and if you confirm that is your "
 "intention, download the man:pkg[8] tarball, install man:pkg[8] from it, "
@@ -483,7 +493,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:168
+#: documentation/content/en/books/handbook/ports/_index.adoc:170
 msgid ""
 "More recent versions of man:pkg[7] understand `pkg -N` as a test to see if "
 "man:pkg[8] is installed without triggering the installation, and conversely, "
@@ -492,7 +502,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:171
+#: documentation/content/en/books/handbook/ports/_index.adoc:173
 msgid ""
 "Usage information for pkg is available in the man:pkg[8] manual page or by "
 "running `pkg` without additional arguments.  Additional pkg configuration "
@@ -500,25 +510,25 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:173
+#: documentation/content/en/books/handbook/ports/_index.adoc:175
 msgid ""
 "Each pkg command argument is documented in a command-specific manual page."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:175
+#: documentation/content/en/books/handbook/ports/_index.adoc:177
 msgid ""
 "To read the manual page for `pkg install`, for example, run this command:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:179
+#: documentation/content/en/books/handbook/ports/_index.adoc:181
 #, no-wrap
 msgid "# pkg help install\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:184
+#: documentation/content/en/books/handbook/ports/_index.adoc:186
 #, fuzzy
 msgid ""
 "The rest of this section demonstrates common binary package management tasks "
@@ -531,13 +541,13 @@ msgstr ""
 "以取得详细信息或更多示例。"
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:186
+#: documentation/content/en/books/handbook/ports/_index.adoc:188
 #, no-wrap
 msgid "Quarterly and Latest Ports Branches"
 msgstr "Ports 分支：Quarterly 和 Latest"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:195
+#: documentation/content/en/books/handbook/ports/_index.adoc:197
 #, fuzzy
 msgid ""
 "The `Quarterly` branch provides users with a more predictable and stable "
@@ -560,7 +570,7 @@ msgstr ""
 "软件包。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:197
+#: documentation/content/en/books/handbook/ports/_index.adoc:199
 #, fuzzy
 #| msgid "To switch from quarterly to latest run the following commands:"
 msgid ""
@@ -568,7 +578,7 @@ msgid ""
 msgstr "要从 quarterly 切换到 latest，请执行："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:202
+#: documentation/content/en/books/handbook/ports/_index.adoc:204
 #, no-wrap
 msgid ""
 "# mkdir -p /usr/local/etc/pkg/repos\n"
@@ -576,7 +586,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:205
+#: documentation/content/en/books/handbook/ports/_index.adoc:207
 #, fuzzy
 #| msgid ""
 #| "And finally run this command to update from the new (latest) repository "
@@ -587,26 +597,26 @@ msgid ""
 msgstr "最后运行这个命令来强制刷新源的元数据。"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:209
+#: documentation/content/en/books/handbook/ports/_index.adoc:211
 #, no-wrap
 msgid "# pkg update -f\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:212
+#: documentation/content/en/books/handbook/ports/_index.adoc:214
 #, no-wrap
 msgid "Configure pkg"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:216
+#: documentation/content/en/books/handbook/ports/_index.adoc:218
 msgid ""
 "man:pkg.conf[5] is the system-wide configuration file used by the man:pkg[8] "
 "tools.  The default location of this file is `/usr/local/etc/pkg.conf`."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:221
+#: documentation/content/en/books/handbook/ports/_index.adoc:223
 msgid ""
 "FreeBSD does not need to have a `pkg.conf` file.  Many installations will "
 "work well with no `pkg.conf` at all or with an empty `pkg.conf` (other than "
@@ -614,12 +624,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:224
+#: documentation/content/en/books/handbook/ports/_index.adoc:226
 msgid "Lines in the file beginning with a \"#\" are\tcomments and are ignored."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:227
+#: documentation/content/en/books/handbook/ports/_index.adoc:229
 msgid ""
 "The file is in UCL format.  For more information on the syntax of man:"
 "libucl[3], please visit the link:https://github.com/vstakhov/libucl[official "
@@ -627,39 +637,39 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:229
+#: documentation/content/en/books/handbook/ports/_index.adoc:231
 msgid ""
 "The following types of options are recognized - boolean, string and list "
 "options."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:231
+#: documentation/content/en/books/handbook/ports/_index.adoc:233
 msgid ""
 "A boolean option is marked as enabled if one of the following values is "
 "specified in the configuration file - YES, TRUE and ON."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:233
+#: documentation/content/en/books/handbook/ports/_index.adoc:235
 #, fuzzy, no-wrap
 #| msgid "Removing Stale Packages"
 msgid "Searching Packages"
 msgstr "移除过时的套件"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:236
+#: documentation/content/en/books/handbook/ports/_index.adoc:238
 msgid "To search a package man:pkg-search[8] can be used:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:240
+#: documentation/content/en/books/handbook/ports/_index.adoc:242
 #, no-wrap
 msgid "# pkg search nginx\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:260
+#: documentation/content/en/books/handbook/ports/_index.adoc:262
 #, no-wrap
 msgid ""
 "modsecurity3-nginx-1.0.3       Instruction detection and prevention engine / nginx Wrapper\n"
@@ -679,14 +689,14 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:263
+#: documentation/content/en/books/handbook/ports/_index.adoc:265
 #, fuzzy, no-wrap
 #| msgid "Installing and Removing Packages"
 msgid "Installing and Fetching Packages"
 msgstr "安装和删除软件包"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:268
+#: documentation/content/en/books/handbook/ports/_index.adoc:270
 msgid ""
 "To install a binary package man:pkg-install[8] can be used.  This command "
 "uses repository data to determine which version of the software to install "
@@ -694,13 +704,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:272
+#: documentation/content/en/books/handbook/ports/_index.adoc:274
 #, no-wrap
 msgid "# pkg install curl\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:282
+#: documentation/content/en/books/handbook/ports/_index.adoc:284
 #, no-wrap
 msgid ""
 "Updating FreeBSD repository catalogue...\n"
@@ -710,7 +720,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:293
+#: documentation/content/en/books/handbook/ports/_index.adoc:295
 #, no-wrap
 msgid ""
 "New packages to be INSTALLED:\n"
@@ -726,13 +736,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:295
+#: documentation/content/en/books/handbook/ports/_index.adoc:297
 #, no-wrap
 msgid "Number of packages to be installed: 9\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:298
+#: documentation/content/en/books/handbook/ports/_index.adoc:300
 #, no-wrap
 msgid ""
 "The process will require 11 MiB more space.\n"
@@ -740,26 +750,26 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:300
+#: documentation/content/en/books/handbook/ports/_index.adoc:302
 #, no-wrap
 msgid "Proceed with this action? [y/N]\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:303
+#: documentation/content/en/books/handbook/ports/_index.adoc:305
 msgid ""
 "The new package and any additional packages that were installed as "
 "dependencies can be seen in the installed packages list:"
 msgstr "新的套件以及任何做为相依安装的额外套件可在已安装的套件清单中看到："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:307
+#: documentation/content/en/books/handbook/ports/_index.adoc:309
 #, no-wrap
 msgid "# pkg info\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:323
+#: documentation/content/en/books/handbook/ports/_index.adoc:325
 #, no-wrap
 msgid ""
 "ca_root_nss-3.83               Root certificate bundle from the Mozilla Project\n"
@@ -775,30 +785,30 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:327
+#: documentation/content/en/books/handbook/ports/_index.adoc:329
 msgid ""
 "To fetch a package and install it later or in another place use man:pkg-"
 "fetch[8].  For example, to download `nginx-lite`:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:331
+#: documentation/content/en/books/handbook/ports/_index.adoc:333
 #, no-wrap
 msgid "# pkg fetch -d -o /usr/home/user/packages/ nginx-lite\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:334
+#: documentation/content/en/books/handbook/ports/_index.adoc:336
 msgid "`-d`: used to fetch all the dependencies"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:335
+#: documentation/content/en/books/handbook/ports/_index.adoc:337
 msgid "`-o`: used to specify the download directory"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:344
+#: documentation/content/en/books/handbook/ports/_index.adoc:346
 #, no-wrap
 msgid ""
 "Updating FreeBSD repository catalogue...\n"
@@ -808,7 +818,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:348
+#: documentation/content/en/books/handbook/ports/_index.adoc:350
 #, no-wrap
 msgid ""
 "New packages to be FETCHED:\n"
@@ -817,13 +827,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:350
+#: documentation/content/en/books/handbook/ports/_index.adoc:352
 #, no-wrap
 msgid "Number of packages to be fetched: 2\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:353
+#: documentation/content/en/books/handbook/ports/_index.adoc:355
 #, no-wrap
 msgid ""
 "The process will require 2 MiB more space.\n"
@@ -831,37 +841,37 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:355
+#: documentation/content/en/books/handbook/ports/_index.adoc:357
 #, no-wrap
 msgid "Proceed with fetching packages? [y/N]:\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:358
+#: documentation/content/en/books/handbook/ports/_index.adoc:360
 msgid ""
 "To install the downloaded packages man:pkg-install[8] can be used as follows:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:362
+#: documentation/content/en/books/handbook/ports/_index.adoc:364
 #, no-wrap
 msgid "# cd /usr/home/user/packages/\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:367
+#: documentation/content/en/books/handbook/ports/_index.adoc:369
 #, no-wrap
 msgid "# pkg install nginx-lite-1.22.1,3.pkg\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:370
+#: documentation/content/en/books/handbook/ports/_index.adoc:372
 #, no-wrap
 msgid "Obtaining Information About Installed Packages"
 msgstr "取得有关已安装套件的信息"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:373
+#: documentation/content/en/books/handbook/ports/_index.adoc:375
 msgid ""
 "Information about the packages installed on a system can be viewed by "
 "running man:pkg-info[8] which, when run without any switches, will list the "
@@ -869,18 +879,18 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:375
+#: documentation/content/en/books/handbook/ports/_index.adoc:377
 msgid "For example, to see which version of pkg is installed, run:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:379
+#: documentation/content/en/books/handbook/ports/_index.adoc:381
 #, no-wrap
 msgid "# pkg info pkg\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:408
+#: documentation/content/en/books/handbook/ports/_index.adoc:410
 #, no-wrap
 msgid ""
 "pkg-1.19.0\n"
@@ -909,19 +919,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:410
+#: documentation/content/en/books/handbook/ports/_index.adoc:412
 #, no-wrap
 msgid "WWW: https://github.com/freebsd/pkg\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:413
+#: documentation/content/en/books/handbook/ports/_index.adoc:415
 #, no-wrap
 msgid "Upgrading Installed Packages"
 msgstr "升级已安装套件"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:416
+#: documentation/content/en/books/handbook/ports/_index.adoc:418
 #, fuzzy
 #| msgid ""
 #| "Installed packages can be upgraded to their latest versions by running:"
@@ -931,13 +941,13 @@ msgid ""
 msgstr "执行以下指令，可将已安装的套件升级到最新版本："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:420
+#: documentation/content/en/books/handbook/ports/_index.adoc:422
 #, no-wrap
 msgid "# pkg upgrade\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:423
+#: documentation/content/en/books/handbook/ports/_index.adoc:425
 msgid ""
 "This command will compare the installed versions with those available in the "
 "repository catalogue and upgrade them from the repository."
@@ -945,13 +955,13 @@ msgstr ""
 "这个指令将会比对已安装的版本与在文件库分类中的版本，并从文件库升级这些套件。"
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:425
+#: documentation/content/en/books/handbook/ports/_index.adoc:427
 #, no-wrap
 msgid "Auditing Installed Packages"
 msgstr "稽查已安装套件"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:430
+#: documentation/content/en/books/handbook/ports/_index.adoc:432
 #, fuzzy
 msgid ""
 "Software vulnerabilities are regularly discovered in third-party "
@@ -964,13 +974,13 @@ msgstr ""
 "有任何已知的漏洞可执行："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:434
+#: documentation/content/en/books/handbook/ports/_index.adoc:436
 #, no-wrap
 msgid "# pkg audit -F\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:449
+#: documentation/content/en/books/handbook/ports/_index.adoc:451
 #, no-wrap
 msgid ""
 "Fetching vuln.xml.xz: 100%  976 KiB 499.5kB/s    00:02\n"
@@ -985,31 +995,31 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:452
+#: documentation/content/en/books/handbook/ports/_index.adoc:454
 #, fuzzy, no-wrap
 #| msgid "Removing Stale Packages"
 msgid "Removing Packages"
 msgstr "移除过时的套件"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:455
+#: documentation/content/en/books/handbook/ports/_index.adoc:457
 msgid ""
 "Packages that are no longer needed can be removed with man:pkg-delete[8]."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:457
+#: documentation/content/en/books/handbook/ports/_index.adoc:459
 msgid "For example:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:461
+#: documentation/content/en/books/handbook/ports/_index.adoc:463
 #, no-wrap
 msgid "# pkg delete curl\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:469
+#: documentation/content/en/books/handbook/ports/_index.adoc:471
 #, no-wrap
 msgid ""
 "Checking integrity... done (0 conflicting)\n"
@@ -1017,7 +1027,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:472
+#: documentation/content/en/books/handbook/ports/_index.adoc:474
 #, no-wrap
 msgid ""
 "Installed packages to be REMOVED:\n"
@@ -1025,20 +1035,20 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:474
-#: documentation/content/en/books/handbook/ports/_index.adoc:504
+#: documentation/content/en/books/handbook/ports/_index.adoc:476
+#: documentation/content/en/books/handbook/ports/_index.adoc:506
 #, no-wrap
 msgid "Number of packages to be removed: 1\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:476
+#: documentation/content/en/books/handbook/ports/_index.adoc:478
 #, no-wrap
 msgid "The operation will free 4 MiB.\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:480
+#: documentation/content/en/books/handbook/ports/_index.adoc:482
 #, no-wrap
 msgid ""
 "Proceed with deinstallation packages? [y/N]: y\n"
@@ -1047,13 +1057,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:483
+#: documentation/content/en/books/handbook/ports/_index.adoc:485
 #, no-wrap
 msgid "Automatically Removing Unused Packages"
 msgstr "自动删除未使用的软件包"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:487
+#: documentation/content/en/books/handbook/ports/_index.adoc:489
 #, fuzzy
 #| msgid ""
 #| "Removing a package may leave behind dependencies which are no longer "
@@ -1069,13 +1079,13 @@ msgstr ""
 "赖（leaf packages）："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:491
+#: documentation/content/en/books/handbook/ports/_index.adoc:493
 #, no-wrap
 msgid "# pkg autoremove\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:499
+#: documentation/content/en/books/handbook/ports/_index.adoc:501
 #, no-wrap
 msgid ""
 "Checking integrity... done (0 conflicting)\n"
@@ -1083,7 +1093,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:502
+#: documentation/content/en/books/handbook/ports/_index.adoc:504
 #, no-wrap
 msgid ""
 "Installed packages to be REMOVED:\n"
@@ -1091,19 +1101,19 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:506
+#: documentation/content/en/books/handbook/ports/_index.adoc:508
 #, no-wrap
 msgid "The operation will free 723 KiB.\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:508
+#: documentation/content/en/books/handbook/ports/_index.adoc:510
 #, no-wrap
 msgid "Proceed with deinstalling packages? [y/N]:\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:512
+#: documentation/content/en/books/handbook/ports/_index.adoc:514
 msgid ""
 "Packages installed as dependencies are called _automatic_ packages.  Non-"
 "automatic packages, i.e the packages that were explicitly installed not as a "
@@ -1111,13 +1121,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:516
+#: documentation/content/en/books/handbook/ports/_index.adoc:518
 #, no-wrap
 msgid "# pkg prime-list\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:525
+#: documentation/content/en/books/handbook/ports/_index.adoc:527
 #, no-wrap
 msgid ""
 "nginx\n"
@@ -1126,7 +1136,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:530
+#: documentation/content/en/books/handbook/ports/_index.adoc:532
 #, fuzzy
 msgid ""
 "`pkg prime-list` is an alias command declared in `/usr/local/etc/pkg.conf`.  "
@@ -1140,13 +1150,13 @@ msgstr ""
 "置："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:534
+#: documentation/content/en/books/handbook/ports/_index.adoc:536
 #, no-wrap
 msgid "# pkg prime-origins\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:543
+#: documentation/content/en/books/handbook/ports/_index.adoc:545
 #, no-wrap
 msgid ""
 "www/nginx\n"
@@ -1155,7 +1165,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:546
+#: documentation/content/en/books/handbook/ports/_index.adoc:548
 #, fuzzy
 msgid ""
 "This list can be used to rebuild all packages installed on a system using "
@@ -1166,42 +1176,42 @@ msgstr ""
 "<package> ports-mgmt/synth</package>）等构建工具重建系统上安装的所有包。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:548
+#: documentation/content/en/books/handbook/ports/_index.adoc:550
 msgid "Marking an installed package as automatic can be done using:"
 msgstr "将已安装的软件包标记为自动包："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:552
+#: documentation/content/en/books/handbook/ports/_index.adoc:554
 #, no-wrap
 msgid "# pkg set -A 1 devel/cmake\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:555
+#: documentation/content/en/books/handbook/ports/_index.adoc:557
 msgid ""
 "Once a package is a leaf package and is marked as automatic, it gets "
 "selected by `pkg autoremove`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:557
+#: documentation/content/en/books/handbook/ports/_index.adoc:559
 msgid "Marking an installed package as _not_ automatic can be done using:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:561
+#: documentation/content/en/books/handbook/ports/_index.adoc:563
 #, no-wrap
 msgid "# pkg set -A 0 devel/cmake\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:564
+#: documentation/content/en/books/handbook/ports/_index.adoc:566
 #, no-wrap
 msgid "Removing Stale Packages"
 msgstr "移除过时的套件"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:569
+#: documentation/content/en/books/handbook/ports/_index.adoc:571
 msgid ""
 "By default, pkg stores binary packages in a cache directory defined by "
 "`PKG_CACHEDIR` in man:pkg.conf[5].  Only copies of the latest installed "
@@ -1210,31 +1220,31 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:573
+#: documentation/content/en/books/handbook/ports/_index.adoc:575
 #, no-wrap
 msgid "# pkg clean\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:576
+#: documentation/content/en/books/handbook/ports/_index.adoc:578
 msgid "The entire cache may be cleared by running:"
 msgstr "使用以下指令可清空全部的缓存："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:580
+#: documentation/content/en/books/handbook/ports/_index.adoc:582
 #, no-wrap
 msgid "# pkg clean -a\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:583
+#: documentation/content/en/books/handbook/ports/_index.adoc:585
 #, fuzzy, no-wrap
 #| msgid "Installing and Removing Packages"
 msgid "Locking and Unlocking Packages"
 msgstr "安装和删除软件包"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:589
+#: documentation/content/en/books/handbook/ports/_index.adoc:591
 msgid ""
 "man:pkg-lock[8] is used to lock packages against reinstallation, "
 "modification or deletion.  man:pkg-unlock[8] unlocks the named packages.  "
@@ -1245,35 +1255,35 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:591
+#: documentation/content/en/books/handbook/ports/_index.adoc:593
 msgid "For example, to lock `nginx-lite`:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:595
+#: documentation/content/en/books/handbook/ports/_index.adoc:597
 #, no-wrap
 msgid "# pkg lock nginx-lite\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:598
+#: documentation/content/en/books/handbook/ports/_index.adoc:600
 msgid "And to unlock `nginx-lite`:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:602
+#: documentation/content/en/books/handbook/ports/_index.adoc:604
 #, no-wrap
 msgid "# pkg unlock nginx-lite\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:605
+#: documentation/content/en/books/handbook/ports/_index.adoc:607
 #, no-wrap
 msgid "Modifying Package Metadata"
 msgstr "修改套件Metadata"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:610
+#: documentation/content/en/books/handbook/ports/_index.adoc:612
 msgid ""
 "Software within the FreeBSD Ports Collection can undergo major version "
 "number changes.  To address this, pkg has a built-in command to update "
@@ -1283,31 +1293,31 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:612
+#: documentation/content/en/books/handbook/ports/_index.adoc:614
 msgid "To change the package origin for the above example, run:"
 msgstr "要更改上述例子中的套件来源，可执行："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:616
+#: documentation/content/en/books/handbook/ports/_index.adoc:618
 #, no-wrap
 msgid "# pkg set -o lang/python3:lang/python311\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:619
+#: documentation/content/en/books/handbook/ports/_index.adoc:621
 msgid ""
 "As another example, to update package:lang/ruby31[] to package:lang/"
 "ruby32[], run:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:623
+#: documentation/content/en/books/handbook/ports/_index.adoc:625
 #, no-wrap
 msgid "# pkg set -o lang/ruby31:lang/ruby32\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:629
+#: documentation/content/en/books/handbook/ports/_index.adoc:631
 #, fuzzy
 #| msgid ""
 #| "When changing package origins, it is important to reinstall packages that "
@@ -1322,19 +1332,19 @@ msgstr ""
 "修改后的来源。要强制重新安装相依套件，可执行："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:633
+#: documentation/content/en/books/handbook/ports/_index.adoc:635
 #, no-wrap
 msgid "# pkg install -Rf lang/ruby32\n"
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/ports/_index.adoc:637
+#: documentation/content/en/books/handbook/ports/_index.adoc:639
 #, no-wrap
 msgid "Using the Ports Collection"
 msgstr "使用Port套件集"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:641
+#: documentation/content/en/books/handbook/ports/_index.adoc:643
 msgid ""
 "The Ports Collection is a set of `Makefiles`, patches, and description "
 "files.  Each set of these files is used to compile and install an individual "
@@ -1342,7 +1352,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:643
+#: documentation/content/en/books/handbook/ports/_index.adoc:645
 #, fuzzy
 msgid ""
 "By default, the Ports Collection itself is stored as a subdirectory of `/usr/"
@@ -1350,7 +1360,7 @@ msgid ""
 msgstr "预设，Port套件集储存在<filename>/usr/ports</filename>的子目录下。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:650
+#: documentation/content/en/books/handbook/ports/_index.adoc:652
 #, fuzzy
 msgid ""
 "Before installing and using the Ports Collection, please be aware that it is "
@@ -1374,7 +1384,7 @@ msgstr ""
 "ports 树的同一个分支版本中。"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:656
+#: documentation/content/en/books/handbook/ports/_index.adoc:658
 #, fuzzy
 msgid ""
 "The Ports Collection contains directories for software categories.  Inside "
@@ -1388,37 +1398,37 @@ msgstr ""
 "<emphasis>Port Skeleton</emphasis>，每个Port Skeleton会含有以下文件及目录："
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:658
+#: documentation/content/en/books/handbook/ports/_index.adoc:660
 #, fuzzy, no-wrap
 msgid "*Makefile*: contains statements that specify how the application should be compiled and where its components should be installed.\n"
 msgstr "<filename>Makefile</filename>：内含用来说明应用程序要如何编译、要安装该程序到那的叙述句。"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:659
+#: documentation/content/en/books/handbook/ports/_index.adoc:661
 #, fuzzy, no-wrap
 msgid "*distinfo*: contains the names and checksums of the files that must be downloaded to build the port.\n"
 msgstr "<filename>distinfo</filename>：内含编译Port必须下载的文件名称以及校验码（Checksum）。"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:660
+#: documentation/content/en/books/handbook/ports/_index.adoc:662
 #, fuzzy, no-wrap
 msgid "*files/*: this directory contains any patches needed for the program to compile and install on FreeBSD. This directory may also contain other files used to build the port.\n"
 msgstr "<filename>files/</filename>：此目录含有编译与安装程序到FreeBSD时所需的修补档。此目录也可能含有其他用来编译Port的文件。"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:661
+#: documentation/content/en/books/handbook/ports/_index.adoc:663
 #, fuzzy, no-wrap
 msgid "*pkg-descr*: provides a more detailed description of the program.\n"
 msgstr "<filename>pkg-descr</filename>：提供程序更详细的说明。"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:662
+#: documentation/content/en/books/handbook/ports/_index.adoc:664
 #, fuzzy, no-wrap
 msgid "*pkg-plist*: a list of all the files that will be installed by the port. It also tells the ports system which files to remove upon deinstallation.\n"
 msgstr "<filename>pkg-plist</filename>:Port安装的所有文件清单，也同时会告诉Port系统卸载时要移除那一些文件。"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:665
+#: documentation/content/en/books/handbook/ports/_index.adoc:667
 msgid ""
 "Some ports include `pkg-message` or other files to handle special "
 "situations.  For more details on these files, and on ports in general, refer "
@@ -1426,7 +1436,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:668
+#: documentation/content/en/books/handbook/ports/_index.adoc:670
 #, fuzzy
 msgid ""
 "The port does not include the actual source code, also known as a "
@@ -1437,14 +1447,14 @@ msgstr ""
 "会自动下载的源码到<filename>/usr/ports/distfiles</filename>。"
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:670
+#: documentation/content/en/books/handbook/ports/_index.adoc:672
 #, fuzzy, no-wrap
 #| msgid "Using the Ports Collection"
 msgid "Installing the Ports Collection"
 msgstr "使用Port套件集"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:674
+#: documentation/content/en/books/handbook/ports/_index.adoc:676
 #, fuzzy
 #| msgid ""
 #| "Before an application can be compiled using a port, the Ports Collection "
@@ -1459,13 +1469,13 @@ msgstr ""
 "装，可以使用以下其中一种方式安装："
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:679
+#: documentation/content/en/books/handbook/ports/_index.adoc:681
 #, no-wrap
 msgid "*Procedure: Git Method*\n"
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:683
+#: documentation/content/en/books/handbook/ports/_index.adoc:685
 msgid ""
 "If more control over the ports tree is needed or if local changes need to be "
 "maintained, or if running FreeBSD-CURRENT, Git can be used to obtain the "
@@ -1474,7 +1484,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:686
+#: documentation/content/en/books/handbook/ports/_index.adoc:688
 msgid ""
 "We add --depth 1 to the git command line to clone the tree without obtaining "
 "the commit history, which saves time and is acceptable for most users.  If "
@@ -1483,14 +1493,14 @@ msgid ""
 msgstr ""
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:688
+#: documentation/content/en/books/handbook/ports/_index.adoc:690
 msgid ""
 "Git must be installed before it can be used to check out the ports tree. If "
 "a copy of the ports tree is already present, install Git like this:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:693
+#: documentation/content/en/books/handbook/ports/_index.adoc:695
 #, no-wrap
 msgid ""
 "# cd /usr/ports/devel/git\n"
@@ -1498,75 +1508,75 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:696
+#: documentation/content/en/books/handbook/ports/_index.adoc:698
 msgid ""
 "If the ports tree is not available, or pkg is being used to manage packages, "
 "Git can be installed as a package:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:700
+#: documentation/content/en/books/handbook/ports/_index.adoc:702
 #, no-wrap
 msgid "# pkg install git\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:703
+#: documentation/content/en/books/handbook/ports/_index.adoc:705
 #, fuzzy
 #| msgid "Check out a copy of the HEAD branch of the ports tree:"
 msgid "Check out a copy of the HEAD branch of the ports tree:"
 msgstr "取出Port树的HEAD 分支："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:707
+#: documentation/content/en/books/handbook/ports/_index.adoc:709
 #, no-wrap
 msgid "# git clone --depth 1 https://git.FreeBSD.org/ports.git /usr/ports\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:710
+#: documentation/content/en/books/handbook/ports/_index.adoc:712
 #, fuzzy
 #| msgid "Or, check out a copy of a quarterly branch:"
 msgid "Or, check out a copy of a quarterly branch:"
 msgstr "或取出Port树的 quarterly 分支："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:714
+#: documentation/content/en/books/handbook/ports/_index.adoc:716
 #, no-wrap
 msgid "# git clone --depth 1 https://git.FreeBSD.org/ports.git -b 2023Q1 /usr/ports\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:717
+#: documentation/content/en/books/handbook/ports/_index.adoc:719
 msgid "As needed, update `/usr/ports` after the initial Git checkout:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:721
+#: documentation/content/en/books/handbook/ports/_index.adoc:723
 #, no-wrap
 msgid "# git -C /usr/ports pull\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:724
+#: documentation/content/en/books/handbook/ports/_index.adoc:726
 #, fuzzy
 msgid "As needed, switch `/usr/ports` to a different quarterly branch:"
 msgstr "根据需求将 <filename>/usr/ports</filename> 切换成所需分支："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:728
+#: documentation/content/en/books/handbook/ports/_index.adoc:730
 #, no-wrap
 msgid "# git -C /usr/ports switch 2023Q1\n"
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:731
+#: documentation/content/en/books/handbook/ports/_index.adoc:733
 #, no-wrap
 msgid "Installing Ports"
 msgstr "安装Port"
 
 #. type: delimited block * 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:735
+#: documentation/content/en/books/handbook/ports/_index.adoc:737
 msgid ""
 "This section provides basic instructions on using the Ports Collection to "
 "install or remove software.  The detailed description of available `make` "
@@ -1574,7 +1584,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:743
+#: documentation/content/en/books/handbook/ports/_index.adoc:745
 msgid ""
 "Before compiling any port, be sure to update the Ports Collection as "
 "described in the previous section.  Since the installation of any third-"
@@ -1588,7 +1598,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:747
+#: documentation/content/en/books/handbook/ports/_index.adoc:749
 #, fuzzy
 #| msgid ""
 #| "Using the Ports Collection assumes a working Internet connection. It also "
@@ -1600,7 +1610,7 @@ msgstr ""
 "使用Port套件集会假设您拥有可正常联机的网络，同时也会需要超级使用者的权限。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:750
+#: documentation/content/en/books/handbook/ports/_index.adoc:752
 #, fuzzy
 msgid ""
 "To compile and install the port, change to the directory of the port to be "
@@ -1611,7 +1621,7 @@ msgstr ""
 "install</command>，信息中会显示安装的进度："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:772
+#: documentation/content/en/books/handbook/ports/_index.adoc:774
 #, no-wrap
 msgid ""
 "# cd /usr/ports/sysutils/lsof\n"
@@ -1636,7 +1646,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:785
+#: documentation/content/en/books/handbook/ports/_index.adoc:787
 #, no-wrap
 msgid ""
 "===>  Installing for lsof-4.88.d,8\n"
@@ -1654,7 +1664,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:789
+#: documentation/content/en/books/handbook/ports/_index.adoc:791
 #, fuzzy
 msgid ""
 "Since `lsof` is a program that runs with increased privileges, a security "
@@ -1665,7 +1675,7 @@ msgstr ""
 "时会显示安全性警告。一旦安装完成便会显示指令提示。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:794
+#: documentation/content/en/books/handbook/ports/_index.adoc:796
 #, fuzzy
 msgid ""
 "Some shells keep a cache of the commands that are available in the "
@@ -1682,7 +1692,7 @@ msgstr ""
 "明文件以取得更多资讯。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:797
+#: documentation/content/en/books/handbook/ports/_index.adoc:799
 #, fuzzy
 #| msgid ""
 #| "During installation, a working subdirectory is created which contains all "
@@ -1699,7 +1709,7 @@ msgstr ""
 "盘空间并渐少往后升级新版Port时造成问题："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:803
+#: documentation/content/en/books/handbook/ports/_index.adoc:805
 #, no-wrap
 msgid ""
 "# make clean\n"
@@ -1708,20 +1718,20 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:808
+#: documentation/content/en/books/handbook/ports/_index.adoc:810
 msgid ""
 "To save this extra step, instead use `make install clean` when compiling the "
 "port."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/handbook/ports/_index.adoc:810
+#: documentation/content/en/books/handbook/ports/_index.adoc:812
 #, no-wrap
 msgid "Customizing Ports Installation"
 msgstr "自定义Port安装"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:818
+#: documentation/content/en/books/handbook/ports/_index.adoc:820
 #, fuzzy
 msgid ""
 "Some ports provide build options which can be used to enable or disable "
@@ -1743,7 +1753,7 @@ msgstr ""
 "再执行<command>make install [clean]</command>编译与安装该Port。"
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:824
+#: documentation/content/en/books/handbook/ports/_index.adoc:826
 msgid ""
 "When using `config-recursive`, the list of ports to configure are gathered "
 "by the `all-depends-list` target.  It is recommended to run `make config-"
@@ -1753,7 +1763,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:831
+#: documentation/content/en/books/handbook/ports/_index.adoc:833
 msgid ""
 "There are several ways to revisit a port's build options menu in order to "
 "add, remove, or change these options after a port has been built.  One "
@@ -1765,7 +1775,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:835
+#: documentation/content/en/books/handbook/ports/_index.adoc:837
 msgid ""
 "The ports system uses man:fetch[1] to download the source files, which "
 "supports various environment variables.  The `FTP_PASSIVE_MODE`, "
@@ -1775,7 +1785,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:840
+#: documentation/content/en/books/handbook/ports/_index.adoc:842
 #, fuzzy
 msgid ""
 "For users who cannot be connected to the Internet all the time, `make fetch` "
@@ -1794,7 +1804,7 @@ msgstr ""
 "recursive</command>来下载所有相依Port的distfiles。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:843
+#: documentation/content/en/books/handbook/ports/_index.adoc:845
 #, fuzzy
 msgid ""
 "In rare cases, such as when an organization has a local distfiles "
@@ -1807,7 +1817,7 @@ msgstr ""
 "定的下载位址。当要指定替代的位址时可："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:849
+#: documentation/content/en/books/handbook/ports/_index.adoc:851
 #, no-wrap
 msgid ""
 "# cd /usr/ports/directory\n"
@@ -1816,51 +1826,51 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:852
+#: documentation/content/en/books/handbook/ports/_index.adoc:854
 msgid ""
 "The `WRKDIRPREFIX` and `PREFIX` variables can override the default working "
 "and target directories. For example:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:856
+#: documentation/content/en/books/handbook/ports/_index.adoc:858
 #, no-wrap
 msgid "# make WRKDIRPREFIX=/usr/home/example/ports install\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:859
+#: documentation/content/en/books/handbook/ports/_index.adoc:861
 msgid ""
 "will compile the port in `/usr/home/example/ports` and install everything "
 "under `/usr/local`."
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:863
+#: documentation/content/en/books/handbook/ports/_index.adoc:865
 #, no-wrap
 msgid "# make PREFIX=/usr/home/example/local install\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:866
+#: documentation/content/en/books/handbook/ports/_index.adoc:868
 msgid ""
 "will compile the port in `/usr/ports` and install it in `/usr/home/example/"
 "local`. And:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:870
+#: documentation/content/en/books/handbook/ports/_index.adoc:872
 #, no-wrap
 msgid "# make WRKDIRPREFIX=../ports PREFIX=../local install\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:873
+#: documentation/content/en/books/handbook/ports/_index.adoc:875
 msgid "will combine the two."
 msgstr "来同时设定工作及目标目录。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:876
+#: documentation/content/en/books/handbook/ports/_index.adoc:878
 #, fuzzy
 #| msgid ""
 #| "These can also be set as environmental variables. Refer to the manual "
@@ -1874,25 +1884,25 @@ msgstr ""
 "数的说明。"
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:878
+#: documentation/content/en/books/handbook/ports/_index.adoc:880
 #, no-wrap
 msgid "Removing Installed Ports"
 msgstr "移除已安装的Port"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:882
+#: documentation/content/en/books/handbook/ports/_index.adoc:884
 msgid ""
 "Installed ports can be uninstalled using `pkg delete`.  Examples for using "
 "this command can be found in the man:pkg-delete[8] manual page."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:884
+#: documentation/content/en/books/handbook/ports/_index.adoc:886
 msgid "Alternately, `make deinstall` can be run in the port\\'s directory:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:892
+#: documentation/content/en/books/handbook/ports/_index.adoc:894
 #, no-wrap
 msgid ""
 "# cd /usr/ports/sysutils/lsof\n"
@@ -1903,13 +1913,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:894
+#: documentation/content/en/books/handbook/ports/_index.adoc:896
 #, no-wrap
 msgid "\tlsof-4.88.d,8\n"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:897
+#: documentation/content/en/books/handbook/ports/_index.adoc:899
 #, no-wrap
 msgid ""
 "The deinstallation will free 229 kB\n"
@@ -1917,7 +1927,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:902
+#: documentation/content/en/books/handbook/ports/_index.adoc:904
 #, fuzzy
 #| msgid ""
 #| "It is recommended to read the messages as the port is uninstalled. If the "
@@ -1936,13 +1946,13 @@ msgstr ""
 "性。"
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:904
+#: documentation/content/en/books/handbook/ports/_index.adoc:906
 #, no-wrap
 msgid "Upgrading Ports"
 msgstr "升级Port"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:908
+#: documentation/content/en/books/handbook/ports/_index.adoc:910
 #, fuzzy
 #| msgid ""
 #| "Over time, newer versions of software become available in the Ports "
@@ -1957,7 +1967,7 @@ msgstr ""
 "级的软件及如何升级。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:912
+#: documentation/content/en/books/handbook/ports/_index.adoc:914
 msgid ""
 "To determine if newer versions of installed ports are available, ensure that "
 "the latest version of the ports tree is installed, using the updating "
@@ -1967,13 +1977,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:916
+#: documentation/content/en/books/handbook/ports/_index.adoc:918
 #, no-wrap
 msgid "# pkg version -l \"<\"\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:923
+#: documentation/content/en/books/handbook/ports/_index.adoc:925
 #, fuzzy
 msgid ""
 "Before attempting an upgrade, read `/usr/ports/UPDATING` from the top of the "
@@ -1991,13 +2001,13 @@ msgstr ""
 "版本不兼容的问题。留意那些与您要升级Port相关的指示，并依照这些指示执行升级。"
 
 #. type: Title ====
-#: documentation/content/en/books/handbook/ports/_index.adoc:926
+#: documentation/content/en/books/handbook/ports/_index.adoc:928
 #, no-wrap
 msgid "Tools to Upgrade and Manage Ports"
 msgstr "升级与管理Port的工具"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:930
+#: documentation/content/en/books/handbook/ports/_index.adoc:932
 #, fuzzy
 #| msgid ""
 #| "The Ports Collection contains several utilities to perform the actual "
@@ -2008,14 +2018,14 @@ msgid ""
 msgstr "Port套件集含有数个工具可以进行升级，每一种工具都有其优点及缺点。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:933
+#: documentation/content/en/books/handbook/ports/_index.adoc:935
 msgid ""
 "Historically, most installations used either Portmaster or Portupgrade.  "
 "Synth is a newer alternative."
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:938
+#: documentation/content/en/books/handbook/ports/_index.adoc:940
 #, fuzzy
 #| msgid ""
 #| "The choice of which tool is best for a particular system is up to the "
@@ -2030,13 +2040,13 @@ msgstr ""
 "先备份数据。"
 
 #. type: Title ====
-#: documentation/content/en/books/handbook/ports/_index.adoc:941
+#: documentation/content/en/books/handbook/ports/_index.adoc:943
 #, no-wrap
 msgid "Upgrading Ports Using Portmaster"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:946
+#: documentation/content/en/books/handbook/ports/_index.adoc:948
 #, fuzzy
 msgid ""
 "package:ports-mgmt/portmaster[] is a very small utility for upgrading "
@@ -2049,7 +2059,7 @@ msgstr ""
 "使用，要使用Port安装此工具可："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:951
+#: documentation/content/en/books/handbook/ports/_index.adoc:953
 #, no-wrap
 msgid ""
 "# cd /usr/ports/ports-mgmt/portmaster\n"
@@ -2057,38 +2067,38 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:954
+#: documentation/content/en/books/handbook/ports/_index.adoc:956
 msgid "Portmaster defines four categories of ports:"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:956
+#: documentation/content/en/books/handbook/ports/_index.adoc:958
 msgid ""
 "Root port: has no dependencies and is not a dependency of any other ports."
 msgstr "根Port：没有相依且也不被任何其他Port相依。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:957
+#: documentation/content/en/books/handbook/ports/_index.adoc:959
 msgid "Trunk port: has no dependencies, but other ports depend upon it."
 msgstr "主干Port：没有相依，但被其他Port相依。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:958
+#: documentation/content/en/books/handbook/ports/_index.adoc:960
 msgid "Branch port: has dependencies and other ports depend upon it."
 msgstr "分支Port：有相依，且其被其他Port相依。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:959
+#: documentation/content/en/books/handbook/ports/_index.adoc:961
 msgid "Leaf port: has dependencies but no other ports depend upon it."
 msgstr "枝Port：有相依，但没有被其他Port相依。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:961
+#: documentation/content/en/books/handbook/ports/_index.adoc:963
 msgid "To list these categories and search for updates:"
 msgstr "要列出这几个分类并搜寻是否有新版："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:982
+#: documentation/content/en/books/handbook/ports/_index.adoc:984
 #, no-wrap
 msgid ""
 "# portmaster -L\n"
@@ -2112,7 +2122,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:985
+#: documentation/content/en/books/handbook/ports/_index.adoc:987
 #, no-wrap
 msgid ""
 "===>>> 137 total installed ports\n"
@@ -2120,18 +2130,18 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:988
+#: documentation/content/en/books/handbook/ports/_index.adoc:990
 msgid "This command is used to upgrade all outdated ports:"
 msgstr "此指令用来升级所有过时的Port："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:992
+#: documentation/content/en/books/handbook/ports/_index.adoc:994
 #, no-wrap
 msgid "# portmaster -a\n"
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1002
+#: documentation/content/en/books/handbook/ports/_index.adoc:1004
 msgid ""
 "By default, Portmaster makes a backup package before deleting the existing "
 "port.  If the installation of the new version is successful, Portmaster "
@@ -2143,20 +2153,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1005
+#: documentation/content/en/books/handbook/ports/_index.adoc:1007
 msgid ""
 "If errors are encountered during the upgrade process, add `-f` to upgrade "
 "and rebuild all ports:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1009
+#: documentation/content/en/books/handbook/ports/_index.adoc:1011
 #, no-wrap
 msgid "# portmaster -af\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1013
+#: documentation/content/en/books/handbook/ports/_index.adoc:1015
 #, fuzzy
 msgid ""
 "Portmaster can also be used to install new ports on the system, upgrading "
@@ -2167,26 +2177,26 @@ msgstr ""
 "新Port前升级所有相依模块。要使用这个功能，要指定Port位于Port套件集中的位置："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1017
+#: documentation/content/en/books/handbook/ports/_index.adoc:1019
 #, no-wrap
 msgid "# portmaster shells/bash\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1020
+#: documentation/content/en/books/handbook/ports/_index.adoc:1022
 msgid ""
 "More information about package:ports-mgmt/portmaster[] may be found in its "
 "`pkg-descr`."
 msgstr ""
 
 #. type: Title ====
-#: documentation/content/en/books/handbook/ports/_index.adoc:1022
+#: documentation/content/en/books/handbook/ports/_index.adoc:1024
 #, no-wrap
 msgid "Upgrading Ports Using Portupgrade"
 msgstr "使用Portupgrade升级Port"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1027
+#: documentation/content/en/books/handbook/ports/_index.adoc:1029
 #, fuzzy
 msgid ""
 "package:ports-mgmt/portupgrade[] is another utility that can be used to "
@@ -2197,7 +2207,7 @@ msgstr ""
 "具会安装一套可以用来管理Port的应用程序，它需要相依Ruby。要安装该Port："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1032
+#: documentation/content/en/books/handbook/ports/_index.adoc:1034
 #, no-wrap
 msgid ""
 "# cd /usr/ports/ports-mgmt/portupgrade\n"
@@ -2205,7 +2215,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1035
+#: documentation/content/en/books/handbook/ports/_index.adoc:1037
 #, fuzzy
 msgid ""
 "Before performing an upgrade using this utility, it is recommended to scan "
@@ -2216,7 +2226,7 @@ msgstr ""
 "并修正该指令回报的所有信息不一致的套件。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1038
+#: documentation/content/en/books/handbook/ports/_index.adoc:1040
 msgid ""
 "To upgrade all the outdated ports installed on the system, use `portupgrade -"
 "a`.  Alternately, include `-i` to be asked for confirmation of every "
@@ -2224,13 +2234,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1042
+#: documentation/content/en/books/handbook/ports/_index.adoc:1044
 #, no-wrap
 msgid "# portupgrade -ai\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1046
+#: documentation/content/en/books/handbook/ports/_index.adoc:1048
 msgid ""
 "To upgrade only a specified application instead of all available ports, use "
 "`portupgrade _pkgname_`.  It is very important to include `-R` to first "
@@ -2238,13 +2248,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1050
+#: documentation/content/en/books/handbook/ports/_index.adoc:1052
 #, no-wrap
 msgid "# portupgrade -R firefox\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1057
+#: documentation/content/en/books/handbook/ports/_index.adoc:1059
 msgid ""
 "If `-P` is included, Portupgrade searches for available packages in the "
 "local directories listed in `PKG_PATH`.  If none are available locally, it "
@@ -2255,13 +2265,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1061
+#: documentation/content/en/books/handbook/ports/_index.adoc:1063
 #, no-wrap
 msgid "# portupgrade -PP gnome3\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1065
+#: documentation/content/en/books/handbook/ports/_index.adoc:1067
 msgid ""
 "To just fetch the port distfiles, or packages, if `-P` is specified, without "
 "building or installing anything, use `-F`.  For further information on all "
@@ -2269,20 +2279,20 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1067
+#: documentation/content/en/books/handbook/ports/_index.adoc:1069
 msgid ""
 "More information about package:ports-mgmt/portupgrade[] may be found in its "
 "`pkg-descr`."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:1069
+#: documentation/content/en/books/handbook/ports/_index.adoc:1071
 #, no-wrap
 msgid "Ports and Disk Space"
 msgstr "Port与磁盘空间"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1075
+#: documentation/content/en/books/handbook/ports/_index.adoc:1077
 msgid ""
 "Using the Ports Collection will use up disk space over time.  After building "
 "and installing a port, running `make clean` within the ports skeleton will "
@@ -2293,13 +2303,13 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1079
+#: documentation/content/en/books/handbook/ports/_index.adoc:1081
 #, no-wrap
 msgid "# portsclean -C\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1083
+#: documentation/content/en/books/handbook/ports/_index.adoc:1085
 msgid ""
 "In addition, outdated source distribution files accumulate in `/usr/ports/"
 "distfiles` over time.  To use Portupgrade to delete all the distfiles that "
@@ -2307,44 +2317,44 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1087
+#: documentation/content/en/books/handbook/ports/_index.adoc:1089
 #, no-wrap
 msgid "# portsclean -D\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1090
+#: documentation/content/en/books/handbook/ports/_index.adoc:1092
 msgid ""
 "Portupgrade can remove all distfiles not referenced by any port currently "
 "installed on the system:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1094
+#: documentation/content/en/books/handbook/ports/_index.adoc:1096
 #, no-wrap
 msgid "# portsclean -DD\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1097
+#: documentation/content/en/books/handbook/ports/_index.adoc:1099
 msgid "If Portmaster is installed, use:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1101
+#: documentation/content/en/books/handbook/ports/_index.adoc:1103
 #, no-wrap
 msgid "# portmaster --clean-distfiles\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1104
+#: documentation/content/en/books/handbook/ports/_index.adoc:1106
 msgid ""
 "By default, this command is interactive and prompts the user to confirm if a "
 "distfile should be deleted."
 msgstr "预设，若distfile应要被删除，这个指令会以互动的方式向使用者确认。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1106
+#: documentation/content/en/books/handbook/ports/_index.adoc:1108
 #, fuzzy
 msgid ""
 "In addition to these commands, package:ports-mgmt/pkg_cutleaves[] automates "
@@ -2354,13 +2364,13 @@ msgstr ""
 "使用的Port。"
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/ports/_index.adoc:1108
+#: documentation/content/en/books/handbook/ports/_index.adoc:1110
 #, no-wrap
 msgid "Building Packages with poudriere"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1115
+#: documentation/content/en/books/handbook/ports/_index.adoc:1117
 msgid ""
 "poudriere is a `BSD`-licensed utility for creating and testing FreeBSD "
 "packages.  It uses FreeBSD jails to set up isolated compilation "
@@ -2372,7 +2382,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1120
+#: documentation/content/en/books/handbook/ports/_index.adoc:1122
 msgid ""
 "poudriere is installed using the package:ports-mgmt/poudriere[] package or "
 "port.  The installation includes a sample configuration file `/usr/local/etc/"
@@ -2381,7 +2391,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1126
+#: documentation/content/en/books/handbook/ports/_index.adoc:1128
 msgid ""
 "While `ZFS` is not required on the system running poudriere, it is "
 "beneficial.  When `ZFS` is used, `ZPOOL` must be specified in `/usr/local/"
@@ -2393,7 +2403,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1130
+#: documentation/content/en/books/handbook/ports/_index.adoc:1132
 #, fuzzy
 msgid ""
 "The number of processor cores detected is used to define how many builds "
@@ -2406,13 +2416,13 @@ msgstr ""
 "被清除，会造成奇怪的错误讯息。"
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:1132
+#: documentation/content/en/books/handbook/ports/_index.adoc:1134
 #, no-wrap
 msgid "Initialize Jails and Port Trees"
 msgstr "初始化Jail与Port树"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1138
+#: documentation/content/en/books/handbook/ports/_index.adoc:1140
 msgid ""
 "After configuration, initialize poudriere so that it installs a jail with "
 "the required FreeBSD tree and a ports tree.  Specify a name for the jail "
@@ -2422,7 +2432,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1185
+#: documentation/content/en/books/handbook/ports/_index.adoc:1187
 #, fuzzy, no-wrap
 msgid ""
 "# poudriere jail -c -j 13amd64 -v 13.1-RELEASE\n"
@@ -2516,7 +2526,7 @@ msgstr ""
 "[00:04:07] Jail 11amd64 11.4-RELEASE-p1 amd64 is ready to be used\n"
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1192
+#: documentation/content/en/books/handbook/ports/_index.adoc:1194
 #, no-wrap
 msgid ""
 "# poudriere ports -c -p local -m git+https\n"
@@ -2525,7 +2535,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1197
+#: documentation/content/en/books/handbook/ports/_index.adoc:1199
 msgid ""
 "On a single computer, poudriere can build ports with multiple "
 "configurations, in multiple jails, and from different port trees.  Custom "
@@ -2535,7 +2545,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1201
+#: documentation/content/en/books/handbook/ports/_index.adoc:1203
 msgid ""
 "The basic configuration shown here puts a single jail-, port-, and set-"
 "specific `make.conf` in `/usr/local/etc/poudriere.d`.  The filename in this "
@@ -2546,7 +2556,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1203
+#: documentation/content/en/books/handbook/ports/_index.adoc:1205
 msgid ""
 "Packages to be built are entered in `13amd64-local-workstation-pkglist` "
 "(ports with extref:{porters-handbook}flavors[FLAVORS] can be defined with "
@@ -2554,7 +2564,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1211
+#: documentation/content/en/books/handbook/ports/_index.adoc:1213
 #, fuzzy, no-wrap
 msgid ""
 "editors/emacs\n"
@@ -2569,29 +2579,29 @@ msgstr ""
 "...\n"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1214
+#: documentation/content/en/books/handbook/ports/_index.adoc:1216
 msgid "Options and dependencies for the specified ports are configured:"
 msgstr "可使用以下方式设定选项及相依："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1218
+#: documentation/content/en/books/handbook/ports/_index.adoc:1220
 #, no-wrap
 msgid "# poudriere options -j 13amd64 -p local -z workstation -f 13amd64-local-workstation-pkglist\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1221
+#: documentation/content/en/books/handbook/ports/_index.adoc:1223
 msgid "Finally, packages are built and a package repository is created:"
 msgstr "最后，编译套件并建立套件文件库："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1225
+#: documentation/content/en/books/handbook/ports/_index.adoc:1227
 #, no-wrap
 msgid "# poudriere bulk -j 13amd64 -p local -z workstation -f 13amd64-local-workstation-pkglist\n"
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1229
+#: documentation/content/en/books/handbook/ports/_index.adoc:1231
 msgid ""
 "While running, pressing kbd:[Ctrl+t] displays the current state of the "
 "build.  poudriere also builds files in `/poudriere/logs/bulk/jailname` that "
@@ -2599,28 +2609,28 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1231
+#: documentation/content/en/books/handbook/ports/_index.adoc:1233
 msgid ""
 "After completion, the new packages are now available for installation from "
 "the poudriere repository."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1233
+#: documentation/content/en/books/handbook/ports/_index.adoc:1235
 msgid ""
 "For more information on using poudriere, see man:poudriere[8] and the main "
 "web site, https://github.com/freebsd/poudriere/wiki[]."
 msgstr ""
 
 #. type: Title ===
-#: documentation/content/en/books/handbook/ports/_index.adoc:1234
+#: documentation/content/en/books/handbook/ports/_index.adoc:1236
 #, fuzzy, no-wrap
 #| msgid "Configuring pkg Clients to Use a Poudriere Repository"
 msgid "Configuring pkg Clients to Use a poudriere Repository"
 msgstr "设定pkg客户端使用Poudriere文件库"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1239
+#: documentation/content/en/books/handbook/ports/_index.adoc:1241
 #, fuzzy
 msgid ""
 "While it is possible to use both a custom repository along side of the "
@@ -2634,7 +2644,7 @@ msgstr ""
 "local/etc/pkg/repos/FreeBSD.conf</filename>包含以下内容："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1245
+#: documentation/content/en/books/handbook/ports/_index.adoc:1247
 #, fuzzy, no-wrap
 msgid ""
 "FreeBSD: {\n"
@@ -2646,7 +2656,7 @@ msgstr ""
 "}\n"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1249
+#: documentation/content/en/books/handbook/ports/_index.adoc:1251
 msgid ""
 "Usually it is easiest to serve a poudriere repository to the client machines "
 "via HTTP.  Set up a webserver to serve up the package directory, for "
@@ -2655,7 +2665,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1252
+#: documentation/content/en/books/handbook/ports/_index.adoc:1254
 #, fuzzy
 msgid ""
 "If the URL to the package repository is: `http://pkg.example.com/13amd64`, "
@@ -2667,7 +2677,7 @@ msgstr ""
 "库配置文件为："
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1259
+#: documentation/content/en/books/handbook/ports/_index.adoc:1261
 #, no-wrap
 msgid ""
 "custom: {\n"
@@ -2677,14 +2687,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1262
+#: documentation/content/en/books/handbook/ports/_index.adoc:1264
 msgid ""
 "If exposing the package repository to the internet is not desired, the "
 "`file://` protocol can be used to point to the repository directly:"
 msgstr ""
 
 #. type: delimited block . 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1269
+#: documentation/content/en/books/handbook/ports/_index.adoc:1271
 #, no-wrap
 msgid ""
 "custom: {\n"
@@ -2694,13 +2704,13 @@ msgid ""
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/ports/_index.adoc:1272
+#: documentation/content/en/books/handbook/ports/_index.adoc:1274
 #, no-wrap
 msgid "Post-Installation Considerations"
 msgstr "安装后的注意事项"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1276
+#: documentation/content/en/books/handbook/ports/_index.adoc:1278
 #, fuzzy
 #| msgid ""
 #| "Regardless of whether the software was installed from a binary package or "
@@ -2717,7 +2727,7 @@ msgstr ""
 "定，下列指令与位置可以用来协助找到应用程序安装了什么。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1278
+#: documentation/content/en/books/handbook/ports/_index.adoc:1280
 #, fuzzy
 msgid ""
 "Most applications install at least one default configuration file in `/usr/"
@@ -2735,7 +2745,7 @@ msgstr ""
 "该文件并去除<filename>.sample</filename>扩展名。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1279
+#: documentation/content/en/books/handbook/ports/_index.adoc:1281
 #, fuzzy
 msgid ""
 "Applications which provide documentation will install it into `/usr/local/"
@@ -2746,7 +2756,7 @@ msgstr ""
 "用程序也同时会安装操作手册，在继续使用应用程序前应先查看这些文件。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1280
+#: documentation/content/en/books/handbook/ports/_index.adoc:1282
 msgid ""
 "Some applications run services which must be added to `/etc/rc.conf` before "
 "starting the application. These applications usually install a startup "
@@ -2755,7 +2765,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1285
+#: documentation/content/en/books/handbook/ports/_index.adoc:1287
 #, fuzzy
 #| msgid ""
 #| "By design, applications do not run their startup script upon "
@@ -2770,32 +2780,32 @@ msgstr ""
 "Script，这留给各系统的管理者去做决定。"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1288
+#: documentation/content/en/books/handbook/ports/_index.adoc:1290
 msgid ""
 "Users of man:csh[1] should run `rehash` to rebuild the known binary list in "
 "the shells `PATH`."
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1289
+#: documentation/content/en/books/handbook/ports/_index.adoc:1291
 msgid ""
 "Use `pkg info` to determine which files, man pages, and binaries were "
 "installed with the application."
 msgstr ""
 
 #. type: Title ==
-#: documentation/content/en/books/handbook/ports/_index.adoc:1291
+#: documentation/content/en/books/handbook/ports/_index.adoc:1293
 #, no-wrap
 msgid "Dealing with Broken Ports"
 msgstr "处理损坏的Port"
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1294
+#: documentation/content/en/books/handbook/ports/_index.adoc:1296
 msgid "When a port does not build or install, try the following:"
 msgstr "当发现某个Port无法顺利编译或安装，可以尝试以下几种方法解决："
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1296
+#: documentation/content/en/books/handbook/ports/_index.adoc:1298
 msgid ""
 "Search to see if there is a fix pending for the port in the link:https://www."
 "FreeBSD.org/support/[Problem Report database]. If so, implementing the "
@@ -2803,7 +2813,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1297
+#: documentation/content/en/books/handbook/ports/_index.adoc:1299
 msgid ""
 "Ask the maintainer of the port for help. Type `make maintainer` in the ports "
 "skeleton or read the port's `Makefile` to find the maintainer's email "
@@ -2812,7 +2822,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1303
+#: documentation/content/en/books/handbook/ports/_index.adoc:1305
 msgid ""
 "Some ports are not maintained by an individual but instead by a group "
 "maintainer represented by a extref:{mailing-list-faq}[mailing list].  Many, "
@@ -2822,7 +2832,7 @@ msgid ""
 msgstr ""
 
 #. type: delimited block = 4
-#: documentation/content/en/books/handbook/ports/_index.adoc:1306
+#: documentation/content/en/books/handbook/ports/_index.adoc:1308
 msgid ""
 "In particular, ports maintained by mailto:ports@FreeBSD.org[ports@FreeBSD."
 "org] are not maintained by a specific individual.  Instead, any fixes and "
@@ -2831,7 +2841,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1309
+#: documentation/content/en/books/handbook/ports/_index.adoc:1311
 msgid ""
 "If there is no response to the email, use Bugzilla to submit a bug report "
 "using the instructions in extref:{problem-reports}[Writing FreeBSD Problem "
@@ -2839,7 +2849,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1310
+#: documentation/content/en/books/handbook/ports/_index.adoc:1312
 msgid ""
 "Fix it! The extref:{porters-handbook}[Porter's Handbook] includes detailed "
 "information on the ports infrastructure so that you can fix the occasional "
@@ -2847,10 +2857,10 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: documentation/content/en/books/handbook/ports/_index.adoc:1310
+#: documentation/content/en/books/handbook/ports/_index.adoc:1312
 msgid ""
 "Install the package instead of the port using the instructions in crossref:"
-"ports[pkgng-intro]."
+"ports[pkgng-intro, Using pkg for Binary Package Management]."
 msgstr ""
 
 #, no-wrap
