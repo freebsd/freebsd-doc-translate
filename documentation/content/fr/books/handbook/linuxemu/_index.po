@@ -1,0 +1,835 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR The FreeBSD Project
+# This file is distributed under the same license as the FreeBSD Documentation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreeBSD Documentation VERSION\n"
+"POT-Creation-Date: 2024-12-29 08:30-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: YAML Front Matter: description
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:1
+#, no-wrap
+msgid "FreeBSD provides binary compatibility with Linux, allowing users to install and run most Linux binaries on a FreeBSD system without having to first modify the binary"
+msgstr ""
+
+#. type: YAML Front Matter: part
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:1
+#, no-wrap
+msgid "Part II. Common Tasks"
+msgstr ""
+
+#. type: YAML Front Matter: title
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:1
+#, no-wrap
+msgid "Chapter 12. Linux Binary Compatibility"
+msgstr ""
+
+#. type: Title =
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:14
+#, no-wrap
+msgid "Linux Binary Compatibility"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:52
+#, no-wrap
+msgid "Synopsis"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:57
+msgid ""
+"FreeBSD provides *optional* binary compatibility with Linux(R), commonly "
+"referred to as Linuxulator, allowing users to install and run unmodified "
+"Linux binaries.  It is available for the x86 (both 32 and 64 bit) and "
+"AArch64 architectures.  Some Linux-specific operating system features are "
+"not yet supported; this mostly happens with functionality specific to "
+"hardware or related to system management, such as cgroups or namespaces."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:59
+msgid "Before reading this chapter, you should:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:61
+msgid ""
+"Know how to install crossref:ports[ports,additional third-party software]."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:63
+msgid "After reading this chapter, you will know:"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:65
+msgid "How to enable Linux binary compatibility on a FreeBSD system."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:66
+msgid "How to install additional Linux shared libraries."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:67
+msgid "How to install Linux applications on a FreeBSD system."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:68
+msgid "The implementation details of Linux compatibility in FreeBSD."
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:70
+#, no-wrap
+msgid "Configuring Linux Binary Compatibility"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:73
+msgid "By default, man:linux[4] binary compatibility is not enabled."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:75
+msgid "To enable the Linux ABI at boot time, execute the following command:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:79
+#, no-wrap
+msgid "# sysrc linux_enable=\"YES\"\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:82
+msgid ""
+"Once enabled, it can be started without rebooting by executing the following "
+"command:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:86
+#, no-wrap
+msgid "# service linux start\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:89
+msgid "This is enough for statically linked Linux binaries to work."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:92
+msgid ""
+"The Linux service will load necessary kernel modules and mount filesystems "
+"expected by Linux applications under [.filename]#/compat/linux#.  They can "
+"be started in the same way native FreeBSD binaries can; they behave almost "
+"exactly like native processes and can be traced and debugged the usual way."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:94
+msgid ""
+"The current content of [.filename]#/compat/linux# can be checked executing "
+"the following command:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:98
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:145
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:193
+#, no-wrap
+msgid "# ls -l /compat/linux/\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:101
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:148
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:196
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:243
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:306
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:384
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:450
+msgid "The output should be similar to the following:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:108
+#, no-wrap
+msgid ""
+"total 1\n"
+"dr-xr-xr-x  13 root  wheel  512 Apr 11 19:12 dev\n"
+"dr-xr-xr-x   1 root  wheel    0 Apr 11 21:03 proc\n"
+"dr-xr-xr-x   1 root  wheel    0 Apr 11 21:03 sys\n"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:111
+#, no-wrap
+msgid "Linux userlands"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:115
+msgid ""
+"Linux software requires more than just an ABI to work.  In order to run "
+"Linux software a Linux userland must be installed first."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:119
+msgid ""
+"If all that is wanted is to run some software already included in the Ports "
+"tree, it can be installed via package manager and man:pkg[8] will "
+"automatically setup the required Linux userland."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:121
+msgid ""
+"For example, to install Sublime Text 4, along with all the Linux libraries "
+"it depends on, run this command:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:125
+#, no-wrap
+msgid "# pkg install linux-sublime-text4\n"
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:129
+#, no-wrap
+msgid "Rocky Linux Base System from FreeBSD Packages"
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:132
+msgid "To install the Rocky Linux 9 userland execute the following command:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:136
+#, no-wrap
+msgid "# pkg install linux_base-rl9\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:139
+msgid ""
+"package:emulators/linux_base-rl9[] will place the base system derived from "
+"Rocky Linux 9 into [.filename]#/compat/linux#."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:141
+msgid ""
+"After installing the package, the contents of [.filename]#/compat/linux# can "
+"be verified by running the following command to check that the Rocky Linux "
+"userland has been installed:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:166
+#, no-wrap
+msgid ""
+"total 36\n"
+"drwxr-xr-x   2 root wheel  512 Oct  9 17:28 afs\n"
+"lrwxr-xr-x   1 root wheel    7 May 16  2022 bin -> usr/bin\n"
+"drwxr-xr-x   3 root wheel  512 Oct  9 17:28 dev\n"
+"drwxr-xr-x  24 root wheel 1536 Oct  9 17:28 etc\n"
+"lrwxr-xr-x   1 root wheel    7 May 16  2022 lib -> usr/lib\n"
+"lrwxr-xr-x   1 root wheel    9 May 16  2022 lib64 -> usr/lib64\n"
+"drwxr-xr-x   2 root wheel  512 Oct  9 17:28 opt\n"
+"drwxr-xr-x   2 root wheel  512 Oct  9 17:28 proc\n"
+"lrwxr-xr-x   1 root wheel    8 Oct  1 03:11 run -> /var/run\n"
+"lrwxr-xr-x   1 root wheel    8 May 16  2022 sbin -> usr/sbin\n"
+"drwxr-xr-x   2 root wheel  512 Oct  9 17:28 srv\n"
+"drwxr-xr-x   2 root wheel  512 Oct  9 17:28 sys\n"
+"drwxr-xr-x   8 root wheel  512 Oct  9 17:28 usr\n"
+"drwxr-xr-x  16 root wheel  512 Oct  9 17:28 var\n"
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:169
+#, no-wrap
+msgid "CentOS Base System from FreeBSD Packages"
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:177
+msgid ""
+"package:emulators/linux_base-c7[] has been deprecated following the "
+"deprecation of the upstream project.  This means package:emulators/"
+"linux_base-c7[] will not receive security updates.  The use of crossref:"
+"linuxemu[linuxemu-rockylinux, the Rocky Linux Base System] is recommended "
+"unless 32-bit compatibility is needed."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:180
+msgid "To install the CentOS userland execute the following command:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:184
+#, no-wrap
+msgid "# pkg install linux_base-c7\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:187
+msgid ""
+"package:emulators/linux_base-c7[] will place the base system derived from "
+"CentOS 7 into [.filename]#/compat/linux#."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:189
+msgid ""
+"After installing the package, the contents of [.filename]#/compat/linux# can "
+"be verified by running the following command to check that the CentOS "
+"userland has been installed:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:213
+#, no-wrap
+msgid ""
+"total 30\n"
+"lrwxr-xr-x   1 root  wheel    7 Apr 11  2018 bin -> usr/bin\n"
+"drwxr-xr-x  13 root  wheel  512 Apr 11 21:10 dev\n"
+"drwxr-xr-x  25 root  wheel   64 Apr 11 21:10 etc\n"
+"lrwxr-xr-x   1 root  wheel    7 Apr 11  2018 lib -> usr/lib\n"
+"lrwxr-xr-x   1 root  wheel    9 Apr 11  2018 lib64 -> usr/lib64\n"
+"drwxr-xr-x   2 root  wheel    2 Apr 11 21:10 opt\n"
+"dr-xr-xr-x   1 root  wheel    0 Apr 11 21:25 proc\n"
+"lrwxr-xr-x   1 root  wheel    8 Feb 18 02:10 run -> /var/run\n"
+"lrwxr-xr-x   1 root  wheel    8 Apr 11  2018 sbin -> usr/sbin\n"
+"drwxr-xr-x   2 root  wheel    2 Apr 11 21:10 srv\n"
+"dr-xr-xr-x   1 root  wheel    0 Apr 11 21:25 sys\n"
+"drwxr-xr-x   8 root  wheel    9 Apr 11 21:10 usr\n"
+"drwxr-xr-x  16 root  wheel   17 Apr 11 21:10 var\n"
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:216
+#, no-wrap
+msgid "Debian / Ubuntu Base System with debootstrap"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:220
+msgid ""
+"An alternative way of providing Linux shared libraries is by using package:"
+"sysutils/debootstrap[].  This has the advantage of providing a full Debian "
+"or Ubuntu distribution."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:222
+msgid "To install debootstrap execute the following command:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:226
+#, no-wrap
+msgid "# pkg install debootstrap\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:230
+msgid ""
+"man:debootstrap[8] needs man:linux[4] ABI enabled.  Once enabled, execute "
+"the following command to install Ubuntu or Debian in [.filename]#/compat/"
+"ubuntu#:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:234
+#, no-wrap
+msgid "# debootstrap focal /compat/ubuntu\n"
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:240
+msgid ""
+"While it is technically possible to install into [.filename]#/compat/linux# "
+"instead, it's discouraged due to possible clashes with CentOS-based "
+"packages.  Instead, derive the directory name from the distribution or "
+"version name, e.g., [.filename]#/compat/ubuntu#."
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:261
+#, no-wrap
+msgid ""
+"I: Retrieving InRelease \n"
+"I: Checking Release signature\n"
+"I: Valid Release signature (key id F6ECB3762474EDA9D21B7022871920D1991BC93C)\n"
+"I: Retrieving Packages \n"
+"I: Validating Packages \n"
+"I: Resolving dependencies of required packages...\n"
+"I: Resolving dependencies of base packages...\n"
+"I: Checking component main on http://archive.ubuntu.com/ubuntu...\n"
+"[...]\n"
+"I: Configuring console-setup...\n"
+"I: Configuring kbd...\n"
+"I: Configuring ubuntu-minimal...\n"
+"I: Configuring libc-bin...\n"
+"I: Configuring ca-certificates...\n"
+"I: Base system installed successfully.\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:264
+msgid "Then set up mounts in [.filename]#/etc/fstab#."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:268
+msgid ""
+"If the contents of the home directory should be shared and to be able to run "
+"X11 applications, [.filename]#/home# and [.filename]#/tmp# should be mounted "
+"in the linux compat area using man:nullfs[5] for loopback."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:270
+msgid "The following example can be added to [.filename]#/etc/fstab#:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:281
+#, no-wrap
+msgid ""
+"# Device        Mountpoint              FStype          Options                      Dump    Pass#\n"
+"devfs           /compat/ubuntu/dev      devfs           rw,late                      0       0\n"
+"tmpfs           /compat/ubuntu/dev/shm  tmpfs           rw,late,size=1g,mode=1777    0       0\n"
+"fdescfs         /compat/ubuntu/dev/fd   fdescfs         rw,late,linrdlnk             0       0\n"
+"linprocfs       /compat/ubuntu/proc     linprocfs       rw,late                      0       0\n"
+"linsysfs        /compat/ubuntu/sys      linsysfs        rw,late                      0       0\n"
+"/tmp            /compat/ubuntu/tmp      nullfs          rw,late                      0       0\n"
+"/home           /compat/ubuntu/home     nullfs          rw,late                      0       0\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:284
+msgid "Then execute man:mount[8]:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:288
+#, no-wrap
+msgid "# mount -al\n"
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:292
+msgid "To access the system using man:chroot[8] execute the following command:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:296
+#, no-wrap
+msgid "# chroot /compat/ubuntu /bin/bash\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:299
+msgid "Then man:uname[1] can be executed to check the Linux environment:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:303
+#, no-wrap
+msgid "# uname -s -r -m\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:310
+#, no-wrap
+msgid "Linux 3.17.0 x86_64\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:314
+msgid ""
+"Once inside the chroot, the system behaves as in a normal Ubuntu "
+"installation.  While systemd doesn't work, the man:service[8] command works "
+"as usual."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:318
+msgid ""
+"To add the package repositories missing from defaults edit the file [."
+"filename]#/compat/ubuntu/etc/apt/sources.list#."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:320
+msgid "For amd64 the following example can be used:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:327
+#, no-wrap
+msgid ""
+"deb http://archive.ubuntu.com/ubuntu focal main universe restricted multiverse\n"
+"deb http://security.ubuntu.com/ubuntu/ focal-security universe multiverse restricted main\n"
+"deb http://archive.ubuntu.com/ubuntu focal-backports universe multiverse restricted main\n"
+"deb http://archive.ubuntu.com/ubuntu focal-updates universe multiverse restricted main\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:330
+msgid "For arm64 this other example can be used:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:334
+#, no-wrap
+msgid "deb http://ports.ubuntu.com/ubuntu-ports bionic main universe restricted multiverse\n"
+msgstr ""
+
+#. type: Title ==
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:338
+#, no-wrap
+msgid "Advanced Topics"
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:341
+msgid ""
+"A list of all Linux-related man:sysctl[8] knobs can be found in man:linux[4]."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:343
+msgid "Some applications require specific filesystems to be mounted."
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:345
+msgid ""
+"This is normally handled by the [.filename]#/etc/rc.d/linux# script but can "
+"be disabled at boot executing the following command:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:349
+#, no-wrap
+msgid "sysrc linux_mounts_enable=\"NO\"\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:352
+msgid ""
+"Filesystems mounted by the rc script will not work for Linux processes "
+"inside chroots or jails; if needed, configure them in [.filename]#/etc/"
+"fstab#:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:360
+#, no-wrap
+msgid ""
+"devfs      /compat/linux/dev      devfs      rw,late                    0  0\n"
+"tmpfs      /compat/linux/dev/shm  tmpfs      rw,late,size=1g,mode=1777  0  0\n"
+"fdescfs    /compat/linux/dev/fd   fdescfs    rw,late,linrdlnk           0  0\n"
+"linprocfs  /compat/linux/proc     linprocfs  rw,late                    0  0\n"
+"linsysfs   /compat/linux/sys      linsysfs   rw,late                    0  0\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:363
+msgid ""
+"Since the Linux binary compatibility layer has gained support for running "
+"both 32- and 64-bit Linux binaries, it is no longer possible to link the "
+"emulation functionality statically into a custom kernel."
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:365
+#, no-wrap
+msgid "Installing Additional Libraries Manually"
+msgstr ""
+
+#. type: delimited block = 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:370
+msgid ""
+"For base system subdirectories created with man:debootstrap[8], use the "
+"instructions above instead."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:373
+msgid ""
+"If a Linux application complains about missing shared libraries after "
+"configuring Linux binary compatibility, determine which shared libraries the "
+"Linux binary needs and install them manually."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:375
+msgid ""
+"From a Linux system using the same CPU architecture, `ldd` can be used to "
+"determine which shared libraries the application needs."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:377
+msgid ""
+"For example, to check which shared libraries `linuxdoom` needs, run this "
+"command from a Linux system that has Doom installed:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:381
+#, no-wrap
+msgid "% ldd linuxdoom\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:390
+#, no-wrap
+msgid ""
+"libXt.so.3 (DLL Jump 3.1) => /usr/X11/lib/libXt.so.3.1.0\n"
+"libX11.so.3 (DLL Jump 3.1) => /usr/X11/lib/libX11.so.3.1.0\n"
+"libc.so.4 (DLL Jump 4.5pl26) => /lib/libc.so.4.6.29\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:394
+msgid ""
+"Then, copy all the files in the last column of the output from the Linux "
+"system into [.filename]#/compat/linux# on the FreeBSD system.  Once copied, "
+"create symbolic links to the names in the first column."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:396
+msgid "This example will result in the following files on the FreeBSD system:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:405
+#, no-wrap
+msgid ""
+"/compat/linux/usr/X11/lib/libXt.so.3.1.0\n"
+"/compat/linux/usr/X11/lib/libXt.so.3 -> libXt.so.3.1.0\n"
+"/compat/linux/usr/X11/lib/libX11.so.3.1.0\n"
+"/compat/linux/usr/X11/lib/libX11.so.3 -> libX11.so.3.1.0\n"
+"/compat/linux/lib/libc.so.4.6.29\n"
+"/compat/linux/lib/libc.so.4 -> libc.so.4.6.29\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:410
+msgid ""
+"If a Linux shared library already exists with a matching major revision "
+"number to the first column of the `ldd` output, it does not need to be "
+"copied to the file named in the last column, as the existing library should "
+"work.  It is advisable to copy the shared library if it is a newer version, "
+"though.  The old one can be removed, as long as the symbolic link points to "
+"the new one."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:412
+msgid "For example, these libraries already exist on the FreeBSD system:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:417
+#, no-wrap
+msgid ""
+"/compat/linux/lib/libc.so.4.6.27\n"
+"/compat/linux/lib/libc.so.4 -> libc.so.4.6.27\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:420
+msgid "and `ldd` indicates that a binary requires a later version:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:424
+#, no-wrap
+msgid "libc.so.4 (DLL Jump 4.5pl26) -> libc.so.4.6.29\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:428
+msgid ""
+"Since the existing library is only one or two versions out of date in the "
+"last digit, the program should still work with the slightly older version.  "
+"However, it is safe to replace the existing [.filename]#libc.so# with the "
+"newer version:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:433
+#, no-wrap
+msgid ""
+"/compat/linux/lib/libc.so.4.6.29\n"
+"/compat/linux/lib/libc.so.4 -> libc.so.4.6.29\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:437
+msgid ""
+"Generally, one will need to look for the shared libraries that Linux "
+"binaries depend on only the first few times that a Linux program is "
+"installed on FreeBSD.  After a while, there will be a sufficient set of "
+"Linux shared libraries on the system to be able to run newly installed Linux "
+"binaries without any extra work."
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:438
+#, no-wrap
+msgid "Branding Linux ELF Binaries"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:441
+msgid ""
+"The FreeBSD kernel uses several methods to determine if the binary to be "
+"executed is a Linux one: it checks the brand in the ELF file header, looks "
+"for known ELF interpreter paths and checks ELF notes; finally, by default, "
+"unbranded ELF executables are assumed to be Linux anyway."
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:443
+msgid ""
+"Should all those methods fail, an attempt to execute the binary might result "
+"in error message:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:447
+#, no-wrap
+msgid "% ./my-linux-elf-binary\n"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:455
+#, no-wrap
+msgid ""
+"ELF binary type not known\n"
+"Abort\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:458
+msgid ""
+"To help the FreeBSD kernel distinguish between a FreeBSD ELF binary and a "
+"Linux binary, use man:brandelf[1]:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:462
+#, no-wrap
+msgid "% brandelf -t Linux my-linux-elf-binary\n"
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:464
+#, no-wrap
+msgid "Installing a Linux RPM Based Application"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:468
+msgid ""
+"To install a Linux RPM-based application, first install the package:"
+"archivers/rpm4[] package or port.  Once installed, `root` can use this "
+"command to install a [.filename]#.rpm#:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:473
+#, no-wrap
+msgid ""
+"# cd /compat/linux\n"
+"# rpm2cpio < /path/to/linux.archive.rpm | cpio -id\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:477
+msgid ""
+"If necessary, `brandelf` the installed ELF binaries.  Note that this will "
+"prevent a clean uninstall."
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:478
+#, no-wrap
+msgid "Configuring the Hostname Resolver"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:481
+msgid "If DNS does not work or this error appears:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:486
+#, no-wrap
+msgid ""
+"resolv+: \"bind\" is an invalid keyword resolv+:\n"
+"\"hosts\" is an invalid keyword\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:489
+msgid "configure [.filename]#/compat/linux/etc/host.conf# as follows:"
+msgstr ""
+
+#. type: delimited block . 4
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:494
+#, no-wrap
+msgid ""
+"order hosts, bind\n"
+"multi on\n"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:499
+msgid ""
+"This specifies that [.filename]#/etc/hosts# is searched first and DNS is "
+"searched second.  When [.filename]#/compat/linux/etc/host.conf# does not "
+"exist, Linux applications use [.filename]#/etc/host.conf# in the host system "
+"but they complain since that file does not exist in FreeBSD.  Remove `bind` "
+"if a name server is not configured using [.filename]#/etc/resolv.conf#."
+msgstr ""
+
+#. type: Title ===
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:501
+#, no-wrap
+msgid "Miscellaneous"
+msgstr ""
+
+#. type: Plain text
+#: documentation/content/en/books/handbook/linuxemu/_index.adoc:503
+msgid ""
+"More information on how binary compatibility works with Linux(R) can be "
+"found in the article link:{linux-emulation}[Linux emulation in FreeBSD]."
+msgstr ""
