@@ -2,12 +2,13 @@
 # Copyright (C) YEAR The FreeBSD Project
 # This file is distributed under the same license as the FreeBSD Documentation package.
 # Fernando  Apesteguía <fernando.apesteguia@gmail.com>, 2021, 2022, 2023.
+# Juan David Jaramillo Ortiz <juanda097@protonmail.ch>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2022-02-01 09:20-0300\n"
-"PO-Revision-Date: 2023-07-18 04:45+0000\n"
-"Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
+"PO-Revision-Date: 2025-02-14 04:45+0000\n"
+"Last-Translator: Juan David Jaramillo Ortiz <juanda097@protonmail.ch>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookpci_index/es/>\n"
 "Language: es\n"
@@ -22,13 +23,13 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:13
 #, no-wrap
 msgid "PCI Devices"
-msgstr ""
+msgstr "Dispositivos PCI"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:1
 #, no-wrap
 msgid "Chapter 11. PCI Devices"
-msgstr ""
+msgstr "Capítulo 11. Dispositivos PCI"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:51
@@ -36,12 +37,14 @@ msgid ""
 "This chapter will talk about the FreeBSD mechanisms for writing a device "
 "driver for a device on a PCI bus."
 msgstr ""
+"Este capítulo hablará sobre los mecanismos de FreeBSD para escribir un "
+"controlador de dispositivo para un dispositivo en un bus PCI."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:53
 #, no-wrap
 msgid "Probe and Attach"
-msgstr ""
+msgstr "Sondear y Adjuntar"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:56
@@ -49,12 +52,15 @@ msgid ""
 "Information here about how the PCI bus code iterates through the unattached "
 "devices and see if a newly loaded kld will attach to any of them."
 msgstr ""
+"Información aquí sobre cómo el código del bus PCI itera a través de los "
+"dispositivos no conectados y verifica si un kld recién cargado se conectará "
+"a alguno de ellos."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:57
 #, no-wrap
 msgid "Sample Driver Source ([.filename]#mypci.c#)"
-msgstr ""
+msgstr "Fuente de controlador de muestra ([.filename]#mypci.c#)"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:66
@@ -66,6 +72,11 @@ msgid ""
 " * Murray Stokely\n"
 " */\n"
 msgstr ""
+"/*\n"
+" * Simple KLD to play with the PCI functions.\n"
+" *\n"
+" * Murray Stokely\n"
+" */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:76
@@ -81,6 +92,16 @@ msgid ""
 "#include <sys/malloc.h>\n"
 "#include <sys/bus.h>\t\t/* structs, prototypes for pci bus stuff and DEVMETHOD macros! */\n"
 msgstr ""
+"#include <sys/param.h>\t\t/* defines used in kernel.h */\n"
+"#include <sys/module.h>\n"
+"#include <sys/systm.h>\n"
+"#include <sys/errno.h>\n"
+"#include <sys/kernel.h>\t\t/* types used in module initialization */\n"
+"#include <sys/conf.h>\t\t/* cdevsw struct */\n"
+"#include <sys/uio.h>\t\t/* uio struct */\n"
+"#include <sys/malloc.h>\n"
+"#include <sys/bus.h>\t\t/* structs, prototypes for pci bus stuff and "
+"DEVMETHOD macros! */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:80
@@ -90,6 +111,9 @@ msgid ""
 "#include <sys/rman.h>\n"
 "#include <machine/resource.h>\n"
 msgstr ""
+"#include <machine/bus.h>\n"
+"#include <sys/rman.h>\n"
+"#include <machine/resource.h>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:83
@@ -98,6 +122,8 @@ msgid ""
 "#include <dev/pci/pcivar.h>\t/* For pci_get macros! */\n"
 "#include <dev/pci/pcireg.h>\n"
 msgstr ""
+"#include <dev/pci/pcivar.h>\t/* For pci_get macros! */\n"
+"#include <dev/pci/pcireg.h>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:89
@@ -109,6 +135,11 @@ msgid ""
 "\tstruct cdev\t*my_cdev;\n"
 "};\n"
 msgstr ""
+"/* The softc holds our per-instance data. */\n"
+"struct mypci_softc {\n"
+"\tdevice_t\tmy_dev;\n"
+"\tstruct cdev\t*my_cdev;\n"
+"};\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:95
@@ -120,6 +151,11 @@ msgid ""
 "static d_read_t\t\tmypci_read;\n"
 "static d_write_t\tmypci_write;\n"
 msgstr ""
+"/* Function prototypes */\n"
+"static d_open_t\t\tmypci_open;\n"
+"static d_close_t\tmypci_close;\n"
+"static d_read_t\t\tmypci_read;\n"
+"static d_write_t\tmypci_write;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:97
