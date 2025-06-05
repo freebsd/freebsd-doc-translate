@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-04 15:10+0000\n"
+"PO-Revision-Date: 2025-06-05 17:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookdisks_index/ru/>\n"
@@ -175,6 +175,8 @@ msgid ""
 "# gpart create -s GPT ada1\n"
 "# gpart add -t freebsd-ufs -a 1M ada1\n"
 msgstr ""
+"# gpart create -s GPT ada1\n"
+"# gpart add -t freebsd-ufs -a 1M ada1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:105
@@ -198,6 +200,11 @@ msgid ""
 "        2048  1465143296     1  freebsd-ufs  (699G)\n"
 "  1465145344        1678        - free -  (839K)\n"
 msgstr ""
+"% gpart show ada1\n"
+"=>        34  1465146988  ada1  GPT  (699G)\n"
+"          34        2014        - free -  (1.0M)\n"
+"        2048  1465143296     1  freebsd-ufs  (699G)\n"
+"  1465145344        1678        - free -  (839K)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:118
@@ -208,7 +215,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:122
 #, no-wrap
 msgid "# newfs -U /dev/ada1p1\n"
-msgstr ""
+msgstr "# newfs -U /dev/ada1p1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:125
@@ -221,7 +228,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:129
 #, no-wrap
 msgid "# mkdir /newdisk\n"
-msgstr ""
+msgstr "# mkdir /newdisk\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:132
@@ -234,7 +241,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:136
 #, no-wrap
 msgid "/dev/ada1p1\t/newdisk\tufs\trw\t2\t2\n"
-msgstr ""
+msgstr "/dev/ada1p1\t/newdisk\tufs\trw\t2\t2\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:139
@@ -245,7 +252,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:143
 #, no-wrap
 msgid "# mount /newdisk\n"
-msgstr ""
+msgstr "# mount /newdisk\n"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/disks/_index.adoc:146
@@ -288,6 +295,12 @@ msgid ""
 "  79691810   4194236     3  freebsd-swap  (2G)\n"
 "  83886046         1        - free -  (512B)\n"
 msgstr ""
+"# gpart show ada0\n"
+"=>      34  83886013  ada0  GPT  (48G) [CORRUPT]\n"
+"        34       128     1  freebsd-boot  (64k)\n"
+"       162  79691648     2  freebsd-ufs  (38G)\n"
+"  79691810   4194236     3  freebsd-swap  (2G)\n"
+"  83886046         1        - free -  (512B)\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:172
@@ -305,6 +318,8 @@ msgid ""
 "# gpart recover ada0\n"
 "ada0 recovered\n"
 msgstr ""
+"# gpart recover ada0\n"
+"ada0 recovered\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:182
@@ -324,6 +339,12 @@ msgid ""
 "   79691810    4194236     3  freebsd-swap  (2G)\n"
 "   83886046   18513921        - free -  (8.8G)\n"
 msgstr ""
+"# gpart show ada0\n"
+"=>       34  102399933  ada0  GPT  (48G)\n"
+"         34        128     1  freebsd-boot  (64k)\n"
+"        162   79691648     2  freebsd-ufs  (38G)\n"
+"   79691810    4194236     3  freebsd-swap  (2G)\n"
+"   83886046   18513921        - free -  (8.8G)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:196
@@ -344,7 +365,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:202
 #, no-wrap
 msgid "# swapoff /dev/ada0p3\n"
-msgstr ""
+msgstr "# swapoff /dev/ada0p3\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:205
@@ -364,6 +385,13 @@ msgid ""
 "        162   79691648     2  freebsd-ufs  (38G)\n"
 "   79691810   22708157        - free -  (10G)\n"
 msgstr ""
+"# gpart delete -i 3 ada0\n"
+"ada0p3 deleted\n"
+"# gpart show ada0\n"
+"=>       34  102399933  ada0  GPT  (48G)\n"
+"         34        128     1  freebsd-boot  (64k)\n"
+"        162   79691648     2  freebsd-ufs  (38G)\n"
+"   79691810   22708157        - free -  (10G)\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:223
@@ -379,7 +407,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:227
 #, no-wrap
 msgid "# sysctl kern.geom.debugflags=16\n"
-msgstr ""
+msgstr "# sysctl kern.geom.debugflags=16\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:236
@@ -403,6 +431,13 @@ msgid ""
 "        162   98566144     2  freebsd-ufs  (47G)\n"
 "   98566306    3833661        - free -  (1.8G)\n"
 msgstr ""
+"# gpart resize -i 2 -s 47G -a 4k ada0\n"
+"ada0p2 resized\n"
+"# gpart show ada0\n"
+"=>       34  102399933  ada0  GPT  (48G)\n"
+"         34        128     1  freebsd-boot  (64k)\n"
+"        162   98566144     2  freebsd-ufs  (47G)\n"
+"   98566306    3833661        - free -  (1.8G)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:250
@@ -424,6 +459,14 @@ msgid ""
 "   98566306    3833661     3  freebsd-swap  (1.8G)\n"
 "# swapon /dev/ada0p3\n"
 msgstr ""
+"# gpart add -t freebsd-swap -a 4k ada0\n"
+"ada0p3 added\n"
+"# gpart show ada0\n"
+"=>       34  102399933  ada0  GPT  (48G)\n"
+"         34        128     1  freebsd-boot  (64k)\n"
+"        162   98566144     2  freebsd-ufs  (47G)\n"
+"   98566306    3833661     3  freebsd-swap  (1.8G)\n"
+"# swapon /dev/ada0p3\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:264
@@ -443,6 +486,15 @@ msgid ""
 " 80781312, 82063552, 83345792, 84628032, 85910272, 87192512, 88474752,\n"
 " 89756992, 91039232, 92321472, 93603712, 94885952, 96168192, 97450432\n"
 msgstr ""
+"# growfs /dev/ada0p2\n"
+"Device is mounted read-write; resizing will result in temporary write "
+"suspension for /.\n"
+"It's strongly recommended to make a backup before growing the file system.\n"
+"OK to grow file system on /dev/ada0p2, mounted on /, from 38GB to 47GB? [Yes/"
+"No] Yes\n"
+"super-block backups (for fsck -b #) at:\n"
+" 80781312, 82063552, 83345792, 84628032, 85910272, 87192512, 88474752,\n"
+" 89756992, 91039232, 92321472, 93603712, 94885952, 96168192, 97450432\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:277
@@ -455,7 +507,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:281
 #, no-wrap
 msgid "# zpool online -e zroot /dev/ada0p2\n"
-msgstr ""
+msgstr "# zpool online -e zroot /dev/ada0p2\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:284
@@ -509,6 +561,16 @@ msgid ""
 "device umass\t# Disks/Mass storage - Requires scbus and da\n"
 "device cd\t# needed for CD and DVD burners\n"
 msgstr ""
+"device scbus\t# SCSI bus (required for ATA/SCSI)\n"
+"device da\t# Direct Access (disks)\n"
+"device pass\t# Passthrough device (direct ATA/SCSI access)\n"
+"device uhci\t# provides USB 1.x support\n"
+"device ohci\t# provides USB 1.x support\n"
+"device ehci\t# provides USB 2.0 support\n"
+"device xhci\t# provides USB 3.0 support\n"
+"device usb\t# USB Bus (required)\n"
+"device umass\t# Disks/Mass storage - Requires scbus and da\n"
+"device cd\t# needed for CD and DVD burners\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:316
@@ -555,6 +617,15 @@ msgid ""
 "da0: 152627MB (312581808 512 byte sectors: 255H 63S/T 19457C)\n"
 "da0: quirks=0x2<NO_6_BYTE>\n"
 msgstr ""
+"umass0: <STECH Simple Drive, class 0/0, rev 2.00/1.04, addr 3> on usbus0\n"
+"umass0:  SCSI over Bulk-Only; quirks = 0x0100\n"
+"umass0:4:0:-1: Attached to scbus4\n"
+"da0 at umass-sim0 bus 0 scbus4 target 0 lun 0\n"
+"da0: <STECH Simple Drive 1.04> Fixed Direct Access SCSI-4 device\n"
+"da0: Serial Number WD-WXE508CAN263\n"
+"da0: 40.000MB/s transfers\n"
+"da0: 152627MB (312581808 512 byte sectors: 255H 63S/T 19457C)\n"
+"da0: quirks=0x2<NO_6_BYTE>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:339
@@ -577,6 +648,8 @@ msgid ""
 "# camcontrol devlist\n"
 "<STECH Simple Drive 1.04>          at scbus4 target 0 lun 0 (pass3,da0)\n"
 msgstr ""
+"# camcontrol devlist\n"
+"<STECH Simple Drive 1.04>          at scbus4 target 0 lun 0 (pass3,da0)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:350
@@ -592,6 +665,9 @@ msgid ""
 "# usbconfig\n"
 "ugen0.3: <Simple Drive STECH> at usbus0, cfg=0 md=HOST spd=HIGH (480Mbps) pwr=ON (2mA)\n"
 msgstr ""
+"# usbconfig\n"
+"ugen0.3: <Simple Drive STECH> at usbus0, cfg=0 md=HOST spd=HIGH (480Mbps) "
+"pwr=ON (2mA)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:359
@@ -628,6 +704,8 @@ msgid ""
 "[localrules=5]\n"
 "add path 'da*' mode 0660 group operator\n"
 msgstr ""
+"[localrules=5]\n"
+"add path 'da*' mode 0660 group operator\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:378
@@ -640,7 +718,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:382
 #, no-wrap
 msgid "add path 'da[3-9]*' mode 0660 group operator\n"
-msgstr ""
+msgstr "add path 'da[3-9]*' mode 0660 group operator\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:387
@@ -660,7 +738,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:394
 #, no-wrap
 msgid "devfs_system_ruleset=\"localrules\"\n"
-msgstr ""
+msgstr "devfs_system_ruleset=\"localrules\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:397
@@ -673,7 +751,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:401
 #, no-wrap
 msgid "vfs.usermount=1\n"
-msgstr ""
+msgstr "vfs.usermount=1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:404
@@ -689,6 +767,8 @@ msgid ""
 "# sysctl vfs.usermount=1\n"
 "vfs.usermount: 0 -> 1\n"
 msgstr ""
+"# sysctl vfs.usermount=1\n"
+"vfs.usermount: 0 -> 1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:415
@@ -708,6 +788,8 @@ msgid ""
 "# mkdir /mnt/username\n"
 "# chown username:usergroup /mnt/username\n"
 msgstr ""
+"# mkdir /mnt/username\n"
+"# chown username:usergroup /mnt/username\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:424
@@ -721,7 +803,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:428
 #, no-wrap
 msgid "% mount -t msdosfs -o -m=644,-M=755 /dev/da0s1 /mnt/username\n"
-msgstr ""
+msgstr "% mount -t msdosfs -o -m=644,-M=755 /dev/da0s1 /mnt/username\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:431
@@ -732,7 +814,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:435
 #, no-wrap
 msgid "% umount /mnt/username\n"
-msgstr ""
+msgstr "% umount /mnt/username\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:438
@@ -750,6 +832,10 @@ msgid ""
 "da0: <STECH Simple Drive 1.04> s/n WD-WXE508CAN263          detached\n"
 "(da0:umass-sim0:0:0:0): Periph destroyed\n"
 msgstr ""
+"umass0: at uhub3, port 2, addr 3 (disconnected)\n"
+"da0 at umass-sim0 bus 0 scbus4 target 0 lun 0\n"
+"da0: <STECH Simple Drive 1.04> s/n WD-WXE508CAN263          detached\n"
+"(da0:umass-sim0:0:0:0): Periph destroyed\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/disks/_index.adoc:447
@@ -768,7 +854,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:454
 #, no-wrap
 msgid "/media\t\t-media\t\t-nosuid\n"
-msgstr ""
+msgstr "/media\t\t-media\t\t-nosuid\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:457
@@ -785,6 +871,11 @@ msgid ""
 "\taction \"/usr/sbin/automount -c\";\n"
 "};\n"
 msgstr ""
+"notify 100 {\n"
+"\tmatch \"system\" \"GEOM\";\n"
+"\tmatch \"subsystem\" \"DEV\";\n"
+"\taction \"/usr/sbin/automount -c\";\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:468
@@ -800,6 +891,8 @@ msgid ""
 "# service automount restart\n"
 "# service devd restart\n"
 msgstr ""
+"# service automount restart\n"
+"# service devd restart\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:476
@@ -812,7 +905,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:480
 #, no-wrap
 msgid "autofs_enable=\"YES\"\n"
-msgstr ""
+msgstr "autofs_enable=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:483
@@ -833,6 +926,10 @@ msgid ""
 "# service autounmountd start\n"
 "# service devd start\n"
 msgstr ""
+"# service automount start\n"
+"# service automountd start\n"
+"# service autounmountd start\n"
+"# service devd start\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:497
@@ -854,7 +951,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:504
 #, no-wrap
 msgid "# automount -fu\n"
-msgstr ""
+msgstr "# automount -fu\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:508
@@ -918,6 +1015,10 @@ msgid ""
 "device pass\t# Passthrough device (direct ATA/SCSI access)\n"
 "device cd\t# needed for CD and DVD burners\n"
 msgstr ""
+"device scbus\t# SCSI bus (required for ATA/SCSI)\n"
+"device da\t# Direct Access (disks)\n"
+"device pass\t# Passthrough device (direct ATA/SCSI access)\n"
+"device cd\t# needed for CD and DVD burners\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:538
@@ -939,6 +1040,16 @@ msgid ""
 "device usb\t# USB Bus (required)\n"
 "device umass\t# Disks/Mass storage - Requires scbus and da\n"
 msgstr ""
+"device scbus\t# SCSI bus (required for ATA/SCSI)\n"
+"device da\t# Direct Access (disks)\n"
+"device pass\t# Passthrough device (direct ATA/SCSI access)\n"
+"device cd\t# needed for CD and DVD burners\n"
+"device uhci\t# provides USB 1.x support\n"
+"device ohci\t# provides USB 1.x support\n"
+"device ehci\t# provides USB 2.0 support\n"
+"device xhci\t# provides USB 3.0 support\n"
+"device usb\t# USB Bus (required)\n"
+"device umass\t# Disks/Mass storage - Requires scbus and da\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:554
@@ -954,6 +1065,10 @@ msgid ""
 "device pass\t# Passthrough device (direct ATA/SCSI access)\n"
 "device cd\t# needed for CD and DVD burners\n"
 msgstr ""
+"device ata\t# Legacy ATA/SATA controllers\n"
+"device scbus\t# SCSI bus (required for ATA/SCSI)\n"
+"device pass\t# Passthrough device (direct ATA/SCSI access)\n"
+"device cd\t# needed for CD and DVD burners\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:566
@@ -966,7 +1081,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:570
 #, no-wrap
 msgid "device atapicam\n"
-msgstr ""
+msgstr "device atapicam\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:573
@@ -979,7 +1094,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:577
 #, no-wrap
 msgid "atapicam_load=\"YES\"\n"
-msgstr ""
+msgstr "atapicam_load=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:580
@@ -1008,6 +1123,13 @@ msgid ""
 "cd0: 150.000MB/s transfers (SATA 1.x, UDMA6, ATAPI 12bytes, PIO 8192bytes)\n"
 "cd0: Attempt to query device size failed: NOT READY, Medium not present - tray closed\n"
 msgstr ""
+"% dmesg | grep cd\n"
+"cd0 at ahcich1 bus 0 scbus1 target 0 lun 0\n"
+"cd0: <HL-DT-ST DVDRAM GU70N LT20> Removable CD-ROM SCSI-0 device\n"
+"cd0: Serial Number M3OD3S34152\n"
+"cd0: 150.000MB/s transfers (SATA 1.x, UDMA6, ATAPI 12bytes, PIO 8192bytes)\n"
+"cd0: Attempt to query device size failed: NOT READY, Medium not present - "
+"tray closed\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/disks/_index.adoc:596
@@ -1034,7 +1156,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:607
 #, no-wrap
 msgid "# cdrecord dev=device imagefile.iso\n"
-msgstr ""
+msgstr "# cdrecord dev=device imagefile.iso\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:610
@@ -1069,6 +1191,28 @@ msgid ""
 "        1,6,0   106) 'ARTEC   ' 'AM12S           ' '1.06' Scanner\n"
 "        1,7,0   107) *\n"
 msgstr ""
+"# cdrecord -scanbus\n"
+"ProDVD-ProBD-Clone 3.00 (amd64-unknown-freebsd10.0) Copyright (C) 1995-2010 "
+"Jörg Schilling\n"
+"Using libscg version 'schily-0.9'\n"
+"scsibus0:\n"
+"        0,0,0     0) 'SEAGATE ' 'ST39236LW       ' '0004' Disk\n"
+"        0,1,0     1) 'SEAGATE ' 'ST39173W        ' '5958' Disk\n"
+"        0,2,0     2) *\n"
+"        0,3,0     3) 'iomega  ' 'jaz 1GB         ' 'J.86' Removable Disk\n"
+"        0,4,0     4) 'NEC     ' 'CD-ROM DRIVE:466' '1.26' Removable CD-ROM\n"
+"        0,5,0     5) *\n"
+"        0,6,0     6) *\n"
+"        0,7,0     7) *\n"
+"scsibus1:\n"
+"        1,0,0   100) *\n"
+"        1,1,0   101) *\n"
+"        1,2,0   102) *\n"
+"        1,3,0   103) *\n"
+"        1,4,0   104) *\n"
+"        1,5,0   105) 'YAMAHA  ' 'CRW4260         ' '1.0q' Removable CD-ROM\n"
+"        1,6,0   106) 'ARTEC   ' 'AM12S           ' '1.06' Scanner\n"
+"        1,7,0   107) *\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:639
@@ -1094,6 +1238,8 @@ msgid ""
 "# camcontrol devlist\n"
 "<MATSHITA CDRW/DVD UJDA740 1.00>   at scbus1 target 0 lun 0 (cd0,pass0)\n"
 msgstr ""
+"# camcontrol devlist\n"
+"<MATSHITA CDRW/DVD UJDA740 1.00>   at scbus1 target 0 lun 0 (cd0,pass0)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:650
@@ -1124,7 +1270,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:661
 #, no-wrap
 msgid "# mkisofs -o imagefile.iso /path/to/tree\n"
-msgstr ""
+msgstr "# mkisofs -o imagefile.iso /path/to/tree\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:664
@@ -1172,6 +1318,7 @@ msgstr ""
 #, no-wrap
 msgid "# mkisofs -R -no-emul-boot -b boot/cdboot -o /tmp/bootable.iso /tmp/myboot\n"
 msgstr ""
+"# mkisofs -R -no-emul-boot -b boot/cdboot -o /tmp/bootable.iso /tmp/myboot\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:685
@@ -1185,6 +1332,8 @@ msgid ""
 "# mdconfig -a -t vnode -f /tmp/bootable.iso -u 0\n"
 "# mount -t cd9660 /dev/md0 /mnt\n"
 msgstr ""
+"# mdconfig -a -t vnode -f /tmp/bootable.iso -u 0\n"
+"# mount -t cd9660 /dev/md0 /mnt\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:693
@@ -1213,7 +1362,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:705
 #, no-wrap
 msgid "# dd if=/dev/cd0 of=file.iso bs=2048\n"
-msgstr ""
+msgstr "# dd if=/dev/cd0 of=file.iso bs=2048\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:708
@@ -1240,7 +1389,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:718
 #, no-wrap
 msgid "# mount -t cd9660 /dev/cd0 /mnt\n"
-msgstr ""
+msgstr "# mount -t cd9660 /dev/cd0 /mnt\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:721
@@ -1272,7 +1421,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:735
 #, no-wrap
 msgid "cd9660_iconv_load=\"YES\"\n"
-msgstr ""
+msgstr "cd9660_iconv_load=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:738
@@ -1305,7 +1454,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:751
 #, no-wrap
 msgid "options SCSI_DELAY=15000\n"
-msgstr ""
+msgstr "options SCSI_DELAY=15000\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:754
@@ -1335,7 +1484,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:767
 #, no-wrap
 msgid "# tar xzvf /dev/cd1\n"
-msgstr ""
+msgstr "# tar xzvf /dev/cd1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:770
@@ -1382,7 +1531,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:789
 #, no-wrap
 msgid "% cdda2wav -vall -B -Owav\n"
-msgstr ""
+msgstr "% cdda2wav -vall -B -Owav\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:793
@@ -1402,7 +1551,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:798
 #, no-wrap
 msgid "% cdrecord -v dev=2,0 -dao -useinfo  *.wav\n"
-msgstr ""
+msgstr "% cdrecord -v dev=2,0 -dao -useinfo  *.wav\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:801
@@ -1520,7 +1669,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1076
 #, no-wrap
 msgid "hw.ata.atapi_dma=\"1\"\n"
-msgstr ""
+msgstr "hw.ata.atapi_dma=\"1\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:846
@@ -1563,7 +1712,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:862
 #, no-wrap
 msgid "# growisofs -dvd-compat -Z /dev/cd0 -J -R /path/to/data\n"
-msgstr ""
+msgstr "# growisofs -dvd-compat -Z /dev/cd0 -J -R /path/to/data\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:866
@@ -1592,7 +1741,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:877
 #, no-wrap
 msgid "# growisofs -dvd-compat -Z /dev/cd0=imagefile.iso\n"
-msgstr ""
+msgstr "# growisofs -dvd-compat -Z /dev/cd0=imagefile.iso\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:881
@@ -1623,7 +1772,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:894
 #, no-wrap
 msgid "% mkisofs -R -J -udf -iso-level 3 -o imagefile.iso /path/to/data\n"
-msgstr ""
+msgstr "% mkisofs -R -J -udf -iso-level 3 -o imagefile.iso /path/to/data\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:897
@@ -1635,6 +1784,7 @@ msgstr ""
 #, no-wrap
 msgid "# growisofs -dvd-compat -udf -iso-level 3 -Z /dev/cd0 -J -R /path/to/data\n"
 msgstr ""
+"# growisofs -dvd-compat -udf -iso-level 3 -Z /dev/cd0 -J -R /path/to/data\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:904
@@ -1680,7 +1830,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:920
 #, no-wrap
 msgid "# growisofs -Z /dev/cd0 -dvd-video /path/to/video\n"
-msgstr ""
+msgstr "# growisofs -Z /dev/cd0 -dvd-video /path/to/video\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:924
@@ -1710,7 +1860,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1024
 #, no-wrap
 msgid "# dvd+rw-format /dev/cd0\n"
-msgstr ""
+msgstr "# dvd+rw-format /dev/cd0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:938
@@ -1732,7 +1882,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:945
 #, no-wrap
 msgid "# growisofs -Z /dev/cd0 -J -R /path/to/newdata\n"
-msgstr ""
+msgstr "# growisofs -Z /dev/cd0 -J -R /path/to/newdata\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:950
@@ -1753,7 +1903,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1044
 #, no-wrap
 msgid "# growisofs -M /dev/cd0 -J -R /path/to/nextdata\n"
-msgstr ""
+msgstr "# growisofs -M /dev/cd0 -J -R /path/to/nextdata\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:959
@@ -1778,7 +1928,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:971
 #, no-wrap
 msgid "# growisofs -Z /dev/cd0=/dev/zero\n"
-msgstr ""
+msgstr "# growisofs -Z /dev/cd0=/dev/zero\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/disks/_index.adoc:973
@@ -1811,7 +1961,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1031
 #, no-wrap
 msgid "# dvd+rw-format -blank=full /dev/cd0\n"
-msgstr ""
+msgstr "# dvd+rw-format -blank=full /dev/cd0\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:993
@@ -1826,7 +1976,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:997
 #, no-wrap
 msgid "# growisofs -use-the-force-luke=dao -Z /dev/cd0=imagefile.iso\n"
-msgstr ""
+msgstr "# growisofs -use-the-force-luke=dao -Z /dev/cd0=imagefile.iso\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1000
@@ -1853,7 +2003,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1009
 #, no-wrap
 msgid "# growisofs -Z /dev/cd0 -J -R /path/to/data\n"
-msgstr ""
+msgstr "# growisofs -Z /dev/cd0 -J -R /path/to/data\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1013
@@ -1983,6 +2133,9 @@ msgid ""
 "# bsdlabel -Bw acd0\n"
 "# newfs /dev/acd0\n"
 msgstr ""
+"# dd if=/dev/zero of=/dev/acd0 bs=2k count=1\n"
+"# bsdlabel -Bw acd0\n"
+"# newfs /dev/acd0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1090
@@ -2002,7 +2155,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1096
 #, no-wrap
 msgid "# mount /dev/acd0 /mnt\n"
-msgstr ""
+msgstr "# mount /dev/acd0 /mnt\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1099
@@ -2047,7 +2200,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1119
 #, no-wrap
 msgid "# /usr/sbin/fdformat -f 1440 /dev/fd0\n"
-msgstr ""
+msgstr "# /usr/sbin/fdformat -f 1440 /dev/fd0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1122
@@ -2066,7 +2219,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1128
 #, no-wrap
 msgid "# /sbin/bsdlabel -B -w /dev/fd0 fd1440\n"
-msgstr ""
+msgstr "# /sbin/bsdlabel -B -w /dev/fd0 fd1440\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1131
@@ -2085,7 +2238,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1137
 #, no-wrap
 msgid "# /sbin/newfs_msdos /dev/fd0\n"
-msgstr ""
+msgstr "# /sbin/newfs_msdos /dev/fd0\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:1143
@@ -2241,6 +2394,9 @@ msgid ""
 "# /sbin/dump -0uan -f - /usr | gzip -2 | ssh -c blowfish \\\n"
 "          targetuser@targetmachine.example.com dd of=/mybigfiles/dump-usr-l0.gz\n"
 msgstr ""
+"# /sbin/dump -0uan -f - /usr | gzip -2 | ssh -c blowfish \\\n"
+"          targetuser@targetmachine.example.com dd of=/mybigfiles/dump-usr-l0."
+"gz\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:1199
@@ -2260,6 +2416,8 @@ msgstr ""
 #, no-wrap
 msgid "# env RSH=/usr/bin/ssh /sbin/dump -0uan -f targetuser@targetmachine.example.com:/dev/sa0 /usr\n"
 msgstr ""
+"# env RSH=/usr/bin/ssh /sbin/dump -0uan -f targetuser@targetmachine.example."
+"com:/dev/sa0 /usr\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1212
@@ -2310,7 +2468,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1231
 #, no-wrap
 msgid "# tar czvf /tmp/mybackup.tgz .\n"
-msgstr ""
+msgstr "# tar czvf /tmp/mybackup.tgz .\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:1237
@@ -2332,7 +2490,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1244
 #, no-wrap
 msgid "# tar xzvf /tmp/mybackup.tgz\n"
-msgstr ""
+msgstr "# tar xzvf /tmp/mybackup.tgz\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:1249
@@ -2370,7 +2528,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1262
 #, no-wrap
 msgid "# ls -R | cpio -ovF /tmp/mybackup.cpio\n"
-msgstr ""
+msgstr "# ls -R | cpio -ovF /tmp/mybackup.cpio\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:1268
@@ -2397,7 +2555,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1277
 #, no-wrap
 msgid "# pax -wf /tmp/mybackup.pax .\n"
-msgstr ""
+msgstr "# pax -wf /tmp/mybackup.pax .\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/disks/_index.adoc:1281
@@ -2439,7 +2597,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1297
 #, no-wrap
 msgid "# mt -f /dev/nsa0 fsf 3\n"
-msgstr ""
+msgstr "# mt -f /dev/nsa0 fsf 3\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1300
@@ -2457,7 +2615,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1306
 #, no-wrap
 msgid "# tar cvf /dev/sa0 file\n"
-msgstr ""
+msgstr "# tar cvf /dev/sa0 file\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1309
@@ -2469,7 +2627,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1313
 #, no-wrap
 msgid "# tar xvf /dev/sa0\n"
-msgstr ""
+msgstr "# tar xvf /dev/sa0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1317
@@ -2482,7 +2640,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1321
 #, no-wrap
 msgid "# dump -0aL -b64 -f /dev/nsa0 /usr\n"
-msgstr ""
+msgstr "# dump -0aL -b64 -f /dev/nsa0 /usr\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1324
@@ -2495,7 +2653,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1328
 #, no-wrap
 msgid "# restore -i -f /dev/nsa0\n"
-msgstr ""
+msgstr "# restore -i -f /dev/nsa0\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/disks/_index.adoc:1331
@@ -2573,12 +2731,12 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1352
 msgid "`gpart show`"
-msgstr ""
+msgstr "`gpart show`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1353
 msgid "`more /etc/fstab`"
-msgstr ""
+msgstr "`more /etc/fstab`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1354
@@ -2588,7 +2746,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1355
 msgid "`dmesg`"
-msgstr ""
+msgstr "`dmesg`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1359
@@ -2644,7 +2802,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1380
 #, no-wrap
 msgid "device md\n"
-msgstr ""
+msgstr "device md\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/disks/_index.adoc:1383
@@ -2670,6 +2828,8 @@ msgid ""
 "# mdconfig -f diskimage.iso -u 0\n"
 "# mount -t cd9660 /dev/md0 /mnt\n"
 msgstr ""
+"# mdconfig -f diskimage.iso -u 0\n"
+"# mount -t cd9660 /dev/md0 /mnt\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1399
@@ -2697,6 +2857,8 @@ msgid ""
 "# umount /mnt\n"
 "# mdconfig -d -u 0\n"
 msgstr ""
+"# umount /mnt\n"
+"# mdconfig -d -u 0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1411
@@ -2746,6 +2908,17 @@ msgid ""
 "Filesystem 1K-blocks Used Avail Capacity  Mounted on\n"
 "/dev/md1        4718    4  4338     0%    /mnt\n"
 msgstr ""
+"# mdconfig -a -t swap -s 5m -u 1\n"
+"# newfs -U md1\n"
+"/dev/md1: 5.0MB (10240 sectors) block size 16384, fragment size 2048\n"
+"        using 4 cylinder groups of 1.27MB, 81 blks, 192 inodes.\n"
+"        with soft updates\n"
+"super-block backups (for fsck -b #) at:\n"
+" 160, 2752, 5344, 7936\n"
+"# mount /dev/md1 /mnt\n"
+"# df /mnt\n"
+"Filesystem 1K-blocks Used Avail Capacity  Mounted on\n"
+"/dev/md1        4718    4  4338     0%    /mnt\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1441
@@ -2762,6 +2935,9 @@ msgid ""
 "5120+0 records in\n"
 "5120+0 records out\n"
 msgstr ""
+"# dd if=/dev/zero of=newimage bs=1k count=5k\n"
+"5120+0 records in\n"
+"5120+0 records out\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1450
@@ -2787,6 +2963,17 @@ msgid ""
 "Filesystem 1K-blocks Used Avail Capacity  Mounted on\n"
 "/dev/md0a       4710    4  4330     0%    /mnt\n"
 msgstr ""
+"# mdconfig -f newimage -u 0\n"
+"# bsdlabel -w md0 auto\n"
+"# newfs -U md0a\n"
+"/dev/md0a: 5.0MB (10224 sectors) block size 16384, fragment size 2048\n"
+"        using 4 cylinder groups of 1.25MB, 80 blks, 192 inodes.\n"
+"super-block backups (for fsck -b #) at:\n"
+" 160, 2720, 5280, 7840\n"
+"# mount /dev/md0a /mnt\n"
+"# df /mnt\n"
+"Filesystem 1K-blocks Used Avail Capacity  Mounted on\n"
+"/dev/md0a       4710    4  4330     0%    /mnt\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1469
@@ -2803,7 +2990,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1473
 #, no-wrap
 msgid "# mdmfs -F newimage -s 5m md0 /mnt\n"
-msgstr ""
+msgstr "# mdmfs -F newimage -s 5m md0 /mnt\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1476
@@ -2816,7 +3003,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1480
 #, no-wrap
 msgid "# mdmfs -s 5m md1 /mnt\n"
-msgstr ""
+msgstr "# mdmfs -s 5m md1 /mnt\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1484
@@ -2880,7 +3067,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1506
 #, no-wrap
 msgid "# mount -u -o snapshot /var/snapshot/snap /var\n"
-msgstr ""
+msgstr "# mount -u -o snapshot /var/snapshot/snap /var\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1509
@@ -2891,7 +3078,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1513
 #, no-wrap
 msgid "# mksnap_ffs /var /var/snapshot/snap\n"
-msgstr ""
+msgstr "# mksnap_ffs /var /var/snapshot/snap\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1516
@@ -2904,7 +3091,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1520
 #, no-wrap
 msgid "# find /var -flags snapshot\n"
-msgstr ""
+msgstr "# find /var -flags snapshot\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1523
@@ -2949,6 +3136,8 @@ msgid ""
 "# mdconfig -a -t vnode -o readonly -f /var/snapshot/snap -u 4\n"
 "# mount -r /dev/md4 /mnt\n"
 msgstr ""
+"# mdconfig -a -t vnode -o readonly -f /var/snapshot/snap -u 4\n"
+"# mount -r /dev/md4 /mnt\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1539
@@ -2966,6 +3155,8 @@ msgid ""
 "# umount /mnt\n"
 "# mdconfig -d -u 4\n"
 msgstr ""
+"# umount /mnt\n"
+"# mdconfig -d -u 4\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1547
@@ -3016,6 +3207,8 @@ msgid ""
 "% sysctl kern.features.ufs_quota\n"
 "kern.features.ufs_quota: 1\n"
 msgstr ""
+"% sysctl kern.features.ufs_quota\n"
+"kern.features.ufs_quota: 1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1569
@@ -3030,7 +3223,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1573
 #, no-wrap
 msgid "options QUOTA\n"
-msgstr ""
+msgstr "options QUOTA\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1576
@@ -3041,7 +3234,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1580
 #, no-wrap
 msgid "quota_enable=\"YES\"\n"
-msgstr ""
+msgstr "quota_enable=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1586
@@ -3057,7 +3250,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1590
 #, no-wrap
 msgid "check_quotas=\"NO\"\n"
-msgstr ""
+msgstr "check_quotas=\"NO\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1595
@@ -3072,7 +3265,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1599
 #, no-wrap
 msgid "/dev/da1s2g   /home    ufs rw,userquota 1 2\n"
-msgstr ""
+msgstr "/dev/da1s2g   /home    ufs rw,userquota 1 2\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1603
@@ -3085,7 +3278,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1607
 #, no-wrap
 msgid "/dev/da1s2g    /home    ufs rw,userquota,groupquota 1 2\n"
-msgstr ""
+msgstr "/dev/da1s2g    /home    ufs rw,userquota,groupquota 1 2\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1612
@@ -3127,7 +3320,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1625
 #, no-wrap
 msgid "# quota -v\n"
-msgstr ""
+msgstr "# quota -v\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1628
@@ -3190,6 +3383,12 @@ msgid ""
 "/usr/var: kbytes in use: 0, limits (soft = 50, hard = 75)\n"
 "        inodes in use: 0, limits (soft = 50, hard = 60)\n"
 msgstr ""
+"# edquota -u test\n"
+"Quotas for user test:\n"
+"/usr: kbytes in use: 65, limits (soft = 50, hard = 75)\n"
+"        inodes in use: 7, limits (soft = 50, hard = 60)\n"
+"/usr/var: kbytes in use: 0, limits (soft = 50, hard = 75)\n"
+"        inodes in use: 0, limits (soft = 50, hard = 60)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1662
@@ -3205,7 +3404,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1666
 #, no-wrap
 msgid "/usr: kbytes in use: 65, limits (soft = 500, hard = 600)\n"
-msgstr ""
+msgstr "/usr: kbytes in use: 65, limits (soft = 500, hard = 600)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1669
@@ -3226,7 +3425,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1678
 #, no-wrap
 msgid "# edquota -p test 10000-19999\n"
-msgstr ""
+msgstr "# edquota -p test 10000-19999\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1681
@@ -3268,6 +3467,11 @@ msgid ""
 "           /usr      65*     50      75   5days       7      50      60\n"
 "       /usr/var       0      50      75               0      50      60\n"
 msgstr ""
+"Disk quotas for user test (uid 1002):\n"
+"     Filesystem  usage    quota   limit   grace   files   quota   limit   "
+"grace\n"
+"           /usr      65*     50      75   5days       7      50      60\n"
+"       /usr/var       0      50      75               0      50      60\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1703
@@ -3303,6 +3507,7 @@ msgstr ""
 #, no-wrap
 msgid "rquotad/1      dgram rpc/udp wait root /usr/libexec/rpc.rquotad rpc.rquotad\n"
 msgstr ""
+"rquotad/1      dgram rpc/udp wait root /usr/libexec/rpc.rquotad rpc.rquotad\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1717
@@ -3313,7 +3518,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1721
 #, no-wrap
 msgid "# service inetd restart\n"
-msgstr ""
+msgstr "# service inetd restart\n"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/disks/_index.adoc:1724
@@ -3392,7 +3597,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1753
 #, no-wrap
 msgid "# kldload geom_bde\n"
-msgstr ""
+msgstr "# kldload geom_bde\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1756
@@ -3403,7 +3608,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1758
 msgid "`options GEOM_BDE`"
-msgstr ""
+msgstr "`options GEOM_BDE`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1760
@@ -3442,6 +3647,10 @@ msgid ""
 "/dev/ad0s1      /dev/ad0s1c     /dev/ad0s1f     /dev/ad4s1c\n"
 "/dev/ad0s1a     /dev/ad0s1d     /dev/ad4\n"
 msgstr ""
+"# ls /dev/ad*\n"
+"/dev/ad0        /dev/ad0s1b     /dev/ad0s1e     /dev/ad4s1\n"
+"/dev/ad0s1      /dev/ad0s1c     /dev/ad0s1f     /dev/ad4s1c\n"
+"/dev/ad0s1a     /dev/ad0s1d     /dev/ad4\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1777
@@ -3452,7 +3661,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1781
 #, no-wrap
 msgid "# mkdir /etc/gbde\n"
-msgstr ""
+msgstr "# mkdir /etc/gbde\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1786
@@ -3492,6 +3701,15 @@ msgid ""
 "sector_size\t=\t2048\n"
 "[...]\n"
 msgstr ""
+"# gbde init /dev/ad4s1c -i -L /etc/gbde/ad4s1c.lock\n"
+"#\n"
+"# Sector size is the smallest unit of data which can be read or written.\n"
+"# Making it too small decreases performance and decreases available space.\n"
+"# Making it too large may prevent filesystems from working.  512 is the\n"
+"# minimum and always safe.  For UFS, use the fragment size\n"
+"#\n"
+"sector_size\t=\t2048\n"
+"[...]\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1810
@@ -3530,7 +3748,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1826
 #, no-wrap
 msgid "# gbde attach /dev/ad4s1c -l /etc/gbde/ad4s1c.lock\n"
-msgstr ""
+msgstr "# gbde attach /dev/ad4s1c -l /etc/gbde/ad4s1c.lock\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1830
@@ -3549,6 +3767,10 @@ msgid ""
 "/dev/ad0s1      /dev/ad0s1c     /dev/ad0s1f     /dev/ad4s1c\n"
 "/dev/ad0s1a     /dev/ad0s1d     /dev/ad4        /dev/ad4s1c.bde\n"
 msgstr ""
+"# ls /dev/ad*\n"
+"/dev/ad0        /dev/ad0s1b     /dev/ad0s1e     /dev/ad4s1\n"
+"/dev/ad0s1      /dev/ad0s1c     /dev/ad0s1f     /dev/ad4s1c\n"
+"/dev/ad0s1a     /dev/ad0s1d     /dev/ad4        /dev/ad4s1c.bde\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1840
@@ -3568,7 +3790,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1848
 #, no-wrap
 msgid "# newfs -U /dev/ad4s1c.bde\n"
-msgstr ""
+msgstr "# newfs -U /dev/ad4s1c.bde\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1851
@@ -3587,6 +3809,8 @@ msgid ""
 "# mkdir /private\n"
 "# mount /dev/ad4s1c.bde /private\n"
 msgstr ""
+"# mkdir /private\n"
+"# mount /dev/ad4s1c.bde /private\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1861
@@ -3611,6 +3835,14 @@ msgid ""
 "/dev/ad0s1d       6.1G   1.9G   3.7G    35%    /usr\n"
 "/dev/ad4s1c.bde   150G   4.1K   138G     0%    /private\n"
 msgstr ""
+"% df -H\n"
+"Filesystem        Size   Used  Avail Capacity  Mounted on\n"
+"/dev/ad0s1a      1037M    72M   883M     8%    /\n"
+"/devfs            1.0K   1.0K     0B   100%    /dev\n"
+"/dev/ad0s1f       8.1G    55K   7.5G     0%    /home\n"
+"/dev/ad0s1e      1037M   1.1M   953M     0%    /tmp\n"
+"/dev/ad0s1d       6.1G   1.9G   3.7G    35%    /usr\n"
+"/dev/ad4s1c.bde   150G   4.1K   138G     0%    /private\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1878
@@ -3629,6 +3861,9 @@ msgid ""
 "gbde_devices=\"ad4s1c\"\n"
 "gbde_lockdir=\"/etc/gbde\"\n"
 msgstr ""
+"gbde_autoattach_all=\"YES\"\n"
+"gbde_devices=\"ad4s1c\"\n"
+"gbde_lockdir=\"/etc/gbde\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1889
@@ -3652,7 +3887,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1899
 #, no-wrap
 msgid "# gbde detach /dev/ad4s1c\n"
-msgstr ""
+msgstr "# gbde detach /dev/ad4s1c\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/disks/_index.adoc:1903
@@ -3754,7 +3989,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1934
 #, no-wrap
 msgid "geom_eli_load=\"YES\"\n"
-msgstr ""
+msgstr "geom_eli_load=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1937
@@ -3765,7 +4000,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1941
 #, no-wrap
 msgid "# kldload geom_eli\n"
-msgstr ""
+msgstr "# kldload geom_eli\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1944
@@ -3781,6 +4016,8 @@ msgid ""
 "options GEOM_ELI\n"
 "device crypto\n"
 msgstr ""
+"options GEOM_ELI\n"
+"device crypto\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1952
@@ -3809,6 +4046,10 @@ msgid ""
 "Enter new passphrase:\n"
 "Reenter new passphrase:\n"
 msgstr ""
+"# dd if=/dev/random of=/root/da2.key bs=64 count=1\n"
+"# geli init -K /root/da2.key -s 4096 /dev/da2\n"
+"Enter new passphrase:\n"
+"Reenter new passphrase:\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1969
@@ -3828,7 +4069,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:1976
 #, no-wrap
 msgid "# cat keyfile1 keyfile2 keyfile3 | geli init -K - /dev/da2\n"
-msgstr ""
+msgstr "# cat keyfile1 keyfile2 keyfile3 | geli init -K - /dev/da2\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1979
@@ -3849,6 +4090,8 @@ msgid ""
 "# geli attach -k /root/da2.key /dev/da2\n"
 "Enter passphrase:\n"
 msgstr ""
+"# geli attach -k /root/da2.key /dev/da2\n"
+"Enter passphrase:\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1989
@@ -3862,6 +4105,8 @@ msgid ""
 "# ls /dev/da2*\n"
 "/dev/da2  /dev/da2.eli\n"
 msgstr ""
+"# ls /dev/da2*\n"
+"/dev/da2  /dev/da2.eli\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:1997
@@ -3883,6 +4128,9 @@ msgid ""
 "# newfs /dev/da2.eli\n"
 "# mount /dev/da2.eli /private\n"
 msgstr ""
+"# dd if=/dev/random of=/dev/da2.eli bs=1m\n"
+"# newfs /dev/da2.eli\n"
+"# mount /dev/da2.eli /private\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2008
@@ -3902,6 +4150,14 @@ msgid ""
 "/dev/ad0s1e    3.9G   1.3G   2.3G    35%    /var\n"
 "/dev/da2.eli   150G   4.1K   138G     0%    /private\n"
 msgstr ""
+"# df -H\n"
+"Filesystem     Size   Used  Avail Capacity  Mounted on\n"
+"/dev/ad0s1a    248M    89M   139M    38%    /\n"
+"/devfs         1.0K   1.0K     0B   100%    /dev\n"
+"/dev/ad0s1f    7.7G   2.3G   4.9G    32%    /usr\n"
+"/dev/ad0s1d    989M   1.5M   909M     0%    /tmp\n"
+"/dev/ad0s1e    3.9G   1.3G   2.3G    35%    /var\n"
+"/dev/da2.eli   150G   4.1K   138G     0%    /private\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2022
@@ -3919,6 +4175,8 @@ msgid ""
 "# umount /private\n"
 "# geli detach da2.eli\n"
 msgstr ""
+"# umount /private\n"
+"# geli detach da2.eli\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2030
@@ -3935,6 +4193,8 @@ msgid ""
 "geli_devices=\"da2\"\n"
 "geli_da2_flags=\"-k /root/da2.key\"\n"
 msgstr ""
+"geli_devices=\"da2\"\n"
+"geli_da2_flags=\"-k /root/da2.key\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2045
@@ -3996,7 +4256,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2066
 #, no-wrap
 msgid "# dd if=/dev/random of=/dev/ada0s1b bs=1m\n"
-msgstr ""
+msgstr "# dd if=/dev/random of=/dev/ada0s1b bs=1m\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2069
@@ -4012,6 +4272,8 @@ msgid ""
 "# Device\t\tMountpoint\tFStype\tOptions\t\tDump\tPass#\n"
 "/dev/ada0s1b.bde\tnone\t\tswap\tsw\t\t0\t0\n"
 msgstr ""
+"# Device\t\tMountpoint\tFStype\tOptions\t\tDump\tPass#\n"
+"/dev/ada0s1b.bde\tnone\t\tswap\tsw\t\t0\t0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2077
@@ -4027,6 +4289,8 @@ msgid ""
 "# Device\t\tMountpoint\tFStype\tOptions\t\tDump\tPass#\n"
 "/dev/ada0s1b.eli\tnone\t\tswap\tsw\t\t0\t0\n"
 msgstr ""
+"# Device\t\tMountpoint\tFStype\tOptions\t\tDump\tPass#\n"
+"/dev/ada0s1b.eli\tnone\t\tswap\tsw\t\t0\t0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2087
@@ -4041,7 +4305,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2088
 #, no-wrap
 msgid "aalgo"
-msgstr ""
+msgstr "aalgo"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2091
@@ -4055,7 +4319,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2092
 #, no-wrap
 msgid "ealgo"
-msgstr ""
+msgstr "ealgo"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2095
@@ -4068,7 +4332,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2096
 #, no-wrap
 msgid "keylen"
-msgstr ""
+msgstr "keylen"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2099
@@ -4081,7 +4345,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2100
 #, no-wrap
 msgid "sectorsize"
-msgstr ""
+msgstr "sectorsize"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2104
@@ -4105,6 +4369,9 @@ msgid ""
 "# Device\t\tMountpoint\tFStype\tOptions\t\t\t\tDump\tPass#\n"
 "/dev/ada0s1b.eli\tnone\t\tswap\tsw,ealgo=AES-XTS,keylen=128,sectorsize=4096\t0\t0\n"
 msgstr ""
+"# Device\t\tMountpoint\tFStype\tOptions\t\t\t\tDump\tPass#\n"
+"/dev/ada0s1b.eli\tnone\t\tswap\tsw,ealgo=AES-XTS,keylen=128,sectorsize="
+"4096\t0\t0\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/disks/_index.adoc:2113
@@ -4132,6 +4399,9 @@ msgid ""
 "Device          1K-blocks     Used    Avail Capacity\n"
 "/dev/ada0s1b.bde   542720        0   542720     0\n"
 msgstr ""
+"% swapinfo\n"
+"Device          1K-blocks     Used    Avail Capacity\n"
+"/dev/ada0s1b.bde   542720        0   542720     0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2127
@@ -4146,6 +4416,9 @@ msgid ""
 "Device          1K-blocks     Used    Avail Capacity\n"
 "/dev/ada0s1b.eli   542720        0   542720     0\n"
 msgstr ""
+"% swapinfo\n"
+"Device          1K-blocks     Used    Avail Capacity\n"
+"/dev/ada0s1b.eli   542720        0   542720     0\n"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/disks/_index.adoc:2136
@@ -4395,7 +4668,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2208
 #, no-wrap
 msgid "options\tGEOM_GATE\n"
-msgstr ""
+msgstr "options\tGEOM_GATE\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2214
@@ -4431,6 +4704,16 @@ msgid ""
 "\t}\n"
 "}\n"
 msgstr ""
+"resource test {\n"
+"\ton hasta {\n"
+"\t\tlocal /dev/ad6\n"
+"\t\tremote 172.16.0.2\n"
+"\t}\n"
+"\ton hastb {\n"
+"\t\tlocal /dev/ad6\n"
+"\t\tremote 172.16.0.1\n"
+"\t}\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2234
@@ -4460,6 +4743,8 @@ msgid ""
 "# hastctl create test\n"
 "# service hastd onestart\n"
 msgstr ""
+"# hastctl create test\n"
+"# service hastd onestart\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2253
@@ -4482,7 +4767,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2261
 #, no-wrap
 msgid "# hastctl role primary test\n"
-msgstr ""
+msgstr "# hastctl role primary test\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2264
@@ -4493,7 +4778,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2268
 #, no-wrap
 msgid "# hastctl role secondary test\n"
-msgstr ""
+msgstr "# hastctl role secondary test\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2271
@@ -4504,7 +4789,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2275
 #, no-wrap
 msgid "# hastctl status test\n"
-msgstr ""
+msgstr "# hastctl status test\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2281
@@ -4533,6 +4818,9 @@ msgid ""
 "# mkdir /hast/test\n"
 "# mount /dev/hast/test /hast/test\n"
 msgstr ""
+"# newfs -U /dev/hast/test\n"
+"# mkdir /hast/test\n"
+"# mount /dev/hast/test /hast/test\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2296
@@ -4546,7 +4834,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2300
 #, no-wrap
 msgid "hastd_enable=\"YES\"\n"
-msgstr ""
+msgstr "hastd_enable=\"YES\"\n"
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/disks/_index.adoc:2302
@@ -4616,6 +4904,12 @@ msgid ""
 "\taction \"/usr/local/sbin/carp-hast-switch primary\";\n"
 "};\n"
 msgstr ""
+"notify 30 {\n"
+"\tmatch \"system\" \"CARP\";\n"
+"\tmatch \"subsystem\" \"<vhid>@<ifname>\";\n"
+"\tmatch \"type\" \"MASTER\";\n"
+"\taction \"/usr/local/sbin/carp-hast-switch primary\";\n"
+"};\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2338
@@ -4628,6 +4922,12 @@ msgid ""
 "\taction \"/usr/local/sbin/carp-hast-switch secondary\";\n"
 "};\n"
 msgstr ""
+"notify 30 {\n"
+"\tmatch \"system\" \"CARP\";\n"
+"\tmatch \"subsystem\" \"<vhid>@<ifname>\";\n"
+"\tmatch \"type\" \"BACKUP\";\n"
+"\taction \"/usr/local/sbin/carp-hast-switch secondary\";\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2341
@@ -4660,7 +4960,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/disks/_index.adoc:2355
 #, no-wrap
 msgid "#!/bin/sh\n"
-msgstr ""
+msgstr "#!/bin/sh\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2359
@@ -4670,6 +4970,9 @@ msgid ""
 "# Modified by Michael W. Lucas <mwlucas@BlackHelicopters.org>\n"
 "# and Viktor Petersson <vpetersson@wireload.net>\n"
 msgstr ""
+"# Original script by Freddie Cash <fjwcash@gmail.com>\n"
+"# Modified by Michael W. Lucas <mwlucas@BlackHelicopters.org>\n"
+"# and Viktor Petersson <vpetersson@wireload.net>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2362
@@ -4678,6 +4981,8 @@ msgid ""
 "# The names of the HAST resources, as listed in /etc/hast.conf\n"
 "resources=\"test\"\n"
 msgstr ""
+"# The names of the HAST resources, as listed in /etc/hast.conf\n"
+"resources=\"test\"\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2366
@@ -4687,6 +4992,9 @@ msgid ""
 "# make your best guess\n"
 "delay=3\n"
 msgstr ""
+"# delay in mounting HAST resource after becoming primary\n"
+"# make your best guess\n"
+"delay=3\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2370
@@ -4696,12 +5004,15 @@ msgid ""
 "log=\"local0.debug\"\n"
 "name=\"carp-hast\"\n"
 msgstr ""
+"# logging\n"
+"log=\"local0.debug\"\n"
+"name=\"carp-hast\"\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2372
 #, no-wrap
 msgid "# end of user configurable stuff\n"
-msgstr ""
+msgstr "# end of user configurable stuff\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2377
@@ -4712,6 +5023,11 @@ msgid ""
 "\t\tlogger -p $log -t $name \"Switching to primary provider for ${resources}.\"\n"
 "\t\tsleep ${delay}\n"
 msgstr ""
+"case \"$1\" in\n"
+"\tprimary)\n"
+"\t\tlogger -p $log -t $name \"Switching to primary provider for ${resources}."
+"\"\n"
+"\t\tsleep ${delay}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2383
@@ -4723,6 +5039,12 @@ msgid ""
 "\t\t\t\tsleep 1\n"
 "\t\t\tdone\n"
 msgstr ""
+"\t\t# Wait for any \"hastd secondary\" processes to stop\n"
+"\t\tfor disk in ${resources}; do\n"
+"\t\t\twhile $( pgrep -lf \"hastd: ${disk} \\(secondary\\)\" > /dev/null 2>&1 "
+"); do\n"
+"\t\t\t\tsleep 1\n"
+"\t\t\tdone\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2391
@@ -4736,6 +5058,14 @@ msgid ""
 "\t\t\tfi\n"
 "\t\tdone\n"
 msgstr ""
+"\t\t\t# Switch role for each disk\n"
+"\t\t\thastctl role primary ${disk}\n"
+"\t\t\tif [ $? -ne 0 ]; then\n"
+"\t\t\t\tlogger -p $log -t $name \"Unable to change role to primary for "
+"resource ${disk}.\"\n"
+"\t\t\t\texit 1\n"
+"\t\t\tfi\n"
+"\t\tdone\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2398
@@ -4748,6 +5078,12 @@ msgid ""
 "\t\t\t\tsleep 0.5\n"
 "\t\t\tdone\n"
 msgstr ""
+"\t\t# Wait for the /dev/hast/* devices to appear\n"
+"\t\tfor disk in ${resources}; do\n"
+"\t\t\tfor I in $( jot 60 ); do\n"
+"\t\t\t\t[ -c \"/dev/hast/${disk}\" ] && break\n"
+"\t\t\t\tsleep 0.5\n"
+"\t\t\tdone\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2404
@@ -4759,12 +5095,20 @@ msgid ""
 "\t\t\tfi\n"
 "\t\tdone\n"
 msgstr ""
+"\t\t\tif [ ! -c \"/dev/hast/${disk}\" ]; then\n"
+"\t\t\t\tlogger -p $log -t $name \"GEOM provider /dev/hast/${disk} did not "
+"appear.\"\n"
+"\t\t\t\texit 1\n"
+"\t\t\tfi\n"
+"\t\tdone\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2406
 #, no-wrap
 msgid "\t\tlogger -p $log -t $name \"Role for HAST resources ${resources} switched to primary.\"\n"
 msgstr ""
+"\t\tlogger -p $log -t $name \"Role for HAST resources ${resources} switched "
+"to primary.\"\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2413
@@ -4777,12 +5121,18 @@ msgid ""
 "\t\t\tmount /dev/hast/${disk} /hast/${disk}\n"
 "\t\tdone\n"
 msgstr ""
+"\t\tlogger -p $log -t $name \"Mounting disks.\"\n"
+"\t\tfor disk in ${resources}; do\n"
+"\t\t\tmkdir -p /hast/${disk}\n"
+"\t\t\tfsck -p -y -t ufs /dev/hast/${disk}\n"
+"\t\t\tmount /dev/hast/${disk} /hast/${disk}\n"
+"\t\tdone\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2415
 #, no-wrap
 msgid "\t;;\n"
-msgstr ""
+msgstr "\t;;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2418
@@ -4791,6 +5141,9 @@ msgid ""
 "\tsecondary)\n"
 "\t\tlogger -p $log -t $name \"Switching to secondary provider for ${resources}.\"\n"
 msgstr ""
+"\tsecondary)\n"
+"\t\tlogger -p $log -t $name \"Switching to secondary provider for "
+"${resources}.\"\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/disks/_index.adoc:2436
@@ -4814,6 +5167,25 @@ msgid ""
 "\t;;\n"
 "esac\n"
 msgstr ""
+"\t\t# Switch roles for the HAST resources\n"
+"\t\tfor disk in ${resources}; do\n"
+"\t\t\tif ! mount | grep -q \"^/dev/hast/${disk} on \"\n"
+"\t\t\tthen\n"
+"\t\t\telse\n"
+"\t\t\t\tumount -f /hast/${disk}\n"
+"\t\t\tfi\n"
+"\t\t\tsleep $delay\n"
+"\t\t\thastctl role secondary ${disk} 2>&1\n"
+"\t\t\tif [ $? -ne 0 ]; then\n"
+"\t\t\t\tlogger -p $log -t $name \"Unable to switch role to secondary for "
+"resource ${disk}.\"\n"
+"\t\t\t\texit 1\n"
+"\t\t\tfi\n"
+"\t\t\tlogger -p $log -t $name \"Role switched to secondary for resource "
+"${disk}.\"\n"
+"\t\tdone\n"
+"\t;;\n"
+"esac\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/disks/_index.adoc:2439
@@ -4939,3 +5311,6 @@ msgid ""
 "# hastctl create test\n"
 "# hastctl role secondary test\n"
 msgstr ""
+"# hastctl role init test\n"
+"# hastctl create test\n"
+"# hastctl role secondary test\n"
