@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-05 17:10+0000\n"
+"PO-Revision-Date: 2025-06-06 22:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookjails_index/ru/>\n"
@@ -529,6 +529,8 @@ msgid ""
 "# sysrc jail_enable=\"YES\"\n"
 "# sysrc jail_parallel_start=\"YES\"\n"
 msgstr ""
+"# sysrc jail_enable=\"YES\"\n"
+"# sysrc jail_parallel_start=\"YES\"\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:219
@@ -654,6 +656,10 @@ msgid ""
 "# zfs create zroot/jails/templates\n"
 "# zfs create zroot/jails/containers\n"
 msgstr ""
+"# zfs create -o mountpoint=/usr/local/jails zroot/jails\n"
+"# zfs create zroot/jails/media\n"
+"# zfs create zroot/jails/templates\n"
+"# zfs create zroot/jails/containers\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:267
@@ -677,6 +683,10 @@ msgid ""
 "# mkdir /usr/local/jails/templates\n"
 "# mkdir /usr/local/jails/containers\n"
 msgstr ""
+"# mkdir /usr/local/jails/\n"
+"# mkdir /usr/local/jails/media\n"
+"# mkdir /usr/local/jails/templates\n"
+"# mkdir /usr/local/jails/containers\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:280
@@ -717,7 +727,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:295
 #, no-wrap
 msgid ".include \"/etc/jail.conf.d/*.conf\";\n"
-msgstr ""
+msgstr ".include \"/etc/jail.conf.d/*.conf\";\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:298
@@ -734,6 +744,11 @@ msgid ""
 "  exec.stop = \"/bin/sh /etc/rc.shutdown\"; <.>\n"
 "  exec.consolelog = \"/var/log/jail_console_${name}.log\"; <.>\n"
 msgstr ""
+"jailname { <.>\n"
+"  # STARTUP/LOGGING\n"
+"  exec.start = \"/bin/sh /etc/rc\"; <.>\n"
+"  exec.stop = \"/bin/sh /etc/rc.shutdown\"; <.>\n"
+"  exec.consolelog = \"/var/log/jail_console_${name}.log\"; <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:311
@@ -744,6 +759,10 @@ msgid ""
 "  exec.clean; <.>\n"
 "  mount.devfs; <.>\n"
 msgstr ""
+"  # PERMISSIONS\n"
+"  allow.raw_sockets; <.>\n"
+"  exec.clean; <.>\n"
+"  mount.devfs; <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:315
@@ -753,6 +772,9 @@ msgid ""
 "  host.hostname = \"${name}\"; <.>\n"
 "  path = \"/usr/local/jails/containers/${name}\"; <.>\n"
 msgstr ""
+"  # HOSTNAME/PATH\n"
+"  host.hostname = \"${name}\"; <.>\n"
+"  path = \"/usr/local/jails/containers/${name}\"; <.>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:321
@@ -764,6 +786,11 @@ msgid ""
 "  interface = em0; <.>\n"
 "}\n"
 msgstr ""
+"  # NETWORK\n"
+"  ip4.addr = 192.168.1.151; <.>\n"
+"  ip6.addr = ::ffff:c0a8:197 <.>\n"
+"  interface = em0; <.>\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:324
@@ -901,6 +928,8 @@ msgstr ""
 #, no-wrap
 msgid "# fetch https://download.freebsd.org/ftp/releases/amd64/amd64/14.2-RELEASE/base.txz -o /usr/local/jails/media/14.2-RELEASE-base.txz\n"
 msgstr ""
+"# fetch https://download.freebsd.org/ftp/releases/amd64/amd64/14.2-RELEASE/"
+"base.txz -o /usr/local/jails/media/14.2-RELEASE-base.txz\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:370
@@ -923,6 +952,9 @@ msgid ""
 "# mkdir -p /usr/local/jails/containers/classic\n"
 "# tar -xf /usr/local/jails/media/14.2-RELEASE-base.txz -C /usr/local/jails/containers/classic --unlink\n"
 msgstr ""
+"# mkdir -p /usr/local/jails/containers/classic\n"
+"# tar -xf /usr/local/jails/media/14.2-RELEASE-base.txz -C /usr/local/jails/"
+"containers/classic --unlink\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:380
@@ -938,6 +970,8 @@ msgid ""
 "# cp /etc/resolv.conf /usr/local/jails/containers/classic/etc/resolv.conf\n"
 "# cp /etc/localtime /usr/local/jails/containers/classic/etc/localtime\n"
 msgstr ""
+"# cp /etc/resolv.conf /usr/local/jails/containers/classic/etc/resolv.conf\n"
+"# cp /etc/localtime /usr/local/jails/containers/classic/etc/localtime\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:388
@@ -951,6 +985,7 @@ msgstr ""
 #, no-wrap
 msgid "# freebsd-update -b /usr/local/jails/containers/classic/ fetch install\n"
 msgstr ""
+"# freebsd-update -b /usr/local/jails/containers/classic/ fetch install\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:396
@@ -977,6 +1012,11 @@ msgid ""
 "  exec.stop = \"/bin/sh /etc/rc.shutdown\";\n"
 "  exec.consolelog = \"/var/log/jail_console_${name}.log\";\n"
 msgstr ""
+"classic {\n"
+"  # STARTUP/LOGGING\n"
+"  exec.start = \"/bin/sh /etc/rc\";\n"
+"  exec.stop = \"/bin/sh /etc/rc.shutdown\";\n"
+"  exec.consolelog = \"/var/log/jail_console_${name}.log\";\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:411
@@ -989,6 +1029,10 @@ msgid ""
 "  exec.clean;\n"
 "  mount.devfs;\n"
 msgstr ""
+"  # PERMISSIONS\n"
+"  allow.raw_sockets;\n"
+"  exec.clean;\n"
+"  mount.devfs;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:415
@@ -1000,6 +1044,9 @@ msgid ""
 "  host.hostname = \"${name}\";\n"
 "  path = \"/usr/local/jails/containers/${name}\";\n"
 msgstr ""
+"  # HOSTNAME/PATH\n"
+"  host.hostname = \"${name}\";\n"
+"  path = \"/usr/local/jails/containers/${name}\";\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:420
@@ -1010,6 +1057,10 @@ msgid ""
 "  interface = em0;\n"
 "}\n"
 msgstr ""
+"  # NETWORK\n"
+"  ip4.addr = 192.168.1.151;\n"
+"  interface = em0;\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:423
@@ -1022,7 +1073,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:427
 #, no-wrap
 msgid "# service jail start classic\n"
-msgstr ""
+msgstr "# service jail start classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:430
@@ -1081,7 +1132,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:455
 #, no-wrap
 msgid "# zfs create -p zroot/jails/templates/14.2-RELEASE\n"
-msgstr ""
+msgstr "# zfs create -p zroot/jails/templates/14.2-RELEASE\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:458
@@ -1102,6 +1153,8 @@ msgstr ""
 #, no-wrap
 msgid "# tar -xf /usr/local/jails/media/14.2-RELEASE-base.txz -C /usr/local/jails/templates/14.2-RELEASE --unlink\n"
 msgstr ""
+"# tar -xf /usr/local/jails/media/14.2-RELEASE-base.txz -C /usr/local/jails/"
+"templates/14.2-RELEASE --unlink\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:472
@@ -1118,6 +1171,9 @@ msgid ""
 "# cp /etc/resolv.conf /usr/local/jails/templates/14.2-RELEASE/etc/resolv.conf\n"
 "# cp /etc/localtime /usr/local/jails/templates/14.2-RELEASE/etc/localtime\n"
 msgstr ""
+"# cp /etc/resolv.conf /usr/local/jails/templates/14.2-RELEASE/etc/resolv."
+"conf\n"
+"# cp /etc/localtime /usr/local/jails/templates/14.2-RELEASE/etc/localtime\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:480
@@ -1131,6 +1187,7 @@ msgstr ""
 #, no-wrap
 msgid "# freebsd-update -b /usr/local/jails/templates/14.2-RELEASE/ fetch install\n"
 msgstr ""
+"# freebsd-update -b /usr/local/jails/templates/14.2-RELEASE/ fetch install\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:487
@@ -1148,7 +1205,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:493
 #, no-wrap
 msgid "# zfs snapshot zroot/jails/templates/14.2-RELEASE@base\n"
-msgstr ""
+msgstr "# zfs snapshot zroot/jails/templates/14.2-RELEASE@base\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:496
@@ -1167,6 +1224,8 @@ msgstr ""
 #, no-wrap
 msgid "# zfs clone zroot/jails/templates/14.2-RELEASE@base zroot/jails/containers/thinjail\n"
 msgstr ""
+"# zfs clone zroot/jails/templates/14.2-RELEASE@base zroot/jails/containers/"
+"thinjail\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:516
@@ -1179,6 +1238,11 @@ msgid ""
 "  exec.stop = \"/bin/sh /etc/rc.shutdown\";\n"
 "  exec.consolelog = \"/var/log/jail_console_${name}.log\";\n"
 msgstr ""
+"thinjail {\n"
+"  # STARTUP/LOGGING\n"
+"  exec.start = \"/bin/sh /etc/rc\";\n"
+"  exec.stop = \"/bin/sh /etc/rc.shutdown\";\n"
+"  exec.consolelog = \"/var/log/jail_console_${name}.log\";\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:530
@@ -1189,13 +1253,17 @@ msgid ""
 "  interface = em0;\n"
 "}\n"
 msgstr ""
+"  # NETWORK\n"
+"  ip4 = inherit;\n"
+"  interface = em0;\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:537
 #: documentation/content/en/books/handbook/jails/_index.adoc:702
 #, no-wrap
 msgid "# service jail start thinjail\n"
-msgstr ""
+msgstr "# service jail start thinjail\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:543
@@ -1222,7 +1290,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:552
 #, no-wrap
 msgid "# zfs create -p zroot/jails/templates/14.2-RELEASE-base\n"
-msgstr ""
+msgstr "# zfs create -p zroot/jails/templates/14.2-RELEASE-base\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:555
@@ -1233,13 +1301,15 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:559
 #, no-wrap
 msgid "# mkdir /usr/local/jails/templates/14.2-RELEASE-base\n"
-msgstr ""
+msgstr "# mkdir /usr/local/jails/templates/14.2-RELEASE-base\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:573
 #, no-wrap
 msgid "# tar -xf /usr/local/jails/media/14.2-RELEASE-base.txz -C /usr/local/jails/templates/14.2-RELEASE-base --unlink\n"
 msgstr ""
+"# tar -xf /usr/local/jails/media/14.2-RELEASE-base.txz -C /usr/local/jails/"
+"templates/14.2-RELEASE-base --unlink\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:576
@@ -1256,6 +1326,10 @@ msgid ""
 "# cp /etc/resolv.conf /usr/local/jails/templates/14.2-RELEASE-base/etc/resolv.conf\n"
 "# cp /etc/localtime /usr/local/jails/templates/14.2-RELEASE-base/etc/localtime\n"
 msgstr ""
+"# cp /etc/resolv.conf /usr/local/jails/templates/14.2-RELEASE-base/etc/resolv"
+".conf\n"
+"# cp /etc/localtime /usr/local/jails/templates/14.2-RELEASE-base/etc/"
+"localtime\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:584
@@ -1269,6 +1343,8 @@ msgstr ""
 #, no-wrap
 msgid "# freebsd-update -b /usr/local/jails/templates/14.2-RELEASE-base/ fetch install\n"
 msgstr ""
+"# freebsd-update -b /usr/local/jails/templates/14.2-RELEASE-base/ fetch "
+"install\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:592
@@ -1289,7 +1365,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:598
 #, no-wrap
 msgid "# zfs create -p zroot/jails/templates/14.2-RELEASE-skeleton\n"
-msgstr ""
+msgstr "# zfs create -p zroot/jails/templates/14.2-RELEASE-skeleton\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:601
@@ -1300,7 +1376,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:605
 #, no-wrap
 msgid "# mkdir /usr/local/jails/templates/14.2-RELEASE-skeleton\n"
-msgstr ""
+msgstr "# mkdir /usr/local/jails/templates/14.2-RELEASE-skeleton\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:609
@@ -1326,6 +1402,18 @@ msgid ""
 "# mv /usr/local/jails/templates/14.2-RELEASE-base/var /usr/local/jails/templates/14.2-RELEASE-skeleton/var\n"
 "# mv /usr/local/jails/templates/14.2-RELEASE-base/root /usr/local/jails/templates/14.2-RELEASE-skeleton/root\n"
 msgstr ""
+"# mkdir -p /usr/local/jails/templates/14.2-RELEASE-skeleton/home\n"
+"# mkdir -p /usr/local/jails/templates/14.2-RELEASE-skeleton/usr\n"
+"# mv /usr/local/jails/templates/14.2-RELEASE-base/etc /usr/local/jails/"
+"templates/14.2-RELEASE-skeleton/etc\n"
+"# mv /usr/local/jails/templates/14.2-RELEASE-base/usr/local /usr/local/jails/"
+"templates/14.2-RELEASE-skeleton/usr/local\n"
+"# mv /usr/local/jails/templates/14.2-RELEASE-base/tmp /usr/local/jails/"
+"templates/14.2-RELEASE-skeleton/tmp\n"
+"# mv /usr/local/jails/templates/14.2-RELEASE-base/var /usr/local/jails/"
+"templates/14.2-RELEASE-skeleton/var\n"
+"# mv /usr/local/jails/templates/14.2-RELEASE-base/root /usr/local/jails/"
+"templates/14.2-RELEASE-skeleton/root\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:624
@@ -1347,6 +1435,14 @@ msgid ""
 "# ln -s skeleton/tmp tmp\n"
 "# ln -s skeleton/var var\n"
 msgstr ""
+"# cd /usr/local/jails/templates/14.2-RELEASE-base/\n"
+"# mkdir skeleton\n"
+"# ln -s skeleton/etc etc\n"
+"# ln -s skeleton/home home\n"
+"# ln -s skeleton/root root\n"
+"# ln -s ../skeleton/usr/local usr/local\n"
+"# ln -s skeleton/tmp tmp\n"
+"# ln -s skeleton/var var\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:638
@@ -1369,6 +1465,9 @@ msgid ""
 "# zfs snapshot zroot/jails/templates/14.2-RELEASE-skeleton@base\n"
 "# zfs clone zroot/jails/templates/14.2-RELEASE-skeleton@base zroot/jails/containers/thinjail\n"
 msgstr ""
+"# zfs snapshot zroot/jails/templates/14.2-RELEASE-skeleton@base\n"
+"# zfs clone zroot/jails/templates/14.2-RELEASE-skeleton@base zroot/jails/"
+"containers/thinjail\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:648
@@ -1382,6 +1481,8 @@ msgstr ""
 #, no-wrap
 msgid "# cp -R /usr/local/jails/templates/14.2-RELEASE-skeleton /usr/local/jails/containers/thinjail\n"
 msgstr ""
+"# cp -R /usr/local/jails/templates/14.2-RELEASE-skeleton /usr/local/jails/"
+"containers/thinjail\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:655
@@ -1394,7 +1495,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:659
 #, no-wrap
 msgid "# mkdir -p /usr/local/jails/thinjail-nullfs-base\n"
-msgstr ""
+msgstr "# mkdir -p /usr/local/jails/thinjail-nullfs-base\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:662
@@ -1411,6 +1512,9 @@ msgid ""
 "  host.hostname = \"${name}\";\n"
 "  path = \"/usr/local/jails/${name}-nullfs-base\";\n"
 msgstr ""
+"  # HOSTNAME/PATH\n"
+"  host.hostname = \"${name}\";\n"
+"  path = \"/usr/local/jails/${name}-nullfs-base\";\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:683
@@ -1420,6 +1524,9 @@ msgid ""
 "  ip4.addr = 192.168.1.153;\n"
 "  interface = em0;\n"
 msgstr ""
+"  # NETWORK\n"
+"  ip4.addr = 192.168.1.153;\n"
+"  interface = em0;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:687
@@ -1429,6 +1536,9 @@ msgid ""
 "  mount.fstab = \"/usr/local/jails/${name}-nullfs-base.fstab\";\n"
 "}\n"
 msgstr ""
+"  # MOUNT\n"
+"  mount.fstab = \"/usr/local/jails/${name}-nullfs-base.fstab\";\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:690
@@ -1444,6 +1554,10 @@ msgid ""
 "/usr/local/jails/templates/14.2-RELEASE-base  /usr/local/jails/thinjail-nullfs-base/ nullfs   ro          0 0\n"
 "/usr/local/jails/containers/thinjail     /usr/local/jails/thinjail-nullfs-base/skeleton nullfs  rw  0 0\n"
 msgstr ""
+"/usr/local/jails/templates/14.2-RELEASE-base  /usr/local/jails/"
+"thinjail-nullfs-base/ nullfs   ro          0 0\n"
+"/usr/local/jails/containers/thinjail     /usr/local/jails/"
+"thinjail-nullfs-base/skeleton nullfs  rw  0 0\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:705
@@ -1469,7 +1583,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:714
 #, no-wrap
 msgid "# ifconfig bridge create\n"
-msgstr ""
+msgstr "# ifconfig bridge create\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:717
@@ -1482,7 +1596,7 @@ msgstr "Вывод должен быть похож на следующий:"
 #: documentation/content/en/books/handbook/jails/_index.adoc:721
 #, no-wrap
 msgid "bridge0\n"
-msgstr ""
+msgstr "bridge0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:724
@@ -1498,6 +1612,8 @@ msgid ""
 "# ifconfig bridge0 addm em0 up\n"
 "# ifconfig em0 up\n"
 msgstr ""
+"# ifconfig bridge0 addm em0 up\n"
+"# ifconfig em0 up\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:732
@@ -1515,6 +1631,10 @@ msgid ""
 "ifconfig_bridge0=\"inet 192.168.1.150/24 addm em0 up\"\n"
 "ifconfig_em0=\"up\"\n"
 msgstr ""
+"defaultrouter=\"192.168.1.1\"\n"
+"cloned_interfaces=\"bridge0\"\n"
+"ifconfig_bridge0=\"inet 192.168.1.150/24 addm em0 up\"\n"
+"ifconfig_em0=\"up\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:742
@@ -1557,6 +1677,9 @@ msgid ""
 "  # STARTUP/LOGGING\n"
 "  exec.consolelog = \"/var/log/jail_console_${name}.log\";\n"
 msgstr ""
+"vnet {\n"
+"  # STARTUP/LOGGING\n"
+"  exec.consolelog = \"/var/log/jail_console_${name}.log\";\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:764
@@ -1568,6 +1691,11 @@ msgid ""
 "  mount.devfs;\n"
 "  devfs_ruleset = 5;\n"
 msgstr ""
+"  # PERMISSIONS\n"
+"  allow.raw_sockets;\n"
+"  exec.clean;\n"
+"  mount.devfs;\n"
+"  devfs_ruleset = 5;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:768
@@ -1577,6 +1705,9 @@ msgid ""
 "  path = \"/usr/local/jails/containers/${name}\";\n"
 "  host.hostname = \"${name}\";\n"
 msgstr ""
+"  # PATH/HOSTNAME\n"
+"  path = \"/usr/local/jails/containers/${name}\";\n"
+"  host.hostname = \"${name}\";\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:772
@@ -1586,6 +1717,9 @@ msgid ""
 "  vnet;\n"
 "  vnet.interface = \"${epair}b\";\n"
 msgstr ""
+"  # VNET/VIMAGE\n"
+"  vnet;\n"
+"  vnet.interface = \"${epair}b\";\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:779
@@ -1598,6 +1732,12 @@ msgid ""
 "  $bridge = \"bridge0\"; <.>\n"
 "  $epair = \"epair${id}\";\n"
 msgstr ""
+"  # NETWORKS/INTERFACES\n"
+"  $id = \"154\"; <.>\n"
+"  $ip = \"192.168.1.${id}/24\";\n"
+"  $gateway = \"192.168.1.1\";\n"
+"  $bridge = \"bridge0\"; <.>\n"
+"  $epair = \"epair${id}\";\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:791
@@ -1615,6 +1755,17 @@ msgid ""
 "  exec.poststop += \"/sbin/ifconfig ${epair}a destroy\";\n"
 "}\n"
 msgstr ""
+"  # ADD TO bridge INTERFACE\n"
+"  exec.prestart  = \"/sbin/ifconfig ${epair} create up\";\n"
+"  exec.prestart += \"/sbin/ifconfig ${epair}a up descr jail:${name}\";\n"
+"  exec.prestart += \"/sbin/ifconfig ${bridge} addm ${epair}a up\";\n"
+"  exec.start    += \"/sbin/ifconfig ${epair}b ${ip} up\";\n"
+"  exec.start    += \"/sbin/route add default ${gateway}\";\n"
+"  exec.start\t+= \"/bin/sh /etc/rc\";\n"
+"  exec.stop\t= \"/bin/sh /etc/rc.shutdown\";\n"
+"  exec.poststop = \"/sbin/ifconfig ${bridge} deletem ${epair}a\";\n"
+"  exec.poststop += \"/sbin/ifconfig ${epair}a destroy\";\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:794
@@ -1705,6 +1856,24 @@ msgid ""
 "    allow.mount.tmpfs \\\n"
 "    enforce_statfs=1\n"
 msgstr ""
+"# jail -cm \\\n"
+"    name=ubuntu \\\n"
+"    host.hostname=\"ubuntu.example.com\" \\\n"
+"    path=\"/usr/local/jails/ubuntu\" \\\n"
+"    interface=\"em0\" \\\n"
+"    ip4.addr=\"192.168.1.150\" \\\n"
+"    exec.start=\"/bin/sh /etc/rc\" \\\n"
+"    exec.stop=\"/bin/sh /etc/rc.shutdown\" \\\n"
+"    mount.devfs \\\n"
+"    devfs_ruleset=4 \\\n"
+"    allow.mount \\\n"
+"    allow.mount.devfs \\\n"
+"    allow.mount.fdescfs \\\n"
+"    allow.mount.procfs \\\n"
+"    allow.mount.linprocfs \\\n"
+"    allow.mount.linsysfs \\\n"
+"    allow.mount.tmpfs \\\n"
+"    enforce_statfs=1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:847
@@ -1722,7 +1891,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:853
 #, no-wrap
 msgid "# jexec -u root ubuntu\n"
-msgstr ""
+msgstr "# jexec -u root ubuntu\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:856
@@ -1738,6 +1907,8 @@ msgid ""
 "# pkg install debootstrap\n"
 "# debootstrap jammy /compat/ubuntu\n"
 msgstr ""
+"# pkg install debootstrap\n"
+"# debootstrap jammy /compat/ubuntu\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:865
@@ -1751,7 +1922,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:869
 #, no-wrap
 msgid "# service jail onestop ubuntu\n"
-msgstr ""
+msgstr "# service jail onestop ubuntu\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:872
@@ -1768,6 +1939,11 @@ msgid ""
 "  exec.stop = \"/bin/sh /etc/rc.shutdown\";\n"
 "  exec.consolelog = \"/var/log/jail_console_${name}.log\";\n"
 msgstr ""
+"ubuntu {\n"
+"  # STARTUP/LOGGING\n"
+"  exec.start = \"/bin/sh /etc/rc\";\n"
+"  exec.stop = \"/bin/sh /etc/rc.shutdown\";\n"
+"  exec.consolelog = \"/var/log/jail_console_${name}.log\";\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:886
@@ -1779,6 +1955,11 @@ msgid ""
 "  mount.devfs;\n"
 "  devfs_ruleset = 4;\n"
 msgstr ""
+"  # PERMISSIONS\n"
+"  allow.raw_sockets;\n"
+"  exec.clean;\n"
+"  mount.devfs;\n"
+"  devfs_ruleset = 4;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:894
@@ -1788,6 +1969,9 @@ msgid ""
 "  ip4.addr = 192.168.1.155;\n"
 "  interface = em0;\n"
 msgstr ""
+"  # NETWORK\n"
+"  ip4.addr = 192.168.1.155;\n"
+"  interface = em0;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:904
@@ -1803,6 +1987,17 @@ msgid ""
 "  mount += \"/home     $path/compat/ubuntu/home    nullfs    rw  0 0\";\n"
 "}\n"
 msgstr ""
+"  # MOUNT\n"
+"  mount += \"devfs     $path/compat/ubuntu/dev     devfs     rw  0 0\";\n"
+"  mount += \"tmpfs     $path/compat/ubuntu/dev/shm tmpfs     "
+"rw,size=1g,mode=1777  0 0\";\n"
+"  mount += \"fdescfs   $path/compat/ubuntu/dev/fd  fdescfs   rw,linrdlnk 0 "
+"0\";\n"
+"  mount += \"linprocfs $path/compat/ubuntu/proc    linprocfs rw  0 0\";\n"
+"  mount += \"linsysfs  $path/compat/ubuntu/sys     linsysfs  rw  0 0\";\n"
+"  mount += \"/tmp      $path/compat/ubuntu/tmp     nullfs    rw  0 0\";\n"
+"  mount += \"/home     $path/compat/ubuntu/home    nullfs    rw  0 0\";\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:907
@@ -1813,7 +2008,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:911
 #, no-wrap
 msgid "# service jail start ubuntu\n"
-msgstr ""
+msgstr "# service jail start ubuntu\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:914
@@ -1824,7 +2019,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:918
 #, no-wrap
 msgid "# jexec ubuntu chroot /compat/ubuntu /bin/bash\n"
-msgstr ""
+msgstr "# jexec ubuntu chroot /compat/ubuntu /bin/bash\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:921
@@ -1863,7 +2058,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:936
 #, no-wrap
 msgid "# grep _svcj_options /path/to/rc.d/servicename\n"
-msgstr ""
+msgstr "# grep _svcj_options /path/to/rc.d/servicename\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:939
@@ -1883,7 +2078,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:945
 #, no-wrap
 msgid "# sysrc servicename_svcj_options=net_basic\n"
-msgstr ""
+msgstr "# sysrc servicename_svcj_options=net_basic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:948
@@ -1906,6 +2101,9 @@ msgid ""
 "# sysrc syslogd_svcj=YES\n"
 "# service syslogd start\n"
 msgstr ""
+"# service syslogd stop\n"
+"# sysrc syslogd_svcj=YES\n"
+"# service syslogd start\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:961
@@ -1958,7 +2156,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:979
 #, no-wrap
 msgid "# jls\n"
-msgstr ""
+msgstr "# jls\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:986
@@ -1967,6 +2165,9 @@ msgid ""
 "   JID  IP Address      Hostname                      Path\n"
 "     1  192.168.250.70  classic                       /usr/local/jails/containers/classic\n"
 msgstr ""
+"   JID  IP Address      Hostname                      Path\n"
+"     1  192.168.250.70  classic                       /usr/local/jails/"
+"containers/classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:989
@@ -1985,13 +2186,16 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:995
 #, no-wrap
 msgid "# jls --libxo=json\n"
-msgstr ""
+msgstr "# jls --libxo=json\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1001
 #, no-wrap
 msgid "{\"__version\": \"2\", \"jail-information\": {\"jail\": [{\"jid\":1,\"ipv4\":\"192.168.250.70\",\"hostname\":\"classic\",\"path\":\"/usr/local/jails/containers/classic\"}]}}\n"
 msgstr ""
+"{\"__version\": \"2\", \"jail-information\": {\"jail\": [{\"jid\":1,\"ipv4\":"
+"\"192.168.250.70\",\"hostname\":\"classic\",\"path\":\"/usr/local/jails/"
+"containers/classic\"}]}}\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:1004
@@ -2013,7 +2217,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:1013
 #, no-wrap
 msgid "# service jail start jailname\n"
-msgstr ""
+msgstr "# service jail start jailname\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1016
@@ -2053,7 +2257,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:1031
 #, no-wrap
 msgid "# service jail stop jailname\n"
-msgstr ""
+msgstr "# service jail stop jailname\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1034
@@ -2066,7 +2270,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:1038
 #, no-wrap
 msgid "# chflags -R 0 /usr/local/jails/containers/classic\n"
-msgstr ""
+msgstr "# chflags -R 0 /usr/local/jails/containers/classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1041
@@ -2077,7 +2281,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:1045
 #, no-wrap
 msgid "# rm -rf /usr/local/jails/containers/classic\n"
-msgstr ""
+msgstr "# rm -rf /usr/local/jails/containers/classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1048
@@ -2110,7 +2314,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:1059
 #, no-wrap
 msgid "# pkg -j classic install nginx-lite\n"
-msgstr ""
+msgstr "# pkg -j classic install nginx-lite\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1062
@@ -2141,7 +2345,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:1073
 #, no-wrap
 msgid "# jexec -u root jailname\n"
-msgstr ""
+msgstr "# jexec -u root jailname\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1076
@@ -2174,7 +2378,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:1087
 #, no-wrap
 msgid "# jexec -l jailname service nginx stop\n"
-msgstr ""
+msgstr "# jexec -l jailname service nginx stop\n"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/jails/_index.adoc:1090
@@ -2219,6 +2423,8 @@ msgid ""
 "# freebsd-update -j classic fetch install\n"
 "# service jail restart classic\n"
 msgstr ""
+"# freebsd-update -j classic fetch install\n"
+"# service jail restart classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1111
@@ -2253,6 +2459,11 @@ msgid ""
 "# freebsd-update -j classic install\n"
 "# service jail restart classic\n"
 msgstr ""
+"# freebsd-update -j classic -r 13.2-RELEASE upgrade\n"
+"# freebsd-update -j classic install\n"
+"# service jail restart classic\n"
+"# freebsd-update -j classic install\n"
+"# service jail restart classic\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1132
@@ -2281,6 +2492,8 @@ msgid ""
 "# pkg -j jailname upgrade -f\n"
 "# service jail restart jailname\n"
 msgstr ""
+"# pkg -j jailname upgrade -f\n"
+"# service jail restart jailname\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:1146
@@ -2310,6 +2523,9 @@ msgid ""
 "# freebsd-update -b /usr/local/jails/templates/13.1-RELEASE-base/ fetch install\n"
 "# service jail restart\n"
 msgstr ""
+"# freebsd-update -b /usr/local/jails/templates/13.1-RELEASE-base/ fetch "
+"install\n"
+"# service jail restart\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1162
@@ -2337,6 +2553,12 @@ msgid ""
 "# freebsd-update -b /usr/local/jails/templates/13.1-RELEASE-base/ install\n"
 "# service jail restart\n"
 msgstr ""
+"# freebsd-update -b /usr/local/jails/templates/13.1-RELEASE-base/ -r 13.2-"
+"RELEASE upgrade\n"
+"# freebsd-update -b /usr/local/jails/templates/13.1-RELEASE-base/ install\n"
+"# service jail restart\n"
+"# freebsd-update -b /usr/local/jails/templates/13.1-RELEASE-base/ install\n"
+"# service jail restart\n"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/jails/_index.adoc:1175
@@ -2374,7 +2596,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:1191
 #, no-wrap
 msgid "rctl -a jail:<jailname>:resource:action=amount/percentage\n"
-msgstr ""
+msgstr "rctl -a jail:<jailname>:resource:action=amount/percentage\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1194
@@ -2387,7 +2609,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:1198
 #, no-wrap
 msgid "# rctl -a jail:classic:memoryuse:deny=2G\n"
-msgstr ""
+msgstr "# rctl -a jail:classic:memoryuse:deny=2G\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1201
@@ -2401,7 +2623,7 @@ msgstr ""
 #: documentation/content/en/books/handbook/jails/_index.adoc:1205
 #, no-wrap
 msgid "jail:classic:memoryuse:deny=2G/jail\n"
-msgstr ""
+msgstr "jail:classic:memoryuse:deny=2G/jail\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1208
