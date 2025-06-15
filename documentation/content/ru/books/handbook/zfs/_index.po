@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-15 04:45+0000\n"
+"PO-Revision-Date: 2025-06-15 21:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookzfs_index/ru/>\n"
@@ -6286,7 +6286,7 @@ msgid ""
 "loader.conf#."
 msgstr ""
 "[[zfs-advanced-tuning-vdev-cache-size]] `_vfs.zfs.vdev.cache.size_` - "
-"Предварительно выделенный объем памяти, зарезервированный в качестве кеша "
+"Предварительно выделенный объем памяти, зарезервированный в качестве кэша "
 "для каждого устройства в пуле. Общий объем используемой памяти будет равен "
 "этому значению, умноженному на количество устройств. Установите это значение "
 "при загрузке и в [.filename]#/boot/loader.conf#."
@@ -6789,7 +6789,7 @@ msgstr "[[zfs-term-vdev]]vdev Types"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2832
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "A pool consists of one or more vdevs, which themselves are a single disk or a group of disks, transformed to a RAID. When using a lot of vdevs, ZFS spreads data across the vdevs to increase performance and maximize usable space. All vdevs must be at least 128 MB in size.\n"
 "\n"
@@ -6830,7 +6830,7 @@ msgstr ""
 "повышения производительности и максимизации доступного пространства. Все "
 "vdev должны быть размером не менее 128 МБ.\n"
 "\n"
-"* [[zfs-term-vdev-disk]] _Диск_ - Самый базовый тип vdev — это стандартное "
+"* [[zfs-term-vdev-disk]] _Диск_ — Самый базовый тип vdev — это стандартное "
 "блочное устройство. Это может быть целый диск (например, [.filename]#/dev/"
 "ada0# или [.filename]#/dev/da0#) или раздел ([.filename]#/dev/ada0p3#). В "
 "FreeBSD нет потери производительности при использовании раздела вместо "
@@ -6846,7 +6846,7 @@ msgstr ""
 "невозможно, и нет места для размещения загрузочного кода.\n"
 "====\n"
 "\n"
-"* [[zfs-term-vdev-file]] _Файл_ - Обычные файлы могут составлять пулы ZFS, "
+"* [[zfs-term-vdev-file]] _Файл_ — Обычные файлы могут составлять пулы ZFS, "
 "что полезно для тестирования и экспериментов. Используйте полный путь к "
 "файлу в качестве пути к устройству в команде `zpool create`.\n"
 "* [[zfs-term-vdev-mirror]] _Зеркало (Mirror)_ - При создании зеркала укажите "
@@ -6866,13 +6866,13 @@ msgstr ""
 "\n"
 "* [[zfs-term-vdev-raidz]] _RAID-Z_ - ZFS использует RAID-Z — вариацию "
 "стандартного RAID-5, которая обеспечивает лучшее распределение четности и "
-"устраняет \"проблему записи RAID-5\", когда данные и информация о четности "
-"становятся несогласованными после неожиданного перезапуска. ZFS поддерживает "
-"три уровня RAID-Z, которые обеспечивают разную степень избыточности в обмен "
-"на уменьшение доступного пространства. ZFS использует RAID-Z1, RAID-Z2 и "
-"RAID-Z3 в зависимости от количества устройств четности в массиве и "
-"количества дисков, которые могут отказать до того, как пул перестанет "
-"работать.\n"
+"устраняет проблему \"записи дырки RAID-5\", когда данные и информация о "
+"четности становятся несогласованными после неожиданного перезапуска. ZFS "
+"поддерживает три уровня RAID-Z, которые обеспечивают разную степень "
+"избыточности в обмен на уменьшение доступного пространства. ZFS использует "
+"RAID-Z1, RAID-Z2 и RAID-Z3 в зависимости от количества устройств четности в "
+"массиве и количества дисков, которые могут отказать до того, как пул "
+"перестанет работать.\n"
 "+\n"
 "В конфигурации RAID-Z1 с четырьмя дисками по 1 ТБ доступное пространство "
 "составляет 3 ТБ, и пул сможет продолжать работу в деградированном режиме при "
@@ -6896,14 +6896,14 @@ msgstr ""
 "вручную настроить для замены отказавшего устройства с помощью команды `zfs "
 "replace`.\n"
 "* [[zfs-term-vdev-log]] _Журнал (Log)_ - Устройства журнала ZFS, также "
-"известные как ZFS Intent Log\n"
+"известные как журнал намерений ZFS (Intent Log)\n"
 "  (crossref:zfs[zfs-term-zil,ZIL]), перемещают журнал намерений с обычных "
 "устройств пула на выделенное устройство, обычно SSD. Наличие выделенного "
 "устройства журнала улучшает производительность приложений с большим объемом "
 "синхронных записей, таких как базы данных. Возможно зеркалирование устройств "
-"журнала, но RAID-Z не поддерживается. При использовании нескольких устройств "
-"журнала записи будут балансироваться между ними.\n"
-"* [[zfs-term-vdev-cache]] _Кэш (Cache)_ - Добавление cache vdev к пулу "
+"журнала, но RAID-Z не поддерживается. При записи на несколько устройств "
+"журнала нагрузка будут балансироваться между ними.\n"
+"* [[zfs-term-vdev-cache]] _Кэш (Cache)_ - Добавление кэширующих vdev к пулу "
 "увеличит\n"
 "  хранилище кэша в crossref:zfs[zfs-term-l2arc,L2ARC]. Зеркалирование "
 "устройств кэша невозможно. Поскольку устройство кэша хранит только новые "
@@ -6917,7 +6917,7 @@ msgstr "[[zfs-term-txg]] Группы транзакций (TXG)"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2854
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "Transaction Groups are the way ZFS groups blocks changes together and writes them to the pool. Transaction groups are the atomic unit that ZFS uses to ensure consistency. ZFS assigns each transaction group a unique 64-bit consecutive identifier. There can be up to three active transaction groups at a time, one in each of these three states:\n"
 "\n"
@@ -6974,7 +6974,7 @@ msgstr ""
 "или удаление снимков и наборов данных,\n"
 "завершающие изменение uberblock. Как только состояние синхронизации "
 "завершается, группа транзакций\n"
-"в завершающемся состоянии переходит в синхронизируемое. Все административные "
+"в Завершающемся состоянии переходит в Синхронизируемое. Все административные "
 "функции, такие как crossref:zfs[zfs-term-snapshot,`снимок`],\n"
 "записываются как часть группы транзакций. ZFS добавляет созданную "
 "синхронизационную задачу в открытую группу транзакций,\n"
@@ -6992,20 +6992,20 @@ msgstr "[[zfs-term-arc]]Adaptive Replacement Cache (ARC)"
 #, no-wrap
 msgid "ZFS uses an Adaptive Replacement Cache (ARC), rather than a more traditional Least Recently Used (LRU) cache. An LRU cache is a simple list of items in the cache, sorted by how recently object was used, adding new items to the head of the list. When the cache is full, evicting items from the tail of the list makes room for more active objects. An ARC consists of four lists; the Most Recently Used (MRU) and Most Frequently Used (MFU) objects, plus a ghost list for each. These ghost lists track evicted objects to prevent adding them back to the cache. This increases the cache hit ratio by avoiding objects that have a history of occasional use. Another advantage of using both an MRU and MFU is that scanning an entire file system would evict all data from an MRU or LRU cache in favor of this freshly accessed content. With ZFS, there is also an MFU that tracks the most frequently used objects, and the cache of the most commonly accessed blocks remains."
 msgstr ""
-"ZFS использует Adaptive Replacement Cache (ARC), а не более традиционный кеш "
-"Least Recently Used (LRU). LRU-кеш — это простой список элементов в кеше, "
+"ZFS использует Adaptive Replacement Cache (ARC), а не более традиционный кэш "
+"Least Recently Used (LRU). LRU-кэш — это простой список элементов в кэше, "
 "отсортированный по времени последнего использования объекта, при этом новые "
-"элементы добавляются в начало списка. Когда кеш заполнен, освобождение места "
+"элементы добавляются в начало списка. Когда кэш заполнен, освобождение места "
 "для более активных объектов происходит за счёт удаления элементов из конца "
 "списка. ARC состоит из четырёх списков: Most Recently Used (MRU) и Most "
 "Frequently Used (MFU), а также дополнительных \"теневых\" списков для "
 "каждого из них. Эти теневые списки отслеживают удалённые объекты, чтобы "
-"предотвратить их повторное добавление в кеш. Это увеличивает процент "
-"попаданий в кеш, исключая объекты, которые использовались лишь изредка. Ещё "
+"предотвратить их повторное добавление в кэш. Это увеличивает процент "
+"попаданий в кэш, исключая объекты, которые использовались лишь изредка. Ещё "
 "одно преимущество использования как MRU, так и MFU заключается в том, что "
 "сканирование всей файловой системы вытеснило бы все данные из MRU- или LRU-"
-"кеша в пользу только что прочитанного содержимого. В ZFS также присутствует "
-"MFU, который отслеживает наиболее часто используемые объекты, и кеш наиболее "
+"кэша в пользу только что прочитанного содержимого. В ZFS также присутствует "
+"MFU, который отслеживает наиболее часто используемые объекты, и кэш наиболее "
 "часто запрашиваемых блоков остаётся неизменным."
 
 #. type: Table
@@ -7016,7 +7016,7 @@ msgstr "[[zfs-term-l2arc]]L2ARC"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2876
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "L2ARC is the second level of the ZFS caching system. RAM stores the primary\n"
 "ARC. Since the amount of available RAM is often limited, ZFS can also use\n"
@@ -7036,7 +7036,7 @@ msgid ""
 "controls the number of bytes written to the cache per second, while\n"
 "crossref:zfs[zfs-advanced-tuning-l2arc_write_boost,`vfs.zfs.l2arc_write_boost`] adds to this limit during the \"Turbo Warmup Phase\" (Write Boost)."
 msgstr ""
-"L2ARC - это второй уровень системы кэширования ZFS. Основной кэш (ARC) "
+"L2ARC — это второй уровень системы кэширования ZFS. Основной кэш (ARC) "
 "хранится в оперативной памяти.\n"
 "Поскольку объем доступной оперативной памяти часто ограничен, ZFS также "
 "может использовать\n"
@@ -7052,7 +7052,8 @@ msgstr ""
 ", поскольку таблица дедупликации (DDT),\n"
 "которая не помещается в оперативную память, но помещается в L2ARC, будет "
 "работать значительно быстрее,\n"
-"чем DDT, вынужденная читать с диска. Ограничения на скорость записи данных\n"
+"чем DDT, которую должны считать с диска. Ограничения на скорость записи "
+"данных\n"
 "на кэширующие устройства предотвращают преждевременный износ SSD\n"
 "из-за дополнительных операций записи. Пока кэш не заполнен (первый блок "
 "вытеснен для освобождения места),\n"
@@ -7113,7 +7114,7 @@ msgstr "[[zfs-term-dataset]]Набор данных (Dataset)"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2893
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "_Dataset_ is the generic term for a ZFS file system, volume, snapshot or clone.\n"
 "Each dataset has a unique name in the format _poolname/path@snapshot_. The root\n"
@@ -7127,7 +7128,7 @@ msgid ""
 msgstr ""
 "_Набор данных_ — это общий термин для файловой системы ZFS, тома, снимка или "
 "клона.\n"
-"Каждый набор данных имеет уникальное имя в формате _имя_пула/путь@снимок_.\n"
+"Каждый набор данных имеет уникальное имя в формате _имяпула/путь@снимок_.\n"
 "Корень пула также является набором данных. Дочерние наборы данных имеют "
 "иерархические имена, подобные каталогам.\n"
 "Например, _mypool/home_, набор данных home, является дочерним для _mypool_ и "
@@ -7182,7 +7183,7 @@ msgstr "[[zfs-term-snapshot]]Снимок (Snapshot)"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2920
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "The crossref:zfs[zfs-term-cow,copy-on-write] (COW) design of ZFS allows for\n"
 "nearly instantaneous, consistent snapshots with arbitrary names. After taking a\n"
@@ -7206,42 +7207,40 @@ msgid ""
 msgstr ""
 "Дизайн crossref:zfs[zfs-term-cow,copy-on-write] (COW) в ZFS позволяет "
 "создавать\n"
-"почти мгновенные, согласованные снапшоты с произвольными именами. После "
+"почти мгновенные, согласованные снимки с произвольными именами. После "
 "создания\n"
-"снапшота набора данных или рекурсивного снапшота родительского набора, "
-"который\n"
+"снимка набора данных или рекурсивного снимка родительского набора, который\n"
 "включит все дочерние наборы, новые данные записываются в новые блоки, но "
 "без\n"
-"освобождения старых блоков как свободного пространства. Снапшот содержит "
+"освобождения старых блоков как свободного пространства. Снимок содержит "
 "исходную\n"
 "версию файловой системы, а активная файловая система — все изменения, "
 "сделанные\n"
-"после создания снапшота, не используя дополнительного пространства. Новые "
+"после создания снимка, не используя дополнительного пространства. Новые "
 "данные,\n"
-"записанные в активную файловую систему, сохраняются в новых блоках. Снапшот "
+"записанные в активную файловую систему, сохраняются в новых блоках. Снимок "
 "будет\n"
 "расти по мере того, как блоки перестают использоваться в активной файловой "
 "системе\n"
-"и остаются только в снапшоте. Монтирование этих снапшотов в режиме только "
-"для чтения\n"
+"и остаются только в снимке. Монтирование этих снимков в режиме только для "
+"чтения\n"
 "позволяет восстановить предыдущие версии файлов. \n"
-"crossref:zfs[zfs-zfs-snapshot,rollback] активной файловой системы к "
+"crossref:zfs[zfs-zfs-snapshot,Откат] активной файловой системы к "
 "определенному\n"
-"снапшоту возможен, отменяя все изменения, произошедшие после создания "
-"снапшота.\n"
+"снимку возможен, отменяя все изменения, произошедшие после создания снимка.\n"
 "\n"
 "Каждый блок в пуле имеет счетчик ссылок, который отслеживает использование "
 "этого\n"
-"блока снапшотами, клонами, наборами данных или томами. По мере удаления "
-"файлов и\n"
-"снапшотов счетчик ссылок уменьшается, освобождая пространство, когда блок "
+"блока снимками, клонами, наборами данных или томами. По мере удаления файлов "
+"и\n"
+"снимков счетчик ссылок уменьшается, освобождая пространство, когда блок "
 "больше\n"
-"не используется. Помечение снапшотов с помощью \n"
-"crossref:zfs[zfs-zfs-snapshot,hold] приводит к тому, что любая попытка "
-"удалить его вернет ошибку `EBUSY`. Каждый снапшот может иметь удержания с "
-"уникальными именами. Команда crossref:zfs[zfs-zfs-snapshot,release] удаляет "
-"удержание, позволяя удалить снапшот. Снапшоты, клонирование и откат работают "
-"с томами, но независимое монтирование — нет."
+"не используется. Если пометить снимки с помощью \n"
+"crossref:zfs[zfs-zfs-snapshot,удержания (hold)], то это приведет к тому, что "
+"любая попытка удалить его вернет ошибку `EBUSY`. Каждый снимок может иметь "
+"удержания с уникальными именами. Команда crossref:zfs[zfs-zfs-"
+"snapshot,release] удаляет удержание, позволяя удалить снимок. Снимки, "
+"клонирование и откат работают с томами, но независимое монтирование — нет."
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2921
@@ -7251,7 +7250,7 @@ msgstr "[[zfs-term-clone]]Клон (Clone)"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2923
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Cloning a snapshot is also possible. A clone is a writable version of a snapshot, allowing the file system to fork as a new dataset. As with a snapshot, a clone initially consumes no new space. As new data written to a clone uses new blocks, the size of the clone grows. When blocks are overwritten in the cloned file system or volume, the reference count on the previous block decreases. Removing the snapshot upon which a clone bases is impossible because the clone depends on it. The snapshot is the parent, and the clone is the child. Clones can be _promoted_, reversing this dependency and making the clone the parent and the previous parent the child. This operation requires no new space. Since the amount of space used by the parent and child reverses, it may affect existing quotas and reservations."
 msgstr ""
 "Также возможно клонирование снимка. Клон — это доступная для записи версия "
@@ -7275,7 +7274,7 @@ msgstr "[[zfs-term-checksum]]Контрольная сумма"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2936
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "Every block is also checksummed. The checksum algorithm used is a per-dataset\n"
 "property, see crossref:zfs[zfs-zfs-set,`set`]. The checksum of each block is\n"
@@ -7318,7 +7317,7 @@ msgstr "[[zfs-term-compression]]Сжатие"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2951
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "Each dataset has a compression property, which defaults to off. Set this property to an available compression algorithm. This causes compression of all new data written to the dataset. Beyond a reduction in space used, read and write throughput often increases because fewer blocks need reading or writing.\n"
 "\n"
@@ -7341,7 +7340,7 @@ msgstr ""
 "увеличивается, поскольку требуется читать или записывать меньше блоков.\n"
 "\n"
 "[[zfs-term-compression-lz4]]\n"
-"* _LZ4_ — добавлен в версии пула ZFS 5000 (флаги функций) и теперь является "
+"* _LZ4_ — добавлен в версии 5000 (флаги функций) пула ZFS и теперь является "
 "рекомендуемым алгоритмом сжатия. LZ4 работает примерно на 50% быстрее, чем "
 "LZJB, при работе с сжимаемыми данными и более чем в три раза быстрее при "
 "работе с несжимаемыми данными. LZ4 также распаковывает данные примерно на "
@@ -7377,13 +7376,13 @@ msgstr "[[zfs-term-copies]]Копии"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2955
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "When set to a value greater than 1, the `copies` property instructs ZFS to\n"
 "maintain copies of each block in the crossref:zfs[zfs-term-filesystem,file\n"
 "system] or crossref:zfs[zfs-term-volume,volume]. Setting this property on important datasets provides added redundancy from which to recover a block that does not match its checksum. In pools without redundancy, the copies feature is the single form of redundancy. The copies feature can recover from a single bad sector or other forms of minor corruption, but it does not protect the pool from the loss of an entire disk."
 msgstr ""
-"Когда свойству `copies` присваивается значение больше 1, ZFS сохраняет копии "
+"Когда свойству `Копии` присваивается значение больше 1, ZFS сохраняет копии "
 "каждого блока в crossref:zfs[zfs-term-filesystem,файловой системе] или "
 "crossref:zfs[zfs-term-volume,томе].\n"
 "Установка этого свойства для важных наборов данных обеспечивает "
@@ -7402,7 +7401,7 @@ msgstr "[[zfs-term-deduplication]]Дедубликация (Deduplication)"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2958
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Checksums make it possible to detect duplicate blocks when writing data. With deduplication, the reference count of an existing, identical block increases, saving storage space. ZFS keeps a deduplication table (DDT) in memory to detect duplicate blocks. The table contains a list of unique checksums, the location of those blocks, and a reference count. When writing new data, ZFS calculates checksums and compares them to the list. When finding a match it uses the existing block. Using the SHA256 checksum algorithm with deduplication provides a secure cryptographic hash. Deduplication is tunable. If `dedup` is `on`, then a matching checksum means that the data is identical. Setting `dedup` to `verify`, ZFS performs a byte-for-byte check on the data ensuring they are actually identical. If the data is not identical, ZFS will note the hash collision and store the two blocks separately. As the DDT must store the hash of each unique block, it consumes a large amount of memory. A general rule of thumb is 5-6 GB of ram per 1 TB of deduplicated data). In situations not practical to have enough RAM to keep the entire DDT in memory, performance will suffer greatly as the DDT must read from disk before writing each new block. Deduplication can use L2ARC to store the DDT, providing a middle ground between fast system memory and slower disks. Consider using compression instead, which often provides nearly as much space savings without the increased memory."
 msgstr ""
 "Контрольные суммы позволяют обнаруживать дублирующиеся блоки при записи "
@@ -7437,7 +7436,7 @@ msgstr "[[zfs-term-scrub]]Scrub"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2970
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "Instead of a consistency check like man:fsck[8], ZFS has `scrub`. `scrub` reads\n"
 "all data blocks stored on the pool and verifies their checksums against the\n"
@@ -7478,7 +7477,7 @@ msgstr "[[zfs-term-quota]]Квота набора данных"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2985
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "ZFS provides fast and accurate dataset, user, and group space accounting as well as quotas and space reservations. This gives the administrator fine grained control over space allocation and allows reserving space for critical file systems.\n"
 "\n"
@@ -7521,10 +7520,10 @@ msgstr "[[zfs-term-refquota]]Квота ссылки"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2988
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "A reference quota limits the amount of space a dataset can consume by enforcing a hard limit. This hard limit includes space referenced by the dataset alone and does not include space used by descendants, such as file systems or snapshots."
 msgstr ""
-"Квота по ссылкам ограничивает объем пространства, который может занимать "
+"Референтная квота ограничивает объем пространства, который может занимать "
 "набор данных, устанавливая жесткий лимит. Этот жесткий лимит включает только "
 "пространство, на которое ссылается сам набор данных, и не учитывает "
 "пространство, используемое его потомками, такими как файловые системы или "
@@ -7538,7 +7537,7 @@ msgstr "[[zfs-term-userquota]]Квота пользователя"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2991
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "User quotas are useful to limit the amount of space used by the specified user."
 msgstr ""
 "Пользовательские квоты полезны для ограничения объема пространства, "
@@ -7552,7 +7551,7 @@ msgstr "[[zfs-term-groupquota]]Квота группы"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:2994
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "The group quota limits the amount of space that a specified group can consume."
 msgstr ""
 "Квота группы ограничивает объем пространства, который может использовать "
@@ -7566,7 +7565,7 @@ msgstr "[[zfs-term-reservation]]Резервирование для набора
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:3003
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "The `reservation` property makes it possible to guarantee an amount of space\n"
 "for a specific dataset and its descendants. This means that setting a 10 GB\n"
@@ -7581,8 +7580,9 @@ msgstr ""
 "Это означает, что установка резерва в 10 ГБ для [.filename]#storage/home/bob#"
 " предотвращает использование всего свободного пространства другими наборами "
 "данных, резервируя как минимум 10 ГБ для этого набора.\n"
-"В отличие от обычного crossref:zfs[zfs-term-refreservation,`refreservation`]"
-", пространство, используемое снимками и потомками,\n"
+"В отличие от обычного `reservation`, при crossref:zfs[zfs-term-"
+"refreservation,`refreservation`] пространство, используемое снимками и "
+"потомками,\n"
 "не учитывается в резерве. Например, при создании снимка [.filename]#storage/"
 "home/bob# для успешного выполнения операции должно быть достаточно дискового "
 "пространства, помимо объёма `refreservation`.\n"
@@ -7598,11 +7598,11 @@ msgstr ""
 #: documentation/content/en/books/handbook/zfs/_index.adoc:3004
 #, no-wrap
 msgid "[[zfs-term-refreservation]]Reference Reservation"
-msgstr "[[zfs-term-refreservation]]Резервирование для ссылки"
+msgstr "[[zfs-term-refreservation]]Референтное резервирование"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:3010
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "The `refreservation` property makes it possible to guarantee an amount of space\n"
 "for the use of a specific dataset _excluding_ its descendants. This means that\n"
@@ -7615,7 +7615,8 @@ msgstr ""
 "для использования конкретным набором данных _исключая_ его потомков.\n"
 "Это означает, что если установить резервирование в 10 ГБ для [.filename]#"
 "storage/home/bob#, а другой набор данных попытается использовать свободное "
-"пространство, то для этого набора будет зарезервировано как минимум 10 ГБ.\n"
+"пространство, то он оставит как минимум 10 ГБ, зарезервированных для [."
+"filename]#storage/home/bob#.\n"
 "В отличие от обычного crossref:zfs[zfs-term-reservation,резервирования], "
 "пространство,\n"
 "используемое снимками и наборами-потомками, не учитывается в резервировании. "
@@ -7629,17 +7630,18 @@ msgstr ""
 #: documentation/content/en/books/handbook/zfs/_index.adoc:3011
 #, no-wrap
 msgid "[[zfs-term-resilver]]Resilver"
-msgstr "[[zfs-term-resilver]]Resilver"
+msgstr "[[zfs-term-resilver]]Ресильверинг"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:3012
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "When replacing a failed disk, ZFS must fill the new disk with the lost data. _Resilvering_ is the process of using the parity information distributed across the remaining drives to calculate and write the missing data to the new drive."
 msgstr ""
 "При замене вышедшего из строя диска ZFS необходимо заполнить новый диск "
-"утерянными данными. _Повторное серебрение_ (resilvering) — это процесс "
-"использования информации о четности, распределенной по оставшимся дискам, "
-"для вычисления и записи отсутствующих данных на новый диск."
+"утерянными данными. _Ресильверинг_ (resilvering — серебрение, восстановление "
+"зеркала) — это процесс использования информации о четности, распределенной "
+"по оставшимся дискам, для вычисления и записи отсутствующих данных на новый "
+"диск."
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:3013
@@ -7649,7 +7651,7 @@ msgstr "[[zfs-term-online]]Online"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:3015
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "A pool or vdev in the `Online` state has its member devices connected and fully operational. Individual devices in the `Online` state are functioning."
 msgstr ""
 "Пул или vdev в состоянии `Online` имеет подключенные и полностью "
@@ -7664,7 +7666,7 @@ msgstr "[[zfs-term-offline]]Offline"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:3020
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "The administrator puts individual devices in an `Offline` state if enough\n"
 "redundancy exists to avoid putting the pool or vdev into a\n"
@@ -7684,7 +7686,7 @@ msgstr "[[zfs-term-degraded]]Degraded"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:3028
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "A pool or vdev in the `Degraded` state has one or more disks that disappeared\n"
 "or failed. The pool is still usable, but if other devices fail, the pool may\n"
@@ -7701,7 +7703,7 @@ msgstr ""
 "или замена неисправных дисков вернет пул\n"
 "в состояние crossref:zfs[zfs-term-online,Online] после того,\n"
 "как повторно подключенное или новое устройство завершит процесс crossref:zfs"
-"[zfs-term-resilver,Resilver]."
+"[zfs-term-resilver,ресильверинга]."
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:3029
@@ -7711,7 +7713,7 @@ msgstr "[[zfs-term-faulted]]Faulted"
 
 #. type: Table
 #: documentation/content/en/books/handbook/zfs/_index.adoc:3034
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "A pool or vdev in the `Faulted` state is no longer operational. Accessing the\n"
 "data is no longer possible. A pool or vdev enters the `Faulted` state when the\n"
