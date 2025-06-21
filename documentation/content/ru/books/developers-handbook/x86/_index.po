@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-05 17:10+0000\n"
+"PO-Revision-Date: 2025-06-21 19:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksdevelopers-handbookx86_index/ru/>\n"
@@ -91,7 +91,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:74
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4311
 msgid "Copyright (R) 2000-2001 G. Adam Stanislav. All rights reserved."
-msgstr ""
+msgstr "Copyright (R) 2000-2001 G. Adam Stanislav. All rights reserved."
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:76
@@ -201,6 +201,9 @@ msgid ""
 "\tint\t80h\t; Call kernel\n"
 "\tret\n"
 msgstr ""
+"kernel:\n"
+"\tint\t80h\t; Call kernel\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:129
@@ -215,6 +218,14 @@ msgid ""
 "\tadd\tesp, byte 12\n"
 "\tret\n"
 msgstr ""
+"open:\n"
+"\tpush\tdword mode\n"
+"\tpush\tdword flags\n"
+"\tpush\tdword path\n"
+"\tmov\teax, 5\n"
+"\tcall\tkernel\n"
+"\tadd\tesp, byte 12\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:133
@@ -245,6 +256,14 @@ msgid ""
 "\tint\t80h\n"
 "\tadd\tesp, byte 16\n"
 msgstr ""
+"open:\n"
+"\tpush\tdword mode\n"
+"\tpush\tdword flags\n"
+"\tpush\tdword path\n"
+"\tmov\teax, 5\n"
+"\tpush\teax\t\t; Or any other dword\n"
+"\tint\t80h\n"
+"\tadd\tesp, byte 16\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:151
@@ -288,6 +307,12 @@ msgid ""
 "\tmov\tedx, mode\n"
 "\tint\t80h\n"
 msgstr ""
+"open:\n"
+"\tmov\teax, 5\n"
+"\tmov\tebx, path\n"
+"\tmov\tecx, flags\n"
+"\tmov\tedx, mode\n"
+"\tint\t80h\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:178
@@ -311,7 +336,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:185
 #, no-wrap
 msgid "% brandelf -t Linux filename\n"
-msgstr ""
+msgstr "% brandelf -t Linux filename\n"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:188
@@ -398,6 +423,14 @@ msgid ""
 "6\tSTD\tPOSIX\t{ int close(int fd); }\n"
 "etc...\n"
 msgstr ""
+"0\tSTD\tNOHIDE\t{ int nosys(void); } syscall nosys_args int\n"
+"1\tSTD\tNOHIDE\t{ void exit(int rval); } exit rexit_args void\n"
+"2\tSTD\tPOSIX\t{ int fork(void); }\n"
+"3\tSTD\tPOSIX\t{ ssize_t read(int fd, void *buf, size_t nbyte); }\n"
+"4\tSTD\tPOSIX\t{ ssize_t write(int fd, const void *buf, size_t nbyte); }\n"
+"5\tSTD\tPOSIX\t{ int open(char *path, int flags, int mode); }\n"
+"6\tSTD\tPOSIX\t{ int close(int fd); }\n"
+"etc...\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:232
@@ -615,6 +648,11 @@ msgid ""
 "%define\tSYS_execve\t59\n"
 "%endif\n"
 msgstr ""
+"%ifdef\tLINUX\n"
+"%define\tSYS_execve\t11\n"
+"%else\n"
+"%define\tSYS_execve\t59\n"
+"%endif\n"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:336
@@ -633,7 +671,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:343
 #, no-wrap
 msgid "%ifdef\tLINUX\n"
-msgstr ""
+msgstr "%ifdef\tLINUX\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:347
@@ -643,6 +681,9 @@ msgid ""
 "\tcall\tkernel\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsystem\t0\n"
+"\tcall\tkernel\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:356
@@ -657,6 +698,14 @@ msgid ""
 "\tpush\tedi\n"
 "\tpush\tebp\n"
 msgstr ""
+"align 4\n"
+"kernel:\n"
+"\tpush\tebx\n"
+"\tpush\tecx\n"
+"\tpush\tedx\n"
+"\tpush\tesi\n"
+"\tpush\tedi\n"
+"\tpush\tebp\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:363
@@ -669,6 +718,12 @@ msgid ""
 "\tmov\tebp, [esp+48]\n"
 "\tint\t80h\n"
 msgstr ""
+"\tmov\tebx, [esp+32]\n"
+"\tmov\tecx, [esp+36]\n"
+"\tmov\tedx, [esp+40]\n"
+"\tmov\tesi, [esp+44]\n"
+"\tmov\tebp, [esp+48]\n"
+"\tint\t80h\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:370
@@ -681,6 +736,12 @@ msgid ""
 "\tpop\tecx\n"
 "\tpop\tebx\n"
 msgstr ""
+"\tpop\tebp\n"
+"\tpop\tedi\n"
+"\tpop\tesi\n"
+"\tpop\tedx\n"
+"\tpop\tecx\n"
+"\tpop\tebx\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:375
@@ -691,6 +752,10 @@ msgid ""
 "\tclc\n"
 "\tret\n"
 msgstr ""
+"\tor\teax, eax\n"
+"\tjs\t.errno\n"
+"\tclc\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:380
@@ -701,12 +766,16 @@ msgid ""
 "\tstc\n"
 "\tret\n"
 msgstr ""
+".errno:\n"
+"\tneg\teax\n"
+"\tstc\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:382
 #, no-wrap
 msgid "%else\n"
-msgstr ""
+msgstr "%else\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:386
@@ -716,12 +785,15 @@ msgid ""
 "\tint\t80h\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsystem\t0\n"
+"\tint\t80h\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:388
 #, no-wrap
 msgid "%endif\n"
-msgstr ""
+msgstr "%endif\n"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:391
@@ -780,6 +852,11 @@ msgid ""
 "\tint\t80h\n"
 "\tret\n"
 msgstr ""
+"sys.open:\n"
+"sys.close:\n"
+"[etc...]\n"
+"\tint\t80h\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:421
@@ -801,12 +878,20 @@ msgid ""
 "\tpop\tebx\n"
 "\tjmp\tsys.return\n"
 msgstr ""
+"sys.exit:\n"
+"sys.close:\n"
+"[etc... one-parameter functions]\n"
+"\tpush\tebx\n"
+"\tmov\tebx, [esp+12]\n"
+"\tint\t80h\n"
+"\tpop\tebx\n"
+"\tjmp\tsys.return\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:434
 #, no-wrap
 msgid "...\n"
-msgstr ""
+msgstr "...\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:440
@@ -818,6 +903,11 @@ msgid ""
 "\tclc\n"
 "\tret\n"
 msgstr ""
+"sys.return:\n"
+"\tor\teax, eax\n"
+"\tjs\tsys.err\n"
+"\tclc\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:445
@@ -828,6 +918,10 @@ msgid ""
 "\tstc\n"
 "\tret\n"
 msgstr ""
+"sys.err:\n"
+"\tneg\teax\n"
+"\tstc\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:452
@@ -895,6 +989,9 @@ msgid ""
 "%define\tstdout\t1\n"
 "%define\tstderr\t2\n"
 msgstr ""
+"%define\tstdin\t0\n"
+"%define\tstdout\t1\n"
+"%define\tstderr\t2\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:479
@@ -912,6 +1009,12 @@ msgid ""
 "%define\tSYS_write\t4\n"
 "; [etc...]\n"
 msgstr ""
+"%define\tSYS_nosys\t0\n"
+"%define\tSYS_exit\t1\n"
+"%define\tSYS_fork\t2\n"
+"%define\tSYS_read\t3\n"
+"%define\tSYS_write\t4\n"
+"; [etc...]\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:491
@@ -930,6 +1033,11 @@ msgid ""
 "\tint\t80h\n"
 "\tret\n"
 msgstr ""
+"section\t.text\n"
+"align 4\n"
+"access.the.bsd.kernel:\n"
+"\tint\t80h\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:502
@@ -945,6 +1053,10 @@ msgid ""
 "\tcall\taccess.the.bsd.kernel\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsystem\t1\n"
+"\tmov\teax, %1\n"
+"\tcall\taccess.the.bsd.kernel\n"
+"%endmacro\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:513
@@ -960,6 +1072,9 @@ msgid ""
 "\tsystem\tSYS_exit\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.exit\t0\n"
+"\tsystem\tSYS_exit\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:523
@@ -969,6 +1084,9 @@ msgid ""
 "\tsystem\tSYS_fork\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.fork\t0\n"
+"\tsystem\tSYS_fork\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:527
@@ -978,6 +1096,9 @@ msgid ""
 "\tsystem\tSYS_read\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.read\t0\n"
+"\tsystem\tSYS_read\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:531
@@ -987,12 +1108,15 @@ msgid ""
 "\tsystem\tSYS_write\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.write\t0\n"
+"\tsystem\tSYS_write\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:533
 #, no-wrap
 msgid "; [etc...]\n"
-msgstr ""
+msgstr "; [etc...]\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:537
@@ -1016,7 +1140,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:546
 #, no-wrap
 msgid "\t%include\t'system.inc'\n"
-msgstr ""
+msgstr "\t%include\t'system.inc'\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:550
@@ -1026,6 +1150,9 @@ msgid ""
 "\thello\tdb\t'Hello, World!', 0Ah\n"
 "\thbytes\tequ\t$-hello\n"
 msgstr ""
+"\tsection\t.data\n"
+"\thello\tdb\t'Hello, World!', 0Ah\n"
+"\thbytes\tequ\t$-hello\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:558
@@ -1039,6 +1166,13 @@ msgid ""
 "\tpush\tdword stdout\n"
 "\tsys.write\n"
 msgstr ""
+"\tsection\t.text\n"
+"\tglobal\t_start\n"
+"_start:\n"
+"\tpush\tdword hbytes\n"
+"\tpush\tdword hello\n"
+"\tpush\tdword stdout\n"
+"\tsys.write\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:561
@@ -1047,6 +1181,8 @@ msgid ""
 "\tpush\tdword 0\n"
 "\tsys.exit\n"
 msgstr ""
+"\tpush\tdword 0\n"
+"\tsys.exit\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:564
@@ -1134,6 +1270,12 @@ msgid ""
 "# exit\n"
 "%\n"
 msgstr ""
+"% su\n"
+"Password:your root password\n"
+"# cd /usr/ports/devel/nasm\n"
+"# make install\n"
+"# exit\n"
+"%\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:609
@@ -1172,6 +1314,11 @@ msgid ""
 "Hello, World!\n"
 "%\n"
 msgstr ""
+"% nasm -f elf hello.asm\n"
+"% ld -s -o hello hello.o\n"
+"% ./hello\n"
+"Hello, World!\n"
+"%\n"
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:630
@@ -1206,7 +1353,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3335
 #, no-wrap
 msgid "%include\t'system.inc'\n"
-msgstr ""
+msgstr "%include\t'system.inc'\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:644
@@ -1217,6 +1364,9 @@ msgid ""
 "hex\tdb\t'0123456789ABCDEF'\n"
 "buffer\tdb\t0, 0, ' '\n"
 msgstr ""
+"section\t.data\n"
+"hex\tdb\t'0123456789ABCDEF'\n"
+"buffer\tdb\t0, 0, ' '\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:656
@@ -1234,6 +1384,17 @@ msgid ""
 "\tor\teax, eax\n"
 "\tje\t.done\n"
 msgstr ""
+"section\t.text\n"
+"global\t_start\n"
+"_start:\n"
+"\t; read a byte from stdin\n"
+"\tpush\tdword 1\n"
+"\tpush\tdword buffer\n"
+"\tpush\tdword stdin\n"
+"\tsys.read\n"
+"\tadd\tesp, byte 12\n"
+"\tor\teax, eax\n"
+"\tje\t.done\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:666
@@ -1249,6 +1410,15 @@ msgid ""
 "\tmov\tal, [hex+eax]\n"
 "\tmov\t[buffer+1], al\n"
 msgstr ""
+"\t; convert it to hex\n"
+"\tmovzx\teax, byte [buffer]\n"
+"\tmov\tedx, eax\n"
+"\tshr\tdl, 4\n"
+"\tmov\tdl, [hex+edx]\n"
+"\tmov\t[buffer], dl\n"
+"\tand\tal, 0Fh\n"
+"\tmov\tal, [hex+eax]\n"
+"\tmov\t[buffer+1], al\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:674
@@ -1262,6 +1432,13 @@ msgid ""
 "\tadd\tesp, byte 12\n"
 "\tjmp\tshort _start\n"
 msgstr ""
+"\t; print it\n"
+"\tpush\tdword 3\n"
+"\tpush\tdword buffer\n"
+"\tpush\tdword stdout\n"
+"\tsys.write\n"
+"\tadd\tesp, byte 12\n"
+"\tjmp\tshort _start\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:678
@@ -1272,6 +1449,9 @@ msgid ""
 "\tpush\tdword 0\n"
 "\tsys.exit\n"
 msgstr ""
+".done:\n"
+"\tpush\tdword 0\n"
+"\tsys.exit\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:686
@@ -1354,6 +1534,12 @@ msgid ""
 "48 65 6C 6C 6F 2C 20 57 6F 72 6C 64 21 0A Here I come!\n"
 "48 65 72 65 20 49 20 63 6F 6D 65 21 0A ^D %\n"
 msgstr ""
+"% nasm -f elf hex.asm\n"
+"% ld -s -o hex hex.o\n"
+"% ./hex\n"
+"Hello, World!\n"
+"48 65 6C 6C 6F 2C 20 57 6F 72 6C 64 21 0A Here I come!\n"
+"48 65 72 65 20 49 20 63 6F 6D 65 21 0A ^D %\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:725
@@ -1382,6 +1568,10 @@ msgid ""
 "_start:\n"
 "\tmov\tcl, ' '\n"
 msgstr ""
+"section\t.text\n"
+"global\t_start\n"
+"_start:\n"
+"\tmov\tcl, ' '\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:753
@@ -1397,6 +1587,15 @@ msgid ""
 "\tor\teax, eax\n"
 "\tje\t.done\n"
 msgstr ""
+".loop:\n"
+"\t; read a byte from stdin\n"
+"\tpush\tdword 1\n"
+"\tpush\tdword buffer\n"
+"\tpush\tdword stdin\n"
+"\tsys.read\n"
+"\tadd\tesp, byte 12\n"
+"\tor\teax, eax\n"
+"\tje\t.done\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:760
@@ -1409,6 +1608,12 @@ msgid ""
 "\tjne\t.hex\n"
 "\tmov\t[buffer+2], al\n"
 msgstr ""
+"\t; convert it to hex\n"
+"\tmovzx\teax, byte [buffer]\n"
+"\tmov\t[buffer+2], cl\n"
+"\tcmp\tal, 0Ah\n"
+"\tjne\t.hex\n"
+"\tmov\t[buffer+2], al\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:769
@@ -1423,6 +1628,14 @@ msgid ""
 "\tmov\tal, [hex+eax]\n"
 "\tmov\t[buffer+1], al\n"
 msgstr ""
+".hex:\n"
+"\tmov\tedx, eax\n"
+"\tshr\tdl, 4\n"
+"\tmov\tdl, [hex+edx]\n"
+"\tmov\t[buffer], dl\n"
+"\tand\tal, 0Fh\n"
+"\tmov\tal, [hex+eax]\n"
+"\tmov\t[buffer+1], al\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:777
@@ -1436,6 +1649,13 @@ msgid ""
 "\tadd\tesp, byte 12\n"
 "\tjmp\tshort .loop\n"
 msgstr ""
+"\t; print it\n"
+"\tpush\tdword 3\n"
+"\tpush\tdword buffer\n"
+"\tpush\tdword stdout\n"
+"\tsys.write\n"
+"\tadd\tesp, byte 12\n"
+"\tjmp\tshort .loop\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:785
@@ -1474,6 +1694,14 @@ msgid ""
 "48 65 72 65 20 49 20 63 6F 6D 65 21 0A\n"
 "^D %\n"
 msgstr ""
+"% nasm -f elf hex.asm\n"
+"% ld -s -o hex hex.o\n"
+"% ./hex\n"
+"Hello, World!\n"
+"48 65 6C 6C 6F 2C 20 57 6F 72 6C 64 21 0A\n"
+"Here I come!\n"
+"48 65 72 65 20 49 20 63 6F 6D 65 21 0A\n"
+"^D %\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:806
@@ -1523,7 +1751,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3337
 #, no-wrap
 msgid "%define\tBUFSIZE\t2048\n"
-msgstr ""
+msgstr "%define\tBUFSIZE\t2048\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:829
@@ -1533,6 +1761,8 @@ msgid ""
 "section\t.data\n"
 "hex\tdb\t'0123456789ABCDEF'\n"
 msgstr ""
+"section\t.data\n"
+"hex\tdb\t'0123456789ABCDEF'\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:833
@@ -1545,6 +1775,9 @@ msgid ""
 "ibuffer\tresb\tBUFSIZE\n"
 "obuffer\tresb\tBUFSIZE\n"
 msgstr ""
+"section .bss\n"
+"ibuffer\tresb\tBUFSIZE\n"
+"obuffer\tresb\tBUFSIZE\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:841
@@ -1559,6 +1792,13 @@ msgid ""
 "\tsub\tecx, ecx\n"
 "\tmov\tedi, obuffer\n"
 msgstr ""
+"section\t.text\n"
+"global\t_start\n"
+"_start:\n"
+"\tsub\teax, eax\n"
+"\tsub\tebx, ebx\n"
+"\tsub\tecx, ecx\n"
+"\tmov\tedi, obuffer\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:845
@@ -1570,6 +1810,9 @@ msgid ""
 "\t; read a byte from stdin\n"
 "\tcall\tgetchar\n"
 msgstr ""
+".loop:\n"
+"\t; read a byte from stdin\n"
+"\tcall\tgetchar\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:851
@@ -1583,6 +1826,11 @@ msgid ""
 "\tmov\tal, [hex+eax]\n"
 "\tcall\tputchar\n"
 msgstr ""
+"\t; convert it to hex\n"
+"\tmov\tdl, al\n"
+"\tshr\tal, 4\n"
+"\tmov\tal, [hex+eax]\n"
+"\tcall\tputchar\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:856
@@ -1595,6 +1843,10 @@ msgid ""
 "\tmov\tal, [hex+eax]\n"
 "\tcall\tputchar\n"
 msgstr ""
+"\tmov\tal, dl\n"
+"\tand\tal, 0Fh\n"
+"\tmov\tal, [hex+eax]\n"
+"\tcall\tputchar\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:861
@@ -1607,6 +1859,10 @@ msgid ""
 "\tjne\t.put\n"
 "\tmov\tal, dl\n"
 msgstr ""
+"\tmov\tal, ' '\n"
+"\tcmp\tdl, 0Ah\n"
+"\tjne\t.put\n"
+"\tmov\tal, dl\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:865
@@ -1617,6 +1873,9 @@ msgid ""
 "\tcall\tputchar\n"
 "\tjmp\tshort .loop\n"
 msgstr ""
+".put:\n"
+"\tcall\tputchar\n"
+"\tjmp\tshort .loop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:870
@@ -1631,6 +1890,10 @@ msgid ""
 "\tor\tebx, ebx\n"
 "\tjne\t.fetch\n"
 msgstr ""
+"align 4\n"
+"getchar:\n"
+"\tor\tebx, ebx\n"
+"\tjne\t.fetch\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:872
@@ -1640,7 +1903,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3850
 #, no-wrap
 msgid "\tcall\tread\n"
-msgstr ""
+msgstr "\tcall\tread\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:877
@@ -1654,6 +1917,10 @@ msgid ""
 "\tdec\tebx\n"
 "\tret\n"
 msgstr ""
+".fetch:\n"
+"\tlodsb\n"
+"\tdec\tebx\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:890
@@ -1673,6 +1940,18 @@ msgid ""
 "\tsub\teax, eax\n"
 "\tret\n"
 msgstr ""
+"read:\n"
+"\tpush\tdword BUFSIZE\n"
+"\tmov\tesi, ibuffer\n"
+"\tpush\tesi\n"
+"\tpush\tdword stdin\n"
+"\tsys.read\n"
+"\tadd\tesp, byte 12\n"
+"\tmov\tebx, eax\n"
+"\tor\teax, eax\n"
+"\tje\t.done\n"
+"\tsub\teax, eax\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:896
@@ -1685,6 +1964,11 @@ msgid ""
 "\tpush\tdword 0\n"
 "\tsys.exit\n"
 msgstr ""
+"align 4\n"
+".done:\n"
+"\tcall\twrite\t\t; flush output buffer\n"
+"\tpush\tdword 0\n"
+"\tsys.exit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:904
@@ -1702,6 +1986,13 @@ msgid ""
 "\tje\twrite\n"
 "\tret\n"
 msgstr ""
+"align 4\n"
+"putchar:\n"
+"\tstosb\n"
+"\tinc\tecx\n"
+"\tcmp\tecx, BUFSIZE\n"
+"\tje\twrite\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:916
@@ -1720,6 +2011,17 @@ msgid ""
 "\tsub\tecx, ecx\t; buffer is empty now\n"
 "\tret\n"
 msgstr ""
+"align 4\n"
+"write:\n"
+"\tsub\tedi, ecx\t; start of buffer\n"
+"\tpush\tecx\n"
+"\tpush\tedi\n"
+"\tpush\tdword stdout\n"
+"\tsys.write\n"
+"\tadd\tesp, byte 12\n"
+"\tsub\teax, eax\n"
+"\tsub\tecx, ecx\t; buffer is empty now\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:922
@@ -1768,6 +2070,14 @@ msgid ""
 "48 65 72 65 20 49 20 63 6F 6D 65 21 0A\n"
 "^D %\n"
 msgstr ""
+"% nasm -f elf hex.asm\n"
+"% ld -s -o hex hex.o\n"
+"% ./hex\n"
+"Hello, World!\n"
+"Here I come!\n"
+"48 65 6C 6C 6F 2C 20 57 6F 72 6C 64 21 0A\n"
+"48 65 72 65 20 49 20 63 6F 6D 65 21 0A\n"
+"^D %\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:948
@@ -1789,6 +2099,12 @@ msgid ""
 ">\tcall\twrite\n"
 "\tjmp\tshort .loop\n"
 msgstr ""
+".put:\n"
+"\tcall\tputchar\n"
+">\tcmp\tal, 0Ah\n"
+">\tjne\t.loop\n"
+">\tcall\twrite\n"
+"\tjmp\tshort .loop\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1050
@@ -1897,6 +2213,8 @@ msgid ""
 "mov\tal, [esi]\n"
 "\tinc\tesi\n"
 msgstr ""
+"mov\tal, [esi]\n"
+"\tinc\tesi\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1117
@@ -1917,6 +2235,10 @@ msgid ""
 "\tinc\tebx\n"
 "\tret\n"
 msgstr ""
+"ungetc:\n"
+"\tdec\tesi\n"
+"\tinc\tebx\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1128
@@ -1977,6 +2299,10 @@ msgid ""
 "ibuffer\tresb\tBUFSIZE\n"
 "obuffer\tresb\tBUFSIZE\n"
 msgstr ""
+"section\t.bss\n"
+"\tresb\t16\t; or whatever the value you came up with\n"
+"ibuffer\tresb\tBUFSIZE\n"
+"obuffer\tresb\tBUFSIZE\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1152
@@ -1995,6 +2321,11 @@ msgid ""
 "\tmov\t[esi], al\n"
 "\tret\n"
 msgstr ""
+"ungetc:\n"
+"\tdec\tesi\n"
+"\tinc\tebx\n"
+"\tmov\t[esi], al\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1163
@@ -2081,6 +2412,8 @@ msgid ""
 "%define\tSYS_open\t5\n"
 "%define\tSYS_close\t6\n"
 msgstr ""
+"%define\tSYS_open\t5\n"
+"%define\tSYS_close\t6\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1202
@@ -2095,6 +2428,9 @@ msgid ""
 "\tsystem\tSYS_open\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.open\t0\n"
+"\tsystem\tSYS_open\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1212
@@ -2104,6 +2440,9 @@ msgid ""
 "\tsystem\tSYS_close\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.close\t0\n"
+"\tsystem\tSYS_close\n"
+"%endmacro\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1215
@@ -2119,6 +2458,10 @@ msgid ""
 "fd.out\tdd\tstdout\n"
 "hex\tdb\t'0123456789ABCDEF'\n"
 msgstr ""
+"section\t.data\n"
+"fd.in\tdd\tstdin\n"
+"fd.out\tdd\tstdout\n"
+"hex\tdb\t'0123456789ABCDEF'\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1236
@@ -2130,6 +2473,11 @@ msgid ""
 "\tpush\tdword 1\t\t; return failure\n"
 "\tsys.exit\n"
 msgstr ""
+"section\t.text\n"
+"align 4\n"
+"err:\n"
+"\tpush\tdword 1\t\t; return failure\n"
+"\tsys.exit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1241
@@ -2140,6 +2488,10 @@ msgid ""
 "_start:\n"
 "\tadd\tesp, byte 8\t; discard argc and argv[0]\n"
 msgstr ""
+"align 4\n"
+"global\t_start\n"
+"_start:\n"
+"\tadd\tesp, byte 8\t; discard argc and argv[0]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1244
@@ -2149,6 +2501,8 @@ msgid ""
 "\tpop\tecx\n"
 "\tjecxz\t.init\t\t; no more arguments\n"
 msgstr ""
+"\tpop\tecx\n"
+"\tjecxz\t.init\t\t; no more arguments\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1250
@@ -2160,6 +2514,11 @@ msgid ""
 "\tsys.open\n"
 "\tjc\terr\t\t; open failed\n"
 msgstr ""
+"\t; ECX contains the path to input file\n"
+"\tpush\tdword 0\t\t; O_RDONLY\n"
+"\tpush\tecx\n"
+"\tsys.open\n"
+"\tjc\terr\t\t; open failed\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1253
@@ -2168,6 +2527,8 @@ msgid ""
 "\tadd\tesp, byte 8\n"
 "\tmov\t[fd.in], eax\n"
 msgstr ""
+"\tadd\tesp, byte 8\n"
+"\tmov\t[fd.in], eax\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1264
@@ -2181,6 +2542,13 @@ msgid ""
 "\tsys.open\n"
 "\tjc\terr\n"
 msgstr ""
+"\t; ECX contains the path to output file\n"
+"\tpush\tdword 420\t; file mode (644 octal)\n"
+"\tpush\tdword 0200h | 0400h | 01h\n"
+"\t; O_CREAT | O_TRUNC | O_WRONLY\n"
+"\tpush\tecx\n"
+"\tsys.open\n"
+"\tjc\terr\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1267
@@ -2189,6 +2557,8 @@ msgid ""
 "\tadd\tesp, byte 12\n"
 "\tmov\t[fd.out], eax\n"
 msgstr ""
+"\tadd\tesp, byte 12\n"
+"\tmov\t[fd.out], eax\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1273
@@ -2200,6 +2570,11 @@ msgid ""
 "\tsub\tecx, ecx\n"
 "\tmov\tedi, obuffer\n"
 msgstr ""
+".init:\n"
+"\tsub\teax, eax\n"
+"\tsub\tebx, ebx\n"
+"\tsub\tecx, ecx\n"
+"\tmov\tedi, obuffer\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1277
@@ -2209,6 +2584,9 @@ msgid ""
 "\t; read a byte from input file or stdin\n"
 "\tcall\tgetchar\n"
 msgstr ""
+".loop:\n"
+"\t; read a byte from input file or stdin\n"
+"\tcall\tgetchar\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1300
@@ -2221,6 +2599,12 @@ msgid ""
 "\tcall\twrite\n"
 "\tjmp\tshort .loop\n"
 msgstr ""
+".put:\n"
+"\tcall\tputchar\n"
+"\tcmp\tal, dl\n"
+"\tjne\t.loop\n"
+"\tcall\twrite\n"
+"\tjmp\tshort .loop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1325
@@ -2239,6 +2623,18 @@ msgid ""
 "\tsub\teax, eax\n"
 "\tret\n"
 msgstr ""
+"read:\n"
+"\tpush\tdword BUFSIZE\n"
+"\tmov\tesi, ibuffer\n"
+"\tpush\tesi\n"
+"\tpush\tdword [fd.in]\n"
+"\tsys.read\n"
+"\tadd\tesp, byte 12\n"
+"\tmov\tebx, eax\n"
+"\tor\teax, eax\n"
+"\tje\t.done\n"
+"\tsub\teax, eax\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1329
@@ -2249,6 +2645,9 @@ msgid ""
 ".done:\n"
 "\tcall\twrite\t\t; flush output buffer\n"
 msgstr ""
+"align 4\n"
+".done:\n"
+"\tcall\twrite\t\t; flush output buffer\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1333
@@ -2260,6 +2659,9 @@ msgid ""
 "\tpush\tdword [fd.in]\n"
 "\tsys.close\n"
 msgstr ""
+"\t; close files\n"
+"\tpush\tdword [fd.in]\n"
+"\tsys.close\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1336
@@ -2270,6 +2672,8 @@ msgid ""
 "\tpush\tdword [fd.out]\n"
 "\tsys.close\n"
 msgstr ""
+"\tpush\tdword [fd.out]\n"
+"\tsys.close\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1340
@@ -2281,6 +2685,9 @@ msgid ""
 "\tpush\tdword 0\n"
 "\tsys.exit\n"
 msgstr ""
+"\t; return success\n"
+"\tpush\tdword 0\n"
+"\tsys.exit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1360
@@ -2298,6 +2705,17 @@ msgid ""
 "\tsub\tecx, ecx\t; buffer is empty now\n"
 "\tret\n"
 msgstr ""
+"align 4\n"
+"write:\n"
+"\tsub\tedi, ecx\t; start of buffer\n"
+"\tpush\tecx\n"
+"\tpush\tedi\n"
+"\tpush\tdword [fd.out]\n"
+"\tsys.write\n"
+"\tadd\tesp, byte 12\n"
+"\tsub\teax, eax\n"
+"\tsub\tecx, ecx\t; buffer is empty now\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1364
@@ -2456,7 +2874,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1419
 #, no-wrap
 msgid "webvars"
-msgstr ""
+msgstr "webvars"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1423
@@ -2571,6 +2989,46 @@ msgid ""
 ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n"
 "%include\t'system.inc'\n"
 msgstr ""
+";;;;;;; webvars.asm "
+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n"
+";\n"
+"; Copyright (c) 2000 G. Adam Stanislav\n"
+"; All rights reserved.\n"
+";\n"
+"; Redistribution and use in source and binary forms, with or without\n"
+"; modification, are permitted provided that the following conditions\n"
+"; are met:\n"
+"; 1. Redistributions of source code must retain the above copyright\n"
+";    notice, this list of conditions and the following disclaimer.\n"
+"; 2. Redistributions in binary form must reproduce the above copyright\n"
+";    notice, this list of conditions and the following disclaimer in the\n"
+";    documentation and/or other materials provided with the distribution.\n"
+";\n"
+"; THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND\n"
+"; ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\n"
+"; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR "
+"PURPOSE\n"
+"; ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE\n"
+"; FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR "
+"CONSEQUENTIAL\n"
+"; DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS\n"
+"; OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)\n"
+"; HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, "
+"STRICT\n"
+"; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY\n"
+"; OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF\n"
+"; SUCH DAMAGE.\n"
+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+";;\n"
+";\n"
+"; Version 1.0\n"
+";\n"
+"; Started:\t 8-Dec-2000\n"
+"; Updated:\t 8-Dec-2000\n"
+";\n"
+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+";;\n"
+"%include\t'system.inc'\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1522
@@ -2613,6 +3071,43 @@ msgid ""
 "\tdb\t'</html>', 0Ah, 0Ah\n"
 "wraplen\tequ\t$-wrap\n"
 msgstr ""
+"section\t.data\n"
+"http\tdb\t'Content-type: text/html', 0Ah, 0Ah\n"
+"\tdb\t'<?xml version=\"1.0\" encoding=\"utf-8\"?>', 0Ah\n"
+"\tdb\t'<!DOCTYPE html PUBLIC \"-//W3C/DTD XHTML Strict//EN\" '\n"
+"\tdb\t'\"DTD/xhtml1-strict.dtd\">', 0Ah\n"
+"\tdb\t'<html xmlns=\"http://www.w3.org/1999/xhtml\" '\n"
+"\tdb\t'xml.lang=\"en\" lang=\"en\">', 0Ah\n"
+"\tdb\t'<head>', 0Ah\n"
+"\tdb\t'<title>Web Environment</title>', 0Ah\n"
+"\tdb\t'<meta name=\"author\" content=\"G. Adam Stanislav\" />', 0Ah\n"
+"\tdb\t'</head>', 0Ah, 0Ah\n"
+"\tdb\t'<body bgcolor=\"#ffffff\" text=\"#000000\" link=\"#0000ff\" '\n"
+"\tdb\t'vlink=\"#840084\" alink=\"#0000ff\">', 0Ah\n"
+"\tdb\t'<div class=\"webvars\">', 0Ah\n"
+"\tdb\t'<h1>Web Environment</h1>', 0Ah\n"
+"\tdb\t'<p>The following <b>environment variables</b> are defined '\n"
+"\tdb\t'on this web server:</p>', 0Ah, 0Ah\n"
+"\tdb\t'<table align=\"center\" width=\"80\" border=\"0\" cellpadding=\"10\" '"
+"\n"
+"\tdb\t'cellspacing=\"0\" class=\"webvars\">', 0Ah\n"
+"httplen\tequ\t$-http\n"
+"left\tdb\t'<tr>', 0Ah\n"
+"\tdb\t'<td class=\"name\"><tt>'\n"
+"leftlen\tequ\t$-left\n"
+"middle\tdb\t'</tt></td>', 0Ah\n"
+"\tdb\t'<td class=\"value\"><tt><b>'\n"
+"midlen\tequ\t$-middle\n"
+"undef\tdb\t'<i>(undefined)</i>'\n"
+"undeflen\tequ\t$-undef\n"
+"right\tdb\t'</b></tt></td>', 0Ah\n"
+"\tdb\t'</tr>', 0Ah\n"
+"rightlen\tequ\t$-right\n"
+"wrap\tdb\t'</table>', 0Ah\n"
+"\tdb\t'</div>', 0Ah\n"
+"\tdb\t'</body>', 0Ah\n"
+"\tdb\t'</html>', 0Ah, 0Ah\n"
+"wraplen\tequ\t$-wrap\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1532
@@ -2628,6 +3123,15 @@ msgid ""
 "\tpush\tdword stdout\n"
 "\tsys.write\n"
 msgstr ""
+"section\t.text\n"
+"global\t_start\n"
+"_start:\n"
+"\t; First, send out all the http and xhtml stuff that is\n"
+"\t; needed before we start showing the environment\n"
+"\tpush\tdword httplen\n"
+"\tpush\tdword http\n"
+"\tpush\tdword stdout\n"
+"\tsys.write\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1536
@@ -2637,6 +3141,9 @@ msgid ""
 "\t; are. We have 12 bytes we have pushed before \"argc\"\n"
 "\tmov\teax, [esp+12]\n"
 msgstr ""
+"\t; Now find how far on the stack the environment pointers\n"
+"\t; are. We have 12 bytes we have pushed before \"argc\"\n"
+"\tmov\teax, [esp+12]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1551
@@ -2657,6 +3164,20 @@ msgid ""
 "\tlea\tesp, [esp+20+eax*4]\n"
 "\tcld\t\t; This should already be the case, but let's be sure.\n"
 msgstr ""
+"\t; We need to remove the following from the stack:\n"
+"\t;\n"
+"\t;\tThe 12 bytes we pushed for sys.write\n"
+"\t;\tThe  4 bytes of argc\n"
+"\t;\tThe EAX*4 bytes of argv\n"
+"\t;\tThe  4 bytes of the NULL after argv\n"
+"\t;\n"
+"\t; Total:\n"
+"\t;\t20 + eax * 4\n"
+"\t;\n"
+"\t; Because stack grows down, we need to ADD that many bytes\n"
+"\t; to ESP.\n"
+"\tlea\tesp, [esp+20+eax*4]\n"
+"\tcld\t\t; This should already be the case, but let's be sure.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1557
@@ -2668,6 +3189,11 @@ msgid ""
 "\tor\tedi, edi\t; Done yet?\n"
 "\tje\tnear .wrap\n"
 msgstr ""
+"\t; Loop through the environment, printing it out\n"
+".loop:\n"
+"\tpop\tedi\n"
+"\tor\tedi, edi\t; Done yet?\n"
+"\tje\tnear .wrap\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1563
@@ -2679,6 +3205,11 @@ msgid ""
 "\tpush\tdword stdout\n"
 "\tsys.write\n"
 msgstr ""
+"\t; Print the left part of HTML\n"
+"\tpush\tdword leftlen\n"
+"\tpush\tdword left\n"
+"\tpush\tdword stdout\n"
+"\tsys.write\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1574
@@ -2695,6 +3226,16 @@ msgid ""
 "\tnot\tecx\t\t; ECX = string length + 1\n"
 "\tmov\tebx, ecx\t; Save it in EBX\n"
 msgstr ""
+"\t; It may be tempting to search for the '=' in the env string next.\n"
+"\t; But it is possible there is no '=', so we search for the\n"
+"\t; terminating NUL first.\n"
+"\tmov\tesi, edi\t; Save start of string\n"
+"\tsub\tecx, ecx\n"
+"\tnot\tecx\t\t; ECX = FFFFFFFF\n"
+"\tsub\teax, eax\n"
+"repne\tscasb\n"
+"\tnot\tecx\t\t; ECX = string length + 1\n"
+"\tmov\tebx, ecx\t; Save it in EBX\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1581
@@ -2707,6 +3248,12 @@ msgid ""
 "\tnot\tecx\n"
 "\tadd\tecx, ebx\t; Length of name\n"
 msgstr ""
+"\t; Now is the time to find '='\n"
+"\tmov\tedi, esi\t; Start of string\n"
+"\tmov\tal, '='\n"
+"repne\tscasb\n"
+"\tnot\tecx\n"
+"\tadd\tecx, ebx\t; Length of name\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1586
@@ -2717,6 +3264,10 @@ msgid ""
 "\tpush\tdword stdout\n"
 "\tsys.write\n"
 msgstr ""
+"\tpush\tecx\n"
+"\tpush\tesi\n"
+"\tpush\tdword stdout\n"
+"\tsys.write\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1592
@@ -2728,6 +3279,11 @@ msgid ""
 "\tpush\tdword stdout\n"
 "\tsys.write\n"
 msgstr ""
+"\t; Print the middle part of HTML table code\n"
+"\tpush\tdword midlen\n"
+"\tpush\tdword middle\n"
+"\tpush\tdword stdout\n"
+"\tsys.write\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1596
@@ -2737,6 +3293,9 @@ msgid ""
 "\tnot\tecx\n"
 "\tlea\tebx, [ebx+ecx-1]\n"
 msgstr ""
+"\t; Find the length of the value\n"
+"\tnot\tecx\n"
+"\tlea\tebx, [ebx+ecx-1]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1600
@@ -2746,6 +3305,9 @@ msgid ""
 "\tor\tebx, ebx\n"
 "\tjne\t.value\n"
 msgstr ""
+"\t; Print \"undefined\" if 0\n"
+"\tor\tebx, ebx\n"
+"\tjne\t.value\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1603
@@ -2754,6 +3316,8 @@ msgid ""
 "\tmov\tebx, undeflen\n"
 "\tmov\tedi, undef\n"
 msgstr ""
+"\tmov\tebx, undeflen\n"
+"\tmov\tedi, undef\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1609
@@ -2765,6 +3329,11 @@ msgid ""
 "\tpush\tdword stdout\n"
 "\tsys.write\n"
 msgstr ""
+".value:\n"
+"\tpush\tebx\n"
+"\tpush\tedi\n"
+"\tpush\tdword stdout\n"
+"\tsys.write\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1615
@@ -2776,6 +3345,11 @@ msgid ""
 "\tpush\tdword stdout\n"
 "\tsys.write\n"
 msgstr ""
+"\t; Print the right part of the table row\n"
+"\tpush\tdword rightlen\n"
+"\tpush\tdword right\n"
+"\tpush\tdword stdout\n"
+"\tsys.write\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1618
@@ -2784,6 +3358,8 @@ msgid ""
 "\t; Get rid of the 60 bytes we have pushed\n"
 "\tadd\tesp, byte 60\n"
 msgstr ""
+"\t; Get rid of the 60 bytes we have pushed\n"
+"\tadd\tesp, byte 60\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1621
@@ -2792,6 +3368,8 @@ msgid ""
 "\t; Get the next variable\n"
 "\tjmp\t.loop\n"
 msgstr ""
+"\t; Get the next variable\n"
+"\tjmp\t.loop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1628
@@ -2804,6 +3382,12 @@ msgid ""
 "\tpush\tdword stdout\n"
 "\tsys.write\n"
 msgstr ""
+".wrap:\n"
+"\t; Print the rest of HTML\n"
+"\tpush\tdword wraplen\n"
+"\tpush\tdword wrap\n"
+"\tpush\tdword stdout\n"
+"\tsys.write\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1632
@@ -2813,6 +3397,9 @@ msgid ""
 "\tpush\tdword 0\n"
 "\tsys.exit\n"
 msgstr ""
+"\t; Return success\n"
+"\tpush\tdword 0\n"
+"\tsys.exit\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1636
@@ -2833,6 +3420,8 @@ msgid ""
 "% nasm -f elf webvars.asm\n"
 "% ld -s -o webvars webvars.o\n"
 msgstr ""
+"% nasm -f elf webvars.asm\n"
+"% ld -s -o webvars webvars.o\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1647
@@ -2904,6 +3493,8 @@ msgid ""
 "% tuc myfile tempfile\n"
 "% mv tempfile myfile\n"
 msgstr ""
+"% tuc myfile tempfile\n"
+"% mv tempfile myfile\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1679
@@ -2915,7 +3506,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1683
 #, no-wrap
 msgid "% ftuc myfile\n"
-msgstr ""
+msgstr "% ftuc myfile\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1686
@@ -2957,22 +3548,22 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1699
 msgid "carriage return / line feed"
-msgstr ""
+msgstr "carriage return / line feed"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1700
 msgid "carriage return"
-msgstr ""
+msgstr "carriage return"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1701
 msgid "line feed / carriage return"
-msgstr ""
+msgstr "line feed / carriage return"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1702
 msgid "line feed"
-msgstr ""
+msgstr "line feed"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1704
@@ -3214,6 +3805,18 @@ msgid ""
 "\t\tbreak;\n"
 "\t}\n"
 msgstr ""
+"switch (state) {\n"
+"\tdefault:\n"
+"\tcase REGULAR:\n"
+"\t\tregular(inputchar);\n"
+"\t\tbreak;\n"
+"\tcase CR:\n"
+"\t\tcr(inputchar);\n"
+"\t\tbreak;\n"
+"\tcase LF:\n"
+"\t\tlf(inputchar);\n"
+"\t\tbreak;\n"
+"\t}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1798
@@ -3226,7 +3829,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1802
 #, no-wrap
 msgid "(output[state])(inputchar);\n"
-msgstr ""
+msgstr "(output[state])(inputchar);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1805
@@ -3239,7 +3842,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1809
 #, no-wrap
 msgid "(*state)(inputchar);\n"
-msgstr ""
+msgstr "(*state)(inputchar);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1813
@@ -3253,7 +3856,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1817
 #, no-wrap
 msgid "call\tebx\n"
-msgstr ""
+msgstr "call\tebx\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1821
@@ -3334,6 +3937,8 @@ msgid ""
 "197\tSTD\tBSD\t{ caddr_t mmap(caddr_t addr, size_t len, int prot, \\\n"
 "\t\t\t    int flags, int fd, long pad, off_t pos); }\n"
 msgstr ""
+"197\tSTD\tBSD\t{ caddr_t mmap(caddr_t addr, size_t len, int prot, \\\n"
+"\t\t\t    int flags, int fd, long pad, off_t pos); }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1859
@@ -3398,7 +4003,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1885
 #, no-wrap
 msgid "189\tSTD\tPOSIX\t{ int fstat(int fd, struct stat *sb); }\n"
-msgstr ""
+msgstr "189\tSTD\tPOSIX\t{ int fstat(int fd, struct stat *sb); }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1889
@@ -3452,7 +4057,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1908
 #, no-wrap
 msgid "201\tSTD\tBSD\t{ int ftruncate(int fd, int pad, off_t length); }\n"
-msgstr ""
+msgstr "201\tSTD\tBSD\t{ int ftruncate(int fd, int pad, off_t length); }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1911
@@ -3463,7 +4068,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1913
 #, no-wrap
 msgid "ftuc"
-msgstr ""
+msgstr "ftuc"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1918
@@ -3482,6 +4087,10 @@ msgid ""
 "%define\tO_WRONLY\t1\n"
 "%define\tO_RDWR\t2\n"
 msgstr ""
+";;;;;;; open flags\n"
+"%define\tO_RDONLY\t0\n"
+"%define\tO_WRONLY\t1\n"
+"%define\tO_RDWR\t2\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1934
@@ -3496,6 +4105,14 @@ msgid ""
 "%define\tMAP_SHARED\t0001h\n"
 "%define\tMAP_PRIVATE\t0002h\n"
 msgstr ""
+";;;;;;; mmap flags\n"
+"%define\tPROT_NONE\t0\n"
+"%define\tPROT_READ\t1\n"
+"%define\tPROT_WRITE\t2\n"
+"%define\tPROT_EXEC\t4\n"
+";;\n"
+"%define\tMAP_SHARED\t0001h\n"
+"%define\tMAP_PRIVATE\t0002h\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1958
@@ -3525,6 +4142,29 @@ msgid ""
 "st_qspare\tresd\t4\t; = 80\n"
 "endstruc\n"
 msgstr ""
+";;;;;;; stat structure\n"
+"struc\tstat\n"
+"st_dev\t\tresd\t1\t; = 0\n"
+"st_ino\t\tresd\t1\t; = 4\n"
+"st_mode\t\tresw\t1\t; = 8, size is 16 bits\n"
+"st_nlink\tresw\t1\t; = 10, ditto\n"
+"st_uid\t\tresd\t1\t; = 12\n"
+"st_gid\t\tresd\t1\t; = 16\n"
+"st_rdev\t\tresd\t1\t; = 20\n"
+"st_atime\tresd\t1\t; = 24\n"
+"st_atimensec\tresd\t1\t; = 28\n"
+"st_mtime\tresd\t1\t; = 32\n"
+"st_mtimensec\tresd\t1\t; = 36\n"
+"st_ctime\tresd\t1\t; = 40\n"
+"st_ctimensec\tresd\t1\t; = 44\n"
+"st_size\t\tresd\t2\t; = 48, size is 64 bits\n"
+"st_blocks\tresd\t2\t; = 56, ditto\n"
+"st_blksize\tresd\t1\t; = 64\n"
+"st_flags\tresd\t1\t; = 68\n"
+"st_gen\t\tresd\t1\t; = 72\n"
+"st_lspare\tresd\t1\t; = 76\n"
+"st_qspare\tresd\t4\t; = 80\n"
+"endstruc\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1961
@@ -3540,6 +4180,10 @@ msgid ""
 "%define\tSYS_fstat\t189\n"
 "%define\tSYS_ftruncate\t201\n"
 msgstr ""
+"%define\tSYS_mmap\t197\n"
+"%define\tSYS_munmap\t73\n"
+"%define\tSYS_fstat\t189\n"
+"%define\tSYS_ftruncate\t201\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1971
@@ -3554,6 +4198,9 @@ msgid ""
 "\tsystem\tSYS_mmap\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.mmap\t0\n"
+"\tsystem\tSYS_mmap\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1981
@@ -3563,6 +4210,9 @@ msgid ""
 "\tsystem\tSYS_munmap\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.munmap\t0\n"
+"\tsystem\tSYS_munmap\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1985
@@ -3572,6 +4222,9 @@ msgid ""
 "\tsystem\tSYS_ftruncate\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.ftruncate\t0\n"
+"\tsystem\tSYS_ftruncate\n"
+"%endmacro\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1989
@@ -3581,6 +4234,9 @@ msgid ""
 "\tsystem\tSYS_fstat\n"
 "%endmacro\n"
 msgstr ""
+"%macro\tsys.fstat\t0\n"
+"\tsystem\tSYS_fstat\n"
+"%endmacro\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1992
@@ -3602,6 +4258,18 @@ msgid ""
 ";;;;;;; v.1 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n"
 "%include\t'system.inc'\n"
 msgstr ""
+";;;;;;; Fast Text-to-Unix Conversion (ftuc.asm) "
+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n"
+";;\n"
+";; Started:\t21-Dec-2000\n"
+";; Updated:\t22-Dec-2000\n"
+";;\n"
+";; Copyright 2000 G. Adam Stanislav.\n"
+";; All rights reserved.\n"
+";;\n"
+";;;;;;; v.1 "
+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n"
+"%include\t'system.inc'\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2019
@@ -3621,12 +4289,25 @@ msgid ""
 "mae\tdb\t'ftuc: Memory allocation error.', 0Ah\n"
 "maelen\tequ\t$-mae\n"
 msgstr ""
+"section\t.data\n"
+"\tdb\t'Copyright 2000 G. Adam Stanislav.', 0Ah\n"
+"\tdb\t'All rights reserved.', 0Ah\n"
+"usg\tdb\t'Usage: ftuc filename', 0Ah\n"
+"usglen\tequ\t$-usg\n"
+"co\tdb\t\"ftuc: Can't open file.\", 0Ah\n"
+"colen\tequ\t$-co\n"
+"fae\tdb\t'ftuc: File access error.', 0Ah\n"
+"faelen\tequ\t$-fae\n"
+"ftl\tdb\t'ftuc: File too long, use regular tuc instead.', 0Ah\n"
+"ftllen\tequ\t$-ftl\n"
+"mae\tdb\t'ftuc: Memory allocation error.', 0Ah\n"
+"maelen\tequ\t$-mae\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2021
 #, no-wrap
 msgid "section\t.text\n"
-msgstr ""
+msgstr "section\t.text\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2027
@@ -3638,6 +4319,11 @@ msgid ""
 "\tpush\tdword mae\n"
 "\tjmp\tshort error\n"
 msgstr ""
+"align 4\n"
+"memerr:\n"
+"\tpush\tdword maelen\n"
+"\tpush\tdword mae\n"
+"\tjmp\tshort error\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2033
@@ -3649,6 +4335,11 @@ msgid ""
 "\tpush\tdword ftl\n"
 "\tjmp\tshort error\n"
 msgstr ""
+"align 4\n"
+"toolong:\n"
+"\tpush\tdword ftllen\n"
+"\tpush\tdword ftl\n"
+"\tjmp\tshort error\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2039
@@ -3660,6 +4351,11 @@ msgid ""
 "\tpush\tdword fae\n"
 "\tjmp\tshort error\n"
 msgstr ""
+"align 4\n"
+"facerr:\n"
+"\tpush\tdword faelen\n"
+"\tpush\tdword fae\n"
+"\tjmp\tshort error\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2045
@@ -3671,6 +4367,11 @@ msgid ""
 "\tpush\tdword co\n"
 "\tjmp\tshort error\n"
 msgstr ""
+"align 4\n"
+"cantopen:\n"
+"\tpush\tdword colen\n"
+"\tpush\tdword co\n"
+"\tjmp\tshort error\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2050
@@ -3681,6 +4382,10 @@ msgid ""
 "\tpush\tdword usglen\n"
 "\tpush\tdword usg\n"
 msgstr ""
+"align 4\n"
+"usage:\n"
+"\tpush\tdword usglen\n"
+"\tpush\tdword usg\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2054
@@ -3690,6 +4395,9 @@ msgid ""
 "\tpush\tdword stderr\n"
 "\tsys.write\n"
 msgstr ""
+"error:\n"
+"\tpush\tdword stderr\n"
+"\tsys.write\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2057
@@ -3698,6 +4406,8 @@ msgid ""
 "\tpush\tdword 1\n"
 "\tsys.exit\n"
 msgstr ""
+"\tpush\tdword 1\n"
+"\tsys.exit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2065
@@ -3711,6 +4421,13 @@ msgid ""
 "\tpop\tecx\t\t; file to convert\n"
 "\tjecxz\tusage\n"
 msgstr ""
+"align 4\n"
+"global\t_start\n"
+"_start:\n"
+"\tpop\teax\t\t; argc\n"
+"\tpop\teax\t\t; program name\n"
+"\tpop\tecx\t\t; file to convert\n"
+"\tjecxz\tusage\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2069
@@ -3720,6 +4437,9 @@ msgid ""
 "\tor\teax, eax\t; Too many arguments?\n"
 "\tjne\tusage\n"
 msgstr ""
+"\tpop\teax\n"
+"\tor\teax, eax\t; Too many arguments?\n"
+"\tjne\tusage\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2075
@@ -3731,12 +4451,17 @@ msgid ""
 "\tsys.open\n"
 "\tjc\tcantopen\n"
 msgstr ""
+"\t; Open the file\n"
+"\tpush\tdword O_RDWR\n"
+"\tpush\tecx\n"
+"\tsys.open\n"
+"\tjc\tcantopen\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2077
 #, no-wrap
 msgid "\tmov\tebp, eax\t; Save fd\n"
-msgstr ""
+msgstr "\tmov\tebp, eax\t; Save fd\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2080
@@ -3745,6 +4470,8 @@ msgid ""
 "\tsub\tesp, byte stat_size\n"
 "\tmov\tebx, esp\n"
 msgstr ""
+"\tsub\tesp, byte stat_size\n"
+"\tmov\tebx, esp\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2086
@@ -3756,12 +4483,17 @@ msgid ""
 "\tsys.fstat\n"
 "\tjc\tfacerr\n"
 msgstr ""
+"\t; Find file size\n"
+"\tpush\tebx\n"
+"\tpush\tebp\t\t; fd\n"
+"\tsys.fstat\n"
+"\tjc\tfacerr\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2088
 #, no-wrap
 msgid "\tmov\tedx, [ebx + st_size + 4]\n"
-msgstr ""
+msgstr "\tmov\tedx, [ebx + st_size + 4]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2096
@@ -3775,6 +4507,13 @@ msgid ""
 "\tor\tecx, ecx\n"
 "\tjs\tnear toolong\n"
 msgstr ""
+"\t; File is too long if EDX != 0 ...\n"
+"\tor\tedx, edx\n"
+"\tjne\tnear toolong\n"
+"\tmov\tecx, [ebx + st_size]\n"
+"\t; ... or if it is above 2 GB\n"
+"\tor\tecx, ecx\n"
+"\tjs\tnear toolong\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2099
@@ -3783,6 +4522,8 @@ msgid ""
 "\t; Do nothing if the file is 0 bytes in size\n"
 "\tjecxz\t.quit\n"
 msgstr ""
+"\t; Do nothing if the file is 0 bytes in size\n"
+"\tjecxz\t.quit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2111
@@ -3800,6 +4541,17 @@ msgid ""
 "\tsys.mmap\n"
 "\tjc\tnear memerr\n"
 msgstr ""
+"\t; Map the entire file in memory\n"
+"\tpush\tedx\n"
+"\tpush\tedx\t\t; starting at offset 0\n"
+"\tpush\tedx\t\t; pad\n"
+"\tpush\tebp\t\t; fd\n"
+"\tpush\tdword MAP_SHARED\n"
+"\tpush\tdword PROT_READ | PROT_WRITE\n"
+"\tpush\tecx\t\t; entire file size\n"
+"\tpush\tedx\t\t; let system decide on the address\n"
+"\tsys.mmap\n"
+"\tjc\tnear memerr\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2116
@@ -3810,6 +4562,10 @@ msgid ""
 "\tpush\tecx\t\t; for SYS_munmap\n"
 "\tpush\tedi\n"
 msgstr ""
+"\tmov\tedi, eax\n"
+"\tmov\tesi, eax\n"
+"\tpush\tecx\t\t; for SYS_munmap\n"
+"\tpush\tedi\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2121
@@ -3820,6 +4576,10 @@ msgid ""
 "\tmov\tah, 0Ah\n"
 "\tcld\n"
 msgstr ""
+"\t; Use EBX for state machine\n"
+"\tmov\tebx, ordinary\n"
+"\tmov\tah, 0Ah\n"
+"\tcld\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2126
@@ -3830,6 +4590,10 @@ msgid ""
 "\tcall\tebx\n"
 "\tloop\t.loop\n"
 msgstr ""
+".loop:\n"
+"\tlodsb\n"
+"\tcall\tebx\n"
+"\tloop\t.loop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2129
@@ -3838,6 +4602,8 @@ msgid ""
 "\tcmp\tebx, ordinary\n"
 "\tje\t.filesize\n"
 msgstr ""
+"\tcmp\tebx, ordinary\n"
+"\tje\t.filesize\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2134
@@ -3848,6 +4614,10 @@ msgid ""
 "\tstosb\n"
 "\tinc\tedx\n"
 msgstr ""
+"\t; Output final lf\n"
+"\tmov\tal, ah\n"
+"\tstosb\n"
+"\tinc\tedx\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2142
@@ -3861,6 +4631,13 @@ msgid ""
 "\tpush\tebp\n"
 "\tsys.ftruncate\n"
 msgstr ""
+".filesize:\n"
+"\t; truncate file to new size\n"
+"\tpush\tdword 0\t\t; high dword\n"
+"\tpush\tedx\t\t; low dword\n"
+"\tpush\teax\t\t; pad\n"
+"\tpush\tebp\n"
+"\tsys.ftruncate\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2145
@@ -3869,6 +4646,8 @@ msgid ""
 "\t; close it (ebp still pushed)\n"
 "\tsys.close\n"
 msgstr ""
+"\t; close it (ebp still pushed)\n"
+"\tsys.close\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2148
@@ -3877,6 +4656,8 @@ msgid ""
 "\tadd\tesp, byte 16\n"
 "\tsys.munmap\n"
 msgstr ""
+"\tadd\tesp, byte 16\n"
+"\tsys.munmap\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2152
@@ -3886,6 +4667,9 @@ msgid ""
 "\tpush\tdword 0\n"
 "\tsys.exit\n"
 msgstr ""
+".quit:\n"
+"\tpush\tdword 0\n"
+"\tsys.exit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2157
@@ -3896,6 +4680,10 @@ msgid ""
 "\tcmp\tal, 0Dh\n"
 "\tje\t.cr\n"
 msgstr ""
+"align 4\n"
+"ordinary:\n"
+"\tcmp\tal, 0Dh\n"
+"\tje\t.cr\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2160
@@ -3905,6 +4693,8 @@ msgid ""
 "\tcmp\tal, ah\n"
 "\tje\t.lf\n"
 msgstr ""
+"\tcmp\tal, ah\n"
+"\tje\t.lf\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2164
@@ -3914,6 +4704,9 @@ msgid ""
 "\tinc\tedx\n"
 "\tret\n"
 msgstr ""
+"\tstosb\n"
+"\tinc\tedx\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2169
@@ -3924,6 +4717,10 @@ msgid ""
 "\tmov\tebx, cr\n"
 "\tret\n"
 msgstr ""
+"align 4\n"
+".cr:\n"
+"\tmov\tebx, cr\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2174
@@ -3934,6 +4731,10 @@ msgid ""
 "\tmov\tebx, lf\n"
 "\tret\n"
 msgstr ""
+"align 4\n"
+".lf:\n"
+"\tmov\tebx, lf\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2179
@@ -3944,6 +4745,10 @@ msgid ""
 "\tcmp\tal, 0Dh\n"
 "\tje\t.cr\n"
 msgstr ""
+"align 4\n"
+"cr:\n"
+"\tcmp\tal, 0Dh\n"
+"\tje\t.cr\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2186
@@ -3954,6 +4759,9 @@ msgid ""
 "\tstosb\n"
 "\tinc\tedx\n"
 msgstr ""
+"\txchg\tal, ah\n"
+"\tstosb\n"
+"\tinc\tedx\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2189
@@ -3962,6 +4770,8 @@ msgid ""
 "\txchg\tal, ah\n"
 "\t; fall through\n"
 msgstr ""
+"\txchg\tal, ah\n"
+"\t; fall through\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2195
@@ -3973,6 +4783,11 @@ msgid ""
 "\tmov\tebx, ordinary\n"
 "\tret\n"
 msgstr ""
+".lf:\n"
+"\tstosb\n"
+"\tinc\tedx\n"
+"\tmov\tebx, ordinary\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2202
@@ -3985,6 +4800,12 @@ msgid ""
 "\tinc\tedx\n"
 "\tret\n"
 msgstr ""
+"align 4\n"
+".cr:\n"
+"\tmov\tal, ah\n"
+"\tstosb\n"
+"\tinc\tedx\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2207
@@ -3995,6 +4816,10 @@ msgid ""
 "\tcmp\tal, ah\n"
 "\tje\t.lf\n"
 msgstr ""
+"align 4\n"
+"lf:\n"
+"\tcmp\tal, ah\n"
+"\tje\t.lf\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2210
@@ -4003,6 +4828,8 @@ msgid ""
 "\tcmp\tal, 0Dh\n"
 "\tje\t.cr\n"
 msgstr ""
+"\tcmp\tal, 0Dh\n"
+"\tje\t.cr\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2220
@@ -4014,6 +4841,11 @@ msgid ""
 "\tmov\tebx, ordinary\n"
 "\tret\n"
 msgstr ""
+"\txchg\tal, ah\n"
+"\tstosb\n"
+"\tinc\tedx\n"
+"\tmov\tebx, ordinary\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2226
@@ -4025,6 +4857,11 @@ msgid ""
 "\tmov\tal, ah\n"
 "\t; fall through\n"
 msgstr ""
+"align 4\n"
+".cr:\n"
+"\tmov\tebx, ordinary\n"
+"\tmov\tal, ah\n"
+"\t; fall through\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2231
@@ -4035,6 +4872,10 @@ msgid ""
 "\tinc\tedx\n"
 "\tret\n"
 msgstr ""
+".lf:\n"
+"\tstosb\n"
+"\tinc\tedx\n"
+"\tret\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2238
@@ -4089,7 +4930,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2253
 #, no-wrap
 msgid "CSV"
-msgstr ""
+msgstr "CSV"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2256
@@ -4194,7 +5035,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2290
 #, no-wrap
 msgid "Usage: csv [-t<delim>] [-c<comma>] [-p] [-o <outfile>] [-i <infile>]\n"
-msgstr ""
+msgstr "Usage: csv [-t<delim>] [-c<comma>] [-p] [-o <outfile>] [-i <infile>]\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2293
@@ -4250,7 +5091,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2316
 #, no-wrap
 msgid "% csv '-t;' data.csv | awk '-F;' '{print $11}'\n"
-msgstr ""
+msgstr "% csv '-t;' data.csv | awk '-F;' '{print $11}'\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2319
@@ -4282,6 +5123,19 @@ msgid ""
 ";\n"
 ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n"
 msgstr ""
+";;;;;;; csv.asm "
+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n"
+";\n"
+"; Convert a comma-separated file to a something-else separated file.\n"
+";\n"
+"; Started:\t31-May-2001\n"
+"; Updated:\t 1-Jun-2001\n"
+";\n"
+"; Copyright (c) 2001 G. Adam Stanislav\n"
+"; All rights reserved.\n"
+";\n"
+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+";;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2349
@@ -4297,6 +5151,16 @@ msgid ""
 "oemsg\tdb\t\"csv: Can't create output file\", 0Ah\n"
 "oemlen\tequ\t$-oemsg\n"
 msgstr ""
+"section\t.data\n"
+"fd.in\tdd\tstdin\n"
+"fd.out\tdd\tstdout\n"
+"usg\tdb\t'Usage: csv [-t<delim>] [-c<comma>] [-p] [-o <outfile>] [-i "
+"<infile>]', 0Ah\n"
+"usglen\tequ\t$-usg\n"
+"iemsg\tdb\t\"csv: Can't open input file\", 0Ah\n"
+"iemlen\tequ\t$-iemsg\n"
+"oemsg\tdb\t\"csv: Can't create output file\", 0Ah\n"
+"oemlen\tequ\t$-oemsg\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2363
@@ -4312,6 +5176,15 @@ msgid ""
 "\tpush\tdword 1\t\t; return failure\n"
 "\tsys.exit\n"
 msgstr ""
+"section\t.text\n"
+"align 4\n"
+"ierr:\n"
+"\tpush\tdword iemlen\n"
+"\tpush\tdword iemsg\n"
+"\tpush\tdword stderr\n"
+"\tsys.write\n"
+"\tpush\tdword 1\t\t; return failure\n"
+"\tsys.exit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2372
@@ -4327,6 +5200,14 @@ msgid ""
 "\tpush\tdword 2\n"
 "\tsys.exit\n"
 msgstr ""
+"align 4\n"
+"oerr:\n"
+"\tpush\tdword oemlen\n"
+"\tpush\tdword oemsg\n"
+"\tpush\tdword stderr\n"
+"\tsys.write\n"
+"\tpush\tdword 2\n"
+"\tsys.exit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2381
@@ -4342,6 +5223,14 @@ msgid ""
 "\tpush\tdword 3\n"
 "\tsys.exit\n"
 msgstr ""
+"align 4\n"
+"usage:\n"
+"\tpush\tdword usglen\n"
+"\tpush\tdword usg\n"
+"\tpush\tdword stderr\n"
+"\tsys.write\n"
+"\tpush\tdword 3\n"
+"\tsys.exit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2387
@@ -4353,6 +5242,11 @@ msgid ""
 "\tadd\tesp, byte 8\t; discard argc and argv[0]\n"
 "\tmov\tedx, (',' << 8) | 9\n"
 msgstr ""
+"align 4\n"
+"global\t_start\n"
+"_start:\n"
+"\tadd\tesp, byte 8\t; discard argc and argv[0]\n"
+"\tmov\tedx, (',' << 8) | 9\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2392
@@ -4363,6 +5257,10 @@ msgid ""
 "\tor\tecx, ecx\n"
 "\tje\tnear .init\t\t; no more arguments\n"
 msgstr ""
+".arg:\n"
+"\tpop\tecx\n"
+"\tor\tecx, ecx\n"
+"\tje\tnear .init\t\t; no more arguments\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2396
@@ -4373,6 +5271,9 @@ msgid ""
 "\tcmp\tbyte [ecx], '-'\n"
 "\tjne\tusage\n"
 msgstr ""
+"\t; ECX contains the pointer to an argument\n"
+"\tcmp\tbyte [ecx], '-'\n"
+"\tjne\tusage\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2399
@@ -4381,6 +5282,8 @@ msgid ""
 "\tinc\tecx\n"
 "\tmov\tax, [ecx]\n"
 msgstr ""
+"\tinc\tecx\n"
+"\tmov\tax, [ecx]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2403
@@ -4391,6 +5294,9 @@ msgid ""
 "\tcmp\tal, 'o'\n"
 "\tjne\t.i\n"
 msgstr ""
+".o:\n"
+"\tcmp\tal, 'o'\n"
+"\tjne\t.i\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2407
@@ -4401,6 +5307,9 @@ msgid ""
 "\tcmp\tdword [fd.out], stdout\n"
 "\tjne\tusage\n"
 msgstr ""
+"\t; Make sure we are not asked for the output file twice\n"
+"\tcmp\tdword [fd.out], stdout\n"
+"\tjne\tusage\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2412
@@ -4412,6 +5321,10 @@ msgid ""
 "\t; or in the next argument,\n"
 "\t; i.e., -o file\n"
 msgstr ""
+"\t; Find the path to output file - it is either at [ECX+1],\n"
+"\t; i.e., -ofile --\n"
+"\t; or in the next argument,\n"
+"\t; i.e., -o file\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2418
@@ -4423,6 +5336,11 @@ msgid ""
 "\tpop\tecx\n"
 "\tjecxz\tusage\n"
 msgstr ""
+"\tinc\tecx\n"
+"\tor\tah, ah\n"
+"\tjne\t.openoutput\n"
+"\tpop\tecx\n"
+"\tjecxz\tusage\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2426
@@ -4437,6 +5355,13 @@ msgid ""
 "\tsys.open\n"
 "\tjc\tnear oerr\n"
 msgstr ""
+".openoutput:\n"
+"\tpush\tdword 420\t; file mode (644 octal)\n"
+"\tpush\tdword 0200h | 0400h | 01h\n"
+"\t; O_CREAT | O_TRUNC | O_WRONLY\n"
+"\tpush\tecx\n"
+"\tsys.open\n"
+"\tjc\tnear oerr\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2430
@@ -4447,6 +5372,9 @@ msgid ""
 "\tmov\t[fd.out], eax\n"
 "\tjmp\tshort .arg\n"
 msgstr ""
+"\tadd\tesp, byte 12\n"
+"\tmov\t[fd.out], eax\n"
+"\tjmp\tshort .arg\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2434
@@ -4457,6 +5385,9 @@ msgid ""
 "\tcmp\tal, 'i'\n"
 "\tjne\t.p\n"
 msgstr ""
+".i:\n"
+"\tcmp\tal, 'i'\n"
+"\tjne\t.p\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2438
@@ -4467,6 +5398,9 @@ msgid ""
 "\tcmp\tdword [fd.in], stdin\n"
 "\tjne\tnear usage\n"
 msgstr ""
+"\t; Make sure we are not asked twice\n"
+"\tcmp\tdword [fd.in], stdin\n"
+"\tjne\tnear usage\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2446
@@ -4480,6 +5414,13 @@ msgid ""
 "\tor\tecx, ecx\n"
 "\tje near usage\n"
 msgstr ""
+"\t; Find the path to the input file\n"
+"\tinc\tecx\n"
+"\tor\tah, ah\n"
+"\tjne\t.openinput\n"
+"\tpop\tecx\n"
+"\tor\tecx, ecx\n"
+"\tje near usage\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2452
@@ -4492,6 +5433,11 @@ msgid ""
 "\tsys.open\n"
 "\tjc\tnear ierr\t\t; open failed\n"
 msgstr ""
+".openinput:\n"
+"\tpush\tdword 0\t\t; O_RDONLY\n"
+"\tpush\tecx\n"
+"\tsys.open\n"
+"\tjc\tnear ierr\t\t; open failed\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2456
@@ -4502,6 +5448,9 @@ msgid ""
 "\tmov\t[fd.in], eax\n"
 "\tjmp\t.arg\n"
 msgstr ""
+"\tadd\tesp, byte 8\n"
+"\tmov\t[fd.in], eax\n"
+"\tjmp\t.arg\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2464
@@ -4515,6 +5464,13 @@ msgid ""
 "\tor\tedx, 1 << 31\n"
 "\tjmp\t.arg\n"
 msgstr ""
+".p:\n"
+"\tcmp\tal, 'p'\n"
+"\tjne\t.t\n"
+"\tor\tah, ah\n"
+"\tjne\tnear usage\n"
+"\tor\tedx, 1 << 31\n"
+"\tjmp\t.arg\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2472
@@ -4528,6 +5484,13 @@ msgid ""
 "\tmov\tdl, ah\n"
 "\tjmp\t.arg\n"
 msgstr ""
+".t:\n"
+"\tcmp\tal, 't'\t\t; redefine output delimiter\n"
+"\tjne\t.c\n"
+"\tor\tah, ah\n"
+"\tje\tnear usage\n"
+"\tmov\tdl, ah\n"
+"\tjmp\t.arg\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2480
@@ -4541,6 +5504,13 @@ msgid ""
 "\tmov\tdh, ah\n"
 "\tjmp\t.arg\n"
 msgstr ""
+".c:\n"
+"\tcmp\tal, 'c'\n"
+"\tjne\tnear usage\n"
+"\tor\tah, ah\n"
+"\tje\tnear usage\n"
+"\tmov\tdh, ah\n"
+"\tjmp\t.arg\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2487
@@ -4553,6 +5523,12 @@ msgid ""
 "\tsub\tecx, ecx\n"
 "\tmov\tedi, obuffer\n"
 msgstr ""
+"align 4\n"
+".init:\n"
+"\tsub\teax, eax\n"
+"\tsub\tebx, ebx\n"
+"\tsub\tecx, ecx\n"
+"\tmov\tedi, obuffer\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2491
@@ -4562,6 +5538,9 @@ msgid ""
 "\tor\tedx, edx\n"
 "\tjs\t.loop\n"
 msgstr ""
+"\t; See if we are to preserve the first line\n"
+"\tor\tedx, edx\n"
+"\tjs\t.loop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2497
@@ -4573,6 +5552,11 @@ msgid ""
 "\tcmp\tal, 0Ah\n"
 "\tjne\t.firstline\n"
 msgstr ""
+".firstline:\n"
+"\t; get rid of the first line\n"
+"\tcall\tgetchar\n"
+"\tcmp\tal, 0Ah\n"
+"\tjne\t.firstline\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2505
@@ -4582,6 +5566,9 @@ msgid ""
 "\tcmp\tal, dh\n"
 "\tjne\t.quote\n"
 msgstr ""
+"\t; is it a comma (or whatever the user asked for)?\n"
+"\tcmp\tal, dh\n"
+"\tjne\t.quote\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2508
@@ -4590,6 +5577,8 @@ msgid ""
 "\t; Replace the comma with a tab (or whatever the user wants)\n"
 "\tmov\tal, dl\n"
 msgstr ""
+"\t; Replace the comma with a tab (or whatever the user wants)\n"
+"\tmov\tal, dl\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2516
@@ -4599,6 +5588,9 @@ msgid ""
 "\tcmp\tal, '\"'\n"
 "\tjne\t.put\n"
 msgstr ""
+".quote:\n"
+"\tcmp\tal, '\"'\n"
+"\tjne\t.put\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2523
@@ -4611,6 +5603,12 @@ msgid ""
 "\tcmp\tal, '\"'\n"
 "\tje\t.loop\n"
 msgstr ""
+"\t; Print everything until you get another quote or EOL. If it\n"
+"\t; is a quote, skip it. If it is EOL, print it.\n"
+".qloop:\n"
+"\tcall\tgetchar\n"
+"\tcmp\tal, '\"'\n"
+"\tje\t.loop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2526
@@ -4619,6 +5617,8 @@ msgid ""
 "\tcmp\tal, 0Ah\n"
 "\tje\t.put\n"
 msgstr ""
+"\tcmp\tal, 0Ah\n"
+"\tje\t.put\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2529
@@ -4627,6 +5627,8 @@ msgid ""
 "\tcall\tputchar\n"
 "\tjmp\tshort .qloop\n"
 msgstr ""
+"\tcall\tputchar\n"
+"\tjmp\tshort .qloop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2545
@@ -4637,6 +5639,9 @@ msgid ""
 "\tjecxz\t.read\n"
 "\tcall\twrite\n"
 msgstr ""
+"read:\n"
+"\tjecxz\t.read\n"
+"\tcall\twrite\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2558
@@ -4655,6 +5660,18 @@ msgid ""
 "\tsub\teax, eax\n"
 "\tret\n"
 msgstr ""
+".read:\n"
+"\tpush\tdword BUFSIZE\n"
+"\tmov\tesi, ibuffer\n"
+"\tpush\tesi\n"
+"\tpush\tdword [fd.in]\n"
+"\tsys.read\n"
+"\tadd\tesp, byte 12\n"
+"\tmov\tebx, eax\n"
+"\tor\teax, eax\n"
+"\tje\t.done\n"
+"\tsub\teax, eax\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2595
@@ -4675,6 +5692,19 @@ msgid ""
 ".ret:\n"
 "\tret\n"
 msgstr ""
+"align 4\n"
+"write:\n"
+"\tjecxz\t.ret\t; nothing to write\n"
+"\tsub\tedi, ecx\t; start of buffer\n"
+"\tpush\tecx\n"
+"\tpush\tedi\n"
+"\tpush\tdword [fd.out]\n"
+"\tsys.write\n"
+"\tadd\tesp, byte 12\n"
+"\tsub\teax, eax\n"
+"\tsub\tecx, ecx\t; buffer is empty now\n"
+".ret:\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2600
@@ -4743,6 +5773,11 @@ msgid ""
 "\tcall\tputchar\n"
 "\tjmp\tshort .loop\n"
 msgstr ""
+".loop:\n"
+"\tcall\tgetchar\n"
+"\tnot\tal\t\t; Create a negative\n"
+"\tcall\tputchar\n"
+"\tjmp\tshort .loop\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2632
@@ -5022,7 +6057,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2722
 #, no-wrap
 msgid "80 00 00 00 00 00 01 23 45 67\n"
-msgstr ""
+msgstr "80 00 00 00 00 00 01 23 45 67\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2725
@@ -5040,7 +6075,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2731
 #, no-wrap
 msgid "67 45 23 01 00 00 00 00 00 80\n"
-msgstr ""
+msgstr "67 45 23 01 00 00 00 00 00 80\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2734
@@ -5155,7 +6190,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2781
 #, no-wrap
 msgid "D = PC * sqrt(FL)\n"
-msgstr ""
+msgstr "D = PC * sqrt(FL)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2787
@@ -5198,7 +6233,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2802
 #, no-wrap
 msgid "F = FL / D\n"
-msgstr ""
+msgstr "F = FL / D\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2807
@@ -5222,7 +6257,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2814
 #, no-wrap
 msgid "t * (B / A)²\n"
-msgstr ""
+msgstr "t * (B / A)²\n"
 
 #. type: Title ====
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2817
@@ -5350,7 +6385,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2861
 #, no-wrap
 msgid " 100, 150, 210\n"
-msgstr ""
+msgstr " 100, 150, 210\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2866
@@ -5402,6 +6437,8 @@ msgid ""
 "What is the best pinhole diameter for the\n"
 "\t    focal length of 150?\n"
 msgstr ""
+"What is the best pinhole diameter for the\n"
+"\t    focal length of 150?\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2888
@@ -5417,6 +6454,10 @@ msgid ""
 "Syntax error: the\n"
 "Syntax error: best\n"
 msgstr ""
+"Syntax error: What\n"
+"Syntax error: is\n"
+"Syntax error: the\n"
+"Syntax error: best\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2898
@@ -5725,7 +6766,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3015
 #, no-wrap
 msgid " 00000000150\n"
-msgstr ""
+msgstr " 00000000150\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3018
@@ -5754,7 +6795,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3028
 #, no-wrap
 msgid " 17459765723452353453534535353530530534563507309676764423\n"
-msgstr ""
+msgstr " 17459765723452353453534535353530530534563507309676764423\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3033
@@ -5803,6 +6844,8 @@ msgstr ""
 #, no-wrap
 msgid "17459765723452353453534535353530530534563507309676764423\t???\t???\t???\t???\t???\n"
 msgstr ""
+"17459765723452353453534535353530530534563507309676764423\t???\t???\t???\t???"
+"\t???\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3053
@@ -5877,7 +6920,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3075
 #, no-wrap
 msgid "0\t???\t???\t???\t???\t???\n"
-msgstr ""
+msgstr "0\t???\t???\t???\t???\t???\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3078
@@ -6061,6 +7104,15 @@ msgid ""
 "\tfsqrt\n"
 "\tfstp\tst1\n"
 msgstr ""
+"fmul\tst0, st0\n"
+"\tfld1\n"
+"\tfld\tst1\n"
+"\tfyl2x\n"
+"\tfrndint\n"
+"\tfld1\n"
+"\tfscale\n"
+"\tfsqrt\n"
+"\tfstp\tst1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3163
@@ -6408,6 +7460,12 @@ msgid ""
 "\tfaddp\tst1, st0\t; TOS =  5\n"
 "\tfchs\t\t\t; TOS = -5\n"
 msgstr ""
+"\tfld1\t\t\t; TOS =  1\n"
+"\tfadd\tst0, st0\t; TOS =  2\n"
+"\tfadd\tst0, st0\t; TOS =  4\n"
+"\tfld1\t\t\t; TOS =  1\n"
+"\tfaddp\tst1, st0\t; TOS =  5\n"
+"\tfchs\t\t\t; TOS = -5\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3310
@@ -6446,6 +7504,19 @@ msgid ""
 ";\n"
 ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n"
 msgstr ""
+";;;;;;; pinhole.asm "
+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\n"
+";\n"
+"; Find various parameters of a pinhole camera construction and use\n"
+";\n"
+"; Started:\t 9-Jun-2001\n"
+"; Updated:\t10-Jun-2001\n"
+";\n"
+"; Copyright (c) 2001 G. Adam Stanislav\n"
+"; All rights reserved.\n"
+";\n"
+";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+";;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3368
@@ -6482,6 +7553,38 @@ msgid ""
 "\tdb\t'from F-5.6', 0Ah\n"
 "headlen\tequ\t$-header\n"
 msgstr ""
+"section\t.data\n"
+"align 4\n"
+"ten\tdd\t10\n"
+"thousand\tdd\t1000\n"
+"tthou\tdd\t10000\n"
+"fd.in\tdd\tstdin\n"
+"fd.out\tdd\tstdout\n"
+"envar\tdb\t'PINHOLE='\t; Exactly 8 bytes, or 2 dwords long\n"
+"pinhole\tdb\t'04,', \t\t; Bender's constant (0.04)\n"
+"connors\tdb\t'037', 0Ah\t; Connors' constant\n"
+"usg\tdb\t'Usage: pinhole [-b] [-c] [-e] [-p <value>] [-o <outfile>] [-i "
+"<infile>]', 0Ah\n"
+"usglen\tequ\t$-usg\n"
+"iemsg\tdb\t\"pinhole: Can't open input file\", 0Ah\n"
+"iemlen\tequ\t$-iemsg\n"
+"oemsg\tdb\t\"pinhole: Can't create output file\", 0Ah\n"
+"oemlen\tequ\t$-oemsg\n"
+"pinmsg\tdb\t\"pinhole: The PINHOLE constant must not be 0\", 0Ah\n"
+"pinlen\tequ\t$-pinmsg\n"
+"toobig\tdb\t\"pinhole: The PINHOLE constant may not exceed 18 decimal "
+"places\", 0Ah\n"
+"biglen\tequ\t$-toobig\n"
+"huhmsg\tdb\t9, '???'\n"
+"separ\tdb\t9, '???'\n"
+"sep2\tdb\t9, '???'\n"
+"sep3\tdb\t9, '???'\n"
+"sep4\tdb\t9, '???', 0Ah\n"
+"huhlen\tequ\t$-huhmsg\n"
+"header\tdb\t'focal length in millimeters,pinhole diameter in microns,'\n"
+"\tdb\t'F-number,normalized F-number,F-5.6 multiplier,stops '\n"
+"\tdb\t'from F-5.6', 0Ah\n"
+"headlen\tequ\t$-header\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3374
@@ -6493,6 +7596,11 @@ msgid ""
 "dbuffer\tresb\t20\t\t; decimal input buffer\n"
 "bbuffer\tresb\t10\t\t; BCD buffer\n"
 msgstr ""
+"section .bss\n"
+"ibuffer\tresb\tBUFSIZE\n"
+"obuffer\tresb\tBUFSIZE\n"
+"dbuffer\tresb\t20\t\t; decimal input buffer\n"
+"bbuffer\tresb\t10\t\t; BCD buffer\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3385
@@ -6509,6 +7617,16 @@ msgid ""
 "\tadd\tesp, byte 12\n"
 "\tret\n"
 msgstr ""
+"section\t.text\n"
+"align 4\n"
+"huh:\n"
+"\tcall\twrite\n"
+"\tpush\tdword huhlen\n"
+"\tpush\tdword huhmsg\n"
+"\tpush\tdword [fd.out]\n"
+"\tsys.write\n"
+"\tadd\tesp, byte 12\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3394
@@ -6523,6 +7641,14 @@ msgid ""
 "\tpush\tdword 4\t\t; return failure\n"
 "\tsys.exit\n"
 msgstr ""
+"align 4\n"
+"perr:\n"
+"\tpush\tdword pinlen\n"
+"\tpush\tdword pinmsg\n"
+"\tpush\tdword stderr\n"
+"\tsys.write\n"
+"\tpush\tdword 4\t\t; return failure\n"
+"\tsys.exit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3403
@@ -6537,6 +7663,14 @@ msgid ""
 "\tpush\tdword 5\t\t; return failure\n"
 "\tsys.exit\n"
 msgstr ""
+"align 4\n"
+"consttoobig:\n"
+"\tpush\tdword biglen\n"
+"\tpush\tdword toobig\n"
+"\tpush\tdword stderr\n"
+"\tsys.write\n"
+"\tpush\tdword 5\t\t; return failure\n"
+"\tsys.exit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3412
@@ -6551,6 +7685,14 @@ msgid ""
 "\tpush\tdword 1\t\t; return failure\n"
 "\tsys.exit\n"
 msgstr ""
+"align 4\n"
+"ierr:\n"
+"\tpush\tdword iemlen\n"
+"\tpush\tdword iemsg\n"
+"\tpush\tdword stderr\n"
+"\tsys.write\n"
+"\tpush\tdword 1\t\t; return failure\n"
+"\tsys.exit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3436
@@ -6562,6 +7704,11 @@ msgid ""
 "\tadd\tesp, byte 8\t; discard argc and argv[0]\n"
 "\tsub\tesi, esi\n"
 msgstr ""
+"align 4\n"
+"global\t_start\n"
+"_start:\n"
+"\tadd\tesp, byte 8\t; discard argc and argv[0]\n"
+"\tsub\tesi, esi\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3441
@@ -6572,6 +7719,10 @@ msgid ""
 "\tor\tecx, ecx\n"
 "\tje\tnear .getenv\t\t; no more arguments\n"
 msgstr ""
+".arg:\n"
+"\tpop\tecx\n"
+"\tor\tecx, ecx\n"
+"\tje\tnear .getenv\t\t; no more arguments\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3449
@@ -6581,6 +7732,9 @@ msgid ""
 "\tmov\tax, [ecx]\n"
 "\tinc\tecx\n"
 msgstr ""
+"\tinc\tecx\n"
+"\tmov\tax, [ecx]\n"
+"\tinc\tecx\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3467
@@ -6591,6 +7745,10 @@ msgid ""
 "\tpop\tecx\n"
 "\tjecxz\tusage\n"
 msgstr ""
+"\tor\tah, ah\n"
+"\tjne\t.openoutput\n"
+"\tpop\tecx\n"
+"\tjecxz\tusage\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3494
@@ -6603,6 +7761,12 @@ msgid ""
 "\tor\tecx, ecx\n"
 "\tje near usage\n"
 msgstr ""
+"\t; Find the path to the input file\n"
+"\tor\tah, ah\n"
+"\tjne\t.openinput\n"
+"\tpop\tecx\n"
+"\tor\tecx, ecx\n"
+"\tje near usage\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3510
@@ -6614,6 +7778,11 @@ msgid ""
 "\tor\tah, ah\n"
 "\tjne\t.pcheck\n"
 msgstr ""
+".p:\n"
+"\tcmp\tal, 'p'\n"
+"\tjne\t.c\n"
+"\tor\tah, ah\n"
+"\tjne\t.pcheck\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3514
@@ -6623,12 +7792,15 @@ msgid ""
 "\tor\tecx, ecx\n"
 "\tje\tnear usage\n"
 msgstr ""
+"\tpop\tecx\n"
+"\tor\tecx, ecx\n"
+"\tje\tnear usage\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3516
 #, no-wrap
 msgid "\tmov\tah, [ecx]\n"
-msgstr ""
+msgstr "\tmov\tah, [ecx]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3524
@@ -6642,6 +7814,13 @@ msgid ""
 "\tmov\tesi, ecx\n"
 "\tjmp\t.arg\n"
 msgstr ""
+".pcheck:\n"
+"\tcmp\tah, '0'\n"
+"\tjl\tnear usage\n"
+"\tcmp\tah, '9'\n"
+"\tja\tnear usage\n"
+"\tmov\tesi, ecx\n"
+"\tjmp\t.arg\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3532
@@ -6655,6 +7834,13 @@ msgid ""
 "\tmov\tesi, connors\n"
 "\tjmp\t.arg\n"
 msgstr ""
+".c:\n"
+"\tcmp\tal, 'c'\n"
+"\tjne\t.b\n"
+"\tor\tah, ah\n"
+"\tjne\tnear usage\n"
+"\tmov\tesi, connors\n"
+"\tjmp\t.arg\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3540
@@ -6668,6 +7854,13 @@ msgid ""
 "\tmov\tesi, pinhole\n"
 "\tjmp\t.arg\n"
 msgstr ""
+".b:\n"
+"\tcmp\tal, 'b'\n"
+"\tjne\t.e\n"
+"\tor\tah, ah\n"
+"\tjne\tnear usage\n"
+"\tmov\tesi, pinhole\n"
+"\tjmp\t.arg\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3553
@@ -6686,6 +7879,18 @@ msgid ""
 "\tmov\t[sep4], al\n"
 "\tjmp\t.arg\n"
 msgstr ""
+".e:\n"
+"\tcmp\tal, 'e'\n"
+"\tjne\tnear usage\n"
+"\tor\tah, ah\n"
+"\tjne\tnear usage\n"
+"\tmov\tal, ','\n"
+"\tmov\t[huhmsg], al\n"
+"\tmov\t[separ], al\n"
+"\tmov\t[sep2], al\n"
+"\tmov\t[sep3], al\n"
+"\tmov\t[sep4], al\n"
+"\tjmp\t.arg\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3560
@@ -6698,12 +7903,18 @@ msgid ""
 "\tor\tesi, esi\n"
 "\tjne\t.init\n"
 msgstr ""
+"align 4\n"
+".getenv:\n"
+"\t; If ESI = 0, we did not have a -p argument,\n"
+"\t; and need to check the environment for \"PINHOLE=\"\n"
+"\tor\tesi, esi\n"
+"\tjne\t.init\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3562
 #, no-wrap
 msgid "\tsub\tecx, ecx\n"
-msgstr ""
+msgstr "\tsub\tecx, ecx\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3567
@@ -6714,6 +7925,10 @@ msgid ""
 "\tor\tesi, esi\n"
 "\tje\t.default\t; no PINHOLE envar found\n"
 msgstr ""
+".nextenv:\n"
+"\tpop\tesi\n"
+"\tor\tesi, esi\n"
+"\tje\t.default\t; no PINHOLE envar found\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3573
@@ -6725,6 +7940,11 @@ msgid ""
 "rep\tcmpsd\n"
 "\tjne\t.nextenv\n"
 msgstr ""
+"\t; check if this envar starts with 'PINHOLE='\n"
+"\tmov\tedi, envar\n"
+"\tmov\tcl, 2\t\t; 'PINHOLE=' is 2 dwords long\n"
+"rep\tcmpsd\n"
+"\tjne\t.nextenv\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3581
@@ -6738,6 +7958,13 @@ msgid ""
 "\tjbe\t.init\n"
 "\t; fall through\n"
 msgstr ""
+"\t; Check if it is followed by a digit\n"
+"\tmov\tal, [esi]\n"
+"\tcmp\tal, '0'\n"
+"\tjl\t.default\n"
+"\tcmp\tal, '9'\n"
+"\tjbe\t.init\n"
+"\t; fall through\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3588
@@ -6750,6 +7977,12 @@ msgid ""
 "\tmov\tesi, pinhole\n"
 "\t; fall through\n"
 msgstr ""
+"align 4\n"
+".default:\n"
+"\t; We got here because we had no -p argument,\n"
+"\t; and did not find the PINHOLE envar.\n"
+"\tmov\tesi, pinhole\n"
+"\t; fall through\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3597
@@ -6764,6 +7997,14 @@ msgid ""
 "\tmov\tedi, dbuffer+1\n"
 "\tmov\tbyte [dbuffer], '0'\n"
 msgstr ""
+"align 4\n"
+".init:\n"
+"\tsub\teax, eax\n"
+"\tsub\tebx, ebx\n"
+"\tsub\tecx, ecx\n"
+"\tsub\tedx, edx\n"
+"\tmov\tedi, dbuffer+1\n"
+"\tmov\tbyte [dbuffer], '0'\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3606
@@ -6778,12 +8019,20 @@ msgid ""
 "\tje\t.processconst\n"
 "\tjb\t.setconst\n"
 msgstr ""
+"\t; Convert the pinhole constant to real\n"
+".constloop:\n"
+"\tlodsb\n"
+"\tcmp\tal, '9'\n"
+"\tja\t.setconst\n"
+"\tcmp\tal, '0'\n"
+"\tje\t.processconst\n"
+"\tjb\t.setconst\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3608
 #, no-wrap
 msgid "\tinc\tdl\n"
-msgstr ""
+msgstr "\tinc\tdl\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3615
@@ -6796,6 +8045,12 @@ msgid ""
 "\tstosb\n"
 "\tjmp\tshort .constloop\n"
 msgstr ""
+".processconst:\n"
+"\tinc\tcl\n"
+"\tcmp\tcl, 18\n"
+"\tja\tnear consttoobig\n"
+"\tstosb\n"
+"\tjmp\tshort .constloop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3620
@@ -6806,6 +8061,10 @@ msgid ""
 "\tor\tdl, dl\n"
 "\tje\tnear perr\n"
 msgstr ""
+"align 4\n"
+".setconst:\n"
+"\tor\tdl, dl\n"
+"\tje\tnear perr\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3623
@@ -6814,6 +8073,8 @@ msgid ""
 "\tfinit\n"
 "\tfild\tdword [tthou]\n"
 msgstr ""
+"\tfinit\n"
+"\tfild\tdword [tthou]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3627
@@ -6823,6 +8084,9 @@ msgid ""
 "\tfild\tdword [ten]\n"
 "\tfdivp\tst1, st0\n"
 msgstr ""
+"\tfld1\n"
+"\tfild\tdword [ten]\n"
+"\tfdivp\tst1, st0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3630
@@ -6831,6 +8095,8 @@ msgid ""
 "\tfild\tdword [thousand]\n"
 "\tmov\tedi, obuffer\n"
 msgstr ""
+"\tfild\tdword [thousand]\n"
+"\tmov\tedi, obuffer\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3633
@@ -6839,6 +8105,8 @@ msgid ""
 "\tmov\tebp, ecx\n"
 "\tcall\tbcdload\n"
 msgstr ""
+"\tmov\tebp, ecx\n"
+"\tcall\tbcdload\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3637
@@ -6848,6 +8116,9 @@ msgid ""
 "\tfmul\tst0, st2\n"
 "\tloop\t.constdiv\n"
 msgstr ""
+".constdiv:\n"
+"\tfmul\tst0, st2\n"
+"\tloop\t.constdiv\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3644
@@ -6860,6 +8131,12 @@ msgid ""
 "\tfaddp\tst1, st0\n"
 "\tfchs\n"
 msgstr ""
+"\tfld1\n"
+"\tfadd\tst0, st0\n"
+"\tfadd\tst0, st0\n"
+"\tfld1\n"
+"\tfaddp\tst1, st0\n"
+"\tfchs\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3649
@@ -6870,6 +8147,10 @@ msgid ""
 "\tcmp\tbyte [separ], ','\n"
 "\tjne\t.bigloop\n"
 msgstr ""
+"\t; If we are creating a CSV file,\n"
+"\t; print header\n"
+"\tcmp\tbyte [separ], ','\n"
+"\tjne\t.bigloop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3654
@@ -6880,6 +8161,10 @@ msgid ""
 "\tpush\tdword [fd.out]\n"
 "\tsys.write\n"
 msgstr ""
+"\tpush\tdword headlen\n"
+"\tpush\tdword header\n"
+"\tpush\tdword [fd.out]\n"
+"\tsys.write\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3658
@@ -6889,6 +8174,9 @@ msgid ""
 "\tcall\tgetchar\n"
 "\tjc\tnear done\n"
 msgstr ""
+".bigloop:\n"
+"\tcall\tgetchar\n"
+"\tjc\tnear done\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3664
@@ -6900,6 +8188,11 @@ msgid ""
 "\tcall\tskiptoeol\n"
 "\tjmp\tshort .bigloop\n"
 msgstr ""
+"\t; Skip to the end of the line if you got '#'\n"
+"\tcmp\tal, '#'\n"
+"\tjne\t.num\n"
+"\tcall\tskiptoeol\n"
+"\tjmp\tshort .bigloop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3671
@@ -6912,6 +8205,12 @@ msgid ""
 "\tcmp\tal, '9'\n"
 "\tja\t.bigloop\n"
 msgstr ""
+".num:\n"
+"\t; See if you got a number\n"
+"\tcmp\tal, '0'\n"
+"\tjl\t.bigloop\n"
+"\tcmp\tal, '9'\n"
+"\tja\t.bigloop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3675
@@ -6921,6 +8220,9 @@ msgid ""
 "\tsub\tebp, ebp\n"
 "\tsub\tedx, edx\n"
 msgstr ""
+"\t; Yes, we have a number\n"
+"\tsub\tebp, ebp\n"
+"\tsub\tedx, edx\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3680
@@ -6931,6 +8233,10 @@ msgid ""
 "\tje\t.number0\n"
 "\tmov\tdl, 1\n"
 msgstr ""
+".number:\n"
+"\tcmp\tal, '0'\n"
+"\tje\t.number0\n"
+"\tmov\tdl, 1\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3691
@@ -6947,6 +8253,16 @@ msgid ""
 "\tjae\t.nextnumber\n"
 "\tmov\t[dbuffer+ebp], al\n"
 msgstr ""
+".number0:\n"
+"\tor\tdl, dl\t\t; Skip leading 0's\n"
+"\tje\t.nextnumber\n"
+"\tpush\teax\n"
+"\tcall\tputchar\n"
+"\tpop\teax\n"
+"\tinc\tebp\n"
+"\tcmp\tebp, 19\n"
+"\tjae\t.nextnumber\n"
+"\tmov\t[dbuffer+ebp], al\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3702
@@ -6963,6 +8279,16 @@ msgid ""
 "\tja\t.work\n"
 "\tjmp\tshort .number\n"
 msgstr ""
+".nextnumber:\n"
+"\tcall\tgetchar\n"
+"\tjc\t.work\n"
+"\tcmp\tal, '#'\n"
+"\tje\t.ungetc\n"
+"\tcmp\tal, '0'\n"
+"\tjl\t.work\n"
+"\tcmp\tal, '9'\n"
+"\tja\t.work\n"
+"\tjmp\tshort .number\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3706
@@ -6972,6 +8298,9 @@ msgid ""
 "\tdec\tesi\n"
 "\tinc\tebx\n"
 msgstr ""
+".ungetc:\n"
+"\tdec\tesi\n"
+"\tinc\tebx\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3711
@@ -6982,6 +8311,10 @@ msgid ""
 "\tor\tdl, dl\n"
 "\tje\tnear .work0\n"
 msgstr ""
+".work:\n"
+"\t; Now, do all the work\n"
+"\tor\tdl, dl\n"
+"\tje\tnear .work0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3714
@@ -6990,18 +8323,20 @@ msgid ""
 "\tcmp\tebp, 19\n"
 "\tjae\tnear .toobig\n"
 msgstr ""
+"\tcmp\tebp, 19\n"
+"\tjae\tnear .toobig\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3716
 #, no-wrap
 msgid "\tcall\tbcdload\n"
-msgstr ""
+msgstr "\tcall\tbcdload\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3718
 #, no-wrap
 msgid "\t; Calculate pinhole diameter\n"
-msgstr ""
+msgstr "\t; Calculate pinhole diameter\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3725
@@ -7014,6 +8349,12 @@ msgid ""
 "\tfmul\tst5\n"
 "\tsub\tebp, ebp\n"
 msgstr ""
+"\tfld\tst0\t; save it\n"
+"\tfsqrt\n"
+"\tfmul\tst0, st3\n"
+"\tfld\tst0\n"
+"\tfmul\tst5\n"
+"\tsub\tebp, ebp\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3735
@@ -7029,6 +8370,15 @@ msgid ""
 "\tinc\tebp\n"
 "\tjmp\tshort .diameter\n"
 msgstr ""
+"\t; Round off to 4 significant digits\n"
+".diameter:\n"
+"\tfcom\tst0, st7\n"
+"\tfstsw\tax\n"
+"\tsahf\n"
+"\tjb\t.printdiameter\n"
+"\tfmul\tst0, st6\n"
+"\tinc\tebp\n"
+"\tjmp\tshort .diameter\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3738
@@ -7037,12 +8387,14 @@ msgid ""
 ".printdiameter:\n"
 "\tcall\tprintnumber\t; pinhole diameter\n"
 msgstr ""
+".printdiameter:\n"
+"\tcall\tprintnumber\t; pinhole diameter\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3740
 #, no-wrap
 msgid "\t; Calculate F-number\n"
-msgstr ""
+msgstr "\t; Calculate F-number\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3743
@@ -7051,12 +8403,14 @@ msgid ""
 "\tfdivp\tst1, st0\n"
 "\tfld\tst0\n"
 msgstr ""
+"\tfdivp\tst1, st0\n"
+"\tfld\tst0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3745
 #, no-wrap
 msgid "\tsub\tebp, ebp\n"
-msgstr ""
+msgstr "\tsub\tebp, ebp\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3754
@@ -7071,6 +8425,14 @@ msgid ""
 "\tinc\tebp\n"
 "\tjmp\tshort .fnumber\n"
 msgstr ""
+".fnumber:\n"
+"\tfcom\tst0, st6\n"
+"\tfstsw\tax\n"
+"\tsahf\n"
+"\tjb\t.printfnumber\n"
+"\tfmul\tst0, st5\n"
+"\tinc\tebp\n"
+"\tjmp\tshort .fnumber\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3757
@@ -7079,6 +8441,8 @@ msgid ""
 ".printfnumber:\n"
 "\tcall\tprintnumber\t; F number\n"
 msgstr ""
+".printfnumber:\n"
+"\tcall\tprintnumber\t; F number\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3768
@@ -7095,6 +8459,16 @@ msgid ""
 "\tfsqrt\n"
 "\tfstp\tst1\n"
 msgstr ""
+"\t; Calculate normalized F-number\n"
+"\tfmul\tst0, st0\n"
+"\tfld1\n"
+"\tfld\tst1\n"
+"\tfyl2x\n"
+"\tfrndint\n"
+"\tfld1\n"
+"\tfscale\n"
+"\tfsqrt\n"
+"\tfstp\tst1\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3771
@@ -7104,12 +8478,14 @@ msgid ""
 "\tsub\tebp, ebp\n"
 "\tcall\tprintnumber\n"
 msgstr ""
+"\tsub\tebp, ebp\n"
+"\tcall\tprintnumber\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3773
 #, no-wrap
 msgid "\t; Calculate time multiplier from F-5.6\n"
-msgstr ""
+msgstr "\t; Calculate time multiplier from F-5.6\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3776
@@ -7118,6 +8494,8 @@ msgid ""
 "\tfscale\n"
 "\tfld\tst0\n"
 msgstr ""
+"\tfscale\n"
+"\tfld\tst0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3782
@@ -7129,6 +8507,11 @@ msgid ""
 "\tfstsw\tax\n"
 "\tsahf\n"
 msgstr ""
+"\t; Round off to 4 significant digits\n"
+".fmul:\n"
+"\tfcom\tst0, st6\n"
+"\tfstsw\tax\n"
+"\tsahf\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3787
@@ -7139,6 +8522,10 @@ msgid ""
 "\tfmul\tst0, st5\n"
 "\tjmp\tshort .fmul\n"
 msgstr ""
+"\tjb\t.printfmul\n"
+"\tinc\tebp\n"
+"\tfmul\tst0, st5\n"
+"\tjmp\tshort .fmul\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3790
@@ -7147,12 +8534,14 @@ msgid ""
 ".printfmul:\n"
 "\tcall\tprintnumber\t; F multiplier\n"
 msgstr ""
+".printfmul:\n"
+"\tcall\tprintnumber\t; F multiplier\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3792
 #, no-wrap
 msgid "\t; Calculate F-stops from 5.6\n"
-msgstr ""
+msgstr "\t; Calculate F-stops from 5.6\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3796
@@ -7162,6 +8551,9 @@ msgid ""
 "\tfxch\tst1\n"
 "\tfyl2x\n"
 msgstr ""
+"\tfld1\n"
+"\tfxch\tst1\n"
+"\tfyl2x\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3803
@@ -7171,6 +8563,9 @@ msgid ""
 "\tcall\tputchar\n"
 "\tjmp\t.bigloop\n"
 msgstr ""
+"\tmov\tal, 0Ah\n"
+"\tcall\tputchar\n"
+"\tjmp\t.bigloop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3807
@@ -7180,6 +8575,9 @@ msgid ""
 "\tmov\tal, '0'\n"
 "\tcall\tputchar\n"
 msgstr ""
+".work0:\n"
+"\tmov\tal, '0'\n"
+"\tcall\tputchar\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3812
@@ -7190,6 +8588,10 @@ msgid ""
 "\tcall\thuh\n"
 "\tjmp\t.bigloop\n"
 msgstr ""
+"align 4\n"
+".toobig:\n"
+"\tcall\thuh\n"
+"\tjmp\t.bigloop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3816
@@ -7199,12 +8601,15 @@ msgid ""
 "done:\n"
 "\tcall\twrite\t\t; flush output buffer\n"
 msgstr ""
+"align 4\n"
+"done:\n"
+"\tcall\twrite\t\t; flush output buffer\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3825
 #, no-wrap
 msgid "\tfinit\n"
-msgstr ""
+msgstr "\tfinit\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3838
@@ -7219,6 +8624,14 @@ msgid ""
 "\tjne\t.cr\n"
 "\tret\n"
 msgstr ""
+"align 4\n"
+"skiptoeol:\n"
+"\t; Keep reading until you come to cr, lf, or eof\n"
+"\tcall\tgetchar\n"
+"\tjc\tdone\n"
+"\tcmp\tal, 0Ah\n"
+"\tjne\t.cr\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3843
@@ -7229,6 +8642,10 @@ msgid ""
 "\tjne\tskiptoeol\n"
 "\tret\n"
 msgstr ""
+".cr:\n"
+"\tcmp\tal, 0Dh\n"
+"\tjne\tskiptoeol\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3856
@@ -7240,6 +8657,11 @@ msgid ""
 "\tclc\n"
 "\tret\n"
 msgstr ""
+".fetch:\n"
+"\tlodsb\n"
+"\tdec\tebx\n"
+"\tclc\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3873
@@ -7258,6 +8680,18 @@ msgid ""
 "\tsub\teax, eax\n"
 "\tret\n"
 msgstr ""
+".read:\n"
+"\tpush\tdword BUFSIZE\n"
+"\tmov\tesi, ibuffer\n"
+"\tpush\tesi\n"
+"\tpush\tdword [fd.in]\n"
+"\tsys.read\n"
+"\tadd\tesp, byte 12\n"
+"\tmov\tebx, eax\n"
+"\tor\teax, eax\n"
+"\tje\t.empty\n"
+"\tsub\teax, eax\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3879
@@ -7269,6 +8703,11 @@ msgid ""
 "\tstc\n"
 "\tret\n"
 msgstr ""
+"align 4\n"
+".empty:\n"
+"\tadd\tesp, byte 4\n"
+"\tstc\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3908
@@ -7281,6 +8720,12 @@ msgid ""
 "\tpush\tesi\n"
 "\tpush\tedi\n"
 msgstr ""
+"align 4\n"
+"bcdload:\n"
+"\t; EBP contains the number of chars in dbuffer\n"
+"\tpush\tecx\n"
+"\tpush\tesi\n"
+"\tpush\tedi\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3912
@@ -7290,12 +8735,15 @@ msgid ""
 "\tlea\tesi, [dbuffer+ebp-1]\n"
 "\tshr\tecx, 1\n"
 msgstr ""
+"\tlea\tecx, [ebp+1]\n"
+"\tlea\tesi, [dbuffer+ebp-1]\n"
+"\tshr\tecx, 1\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3914
 #, no-wrap
 msgid "\tstd\n"
-msgstr ""
+msgstr "\tstd\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3920
@@ -7307,6 +8755,11 @@ msgid ""
 "\tmov\t[edi+4], eax\n"
 "\tmov\t[edi+2], ax\n"
 msgstr ""
+"\tmov\tedi, bbuffer\n"
+"\tsub\teax, eax\n"
+"\tmov\t[edi], eax\n"
+"\tmov\t[edi+4], eax\n"
+"\tmov\t[edi+2], ax\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3929
@@ -7321,12 +8774,20 @@ msgid ""
 "\tinc\tedi\n"
 "\tloop\t.loop\n"
 msgstr ""
+".loop:\n"
+"\tlodsw\n"
+"\tsub\tax, 3030h\n"
+"\tshl\tal, 4\n"
+"\tor\tal, ah\n"
+"\tmov\t[edi], al\n"
+"\tinc\tedi\n"
+"\tloop\t.loop\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3931
 #, no-wrap
 msgid "\tfbld\t[bbuffer]\n"
-msgstr ""
+msgstr "\tfbld\t[bbuffer]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3938
@@ -7339,6 +8800,12 @@ msgid ""
 "\tsub\teax, eax\n"
 "\tret\n"
 msgstr ""
+"\tcld\n"
+"\tpop\tedi\n"
+"\tpop\tesi\n"
+"\tpop\tecx\n"
+"\tsub\teax, eax\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3944
@@ -7350,6 +8817,11 @@ msgid ""
 "\tmov\tal, [separ]\n"
 "\tcall\tputchar\n"
 msgstr ""
+"align 4\n"
+"printnumber:\n"
+"\tpush\tebp\n"
+"\tmov\tal, [separ]\n"
+"\tcall\tputchar\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3948
@@ -7359,6 +8831,9 @@ msgid ""
 "\tmov\tebp, bbuffer+9\n"
 "\tfbstp\t[bbuffer]\n"
 msgstr ""
+"\t; Print the integer at the TOS\n"
+"\tmov\tebp, bbuffer+9\n"
+"\tfbstp\t[bbuffer]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3954
@@ -7370,6 +8845,11 @@ msgid ""
 "\tor\tal, al\n"
 "\tjns\t.leading\n"
 msgstr ""
+"\t; Check the sign\n"
+"\tmov\tal, [ebp]\n"
+"\tdec\tebp\n"
+"\tor\tal, al\n"
+"\tjns\t.leading\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3958
@@ -7379,6 +8859,9 @@ msgid ""
 "\tmov\tal, '-'\n"
 "\tcall\tputchar\n"
 msgstr ""
+"\t; We got a negative number (should never happen)\n"
+"\tmov\tal, '-'\n"
+"\tcall\tputchar\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3967
@@ -7393,6 +8876,14 @@ msgid ""
 "\tcmp\tebp, bbuffer\n"
 "\tjae\t.leading\n"
 msgstr ""
+".leading:\n"
+"\t; Skip leading zeros\n"
+"\tmov\tal, [ebp]\n"
+"\tdec\tebp\n"
+"\tor\tal, al\n"
+"\tjne\t.first\n"
+"\tcmp\tebp, bbuffer\n"
+"\tjae\t.leading\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3972
@@ -7403,6 +8894,10 @@ msgid ""
 "\tmov\tal, '0'\n"
 "\tjmp\tputchar\n"
 msgstr ""
+"\t; We are here because the result was 0.\n"
+"\t; Print '0' and return\n"
+"\tmov\tal, '0'\n"
+"\tjmp\tputchar\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3984
@@ -7420,6 +8915,17 @@ msgid ""
 "\tpop\teax\n"
 "\tand\tal, 0Fh\n"
 msgstr ""
+".first:\n"
+"\t; We have found the first non-zero.\n"
+"\t; But it is still packed\n"
+"\ttest\tal, 0F0h\n"
+"\tjz\t.second\n"
+"\tpush\teax\n"
+"\tshr\tal, 4\n"
+"\tadd\tal, '0'\n"
+"\tcall\tputchar\n"
+"\tpop\teax\n"
+"\tand\tal, 0Fh\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3988
@@ -7429,6 +8935,9 @@ msgid ""
 "\tadd\tal, '0'\n"
 "\tcall\tputchar\n"
 msgstr ""
+".second:\n"
+"\tadd\tal, '0'\n"
+"\tcall\tputchar\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:3992
@@ -7438,6 +8947,9 @@ msgid ""
 "\tcmp\tebp, bbuffer\n"
 "\tjb\t.done\n"
 msgstr ""
+".next:\n"
+"\tcmp\tebp, bbuffer\n"
+"\tjb\t.done\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4002
@@ -7453,6 +8965,15 @@ msgid ""
 "\tadd\tal, '0'\n"
 "\tcall\tputchar\n"
 msgstr ""
+"\tmov\tal, [ebp]\n"
+"\tpush\teax\n"
+"\tshr\tal, 4\n"
+"\tadd\tal, '0'\n"
+"\tcall\tputchar\n"
+"\tpop\teax\n"
+"\tand\tal, 0Fh\n"
+"\tadd\tal, '0'\n"
+"\tcall\tputchar\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4005
@@ -7461,6 +8982,8 @@ msgid ""
 "\tdec\tebp\n"
 "\tjmp\tshort .next\n"
 msgstr ""
+"\tdec\tebp\n"
+"\tjmp\tshort .next\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4010
@@ -7471,6 +8994,10 @@ msgid ""
 "\tor\tebp, ebp\n"
 "\tje\t.ret\n"
 msgstr ""
+".done:\n"
+"\tpop\tebp\n"
+"\tor\tebp, ebp\n"
+"\tje\t.ret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4016
@@ -7482,6 +9009,11 @@ msgid ""
 "\tdec\tebp\n"
 "\tjne\t.zeros\n"
 msgstr ""
+".zeros:\n"
+"\tmov\tal, '0'\n"
+"\tcall\tputchar\n"
+"\tdec\tebp\n"
+"\tjne\t.zeros\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4019
@@ -7490,6 +9022,8 @@ msgid ""
 ".ret:\n"
 "\tret\n"
 msgstr ""
+".ret:\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4022
@@ -7675,13 +9209,13 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4086
 #, no-wrap
 msgid "% pinhole\n"
-msgstr ""
+msgstr "% pinhole\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4088
 #, no-wrap
 msgid "Computer,\n"
-msgstr ""
+msgstr "Computer,\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4101
@@ -7700,6 +9234,18 @@ msgid ""
 "That's it! Perfect! Thank you very much!\n"
 "^D\n"
 msgstr ""
+"What size pinhole do I need for the focal length of 150?\n"
+"150\t490\t306\t362\t2930\t12\n"
+"Hmmm... How about 160?\n"
+"160\t506\t316\t362\t3125\t12\n"
+"Let's make it 155, please.\n"
+"155\t498\t311\t362\t3027\t12\n"
+"Ah, let's try 157...\n"
+"157\t501\t313\t362\t3066\t12\n"
+"156?\n"
+"156\t500\t312\t362\t3047\t12\n"
+"That's it! Perfect! Thank you very much!\n"
+"^D\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4104
@@ -7732,7 +9278,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4115
 #, no-wrap
 msgid "#! /bin/sh\n"
-msgstr ""
+msgstr "#! /bin/sh\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4118
@@ -7779,6 +9325,9 @@ msgid ""
 "# Find the best pinhole diameter\n"
 "# for the 120 film\n"
 msgstr ""
+"#! /usr/local/bin/pinhole -b -i\n"
+"# Find the best pinhole diameter\n"
+"# for the 120 film\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4141
@@ -7787,6 +9336,8 @@ msgid ""
 "### Standard\n"
 "80\n"
 msgstr ""
+"### Standard\n"
+"80\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4144
@@ -7795,6 +9346,8 @@ msgid ""
 "### Wide angle\n"
 "30, 40, 50, 60, 70\n"
 msgstr ""
+"### Wide angle\n"
+"30, 40, 50, 60, 70\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4147
@@ -7803,6 +9356,8 @@ msgid ""
 "### Telephoto\n"
 "100, 120, 140\n"
 msgstr ""
+"### Telephoto\n"
+"100, 120, 140\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4150
@@ -7822,6 +9377,8 @@ msgid ""
 "% chmod 755 medium\n"
 "% ./medium\n"
 msgstr ""
+"% chmod 755 medium\n"
+"% ./medium\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4160
@@ -7832,7 +9389,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4164
 #, no-wrap
 msgid "% /usr/local/bin/pinhole -b -i ./medium\n"
-msgstr ""
+msgstr "% /usr/local/bin/pinhole -b -i ./medium\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4167
@@ -7853,6 +9410,15 @@ msgid ""
 "120\t438\t274\t256\t2344\t11\n"
 "140\t473\t296\t256\t2734\t11\n"
 msgstr ""
+"80\t358\t224\t256\t1562\t11\n"
+"30\t219\t137\t128\t586\t9\n"
+"40\t253\t158\t181\t781\t10\n"
+"50\t283\t177\t181\t977\t10\n"
+"60\t310\t194\t181\t1172\t10\n"
+"70\t335\t209\t181\t1367\t10\n"
+"100\t400\t250\t256\t1953\t11\n"
+"120\t438\t274\t256\t2344\t11\n"
+"140\t473\t296\t256\t2734\t11\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4182
@@ -7863,7 +9429,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4186
 #, no-wrap
 msgid "% ./medium -c\n"
-msgstr ""
+msgstr "% ./medium -c\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4189
@@ -7874,7 +9440,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4193
 #, no-wrap
 msgid "% /usr/local/bin/pinhole -b -i ./medium -c\n"
-msgstr ""
+msgstr "% /usr/local/bin/pinhole -b -i ./medium -c\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4197
@@ -7898,6 +9464,15 @@ msgid ""
 "120\t405\t296\t256\t2739\t11\n"
 "140\t438\t320\t362\t3196\t12\n"
 msgstr ""
+"80\t331\t242\t256\t1826\t11\n"
+"30\t203\t148\t128\t685\t9\n"
+"40\t234\t171\t181\t913\t10\n"
+"50\t262\t191\t181\t1141\t10\n"
+"60\t287\t209\t181\t1370\t10\n"
+"70\t310\t226\t256\t1598\t11\n"
+"100\t370\t270\t256\t2283\t11\n"
+"120\t405\t296\t256\t2739\t11\n"
+"140\t438\t320\t362\t3196\t12\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4213
@@ -7924,6 +9499,20 @@ msgid ""
 "140,473,296,256,2734,11\n"
 "%\n"
 msgstr ""
+"% ./medium -b -e > bender\n"
+"% cat bender\n"
+"focal length in millimeters,pinhole diameter in microns,F-number,normalized "
+"F-number,F-5.6 multiplier,stops from F-5.6\n"
+"80,358,224,256,1562,11\n"
+"30,219,137,128,586,9\n"
+"40,253,158,181,781,10\n"
+"50,283,177,181,977,10\n"
+"60,310,194,181,1172,10\n"
+"70,335,209,181,1367,10\n"
+"100,400,250,256,1953,11\n"
+"120,438,274,256,2344,11\n"
+"140,473,296,256,2734,11\n"
+"%\n"
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4232
@@ -8019,7 +9608,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4272
 #, no-wrap
 msgid "% program1 | program2 | program3 > file1\n"
-msgstr ""
+msgstr "% program1 | program2 | program3 > file1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4276

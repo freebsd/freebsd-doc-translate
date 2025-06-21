@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-05 18:10+0000\n"
+"PO-Revision-Date: 2025-06-21 19:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksdevelopers-handbooksockets_index/ru/>\n"
@@ -34,7 +34,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:16
 #, no-wrap
 msgid "Sockets"
-msgstr ""
+msgstr "Sockets"
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:54
@@ -175,7 +175,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:113
 #, no-wrap
 msgid "layers.png"
-msgstr ""
+msgstr "layers.png"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:116
@@ -397,7 +397,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:201
 #, no-wrap
 msgid "slayers.png"
-msgstr ""
+msgstr "slayers.png"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:204
@@ -486,7 +486,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:241
 #, no-wrap
 msgid "int socket(int domain, int type, int protocol);\n"
-msgstr ""
+msgstr "int socket(int domain, int type, int protocol);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:246
@@ -591,6 +591,16 @@ msgid ""
 "};\n"
 "#define\tSOCK_MAXADDRLEN\t255\t\t/* longest possible addresses */\n"
 msgstr ""
+"/*\n"
+" * Structure used by kernel to store most\n"
+" * addresses.\n"
+" */\n"
+"struct sockaddr {\n"
+"\tunsigned char\tsa_len;\t\t/* total length */\n"
+"\tsa_family_t\tsa_family;\t/* address family */\n"
+"\tchar\t\tsa_data[14];\t/* actually longer; address value */\n"
+"};\n"
+"#define\tSOCK_MAXADDRLEN\t255\t\t/* longest possible addresses */\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:297
@@ -669,6 +679,52 @@ msgid ""
 "#define\tAF_BLUETOOTH\t36\t\t/* Bluetooth sockets */\n"
 "#define\tAF_MAX\t\t37\n"
 msgstr ""
+"/*\n"
+" * Address families.\n"
+" */\n"
+"#define\tAF_UNSPEC\t0\t\t/* unspecified */\n"
+"#define\tAF_LOCAL\t1\t\t/* local to host (pipes, portals) */\n"
+"#define\tAF_UNIX\t\tAF_LOCAL\t/* backward compatibility */\n"
+"#define\tAF_INET\t\t2\t\t/* internetwork: UDP, TCP, etc. */\n"
+"#define\tAF_IMPLINK\t3\t\t/* arpanet imp addresses */\n"
+"#define\tAF_PUP\t\t4\t\t/* pup protocols: e.g. BSP */\n"
+"#define\tAF_CHAOS\t5\t\t/* mit CHAOS protocols */\n"
+"#define\tAF_NS\t\t6\t\t/* XEROX NS protocols */\n"
+"#define\tAF_ISO\t\t7\t\t/* ISO protocols */\n"
+"#define\tAF_OSI\t\tAF_ISO\n"
+"#define\tAF_ECMA\t\t8\t\t/* European computer manufacturers */\n"
+"#define\tAF_DATAKIT\t9\t\t/* datakit protocols */\n"
+"#define\tAF_CCITT\t10\t\t/* CCITT protocols, X.25 etc */\n"
+"#define\tAF_SNA\t\t11\t\t/* IBM SNA */\n"
+"#define AF_DECnet\t12\t\t/* DECnet */\n"
+"#define AF_DLI\t\t13\t\t/* DEC Direct data link interface */\n"
+"#define AF_LAT\t\t14\t\t/* LAT */\n"
+"#define\tAF_HYLINK\t15\t\t/* NSC Hyperchannel */\n"
+"#define\tAF_APPLETALK\t16\t\t/* Apple Talk */\n"
+"#define\tAF_ROUTE\t17\t\t/* Internal Routing Protocol */\n"
+"#define\tAF_LINK\t\t18\t\t/* Link layer interface */\n"
+"#define\tpseudo_AF_XTP\t19\t\t/* eXpress Transfer Protocol (no AF) */\n"
+"#define\tAF_COIP\t\t20\t\t/* connection-oriented IP, aka ST II */\n"
+"#define\tAF_CNT\t\t21\t\t/* Computer Network Technology */\n"
+"#define pseudo_AF_RTIP\t22\t\t/* Help Identify RTIP packets */\n"
+"#define\tAF_IPX\t\t23\t\t/* Novell Internet Protocol */\n"
+"#define\tAF_SIP\t\t24\t\t/* Simple Internet Protocol */\n"
+"#define\tpseudo_AF_PIP\t25\t\t/* Help Identify PIP packets */\n"
+"#define\tAF_ISDN\t\t26\t\t/* Integrated Services Digital Network*/\n"
+"#define\tAF_E164\t\tAF_ISDN\t\t/* CCITT E.164 recommendation */\n"
+"#define\tpseudo_AF_KEY\t27\t\t/* Internal key-management function */\n"
+"#define\tAF_INET6\t28\t\t/* IPv6 */\n"
+"#define\tAF_NATM\t\t29\t\t/* native ATM access */\n"
+"#define\tAF_ATM\t\t30\t\t/* ATM */\n"
+"#define pseudo_AF_HDRCMPLT 31\t\t/* Used by BPF to not rewrite headers\n"
+"\t\t\t\t\t * in interface output routine\n"
+"\t\t\t\t\t */\n"
+"#define\tAF_NETGRAPH\t32\t\t/* Netgraph sockets */\n"
+"#define\tAF_SLOW\t\t33\t\t/* 802.3ad slow protocol */\n"
+"#define\tAF_SCLUSTER\t34\t\t/* Sitara cluster protocol */\n"
+"#define\tAF_ARP\t\t35\n"
+"#define\tAF_BLUETOOTH\t36\t\t/* Bluetooth sockets */\n"
+"#define\tAF_MAX\t\t37\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:356
@@ -705,6 +761,16 @@ msgid ""
 "\tchar\tsin_zero[8];\n"
 "};\n"
 msgstr ""
+"/*\n"
+" * Socket address, internet style.\n"
+" */\n"
+"struct sockaddr_in {\n"
+"\tuint8_t\t\tsin_len;\n"
+"\tsa_family_t\tsin_family;\n"
+"\tin_port_t\tsin_port;\n"
+"\tstruct\tin_addr sin_addr;\n"
+"\tchar\tsin_zero[8];\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:376
@@ -721,7 +787,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:378
 #, no-wrap
 msgid "sain.png"
-msgstr ""
+msgstr "sain.png"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:381
@@ -754,7 +820,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:389
 #, no-wrap
 msgid "sainfill.png"
-msgstr ""
+msgstr "sainfill.png"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:392
@@ -774,6 +840,12 @@ msgid ""
 "\tin_addr_t s_addr;\n"
 "};\n"
 msgstr ""
+"/*\n"
+" * Internet address (a structure for historical reasons)\n"
+" */\n"
+"struct in_addr {\n"
+"\tin_addr_t s_addr;\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:404
@@ -809,6 +881,9 @@ msgid ""
 "sa.sin_port        = 13;\n"
 "sa.sin_addr.s_addr = (((((192 << 8) | 43) << 8) | 244) << 8) | 18;\n"
 msgstr ""
+"sa.sin_family      = AF_INET;\n"
+"sa.sin_port        = 13;\n"
+"sa.sin_addr.s_addr = (((((192 << 8) | 43) << 8) | 244) << 8) | 18;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:421
@@ -833,7 +908,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:472
 #, no-wrap
 msgid "sainlsb.png"
-msgstr ""
+msgstr "sainlsb.png"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:429
@@ -851,7 +926,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:477
 #, no-wrap
 msgid "sainmsb.png"
-msgstr ""
+msgstr "sainmsb.png"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:435
@@ -996,6 +1071,9 @@ msgid ""
 "sa.sin_port        = 13 << 8;\n"
 "sa.sin_addr.s_addr = (((((18 << 8) | 244) << 8) | 43) << 8) | 192;\n"
 msgstr ""
+"sa.sin_family      = AF_INET;\n"
+"sa.sin_port        = 13 << 8;\n"
+"sa.sin_addr.s_addr = (((((18 << 8) | 244) << 8) | 43) << 8) | 192;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:494
@@ -1098,7 +1176,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:533
 #, no-wrap
 msgid "int connect(int s, const struct sockaddr *name, socklen_t namelen);\n"
-msgstr ""
+msgstr "int connect(int s, const struct sockaddr *name, socklen_t namelen);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:538
@@ -1154,6 +1232,17 @@ msgid ""
 "#include <netinet/in.h>\n"
 "#include <unistd.h>\n"
 msgstr ""
+"/*\n"
+" * daytime.c\n"
+" *\n"
+" * Programmed by G. Adam Stanislav\n"
+" */\n"
+"#include <stdio.h>\n"
+"#include <string.h>\n"
+"#include <sys/types.h>\n"
+"#include <sys/socket.h>\n"
+"#include <netinet/in.h>\n"
+"#include <unistd.h>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:569
@@ -1164,6 +1253,10 @@ msgid ""
 "  struct sockaddr_in sa;\n"
 "  char buffer[BUFSIZ+1];\n"
 msgstr ""
+"int main() {\n"
+"  int s, bytes;\n"
+"  struct sockaddr_in sa;\n"
+"  char buffer[BUFSIZ+1];\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:574
@@ -1175,13 +1268,17 @@ msgid ""
 "    return 1;\n"
 "  }\n"
 msgstr ""
+"  if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0) {\n"
+"    perror(\"socket\");\n"
+"    return 1;\n"
+"  }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:576
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:995
 #, no-wrap
 msgid "  memset(&sa, '\\0', sizeof(sa));\n"
-msgstr ""
+msgstr "  memset(&sa, '\\0', sizeof(sa));\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:585
@@ -1196,6 +1293,14 @@ msgid ""
 "    return 2;\n"
 "  }\n"
 msgstr ""
+"  sa.sin_family = AF_INET;\n"
+"  sa.sin_port = htons(13);\n"
+"  sa.sin_addr.s_addr = htonl((((((192 << 8) | 43) << 8) | 244) << 8) | 18);\n"
+"  if (connect(s, (struct sockaddr *)&sa, sizeof sa) < 0) {\n"
+"    perror(\"connect\");\n"
+"    close(s);\n"
+"    return 2;\n"
+"  }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:588
@@ -1204,6 +1309,8 @@ msgid ""
 "  while ((bytes = read(s, buffer, BUFSIZ)) > 0)\n"
 "    write(1, buffer, bytes);\n"
 msgstr ""
+"  while ((bytes = read(s, buffer, BUFSIZ)) > 0)\n"
+"    write(1, buffer, bytes);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:592
@@ -1214,6 +1321,9 @@ msgid ""
 "  return 0;\n"
 "}\n"
 msgstr ""
+"  close(s);\n"
+"  return 0;\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:595
@@ -1229,6 +1339,8 @@ msgid ""
 "% cc -O3 -o daytime daytime.c\n"
 "% ./daytime\n"
 msgstr ""
+"% cc -O3 -o daytime daytime.c\n"
+"% ./daytime\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:603
@@ -1237,6 +1349,8 @@ msgid ""
 "52079 01-06-19 02:29:25 50 0 1 543.9 UTC(NIST) *\n"
 "%\n"
 msgstr ""
+"52079 01-06-19 02:29:25 50 0 1 543.9 UTC(NIST) *\n"
+"%\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:607
@@ -1292,7 +1406,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:630
 #, no-wrap
 msgid "int bind(int s, const struct sockaddr *addr, socklen_t addrlen);\n"
-msgstr ""
+msgstr "int bind(int s, const struct sockaddr *addr, socklen_t addrlen);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:635
@@ -1308,7 +1422,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:639
 #, no-wrap
 msgid "#define\tINADDR_ANY\t\t(u_int32_t)0x00000000\n"
-msgstr ""
+msgstr "#define\tINADDR_ANY\t\t(u_int32_t)0x00000000\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:644
@@ -1328,7 +1442,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:646
 #, no-wrap
 msgid "sainserv.png"
-msgstr ""
+msgstr "sainserv.png"
 
 #. type: Title =====
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:649
@@ -1355,7 +1469,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:659
 #, no-wrap
 msgid "int listen(int s, int backlog);\n"
-msgstr ""
+msgstr "int listen(int s, int backlog);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:663
@@ -1388,7 +1502,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:676
 #, no-wrap
 msgid "int accept(int s, struct sockaddr *addr, socklen_t *addrlen);\n"
-msgstr ""
+msgstr "int accept(int s, struct sockaddr *addr, socklen_t *addrlen);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:680
@@ -1467,12 +1581,25 @@ msgid ""
 "#include <sys/socket.h>\n"
 "#include <netinet/in.h>\n"
 msgstr ""
+"/*\n"
+" * daytimed - a port 13 server\n"
+" *\n"
+" * Programmed by G. Adam Stanislav\n"
+" * June 19, 2001\n"
+" */\n"
+"#include <stdio.h>\n"
+"#include <string.h>\n"
+"#include <time.h>\n"
+"#include <unistd.h>\n"
+"#include <sys/types.h>\n"
+"#include <sys/socket.h>\n"
+"#include <netinet/in.h>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:719
 #, no-wrap
 msgid "#define BACKLOG 4\n"
-msgstr ""
+msgstr "#define BACKLOG 4\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:727
@@ -1486,6 +1613,13 @@ msgid ""
 "    struct tm *tm;\n"
 "    FILE *client;\n"
 msgstr ""
+"int main() {\n"
+"    int s, c;\n"
+"    socklen_t b;\n"
+"    struct sockaddr_in sa;\n"
+"    time_t t;\n"
+"    struct tm *tm;\n"
+"    FILE *client;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:732
@@ -1496,12 +1630,16 @@ msgid ""
 "        return 1;\n"
 "    }\n"
 msgstr ""
+"    if ((s = socket(PF_INET, SOCK_STREAM, 0)) < 0) {\n"
+"        perror(\"socket\");\n"
+"        return 1;\n"
+"    }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:734
 #, no-wrap
 msgid "    memset(&sa, '\\0', sizeof(sa));\n"
-msgstr ""
+msgstr "    memset(&sa, '\\0', sizeof(sa));\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:737
@@ -1510,6 +1648,8 @@ msgid ""
 "    sa.sin_family = AF_INET;\n"
 "    sa.sin_port   = htons(13);\n"
 msgstr ""
+"    sa.sin_family = AF_INET;\n"
+"    sa.sin_port   = htons(13);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:740
@@ -1518,6 +1658,8 @@ msgid ""
 "    if (INADDR_ANY)\n"
 "        sa.sin_addr.s_addr = htonl(INADDR_ANY);\n"
 msgstr ""
+"    if (INADDR_ANY)\n"
+"        sa.sin_addr.s_addr = htonl(INADDR_ANY);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:745
@@ -1528,6 +1670,10 @@ msgid ""
 "        return 2;\n"
 "    }\n"
 msgstr ""
+"    if (bind(s, (struct sockaddr *)&sa, sizeof sa) < 0) {\n"
+"        perror(\"bind\");\n"
+"        return 2;\n"
+"    }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:756
@@ -1544,12 +1690,22 @@ msgid ""
 "            break;\n"
 "    }\n"
 msgstr ""
+"    switch (fork()) {\n"
+"        case -1:\n"
+"            perror(\"fork\");\n"
+"            return 3;\n"
+"        default:\n"
+"            close(s);\n"
+"            return 0;\n"
+"        case 0:\n"
+"            break;\n"
+"    }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:758
 #, no-wrap
 msgid "    listen(s, BACKLOG);\n"
-msgstr ""
+msgstr "    listen(s, BACKLOG);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:761
@@ -1558,6 +1714,8 @@ msgid ""
 "    for (;;) {\n"
 "        b = sizeof sa;\n"
 msgstr ""
+"    for (;;) {\n"
+"        b = sizeof sa;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:766
@@ -1568,6 +1726,10 @@ msgid ""
 "            return 4;\n"
 "        }\n"
 msgstr ""
+"        if ((c = accept(s, (struct sockaddr *)&sa, &b)) < 0) {\n"
+"            perror(\"daytimed accept\");\n"
+"            return 4;\n"
+"        }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:771
@@ -1578,6 +1740,10 @@ msgid ""
 "            return 5;\n"
 "        }\n"
 msgstr ""
+"        if ((client = fdopen(c, \"w\")) == NULL) {\n"
+"            perror(\"daytimed fdopen\");\n"
+"            return 5;\n"
+"        }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:776
@@ -1588,6 +1754,10 @@ msgid ""
 "            return 6;\n"
 "        }\n"
 msgstr ""
+"        if ((t = time(NULL)) < 0) {\n"
+"            perror(\"daytimed time\");\n"
+"            return 6;\n"
+"        }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:785
@@ -1602,6 +1772,15 @@ msgid ""
 "            tm->tm_min,\n"
 "            tm->tm_sec);\n"
 msgstr ""
+"        tm = gmtime(&t);\n"
+"        fprintf(client, \"%.4i-%.2i-%.2iT%.2i:%.2i:%.2iZ\\n"
+"\",\n"
+"            tm->tm_year + 1900,\n"
+"            tm->tm_mon + 1,\n"
+"            tm->tm_mday,\n"
+"            tm->tm_hour,\n"
+"            tm->tm_min,\n"
+"            tm->tm_sec);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:789
@@ -1611,6 +1790,9 @@ msgid ""
 "    }\n"
 "}\n"
 msgstr ""
+"        fclose(client);\n"
+"    }\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:794
@@ -1626,6 +1808,8 @@ msgid ""
 "if (INADDR_ANY)\n"
 "        sa.sin_addr.s_addr = htonl(INADDR_ANY);\n"
 msgstr ""
+"if (INADDR_ANY)\n"
+"        sa.sin_addr.s_addr = htonl(INADDR_ANY);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:806
@@ -1703,7 +1887,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:826
 #, no-wrap
 msgid "serv.png"
-msgstr ""
+msgstr "serv.png"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:832
@@ -1768,6 +1952,9 @@ msgid ""
 "bind: Permission denied\n"
 "%\n"
 msgstr ""
+"% ./daytimed\n"
+"bind: Permission denied\n"
+"%\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:862
@@ -1790,6 +1977,8 @@ msgid ""
 "# ./daytimed\n"
 "#\n"
 msgstr ""
+"# ./daytimed\n"
+"#\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:872
@@ -1800,7 +1989,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:876
 #, no-wrap
 msgid "# ./daytimed\n"
-msgstr ""
+msgstr "# ./daytimed\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:879
@@ -1809,6 +1998,8 @@ msgid ""
 "bind: Address already in use\n"
 "#\n"
 msgstr ""
+"bind: Address already in use\n"
+"#\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:884
@@ -1830,7 +2021,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:891
 #, no-wrap
 msgid "% telnet localhost 13\n"
-msgstr ""
+msgstr "% telnet localhost 13\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:900
@@ -1845,6 +2036,14 @@ msgid ""
 "Connection closed by foreign host.\n"
 "%\n"
 msgstr ""
+"Trying ::1...\n"
+"telnet: connect to address ::1: Connection refused\n"
+"Trying 127.0.0.1...\n"
+"Connected to localhost.\n"
+"Escape character is '^]'.\n"
+"2001-06-19T21:04:42Z\n"
+"Connection closed by foreign host.\n"
+"%\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:905
@@ -1865,7 +2064,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:912
 #, no-wrap
 msgid "% who\n"
-msgstr ""
+msgstr "% who\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:916
@@ -1875,6 +2074,9 @@ msgid ""
 "xxx              ttyp1   Jun 19 16:06   (xx.xx.xx.xx)\n"
 "% telnet 216.127.220.143 13\n"
 msgstr ""
+"whizkid          ttyp0   Jun 19 16:59   (216.127.220.143)\n"
+"xxx              ttyp1   Jun 19 16:06   (xx.xx.xx.xx)\n"
+"% telnet 216.127.220.143 13\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:923
@@ -1887,6 +2089,12 @@ msgid ""
 "Connection closed by foreign host.\n"
 "%\n"
 msgstr ""
+"Trying 216.127.220.143...\n"
+"Connected to r47.bfm.org.\n"
+"Escape character is '^]'.\n"
+"2001-06-19T21:31:11Z\n"
+"Connection closed by foreign host.\n"
+"%\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:926
@@ -1897,7 +2105,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:930
 #, no-wrap
 msgid "% telnet r47.bfm.org 13\n"
-msgstr ""
+msgstr "% telnet r47.bfm.org 13\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:937
@@ -1910,6 +2118,12 @@ msgid ""
 "Connection closed by foreign host.\n"
 "%\n"
 msgstr ""
+"Trying 216.127.220.143...\n"
+"Connected to r47.bfm.org.\n"
+"Escape character is '^]'.\n"
+"2001-06-19T21:31:40Z\n"
+"Connection closed by foreign host.\n"
+"%\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:941
@@ -1956,6 +2170,8 @@ msgid ""
 "struct hostent * gethostbyname(const char *name);\n"
 "struct hostent * gethostbyname2(const char *name, int af);\n"
 msgstr ""
+"struct hostent * gethostbyname(const char *name);\n"
+"struct hostent * gethostbyname2(const char *name, int af);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:963
@@ -1991,6 +2207,19 @@ msgid ""
 "#include <netinet/in.h>\n"
 "#include <netdb.h>\n"
 msgstr ""
+"/*\n"
+" * daytime.c\n"
+" *\n"
+" * Programmed by G. Adam Stanislav\n"
+" * 19 June 2001\n"
+" */\n"
+"#include <stdio.h>\n"
+"#include <string.h>\n"
+"#include <unistd.h>\n"
+"#include <sys/types.h>\n"
+"#include <sys/socket.h>\n"
+"#include <netinet/in.h>\n"
+"#include <netdb.h>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:988
@@ -2003,6 +2232,12 @@ msgid ""
 "  char buf[BUFSIZ+1];\n"
 "  char *host;\n"
 msgstr ""
+"int main(int argc, char *argv[]) {\n"
+"  int s, bytes;\n"
+"  struct sockaddr_in sa;\n"
+"  struct hostent *he;\n"
+"  char buf[BUFSIZ+1];\n"
+"  char *host;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:998
@@ -2011,12 +2246,14 @@ msgid ""
 "  sa.sin_family = AF_INET;\n"
 "  sa.sin_port = htons(13);\n"
 msgstr ""
+"  sa.sin_family = AF_INET;\n"
+"  sa.sin_port = htons(13);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1000
 #, no-wrap
 msgid "  host = (argc > 1) ? argv[1] : \"time.nist.gov\";\n"
-msgstr ""
+msgstr "  host = (argc > 1) ? argv[1] : \"time.nist.gov\";\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1005
@@ -2027,12 +2264,16 @@ msgid ""
 "    return 2;\n"
 "  }\n"
 msgstr ""
+"  if ((he = gethostbyname(host)) == NULL) {\n"
+"    herror(host);\n"
+"    return 2;\n"
+"  }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1007
 #, no-wrap
 msgid "  memcpy(&sa.sin_addr, he->h_addr_list[0], he->h_length);\n"
-msgstr ""
+msgstr "  memcpy(&sa.sin_addr, he->h_addr_list[0], he->h_length);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1012
@@ -2043,6 +2284,10 @@ msgid ""
 "    return 3;\n"
 "  }\n"
 msgstr ""
+"  if (connect(s, (struct sockaddr *)&sa, sizeof sa) < 0) {\n"
+"    perror(\"connect\");\n"
+"    return 3;\n"
+"  }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1015
@@ -2051,6 +2296,8 @@ msgid ""
 "  while ((bytes = read(s, buf, BUFSIZ)) > 0)\n"
 "    write(1, buf, bytes);\n"
 msgstr ""
+"  while ((bytes = read(s, buf, BUFSIZ)) > 0)\n"
+"    write(1, buf, bytes);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1025
@@ -2076,7 +2323,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1033
 #, no-wrap
 msgid "% daytime ; daytime localhost\n"
-msgstr ""
+msgstr "% daytime ; daytime localhost\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1037
@@ -2086,6 +2333,9 @@ msgid ""
 "2001-06-20T04:02:35Z\n"
 "%\n"
 msgstr ""
+"52080 01-06-20 04:02:33 50 0 0 390.2 UTC(NIST) *\n"
+"2001-06-20T04:02:35Z\n"
+"%\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1040
@@ -2110,7 +2360,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1050
 #, no-wrap
 msgid "struct servent * getservbyname(const char *name, const char *proto);\n"
-msgstr ""
+msgstr "struct servent * getservbyname(const char *name, const char *proto);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1053
@@ -2138,6 +2388,14 @@ msgid ""
 "  }\n"
 "  sa.sin_port = se->s_port;\n"
 msgstr ""
+"struct servent *se;\n"
+"  ...\n"
+"  if ((se = getservbyname(\"daytime\", \"tcp\")) == NULL {\n"
+"    fprintf(stderr, \"Cannot determine which port to use.\\n"
+"\");\n"
+"    return 7;\n"
+"  }\n"
+"  sa.sin_port = se->s_port;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1072
@@ -2181,7 +2439,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1082
 #, no-wrap
 msgid "serv2.png"
-msgstr ""
+msgstr "serv2.png"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/sockets/_index.adoc:1086

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-14 04:45+0000\n"
+"PO-Revision-Date: 2025-06-21 19:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksdevelopers-handbookkerneldebug_index/ru/>\n"
@@ -166,6 +166,8 @@ msgid ""
 "# mkdir /var/crash\n"
 "# chmod 700 /var/crash\n"
 msgstr ""
+"# mkdir /var/crash\n"
+"# chmod 700 /var/crash\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:113
@@ -232,6 +234,10 @@ msgid ""
 "# savecore /var/crash /dev/ad0s1b\n"
 "# exit                  # exit to multi-user\n"
 msgstr ""
+"# fsck -p\n"
+"# mount -a -t ufs       # make sure /var/crash is writable\n"
+"# savecore /var/crash /dev/ad0s1b\n"
+"# exit                  # exit to multi-user\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:147
@@ -270,6 +276,13 @@ msgid ""
 "debug.kdb.panic:panic: kdb_sysctl_panic\n"
 "...\n"
 msgstr ""
+"# shutdown now\n"
+"...\n"
+"Enter full pathname of shell or RETURN for /bin/sh:\n"
+"# mount -a -u -r\n"
+"# sysctl debug.kdb.panic=1\n"
+"debug.kdb.panic:panic: kdb_sysctl_panic\n"
+"...\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:167
@@ -303,7 +316,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:183
 #, no-wrap
 msgid "# kgdb -n N\n"
-msgstr ""
+msgstr "# kgdb -n N\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:187
@@ -316,7 +329,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:191
 #, no-wrap
 msgid "# kgdb -n last\n"
-msgstr ""
+msgstr "# kgdb -n last\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:195
@@ -330,7 +343,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:199
 #, no-wrap
 msgid "# kgdb /boot/kernel/kernel /var/crash/vmcore.0\n"
-msgstr ""
+msgstr "# kgdb /boot/kernel/kernel /var/crash/vmcore.0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:202
@@ -448,6 +461,111 @@ msgid ""
 "89:---Can't read userspace from dump, or kernel process---\n"
 "90:(kgdb) quit\n"
 msgstr ""
+" 1:# cd /usr/obj/usr/src/sys/KERNCONF\n"
+" 2:# kgdb kernel.debug /var/crash/vmcore.0\n"
+" 3:GNU gdb 5.2.1 (FreeBSD)\n"
+" 4:Copyright 2002 Free Software Foundation, Inc.\n"
+" 5:GDB is free software, covered by the GNU General Public License, and you "
+"are\n"
+" 6:welcome to change it and/or distribute copies of it under certain "
+"conditions.\n"
+" 7:Type \"show copying\" to see the conditions.\n"
+" 8:There is absolutely no warranty for GDB.  Type \"show warranty\" for "
+"details.\n"
+" 9:This GDB was configured as \"i386-undermydesk-freebsd\"...\n"
+"10:panic: page fault\n"
+"11:panic messages:\n"
+"12:---\n"
+"13:Fatal trap 12: page fault while in kernel mode\n"
+"14:cpuid = 0; apic id = 00\n"
+"15:fault virtual address   = 0x300\n"
+"16:fault code:             = supervisor read, page not present\n"
+"17:instruction pointer     = 0x8:0xc0713860\n"
+"18:stack pointer           = 0x10:0xdc1d0b70\n"
+"19:frame pointer           = 0x10:0xdc1d0b7c\n"
+"20:code segment            = base 0x0, limit 0xfffff, type 0x1b\n"
+"21:                        = DPL 0, pres 1, def32 1, gran 1\n"
+"22:processor eflags        = resume, IOPL = 0\n"
+"23:current process         = 14394 (uname)\n"
+"24:trap number             = 12\n"
+"25:panic: page fault\n"
+"26      cpuid = 0;\n"
+"27:Stack backtrace:\n"
+"28\n"
+"29:syncing disks, buffers remaining... 2199 2199 panic: mi_switch: switch in "
+"a critical section\n"
+"30:cpuid = 0;\n"
+"31:Uptime: 2h43m19s\n"
+"32:Dumping 255 MB\n"
+"33: 16 32 48 64 80 96 112 128 144 160 176 192 208 224 240\n"
+"34:---\n"
+"35:Reading symbols from /boot/kernel/snd_maestro3.ko...done.\n"
+"36:Loaded symbols for /boot/kernel/snd_maestro3.ko\n"
+"37:Reading symbols from /boot/kernel/snd_pcm.ko...done.\n"
+"38:Loaded symbols for /boot/kernel/snd_pcm.ko\n"
+"39:#0  doadump () at /usr/src/sys/kern/kern_shutdown.c:240\n"
+"40:240             dumping++;\n"
+"41:(kgdb) list *0xc0713860\n"
+"42:0xc0713860 is in lapic_ipi_wait (/usr/src/sys/i386/i386/local_apic.c:663)."
+"\n"
+"43:658                     incr = 0;\n"
+"44:659                     delay = 1;\n"
+"45:660             } else\n"
+"46:661                     incr = 1;\n"
+"47:662             for (x = 0; x < delay; x += incr) {\n"
+"48:663                     if ((lapic->icr_lo & APIC_DELSTAT_MASK) == "
+"APIC_DELSTAT_IDLE)\n"
+"49:664                             return (1);\n"
+"50:665                     ia32_pause();\n"
+"51:666             }\n"
+"52:667             return (0);\n"
+"53:(kgdb) backtrace\n"
+"54:#0  doadump () at /usr/src/sys/kern/kern_shutdown.c:240\n"
+"55:#1  0xc055fd9b in boot (howto=260) at /usr/src/sys/kern/kern_shutdown.c:"
+"372\n"
+"56:#2  0xc056019d in panic () at /usr/src/sys/kern/kern_shutdown.c:550\n"
+"57:#3  0xc0567ef5 in mi_switch () at /usr/src/sys/kern/kern_synch.c:470\n"
+"58:#4  0xc055fa87 in boot (howto=256) at /usr/src/sys/kern/kern_shutdown.c:"
+"312\n"
+"59:#5  0xc056019d in panic () at /usr/src/sys/kern/kern_shutdown.c:550\n"
+"60:#6  0xc0720c66 in trap_fatal (frame=0xdc1d0b30, eva=0)\n"
+"61:    at /usr/src/sys/i386/i386/trap.c:821\n"
+"62:#7  0xc07202b3 in trap (frame=\n"
+"63:      {tf_fs = -1065484264, tf_es = -1065484272, tf_ds = -1065484272, "
+"tf_edi = 1, tf_esi = 0, tf_ebp = -602076292, tf_isp = -602076324, tf_ebx = "
+"0, tf_edx = 0, tf_ecx = 1000000, tf_eax = 243, tf_trapno = 12, tf_err = 0, "
+"tf_eip = -1066321824, tf_cs = 8, tf_eflags = 65671, tf_esp = 243, tf_ss = 0})"
+"\n"
+"64:    at /usr/src/sys/i386/i386/trap.c:250\n"
+"65:#8  0xc070c9f8 in calltrap () at {standard input}:94\n"
+"66:#9  0xc07139f3 in lapic_ipi_vectored (vector=0, dest=0)\n"
+"67:    at /usr/src/sys/i386/i386/local_apic.c:733\n"
+"68:#10 0xc0718b23 in ipi_selected (cpus=1, ipi=1)\n"
+"69:    at /usr/src/sys/i386/i386/mp_machdep.c:1115\n"
+"70:#11 0xc057473e in kseq_notify (ke=0xcc05e360, cpu=0)\n"
+"71:    at /usr/src/sys/kern/sched_ule.c:520\n"
+"72:#12 0xc0575cad in sched_add (td=0xcbcf5c80)\n"
+"73:    at /usr/src/sys/kern/sched_ule.c:1366\n"
+"74:#13 0xc05666c6 in setrunqueue (td=0xcc05e360)\n"
+"75:    at /usr/src/sys/kern/kern_switch.c:422\n"
+"76:#14 0xc05752f4 in sched_wakeup (td=0xcbcf5c80)\n"
+"77:    at /usr/src/sys/kern/sched_ule.c:999\n"
+"78:#15 0xc056816c in setrunnable (td=0xcbcf5c80)\n"
+"79:    at /usr/src/sys/kern/kern_synch.c:570\n"
+"80:#16 0xc0567d53 in wakeup (ident=0xcbcf5c80)\n"
+"81:    at /usr/src/sys/kern/kern_synch.c:411\n"
+"82:#17 0xc05490a8 in exit1 (td=0xcbcf5b40, rv=0)\n"
+"83:    at /usr/src/sys/kern/kern_exit.c:509\n"
+"84:#18 0xc0548011 in sys_exit () at /usr/src/sys/kern/kern_exit.c:102\n"
+"85:#19 0xc0720fd0 in syscall (frame=\n"
+"86:      {tf_fs = 47, tf_es = 47, tf_ds = 47, tf_edi = 0, tf_esi = -1, "
+"tf_ebp = -1077940712, tf_isp = -602075788, tf_ebx = 672411944, tf_edx = 10, "
+"tf_ecx = 672411600, tf_eax = 1, tf_trapno = 12, tf_err = 2, tf_eip = "
+"671899563, tf_cs = 31, tf_eflags = 642, tf_esp = -1077940740, tf_ss = 47})\n"
+"87:    at /usr/src/sys/i386/i386/trap.c:1010\n"
+"88:#20 0xc070ca4d in Xint0x80_syscall () at {standard input}:136\n"
+"89:---Can't read userspace from dump, or kernel process---\n"
+"90:(kgdb) quit\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:308
@@ -491,13 +609,13 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:324
 #, no-wrap
 msgid "options KDB\n"
-msgstr ""
+msgstr "options KDB\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:329
 #, no-wrap
 msgid "options DDB\n"
-msgstr ""
+msgstr "options DDB\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:333
@@ -528,7 +646,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:347
 #, no-wrap
 msgid "# sysctl debug.kdb.enter=1\n"
-msgstr ""
+msgstr "# sysctl debug.kdb.enter=1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:354
@@ -561,7 +679,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:363
 #, no-wrap
 msgid "options\tKDB_UNATTENDED\n"
-msgstr ""
+msgstr "options\tKDB_UNATTENDED\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:366
@@ -579,7 +697,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:373
 #, no-wrap
 msgid " break function-name address\n"
-msgstr ""
+msgstr " break function-name address\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:378
@@ -599,7 +717,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:384
 #, no-wrap
 msgid " continue\n"
-msgstr ""
+msgstr " continue\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:387
@@ -610,7 +728,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:391
 #, no-wrap
 msgid " trace\n"
-msgstr ""
+msgstr " trace\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:394
@@ -631,6 +749,8 @@ msgid ""
 " del\n"
 " del address-expression\n"
 msgstr ""
+" del\n"
+" del address-expression\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:405
@@ -644,7 +764,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:409
 #, no-wrap
 msgid " show b\n"
-msgstr ""
+msgstr " show b\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:412
@@ -655,7 +775,7 @@ msgstr "или:"
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:416
 #, no-wrap
 msgid " show break\n"
-msgstr ""
+msgstr " show break\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:419
@@ -666,7 +786,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:423
 #, no-wrap
 msgid " s\n"
-msgstr ""
+msgstr " s\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:426
@@ -679,7 +799,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:430
 #, no-wrap
 msgid " n\n"
-msgstr ""
+msgstr " n\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:436
@@ -702,6 +822,10 @@ msgid ""
 " x/bc termbuf,10\n"
 " x/s stringbuf\n"
 msgstr ""
+" x/wx 0xf0133fe0,40\n"
+" x/hd db_symtab_space\n"
+" x/bc termbuf,10\n"
+" x/s stringbuf\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:451
@@ -715,7 +839,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:455
 #, no-wrap
 msgid " x ,10\n"
-msgstr ""
+msgstr " x ,10\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:458
@@ -726,7 +850,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:462
 #, no-wrap
 msgid " x/ia foofunc,10\n"
-msgstr ""
+msgstr " x/ia foofunc,10\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:465
@@ -747,6 +871,8 @@ msgid ""
 " w/b termbuf 0xa 0xb 0\n"
 " w/w 0xf0010030 0 0\n"
 msgstr ""
+" w/b termbuf 0xa 0xb 0\n"
+" w/w 0xf0010030 0 0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:476
@@ -765,7 +891,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:482
 #, no-wrap
 msgid " show reg\n"
-msgstr ""
+msgstr " show reg\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:485
@@ -776,7 +902,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:489
 #, no-wrap
 msgid " p $eax\n"
-msgstr ""
+msgstr " p $eax\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:492
@@ -787,7 +913,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:496
 #, no-wrap
 msgid " set $eax new-value\n"
-msgstr ""
+msgstr " set $eax new-value\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:499
@@ -798,7 +924,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:503
 #, no-wrap
 msgid " call func(arg1, arg2, ...)\n"
-msgstr ""
+msgstr " call func(arg1, arg2, ...)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:506
@@ -814,7 +940,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:512
 #, no-wrap
 msgid " ps\n"
-msgstr ""
+msgstr " ps\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:517
@@ -829,7 +955,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:521
 #, no-wrap
 msgid " panic\n"
-msgstr ""
+msgstr " panic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:524
@@ -842,7 +968,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:528
 #, no-wrap
 msgid " call boot(0)\n"
-msgstr ""
+msgstr " call boot(0)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:532
@@ -857,7 +983,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:536
 #, no-wrap
 msgid " reset\n"
-msgstr ""
+msgstr " reset\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:539
@@ -875,7 +1001,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:545
 #, no-wrap
 msgid " help\n"
-msgstr ""
+msgstr " help\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:549
@@ -926,6 +1052,9 @@ msgid ""
 "options         KDB\n"
 "options         GDB\n"
 msgstr ""
+"makeoptions     DEBUG=-g\n"
+"options         KDB\n"
+"options         GDB\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:571
@@ -958,6 +1087,8 @@ msgid ""
 "# sysctl debug.kdb.current=gdb\n"
 "debug.kdb.current: ddb -> gdb\n"
 msgstr ""
+"# sysctl debug.kdb.current=gdb\n"
+"debug.kdb.current: ddb -> gdb\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:589
@@ -980,6 +1111,8 @@ msgid ""
 "# sysctl debug.kdb.enter=1\n"
 "debug.kdb.enter: 0KDB: enter: sysctl debug.kdb.enter\n"
 msgstr ""
+"# sysctl debug.kdb.enter=1\n"
+"debug.kdb.enter: 0KDB: enter: sysctl debug.kdb.enter\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:600
@@ -1002,6 +1135,15 @@ msgid ""
 "Reading symbols from /usr/obj/usr/src/amd64.amd64/sys/GENERIC/kernel.debug...\n"
 "(kgdb)\n"
 msgstr ""
+"# cd /usr/obj/usr/src/amd64.amd64/sys/GENERIC/\n"
+"# kgdb kernel\n"
+"GNU gdb (GDB) 10.2 [GDB v10.2 for FreeBSD]\n"
+"Copyright (C) 2021 Free Software Foundation, Inc.\n"
+"...\n"
+"Reading symbols from kernel...\n"
+"Reading symbols from /usr/obj/usr/src/amd64.amd64/sys/GENERIC/kernel.debug..."
+"\n"
+"(kgdb)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:614
@@ -1014,7 +1156,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:618
 #, no-wrap
 msgid "(kgdb) target remote /dev/cuau0\n"
-msgstr ""
+msgstr "(kgdb) target remote /dev/cuau0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:621
@@ -1030,6 +1172,11 @@ msgid ""
 "506                     kdb_why = KDB_WHY_UNSET;\n"
 "(kgdb)\n"
 msgstr ""
+"Remote debugging using /dev/cuau0\n"
+"kdb_enter (why=<optimized out>, msg=<optimized out>) at /usr/src/sys/kern/"
+"subr_kdb.c:506\n"
+"506                     kdb_why = KDB_WHY_UNSET;\n"
+"(kgdb)\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:636
@@ -1104,6 +1251,14 @@ msgid ""
 "options \tDEBUG_VFS_LOCKS\n"
 "options \tDIAGNOSTIC\n"
 msgstr ""
+"makeoptions \tDEBUG=-g\n"
+"options \tINVARIANTS\n"
+"options \tINVARIANT_SUPPORT\n"
+"options \tWITNESS\n"
+"options \tWITNESS_SKIPSPIN\n"
+"options \tDEBUG_LOCKS\n"
+"options \tDEBUG_VFS_LOCKS\n"
+"options \tDIAGNOSTIC\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:673
@@ -1233,7 +1388,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:714
 #, no-wrap
 msgid "# cd /sys/boot/i386 && make clean && make && make install\n"
-msgstr ""
+msgstr "# cd /sys/boot/i386 && make clean && make && make install\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:717
@@ -1260,6 +1415,12 @@ msgid ""
 "options GDB\n"
 "options ALT_BREAK_TO_DEBUGGER\n"
 msgstr ""
+"device dcons\n"
+"device dcons_crom\n"
+"options KDB\n"
+"options DDB\n"
+"options GDB\n"
+"options ALT_BREAK_TO_DEBUGGER\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:732
@@ -1276,6 +1437,11 @@ msgid ""
 "hw.firewire.phydma_enable=1\n"
 "hw.firewire.dcons_crom.force_console=1\n"
 msgstr ""
+"dcons_crom_load=\"YES\"\n"
+"dcons_gdb=1\n"
+"boot_multicons=\"YES\"\n"
+"hw.firewire.phydma_enable=1\n"
+"hw.firewire.dcons_crom.force_console=1\n"
 
 #. type: Title ====
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:742
@@ -1292,7 +1458,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:749
 #, no-wrap
 msgid "# kldload firewire\n"
-msgstr ""
+msgstr "# kldload firewire\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:752
@@ -1311,7 +1477,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:758
 #, no-wrap
 msgid "# dconschat -e \\# -br -G 12345 -t 00-11-22-33-44-55-66-77\n"
-msgstr ""
+msgstr "# dconschat -e \\# -br -G 12345 -t 00-11-22-33-44-55-66-77\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:761
@@ -1367,7 +1533,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:784
 #, no-wrap
 msgid " kgdb -r :12345 kernel\n"
-msgstr ""
+msgstr " kgdb -r :12345 kernel\n"
 
 #. type: Title ====
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:786
@@ -1394,6 +1560,8 @@ msgid ""
 "# conscontrol delete ttyd0\t     # serial console\n"
 "# conscontrol delete consolectl\t# video/keyboard\n"
 msgstr ""
+"# conscontrol delete ttyd0\t     # serial console\n"
+"# conscontrol delete consolectl\t# video/keyboard\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:799
@@ -1411,6 +1579,10 @@ msgid ""
 "(xterm-mouse-mode 1)\n"
 "M-x gdba\n"
 msgstr ""
+"(setq gud-gdba-command-name \"kgdb -a -a -a -r :12345\")\n"
+"(setq gdb-many-windows t)\n"
+"(xterm-mouse-mode 1)\n"
+"M-x gdba\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:809
@@ -1426,6 +1598,10 @@ msgid ""
 "# live core debug\n"
 "LANG=C ddd --debugger kgdb kernel /dev/fwmem0.2\n"
 msgstr ""
+"# remote serial protocol\n"
+"LANG=C ddd --debugger kgdb -r :12345 kernel\n"
+"# live core debug\n"
+"LANG=C ddd --debugger kgdb kernel /dev/fwmem0.2\n"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:818
@@ -1462,7 +1638,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:832
 #, no-wrap
 msgid "# dconschat -1\n"
-msgstr ""
+msgstr "# dconschat -1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:835
@@ -1473,7 +1649,7 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:839
 #, no-wrap
 msgid "# dconschat -1 -M vmcore.XX\n"
-msgstr ""
+msgstr "# dconschat -1 -M vmcore.XX\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:842
@@ -1487,6 +1663,8 @@ msgid ""
 "# fwcontrol -m target_eui64\n"
 "# kgdb kernel /dev/fwmem0.2\n"
 msgstr ""
+"# fwcontrol -m target_eui64\n"
+"# kgdb kernel /dev/fwmem0.2\n"
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/kerneldebug/_index.adoc:850
