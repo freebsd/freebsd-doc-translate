@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-26 04:45+0000\n"
+"PO-Revision-Date: 2025-06-27 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksdevelopers-handbookx86_index/ru/>\n"
@@ -4606,7 +4606,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1869
-#, fuzzy
 msgid ""
 "For an in-depth treatment of `mmap`, see W. Richard Stevens' http://"
 "www.int80h.org/cgi-bin/isbn?isbn=0130810819[Unix Network Programming, Volume "
@@ -4618,13 +4617,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1872
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Determining File Size"
 msgstr "Определение размера файла"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1875
-#, fuzzy
 msgid ""
 "Because we need to tell `mmap` how many bytes of the file to map into the "
 "memory, and because we want to map the entire file, we need to determine the "
@@ -4636,7 +4634,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1878
-#, fuzzy
 msgid ""
 "We can use the `fstat` syscall to get all the information about an open file "
 "that the system can give us.  That includes the file size."
@@ -4647,7 +4644,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1881
-#, fuzzy
 msgid ""
 "Again, [.filename]#syscalls.master# lists two versions of `fstat`, a "
 "traditional one (syscall 62), and a POSIX(R) one (syscall 189).  Naturally, "
@@ -4665,7 +4661,6 @@ msgstr "189\tSTD\tPOSIX\t{ int fstat(int fd, struct stat *sb); }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1889
-#, fuzzy
 msgid ""
 "This is a very straightforward call: We pass to it the address of a `stat` "
 "structure and the descriptor of an open file.  It will fill out the contents "
@@ -4676,7 +4671,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1892
-#, fuzzy
 msgid ""
 "I do, however, have to say that I tried to declare the `stat` structure in "
 "the `.bss` section, and `fstat` did not like it: It set the carry flag "
@@ -4685,18 +4679,17 @@ msgid ""
 msgstr ""
 "Однако должен сказать, что я пытался объявить структуру `stat` в секции `."
 "bss`, и `fstat` это не понравилось: был установлен флаг переноса, "
-"указывающий на ошибку. После того как я изменил код, чтобы размещать "
+"указывающий на ошибку. После того как я изменил код, чтобы разместить "
 "структуру в стеке, всё заработало как надо."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1894
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Changing the File Size"
 msgstr "Изменение размера файла"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1898
-#, fuzzy
 msgid ""
 "Because our program may combine carriage return / line feed sequences into "
 "straight line feeds, our output may be smaller than our input.  However, "
@@ -4710,20 +4703,18 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1901
-#, fuzzy
 msgid ""
 "The `ftruncate` system call allows us to do just that.  Despite its somewhat "
 "misleading name, the `ftruncate` system call can be used to both truncate "
 "the file (make it smaller) and to grow it."
 msgstr ""
 "Системный вызов `ftruncate` позволяет нам сделать именно это. Несмотря на "
-"несколько вводящее название, системный вызов `ftruncate` может "
-"использоваться как для усечения файла (уменьшения его размера), так и для "
-"его увеличения."
+"название , несколько вводящее в звблуждение, системный вызов `ftruncate` "
+"может использоваться как для усечения файла (уменьшения его размера), так и "
+"для его увеличения."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1904
-#, fuzzy
 msgid ""
 "And yes, we will find two versions of `ftruncate` in "
 "[.filename]#syscalls.master#, an older one (130), and a newer one (201).  We "
@@ -4740,7 +4731,6 @@ msgstr "201\tSTD\tBSD\t{ int ftruncate(int fd, int pad, off_t length); }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1911
-#, fuzzy
 msgid "Please note that this one contains a `int pad` again."
 msgstr "Обратите внимание, что здесь снова присутствует `int pad`."
 
@@ -4752,7 +4742,6 @@ msgstr "ftuc"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1918
-#, fuzzy
 msgid ""
 "We now know everything we need to write ftuc.  We start by adding some new "
 "lines in [.filename]#system.inc#.  First, we define some constants and "
@@ -4852,7 +4841,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1961
-#, fuzzy
 msgid "We define the new syscalls:"
 msgstr "Мы определяем новые системные вызовы:"
 
@@ -4872,7 +4860,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1971
-#, fuzzy
 msgid "We add the macros for their use:"
 msgstr "Добавляем макросы для их использования:"
 
@@ -4926,7 +4913,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1992
-#, fuzzy
 msgid "And here is our code:"
 msgstr "И вот наш код:"
 
@@ -5566,7 +5552,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2238
-#, fuzzy
 msgid ""
 "Do not use this program on files stored on a disk formatted by MS-DOS(R) or "
 "Windows(R).  There seems to be a subtle bug in the FreeBSD code when using "
@@ -5583,23 +5568,21 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2241
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "One-Pointed Mind"
-msgstr "Однозадачный разум"
+msgstr "Спокойствие ума"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2244
-#, fuzzy
 msgid ""
 "As a student of Zen, I like the idea of a one-pointed mind: Do one thing at "
 "a time, and do it well."
 msgstr ""
-"Как ученик дзэн, мне нравится идея однонаправленного ума: делай одно дело за "
-"раз и делай его хорошо."
+"Как ученик дзэн, мне нравится идея спокойствия ума (экаггата): делай одно "
+"дело за раз и делай его хорошо."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2247
-#, fuzzy
 msgid ""
 "This, indeed, is very much how UNIX(R) works as well.  While a typical "
 "Windows(R) application is attempting to do everything imaginable (and is, "
@@ -5613,7 +5596,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2249
-#, fuzzy
 msgid ""
 "The typical UNIX(R) user then essentially assembles his own applications by "
 "writing a shell script which combines the various existing programs by "
@@ -5625,7 +5607,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2251
-#, fuzzy
 msgid ""
 "When writing your own UNIX(R) software, it is generally a good idea to see "
 "what parts of the problem you need to solve can be handled by existing "
@@ -5645,7 +5626,6 @@ msgstr "CSV"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2256
-#, fuzzy
 msgid ""
 "I will illustrate this principle with a specific real-life example I was "
 "faced with recently:"
@@ -5655,7 +5635,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2260
-#, fuzzy
 msgid ""
 "I needed to extract the 11th field of each record from a database I "
 "downloaded from a web site.  The database was a CSV file, i.e., a list of "
@@ -5670,7 +5649,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2263
-#, fuzzy
 msgid ""
 "The first line of the file contains the list of various fields separated by "
 "commas.  The rest of the file contains the data listed line by line, with "
@@ -5682,7 +5660,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2265
-#, fuzzy
 msgid ""
 "I tried awk, using the comma as a separator. But because several lines "
 "contained a quoted comma, awk was extracting the wrong field from those "
@@ -5694,7 +5671,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2268
-#, fuzzy
 msgid ""
 "Therefore, I needed to write my own software to extract the 11th field from "
 "the CSV file.  However, going with the UNIX(R) spirit, I only needed to "
@@ -5706,25 +5682,21 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2270
-#, fuzzy
 msgid "Remove the first line from the file;"
-msgstr "Удалите первую строку из файла;"
+msgstr "Удалить первую строку из файла;"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2271
-#, fuzzy
 msgid "Change all unquoted commas to a different character;"
-msgstr "Замените все не заключённые в кавычки запятые на другой символ;"
+msgstr "Заменить все не заключённые в кавычки запятые на другой символ;"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2272
-#, fuzzy
 msgid "Remove all quotation marks."
-msgstr "Удалите все кавычки."
+msgstr "Удалить все кавычки."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2274
-#, fuzzy
 msgid ""
 "Strictly speaking, I could use sed to remove the first line from the file, "
 "but doing so in my own program was very easy, so I decided to do it and "
@@ -5736,7 +5708,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2278
-#, fuzzy
 msgid ""
 "At any rate, writing a program like this took me about 20 minutes.  Writing "
 "a program that extracts the 11th field from the CSV file would take a lot "
@@ -5750,38 +5721,32 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2280
-#, fuzzy
 msgid ""
 "This time I decided to let it do a little more work than a typical tutorial "
 "program would:"
 msgstr ""
-"На этот раз я решил позволить ему выполнить немного больше работы, чем "
+"На этот раз я решил позволить ей выполнить немного больше работы, чем "
 "обычная учебная программа:"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2282
-#, fuzzy
 msgid "It parses its command line for options;"
-msgstr "Он анализирует свою командную строку на наличие опций;"
+msgstr "Она анализирует свою командную строку на наличие опций;"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2283
-#, fuzzy
 msgid "It displays proper usage if it finds wrong arguments;"
-msgstr ""
-"Он отображает правильное использование, если обнаруживает неверные аргументы;"
+msgstr "Она отображает подсказку, если обнаруживает неверные аргументы;"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2284
-#, fuzzy
 msgid "It produces meaningful error messages."
-msgstr "Он выдает понятные сообщения об ошибках."
+msgstr "Она выдает понятные сообщения об ошибках."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2286
-#, fuzzy
 msgid "Here is its usage message:"
-msgstr "Вот сообщение о его использовании:"
+msgstr "Вот какое сообщение она выводит о том, как ее использовать:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2290
@@ -5791,13 +5756,11 @@ msgstr "Usage: csv [-t<delim>] [-c<comma>] [-p] [-o <outfile>] [-i <infile>]\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2293
-#, fuzzy
 msgid "All parameters are optional, and can appear in any order."
 msgstr "Все параметры необязательны и могут располагаться в любом порядке."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2297
-#, fuzzy
 msgid ""
 "The `-t` parameter declares what to replace the commas with.  The `tab` is "
 "the default here.  For example, `-t;` will replace all unquoted commas with "
@@ -5808,7 +5771,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2301
-#, fuzzy
 msgid ""
 "I did not need the `-c` option, but it may come in handy in the future.  It "
 "lets me declare that I want a character other than a comma replaced with "
@@ -5822,7 +5784,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2304
-#, fuzzy
 msgid ""
 "The `-p` option preserves the first line, i.e., it does not delete it.  By "
 "default, we delete the first line because in a CSV file it contains the "
@@ -5834,19 +5795,17 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2307
-#, fuzzy
 msgid ""
 "The `-i` and `-o` options let me specify the input and the output files.  "
 "Defaults are [.filename]#stdin# and [.filename]#stdout#, so this is a "
 "regular UNIX(R) filter."
 msgstr ""
 "Опции `-i` и `-o` позволяют указать входной и выходной файлы. По умолчанию "
-"используются [.filename]#stdin# и [.filename]#stdout#, что соответствует "
-"стандартному фильтру UNIX(R)."
+"используются [.filename]#stdin# и [.filename]#stdout#, как обычно работает "
+"стандартный фильтр UNIX(R)."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2310
-#, fuzzy
 msgid ""
 "I made sure that both `-i filename` and `-ifilename` are accepted.  I also "
 "made sure that only one input and one output files may be specified."
@@ -5856,7 +5815,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2312
-#, fuzzy
 msgid "To get the 11th field of each record, I can now do:"
 msgstr "Чтобы получить 11-е поле каждой записи, теперь я могу сделать:"
 
@@ -5868,7 +5826,6 @@ msgstr "% csv '-t;' data.csv | awk '-F;' '{print $11}'\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2319
-#, fuzzy
 msgid ""
 "The code stores the options (except for the file descriptors) in `EDX`: The "
 "comma in `DH`, the new separator in `DL`, and the flag for the `-p` option "
@@ -5882,7 +5839,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2321
-#, fuzzy
 msgid "Here is the code:"
 msgstr "Вот код:"
 
@@ -6487,7 +6443,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2600
-#, fuzzy
 msgid ""
 "Much of it is taken from [.filename]#hex.asm# above.  But there is one "
 "important difference: I no longer call `write` whenever I am outputting a "
@@ -6499,7 +6454,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2604
-#, fuzzy
 msgid ""
 "I have found a better solution for the interactive problem since I first "
 "started writing this chapter.  I wanted to make sure each line is printed "
@@ -6513,7 +6467,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2608
-#, fuzzy
 msgid ""
 "The new solution I use now is to call `write` every time I find the input "
 "buffer empty.  That way, when running in the interactive mode, the program "
@@ -6528,13 +6481,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2610
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "The Dark Side of Buffering"
 msgstr "Темная сторона буферизации"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2614
-#, fuzzy
 msgid ""
 "This change prevents a mysterious lockup in a very specific case.  I refer "
 "to it as the _dark side of buffering_, mostly because it presents a danger "
@@ -6546,7 +6498,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2618
-#, fuzzy
 msgid ""
 "It is unlikely to happen with a program like the csv above, so let us "
 "consider yet another filter: In this case we expect our input to be raw data "
@@ -6561,7 +6512,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2621
-#, fuzzy
 msgid ""
 "Such a filter would be very simple to write.  Most of it would look just "
 "like all the other filters we have written so far, so I am only going to "
@@ -6589,7 +6539,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2632
-#, fuzzy
 msgid ""
 "Because this filter works with raw data, it is unlikely to be used "
 "interactively."
@@ -6599,7 +6548,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2635
-#, fuzzy
 msgid ""
 "But it could be called by image manipulation software.  And, unless it calls "
 "`write` before each call to `read`, chances are it will lock up."
@@ -6610,13 +6558,11 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2637
-#, fuzzy
 msgid "Here is what might happen:"
 msgstr "Вот что может произойти:"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2640
-#, fuzzy
 msgid "The image editor will load our filter using the C function `popen()`."
 msgstr ""
 "Редактор изображений загрузит наш фильтр, используя функцию `popen()` на "
@@ -6624,13 +6570,11 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2641
-#, fuzzy
 msgid "It will read the first row of pixels from a bitmap or pixmap."
 msgstr "Он прочитает первый ряд пикселей из битовой карты или пиксельной карты."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2642
-#, fuzzy
 msgid ""
 "It will write the first row of pixels to the _pipe_ leading to the `fd.in` "
 "of our filter."
@@ -6640,7 +6584,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2643
-#, fuzzy
 msgid ""
 "Our filter will read each pixel from its input, turn it to a negative, and "
 "write it to its output buffer."
@@ -6650,25 +6593,21 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2644
-#, fuzzy
 msgid "Our filter will call `getchar` to fetch the next pixel."
 msgstr "Наш фильтр будет вызывать `getchar` для получения следующего пикселя."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2645
-#, fuzzy
 msgid "`getchar` will find an empty input buffer, so it will call `read`."
 msgstr "`getchar` обнаружит пустой входной буфер, поэтому вызовет `read`."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2646
-#, fuzzy
 msgid "`read` will call the `SYS_read` system call."
 msgstr "`read` вызовет системный вызов `SYS_read`."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2647
-#, fuzzy
 msgid ""
 "The _kernel_ will suspend our filter until the image editor sends more data "
 "to the pipe."
@@ -6678,7 +6617,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2648
-#, fuzzy
 msgid ""
 "The image editor will read from the other pipe, connected to the `fd.out` of "
 "our filter so it can set the first row of the output image _before_ it sends "
@@ -6690,7 +6628,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2649
-#, fuzzy
 msgid ""
 "The _kernel_ suspends the image editor until it receives some output from "
 "our filter, so it can pass it on to the image editor."
@@ -6700,7 +6637,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2653
-#, fuzzy
 msgid ""
 "At this point our filter waits for the image editor to send it more data to "
 "process, while the image editor is waiting for our filter to send it the "
@@ -6714,7 +6650,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2656
-#, fuzzy
 msgid ""
 "The filter and the image editor will continue waiting for each other forever "
 "(or, at least, until they are killed).  Our software has just entered a "
@@ -6727,12 +6662,11 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2658
-#, fuzzy
 msgid ""
 "This problem does not exist if our filter flushes its output buffer _before_ "
 "asking the _kernel_ for more input data."
 msgstr ""
-"Эта проблема не существует, если наш фильтр очищает свой выходной буфер "
+"Эта проблема не возникает, если наш фильтр очищает свой выходной буфер "
 "_перед_ запросом к _ядру_ для получения дополнительных входных данных."
 
 #. type: Title ==
