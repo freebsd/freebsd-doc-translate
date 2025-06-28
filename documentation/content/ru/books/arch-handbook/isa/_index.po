@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-04 14:10+0000\n"
+"PO-Revision-Date: 2025-06-28 21:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookisa_index/ru/>\n"
@@ -69,6 +69,11 @@ msgid ""
 "#include <machine/resource.h>\n"
 "#include <sys/rman.h>\n"
 msgstr ""
+"#include <sys/module.h>\n"
+"#include <sys/bus.h>\n"
+"#include <machine/bus.h>\n"
+"#include <machine/resource.h>\n"
+"#include <sys/rman.h>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:71
@@ -77,6 +82,8 @@ msgid ""
 "#include <isa/isavar.h>\n"
 "#include <isa/pnpvar.h>\n"
 msgstr ""
+"#include <isa/isavar.h>\n"
+"#include <isa/pnpvar.h>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:74
@@ -178,6 +185,17 @@ msgid ""
 "        DEVMETHOD(device_suspend,   xxx_isa_suspend),\n"
 "        DEVMETHOD(device_resume,    xxx_isa_resume),\n"
 msgstr ""
+"    /* table of supported bus methods */\n"
+"    static device_method_t xxx_isa_methods[] = {\n"
+"        /* list all the bus method functions supported by the driver */\n"
+"        /* omit the unsupported methods */\n"
+"        DEVMETHOD(device_identify,  xxx_isa_identify),\n"
+"        DEVMETHOD(device_probe,     xxx_isa_probe),\n"
+"        DEVMETHOD(device_attach,    xxx_isa_attach),\n"
+"        DEVMETHOD(device_detach,    xxx_isa_detach),\n"
+"        DEVMETHOD(device_shutdown,  xxx_isa_shutdown),\n"
+"        DEVMETHOD(device_suspend,   xxx_isa_suspend),\n"
+"        DEVMETHOD(device_resume,    xxx_isa_resume),\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:107
@@ -186,6 +204,8 @@ msgid ""
 "\tDEVMETHOD_END\n"
 "    };\n"
 msgstr ""
+"\tDEVMETHOD_END\n"
+"    };\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:113
@@ -197,12 +217,17 @@ msgid ""
 "        sizeof(struct xxx_softc),\n"
 "    };\n"
 msgstr ""
+"    static driver_t xxx_isa_driver = {\n"
+"        \"xxx\",\n"
+"        xxx_isa_methods,\n"
+"        sizeof(struct xxx_softc),\n"
+"    };\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:115
 #, no-wrap
 msgid "    static devclass_t xxx_devclass;\n"
-msgstr ""
+msgstr "    static devclass_t xxx_devclass;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:118
@@ -211,6 +236,8 @@ msgid ""
 "    DRIVER_MODULE(xxx, isa, xxx_isa_driver, xxx_devclass,\n"
 "        load_function, load_argument);\n"
 msgstr ""
+"    DRIVER_MODULE(xxx, isa, xxx_isa_driver, xxx_devclass,\n"
+"        load_function, load_argument);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:121
@@ -238,6 +265,8 @@ msgid ""
 " DRIVER_MODULE(xxx, isa, xxx_isa_driver,\n"
 "       xxx_devclass, 0, 0);\n"
 msgstr ""
+" DRIVER_MODULE(xxx, isa, xxx_isa_driver,\n"
+"       xxx_devclass, 0, 0);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:131
@@ -259,6 +288,12 @@ msgid ""
 "        { 0,        NULL }, /* end of table */\n"
 "    };\n"
 msgstr ""
+"    static struct isa_pnp_id xxx_pnp_ids[] = {\n"
+"        /* a line for each supported PnP ID */\n"
+"        { 0x12345678,   \"Our device model 1234A\" },\n"
+"        { 0x12345679,   \"Our device model 1234B\" },\n"
+"        { 0,        NULL }, /* end of table */\n"
+"    };\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:143
@@ -275,12 +310,15 @@ msgid ""
 "        { 0,        NULL }, /* end of table */\n"
 "    };\n"
 msgstr ""
+"    static struct isa_pnp_id xxx_pnp_ids[] = {\n"
+"        { 0,        NULL }, /* end of table */\n"
+"    };\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:152
 #, no-wrap
 msgid "`device_t` Pointer"
-msgstr ""
+msgstr "`device_t` Pointer"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:155
@@ -391,6 +429,8 @@ msgid ""
 "device xxx0 at isa? port 0x300 irq 10 drq 5\n"
 "       iomem 0xd0000 flags 0x1 sensitive\n"
 msgstr ""
+"device xxx0 at isa? port 0x300 irq 10 drq 5\n"
+"       iomem 0xd0000 flags 0x1 sensitive\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:183
@@ -426,7 +466,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:190
 #, no-wrap
 msgid "device xxx0 at isa?\n"
-msgstr ""
+msgstr "device xxx0 at isa?\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:192
@@ -446,7 +486,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:198
 #, no-wrap
 msgid "device xxx at isa?\n"
-msgstr ""
+msgstr "device xxx at isa?\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:201
@@ -649,6 +689,10 @@ msgid ""
 "          MEMORY: 0-3\n"
 "          IOPORT: 0-7\n"
 msgstr ""
+"          IRQ: 0-1\n"
+"          DRQ: 0-1\n"
+"          MEMORY: 0-3\n"
+"          IOPORT: 0-7\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:251
@@ -666,17 +710,17 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:255
 msgid "set/get"
-msgstr ""
+msgstr "set/get"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:256
 msgid "allocate/release"
-msgstr ""
+msgstr "allocate/release"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:257
 msgid "activate/deactivate"
-msgstr ""
+msgstr "activate/deactivate"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:259
@@ -700,6 +744,8 @@ msgid ""
 "`int bus_set_resource(device_t dev, int type, int rid, u_long start, u_long "
 "count)`"
 msgstr ""
+"`int bus_set_resource(device_t dev, int type, int rid, u_long start, u_long "
+"count)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:265
@@ -735,6 +781,8 @@ msgid ""
 "`int bus_get_resource(device_t dev, int type, int rid, u_long *startp, "
 "u_long *countp)`"
 msgstr ""
+"`int bus_get_resource(device_t dev, int type, int rid, u_long *startp, "
+"u_long *countp)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:274
@@ -749,6 +797,8 @@ msgid ""
 "`u_long bus_get_resource_start(device_t dev, int type, int rid) u_long "
 "bus_get_resource_count (device_t dev, int type, int rid)`"
 msgstr ""
+"`u_long bus_get_resource_start(device_t dev, int type, int rid) u_long "
+"bus_get_resource_count (device_t dev, int type, int rid)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:277
@@ -762,7 +812,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:278
 msgid "`void bus_delete_resource(device_t dev, int type, int rid)`"
-msgstr ""
+msgstr "`void bus_delete_resource(device_t dev, int type, int rid)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:280
@@ -775,6 +825,8 @@ msgid ""
 "`struct resource * bus_alloc_resource(device_t dev, int type, int *rid, "
 "u_long start, u_long end, u_long count, u_int flags)`"
 msgstr ""
+"`struct resource * bus_alloc_resource(device_t dev, int type, int *rid, "
+"u_long start, u_long end, u_long count, u_int flags)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:283
@@ -829,6 +881,8 @@ msgid ""
 "`int bus_release_resource(device_t dev, int type, int rid, struct resource "
 "*r)`"
 msgstr ""
+"`int bus_release_resource(device_t dev, int type, int rid, struct resource "
+"*r)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:292
@@ -844,6 +898,9 @@ msgid ""
 "*r) int bus_deactivate_resource(device_t dev, int type, int rid, struct "
 "resource *r)`"
 msgstr ""
+"`int bus_activate_resource(device_t dev, int type, int rid, struct resource "
+"*r) int bus_deactivate_resource(device_t dev, int type, int rid, struct "
+"resource *r)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:294
@@ -860,6 +917,9 @@ msgid ""
 "driver_intr_t *handler, void *arg, void **cookiep) int "
 "bus_teardown_intr(device_t dev, struct resource *r, void *cookie)`"
 msgstr ""
+"`int bus_setup_intr(device_t dev, struct resource *r, int flags, "
+"driver_intr_t *handler, void *arg, void **cookiep) int bus_teardown_intr("
+"device_t dev, struct resource *r, void *cookie)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:296
@@ -1106,6 +1166,10 @@ msgid ""
 "bus_dma_filter_t *filter, void *filterarg, bus_size_t maxsize, int "
 "nsegments, bus_size_t maxsegsz, int flags, bus_dma_tag_t *dmat)`"
 msgstr ""
+"`int bus_dma_tag_create(bus_dma_tag_t parent, bus_size_t alignment, "
+"bus_size_t boundary, bus_addr_t lowaddr, bus_addr_t highaddr, "
+"bus_dma_filter_t *filter, void *filterarg, bus_size_t maxsize, int "
+"nsegments, bus_size_t maxsegsz, int flags, bus_dma_tag_t *dmat)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:350
@@ -1170,12 +1234,12 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:361
 msgid "lowaddr = BUS_SPACE_MAXADDR_24BIT"
-msgstr ""
+msgstr "lowaddr = BUS_SPACE_MAXADDR_24BIT"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:363
 msgid "highaddr = BUS_SPACE_MAXADDR"
-msgstr ""
+msgstr "highaddr = BUS_SPACE_MAXADDR"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:365
@@ -1238,7 +1302,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:375
 msgid "`int bus_dma_tag_destroy(bus_dma_tag_t dmat)`"
-msgstr ""
+msgstr "`int bus_dma_tag_destroy(bus_dma_tag_t dmat)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:377
@@ -1256,6 +1320,8 @@ msgid ""
 "`int bus_dmamem_alloc(bus_dma_tag_t dmat, void** vaddr, int flags, "
 "bus_dmamap_t *mapp)`"
 msgstr ""
+"`int bus_dmamem_alloc(bus_dma_tag_t dmat, void** vaddr, int flags, "
+"bus_dmamap_t *mapp)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:382
@@ -1304,6 +1370,7 @@ msgstr ""
 msgid ""
 "`void bus_dmamem_free(bus_dma_tag_t dmat, void *vaddr, bus_dmamap_t map)`"
 msgstr ""
+"`void bus_dmamem_free(bus_dma_tag_t dmat, void *vaddr, bus_dmamap_t map)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:394
@@ -1331,6 +1398,7 @@ msgstr ""
 msgid ""
 "`int bus_dmamap_create(bus_dma_tag_t dmat, int flags, bus_dmamap_t *mapp)`"
 msgstr ""
+"`int bus_dmamap_create(bus_dma_tag_t dmat, int flags, bus_dmamap_t *mapp)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:402
@@ -1354,7 +1422,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:408
 msgid "`int bus_dmamap_destroy(bus_dma_tag_t dmat, bus_dmamap_t map)`"
-msgstr ""
+msgstr "`int bus_dmamap_destroy(bus_dma_tag_t dmat, bus_dmamap_t map)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:410
@@ -1378,6 +1446,9 @@ msgid ""
 "bus_size_t buflen, bus_dmamap_callback_t *callback, void *callback_arg, int "
 "flags)`"
 msgstr ""
+"`int bus_dmamap_load(bus_dma_tag_t dmat, bus_dmamap_t map, void *buf, "
+"bus_size_t buflen, bus_dmamap_callback_t *callback, void *callback_arg, int "
+"flags)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:417
@@ -1467,7 +1538,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:437
 msgid "`void bus_dmamap_unload(bus_dma_tag_t dmat, bus_dmamap_t map)`"
-msgstr ""
+msgstr "`void bus_dmamap_unload(bus_dma_tag_t dmat, bus_dmamap_t map)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:439
@@ -1492,6 +1563,8 @@ msgid ""
 "`void bus_dmamap_sync (bus_dma_tag_t dmat, bus_dmamap_t map, "
 "bus_dmasync_op_t op)`"
 msgstr ""
+"`void bus_dmamap_sync (bus_dma_tag_t dmat, bus_dmamap_t map, "
+"bus_dmasync_op_t op)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:446
@@ -1593,6 +1666,8 @@ msgid ""
 "bus_dmamem_alloc -> bus_dmamap_load -> ...use buffer... -> -> "
 "bus_dmamap_unload -> bus_dmamem_free"
 msgstr ""
+"bus_dmamem_alloc -> bus_dmamap_load -> ...use buffer... -> -> "
+"bus_dmamap_unload -> bus_dmamem_free"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:471
@@ -1612,6 +1687,13 @@ msgid ""
 "          -> bus_dmamap_sync(POST...) -> bus_dmamap_unload ->\n"
 "          -> bus_dmamap_destroy\n"
 msgstr ""
+"          bus_dmamap_create ->\n"
+"          -> bus_dmamap_load -> bus_dmamap_sync(PRE...) -> do transfer ->\n"
+"          -> bus_dmamap_sync(POST...) -> bus_dmamap_unload ->\n"
+"          ...\n"
+"          -> bus_dmamap_load -> bus_dmamap_sync(PRE...) -> do transfer ->\n"
+"          -> bus_dmamap_sync(POST...) -> bus_dmamap_unload ->\n"
+"          -> bus_dmamap_destroy\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:483
@@ -1639,6 +1721,12 @@ msgid ""
 "          *(bus_addr_t *)arg = seg[0].ds_addr;\n"
 "        }\n"
 msgstr ""
+"          static void\n"
+"        alloc_callback(void *arg, bus_dma_segment_t *seg, int nseg, int "
+"error)\n"
+"        {\n"
+"          *(bus_addr_t *)arg = seg[0].ds_addr;\n"
+"        }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:504
@@ -1655,6 +1743,16 @@ msgid ""
 "          bus_dmamap_t map_somedata;\n"
 "          ...\n"
 msgstr ""
+"          ...\n"
+"          int error;\n"
+"          struct somedata {\n"
+"            ....\n"
+"          };\n"
+"          struct somedata *vsomedata; /* virtual address */\n"
+"          bus_addr_t psomedata; /* physical bus-relative address */\n"
+"          bus_dma_tag_t tag_somedata;\n"
+"          bus_dmamap_t map_somedata;\n"
+"          ...\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:512
@@ -1668,6 +1766,14 @@ msgid ""
 "          if(error)\n"
 "          return error;\n"
 msgstr ""
+"          error=bus_dma_tag_create(parent_tag, alignment,\n"
+"           boundary, lowaddr, highaddr, /*filter*/ NULL, /*filterarg*/ NULL,"
+"\n"
+"           /*maxsize*/ sizeof(struct somedata), /*nsegments*/ 1,\n"
+"           /*maxsegsz*/ sizeof(struct somedata), /*flags*/ 0,\n"
+"           &tag_somedata);\n"
+"          if(error)\n"
+"          return error;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:517
@@ -1678,6 +1784,10 @@ msgid ""
 "          if(error)\n"
 "             return error;\n"
 msgstr ""
+"          error = bus_dmamem_alloc(tag_somedata, &vsomedata, /* flags*/ 0,\n"
+"             &map_somedata);\n"
+"          if(error)\n"
+"             return error;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:521
@@ -1687,6 +1797,9 @@ msgid ""
 "             sizeof (struct somedata), alloc_callback,\n"
 "             (void *) &psomedata, /*flags*/0);\n"
 msgstr ""
+"          bus_dmamap_load(tag_somedata, map_somedata, (void *)vsomedata,\n"
+"             sizeof (struct somedata), alloc_callback,\n"
+"             (void *) &psomedata, /*flags*/0);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:524
@@ -1713,6 +1826,9 @@ msgid ""
 "           int s;\n"
 "           int error;\n"
 msgstr ""
+"          {\n"
+"           int s;\n"
+"           int error;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:551
@@ -1737,6 +1853,24 @@ msgid ""
 "           splx(s);\n"
 "          }\n"
 msgstr ""
+"           s = splsoftvm();\n"
+"           error = bus_dmamap_load(\n"
+"               dmat,\n"
+"               dmamap,\n"
+"               buffer_ptr,\n"
+"               buffer_len,\n"
+"               callback,\n"
+"               /*callback_arg*/ buffer_descriptor,\n"
+"               /*flags*/0);\n"
+"           if (error == EINPROGRESS) {\n"
+"               /*\n"
+"                * Do whatever is needed to ensure synchronization\n"
+"                * with callback. Callback is guaranteed not to be started\n"
+"                * until we do splx() or tsleep().\n"
+"                */\n"
+"              }\n"
+"           splx(s);\n"
+"          }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:554
@@ -1772,7 +1906,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:560
 #, no-wrap
 msgid "DMA"
-msgstr ""
+msgstr "DMA"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:563
@@ -1800,7 +1934,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:567
 msgid "`void isa_dmacascade(int channel_number)`"
-msgstr ""
+msgstr "`void isa_dmacascade(int channel_number)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:569
@@ -1818,7 +1952,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:573
 msgid "`int isa_dma_acquire(int chanel_number)`"
-msgstr ""
+msgstr "`int isa_dma_acquire(int chanel_number)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:575
@@ -1834,7 +1968,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:576
 msgid "`int isa_dma_release(int chanel_number)`"
-msgstr ""
+msgstr "`int isa_dma_release(int chanel_number)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:578
@@ -1847,7 +1981,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:579
 msgid "`void isa_dmainit(int chan, u_int bouncebufsize)`"
-msgstr ""
+msgstr "`void isa_dmainit(int chan, u_int bouncebufsize)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:581
@@ -1877,7 +2011,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:586
 msgid "`void isa_dmastart(int flags, caddr_t addr, u_int nbytes, int chan)`"
-msgstr ""
+msgstr "`void isa_dmastart(int flags, caddr_t addr, u_int nbytes, int chan)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:588
@@ -1944,7 +2078,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:598
 msgid "`void isa_dmadone(int flags, caddr_t addr, int nbytes, int chan)`"
-msgstr ""
+msgstr "`void isa_dmadone(int flags, caddr_t addr, int nbytes, int chan)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:600
@@ -1959,7 +2093,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:601
 msgid "`int isa_dmastatus(int channel_number)`"
-msgstr ""
+msgstr "`int isa_dmastatus(int channel_number)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:603
@@ -1976,7 +2110,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:604
 msgid "`int isa_dmastop(int channel_number)`"
-msgstr ""
+msgstr "`int isa_dmastop(int channel_number)`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:606
@@ -1989,7 +2123,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:608
 #, no-wrap
 msgid "xxx_isa_probe"
-msgstr ""
+msgstr "xxx_isa_probe"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:611
@@ -2060,6 +2194,10 @@ msgid ""
 "          int pnperror;\n"
 "          int error = 0;\n"
 msgstr ""
+"         struct xxx_softc *sc = device_get_softc(dev);\n"
+"          int unit = device_get_unit(dev);\n"
+"          int pnperror;\n"
+"          int error = 0;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:629
@@ -2068,6 +2206,8 @@ msgid ""
 "          sc->dev = dev; /* link it back */\n"
 "          sc->unit = unit;\n"
 msgstr ""
+"          sc->dev = dev; /* link it back */\n"
+"          sc->unit = unit;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:632
@@ -2084,6 +2224,8 @@ msgid ""
 "        pnperror=ISA_PNP_PROBE(device_get_parent(dev), dev,\n"
 "        xxx_pnp_ids); if(pnperror == ENXIO) return ENXIO;\n"
 msgstr ""
+"        pnperror=ISA_PNP_PROBE(device_get_parent(dev), dev,\n"
+"        xxx_pnp_ids); if(pnperror == ENXIO) return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:641
@@ -2109,6 +2251,8 @@ msgid ""
 "          if(pnperror != 0)\n"
 "              return pnperror;\n"
 msgstr ""
+"          if(pnperror != 0)\n"
+"              return pnperror;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:651
@@ -2144,6 +2288,8 @@ msgid ""
 " sc->port0 = bus_get_resource_start(dev,\n"
 "        SYS_RES_IOPORT, 0 /*rid*/); if(sc->port0 == 0) return ENXIO;\n"
 msgstr ""
+" sc->port0 = bus_get_resource_start(dev,\n"
+"        SYS_RES_IOPORT, 0 /*rid*/); if(sc->port0 == 0) return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:663
@@ -2170,6 +2316,18 @@ msgid ""
 "              { 0, 0 } /* end of table */\n"
 "          };\n"
 msgstr ""
+"          /* table of all possible base I/O port addresses for this device */"
+"\n"
+"          static struct xxx_allports {\n"
+"              u_short port; /* port address */\n"
+"              short used; /* flag: if this port is already used by some unit "
+"*/\n"
+"          } xxx_allports = {\n"
+"              { 0x300, 0 },\n"
+"              { 0x320, 0 },\n"
+"              { 0x340, 0 },\n"
+"              { 0, 0 } /* end of table */\n"
+"          };\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:681
@@ -2179,6 +2337,9 @@ msgid ""
 "          int port, i;\n"
 "          ...\n"
 msgstr ""
+"          ...\n"
+"          int port, i;\n"
+"          ...\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:687
@@ -2190,6 +2351,11 @@ msgid ""
 "                  if(xxx_allports[i].used || xxx_allports[i].port != port)\n"
 "                      continue;\n"
 msgstr ""
+"          port =  bus_get_resource_start(dev, SYS_RES_IOPORT, 0 /*rid*/);\n"
+"          if(port !=0 ) {\n"
+"              for(i=0; xxx_allports[i].port!=0; i++) {\n"
+"                  if(xxx_allports[i].used || xxx_allports[i].port != port)\n"
+"                      continue;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:695
@@ -2203,6 +2369,13 @@ msgid ""
 "              return ENXIO; /* port is unknown or already used */\n"
 "          }\n"
 msgstr ""
+"                  /* found it */\n"
+"                  xxx_allports[i].used = 1;\n"
+"                  /* do probe on a known port */\n"
+"                  return xxx_really_probe(dev, port);\n"
+"              }\n"
+"              return ENXIO; /* port is unknown or already used */\n"
+"          }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:700
@@ -2213,6 +2386,10 @@ msgid ""
 "              if(xxx_allports[i].used)\n"
 "                  continue;\n"
 msgstr ""
+"          /* we get here only if we need to guess the port */\n"
+"          for(i=0; xxx_allports[i].port!=0; i++) {\n"
+"              if(xxx_allports[i].used)\n"
+"                  continue;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:705
@@ -2223,6 +2400,10 @@ msgid ""
 "               */\n"
 "               xxx_allports[i].used = 1;\n"
 msgstr ""
+"              /* mark as used - even if we find nothing at this port\n"
+"               * at least we won't probe it in future\n"
+"               */\n"
+"               xxx_allports[i].used = 1;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:712
@@ -2235,6 +2416,12 @@ msgid ""
 "          /* probed all possible addresses, none worked */\n"
 "          return ENXIO;\n"
 msgstr ""
+"              error = xxx_really_probe(dev, xxx_allports[i].port);\n"
+"              if(error == 0) /* found a device at that port */\n"
+"                  return 0;\n"
+"          }\n"
+"          /* probed all possible addresses, none worked */\n"
+"          return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:715
@@ -2265,6 +2452,10 @@ msgid ""
 "         XXX_PORT_COUNT)<0)\n"
 "             return ENXIO;\n"
 msgstr ""
+"         if(pnperror /* only for non-PnP devices */\n"
+"         && bus_set_resource(dev, SYS_RES_IOPORT, 0, sc->port0,\n"
+"         XXX_PORT_COUNT)<0)\n"
+"             return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:728
@@ -2282,6 +2473,10 @@ msgid ""
 "          &sc->port0_rid,\n"
 "              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 msgstr ""
+"          sc->port0_rid = 0;\n"
+"          sc->port0_r = bus_alloc_resource(dev, SYS_RES_IOPORT,\n"
+"          &sc->port0_rid,\n"
+"              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:739
@@ -2290,6 +2485,8 @@ msgid ""
 "          if(sc->port0_r == NULL)\n"
 "              return ENXIO;\n"
 msgstr ""
+"          if(sc->port0_r == NULL)\n"
+"              return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:742
@@ -2328,6 +2525,10 @@ msgid ""
 "          if(error = xxx_probe_ports(sc))\n"
 "              goto bad; /* will deallocate the resources before returning */\n"
 msgstr ""
+"          /* implemented in some very device-specific way */\n"
+"          if(error = xxx_probe_ports(sc))\n"
+"              goto bad; /* will deallocate the resources before returning */"
+"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:756
@@ -2346,6 +2547,8 @@ msgid ""
 "          if(pnperror)\n"
 "              device_set_desc(dev, \"Our device model 1234\");\n"
 msgstr ""
+"          if(pnperror)\n"
+"              device_set_desc(dev, \"Our device model 1234\");\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:764
@@ -2378,6 +2581,11 @@ msgid ""
 "          if(sc->mem0_p == 0) { /* nope, not specified by user */\n"
 "              sc->mem0_p = xxx_read_mem0_from_device_config(sc);\n"
 msgstr ""
+"          /* try to find out the config address first */\n"
+"          sc->mem0_p = bus_get_resource_start(dev, SYS_RES_MEMORY, 0 "
+"/*rid*/);\n"
+"          if(sc->mem0_p == 0) { /* nope, not specified by user */\n"
+"              sc->mem0_p = xxx_read_mem0_from_device_config(sc);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:782
@@ -2391,6 +2599,13 @@ msgid ""
 "                  goto bad; /* device does not support that address */\n"
 "          }\n"
 msgstr ""
+"          if(sc->mem0_p == 0)\n"
+"                  /* can't get it from device config registers either */\n"
+"                  goto bad;\n"
+"          } else {\n"
+"              if(xxx_set_mem0_address_on_device(sc) < 0)\n"
+"                  goto bad; /* device does not support that address */\n"
+"          }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:794
@@ -2408,6 +2623,22 @@ msgid ""
 "              if(sc->mem0_size == 0) /* not specified by user */\n"
 "                  sc->mem0_size = xxx_read_mem0_size_from_device_config(sc);\n"
 msgstr ""
+"          /* just like the port, set the memory size,\n"
+"           * for some devices the memory size would not be constant\n"
+"           * but should be read from the device configuration registers "
+"instead\n"
+"           * to accommodate different models of devices. Another option "
+"would\n"
+"           * be to let the user set the memory size as \"msize\" "
+"configuration\n"
+"           * resource which will be automatically handled by the ISA bus.\n"
+"           */\n"
+"           if(pnperror) { /* only for non-PnP devices */\n"
+"              sc->mem0_size = bus_get_resource_count(dev, SYS_RES_MEMORY, 0 "
+"/*rid*/);\n"
+"              if(sc->mem0_size == 0) /* not specified by user */\n"
+"                  sc->mem0_size = xxx_read_mem0_size_from_device_config(sc);"
+"\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:803
@@ -2422,6 +2653,15 @@ msgid ""
 "                  sc->mem0_size = 8*1024;\n"
 "              }\n"
 msgstr ""
+"              if(sc->mem0_size == 0) {\n"
+"                  /* suppose this is a very old model of device without\n"
+"                   * auto-configuration features and the user gave no "
+"preference,\n"
+"                   * so assume the minimalistic case\n"
+"                   * (of course, the real value will vary with the driver)\n"
+"                   */\n"
+"                  sc->mem0_size = 8*1024;\n"
+"              }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:806
@@ -2430,6 +2670,8 @@ msgid ""
 "              if(xxx_set_mem0_size_on_device(sc) < 0)\n"
 "                  goto bad; /* device does not support that size */\n"
 msgstr ""
+"              if(xxx_set_mem0_size_on_device(sc) < 0)\n"
+"                  goto bad; /* device does not support that size */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:813
@@ -2442,6 +2684,13 @@ msgid ""
 "              sc->mem0_size = bus_get_resource_count(dev, SYS_RES_MEMORY, 0 /*rid*/);\n"
 "          }\n"
 msgstr ""
+"              if(bus_set_resource(dev, SYS_RES_MEMORY, /*rid*/0,\n"
+"                      sc->mem0_p, sc->mem0_size)<0)\n"
+"                  goto bad;\n"
+"          } else {\n"
+"              sc->mem0_size = bus_get_resource_count(dev, SYS_RES_MEMORY, 0 "
+"/*rid*/);\n"
+"          }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:816
@@ -2461,6 +2710,8 @@ msgid ""
 "          xxx_free_resources(sc);\n"
 "          return 0;\n"
 msgstr ""
+"          xxx_free_resources(sc);\n"
+"          return 0;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:826
@@ -2476,7 +2727,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1047
 #, no-wrap
 msgid "          bad:\n"
-msgstr ""
+msgstr "          bad:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:836
@@ -2488,6 +2739,11 @@ msgid ""
 "          else /* exact error is unknown */\n"
 "              return ENXIO;\n"
 msgstr ""
+"          xxx_free_resources(sc);\n"
+"          if(error)\n"
+"                return error;\n"
+"          else /* exact error is unknown */\n"
+"              return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:839
@@ -2506,6 +2762,11 @@ msgid ""
 "          {\n"
 "              /* check every resource and free if not zero */\n"
 msgstr ""
+"static void\n"
+"           xxx_free_resources(sc)\n"
+"              struct xxx_softc *sc;\n"
+"          {\n"
+"              /* check every resource and free if not zero */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:855
@@ -2519,6 +2780,13 @@ msgid ""
 "                  sc->intr_r = 0;\n"
 "              }\n"
 msgstr ""
+"              /* interrupt handler */\n"
+"              if(sc->intr_r) {\n"
+"                  bus_teardown_intr(sc->dev, sc->intr_r, sc->intr_cookie);\n"
+"                  bus_release_resource(sc->dev, SYS_RES_IRQ, sc->intr_rid,\n"
+"                      sc->intr_r);\n"
+"                  sc->intr_r = 0;\n"
+"              }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:870
@@ -2539,12 +2807,27 @@ msgid ""
 "                  sc->data_tag = 0;\n"
 "              }\n"
 msgstr ""
+"              /* all kinds of memory maps we could have allocated */\n"
+"              if(sc->data_p) {\n"
+"                  bus_dmamap_unload(sc->data_tag, sc->data_map);\n"
+"                  sc->data_p = 0;\n"
+"              }\n"
+"               if(sc->data) { /* sc->data_map may be legitimately equal to 0 "
+"*/\n"
+"                  /* the map will also be freed */\n"
+"                  bus_dmamem_free(sc->data_tag, sc->data, sc->data_map);\n"
+"                  sc->data = 0;\n"
+"              }\n"
+"              if(sc->data_tag) {\n"
+"                  bus_dma_tag_destroy(sc->data_tag);\n"
+"                  sc->data_tag = 0;\n"
+"              }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:872
 #, no-wrap
 msgid "              ... free other maps and tags if we have them ...\n"
-msgstr ""
+msgstr "              ... free other maps and tags if we have them ...\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:877
@@ -2555,6 +2838,10 @@ msgid ""
 "                  sc->parent_tag = 0;\n"
 "              }\n"
 msgstr ""
+"              if(sc->parent_tag) {\n"
+"                  bus_dma_tag_destroy(sc->parent_tag);\n"
+"                  sc->parent_tag = 0;\n"
+"              }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:891
@@ -2574,12 +2861,27 @@ msgid ""
 "              }\n"
 "          }\n"
 msgstr ""
+"              /* release all the bus resources */\n"
+"              if(sc->mem0_r) {\n"
+"                  bus_release_resource(sc->dev, SYS_RES_MEMORY, sc->mem0_rid,"
+"\n"
+"                      sc->mem0_r);\n"
+"                  sc->mem0_r = 0;\n"
+"              }\n"
+"              ...\n"
+"              if(sc->port0_r) {\n"
+"                  bus_release_resource(sc->dev, SYS_RES_IOPORT, "
+"sc->port0_rid,\n"
+"                      sc->port0_r);\n"
+"                  sc->port0_r = 0;\n"
+"              }\n"
+"          }\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:894
 #, no-wrap
 msgid "xxx_isa_attach"
-msgstr ""
+msgstr "xxx_isa_attach"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:897
@@ -2616,6 +2918,9 @@ msgid ""
 "          int unit = device_get_unit(dev);\n"
 "          int error = 0;\n"
 msgstr ""
+"          struct xxx_softc *sc = device_get_softc(dev);\n"
+"          int unit = device_get_unit(dev);\n"
+"          int error = 0;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:910
@@ -2636,6 +2941,10 @@ msgid ""
 "          sc->port0_r = bus_alloc_resource(dev, SYS_RES_IOPORT,  &sc->port0_rid,\n"
 "              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 msgstr ""
+"          sc->port0_rid = 0;\n"
+"          sc->port0_r = bus_alloc_resource(dev, SYS_RES_IOPORT,  "
+"&sc->port0_rid,\n"
+"              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:919
@@ -2644,6 +2953,8 @@ msgid ""
 "          if(sc->port0_r == NULL)\n"
 "               return ENXIO;\n"
 msgstr ""
+"          if(sc->port0_r == NULL)\n"
+"               return ENXIO;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:924
@@ -2654,6 +2965,11 @@ msgid ""
 "          sc->mem0_r = bus_alloc_resource(dev, SYS_RES_MEMORY,  &sc->mem0_rid,\n"
 "              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 msgstr ""
+"          /* on-board memory */\n"
+"          sc->mem0_rid = 0;\n"
+"          sc->mem0_r = bus_alloc_resource(dev, SYS_RES_MEMORY,  "
+"&sc->mem0_rid,\n"
+"              /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:927
@@ -2662,6 +2978,8 @@ msgid ""
 "          if(sc->mem0_r == NULL)\n"
 "                goto bad;\n"
 msgstr ""
+"          if(sc->mem0_r == NULL)\n"
+"                goto bad;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:930
@@ -2670,6 +2988,8 @@ msgid ""
 "          /* get its virtual address */\n"
 "          sc->mem0_v = rman_get_virtual(sc->mem0_r);\n"
 msgstr ""
+"          /* get its virtual address */\n"
+"          sc->mem0_v = rman_get_virtual(sc->mem0_r);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:933
@@ -2681,7 +3001,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:935
 msgid "`isa_dmacascade(sc->drq0);`"
-msgstr ""
+msgstr "`isa_dmacascade(sc->drq0);`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:937
@@ -2707,6 +3027,10 @@ msgid ""
 "          sc->intr_r = bus_alloc_resource(dev, SYS_RES_MEMORY,  &sc->intr_rid,\n"
 "                /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 msgstr ""
+"          sc->intr_rid = 0;\n"
+"          sc->intr_r = bus_alloc_resource(dev, SYS_RES_MEMORY,  "
+"&sc->intr_rid,\n"
+"                /*start*/ 0, /*end*/ ~0, /*count*/ 0, RF_ACTIVE);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:947
@@ -2715,6 +3039,8 @@ msgid ""
 "          if(sc->intr_r == NULL)\n"
 "              goto bad;\n"
 msgstr ""
+"          if(sc->intr_r == NULL)\n"
+"              goto bad;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:956
@@ -2729,6 +3055,15 @@ msgid ""
 "          if(error)\n"
 "              goto bad;\n"
 msgstr ""
+"          /*\n"
+"           * XXX_INTR_TYPE is supposed to be defined depending on the type "
+"of\n"
+"           * the driver, for example as INTR_TYPE_CAM for a CAM driver\n"
+"           */\n"
+"          error = bus_setup_intr(dev, sc->intr_r, XXX_INTR_TYPE,\n"
+"              (driver_intr_t *) xxx_intr, (void *) sc, &sc->intr_cookie);\n"
+"          if(error)\n"
+"              goto bad;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:959
@@ -2751,6 +3086,16 @@ msgid ""
 "          if(error)\n"
 "              goto bad;\n"
 msgstr ""
+"          error=bus_dma_tag_create(NULL, /*alignment*/ 4,\n"
+"              /*boundary*/ 0, /*lowaddr*/ BUS_SPACE_MAXADDR_24BIT,\n"
+"              /*highaddr*/ BUS_SPACE_MAXADDR, /*filter*/ NULL, /*filterarg*/ "
+"NULL,\n"
+"              /*maxsize*/ BUS_SPACE_MAXSIZE_24BIT,\n"
+"              /*nsegments*/ BUS_SPACE_UNRESTRICTED,\n"
+"              /*maxsegsz*/ BUS_SPACE_MAXSIZE_24BIT, /*flags*/ 0,\n"
+"              &sc->parent_tag);\n"
+"          if(error)\n"
+"              goto bad;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:988
@@ -2773,6 +3118,23 @@ msgid ""
 "          if(error)\n"
 "              goto bad;\n"
 msgstr ""
+"          /* many things get inherited from the parent tag\n"
+"           * sc->data is supposed to point to the structure with the shared "
+"data,\n"
+"           * for example for a ring buffer it could be:\n"
+"           * struct {\n"
+"           *   u_short rd_pos;\n"
+"           *   u_short wr_pos;\n"
+"           *   char    bf[XXX_RING_BUFFER_SIZE]\n"
+"           * } *data;\n"
+"           */\n"
+"          error=bus_dma_tag_create(sc->parent_tag, 1,\n"
+"              0, BUS_SPACE_MAXADDR, 0, /*filter*/ NULL, /*filterarg*/ NULL,\n"
+"              /*maxsize*/ sizeof(* sc->data), /*nsegments*/ 1,\n"
+"              /*maxsegsz*/ sizeof(* sc->data), /*flags*/ 0,\n"
+"              &sc->data_tag);\n"
+"          if(error)\n"
+"              goto bad;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:993
@@ -2783,6 +3145,10 @@ msgid ""
 "          if(error)\n"
 "               goto bad;\n"
 msgstr ""
+"          error = bus_dmamem_alloc(sc->data_tag, &sc->data, /* flags*/ 0,\n"
+"              &sc->data_map);\n"
+"          if(error)\n"
+"               goto bad;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1009
@@ -2804,6 +3170,22 @@ msgid ""
 "              sizeof (* sc->data), xxx_alloc_callback, (void *) &sc->data_p,\n"
 "              /*flags*/0);\n"
 msgstr ""
+"          /* xxx_alloc_callback() just saves the physical address at\n"
+"           * the pointer passed as its argument, in this case &sc->data_p.\n"
+"           * See details in the section on bus memory mapping.\n"
+"           * It can be implemented like:\n"
+"           *\n"
+"           * static void\n"
+"           * xxx_alloc_callback(void *arg, bus_dma_segment_t *seg,\n"
+"           *     int nseg, int error)\n"
+"           * {\n"
+"           *    *(bus_addr_t *)arg = seg[0].ds_addr;\n"
+"           * }\n"
+"           */\n"
+"          bus_dmamap_load(sc->data_tag, sc->data_map, (void *)sc->data,\n"
+"              sizeof (* sc->data), xxx_alloc_callback, (void *) &sc->data_p,"
+"\n"
+"              /*flags*/0);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1012
@@ -2820,6 +3202,8 @@ msgid ""
 "          if(xxx_initialize(sc) < 0)\n"
 "               goto bad;\n"
 msgstr ""
+"          if(xxx_initialize(sc) < 0)\n"
+"               goto bad;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1020
@@ -2834,6 +3218,8 @@ msgstr ""
 #, no-wrap
 msgid "        device_printf(dev, \"has on-card FIFO buffer of %d bytes\\n\", sc->fifosize);\n"
 msgstr ""
+"        device_printf(dev, \"has on-card FIFO buffer of %d bytes\\n"
+"\", sc->fifosize);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1028
@@ -2864,12 +3250,15 @@ msgid ""
 "          if(error)\n"
 "              goto bad;\n"
 msgstr ""
+"          error = xxx_attach_subsystem(sc);\n"
+"          if(error)\n"
+"              goto bad;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1040
 #, no-wrap
 msgid "          return 0;\n"
-msgstr ""
+msgstr "          return 0;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1043
@@ -2890,6 +3279,11 @@ msgid ""
 "          else /* exact error is unknown */\n"
 "              return ENXIO;\n"
 msgstr ""
+"          xxx_free_resources(sc);\n"
+"          if(error)\n"
+"              return error;\n"
+"          else /* exact error is unknown */\n"
+"              return ENXIO;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1056
@@ -2900,7 +3294,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1058
 #, no-wrap
 msgid "xxx_isa_detach"
-msgstr ""
+msgstr "xxx_isa_detach"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1061
@@ -2947,6 +3341,8 @@ msgid ""
 "          struct xxx_softc *sc = device_get_softc(dev);\n"
 "          int error;\n"
 msgstr ""
+"          struct xxx_softc *sc = device_get_softc(dev);\n"
+"          int error;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1074
@@ -2956,6 +3352,9 @@ msgid ""
 "          if(error)\n"
 "              return error;\n"
 msgstr ""
+"          error = xxx_detach_subsystem(sc);\n"
+"          if(error)\n"
+"              return error;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1077
@@ -2970,7 +3369,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1079
 msgid "`xxx_isa_shutdown(dev);`"
-msgstr ""
+msgstr "`xxx_isa_shutdown(dev);`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1081
@@ -2981,7 +3380,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1089
 #, no-wrap
 msgid "xxx_isa_shutdown"
-msgstr ""
+msgstr "xxx_isa_shutdown"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1092
@@ -3002,7 +3401,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1094
 #, no-wrap
 msgid "xxx_intr"
-msgstr ""
+msgstr "xxx_intr"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1097
@@ -3033,6 +3432,9 @@ msgid ""
 "          xxx_intr(struct xxx_softc *sc)\n"
 "          {\n"
 msgstr ""
+"          static void\n"
+"          xxx_intr(struct xxx_softc *sc)\n"
+"          {\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1109
@@ -3056,6 +3458,10 @@ msgid ""
 "              xxx_acknowledge_interrupt(sc);\n"
 "          }\n"
 msgstr ""
+"          while(xxx_interrupt_pending(sc)) {\n"
+"              xxx_process_interrupt(sc);\n"
+"              xxx_acknowledge_interrupt(sc);\n"
+"          }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/isa/_index.adoc:1121

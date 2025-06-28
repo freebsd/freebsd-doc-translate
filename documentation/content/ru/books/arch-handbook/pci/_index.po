@@ -1,19 +1,22 @@
 # SOME DESCRIPTIVE TITLE
 # Copyright (C) YEAR The FreeBSD Project
 # This file is distributed under the same license as the FreeBSD Documentation package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Vladlen Popolitov <vladlenpopolitov@list.ru>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-06-28 21:10+0000\n"
+"Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
+"Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
+"documentation/booksarch-handbookpci_index/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. type: Title =
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:1
@@ -64,6 +67,11 @@ msgid ""
 " * Murray Stokely\n"
 " */\n"
 msgstr ""
+"/*\n"
+" * Simple KLD to play with the PCI functions.\n"
+" *\n"
+" * Murray Stokely\n"
+" */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:77
@@ -79,6 +87,16 @@ msgid ""
 "#include <sys/malloc.h>\n"
 "#include <sys/bus.h>\t\t/* structs, prototypes for pci bus stuff and DEVMETHOD macros! */\n"
 msgstr ""
+"#include <sys/param.h>\t\t/* defines used in kernel.h */\n"
+"#include <sys/module.h>\n"
+"#include <sys/systm.h>\n"
+"#include <sys/errno.h>\n"
+"#include <sys/kernel.h>\t\t/* types used in module initialization */\n"
+"#include <sys/conf.h>\t\t/* cdevsw struct */\n"
+"#include <sys/uio.h>\t\t/* uio struct */\n"
+"#include <sys/malloc.h>\n"
+"#include <sys/bus.h>\t\t/* structs, prototypes for pci bus stuff and "
+"DEVMETHOD macros! */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:81
@@ -88,6 +106,9 @@ msgid ""
 "#include <sys/rman.h>\n"
 "#include <machine/resource.h>\n"
 msgstr ""
+"#include <machine/bus.h>\n"
+"#include <sys/rman.h>\n"
+"#include <machine/resource.h>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:84
@@ -96,6 +117,8 @@ msgid ""
 "#include <dev/pci/pcivar.h>\t/* For pci_get macros! */\n"
 "#include <dev/pci/pcireg.h>\n"
 msgstr ""
+"#include <dev/pci/pcivar.h>\t/* For pci_get macros! */\n"
+"#include <dev/pci/pcireg.h>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:90
@@ -107,6 +130,11 @@ msgid ""
 "\tstruct cdev\t*my_cdev;\n"
 "};\n"
 msgstr ""
+"/* The softc holds our per-instance data. */\n"
+"struct mypci_softc {\n"
+"\tdevice_t\tmy_dev;\n"
+"\tstruct cdev\t*my_cdev;\n"
+"};\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:96
@@ -118,12 +146,17 @@ msgid ""
 "static d_read_t\t\tmypci_read;\n"
 "static d_write_t\tmypci_write;\n"
 msgstr ""
+"/* Function prototypes */\n"
+"static d_open_t\t\tmypci_open;\n"
+"static d_close_t\tmypci_close;\n"
+"static d_read_t\t\tmypci_read;\n"
+"static d_write_t\tmypci_write;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:98
 #, no-wrap
 msgid "/* Character device entry points */\n"
-msgstr ""
+msgstr "/* Character device entry points */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:107
@@ -138,6 +171,14 @@ msgid ""
 "\t.d_name =\t\"mypci\",\n"
 "};\n"
 msgstr ""
+"static struct cdevsw mypci_cdevsw = {\n"
+"\t.d_version =\tD_VERSION,\n"
+"\t.d_open =\tmypci_open,\n"
+"\t.d_close =\tmypci_close,\n"
+"\t.d_read =\tmypci_read,\n"
+"\t.d_write =\tmypci_write,\n"
+"\t.d_name =\t\"mypci\",\n"
+"};\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:113
@@ -149,6 +190,11 @@ msgid ""
 " * attach routine when we create the /dev entry.\n"
 " */\n"
 msgstr ""
+"/*\n"
+" * In the cdevsw routines, we find our softc by using the si_drv1 member\n"
+" * of struct cdev.  We set this variable to point to our softc in our\n"
+" * attach routine when we create the /dev entry.\n"
+" */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:118
@@ -159,6 +205,10 @@ msgid ""
 "{\n"
 "\tstruct mypci_softc *sc;\n"
 msgstr ""
+"int\n"
+"mypci_open(struct cdev *dev, int oflags, int devtype, struct thread *td)\n"
+"{\n"
+"\tstruct mypci_softc *sc;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:124
@@ -170,6 +220,12 @@ msgid ""
 "\treturn (0);\n"
 "}\n"
 msgstr ""
+"\t/* Look up our softc. */\n"
+"\tsc = dev->si_drv1;\n"
+"\tdevice_printf(sc->my_dev, \"Opened successfully.\\n"
+"\");\n"
+"\treturn (0);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:129
@@ -180,6 +236,10 @@ msgid ""
 "{\n"
 "\tstruct mypci_softc *sc;\n"
 msgstr ""
+"int\n"
+"mypci_close(struct cdev *dev, int fflag, int devtype, struct thread *td)\n"
+"{\n"
+"\tstruct mypci_softc *sc;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:135
@@ -191,6 +251,12 @@ msgid ""
 "\treturn (0);\n"
 "}\n"
 msgstr ""
+"\t/* Look up our softc. */\n"
+"\tsc = dev->si_drv1;\n"
+"\tdevice_printf(sc->my_dev, \"Closed.\\n"
+"\");\n"
+"\treturn (0);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:140
@@ -201,6 +267,10 @@ msgid ""
 "{\n"
 "\tstruct mypci_softc *sc;\n"
 msgstr ""
+"int\n"
+"mypci_read(struct cdev *dev, struct uio *uio, int ioflag)\n"
+"{\n"
+"\tstruct mypci_softc *sc;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:146
@@ -212,6 +282,12 @@ msgid ""
 "\treturn (0);\n"
 "}\n"
 msgstr ""
+"\t/* Look up our softc. */\n"
+"\tsc = dev->si_drv1;\n"
+"\tdevice_printf(sc->my_dev, \"Asked to read %zd bytes.\\n"
+"\", uio->uio_resid);\n"
+"\treturn (0);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:151
@@ -222,6 +298,10 @@ msgid ""
 "{\n"
 "\tstruct mypci_softc *sc;\n"
 msgstr ""
+"int\n"
+"mypci_write(struct cdev *dev, struct uio *uio, int ioflag)\n"
+"{\n"
+"\tstruct mypci_softc *sc;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:157
@@ -233,12 +313,18 @@ msgid ""
 "\treturn (0);\n"
 "}\n"
 msgstr ""
+"\t/* Look up our softc. */\n"
+"\tsc = dev->si_drv1;\n"
+"\tdevice_printf(sc->my_dev, \"Asked to write %zd bytes.\\n"
+"\", uio->uio_resid);\n"
+"\treturn (0);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:159
 #, no-wrap
 msgid "/* PCI Support Functions */\n"
-msgstr ""
+msgstr "/* PCI Support Functions */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:167
@@ -252,6 +338,13 @@ msgid ""
 "mypci_probe(device_t dev)\n"
 "{\n"
 msgstr ""
+"/*\n"
+" * Compare the device ID of this device against the IDs that this driver\n"
+" * supports.  If there is a match, set the description and return success.\n"
+" */\n"
+"static int\n"
+"mypci_probe(device_t dev)\n"
+"{\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:170
@@ -260,6 +353,11 @@ msgid ""
 "\tdevice_printf(dev, \"MyPCI Probe\\nVendor ID : 0x%x\\nDevice ID : 0x%x\\n\",\n"
 "\t    pci_get_vendor(dev), pci_get_device(dev));\n"
 msgstr ""
+"\tdevice_printf(dev, \"MyPCI Probe\\n"
+"Vendor ID : 0x%x\\n"
+"Device ID : 0x%x\\n"
+"\",\n"
+"\t    pci_get_vendor(dev), pci_get_device(dev));\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:178
@@ -273,12 +371,20 @@ msgid ""
 "\treturn (ENXIO);\n"
 "}\n"
 msgstr ""
+"\tif (pci_get_vendor(dev) == 0x11c1) {\n"
+"\t\tprintf(\"We've got the Winmodem, probe successful!\\n"
+"\");\n"
+"\t\tdevice_set_desc(dev, \"WinModem\");\n"
+"\t\treturn (BUS_PROBE_DEFAULT);\n"
+"\t}\n"
+"\treturn (ENXIO);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:180
 #, no-wrap
 msgid "/* Attach function is only called if the probe is successful. */\n"
-msgstr ""
+msgstr "/* Attach function is only called if the probe is successful. */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:185
@@ -289,12 +395,18 @@ msgid ""
 "{\n"
 "\tstruct mypci_softc *sc;\n"
 msgstr ""
+"static int\n"
+"mypci_attach(device_t dev)\n"
+"{\n"
+"\tstruct mypci_softc *sc;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:187
 #, no-wrap
 msgid "\tprintf(\"MyPCI Attach for : deviceID : 0x%x\\n\", pci_get_devid(dev));\n"
 msgstr ""
+"\tprintf(\"MyPCI Attach for : deviceID : 0x%x\\n"
+"\", pci_get_devid(dev));\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:191
@@ -304,6 +416,9 @@ msgid ""
 "\tsc = device_get_softc(dev);\n"
 "\tsc->my_dev = dev;\n"
 msgstr ""
+"\t/* Look up our softc and initialize its fields. */\n"
+"\tsc = device_get_softc(dev);\n"
+"\tsc->my_dev = dev;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:204
@@ -322,12 +437,25 @@ msgid ""
 "\treturn (0);\n"
 "}\n"
 msgstr ""
+"\t/*\n"
+"\t * Create a /dev entry for this device.  The kernel will assign us\n"
+"\t * a major number automatically.  We use the unit number of this\n"
+"\t * device as the minor number and name the character device\n"
+"\t * \"mypci<unit>\".\n"
+"\t */\n"
+"\tsc->my_cdev = make_dev(&mypci_cdevsw, device_get_unit(dev),\n"
+"\t    UID_ROOT, GID_WHEEL, 0600, \"mypci%u\", device_get_unit(dev));\n"
+"\tsc->my_cdev->si_drv1 = sc;\n"
+"\tprintf(\"Mypci device loaded.\\n"
+"\");\n"
+"\treturn (0);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:206
 #, no-wrap
 msgid "/* Detach device. */\n"
-msgstr ""
+msgstr "/* Detach device. */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:211
@@ -338,6 +466,10 @@ msgid ""
 "{\n"
 "\tstruct mypci_softc *sc;\n"
 msgstr ""
+"static int\n"
+"mypci_detach(device_t dev)\n"
+"{\n"
+"\tstruct mypci_softc *sc;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:218
@@ -350,12 +482,19 @@ msgid ""
 "\treturn (0);\n"
 "}\n"
 msgstr ""
+"\t/* Teardown the state in our softc created in our attach routine. */\n"
+"\tsc = device_get_softc(dev);\n"
+"\tdestroy_dev(sc->my_cdev);\n"
+"\tprintf(\"Mypci detach!\\n"
+"\");\n"
+"\treturn (0);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:220
 #, no-wrap
 msgid "/* Called during system shutdown after sync. */\n"
-msgstr ""
+msgstr "/* Called during system shutdown after sync. */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:224
@@ -365,6 +504,9 @@ msgid ""
 "mypci_shutdown(device_t dev)\n"
 "{\n"
 msgstr ""
+"static int\n"
+"mypci_shutdown(device_t dev)\n"
+"{\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:228
@@ -374,6 +516,10 @@ msgid ""
 "\treturn (0);\n"
 "}\n"
 msgstr ""
+"\tprintf(\"Mypci shutdown!\\n"
+"\");\n"
+"\treturn (0);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:235
@@ -386,6 +532,12 @@ msgid ""
 "mypci_suspend(device_t dev)\n"
 "{\n"
 msgstr ""
+"/*\n"
+" * Device suspend routine.\n"
+" */\n"
+"static int\n"
+"mypci_suspend(device_t dev)\n"
+"{\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:239
@@ -395,6 +547,10 @@ msgid ""
 "\treturn (0);\n"
 "}\n"
 msgstr ""
+"\tprintf(\"Mypci suspend!\\n"
+"\");\n"
+"\treturn (0);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:246
@@ -407,6 +563,12 @@ msgid ""
 "mypci_resume(device_t dev)\n"
 "{\n"
 msgstr ""
+"/*\n"
+" * Device resume routine.\n"
+" */\n"
+"static int\n"
+"mypci_resume(device_t dev)\n"
+"{\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:250
@@ -416,6 +578,10 @@ msgid ""
 "\treturn (0);\n"
 "}\n"
 msgstr ""
+"\tprintf(\"Mypci resume!\\n"
+"\");\n"
+"\treturn (0);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:259
@@ -430,6 +596,14 @@ msgid ""
 "\tDEVMETHOD(device_suspend,\tmypci_suspend),\n"
 "\tDEVMETHOD(device_resume,\tmypci_resume),\n"
 msgstr ""
+"static device_method_t mypci_methods[] = {\n"
+"\t/* Device interface */\n"
+"\tDEVMETHOD(device_probe,\t\tmypci_probe),\n"
+"\tDEVMETHOD(device_attach,\tmypci_attach),\n"
+"\tDEVMETHOD(device_detach,\tmypci_detach),\n"
+"\tDEVMETHOD(device_shutdown,\tmypci_shutdown),\n"
+"\tDEVMETHOD(device_suspend,\tmypci_suspend),\n"
+"\tDEVMETHOD(device_resume,\tmypci_resume),\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:262
@@ -438,12 +612,14 @@ msgid ""
 "\tDEVMETHOD_END\n"
 "};\n"
 msgstr ""
+"\tDEVMETHOD_END\n"
+"};\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:264
 #, no-wrap
 msgid "static devclass_t mypci_devclass;\n"
-msgstr ""
+msgstr "static devclass_t mypci_devclass;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:267
@@ -452,6 +628,9 @@ msgid ""
 "DEFINE_CLASS_0(mypci, mypci_driver, mypci_methods, sizeof(struct mypci_softc));\n"
 "DRIVER_MODULE(mypci, pci, mypci_driver, mypci_devclass, 0, 0);\n"
 msgstr ""
+"DEFINE_CLASS_0(mypci, mypci_driver, mypci_methods, sizeof(struct "
+"mypci_softc));\n"
+"DRIVER_MODULE(mypci, pci, mypci_driver, mypci_devclass, 0, 0);\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:269
@@ -463,7 +642,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:274
 #, no-wrap
 msgid "# Makefile for mypci driver\n"
-msgstr ""
+msgstr "# Makefile for mypci driver\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:278
@@ -473,12 +652,15 @@ msgid ""
 "SRCS=\tmypci.c\n"
 "SRCS+=\tdevice_if.h bus_if.h pci_if.h\n"
 msgstr ""
+"KMOD=\tmypci\n"
+"SRCS=\tmypci.c\n"
+"SRCS+=\tdevice_if.h bus_if.h pci_if.h\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:280
 #, no-wrap
 msgid ".include <bsd.kmod.mk>\n"
-msgstr ""
+msgstr ".include <bsd.kmod.mk>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:283
@@ -503,7 +685,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:288
 msgid "PCI System Architecture, Fourth Edition by Tom Shanley, et al."
-msgstr ""
+msgstr "PCI System Architecture, Fourth Edition by Tom Shanley, et al."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:290
@@ -555,6 +737,15 @@ msgid ""
 "        goto fail1;\n"
 "    }\n"
 msgstr ""
+"    sc->bar0id = PCIR_BAR(0);\n"
+"    sc->bar0res = bus_alloc_resource(dev, SYS_RES_MEMORY, &sc->bar0id,\n"
+"\t\t\t\t  0, ~0, 1, RF_ACTIVE);\n"
+"    if (sc->bar0res == NULL) {\n"
+"        printf(\"Memory allocation of PCI base register 0 failed!\\n"
+"\");\n"
+"        error = ENXIO;\n"
+"        goto fail1;\n"
+"    }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:323
@@ -573,6 +764,19 @@ msgid ""
 "    sc->bar1_bt = rman_get_bustag(sc->bar1res);\n"
 "    sc->bar1_bh = rman_get_bushandle(sc->bar1res);\n"
 msgstr ""
+"    sc->bar1id = PCIR_BAR(1);\n"
+"    sc->bar1res = bus_alloc_resource(dev, SYS_RES_MEMORY, &sc->bar1id,\n"
+"\t\t\t\t  0, ~0, 1, RF_ACTIVE);\n"
+"    if (sc->bar1res == NULL) {\n"
+"        printf(\"Memory allocation of PCI base register 1 failed!\\n"
+"\");\n"
+"        error =  ENXIO;\n"
+"        goto fail2;\n"
+"    }\n"
+"    sc->bar0_bt = rman_get_bustag(sc->bar0res);\n"
+"    sc->bar0_bh = rman_get_bushandle(sc->bar0res);\n"
+"    sc->bar1_bt = rman_get_bustag(sc->bar1res);\n"
+"    sc->bar1_bh = rman_get_bushandle(sc->bar1res);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:326
@@ -599,6 +803,11 @@ msgid ""
 "    return bus_space_read_2(sc->bar1_bt, sc->bar1_bh, address);\n"
 "}\n"
 msgstr ""
+"uint16_t\n"
+"board_read(struct ni_softc *sc, uint16_t address)\n"
+"{\n"
+"    return bus_space_read_2(sc->bar1_bt, sc->bar1_bh, address);\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:339
@@ -615,6 +824,11 @@ msgid ""
 "    bus_space_write_2(sc->bar1_bt, sc->bar1_bh, address, value);\n"
 "}\n"
 msgstr ""
+"void\n"
+"board_write(struct ni_softc *sc, uint16_t address, uint16_t value)\n"
+"{\n"
+"    bus_space_write_2(sc->bar1_bt, sc->bar1_bh, address, value);\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:350
@@ -642,6 +856,11 @@ msgid ""
 "\treturn (bus_read(sc->bar1res, address));\n"
 "}\n"
 msgstr ""
+"uint16_t\n"
+"board_read(struct ni_softc *sc, uint16_t address)\n"
+"{\n"
+"\treturn (bus_read(sc->bar1res, address));\n"
+"}\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:366
@@ -667,7 +886,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:375
 #, no-wrap
 msgid "/* Get the IRQ resource */\n"
-msgstr ""
+msgstr "/* Get the IRQ resource */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:384
@@ -682,12 +901,21 @@ msgid ""
 "\tgoto fail3;\n"
 "    }\n"
 msgstr ""
+"    sc->irqid = 0x0;\n"
+"    sc->irqres = bus_alloc_resource(dev, SYS_RES_IRQ, &(sc->irqid),\n"
+"\t\t\t\t  0, ~0, 1, RF_SHAREABLE | RF_ACTIVE);\n"
+"    if (sc->irqres == NULL) {\n"
+"\tprintf(\"IRQ allocation failed!\\n"
+"\");\n"
+"\terror = ENXIO;\n"
+"\tgoto fail3;\n"
+"    }\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:386
 #, no-wrap
 msgid "    /* Now we should set up the interrupt handler */\n"
-msgstr ""
+msgstr "    /* Now we should set up the interrupt handler */\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:393
@@ -700,6 +928,13 @@ msgid ""
 "\tgoto fail4;\n"
 "    }\n"
 msgstr ""
+"    error = bus_setup_intr(dev, sc->irqres, INTR_TYPE_MISC,\n"
+"\t\t\t   my_handler, sc, &(sc->handler));\n"
+"    if (error) {\n"
+"\tprintf(\"Couldn't set up irq\\n"
+"\");\n"
+"\tgoto fail4;\n"
+"    }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:396
@@ -716,7 +951,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:397
 #, no-wrap
 msgid "DMA"
-msgstr ""
+msgstr "DMA"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:400
@@ -745,12 +980,14 @@ msgid ""
 "#include <vm/vm.h>\n"
 "#include <vm/pmap.h>\n"
 msgstr ""
+"#include <vm/vm.h>\n"
+"#include <vm/pmap.h>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:409
 #, no-wrap
 msgid "#define vtophys(virtual_address) (...)\n"
-msgstr ""
+msgstr "#define vtophys(virtual_address) (...)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:412
@@ -769,6 +1006,11 @@ msgid ""
 "#define vtobus(va)      vtophys(va)\n"
 "#endif\n"
 msgstr ""
+"#if defined(__alpha__)\n"
+"#define vtobus(va)      alpha_XXX_dmamap((vm_offset_t)va)\n"
+"#else\n"
+"#define vtobus(va)      vtophys(va)\n"
+"#endif\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:422

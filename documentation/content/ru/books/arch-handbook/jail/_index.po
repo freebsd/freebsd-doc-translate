@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-21 19:10+0000\n"
+"PO-Revision-Date: 2025-06-28 21:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookjail_index/ru/>\n"
@@ -110,7 +110,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:73
 #, no-wrap
 msgid "/usr/include/sys/jail.h:\n"
-msgstr ""
+msgstr "/usr/include/sys/jail.h:\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:80
@@ -123,6 +123,12 @@ msgid ""
 "        u_int32_t       ip_number;\n"
 "};\n"
 msgstr ""
+"struct jail {\n"
+"        u_int32_t       version;\n"
+"        char            *path;\n"
+"        char            *hostname;\n"
+"        u_int32_t       ip_number;\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:83
@@ -147,6 +153,17 @@ msgid ""
 "j.path = path;\n"
 "j.hostname = argv[1];\n"
 msgstr ""
+"/usr/src/usr.sbin/jail/jail.c\n"
+"char path[PATH_MAX];\n"
+"...\n"
+"if (realpath(argv[0], path) == NULL)\n"
+"    err(1, \"realpath: %s\", argv[0]);\n"
+"if (chdir(path) != 0)\n"
+"    err(1, \"chdir: %s\", path);\n"
+"memset(&j, 0, sizeof(j));\n"
+"j.version = 0;\n"
+"j.path = path;\n"
+"j.hostname = argv[1];\n"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:99
@@ -174,6 +191,12 @@ msgid ""
 "    errx(1, \"Could not make sense of ip-number: %s\", argv[2]);\n"
 "j.ip_number = ntohl(in.s_addr);\n"
 msgstr ""
+"/usr/src/usr.sbin/jail/jail.c:\n"
+"struct in_addr in;\n"
+"...\n"
+"if (inet_aton(argv[2], &in) == 0)\n"
+"    errx(1, \"Could not make sense of ip-number: %s\", argv[2]);\n"
+"j.ip_number = ntohl(in.s_addr);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:114
@@ -209,6 +232,11 @@ msgid ""
 "if (execv(argv[3], argv + 3) != 0)\n"
 "    err(1, \"execv: %s\", argv[3]);\n"
 msgstr ""
+"/usr/src/usr.sbin/jail/jail.c\n"
+"i = jail(&j);\n"
+"...\n"
+"if (execv(argv[3], argv + 3) != 0)\n"
+"    err(1, \"execv: %s\", argv[3]);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:129
@@ -237,7 +265,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:134
 #, no-wrap
 msgid "Sysctls"
-msgstr ""
+msgstr "Sysctls"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:137
@@ -254,6 +282,11 @@ msgid ""
 "    &jail_set_hostname_allowed, 0,\n"
 "    \"Processes in jail can set their hostnames\");\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c:\n"
+"int     jail_set_hostname_allowed = 1;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, set_hostname_allowed, CTLFLAG_RW,\n"
+"    &jail_set_hostname_allowed, 0,\n"
+"    \"Processes in jail can set their hostnames\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:150
@@ -264,6 +297,11 @@ msgid ""
 "    &jail_socket_unixiproute_only, 0,\n"
 "    \"Processes in jail are limited to creating UNIX/IPv4/route sockets only\");\n"
 msgstr ""
+"int     jail_socket_unixiproute_only = 1;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, socket_unixiproute_only, CTLFLAG_RW,\n"
+"    &jail_socket_unixiproute_only, 0,\n"
+"    \"Processes in jail are limited to creating UNIX/IPv4/route sockets "
+"only\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:155
@@ -274,6 +312,10 @@ msgid ""
 "    &jail_sysvipc_allowed, 0,\n"
 "    \"Processes in jail can use System V IPC primitives\");\n"
 msgstr ""
+"int     jail_sysvipc_allowed = 0;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, sysvipc_allowed, CTLFLAG_RW,\n"
+"    &jail_sysvipc_allowed, 0,\n"
+"    \"Processes in jail can use System V IPC primitives\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:160
@@ -284,6 +326,10 @@ msgid ""
 "    &jail_enforce_statfs, 0,\n"
 "    \"Processes in jail cannot see all mounted file systems\");\n"
 msgstr ""
+"static int jail_enforce_statfs = 2;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, enforce_statfs, CTLFLAG_RW,\n"
+"    &jail_enforce_statfs, 0,\n"
+"    \"Processes in jail cannot see all mounted file systems\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:165
@@ -294,6 +340,10 @@ msgid ""
 "    &jail_allow_raw_sockets, 0,\n"
 "    \"Prison root can create raw sockets\");\n"
 msgstr ""
+"int    jail_allow_raw_sockets = 0;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, allow_raw_sockets, CTLFLAG_RW,\n"
+"    &jail_allow_raw_sockets, 0,\n"
+"    \"Prison root can create raw sockets\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:170
@@ -304,6 +354,10 @@ msgid ""
 "    &jail_chflags_allowed, 0,\n"
 "    \"Processes in jail can alter system file flags\");\n"
 msgstr ""
+"int    jail_chflags_allowed = 0;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, chflags_allowed, CTLFLAG_RW,\n"
+"    &jail_chflags_allowed, 0,\n"
+"    \"Processes in jail can alter system file flags\");\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:175
@@ -314,6 +368,10 @@ msgid ""
 "    &jail_mount_allowed, 0,\n"
 "    \"Processes in jail can mount/unmount jail-friendly file systems\");\n"
 msgstr ""
+"int     jail_mount_allowed = 0;\n"
+"SYSCTL_INT(_security_jail, OID_AUTO, mount_allowed, CTLFLAG_RW,\n"
+"    &jail_mount_allowed, 0,\n"
+"    \"Processes in jail can mount/unmount jail-friendly file systems\");\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:178
@@ -355,6 +413,14 @@ msgid ""
 "int\n"
 "jail(struct thread *td, struct jail_args *uap)\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c:\n"
+"/*\n"
+" * struct jail_args {\n"
+" *  struct jail *jail;\n"
+" * };\n"
+" */\n"
+"int\n"
+"jail(struct thread *td, struct jail_args *uap)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:196
@@ -375,6 +441,8 @@ msgid ""
 "/usr/src/sys/kern/kern_jail.c:\n"
 "error = copyin(uap->jail, &j, sizeof(j));\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c:\n"
+"error = copyin(uap->jail, &j, sizeof(j));\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:204
@@ -404,6 +472,29 @@ msgid ""
 "      void            **pr_slots;                     /* (p) additional data */\n"
 "};\n"
 msgstr ""
+"/usr/include/sys/jail.h:\n"
+"struct prison {\n"
+"        LIST_ENTRY(prison) pr_list;                     /* (a) all prisons */"
+"\n"
+"        int              pr_id;                         /* (c) prison id */\n"
+"        int              pr_ref;                        /* (p) refcount */\n"
+"        char             pr_path[MAXPATHLEN];           /* (c) chroot path */"
+"\n"
+"        struct vnode    *pr_root;                       /* (c) vnode to rdir "
+"*/\n"
+"        char             pr_host[MAXHOSTNAMELEN];       /* (p) jail hostname "
+"*/\n"
+"        u_int32_t        pr_ip;                         /* (c) ip addr host "
+"*/\n"
+"        void            *pr_linux;                      /* (p) linux abi */\n"
+"        int              pr_securelevel;                /* (p) securelevel */"
+"\n"
+"        struct task      pr_task;                       /* (d) destroy task "
+"*/\n"
+"        struct mtx       pr_mtx;\n"
+"      void            **pr_slots;                     /* (p) additional data "
+"*/\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:225
@@ -428,6 +519,17 @@ msgid ""
 "     goto e_dropvnref;\n"
 "pr->pr_ip = j.ip_number;\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c:\n"
+"MALLOC(pr, struct prison *, sizeof(*pr), M_PRISON, M_WAITOK | M_ZERO);\n"
+"...\n"
+"error = copyinstr(j.path, &pr->pr_path, sizeof(pr->pr_path), 0);\n"
+"if (error)\n"
+"    goto e_killmtx;\n"
+"...\n"
+"error = copyinstr(j.hostname, &pr->pr_host, sizeof(pr->pr_host), 0);\n"
+"if (error)\n"
+"     goto e_dropvnref;\n"
+"pr->pr_ip = j.ip_number;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:242
@@ -449,6 +551,14 @@ msgid ""
 "int\n"
 "jail_attach(struct thread *td, struct jail_attach_args *uap)\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c:\n"
+"/*\n"
+" * struct jail_attach_args {\n"
+" *      int jid;\n"
+" * };\n"
+" */\n"
+"int\n"
+"jail_attach(struct thread *td, struct jail_attach_args *uap)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:256
@@ -497,6 +607,23 @@ msgid ""
 "    ...\n"
 "};\n"
 msgstr ""
+"/usr/include/sys/proc.h:\n"
+"struct thread {\n"
+"    ...\n"
+"    struct proc *td_proc;\n"
+"    ...\n"
+"};\n"
+"struct proc {\n"
+"    ...\n"
+"    struct ucred *p_ucred;\n"
+"    ...\n"
+"};\n"
+"/usr/include/sys/ucred.h\n"
+"struct ucred {\n"
+"    ...\n"
+"    struct prison *cr_prison;\n"
+"    ...\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:281
@@ -534,6 +661,18 @@ msgid ""
 "...\n"
 "}\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c\n"
+"int\n"
+"jail(struct thread *td, struct jail_args *uap)\n"
+"{\n"
+"...\n"
+"    struct jail_attach_args jaa;\n"
+"...\n"
+"    error = jail_attach(td, &jaa);\n"
+"    if (error)\n"
+"        goto e_dropprref;\n"
+"...\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:314
@@ -557,6 +696,23 @@ msgid ""
 "...\n"
 "}\n"
 msgstr ""
+"int\n"
+"jail_attach(struct thread *td, struct jail_attach_args *uap)\n"
+"{\n"
+"    struct proc *p;\n"
+"    struct ucred *newcred, *oldcred;\n"
+"    struct prison *pr;\n"
+"...\n"
+"    p = td->td_proc;\n"
+"...\n"
+"    pr = prison_find(uap->jid);\n"
+"...\n"
+"    change_root(pr->pr_root, td);\n"
+"...\n"
+"    newcred->cr_prison = pr;\n"
+"    p->p_ucred = newcred;\n"
+"...\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:317
@@ -576,6 +732,10 @@ msgid ""
 "...\n"
 "td2->td_ucred = crhold(p2->p_ucred);\n"
 msgstr ""
+"/usr/src/sys/kern/kern_fork.c:\n"
+"p2->p_ucred = crhold(td->td_ucred);\n"
+"...\n"
+"td2->td_ucred = crhold(p2->p_ucred);\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:327
@@ -598,12 +758,14 @@ msgid ""
 "if (jailed(td->td_ucred))\n"
 "    return (EPERM);\n"
 msgstr ""
+"if (jailed(td->td_ucred))\n"
+"    return (EPERM);\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:337
 #, no-wrap
 msgid "SysV IPC"
-msgstr ""
+msgstr "SysV IPC"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:340
@@ -623,7 +785,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:342
 msgid "[.filename]#/usr/src/sys/kern/sysv_msg.c#:"
-msgstr ""
+msgstr "[.filename]#/usr/src/sys/kern/sysv_msg.c#:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:344
@@ -667,6 +829,9 @@ msgid ""
 "if (!jail_sysvipc_allowed && jailed(td->td_ucred))\n"
 "    return (ENOSYS);\n"
 msgstr ""
+"/usr/src/sys/kern/sysv_msg.c:\n"
+"if (!jail_sysvipc_allowed && jailed(td->td_ucred))\n"
+"    return (ENOSYS);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:358
@@ -682,7 +847,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:360
 msgid "[.filename]#/usr/src/sys/kern/sysv_sem.c#:"
-msgstr ""
+msgstr "[.filename]#/usr/src/sys/kern/sysv_sem.c#:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:362
@@ -723,7 +888,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:370
 msgid "[.filename]#/usr/src/sys/kern/sysv_shm.c#:"
-msgstr ""
+msgstr "[.filename]#/usr/src/sys/kern/sysv_shm.c#:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:372
@@ -790,6 +955,21 @@ msgid ""
 "...\n"
 "}\n"
 msgstr ""
+"/usr/src/sys/kern/uipc_socket.c:\n"
+"int\n"
+"socreate(int dom, struct socket **aso, int type, int proto,\n"
+"    struct ucred *cred, struct thread *td)\n"
+"{\n"
+"    struct protosw *prp;\n"
+"...\n"
+"    if (jailed(cred) && jail_socket_unixiproute_only &&\n"
+"        prp->pr_domain->dom_family != PF_LOCAL &&\n"
+"        prp->pr_domain->dom_family != PF_INET &&\n"
+"        prp->pr_domain->dom_family != PF_ROUTE) {\n"
+"        return (EPROTONOSUPPORT);\n"
+"    }\n"
+"...\n"
+"}\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:399
@@ -809,7 +989,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:403
 #, no-wrap
 msgid "Protocols"
-msgstr "Протокол"
+msgstr "Протоколы"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:406
@@ -867,6 +1047,41 @@ msgid ""
 "...\n"
 "}\n"
 msgstr ""
+"/usr/src/sys/netinet/in_pcb.c:\n"
+"int\n"
+"in_pcbbind_setup(struct inpcb *inp, struct sockaddr *nam, in_addr_t *laddrp,"
+"\n"
+"    u_short *lportp, struct ucred *cred)\n"
+"{\n"
+"    ...\n"
+"    struct sockaddr_in *sin;\n"
+"    ...\n"
+"    if (nam) {\n"
+"        sin = (struct sockaddr_in *)nam;\n"
+"        ...\n"
+"        if (sin->sin_addr.s_addr != INADDR_ANY)\n"
+"            if (prison_ip(cred, 0, &sin->sin_addr.s_addr))\n"
+"                return(EINVAL);\n"
+"        ...\n"
+"        if (lport) {\n"
+"            ...\n"
+"            if (prison && prison_ip(cred, 0, &sin->sin_addr.s_addr))\n"
+"                return (EADDRNOTAVAIL);\n"
+"            ...\n"
+"        }\n"
+"    }\n"
+"    if (lport == 0) {\n"
+"        ...\n"
+"        if (laddr.s_addr != INADDR_ANY)\n"
+"            if (prison_ip(cred, 0, &laddr.s_addr))\n"
+"                return (EINVAL);\n"
+"        ...\n"
+"    }\n"
+"...\n"
+"    if (prison_ip(cred, 0, &laddr.s_addr))\n"
+"        return (EINVAL);\n"
+"...\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:446
@@ -889,6 +1104,11 @@ msgid ""
 "{\n"
 "    u_int32_t tmp;\n"
 msgstr ""
+"/usr/src/sys/kern/kern_jail.c:\n"
+"int\n"
+"prison_ip(struct ucred *cred, int flag, u_int32_t *ip)\n"
+"{\n"
+"    u_int32_t tmp;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:479
@@ -919,6 +1139,30 @@ msgid ""
 "    return (0);\n"
 "}\n"
 msgstr ""
+"    if (!jailed(cred))\n"
+"        return (0);\n"
+"    if (flag)\n"
+"        tmp = *ip;\n"
+"    else\n"
+"        tmp = ntohl(*ip);\n"
+"    if (tmp == INADDR_ANY) {\n"
+"        if (flag)\n"
+"            *ip = cred->cr_prison->pr_ip;\n"
+"        else\n"
+"            *ip = htonl(cred->cr_prison->pr_ip);\n"
+"        return (0);\n"
+"    }\n"
+"    if (tmp == INADDR_LOOPBACK) {\n"
+"        if (flag)\n"
+"            *ip = cred->cr_prison->pr_ip;\n"
+"        else\n"
+"            *ip = htonl(cred->cr_prison->pr_ip);\n"
+"        return (0);\n"
+"    }\n"
+"    if (cred->cr_prison->pr_ip != tmp)\n"
+"        return (1);\n"
+"    return (0);\n"
+"}\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:481
@@ -981,3 +1225,45 @@ msgid ""
 "    ...\n"
 "}\n"
 msgstr ""
+"/usr/src/sys/ufs/ufs/ufs_vnops.c:\n"
+"static int\n"
+"ufs_setattr(ap)\n"
+"    ...\n"
+"{\n"
+"    ...\n"
+"        if (!priv_check_cred(cred, PRIV_VFS_SYSFLAGS, 0)) {\n"
+"            if (ip->i_flags\n"
+"                & (SF_NOUNLINK | SF_IMMUTABLE | SF_APPEND)) {\n"
+"                    error = securelevel_gt(cred, 0);\n"
+"                    if (error)\n"
+"                        return (error);\n"
+"            }\n"
+"            ...\n"
+"        }\n"
+"}\n"
+"/usr/src/sys/kern/kern_priv.c\n"
+"int\n"
+"priv_check_cred(struct ucred *cred, int priv, int flags)\n"
+"{\n"
+"    ...\n"
+"    error = prison_priv_check(cred, priv);\n"
+"    if (error)\n"
+"        return (error);\n"
+"    ...\n"
+"}\n"
+"/usr/src/sys/kern/kern_jail.c\n"
+"int\n"
+"prison_priv_check(struct ucred *cred, int priv)\n"
+"{\n"
+"    ...\n"
+"    switch (priv) {\n"
+"    ...\n"
+"    case PRIV_VFS_SYSFLAGS:\n"
+"        if (jail_chflags_allowed)\n"
+"            return (0);\n"
+"        else\n"
+"            return (EPERM);\n"
+"    ...\n"
+"    }\n"
+"    ...\n"
+"}\n"

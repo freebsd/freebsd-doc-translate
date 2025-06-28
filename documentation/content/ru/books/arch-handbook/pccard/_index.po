@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-01 09:10+0000\n"
+"PO-Revision-Date: 2025-06-28 21:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookpccard_index/ru/>\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:14
 #, no-wrap
 msgid "PC Card"
-msgstr ""
+msgstr "PC Card"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:1
@@ -157,6 +157,10 @@ msgid ""
 "vendor PANASONIC\t\t0x0032\tMatsushita Electric Industrial Co.\n"
 "vendor SANDISK\t\t\t0x0045\tSandisk Corporation\n"
 msgstr ""
+"vendor FUJITSU\t\t\t0x0004  Fujitsu Corporation\n"
+"vendor NETGEAR_2\t\t0x000b  Netgear\n"
+"vendor PANASONIC\t\t0x0032\tMatsushita Electric Industrial Co.\n"
+"vendor SANDISK\t\t\t0x0045\tSandisk Corporation\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:87
@@ -190,6 +194,8 @@ msgid ""
 "/* Allied Telesis K.K. */\n"
 "product ALLIEDTELESIS LA_PCM\t0x0002 Allied Telesis LA-PCM\n"
 msgstr ""
+"/* Allied Telesis K.K. */\n"
+"product ALLIEDTELESIS LA_PCM\t0x0002 Allied Telesis LA-PCM\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:97
@@ -198,6 +204,8 @@ msgid ""
 "/* Archos */\n"
 "product\tARCHOS ARC_ATAPI\t0x0043 MiniCD\n"
 msgstr ""
+"/* Archos */\n"
+"product\tARCHOS ARC_ATAPI\t0x0043 MiniCD\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:100
@@ -240,6 +248,10 @@ msgid ""
 "product ADDTRON AWP100\t\t{ \"Addtron\", \"AWP-100&spWireless&spPCMCIA\", \"Version&sp01.02\", NULL }\n"
 "product ALLIEDTELESIS WR211PCM\t{ \"Allied&spTelesis&spK.K.\", \"WR211PCM\", NULL, NULL } Allied Telesis WR211PCM\n"
 msgstr ""
+"product ADDTRON AWP100\t\t{ \"Addtron\", \"AWP-100&spWireless&spPCMCIA\", "
+"\"Version&sp01.02\", NULL }\n"
+"product ALLIEDTELESIS WR211PCM\t{ \"Allied&spTelesis&spK.K.\", \"WR211PCM\", "
+"NULL, NULL } Allied Telesis WR211PCM\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:112
@@ -291,6 +303,13 @@ msgid ""
 "\t{ NULL }\n"
 "};\n"
 msgstr ""
+"static const struct pccard_product wi_pccard_products[] = {\n"
+"\tPCMCIA_CARD(3COM, 3CRWE737A, 0),\n"
+"\tPCMCIA_CARD(BUFFALO, WLI_PCM_S11, 0),\n"
+"\tPCMCIA_CARD(BUFFALO, WLI_CF_S11G, 0),\n"
+"\tPCMCIA_CARD(TDK, LAK_CD011WL, 0),\n"
+"\t{ NULL }\n"
+"};\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:133
@@ -302,6 +321,11 @@ msgid ""
 "{\n"
 "\tconst struct pccard_product *pp;\n"
 msgstr ""
+"static int\n"
+"wi_pccard_probe(dev)\n"
+"\tdevice_t\tdev;\n"
+"{\n"
+"\tconst struct pccard_product *pp;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:142
@@ -316,6 +340,14 @@ msgid ""
 "\treturn (ENXIO);\n"
 "}\n"
 msgstr ""
+"\tif ((pp = pccard_product_lookup(dev, wi_pccard_products,\n"
+"\t    sizeof(wi_pccard_products[0]), NULL)) != NULL) {\n"
+"\t\tif (pp->pp_name != NULL)\n"
+"\t\t\tdevice_set_desc(dev, pp->pp_name);\n"
+"\t\treturn (0);\n"
+"\t}\n"
+"\treturn (ENXIO);\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:145
@@ -368,6 +400,12 @@ msgid ""
 "          pccard1\n"
 "            unknown pnpinfo manufacturer=0x026f product=0x030c cisvendor=\"BUFFALO\" cisproduct=\"WLI2-CF-S11\" function_type=6 at function=0\n"
 msgstr ""
+"        cbb1 pnpinfo vendor=0x104c device=0xac51 subvendor=0x1265 "
+"subdevice=0x0300 class=0x060700 at slot=10 function=1\n"
+"          cardbus1\n"
+"          pccard1\n"
+"            unknown pnpinfo manufacturer=0x026f product=0x030c cisvendor="
+"\"BUFFALO\" cisproduct=\"WLI2-CF-S11\" function_type=6 at function=0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:162
@@ -390,7 +428,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:168
 #, no-wrap
 msgid "vendor BUFFALO\t\t\t0x026f\tBUFFALO (Melco Corporation)\n"
-msgstr ""
+msgstr "vendor BUFFALO\t\t\t0x026f\tBUFFALO (Melco Corporation)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:171
@@ -407,6 +445,11 @@ msgid ""
 "product\tBUFFALO\tLPC3_CLT\t0x030a\tBUFFALO LPC3-CLT Ethernet Adapter\n"
 "product BUFFALO WLI_CF_S11G\t0x030b\tBUFFALO AirStation 11Mbps CF WLAN\n"
 msgstr ""
+"/* BUFFALO */\n"
+"product BUFFALO WLI_PCM_S11\t0x0305\tBUFFALO AirStation 11Mbps WLAN\n"
+"product BUFFALO LPC_CF_CLT\t0x0307\tBUFFALO LPC-CF-CLT\n"
+"product\tBUFFALO\tLPC3_CLT\t0x030a\tBUFFALO LPC3-CLT Ethernet Adapter\n"
+"product BUFFALO WLI_CF_S11G\t0x030b\tBUFFALO AirStation 11Mbps CF WLAN\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:182
@@ -419,6 +462,7 @@ msgstr ""
 #, no-wrap
 msgid "product BUFFALO WLI2_CF_S11G\t0x030c\tBUFFALO AirStation ultra 802.11b CF\n"
 msgstr ""
+"product BUFFALO WLI2_CF_S11G\t0x030c\tBUFFALO AirStation ultra 802.11b CF\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:189
@@ -440,6 +484,14 @@ msgid ""
 "\t{ NULL }\n"
 "};\n"
 msgstr ""
+"static const struct pccard_product wi_pccard_products[] = {\n"
+"\tPCMCIA_CARD(3COM, 3CRWE737A, 0),\n"
+"\tPCMCIA_CARD(BUFFALO, WLI_PCM_S11, 0),\n"
+"\tPCMCIA_CARD(BUFFALO, WLI_CF_S11G, 0),\n"
+"+\tPCMCIA_CARD(BUFFALO, WLI_CF2_S11G, 0),\n"
+"\tPCMCIA_CARD(TDK, LAK_CD011WL, 0),\n"
+"\t{ NULL }\n"
+"};\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:203

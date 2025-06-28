@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-05-29 04:45+0000\n"
+"PO-Revision-Date: 2025-06-28 21:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbooknewbus_index/ru/>\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:19
 #, no-wrap
 msgid "Newbus"
-msgstr ""
+msgstr "Newbus"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:1
@@ -300,13 +300,13 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:128
 #, no-wrap
 msgid "      # Foo subsystem/driver (a comment...)\n"
-msgstr ""
+msgstr "      # Foo subsystem/driver (a comment...)\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:130
 #, no-wrap
 msgid "\t  INTERFACE foo\n"
-msgstr ""
+msgstr "\t  INTERFACE foo\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:134
@@ -316,6 +316,9 @@ msgid ""
 "\t\tdevice_t dev;\n"
 "\t};\n"
 msgstr ""
+"\tMETHOD int doit {\n"
+"\t\tdevice_t dev;\n"
+"\t};\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:137
@@ -324,6 +327,8 @@ msgid ""
 "\t# DEFAULT is the method that will be used, if a method was not\n"
 "\t# provided via: DEVMETHOD()\n"
 msgstr ""
+"\t# DEFAULT is the method that will be used, if a method was not\n"
+"\t# provided via: DEVMETHOD()\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:142
@@ -334,6 +339,10 @@ msgid ""
 "\t\tdriver_t child;\n"
 "\t} DEFAULT doit_generic_to_child;\n"
 msgstr ""
+"\tMETHOD void doit_to_child {\n"
+"\t\tdevice_t dev;\n"
+"\t\tdriver_t child;\n"
+"\t} DEFAULT doit_generic_to_child;\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:146
@@ -349,6 +358,8 @@ msgid ""
 "      int FOO_DOIT(device_t dev);\n"
 "      int FOO_DOIT_TO_CHILD(device_t dev, device_t child);\n"
 msgstr ""
+"      int FOO_DOIT(device_t dev);\n"
+"      int FOO_DOIT_TO_CHILD(device_t dev, device_t child);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:154
@@ -407,7 +418,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:164
 #, no-wrap
 msgid "Newbus API"
-msgstr ""
+msgstr "Newbus API"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:167
@@ -502,6 +513,10 @@ msgid ""
 "\t\tvoid\t*priv;\t\t\t/* driver private data */\n"
 "\t  };\n"
 msgstr ""
+"\t  struct driver {\n"
+"\t\tKOBJ_CLASS_FIELDS;\n"
+"\t\tvoid\t*priv;\t\t\t/* driver private data */\n"
+"\t  };\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/newbus/_index.adoc:198
@@ -531,3 +546,12 @@ msgid ""
 "\t\tDS_BUSY\t\t\t/* device is open */\n"
 "\t  } device_state_t;\n"
 msgstr ""
+"\t  /*\n"
+"\t   * src/sys/sys/bus.h\n"
+"\t   */\n"
+"\t  typedef enum device_state {\n"
+"\t\tDS_NOTPRESENT,\t/* not probed or probe failed */\n"
+"\t\tDS_ALIVE,\t\t/* probe succeeded */\n"
+"\t\tDS_ATTACHED,\t/* attach method called */\n"
+"\t\tDS_BUSY\t\t\t/* device is open */\n"
+"\t  } device_state_t;\n"
