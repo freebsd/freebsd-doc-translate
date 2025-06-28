@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-27 04:45+0000\n"
+"PO-Revision-Date: 2025-06-28 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksdevelopers-handbookx86_index/ru/>\n"
@@ -6671,13 +6671,12 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2660
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Using the FPU"
 msgstr "Использование FPU"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2663
-#, fuzzy
 msgid ""
 "Strangely enough, most of assembly language literature does not even mention "
 "the existence of the FPU, or _floating point unit_, let alone discuss "
@@ -6689,7 +6688,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2665
-#, fuzzy
 msgid ""
 "Yet, never does assembly language shine more than when we create highly "
 "optimized FPU code by doing things that can be done _only_ in assembly "
@@ -6701,13 +6699,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2667
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Organization of the FPU"
 msgstr "Организация FPU"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2671
-#, fuzzy
 msgid ""
 "The FPU consists of 8 80-bit floating-point registers.  These are organized "
 "in a stack fashion-you can `push` a value on TOS (_top of stack_) and you "
@@ -6719,7 +6716,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2673
-#, fuzzy
 msgid ""
 "That said, the assembly language op codes are not `push` and `pop` because "
 "those are already taken."
@@ -6729,7 +6725,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2676
-#, fuzzy
 msgid ""
 "You can `push` a value on TOS by using `fld`, `fild`, and `fbld`.  Several "
 "other op codes let you `push` many common _constants_-such as _pi_-on the "
@@ -6742,7 +6737,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2679
-#, fuzzy
 msgid ""
 "Similarly, you can `pop` a value by using `fst`, `fstp`, `fist`, `fistp`, "
 "and `fbstp`.  Actually, only the op codes that end with a _p_ will literally "
@@ -6756,7 +6750,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2681
-#, fuzzy
 msgid ""
 "We can transfer the data between the TOS and the computer memory either as a "
 "32-bit, 64-bit, or 80-bit _real_, a 16-bit, 32-bit, or 64-bit _integer_, or "
@@ -6769,7 +6762,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2684
-#, fuzzy
 msgid ""
 "The 80-bit _packed decimal_ is a special case of _binary coded decimal_ "
 "which is very convenient when converting between the ASCII representation of "
@@ -6783,7 +6775,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2686
-#, fuzzy
 msgid ""
 "No matter how we represent data in the memory, the FPU always stores it in "
 "the 80-bit _real_ format in its registers."
@@ -6793,7 +6784,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2688
-#, fuzzy
 msgid ""
 "Its internal precision is at least 19 decimal digits, so even if we choose "
 "to display results as ASCII in the full 18-digit precision, we are still "
@@ -6805,7 +6795,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2690
-#, fuzzy
 msgid ""
 "We can perform mathematical operations on the TOS: We can calculate its "
 "_sine_, we can _scale_ it (i.e., we can multiply or divide it by a power of "
@@ -6817,7 +6806,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2692
-#, fuzzy
 msgid ""
 "We can also _multiply_ or _divide_ it by, _add_ it to, or _subtract_ it "
 "from, any of the FPU registers (including itself)."
@@ -6827,17 +6815,16 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2695
-#, fuzzy
 msgid ""
 "The official Intel op code for the TOS is `st`, and for the _registers_ "
 "`st(0)`-`st(7)`.  `st` and `st(0)`, then, refer to the same register."
 msgstr ""
-"Официальный опкод Intel для TOS — `st`, а для _регистров_ — `st(0)`-`st(7)`. "
-"Таким образом, `st` и `st(0)` ссылаются на один и тот же регистр."
+"Официальный код операции Intel для TOS — `st`, а для _регистров_ — "
+"`st(0)`-`st(7)`. Таким образом, `st` и `st(0)` ссылаются на один и тот же "
+"регистр."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2698
-#, fuzzy
 msgid ""
 "For whatever reasons, the original author of nasm has decided to use "
 "different op codes, namely `st0`-`st7`.  In other words, there are no "
@@ -6849,13 +6836,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2700
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "The Packed Decimal Format"
 msgstr "Формат упакованного десятичного числа"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2704
-#, fuzzy
 msgid ""
 "The _packed decimal_ format uses 10 bytes (80 bits) of memory to represent "
 "18 digits.  The number represented there is always an _integer_."
@@ -6865,7 +6851,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2708
-#, fuzzy
 msgid ""
 "You can use it to get decimal places by multiplying the TOS by a power of 10 "
 "first."
@@ -6875,7 +6860,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2712
-#, fuzzy
 msgid ""
 "The highest bit of the highest byte (byte 9) is the _sign bit_: If it is "
 "set, the number is _negative_, otherwise, it is _positive_.  The rest of the "
@@ -6887,24 +6871,21 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2714
-#, fuzzy
 msgid ""
 "The remaining 9 bytes store the 18 digits of the number: 2 digits per byte."
 msgstr "Оставшиеся 9 байт хранят 18 цифр числа: 2 цифры на байт."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2716
-#, fuzzy
 msgid ""
 "The _more significant digit_ is stored in the high _nibble_ (4 bits), the "
 "_less significant digit_ in the low _nibble_."
 msgstr ""
-"_Старший разряд_ хранится в старшем _ниббле_ (4 бита), _младший разряд_ — в "
-"младшем _ниббле_."
+"_Старший разряд_ хранится в старшем _полубайте_ (4 бита), _младший разряд_ — "
+"в младшем _полубайте_."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2718
-#, fuzzy
 msgid ""
 "That said, you might think that `-1234567` would be stored in the memory "
 "like this (using hexadecimal notation):"
@@ -6920,7 +6901,6 @@ msgstr "80 00 00 00 00 00 01 23 45 67\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2725
-#, fuzzy
 msgid ""
 "Alas it is not! As with everything else of Intel make, even the _packed "
 "decimal_ is _little-endian_."
@@ -6930,7 +6910,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2727
-#, fuzzy
 msgid "That means our `-1234567` is stored like this:"
 msgstr "Это означает, что наш `-1234567` хранится следующим образом:"
 
@@ -6942,13 +6921,11 @@ msgstr "67 45 23 01 00 00 00 00 00 80\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2734
-#, fuzzy
 msgid "Remember that, or you will be pulling your hair out in desperation!"
 msgstr "Помните об этом, иначе вы будете рвать на себе волосы в отчаянии!"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:2740
-#, fuzzy
 msgid ""
 "The book to read-if you can find it-is Richard Startz' http://www.amazon.com/"
 "exec/obidos/ASIN/013246604X/whizkidtechnomag[8087/80287/80387 for the IBM PC "
