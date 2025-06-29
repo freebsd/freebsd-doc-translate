@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-05-31 08:10+0000\n"
+"PO-Revision-Date: 2025-06-29 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbooksound_index/ru/>\n"
@@ -177,6 +177,11 @@ msgid ""
 "              sizeof(struct snddev_info)\n"
 "          };\n"
 msgstr ""
+"          static driver_t xxx_driver = {\n"
+"              \"pcm\",\n"
+"              xxx_methods,\n"
+"              sizeof(struct snddev_info)\n"
+"          };\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:97
@@ -185,6 +190,9 @@ msgid ""
 "          DRIVER_MODULE(snd_xxxpci, pci, xxx_driver, pcm_devclass, 0, 0);\n"
 "          MODULE_DEPEND(snd_xxxpci, snd_pcm, PCM_MINVER, PCM_PREFVER,PCM_MAXVER);\n"
 msgstr ""
+"          DRIVER_MODULE(snd_xxxpci, pci, xxx_driver, pcm_devclass, 0, 0);\n"
+"          MODULE_DEPEND(snd_xxxpci, snd_pcm, PCM_MINVER, "
+"PCM_PREFVER,PCM_MAXVER);\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:100
@@ -263,7 +271,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:117
 #, no-wrap
 msgid "Interfaces"
-msgstr ""
+msgstr "Interfaces"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:121
@@ -388,7 +396,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:152
 #, no-wrap
 msgid "channel_init"
-msgstr ""
+msgstr "channel_init"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:156
@@ -412,6 +420,15 @@ msgid ""
 "              return ch; <.>\n"
 "           }\n"
 msgstr ""
+"          static void *\n"
+"          xxxchannel_init(kobj_t obj, void *data,\n"
+"             struct snd_dbuf *b, struct pcm_channel *c, int dir) <.>\n"
+"          {\n"
+"              struct xxx_info *sc = data;\n"
+"              struct xxx_chinfo *ch;\n"
+"               ...\n"
+"              return ch; <.>\n"
+"           }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:171
@@ -438,7 +455,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:174
 #, no-wrap
 msgid "channel_setformat"
-msgstr ""
+msgstr "channel_setformat"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:177
@@ -459,6 +476,14 @@ msgid ""
 "              return 0;\n"
 "           }\n"
 msgstr ""
+"          static int\n"
+"          xxxchannel_setformat(kobj_t obj, void *data, u_int32_t format) <.>"
+"\n"
+"          {\n"
+"              struct xxx_chinfo *ch = data;\n"
+"               ...\n"
+"              return 0;\n"
+"           }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:190
@@ -470,7 +495,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:191
 #, no-wrap
 msgid "channel_setspeed"
-msgstr ""
+msgstr "channel_setspeed"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:194
@@ -491,12 +516,19 @@ msgid ""
 "              return speed;\n"
 "           }\n"
 msgstr ""
+"          static int\n"
+"          xxxchannel_setspeed(kobj_t obj, void *data, u_int32_t speed)\n"
+"          {\n"
+"              struct xxx_chinfo *ch = data;\n"
+"               ...\n"
+"              return speed;\n"
+"           }\n"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:206
 #, no-wrap
 msgid "channel_setblocksize"
-msgstr ""
+msgstr "channel_setblocksize"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:209
@@ -528,6 +560,14 @@ msgid ""
 "              return blocksize; <.>\n"
 "           }\n"
 msgstr ""
+"          static int\n"
+"          xxxchannel_setblocksize(kobj_t obj, void *data, u_int32_t "
+"blocksize)\n"
+"          {\n"
+"              struct xxx_chinfo *ch = data;\n"
+"                ...\n"
+"              return blocksize; <.>\n"
+"           }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:224
@@ -541,7 +581,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:226
 #, no-wrap
 msgid "channel_trigger"
-msgstr ""
+msgstr "channel_trigger"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:229
@@ -562,6 +602,13 @@ msgid ""
 "              return 0;\n"
 "           }\n"
 msgstr ""
+"          static int\n"
+"          xxxchannel_trigger(kobj_t obj, void *data, int go) <.>\n"
+"          {\n"
+"              struct xxx_chinfo *ch = data;\n"
+"               ...\n"
+"              return 0;\n"
+"           }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:242
@@ -580,7 +627,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:248
 #, no-wrap
 msgid "channel_getptr"
-msgstr ""
+msgstr "channel_getptr"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:251
@@ -594,7 +641,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:252
 #, no-wrap
 msgid "channel_free"
-msgstr ""
+msgstr "channel_free"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:255
@@ -609,7 +656,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:256
 #, no-wrap
 msgid "channel_getcaps"
-msgstr ""
+msgstr "channel_getcaps"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:265
@@ -621,6 +668,11 @@ msgid ""
 "              return &xxx_caps; <.>\n"
 "           }\n"
 msgstr ""
+"          struct pcmchan_caps *\n"
+"          xxxchannel_getcaps(kobj_t obj, void *data)\n"
+"          {\n"
+"              return &xxx_caps; <.>\n"
+"           }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:268
@@ -660,7 +712,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:278
 #, no-wrap
 msgid "mixer_init"
-msgstr ""
+msgstr "mixer_init"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:281
@@ -679,12 +731,17 @@ msgid ""
 "              struct xxx_info   *sc = mix_getdevinfo(m);\n"
 "              u_int32_t v;\n"
 msgstr ""
+"          static int\n"
+"          xxxmixer_init(struct snd_mixer *m)\n"
+"          {\n"
+"              struct xxx_info   *sc = mix_getdevinfo(m);\n"
+"              u_int32_t v;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:291
 #, no-wrap
 msgid "              [Initialize hardware]\n"
-msgstr ""
+msgstr "              [Initialize hardware]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:296
@@ -695,6 +752,10 @@ msgid ""
 "              [Set appropriate bits in v for record mixers]\n"
 "              mix_setrecdevs(m, v)\n"
 msgstr ""
+"              [Set appropriate bits in v for play mixers] <.>\n"
+"              mix_setdevs(m, v);\n"
+"              [Set appropriate bits in v for record mixers]\n"
+"              mix_setrecdevs(m, v)\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:299
@@ -703,6 +764,8 @@ msgid ""
 "              return 0;\n"
 "          }\n"
 msgstr ""
+"              return 0;\n"
+"          }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:302
@@ -722,7 +785,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:305
 #, no-wrap
 msgid "mixer_set"
-msgstr ""
+msgstr "mixer_set"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:308
@@ -742,6 +805,14 @@ msgid ""
 "              return left | (right << 8); <.>\n"
 "          }\n"
 msgstr ""
+"          static int\n"
+"          xxxmixer_set(struct snd_mixer *m, unsigned dev,\n"
+"                           unsigned left, unsigned right) <.>\n"
+"          {\n"
+"              struct sc_info *sc = mix_getdevinfo(m);\n"
+"              [set volume level]\n"
+"              return left | (right << 8); <.>\n"
+"          }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:322
@@ -762,7 +833,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:324
 #, no-wrap
 msgid "mixer_setrecsrc"
-msgstr ""
+msgstr "mixer_setrecsrc"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:327
@@ -778,12 +849,16 @@ msgid ""
 "          {\n"
 "              struct xxx_info *sc = mix_getdevinfo(m);\n"
 msgstr ""
+"          static int\n"
+"          xxxmixer_setrecsrc(struct snd_mixer *m, u_int32_t src) <.>\n"
+"          {\n"
+"              struct xxx_info *sc = mix_getdevinfo(m);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:336
 #, no-wrap
 msgid "              [look for non zero bit(s) in src, set up hardware]\n"
-msgstr ""
+msgstr "              [look for non zero bit(s) in src, set up hardware]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:340
@@ -793,6 +868,9 @@ msgid ""
 "              return src; <.>\n"
 "           }\n"
 msgstr ""
+"              [update src to reflect actual action]\n"
+"              return src; <.>\n"
+"           }\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:343
@@ -810,7 +888,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:345
 #, no-wrap
 msgid "mixer_uninit, mixer_reinit"
-msgstr ""
+msgstr "mixer_uninit, mixer_reinit"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/sound/_index.adoc:348

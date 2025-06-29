@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-01 15:10+0000\n"
+"PO-Revision-Date: 2025-06-29 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbooksysinit_index/ru/>\n"
@@ -132,7 +132,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:78
 #, no-wrap
 msgid "<sys/kernel.h>\n"
-msgstr ""
+msgstr "<sys/kernel.h>\n"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:80
@@ -147,6 +147,8 @@ msgid ""
 "SYSINIT(uniquifier, subsystem, order, func, ident)\n"
 "SYSUNINIT(uniquifier, subsystem, order, func, ident)\n"
 msgstr ""
+"SYSINIT(uniquifier, subsystem, order, func, ident)\n"
+"SYSUNINIT(uniquifier, subsystem, order, func, ident)\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:88
@@ -176,7 +178,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:148
 #, no-wrap
 msgid "#include <sys/kernel.h>\n"
-msgstr ""
+msgstr "#include <sys/kernel.h>\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:104
@@ -188,6 +190,11 @@ msgid ""
 "}\n"
 "SYSINIT(foo, SI_SUB_FOO, SI_ORDER_FOO, foo_null, NULL);\n"
 msgstr ""
+"void foo_null(void *unused)\n"
+"{\n"
+"        foo_doo();\n"
+"}\n"
+"SYSINIT(foo, SI_SUB_FOO, SI_ORDER_FOO, foo_null, NULL);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:108
@@ -197,6 +204,9 @@ msgid ""
 "        FOO_VOODOO;\n"
 "}\n"
 msgstr ""
+"struct foo foo_voodoo = {\n"
+"        FOO_VOODOO;\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:115
@@ -209,6 +219,12 @@ msgid ""
 "}\n"
 "SYSINIT(bar, SI_SUB_FOO, SI_ORDER_FOO, foo_arg, &foo_voodoo);\n"
 msgstr ""
+"void foo_arg(void *vdata)\n"
+"{\n"
+"        struct foo *foo = (struct foo *)vdata;\n"
+"        foo_data(foo);\n"
+"}\n"
+"SYSINIT(bar, SI_SUB_FOO, SI_ORDER_FOO, foo_arg, &foo_voodoo);\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:119
@@ -234,6 +250,9 @@ msgid ""
 "mptable_register(void *dummy __unused)\n"
 "{\n"
 msgstr ""
+"static void\n"
+"mptable_register(void *dummy __unused)\n"
+"{\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:131
@@ -242,6 +261,8 @@ msgid ""
 "\tapic_register_enumerator(&mptable_enumerator);\n"
 "}\n"
 msgstr ""
+"\tapic_register_enumerator(&mptable_enumerator);\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:134
@@ -250,6 +271,8 @@ msgid ""
 "SYSINIT(mptable_register, SI_SUB_TUNABLES - 1, SI_ORDER_FIRST,\n"
 "    mptable_register, NULL);\n"
 msgstr ""
+"SYSINIT(mptable_register, SI_SUB_TUNABLES - 1, SI_ORDER_FIRST,\n"
+"    mptable_register, NULL);\n"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:138
@@ -280,6 +303,11 @@ msgid ""
 "}\n"
 "SYSUNINIT(foobar, SI_SUB_FOO, SI_ORDER_FOO, foo_cleanup, NULL);\n"
 msgstr ""
+"void foo_cleanup(void *unused)\n"
+"{\n"
+"        foo_kill();\n"
+"}\n"
+"SYSUNINIT(foobar, SI_SUB_FOO, SI_ORDER_FOO, foo_cleanup, NULL);\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:158
@@ -289,6 +317,9 @@ msgid ""
 "        FOO_STACK_VOODOO;\n"
 "}\n"
 msgstr ""
+"struct foo_stack foo_stack = {\n"
+"        FOO_STACK_VOODOO;\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/sysinit/_index.adoc:163
@@ -299,3 +330,7 @@ msgid ""
 "}\n"
 "SYSUNINIT(barfoo, SI_SUB_FOO, SI_ORDER_FOO, foo_flush, &foo_stack);\n"
 msgstr ""
+"void foo_flush(void *vdata)\n"
+"{\n"
+"}\n"
+"SYSUNINIT(barfoo, SI_SUB_FOO, SI_ORDER_FOO, foo_flush, &foo_stack);\n"
