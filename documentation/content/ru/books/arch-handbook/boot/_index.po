@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-30 04:45+0000\n"
+"PO-Revision-Date: 2025-06-30 23:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookboot_index/ru/>\n"
@@ -2075,7 +2075,6 @@ msgstr "[.filename]#stand/i386/boot2/Makefile# [[boot-boot1-make-boot1]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:799
-#, fuzzy
 msgid ""
 "To apply the rule for creating [.filename]#boot1#, [.filename]#boot1.out# "
 "must be resolved.  This, in turn, depends on the existence of "
@@ -2090,7 +2089,7 @@ msgid ""
 "and symbolic information; `-O binary` indicates the output format, that is, "
 "a simple, unformatted binary file."
 msgstr ""
-"Для применения правила создания [.filename]#boot1# необходимо разрешить [."
+"Для применения правила создания [.filename]#boot1# необходимо собрать [."
 "filename]#boot1.out#. Это, в свою очередь, зависит от наличия [."
 "filename]#boot1.o#. Последний файл является результатом ассемблирования "
 "нашего знакомого [.filename]#boot1.S# без компоновки. Теперь применяется "
@@ -2775,7 +2774,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1034
-#, fuzzy
 msgid ""
 "The next step is to initialize the TSS (Task-State Segment).  The TSS is a "
 "hardware feature that helps the operating system or executive software "
@@ -2820,7 +2818,6 @@ msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-tss]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1049
-#, fuzzy
 msgid ""
 "Note that a value is given for the Privilege Level 0 stack pointer and stack "
 "segment in the TSS.  This is needed because, if an interrupt or exception is "
@@ -2834,14 +2831,13 @@ msgstr ""
 "стека уровня привилегий 0. Это необходимо, потому что если прерывание или "
 "исключение получено во время выполнения [.filename]#boot2# на уровне "
 "привилегий 3, процессор автоматически переключается на уровень привилегий 0, "
-"поэтому требуется новый рабочий стек. Наконец, полю Базового Адреса Карты "
-"Ввода-Вывода TSS присваивается значение, которое представляет собой 16-"
-"битное смещение от начала TSS до Битмапа Разрешений Ввода-Вывода и Битмапа "
-"Перенаправления Прерываний."
+"поэтому требуется новый рабочий стек. Наконец, полю базового адреса карты "
+"ввода-вывода TSS присваивается значение, которое представляет собой 16-"
+"битное смещение от начала TSS до битовой карты разрешений ввода-вывода и "
+"битовой карты перенаправления прерываний."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1052
-#, fuzzy
 msgid ""
 "After the IDT and TSS are created, the processor is ready to switch to "
 "protected mode.  This is done in the next block:"
@@ -2893,7 +2889,6 @@ msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-prot]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1085
-#, fuzzy
 msgid ""
 "First, a call is made to `setpic` to program the 8259A PIC (Programmable "
 "Interrupt Controller).  This chip is connected to multiple hardware "
@@ -2934,7 +2929,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1087
-#, fuzzy
 msgid ""
 "Our last code block is responsible for loading the TR (Task Register) with "
 "the segment selector for the TSS we created earlier, and setting the User "
@@ -3026,7 +3020,6 @@ msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-end]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1149
-#, fuzzy
 msgid ""
 "Note that the client's environment include a stack segment selector and "
 "stack pointer (registers `%ss` and `%esp`).  Indeed, once the TR is loaded "
@@ -3069,30 +3062,29 @@ msgstr ""
 "Напомним, что эта точка входа прописывается в заголовке BTX во время "
 "компоновки. Наконец, селекторы сегментов (хранящиеся в регистре `%ecx`) для "
 "регистров сегментов `%gs, %fs, %ds и %es` помещаются в стек вместе со "
-"значением из `%edx` (`0xa000`). Учтите различные значения, которые были "
-"помещены в стек (они скоро будут извлечены). Затем значения для оставшихся "
-"регистров общего назначения также помещаются в стек (обратите внимание на "
-"цикл `loop`, который помещает значение `0` семь раз). Теперь начнётся "
-"извлечение значений из стека. Сначала инструкция `popa` извлекает из стека "
-"последние семь помещённых значений. Они сохраняются в регистрах общего "
-"назначения в порядке `%edi, %esi, %ebp, %ebx, %edx, %ecx, %eax`. Затем "
-"различные селекторы сегментов, помещённые в стек, извлекаются в "
-"соответствующие регистры сегментов. В стеке остаются ещё пять значений. Они "
-"извлекаются при выполнении инструкции `iret`. Эта инструкция сначала "
-"извлекает значение, которое было помещено из заголовка BTX. Это значение "
-"является указателем на точку входа [.filename]#boot2#. Оно помещается в "
-"регистр `%eip` — регистр указателя инструкций. Затем селектор сегмента кода "
-"пользователя извлекается и копируется в регистр `%cs`. Помните, что уровень "
-"привилегий этого сегмента — 3, наименее привилегированный уровень. Это "
-"означает, что мы должны предоставить значения для стека этого уровня "
-"привилегий. Именно поэтому процессор, помимо дальнейшего извлечения значения "
-"для регистра EFLAGS, выполняет ещё два извлечения из стека. Эти значения "
-"попадают в указатель стека (`%esp`) и сегмент стека (`%ss`). Теперь "
-"выполнение продолжается с точки входа ``boot0``."
+"значением из `%edx` (`0xa000`). Примите во внимание эти значения, помещенные "
+"в стек (они скоро будут извлечены). Затем значения для оставшихся регистров "
+"общего назначения также помещаются в стек (обратите внимание на цикл `loop`, "
+"который помещает значение `0` семь раз). Теперь начнётся извлечение значений "
+"из стека. Сначала инструкция `popa` извлекает из стека последние семь "
+"помещённых значений. Они сохраняются в регистрах общего назначения в порядке "
+"`%edi, %esi, %ebp, %ebx, %edx, %ecx, %eax`. Затем различные селекторы "
+"сегментов, помещённые в стек, извлекаются в соответствующие регистры "
+"сегментов. В стеке остаются ещё пять значений. Они извлекаются при "
+"выполнении инструкции `iret`. Эта инструкция сначала извлекает значение, "
+"которое было помещено из заголовка BTX. Это значение является указателем на "
+"точку входа [.filename]#boot2#. Оно помещается в регистр `%eip` — регистр "
+"указателя инструкций. Затем селектор сегмента кода пользователя извлекается "
+"и копируется в регистр `%cs`. Помните, что уровень привилегий этого сегмента "
+"— 3, наименее привилегированный уровень. Это означает, что мы должны "
+"предоставить значения для стека этого уровня привилегий. Именно поэтому "
+"процессор, помимо дальнейшего извлечения значения для регистра EFLAGS, "
+"выполняет ещё два извлечения из стека. Эти значения попадают в указатель "
+"стека (`%esp`) и сегмент стека (`%ss`). Теперь выполнение продолжается с "
+"точки входа ``boot0``."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1153
-#, fuzzy
 msgid ""
 "It is important to note how the User Code Segment is defined.  This "
 "segment's _base address_ is set to `0xa000`.  This means that code memory "
@@ -3108,13 +3100,12 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1155
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "boot2 Stage"
 msgstr "Этап загрузки boot2"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1162
-#, fuzzy
 msgid ""
 "`boot2` defines an important structure, `struct bootinfo`.  This structure "
 "is initialized by `boot2` and passed to the loader, and then further to the "
@@ -3126,9 +3117,10 @@ msgstr ""
 "`boot2` определяет важную структуру, `struct bootinfo`. Эта структура "
 "инициализируется `boot2` и передается загрузчику, а затем ядру. Некоторые "
 "узлы этой структуры устанавливаются `boot2`, остальные — загрузчиком. Эта "
-"структура, среди прочей информации, содержит имя файла ядра, геометрию BIOS "
-"жесткого диска, номер диска BIOS для загрузочного устройства, доступную "
-"физическую память, указатель `envp` и т.д. Ее определение выглядит так:"
+"структура, среди прочей информации, содержит имя файла ядра, геометрию "
+"жесткого диска в BIOS, номер диска в BIOS для загрузочного устройства, "
+"доступную физическую память, указатель `envp` и т.д. Ее определение выглядит "
+"так:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1187
@@ -3182,7 +3174,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1194
-#, fuzzy
 msgid ""
 "`boot2` enters into an infinite loop waiting for user input, then calls "
 "`load()`.  If the user does not press anything, the loop breaks by a "
@@ -3220,13 +3211,12 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1204
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "loader Stage"
-msgstr "Этап загрузчика (loader stage)"
+msgstr "Этап загрузчика (loader)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1209
-#, fuzzy
 msgid ""
 "loader is a BTX client as well.  I will not describe it here in detail, "
 "there is a comprehensive man page written by Mike Smith, man:loader[8].  The "
@@ -3238,7 +3228,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1212
-#, fuzzy
 msgid ""
 "The main task for the loader is to boot the kernel.  When the kernel is "
 "loaded into memory, it is being called by the loader:"
@@ -3260,13 +3249,12 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1221
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Kernel Initialization"
 msgstr "Инициализация ядра"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1228
-#, fuzzy
 msgid ""
 "Let us take a look at the command that links the kernel.  This will help "
 "identify the exact location where the loader passes execution to the "
@@ -3275,7 +3263,7 @@ msgid ""
 "interests us can be found in [.filename]#/usr/obj/usr/src/i386.i386/sys/"
 "GENERIC/#."
 msgstr ""
-"Давайте рассмотрим команду, которая связывает ядро. Это поможет определить "
+"Давайте рассмотрим команду, которая компонует ядро. Это поможет определить "
 "точное местоположение, где загрузчик передает выполнение ядру. Это "
 "местоположение является фактической точкой входа ядра. Данная команда теперь "
 "исключена из [.filename]#sys/conf/Makefile.i386#. Интересующее нас "
@@ -3300,7 +3288,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1241
-#, fuzzy
 msgid ""
 "A few interesting things can be seen here.  First, the kernel is an ELF "
 "dynamically linked binary, but the dynamic linker for kernel is [.filename]#/"
@@ -3314,7 +3301,7 @@ msgstr ""
 "ядра — это [.filename]#/red/herring#, что явно является фиктивным файлом. Во-"
 "вторых, взглянув на файл [.filename]#sys/conf/ldscript.i386#, можно понять, "
 "какие параметры ld используются при компиляции ядра. Читая первые несколько "
-"строк, строку"
+"строк, видим, что строка"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1246
@@ -3328,7 +3315,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1250
-#, fuzzy
 msgid ""
 "says that a kernel's entry point is the symbol `btext`.  This symbol is "
 "defined in [.filename]#locore.s#:"
@@ -3360,7 +3346,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1265
-#, fuzzy
 msgid ""
 "First, the register EFLAGS is set to a predefined value of 0x00000002.  Then "
 "all the segment registers are initialized:"

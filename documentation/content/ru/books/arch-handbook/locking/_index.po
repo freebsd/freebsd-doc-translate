@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-28 21:10+0000\n"
+"PO-Revision-Date: 2025-06-30 23:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbooklocking_index/ru/>\n"
@@ -23,19 +23,21 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:14
 #, no-wrap
 msgid "Locking Notes"
-msgstr ""
+msgstr "Заметки о блокировках"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:1
 #, no-wrap
 msgid "Chapter 2. Locking Notes"
-msgstr ""
+msgstr "Глава 2. Заметки о блокировках"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:52
 msgid ""
 "_This chapter is maintained by the FreeBSD SMP Next Generation Project._"
 msgstr ""
+"_Эта глава сопровождается и поддерживается проектом FreeBSD SMP Next "
+"Generation._"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:54
@@ -46,6 +48,11 @@ msgid ""
 "locks. A few variables are protected simply by always using atomic "
 "operations to access them."
 msgstr ""
+"Этот документ описывает механизмы блокировки, используемые в ядре FreeBSD "
+"для эффективной многопроцессорной обработки. Блокировка может быть "
+"достигнута несколькими способами. Структуры данных могут защищаться "
+"мьютексами или блокировками (lock) из man:lockmgr[9]. Некоторые переменные "
+"защищаются просто за счёт использования атомарных операций для доступа к ним."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:56
@@ -61,6 +68,11 @@ msgid ""
 "obtain a mutex that is already owned, it must wait until the mutex is "
 "released. In the FreeBSD kernel, mutexes are owned by processes."
 msgstr ""
+"Мьютекс — это просто блокировка, используемая для обеспечения взаимного "
+"исключения. Конкретно, мьютекс может принадлежать только одному объекту в "
+"один момент времени. Если другой объект хочет получить мьютекс, который уже "
+"принадлежит кому-то, он должен ждать, пока мьютекс не будет освобожден. В "
+"ядре FreeBSD мьютексы принадлежат процессам."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:61
@@ -69,11 +81,15 @@ msgid ""
 "short period of time. Specifically, one may not sleep while holding a mutex. "
 "If you need to hold a lock across a sleep, use a man:lockmgr[9] lock."
 msgstr ""
+"Мьютексы могут быть получены рекурсивно, но предполагается, что они "
+"удерживаются в течение короткого периода времени. В частности, нельзя "
+"переходить в режим сна, удерживая мьютекс. Если необходимо удерживать "
+"блокировку во время сна, используйте блокировку man:lockmgr[9]."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:63
 msgid "Each mutex has several properties of interest:"
-msgstr ""
+msgstr "Каждый мьютекс обладает несколькими важными свойствами:"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:64
@@ -81,19 +97,19 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:131
 #, no-wrap
 msgid "Variable Name"
-msgstr ""
+msgstr "Имя переменной"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:66
 msgid "The name of the struct mtx variable in the kernel source."
-msgstr ""
+msgstr "Имя переменной struct mtx в исходном коде ядра."
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:67
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:93
 #, no-wrap
 msgid "Logical Name"
-msgstr ""
+msgstr "Логическое имя"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:69
@@ -102,6 +118,9 @@ msgid ""
 "in KTR trace messages and witness errors and warnings and is used to "
 "distinguish mutexes in the witness code."
 msgstr ""
+"Имя мьютекса, назначенное ему с помощью `mtx_init`. Это имя отображается в "
+"сообщениях трассировки KTR, ошибках и предупреждениях witness, а также "
+"используется для различения мьютексов в коде witness."
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:70
@@ -116,6 +135,8 @@ msgid ""
 "The type of the mutex in terms of the `MTX_*` flags. The meaning for each "
 "flag is related to its meaning as documented in man:mutex[9]."
 msgstr ""
+"Тип мьютекса в терминах флагов `MTX_*`. Значение каждого флага связано с его "
+"значением, как описано в man:mutex[9]."
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:73
@@ -127,7 +148,7 @@ msgstr "`MTX_DEF`"
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:75
 msgid "A sleep mutex"
-msgstr ""
+msgstr "Мьютекс блокировки с ожиданием"
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:76
@@ -138,7 +159,7 @@ msgstr "`MTX_SPIN`"
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:78
 msgid "A spin mutex"
-msgstr ""
+msgstr "Мьютекс с вращающейся блокировкой (spin mutex)"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:79
@@ -152,7 +173,7 @@ msgstr "`MTX_RECURSE`"
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:81
 msgid "This mutex is allowed to recurse."
-msgstr ""
+msgstr "Этот мьютекс допускает рекурсию."
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:82
@@ -160,7 +181,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:133
 #, no-wrap
 msgid "Protectees"
-msgstr ""
+msgstr "Защищаемые системы"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:84
@@ -169,24 +190,28 @@ msgid ""
 "protects. For data structure members, the name will be in the form of "
 "`structure name`.`member name`."
 msgstr ""
+"Список структур данных или членов структур данных, которые защищает эта "
+"запись. Для членов структур данных имя будет указано в формате `имя "
+"структуры`.`имя члена`."
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:85
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:97
 #, no-wrap
 msgid "Dependent Functions"
-msgstr ""
+msgstr "Зависимые функции"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:87
 msgid "Functions that can only be called if this mutex is held."
 msgstr ""
+"Функции, которые могут быть вызваны только при удержании этого мьютекса."
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:88
 #, no-wrap
 msgid "Mutex List"
-msgstr ""
+msgstr "Список мьютексов"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:98
@@ -281,13 +306,13 @@ msgstr "`MTX_DEF` \\"
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:113
 #, no-wrap
 msgid "nearly everything"
-msgstr ""
+msgstr "почти всё"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:115
 #, no-wrap
 msgid "lots"
-msgstr ""
+msgstr "много"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:116
@@ -313,7 +338,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:123
 #, no-wrap
 msgid "Shared Exclusive Locks"
-msgstr ""
+msgstr "Разделяемые эксклюзивные блокировки"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:126
@@ -321,12 +346,15 @@ msgid ""
 "These locks provide basic reader-writer type functionality and may be held "
 "by a sleeping process. Currently they are backed by man:lockmgr[9]."
 msgstr ""
+"Эти блокировки обеспечивают базовую функциональность типа читатель-писатель "
+"и могут удерживаться спящим процессом. В настоящее время они реализованы "
+"через man:lockmgr[9]."
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:127
 #, no-wrap
 msgid "Shared Exclusive Lock List"
-msgstr ""
+msgstr "Список разделяемых эксклюзивных блокировок"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:134
@@ -357,7 +385,7 @@ msgstr "`proc`.`p_children` `proc`.`p_sibling`"
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:141
 #, no-wrap
 msgid "Atomically Protected Variables"
-msgstr ""
+msgstr "Атомарно защищённые переменные"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:144
@@ -368,6 +396,12 @@ msgid ""
 "treated this way, although other synchronization primitives such as mutexes "
 "are implemented with atomically protected variables."
 msgstr ""
+"Переменная с атомарной защитой — это специальная переменная, которая не "
+"защищена явной блокировкой. Вместо этого все операции доступа к данным этой "
+"переменной используют специальные атомарные операции, как описано в "
+"man:atomic[9]. Очень немногие переменные обрабатываются таким образом, хотя "
+"другие примитивы синхронизации, такие как мьютексы, реализованы с "
+"использованием переменных с атомарной защитой."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/locking/_index.adoc:145
