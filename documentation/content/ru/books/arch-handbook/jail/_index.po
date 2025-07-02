@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-30 23:10+0000\n"
+"PO-Revision-Date: 2025-07-02 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookjail_index/ru/>\n"
@@ -59,7 +59,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:54
-#, fuzzy
 msgid ""
 "Jail is becoming the new security model. People are running potentially "
 "vulnerable servers such as Apache, BIND, and sendmail within jails, so that "
@@ -84,7 +83,6 @@ msgstr "Архитектура"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:59
-#, fuzzy
 msgid ""
 "Jail consists of two realms: the userland program, man:jail[8], and the code "
 "implemented within the kernel: the man:jail[2] system call and associated "
@@ -104,7 +102,6 @@ msgstr "Код в пользовательском пространстве"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:63
-#, fuzzy
 msgid ""
 "The source for the userland jail is located in [.filename]#/usr/src/usr.sbin/"
 "jail#, consisting of one file, [.filename]#jail.c#. The program takes these "
@@ -124,7 +121,6 @@ msgstr "Структуры данных"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:67
-#, fuzzy
 msgid ""
 "In [.filename]#jail.c#, the first thing I would note is the declaration of "
 "an important structure `struct jail j;` which was included from [.filename]#/"
@@ -136,9 +132,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:69
-#, fuzzy
 msgid "The definition of the `jail` structure is:"
-msgstr "Определение структуры `клетка` выглядит следующим образом:"
+msgstr "Определение структуры `jail` выглядит следующим образом:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:73
@@ -166,7 +161,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:83
-#, fuzzy
 msgid ""
 "As you can see, there is an entry for each of the arguments passed to the "
 "man:jail[8] program, and indeed, they are set during its execution."
@@ -210,7 +204,6 @@ msgstr "Сетевое взаимодействие"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:102
-#, fuzzy
 msgid ""
 "One of the arguments passed to the man:jail[8] program is an IP address with "
 "which the jail can be accessed over the network. man:jail[8] translates the "
@@ -220,7 +213,7 @@ msgstr ""
 "Один из аргументов, передаваемых программе man:jail[8], — это IP-адрес, по "
 "которому можно получить доступ к клетке через сеть. man:jail[8] преобразует "
 "указанный IP-адрес в порядок байтов хоста и сохраняет его в `j` (структура "
-"`клетка`)."
+"`jail`)."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:111
@@ -242,7 +235,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:114
-#, fuzzy
 msgid ""
 "The man:inet_aton[3] function \"interprets the specified character string as "
 "an Internet address, placing the address into the structure provided.\" The "
@@ -252,9 +244,9 @@ msgid ""
 msgstr ""
 "Функция man:inet_aton[3] \"интерпретирует указанную строку символов как "
 "интернет-адрес, помещая адрес в предоставленную структуру.\" Член структуры "
-"`ip_number` в структуре `клетка` устанавливается только тогда, когда IP-"
-"адрес, помещённый в структуру `in` функцией man:inet_aton[3], преобразуется "
-"в порядок байтов хоста с помощью man:ntohl[3]."
+"`ip_number` в структуре `jail` устанавливается только тогда, когда IP-адрес, "
+"помещённый в структуру `in` функцией man:inet_aton[3], преобразуется в "
+"порядок байтов хоста с помощью man:ntohl[3]."
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:115
@@ -264,7 +256,6 @@ msgstr "Процесс в клетке"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:118
-#, fuzzy
 msgid ""
 "Finally, the userland program jails the process. Jail now becomes an "
 "imprisoned process itself and then executes the command given using "
@@ -292,7 +283,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:129
-#, fuzzy
 msgid ""
 "As you can see, the `jail()` function is called, and its argument is the "
 "`jail` structure which has been filled with the arguments given to the "
@@ -312,7 +302,6 @@ msgstr "Пространство ядра системы"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:133
-#, fuzzy
 msgid ""
 "We will now be looking at the file [.filename]#/usr/src/sys/kern/"
 "kern_jail.c#. This is the file where the man:jail[2] system call, "
@@ -326,11 +315,10 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:134
 #, no-wrap
 msgid "Sysctls"
-msgstr "Системные вызовы"
+msgstr "Управляемые переменные ядра sysctl"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:137
-#, fuzzy
 msgid "In [.filename]#kern_jail.c#, the following sysctls are defined:"
 msgstr "В файле [.filename]#kern_jail.c# определены следующие параметры sysctl:"
 
@@ -437,7 +425,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:178
-#, fuzzy
 msgid ""
 "Each of these sysctls can be accessed by the user through the man:sysctl[8] "
 "program. Throughout the kernel, these specific sysctls are recognized by "
@@ -451,13 +438,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:179
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "man:jail[2] System Call"
-msgstr "man:jail[2] Системный вызов"
+msgstr "Системный вызов man:jail[2]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:182
-#, fuzzy
 msgid ""
 "Like all system calls, the man:jail[2] system call takes two arguments, "
 "`struct thread *td` and `struct jail_args *uap`. `td` is a pointer to the "
@@ -500,7 +486,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:196
-#, fuzzy
 msgid ""
 "Therefore, `uap->jail` can be used to access the `jail` structure which was "
 "passed to the system call. Next, the system call copies the `jail` structure "
@@ -510,14 +495,14 @@ msgid ""
 "`jail` structure pointed by `uap->jail` is copied into kernel space and is "
 "stored in another `jail` structure, `j`."
 msgstr ""
-"Следовательно, `uap->jail` можно использовать для доступа к структуре "
-"`клетка`, которая была передана системному вызову. Далее системный вызов "
-"копирует структуру `клетка` в пространство ядра с помощью функции "
-"man:copyin[9]. man:copyin[9] принимает три аргумента: адрес данных, которые "
-"нужно скопировать в пространство ядра (`uap->клетка`), место для хранения "
-"(`j`) и размер хранилища. Структура `клетка`, на которую указывает "
-"`uap->клетка`, копируется в пространство ядра и сохраняется в другой "
-"структуре `клетка` — `j`."
+"Следовательно, `uap->jail` можно использовать для доступа к структуре `jail`"
+", которая была передана системному вызову. Далее системный вызов копирует "
+"структуру `клетка` в пространство ядра с помощью функции man:copyin[9]. "
+"man:copyin[9] принимает три аргумента: адрес данных, которые нужно "
+"скопировать в пространство ядра (`uap->jail`), место для записи данных (`j`) "
+"и размер хранилища. Структура `jail`, на которую указывает `uap->jail`, "
+"копируется в пространство ядра и сохраняется в другой структуре `клетка` — "
+"`j`."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:201
@@ -531,7 +516,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:204
-#, fuzzy
 msgid ""
 "There is another important structure defined in [.filename]#jail.h#. It is "
 "the `prison` structure. The `prison` structure is used exclusively within "
@@ -587,7 +571,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:225
-#, fuzzy
 msgid ""
 "The man:jail[2] system call then allocates memory for a `prison` structure "
 "and copies data between the `jail` and `prison` structure."
@@ -625,7 +608,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:242
-#, fuzzy
 msgid ""
 "Next, we will discuss another important system call man:jail_attach[2], "
 "which implements the function to put a process into the jail."
@@ -657,7 +639,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:256
-#, fuzzy
 msgid ""
 "This system call makes the changes that can distinguish a jailed process "
 "from those unjailed ones. To understand what man:jail_attach[2] does for us, "
@@ -669,7 +650,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:258
-#, fuzzy
 msgid ""
 "On FreeBSD, each kernel visible thread is identified by its `thread` "
 "structure, while the processes are described by their `proc` structures. You "
@@ -684,17 +664,17 @@ msgid ""
 "pointed by `p_ucred` member in the `proc` structure, there is a pointer to "
 "the `prison` structure(`cr_prison`)."
 msgstr ""
-"В FreeBSD каждая видимая ядром нить идентифицируется своей структурой "
+"В FreeBSD каждый видимый ядром поток идентифицируется своей структурой "
 "`thread`, а процессы описываются их структурами `proc`. Определения структур "
 "`thread` и `proc` можно найти в [.filename]#/usr/include/sys/proc.h#. "
 "Например, аргумент `td` в любом системном вызове на самом деле является "
-"указателем на структуру `thread` вызывающей нити, как было указано ранее. "
+"указателем на структуру `thread` вызывающего потока, как было указано ранее. "
 "Член `td_proc` в структуре `thread`, на которую указывает `td`, является "
-"указателем на структуру `proc`, представляющую процесс, содержащий нить, "
-"представленную `td`. Структура `proc` содержит члены, которые могут "
-"описывать идентификацию владельца (`p_ucred`), ограничения ресурсов процесса "
-"(`p_limit`) и так далее. В структуре `ucred`, на которую указывает член "
-"`p_ucred` в структуре `proc`, есть указатель на структуру `prison` "
+"указателем на структуру `proc`, представляющую процесс, содержащий поток, "
+"представленный структурой `td`. Структура `proc` содержит члены, которые "
+"могут описывать идентификацию владельца (`p_ucred`), ограничения ресурсов "
+"процесса (`p_limit`) и так далее. В структуре `ucred`, на которую указывает "
+"член `p_ucred` в структуре `proc`, есть указатель на структуру `prison` "
 "(`cr_prison`)."
 
 #. type: delimited block . 4
@@ -739,7 +719,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:281
-#, fuzzy
 msgid ""
 "In [.filename]#kern_jail.c#, the function `jail()` then calls function "
 "`jail_attach()` with a given `jid`. And `jail_attach()` calls function "
@@ -768,8 +747,8 @@ msgstr ""
 "процессов, созданных внутри клетки, является процесс, запускающий man:jail[8]"
 ", так как он вызывает системный вызов man:jail[2]. При выполнении программы "
 "через man:execve[2] она наследует свойство клетки из структуры `ucred` "
-"родительского процесса, следовательно, получает структуру `ucred` в "
-"состоянии клетки."
+"родительского процесса, следовательно, у нее структура `ucred` тоже со "
+"свойством клетки."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:296
@@ -843,7 +822,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:317
-#, fuzzy
 msgid ""
 "When a process is forked from its parent process, the man:fork[2] system "
 "call uses `crhold()` to maintain the credential for the newly forked "
@@ -872,13 +850,12 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:327
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Restrictions"
 msgstr "Ограничения"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:330
-#, fuzzy
 msgid ""
 "Throughout the kernel there are access restrictions relating to jailed "
 "processes. Usually, these restrictions only check whether the process is "
@@ -906,7 +883,6 @@ msgstr "SysV IPC"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:340
-#, fuzzy
 msgid ""
 "System V IPC is based on messages. Processes can send each other these "
 "messages which tell them how to act. The functions which deal with messages "
@@ -937,7 +913,6 @@ msgstr "[.filename]#/usr/src/sys/kern/sysv_msg.c#:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:344
-#, fuzzy
 msgid ""
 "`msgget(key, msgflg)`: `msgget` returns (and possibly creates) a message "
 "descriptor that designates a message queue for use in other functions."
@@ -948,7 +923,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:345
-#, fuzzy
 msgid ""
 "`msgctl(msgid, cmd, buf)`: Using this function, a process can query the "
 "status of a message descriptor."
@@ -958,7 +932,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:346
-#, fuzzy
 msgid ""
 "`msgsnd(msgid, msgp, msgsz, msgflg)`: `msgsnd` sends a message to a process."
 msgstr ""
@@ -966,7 +939,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:347
-#, fuzzy
 msgid ""
 "`msgrcv(msgid, msgp, msgsz, msgtyp, msgflg)`: a process receives messages "
 "using this function"
@@ -976,7 +948,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:349
-#, fuzzy
 msgid ""
 "In each of the system calls corresponding to these functions, there is this "
 "conditional:"
@@ -998,7 +969,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:358
-#, fuzzy
 msgid ""
 "Semaphore system calls allow processes to synchronize execution by doing a "
 "set of operations atomically on a set of semaphores. Basically semaphores "
@@ -1022,7 +992,6 @@ msgstr "[.filename]#/usr/src/sys/kern/sysv_sem.c#:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:362
-#, fuzzy
 msgid ""
 "`semctl(semid, semnum, cmd, ...)`: `semctl` does the specified `cmd` on the "
 "semaphore queue indicated by `semid`."
@@ -1032,7 +1001,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:363
-#, fuzzy
 msgid ""
 "`semget(key, nsems, flag)`: `semget` creates an array of semaphores, "
 "corresponding to `key`."
@@ -1042,13 +1010,11 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:365
-#, fuzzy
 msgid "`key and flag take on the same meaning as they do in msgget.`"
-msgstr "`key and flag имеют то же значение, как и в msgget.`"
+msgstr "`key и flag имеют то же значение, как и в msgget.`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:366
-#, fuzzy
 msgid ""
 "`semop(semid, array, nops)`: `semop` performs a group of operations "
 "indicated by `array`, to the set of semaphores identified by `semid`."
@@ -1058,7 +1024,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:368
-#, fuzzy
 msgid ""
 "System V IPC allows for processes to share memory. Processes can communicate "
 "directly with each other by sharing parts of their virtual address space and "
@@ -1079,7 +1044,6 @@ msgstr "[.filename]#/usr/src/sys/kern/sysv_shm.c#:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:372
-#, fuzzy
 msgid ""
 "`shmctl(shmid, cmd, buf)`: `shmctl` does various control operations on the "
 "shared memory region identified by `shmid`."
@@ -1089,7 +1053,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:373
-#, fuzzy
 msgid ""
 "`shmget(key, size, flag)`: `shmget` accesses or creates a shared memory "
 "region of `size` bytes."
@@ -1099,7 +1062,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:374
-#, fuzzy
 msgid ""
 "`shmat(shmid, addr, flag)`: `shmat` attaches a shared memory region "
 "identified by `shmid` to the address space of a process."
@@ -1109,7 +1071,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:375
-#, fuzzy
 msgid ""
 "`shmdt(addr)`: `shmdt` detaches the shared memory region previously attached "
 "at `addr`."
@@ -1125,7 +1086,6 @@ msgstr "Сокеты"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:379
-#, fuzzy
 msgid ""
 "Jail treats the man:socket[2] system call and related lower-level socket "
 "functions in a special manner. In order to determine whether a certain "
@@ -1179,13 +1139,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:399
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Berkeley Packet Filter"
 msgstr "Berkeley Packet Filter"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:402
-#, fuzzy
 msgid ""
 "The Berkeley Packet Filter provides a raw interface to data link layers in a "
 "protocol independent fashion. BPF is now controlled by the man:devfs[8] "
@@ -1204,7 +1163,6 @@ msgstr "Протоколы"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/jail/_index.adoc:406
-#, fuzzy
 msgid ""
 "There are certain protocols which are very common, such as TCP, UDP, IP and "
 "ICMP. IP and ICMP are on the same level: the network layer 2. There are "
@@ -1222,8 +1180,8 @@ msgstr ""
 "Существуют определенные протоколы, которые очень распространены, такие как "
 "TCP, UDP, IP и ICMP. IP и ICMP находятся на одном уровне: сетевом уровне 2. "
 "Принимаются определенные меры предосторожности, чтобы предотвратить привязку "
-"протокола к определенному адресу процессом в клетке, только если параметр "
-"`nam` установлен. `nam` является указателем на структуру `sockaddr`, которая "
+"протокола к определенному адресу процессом в клетке, только если установлен "
+"параметр `nam`. `nam` является указателем на структуру `sockaddr`, которая "
 "описывает адрес, к которому привязывается служба. Более точное определение "
 "заключается в том, что `sockaddr` \"может использоваться как шаблон для "
 "ссылки на идентификационный тег и длину каждого адреса\". В функции "
