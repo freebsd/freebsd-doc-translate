@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-30 23:10+0000\n"
+"PO-Revision-Date: 2025-07-03 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbooksmp_index/ru/>\n"
@@ -21,15 +21,15 @@ msgstr ""
 #. type: Title =
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:1
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:14
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "SMPng Design Document"
-msgstr "Документ по проектированию SMPng"
+msgstr "Документ по архитектуре SMPng"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Chapter 8. SMPng Design Document"
-msgstr "Глава 8. Документ по проектированию SMPng"
+msgstr "Глава 8. Документ по архитектуре SMPng"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:52
@@ -39,7 +39,6 @@ msgstr "Введение"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:55
-#, fuzzy
 msgid ""
 "This document presents the current design and implementation of the SMPng "
 "Architecture. First, the basic primitives and tools are introduced. Next, a "
@@ -62,7 +61,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:57
-#, fuzzy
 msgid ""
 "This document is a work-in-progress, and will be updated to reflect on-going "
 "design and implementation activities associated with the SMPng Project. Many "
@@ -78,7 +76,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:63
-#, fuzzy
 msgid ""
 "The goal of SMPng is to allow concurrency in the kernel. The kernel is "
 "basically one rather large and complex program. To make the kernel multi-"
@@ -91,25 +88,24 @@ msgstr ""
 "Цель SMPng — обеспечить параллелизм в ядре. Ядро представляет собой одну "
 "довольно большую и сложную программу. Чтобы сделать ядро многопоточным, мы "
 "используем те же инструменты, что и для многопоточности других программ. К "
-"ним относятся мьютексы, shared/exclusive блокировки, семафоры и условные "
-"переменные. Для определений этих и других терминов, связанных с SMP, см. "
-"раздел crossref:smp[smp-glossary, Глоссарий] в этой статье."
+"ним относятся мьютексы, разделяемые/монопольные блокировки, семафоры и "
+"условные переменные. Для определений этих и других терминов, связанных с "
+"SMP, см. раздел crossref:smp[smp-glossary, Глоссарий] в этой статье."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:65
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Basic Tools and Locking Fundamentals"
 msgstr "Основные инструменты и основы блокировки"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:67
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Atomic Instructions and Memory Barriers"
 msgstr "Атомарные инструкции и барьеры памяти"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:70
-#, fuzzy
 msgid ""
 "There are several existing treatments of memory barriers and atomic "
 "instructions, so this section will not include a lot of detail. To put it "
@@ -127,15 +123,15 @@ msgid ""
 "to the second CPU along with any other operations that memory barriers may "
 "require."
 msgstr ""
-"Существует несколько описаний барьеров памяти и атомарных инструкций, "
-"поэтому в этом разделе не будет много деталей. Проще говоря, нельзя читать "
-"переменные без блокировки, если блокировка используется для защиты записи в "
-"эту переменную. Это становится очевидным, если учесть, что барьеры памяти "
-"лишь определяют относительный порядок операций с памятью; они не дают "
-"никаких гарантий относительно времени выполнения этих операций. То есть, "
-"барьер памяти не принуждает к сбросу содержимого локального кеша или буфера "
-"записи процессора. Вместо этого, барьер памяти при освобождении блокировки "
-"просто гарантирует, что все записи в защищённые данные будут видны другим "
+"Можно найти много описаний барьеров памяти и атомарных инструкций, поэтому в "
+"этом разделе не будет много деталей. Проще говоря, нельзя читать переменные "
+"без блокировки, если блокировка используется для защиты записи в эту "
+"переменную. Это становится очевидным, если учесть, что барьеры памяти лишь "
+"определяют относительный порядок операций с памятью; они не дают никаких "
+"гарантий относительно времени выполнения этих операций. То есть, барьер "
+"памяти не принуждает к сбросу содержимого локального кеша или буфера записи "
+"процессора. Вместо этого, барьер памяти при освобождении блокировки просто "
+"гарантирует, что все записи в защищённые данные будут видны другим "
 "процессорам или устройствам, если видна запись, освобождающая блокировку. "
 "Процессор может хранить эти данные в своём кеше или буфере записи сколько "
 "угодно долго. Однако, если другой процессор выполняет атомарную инструкцию "
@@ -145,7 +141,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:72
-#, fuzzy
 msgid ""
 "For example, assuming a simple model where data is considered visible when "
 "it is in main memory (or a global cache), when an atomic instruction is "
@@ -154,14 +149,13 @@ msgid ""
 "memory barrier."
 msgstr ""
 "Например, предполагая простую модель, в которой данные считаются видимыми, "
-"когда они находятся в основной памяти (или в глобальном кеше), при "
-"срабатывании атомарной инструкции на одном процессоре, буферы записи и кеши "
-"других процессоров должны сбросить все записи в ту же строку кеша вместе с "
-"любыми ожидающими операциями за барьером памяти."
+"когда они находятся в основной памяти (или в глобальном кеше), когда "
+"начинается выполнение атомарной инструкции на одном процессоре, буферы "
+"записи и кеши других процессоров должны выполнить все записи в ту же строку "
+"кеша вместе с любыми ожидающими операциями за барьером памяти."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:74
-#, fuzzy
 msgid ""
 "This requires one to take special care when using an item protected by "
 "atomic instructions. For example, in the sleep mutex implementation, we have "
@@ -179,16 +173,15 @@ msgstr ""
 "использовать `atomic_cmpset` вместо `atomic_set` для установки бита "
 "`MTX_CONTESTED`. Причина в том, что мы считываем значение `mtx_lock` в "
 "переменную и затем принимаем решение на основе этого чтения. Однако "
-"значение, которое мы считали, может быть устаревшим или измениться во время "
-"принятия решения. Таким образом, когда выполняется `atomic_set`, это может "
-"привести к установке бита на другом значении, отличном от того, на котором "
-"мы основывали своё решение. Поэтому мы должны использовать `atomic_cmpset`, "
-"чтобы установить значение только в том случае, если значение, на котором мы "
-"приняли решение, актуально и действительно."
+"значение, которое мы ранее прочитали, может быть устаревшим или измениться, "
+"пока мы принимаем решение. Таким образом, когда выполняется `atomic_set`, "
+"это может привести к установке бита на другом значении, отличном от того, на "
+"котором мы основывали своё решение. Поэтому мы должны использовать "
+"`atomic_cmpset`, чтобы установить значение только в том случае, если "
+"значение, на котором мы приняли решение, актуально и действительно."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:76
-#, fuzzy
 msgid ""
 "Finally, atomic instructions only allow one item to be updated or read. If "
 "one needs to atomically update several items, then a lock must be used "
@@ -205,13 +198,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:77
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Read Locks Versus Write Locks"
 msgstr "Блокировки на чтение и блокировки на запись"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:80
-#, fuzzy
 msgid ""
 "Read locks do not need to be as strong as write locks. Both types of locks "
 "need to ensure that the data they are accessing is not stale. However, only "
@@ -219,26 +211,25 @@ msgid ""
 "value. Using different types of locks for reads and writes can be "
 "implemented in a number of ways."
 msgstr ""
-"Чтение блокировок не требует такой же строгости, как запись. Оба типа "
-"блокировок должны гарантировать, что данные, к которым они обращаются, не "
-"устарели. Однако только запись требует исключительного доступа. Несколько "
-"потоков могут безопасно читать значение. Использование разных типов "
-"блокировок для чтения и записи может быть реализовано несколькими способами."
+"Блокировки на чтение не требуют такой же строгости, как блокировки на "
+"запись. Оба типа блокировок должны гарантировать, что данные, к которым они "
+"обращаются, не устарели. Однако запись требует монопольного доступа. "
+"Несколько потоков могут безопасно читать значение. Использование разных "
+"типов блокировок для чтения и записи может быть реализовано несколькими "
+"способами."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:82
-#, fuzzy
 msgid ""
 "First, sx locks can be used in this manner by using an exclusive lock when "
 "writing and a shared lock when reading. This method is quite straightforward."
 msgstr ""
-"Во-первых, блокировки sx могут использоваться таким образом: эксклюзивная "
+"Во-первых, блокировки sx могут использоваться таким образом: монопольная "
 "блокировка при записи и разделяемая блокировка при чтении. Этот метод "
 "достаточно прост."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:84
-#, fuzzy
 msgid ""
 "A second method is a bit more obscure. You can protect a datum with multiple "
 "locks. Then for reading that data you simply need to have a read lock of one "
@@ -269,13 +260,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:85
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Locking Conditions and Results"
 msgstr "Условия и результаты блокировки"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:88
-#, fuzzy
 msgid ""
 "If you need a lock to check the state of a variable so that you can take an "
 "action based on the state you read, you can not just hold the lock while "
@@ -295,19 +285,18 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:90
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "General Architecture and Design"
 msgstr "Общая Архитектура и Дизайн"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:92
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Interrupt Handling"
 msgstr "Обработка прерываний"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:95
-#, fuzzy
 msgid ""
 "Following the pattern of several other multi-threaded UNIX(R) kernels, "
 "FreeBSD deals with interrupt handlers by giving them their own thread "
@@ -319,7 +308,7 @@ msgid ""
 "sleepable lock to avoid starving another interrupt handler."
 msgstr ""
 "Следуя примеру нескольких других многопоточных ядер UNIX(R), FreeBSD "
-"обрабатывает обработчики прерываний, предоставляя им собственный контекст "
+"реализрвала обработчики прерываний, предоставив им собственный контекст "
 "потока. Предоставление контекста для обработчиков прерываний позволяет им "
 "блокироваться на блокировках. Однако, чтобы избежать задержек, потоки "
 "обработки прерываний выполняются с приоритетом реального времени в ядре. "
@@ -331,7 +320,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:97
-#, fuzzy
 msgid ""
 "The interrupt threads currently in FreeBSD are referred to as heavyweight "
 "interrupt threads. They are called this because switching to an interrupt "
@@ -340,8 +328,8 @@ msgid ""
 "thread would have to wait until the kernel thread blocked or returned to "
 "userland before they would have an opportunity to run."
 msgstr ""
-"Текущие потоки обработки прерываний в FreeBSD называются потоками обработки "
-"прерываний с большой нагрузкой. Они получили такое название, потому что "
+"Текущие потоки обработки прерываний в FreeBSD называются тяжеловесными "
+"потоками обработки прерываний. Они получили такое название, потому что "
 "переключение на поток обработки прерывания включает в себя полное "
 "переключение контекста. В первоначальной реализации ядро не было "
 "вытесняющим, поэтому прерывания, которые прерывали поток ядра, должны были "
@@ -350,7 +338,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:99
-#, fuzzy
 msgid ""
 "To deal with the latency problems, the kernel in FreeBSD has been made "
 "preemptive. Currently, we only preempt a kernel thread when we release a "
@@ -364,7 +351,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:101
-#, fuzzy
 msgid ""
 "Not all interrupt handlers execute in a thread context. Instead, some "
 "handlers execute directly in primary interrupt context. These interrupt "
@@ -378,17 +364,16 @@ msgstr ""
 "Не все обработчики прерываний выполняются в контексте потока. Вместо этого, "
 "некоторые обработчики выполняются непосредственно в основном контексте "
 "прерывания. Эти обработчики прерываний в настоящее время ошибочно называются "
-"\"быстрыми\" обработчиками прерываний, поскольку флаг `INTR_FAST`, "
-"использовавшийся в более ранних версиях ядра, применяется для их "
-"обозначения. Единственные прерывания, которые в настоящее время используют "
-"такие обработчики прерываний, — это прерывания от часов и последовательных "
+"\"быстрыми\" обработчиками прерываний, поскольку для их обозначения "
+"применяется флаг `INTR_FAST`, использовавшийся в более ранних версиях ядра. "
+"Единственные прерывания, которые в настоящее время используют такие "
+"обработчики прерываний, — это прерывания от часов и последовательных "
 "устройств ввода-вывода. Поскольку эти обработчики не имеют собственного "
 "контекста, они не могут захватывать блокирующие блокировки и, следовательно, "
 "могут использовать только спин-мьютексы."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:103
-#, fuzzy
 msgid ""
 "Finally, there is one optional optimization that can be added in MD code "
 "called lightweight context switches. Since an interrupt thread executes in a "
@@ -417,7 +402,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:105
-#, fuzzy
 msgid ""
 "The cons of this optimization are that they are very machine specific and "
 "complex and thus only worth the effort if their is a large performance "
@@ -438,7 +422,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:107
-#, fuzzy
 msgid ""
 "Each interrupt handler has two parts: a predicate which runs in primary "
 "interrupt context and a handler which runs in its own thread context."
@@ -449,7 +432,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:108
-#, fuzzy
 msgid ""
 "If an interrupt handler has a predicate, then when an interrupt is "
 "triggered, the predicate is run. If the predicate returns true then the "
@@ -465,7 +447,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:110
-#, fuzzy
 msgid ""
 "Fitting light weight context switches into this scheme might prove rather "
 "complicated. Since we may want to change to this scheme at some point in the "
@@ -482,33 +463,31 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:111
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Kernel Preemption and Critical Sections"
 msgstr "Ядро с вытеснением и критические секции"
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:113
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Kernel Preemption in a Nutshell"
 msgstr "Ядро и вытеснение вкратце"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:116
-#, fuzzy
 msgid ""
 "Kernel preemption is fairly simple. The basic idea is that a CPU should "
 "always be doing the highest priority work available. Well, that is the ideal "
 "at least. There are a couple of cases where the expense of achieving the "
 "ideal is not worth being perfect."
 msgstr ""
-"Прерывание ядра довольно просто. Основная идея заключается в том, что "
+"Вытеснение ядра довольно просто. Основная идея заключается в том, что "
 "процессор всегда должен выполнять наиболее приоритетную доступную работу. "
 "Ну, это в идеале, по крайней мере. Есть несколько случаев, когда затраты на "
 "достижение идеала не стоят того, чтобы быть совершенным."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:118
-#, fuzzy
 msgid ""
 "Implementing full kernel preemption is very straightforward: when you "
 "schedule a thread to be executed by putting it on a run queue, you check to "
@@ -522,7 +501,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:120
-#, fuzzy
 msgid ""
 "While locks can protect most data in the case of a preemption, not all of "
 "the kernel is preemption safe. For example, if a thread holding a spin mutex "
@@ -545,7 +523,7 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:121
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Critical Sections"
 msgstr "Критические Секции"
 
@@ -1797,56 +1775,50 @@ msgstr "Источники прерываний и абстракции ICU"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:293
-#, fuzzy
 msgid "struct isrc"
-msgstr "структура isrc"
+msgstr "struct isrc"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:295
-#, fuzzy
 msgid "pic drivers"
 msgstr "pic драйверы"
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:296
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Other Random Questions/Topics"
 msgstr "Другие случайные вопросы/темы"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:299
-#, fuzzy
 msgid "Should we pass an interlock into `sema_wait`?"
 msgstr "Передавать ли блокировку в `sema_wait`?"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:301
-#, fuzzy
 msgid "Should we have non-sleepable sx locks?"
-msgstr "Должны ли мы иметь несклоняемые sx блокировки?"
+msgstr "Должны ли мы иметь sx блокировки без возможности сна?"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:303
-#, fuzzy
 msgid "Add some info about proper use of reference counts."
 msgstr ""
 "Добавить некоторую информацию о правильном использовании счетчиков ссылок."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:308
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Glossary"
 msgstr "Глоссарий"
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:311
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "atomic"
-msgstr "атомарный"
+msgstr "atomic (атомарный)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:313
-#, fuzzy
 msgid ""
 "An operation is atomic if all of its effects are visible to other CPUs "
 "together when the proper access protocol is followed. In the degenerate case "
@@ -1865,42 +1837,38 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:315
-#, fuzzy
 msgid "See Also operation."
-msgstr "См. Также операция."
+msgstr "См. также operation (операция)."
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:316
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "block"
-msgstr "block"
+msgstr "block (блокировать)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:318
-#, fuzzy
 msgid ""
 "A thread is blocked when it is waiting on a lock, resource, or condition. "
 "Unfortunately this term is a bit overloaded as a result."
 msgstr ""
 "Поток блокируется, когда он ожидает блокировку, ресурс или условие. К "
-"сожалению, этот термин немного перегружен в результате."
+"сожалению, этот термин в результате немного перегружен."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:320
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:357
-#, fuzzy
 msgid "See Also sleep."
-msgstr "См. Также sleep."
+msgstr "См. также sleep (спать)."
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:321
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "critical section"
-msgstr "критическая секция"
+msgstr "critical section (критическая секция)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:323
-#, fuzzy
 msgid ""
 "A section of code that is not allowed to be preempted. A critical section is "
 "entered and exited using the man:critical_enter[9] API."
@@ -1910,73 +1878,66 @@ msgstr ""
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:324
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "MD"
 msgstr "MD"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:326
-#, fuzzy
 msgid "Machine dependent."
-msgstr "Машинозависимый."
+msgstr "Машинозависимый (machine dependent)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:328
-#, fuzzy
 msgid "See Also MI."
-msgstr "Смотри Также MI."
+msgstr "Смотри также MI."
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:329
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "memory operation"
-msgstr "Операция с памятью"
+msgstr "memory operation (операция с памятью)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:331
-#, fuzzy
 msgid "A memory operation reads and/or writes to a memory location."
 msgstr "Операция с памятью выполняет чтение и/или запись в ячейку памяти."
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:332
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "MI"
 msgstr "MI"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:334
-#, fuzzy
 msgid "Machine independent."
-msgstr "Машинно-независимый."
+msgstr "Машинно-независимый (machine independent)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:336
-#, fuzzy
 msgid "See Also MD."
-msgstr "См. Также MD."
+msgstr "См. также MD."
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:337
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "operation"
-msgstr "операция"
+msgstr "operation (операция)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:339
-#, fuzzy
 msgid "See memory operation."
-msgstr "См. операцию с памятью."
+msgstr "См. memory operation (операция с памятью)."
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:340
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "primary interrupt context"
-msgstr "основной контекст прерывания"
+msgstr "primary interrupt context (основной контекст прерывания)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:342
-#, fuzzy
 msgid ""
 "Primary interrupt context refers to the code that runs when an interrupt "
 "occurs. This code can either run an interrupt handler directly or schedule "
@@ -1990,35 +1951,32 @@ msgstr ""
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:343
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "realtime kernel thread"
-msgstr "поток ядра реального времени"
+msgstr "realtime kernel thread (поток ядра реального времени)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:345
-#, fuzzy
 msgid ""
 "A high priority kernel thread. Currently, the only realtime priority kernel "
 "threads are interrupt threads."
 msgstr ""
-"Высокоприоритетная поток ядра. В настоящее время единственными потоками ядра "
+"Высокоприоритетный поток ядра. В настоящее время единственными потоками ядра "
 "с реальным приоритетом являются потоки обработки прерываний."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:347
-#, fuzzy
 msgid "See Also thread."
-msgstr "См. Также thread."
+msgstr "См. также thread (поток)."
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:348
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "sleep"
-msgstr "sleep"
+msgstr "sleep (спать)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:350
-#, fuzzy
 msgid ""
 "A thread is asleep when it is blocked on a condition variable or a sleep "
 "queue via msleep or tsleep."
@@ -2028,55 +1986,52 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:352
-#, fuzzy
 msgid "See Also block."
-msgstr "Блок See Also."
+msgstr "См. также block (блокировать)."
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:353
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "sleepable lock"
-msgstr "`блокировка с возможностью сна`"
+msgstr "sleepable lock (блокировка с возможностью сна)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:355
-#, fuzzy
 msgid ""
 "A sleepable lock is a lock that can be held by a thread which is asleep. "
 "Lockmgr locks and sx locks are currently the only sleepable locks in "
 "FreeBSD. Eventually, some sx locks such as the allproc and proctree locks "
 "may become non-sleepable locks."
 msgstr ""
-"Спиновый замок — это замок, который может удерживаться потоком, находящимся "
-"в состоянии сна. В настоящее время в FreeBSD единственными спиновыми замками "
-"являются lockmgr и sx. В будущем некоторые sx-замки, такие как allproc и "
-"proctree, могут стать неспиновыми."
+"блокировка с возможностью сна — это блокировка, которая может удерживаться "
+"потоком, находящимся в состоянии сна. В настоящее время в FreeBSD "
+"единственными блокировками с возможностью сна являются lockmgr и sx. В "
+"будущем некоторые sx-блокировки, такие как allproc и proctree, могут стать "
+"блокировками с возможностью сна."
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:358
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "thread"
-msgstr "поток"
+msgstr "thread (поток)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:360
-#, fuzzy
 msgid ""
 "A kernel thread represented by a struct thread. Threads own locks and hold a "
 "single execution context."
 msgstr ""
 "Поток ядра, представленный структурой `struct thread`. Потоки владеют "
-"блокировками и содержат единственный контекст выполнения."
+"блокировками и содержат единственный на поток контекст выполнения."
 
 #. type: Labeled list
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:361
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "wait channel"
-msgstr "канал ожидания"
+msgstr "wait channel (канал ожидания)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/smp/_index.adoc:363
-#, fuzzy
 msgid "A kernel virtual address that threads may sleep on."
 msgstr ""
 "Виртуальный адрес ядра, на котором потоки могут переходить в режим ожидания."

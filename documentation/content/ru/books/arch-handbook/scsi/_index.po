@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-07-02 04:45+0000\n"
+"PO-Revision-Date: 2025-07-03 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookscsi_index/ru/>\n"
@@ -2157,6 +2157,11 @@ msgid ""
 "all the other active transactions on this LUN as aborted.  That should be "
 "done in the interrupt routine, after the transaction gets aborted."
 msgstr ""
+"Вот и все, что касается запроса ABORT, хотя есть еще один момент. Поскольку "
+"сообщение ABORT очищает все текущие транзакции на LUN, нам необходимо "
+"пометить все остальные активные транзакции на этом LUN как прерванные. Это "
+"должно быть выполнено в процедуре аппаратного прерывания после того, как "
+"транзакция будет прервана."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:782
@@ -2167,6 +2172,11 @@ msgid ""
 "CAM_CMD_TIMEOUT for the timed out request.  Then the case XPT_ABORT would be "
 "small, like that:"
 msgstr ""
+"Реализация прерывания CCB в виде функции может быть довольно хорошей идеей, "
+"эта функция может быть повторно использована, если транзакция ввода-вывода "
+"превысит время ожидания. Единственное различие будет в том, что для "
+"транзакции с истекшим временем ожидания будет возвращён статус "
+"CAM_CMD_TIMEOUT. Тогда код в case XPT_ABORT будет небольшим, например:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:788
@@ -2215,6 +2225,7 @@ msgstr ""
 #, no-wrap
 msgid "_XPT_SET_TRAN_SETTINGS_ - explicitly set values of SCSI transfer settings"
 msgstr ""
+"_XPT_SET_TRAN_SETTINGS_ - явно установить значения настроек передачи SCSI"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:806
@@ -2222,36 +2233,39 @@ msgid ""
 "The arguments are transferred in the instance \"struct ccb_trans_setting "
 "cts\" of the union ccb:"
 msgstr ""
+"Аргументы передаются в экземпляре \"struct ccb_trans_setting cts\" "
+"объединения ccb:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:808
 msgid "_valid_ - a bitmask showing which settings should be updated:"
 msgstr ""
+"_valid_ - битовая маска, показывающая, какие настройки должны быть обновлены:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:809
 msgid "_CCB_TRANS_SYNC_RATE_VALID_ - synchronous transfer rate"
-msgstr ""
+msgstr "_CCB_TRANS_SYNC_RATE_VALID_ - скорость синхронной передачи"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:810
 msgid "_CCB_TRANS_SYNC_OFFSET_VALID_ - synchronous offset"
-msgstr ""
+msgstr "_CCB_TRANS_SYNC_OFFSET_VALID_ - синхронное смещение"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:811
 msgid "_CCB_TRANS_BUS_WIDTH_VALID_ - bus width"
-msgstr ""
+msgstr "_CCB_TRANS_BUS_WIDTH_VALID_ - ширина шины"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:812
 msgid "_CCB_TRANS_DISC_VALID_ - set enable/disable disconnection"
-msgstr ""
+msgstr "_CCB_TRANS_DISC_VALID_ - установить разрешение/запрет отключения"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:813
 msgid "_CCB_TRANS_TQ_VALID_ - set enable/disable tagged queuing"
-msgstr ""
+msgstr "_CCB_TRANS_TQ_VALID_ - установить разрешение/запрет очередей с тегами"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:815
@@ -2259,26 +2273,28 @@ msgid ""
 "_flags_ - consists of two parts, binary arguments and identification of sub-"
 "operations.  The binary arguments are:"
 msgstr ""
+"_flags_ - состоит из двух частей: бинарных аргументов и идентификации "
+"подопераций. Бинарные аргументы:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:816
 msgid "_CCB_TRANS_DISC_ENB_ - enable disconnection"
-msgstr ""
+msgstr "_CCB_TRANS_DISC_ENB_ - разрешить отключение"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:817
 msgid "_CCB_TRANS_TAG_ENB_ - enable tagged queuing"
-msgstr ""
+msgstr "_CCB_TRANS_TAG_ENB_ - разрешить тегированную очередь"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:818
 msgid "the sub-operations are:"
-msgstr ""
+msgstr "подоперации:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:819
 msgid "_CCB_TRANS_CURRENT_SETTINGS_ - change the current negotiations"
-msgstr ""
+msgstr "_CCB_TRANS_CURRENT_SETTINGS_ - изменить текущие параметры согласования"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:820
@@ -2287,6 +2303,9 @@ msgid ""
 "sync_offset - self-explanatory, if sync_offset==0 then the asynchronous mode "
 "is requested bus_width - bus width, in bits (not bytes)"
 msgstr ""
+"_CCB_TRANS_USER_SETTINGS_ - сохранять желаемые пользовательские значения "
+"sync_period, sync_offset - самоочевидные параметры; если sync_offset==0, то "
+"запрашивается асинхронный режим bus_width - ширина шины в битах (не в байтах)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:825
@@ -2299,6 +2318,14 @@ msgid ""
 "the SCSI controller does a negotiation it must never set the values higher "
 "than the user parameters, so it is essentially the top boundary."
 msgstr ""
+"Поддерживаются два набора согласованных параметров: пользовательские "
+"настройки и текущие настройки. Пользовательские настройки не так часто "
+"используются в драйверах SIM, это в основном просто область памяти, где "
+"верхние уровни могут сохранять (и позже извлекать) свои представления о "
+"параметрах. Установка пользовательских параметров не вызывает повторного "
+"согласования скоростей передачи. Однако, когда SCSI-контроллер выполняет "
+"согласование, он никогда не должен устанавливать значения выше "
+"пользовательских параметров, так что они по сути являются верхней границей."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:830
@@ -2312,6 +2339,15 @@ msgid ""
 "transfers this parameter must be silently truncated to 8-bit transfers "
 "before sending it to the device."
 msgstr ""
+"Текущие настройки, как следует из названия, являются текущими. Их изменение "
+"означает, что параметры должны быть повторно согласованы при следующей "
+"передаче. Опять же, эти «новые текущие настройки» не предназначены для "
+"принудительного применения к устройству, они лишь используются в качестве "
+"начального шага переговоров. Кроме того, они должны быть ограничены "
+"реальными возможностями SCSI-контроллера: например, если SCSI-контроллер "
+"имеет 8-битную шину, а запрос требует установки 16-битных передач, этот "
+"параметр должен быть тихо усечён до 8-битных передач перед отправкой на "
+"устройство."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:832
@@ -2319,6 +2355,9 @@ msgid ""
 "One caveat is that the bus width and synchronous parameters are per target "
 "while the disconnection and tag enabling parameters are per lun."
 msgstr ""
+"Один нюанс заключается в том, что ширина шины и синхронные параметры "
+"относятся к цели, тогда как параметры отключения и включения тегов относятся "
+"к логическому устройству LUN."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:834
@@ -2326,26 +2365,30 @@ msgid ""
 "The recommended implementation is to keep 3 sets of negotiated (bus width "
 "and synchronous transfer) parameters:"
 msgstr ""
+"Рекомендуемая реализация заключается в хранении 3 наборов согласованных "
+"параметров (ширина шины и синхронная передача):"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:836
 msgid "_user_ - the user set, as above"
-msgstr ""
+msgstr "_user_ - пользовательский набор, как указано выше"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:837
 msgid "_current_ - those actually in effect"
-msgstr ""
+msgstr "_current_ - тот, который фактически действуют"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:838
 msgid "_goal_ - those requested by setting of the \"current\" parameters"
 msgstr ""
+"_goal_ - тот набор, который запрошен для установки параметров в качестве "
+"\"текущих\""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:840
 msgid "The code looks like:"
-msgstr ""
+msgstr "Код выглядит следующим образом:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:846
@@ -2467,6 +2510,9 @@ msgid ""
 "re-negotiate, for example by calling the function target_negotiated(hcb).  "
 "It can be implemented like this:"
 msgstr ""
+"Затем, когда следующий запрос ввода-вывода будет обработан, он проверит, "
+"нужно ли повторное согласование, например, вызовом функции "
+"target_negotiated(hcb). Это может быть реализовано следующим образом:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:902
@@ -2517,12 +2563,19 @@ msgid ""
 "and current values must be initialized to the maximal values supported by "
 "controller."
 msgstr ""
+"После пересогласования значений полученные значения должны быть присвоены "
+"как текущим, так и целевым параметрам, чтобы для будущих операций ввода-"
+"вывода текущие и целевые параметры совпадали, и функция `target_negotiated()`"
+" возвращала TRUE. При инициализации карты (в `xxx_attach()`) текущие "
+"параметры согласования должны быть инициализированы узким асинхронным "
+"режимом, а целевые и текущие значения должны быть инициализированы "
+"максимальными значениями, поддерживаемыми контроллером."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:915
 #, no-wrap
 msgid "_XPT_GET_TRAN_SETTINGS_ - get values of SCSI transfer settings"
-msgstr ""
+msgstr "_XPT_GET_TRAN_SETTINGS_ - получить значения настроек передачи SCSI"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:920
@@ -2533,12 +2586,17 @@ msgid ""
 "then the existing drivers return the current settings).  Set all the bits in "
 "the valid field."
 msgstr ""
+"Эта операция является обратной XPT_SET_TRAN_SETTINGS. Заполните экземпляр "
+"CCB \"struct ccb_trans_setting cts\" данными, запрошенными флагами "
+"CCB_TRANS_CURRENT_SETTINGS или CCB_TRANS_USER_SETTINGS (если установлены "
+"оба, существующие драйверы возвращают текущие настройки). Установите все "
+"биты в поле valid."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:921
 #, no-wrap
 msgid "_XPT_CALC_GEOMETRY_ - calculate logical (BIOS) geometry of the disk"
-msgstr ""
+msgstr "_XPT_CALC_GEOMETRY_ - вычислить логическую (BIOS) геометрию диска"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:924
@@ -2546,31 +2604,33 @@ msgid ""
 "The arguments are transferred in the instance \"struct ccb_calc_geometry "
 "ccg\" of the union ccb:"
 msgstr ""
+"Аргументы передаются в экземпляре \"struct ccb_calc_geometry ccg\" "
+"объединения ccb:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:926
 msgid "_block_size_ - input, block (A.K.A sector) size in bytes"
-msgstr ""
+msgstr "_block_size_ - вход, размер блока (также известный как сектор) в байтах"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:927
 msgid "_volume_size_ - input, volume size in bytes"
-msgstr ""
+msgstr "_volume_size_ - вход, размер тома в байтах"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:928
 msgid "_cylinders_ - output, logical cylinders"
-msgstr ""
+msgstr "_cylinders_ - выход, логические цилиндры"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:929
 msgid "_heads_ - output, logical heads"
-msgstr ""
+msgstr "_heads_ - выход, логические головки"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:930
 msgid "_secs_per_track_ - output, logical sectors per track"
-msgstr ""
+msgstr "_secs_per_track_ - выход, логических секторов на дорожку"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:933
@@ -2580,6 +2640,10 @@ msgid ""
 "system may not be able to boot.  The typical calculation example taken from "
 "the aic7xxx driver is:"
 msgstr ""
+"Если возвращённая геометрия значительно отличается от той, которую "
+"предполагает BIOS SCSI-контроллера, и диск на этом SCSI-контроллере "
+"используется как загрузочный, система может не загрузиться. Типичный пример "
+"расчёта, взятый из драйвера `aic7xxx`, выглядит следующим образом:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:940
@@ -2647,6 +2711,10 @@ msgid ""
 "translation\" flag in EEPROM this flag should normally be assumed equal to "
 "1.  Other popular geometries are:"
 msgstr ""
+"Это дает общее представление, точный расчет зависит от особенностей "
+"конкретной BIOS. Если BIOS не предоставляет возможности установить флаг "
+"\"расширенной трансляции\" в EEPROM, этот флаг обычно следует считать равным "
+"1. Другие популярные геометрии:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:968
@@ -2666,12 +2734,18 @@ msgid ""
 "can give geometry 128/63 after power up and 255/63 after a hard reset or "
 "soft reboot."
 msgstr ""
+"Некоторые системные BIOS и SCSI BIOS конфликтуют друг с другом с переменным "
+"успехом. Например, комбинация Symbios 875/895 SCSI и Phoenix BIOS может "
+"выдавать геометрию 128/63 после включения питания и 255/63 после жесткого "
+"сброса или мягкой перезагрузки."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:972
 #, no-wrap
 msgid "_XPT_PATH_INQ_ - path inquiry, in other words get the SIM driver and SCSI controller (also known as HBA - Host Bus Adapter) properties"
 msgstr ""
+"_XPT_PATH_INQ_ - запрос пути, другими словами, получение свойств драйвера "
+"SIM и контроллера SCSI (также известного как HBA - Host Bus Adapter)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:975
@@ -2679,46 +2753,50 @@ msgid ""
 "The properties are returned in the instance \"struct ccb_pathinq cpi\" of "
 "the union ccb:"
 msgstr ""
+"Свойства возвращаются в экземпляре \"struct ccb_pathinq cpi\" объединения "
+"ccb:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:977
 msgid "version_num - the SIM driver version number, now all drivers use 1"
 msgstr ""
+"`version_num` - номер версии драйвера SIM, в настоящее время все драйверы "
+"используют 1"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:978
 msgid "hba_inquiry - bitmask of features supported by the controller:"
-msgstr ""
+msgstr "hba_inquiry - битовая маска функций, поддерживаемых контроллером:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:979
 msgid "PI_MDP_ABLE - supports MDP message (something from SCSI3?)"
-msgstr ""
+msgstr "PI_MDP_ABLE - поддерживает сообщение MDP (что-то из SCSI3?)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:980
 msgid "PI_WIDE_32 - supports 32 bit wide SCSI"
-msgstr ""
+msgstr "PI_WIDE_32 — поддерживает 32-битную широкую SCSI"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:981
 msgid "PI_WIDE_16 - supports 16 bit wide SCSI"
-msgstr ""
+msgstr "PI_WIDE_16 — поддерживает 16-битную широкую SCSI"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:982
 msgid "PI_SDTR_ABLE - can negotiate synchronous transfer rate"
-msgstr ""
+msgstr "PI_SDTR_ABLE - может согласовать синхронную скорость передачи"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:983
 msgid "PI_LINKED_CDB - supports linked commands"
-msgstr ""
+msgstr "PI_LINKED_CDB - поддерживает связанные команды"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:984
 msgid "PI_TAG_ABLE - supports tagged commands"
-msgstr ""
+msgstr "PI_TAG_ABLE - поддерживает помеченные команды"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:985
@@ -2726,36 +2804,38 @@ msgid ""
 "PI_SOFT_RST - supports soft reset alternative (hard reset and soft reset are "
 "mutually exclusive within a SCSI bus)"
 msgstr ""
+"PI_SOFT_RST — поддерживает альтернативу мягкого сброса (жесткий сброс и "
+"мягкий сброс являются взаимоисключающими в пределах шины SCSI)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:986
 msgid "target_sprt - flags for target mode support, 0 if unsupported"
-msgstr ""
+msgstr "target_sprt - флаги поддержки целевого режима, 0 если не поддерживается"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:987
 msgid "hba_misc - miscellaneous controller features:"
-msgstr ""
+msgstr "hba_misc - различные функции контроллера:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:988
 msgid "PIM_SCANHILO - bus scans from high ID to low ID"
-msgstr ""
+msgstr "PIM_SCANHILO - сканирование шины от высокого ID к низкому ID"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:989
 msgid "PIM_NOREMOVE - removable devices not included in scan"
-msgstr ""
+msgstr "PIM_NOREMOVE - съемные устройства не включены в сканирование"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:990
 msgid "PIM_NOINITIATOR - initiator role not supported"
-msgstr ""
+msgstr "PIM_NOINITIATOR - роль инициатора не поддерживается"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:991
 msgid "PIM_NOBUSRESET - user has disabled initial BUS RESET"
-msgstr ""
+msgstr "PIM_NOBUSRESET - пользователь отключил начальный BUS RESET"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:992
@@ -2763,11 +2843,15 @@ msgid ""
 "hba_eng_cnt - mysterious HBA engine count, something related to compression, "
 "now is always set to 0"
 msgstr ""
+"hba_eng_cnt - загадочное количество движков HBA, что-то связанное со "
+"сжатием, в настоящее время всегда устанавливается в 0"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:993
 msgid "vuhba_flags - vendor-unique flags, unused now"
 msgstr ""
+"vuhba_flags - уникальные флаги производителя, в настоящее время не "
+"используются"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:994
@@ -2775,6 +2859,8 @@ msgid ""
 "max_target - maximal supported target ID (7 for 8-bit bus, 15 for 16-bit "
 "bus, 127 for Fibre Channel)"
 msgstr ""
+"max_target - максимальный поддерживаемый идентификатор целевого устройства ("
+"7 для 8-битной шины, 15 для 16-битной шины, 127 для Fibre Channel)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:995
@@ -2782,31 +2868,36 @@ msgid ""
 "max_lun - maximal supported LUN ID (7 for older SCSI controllers, 63 for "
 "newer ones)"
 msgstr ""
+"max_lun - максимально поддерживаемый идентификатор LUN (7 для старых SCSI-"
+"контроллеров, 63 для новых)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:996
 msgid "async_flags - bitmask of installed Async handler, unused now"
 msgstr ""
+"async_flags - битовая маска установленных обработчиков Async, в настоящее "
+"время не используется"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:997
 msgid "hpath_id - highest Path ID in the subsystem, unused now"
 msgstr ""
+"hpath_id - наивысший Path ID в подсистеме, в настоящее время не используется"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:998
 msgid "unit_number - the controller unit number, cam_sim_unit(sim)"
-msgstr ""
+msgstr "unit_number - номер контроллера, cam_sim_unit(sim)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:999
 msgid "bus_id - the bus number, cam_sim_bus(sim)"
-msgstr ""
+msgstr "bus_id - номер шины, cam_sim_bus(sim)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1000
 msgid "initiator_id - the SCSI ID of the controller itself"
-msgstr ""
+msgstr "initiator_id - SCSI ID самого контроллера"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1001
@@ -2814,6 +2905,8 @@ msgid ""
 "base_transfer_speed - nominal transfer speed in KB/s for asynchronous narrow "
 "transfers, equals to 3300 for SCSI"
 msgstr ""
+"base_transfer_speed - номинальная скорость передачи в КБ/с для асинхронных "
+"узкополосных передач, равна 3300 для SCSI"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1002
@@ -2821,6 +2914,8 @@ msgid ""
 "sim_vid - SIM driver's vendor id, a zero-terminated string of maximal length "
 "SIM_IDLEN including the terminating zero"
 msgstr ""
+"sim_vid - идентификатор производителя драйвера SIM, строка с нулевым "
+"окончанием максимальной длины SIM_IDLEN, включая завершающий ноль"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1003
@@ -2828,6 +2923,8 @@ msgid ""
 "hba_vid - SCSI controller's vendor id, a zero-terminated string of maximal "
 "length HBA_IDLEN including the terminating zero"
 msgstr ""
+"hba_vid - идентификатор производителя SCSI-контроллера, строка с нулевым "
+"окончанием максимальной длины HBA_IDLEN, включая завершающий ноль"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1004
@@ -2835,12 +2932,16 @@ msgid ""
 "dev_name - device driver name, a zero-terminated string of maximal length "
 "DEV_IDLEN including the terminating zero, equal to cam_sim_name(sim)"
 msgstr ""
+"dev_name - имя драйвера устройства, строка с нулевым окончанием максимальной "
+"длины DEV_IDLEN, включая завершающий ноль, эквивалентно cam_sim_name(sim)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1006
 msgid ""
 "The recommended way of setting the string fields is using strncpy, like:"
 msgstr ""
+"Рекомендуемый способ установки строковых полей — использование strncpy, "
+"например:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1010
@@ -2854,12 +2955,14 @@ msgid ""
 "After setting the values set the status to CAM_REQ_CMP and mark the CCB as "
 "done."
 msgstr ""
+"После установки значений установите статус в CAM_REQ_CMP и пометьте CCB как "
+"завершённый."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1015
 #, no-wrap
 msgid "Polling xxx_poll"
-msgstr ""
+msgstr "Опрос xxx_poll"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1029
@@ -2877,6 +2980,18 @@ msgid ""
 "routine gets just the device unit number.  So the poll routine would "
 "normally look as:"
 msgstr ""
+"Функция poll используется для имитации прерываний, когда подсистема "
+"прерываний не функционирует (например, когда система аварийно завершила "
+"работу и создает дамп памяти). Подсистема CAM устанавливает соответствующий "
+"уровень прерывания перед вызовом процедуры poll. Таким образом, все, что ей "
+"нужно сделать, — это вызвать процедуру прерывания (или наоборот, процедура "
+"poll может выполнять реальные действия, а процедура прерывания просто "
+"вызывает процедуру poll). Зачем тогда нужна отдельная функция? Это связано с "
+"различными соглашениями о вызовах. Процедура `xxx_poll` получает указатель "
+"на структуру cam_sim в качестве аргумента, в то время как процедура "
+"прерывания PCI по общему соглашению получает указатель на структуру "
+"`xxx_softc`, а процедура прерывания ISA получает только номер устройства. "
+"Таким образом, процедура poll обычно выглядит следующим образом:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1037
@@ -2919,7 +3034,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1051
 #, no-wrap
 msgid "Asynchronous Events"
-msgstr ""
+msgstr "Асинхронные события"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1054
@@ -2927,6 +3042,8 @@ msgid ""
 "If an asynchronous event callback has been set up then the callback function "
 "should be defined."
 msgstr ""
+"Если была настроена асинхронная callback-функция для события, то callback-"
+"функция должна быть определена."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1059
@@ -2942,27 +3059,29 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1062
 msgid "callback_arg - the value supplied when registering the callback"
-msgstr ""
+msgstr "callback_arg - значение, переданное при регистрации callback"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1063
 msgid "code - identifies the type of event"
-msgstr ""
+msgstr "code - определяет тип события"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1064
 msgid "path - identifies the devices to which the event applies"
-msgstr ""
+msgstr "path - определяет устройства, к которым применяется событие"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1065
 msgid "arg - event-specific argument"
-msgstr ""
+msgstr "arg - аргумент, специфичный для события"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1067
 msgid "Implementation for a single type of event, AC_LOST_DEVICE, looks like:"
 msgstr ""
+"Реализация для одного типа события, AC_LOST_DEVICE, выглядит следующим "
+"образом:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1074
@@ -3024,7 +3143,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1096
 #, no-wrap
 msgid "Interrupts"
-msgstr ""
+msgstr "Прерывания"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1099
@@ -3033,6 +3152,8 @@ msgid ""
 "peripheral bus (PCI, ISA and so on) to which the SCSI controller is "
 "connected."
 msgstr ""
+"Точный тип процедуры прерывания зависит от типа периферийной шины (PCI, ISA "
+"и так далее), к которой подключен SCSI-контроллер."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1106
@@ -3048,6 +3169,16 @@ msgid ""
 "make sure that the interrupt level will be always restored a wrapper "
 "function can be defined, like:"
 msgstr ""
+"Прерывания в драйверах SIM выполняются на уровне прерывания splcam. Поэтому "
+"в драйвере следует использовать `splcam()` для синхронизации между "
+"обработчиком прерывания и остальной частью драйвера (для драйверов, "
+"учитывающих многопроцессорность, ситуация становится ещё сложнее, но здесь "
+"мы этот случай не рассматриваем). Псевдокод в этом документе беззаботно "
+"игнорирует проблемы синхронизации. Реальный код так делать не должен. "
+"Простейший подход — установить `splcam()` при входе в другие функции и "
+"сбросить при выходе, защищая их одной большой критической секцией. Чтобы "
+"гарантировать восстановление уровня прерывания, можно определить обёрточную "
+"функцию, например:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1117
@@ -3096,6 +3227,11 @@ msgid ""
 "of the `spl()` family have rather high overhead, so vast amount of tiny "
 "critical sections may not be good either."
 msgstr ""
+"Этот подход прост и надежен, но проблема в том, что прерывания могут "
+"блокироваться на относительно долгое время, что негативно скажется на "
+"производительности системы. С другой стороны, функции семейства `spl()` "
+"имеют довольно высокие накладные расходы, поэтому большое количество мелких "
+"критических секций также может быть нежелательным."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1130
@@ -3103,6 +3239,8 @@ msgid ""
 "The conditions handled by the interrupt routine and the details depend very "
 "much on the hardware.  We consider the set of \"typical\" conditions."
 msgstr ""
+"Условия, обрабатываемые процедурой прерывания, и детали сильно зависят от "
+"оборудования. Мы рассматриваем набор \"типичных\" условий."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1135
@@ -3117,6 +3255,15 @@ msgid ""
 "sending RESET signal to the SCSI bus to reset the status of the connections "
 "with the SCSI devices."
 msgstr ""
+"Сначала проверяем, было ли на шине событие SCSI сброса (вероятно, вызванное "
+"другим SCSI-контроллером на той же SCSI-шине). Если это так, мы отменяем все "
+"поставленные в очередь и отключенные запросы, сообщаем о событиях и повторно "
+"инициализируем наш SCSI-контроллер. Важно, чтобы во время этой инициализации "
+"контроллер не инициировал ещё один сброс, иначе два контроллера на одной "
+"SCSI-шине могут бесконечно обмениваться сбросами. Случай фатальной ошибки/"
+"зависания контроллера может быть обработан в том же месте, но, вероятно, "
+"также потребуется отправка сигнала RESET на SCSI-шину для сброса состояния "
+"соединений с SCSI-устройствами."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1141
@@ -3285,6 +3432,11 @@ msgid ""
 "the hardware there may be other non-HCB-related events, we just do not "
 "consider them here.  Then we analyze what happened to this HCB:"
 msgstr ""
+"Если прерывание не вызвано условием, общим для всего контроллера, то, "
+"вероятно, что-то произошло с текущим блоком управления аппаратным "
+"обеспечением. В зависимости от оборудования могут быть и другие события, не "
+"связанные с HCB, но мы их здесь не рассматриваем. Затем мы анализируем, что "
+"произошло с этим HCB:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1210
@@ -3340,6 +3492,8 @@ msgid ""
 "First we check if the HCB has completed and if so we check the returned SCSI "
 "status."
 msgstr ""
+"Сначала мы проверяем, завершился ли HCB, и если да, то проверяем "
+"возвращённый статус SCSI."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1230
@@ -3357,6 +3511,8 @@ msgid ""
 "Then look if this status is related to the REQUEST SENSE command and if so "
 "handle it in a simple way."
 msgstr ""
+"Затем проверьте, связан ли этот статус с командой REQUEST SENSE, и если да, "
+"обработайте его простым способом."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1247
@@ -3394,6 +3550,9 @@ msgid ""
 "auto-sense is not disabled for this CCB and the command has failed with "
 "sense data then run REQUEST SENSE command to receive that data."
 msgstr ""
+"Иначе сама команда завершена, уделяйте больше внимания деталям. Если "
+"автоопределение не отключено для этого CCB и команда завершилась неудачно с "
+"данными состояния, выполните команду REQUEST SENSE для получения этих данных."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1256
@@ -3451,6 +3610,10 @@ msgid ""
 "initiative) or the target is unable to negotiate (rejects our negotiation "
 "messages or does not answer them)."
 msgstr ""
+"Типичным примером могут быть события согласования: сообщения согласования, "
+"полученные от цели SCSI (в ответ на нашу попытку согласования или по "
+"инициативе цели), или если цель не может согласовать (отклоняет наши "
+"сообщения согласования или не отвечает на них)."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1292
@@ -3587,6 +3750,9 @@ msgid ""
 "same simple-minded way as before.  Otherwise we look closer at the details "
 "again."
 msgstr ""
+"Затем мы обрабатываем любые ошибки, которые могли произойти во время "
+"автоопределения, тем же простым способом, что и раньше. В противном случае "
+"мы снова внимательно изучаем детали."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1339
@@ -3611,6 +3777,9 @@ msgid ""
 "normal after an ABORT or BUS DEVICE RESET message and abnormal in other "
 "cases."
 msgstr ""
+"Следующее событие, которое мы рассматриваем, — это неожиданное отключение. "
+"Оно считается нормальным после сообщения ABORT или BUS DEVICE RESET и "
+"аномальным в остальных случаях."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1361
@@ -3717,6 +3886,8 @@ msgid ""
 "If the target refuses to accept tags we notify CAM about that and return "
 "back all commands for this LUN:"
 msgstr ""
+"Если цель отказывается принимать теги, мы уведомляем CAM об этом и "
+"возвращаем все команды для этого LUN:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1397
@@ -3756,6 +3927,8 @@ msgid ""
 "Then we check a number of other conditions, with processing basically "
 "limited to setting the CCB status:"
 msgstr ""
+"Затем мы проверяем ряд других условий, при этом обработка в основном "
+"ограничивается установкой статуса CCB:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1430
@@ -3811,6 +3984,8 @@ msgid ""
 "Then we check if the error was serious enough to freeze the input queue "
 "until it gets proceeded and do so if it is:"
 msgstr ""
+"Затем мы проверяем, была ли ошибка достаточно серьёзной, чтобы заморозить "
+"очередь ввода до её обработки, и если да, то делаем это:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1439
@@ -3869,12 +4044,14 @@ msgid ""
 "This concludes the generic interrupt handling although specific controllers "
 "may require some additions."
 msgstr ""
+"На этом общее описание обработки прерываний завершается, хотя для некоторых "
+"контроллеров могут потребоваться дополнительные действия."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1458
 #, no-wrap
 msgid "Errors Summary"
-msgstr ""
+msgstr "Ошибки (Сводка)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1464
@@ -3884,6 +4061,10 @@ msgid ""
 "spread throughout this document.  For completeness here is the summary of "
 "recommended responses for the typical error conditions:"
 msgstr ""
+"При выполнении запроса ввода-вывода может произойти множество ошибок. "
+"Причина ошибки может быть указана в статусе CCB с большим количеством "
+"деталей. Примеры использования разбросаны по всему документу. Для полноты "
+"изложения приведём сводку рекомендуемых действий при типичных ошибках:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1467
@@ -3893,11 +4074,15 @@ msgid ""
 "of this resource would be some intra-controller hardware resource for which "
 "the controller does not generate an interrupt when it becomes available."
 msgstr ""
+"_CAM_RESRC_UNAVAIL_ — некоторый ресурс временно недоступен, и драйвер SIM не "
+"может сгенерировать событие, когда он станет доступен. Примером такого "
+"ресурса может быть некоторый внутренний аппаратный ресурс контроллера, для "
+"которого контроллер не генерирует прерывание при его доступности."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1468
 msgid "_CAM_UNCOR_PARITY_ - unrecovered parity error occurred"
-msgstr ""
+msgstr "_CAM_UNCOR_PARITY_ - произошла неисправимая ошибка четности"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1469
@@ -3906,22 +4091,27 @@ msgid ""
 "direction than specified in CAM_DIR_MASK) or odd transfer length for wide "
 "transfer"
 msgstr ""
+"_CAM_DATA_RUN_ERR_ - переполнение данных или неожиданная фаза данных ("
+"направление передачи не соответствует указанному в CAM_DIR_MASK) или "
+"нечётная длина передачи для широкой передачи"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1470
 msgid ""
 "_CAM_SEL_TIMEOUT_ - selection timeout occurred (target does not respond)"
-msgstr ""
+msgstr "_CAM_SEL_TIMEOUT_ - произошел таймаут выбора (цель не отвечает)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1471
 msgid "_CAM_CMD_TIMEOUT_ - command timeout occurred (the timeout function ran)"
 msgstr ""
+"_CAM_CMD_TIMEOUT_ - произошло превышение времени ожидания команды (сработала "
+"функция таймаута)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1472
 msgid "_CAM_SCSI_STATUS_ERROR_ - the device returned error"
-msgstr ""
+msgstr "_CAM_SCSI_STATUS_ERROR_ - устройство вернуло ошибку"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1473
@@ -3929,16 +4119,18 @@ msgid ""
 "_CAM_AUTOSENSE_FAIL_ - the device returned error and the REQUEST SENSE "
 "COMMAND failed"
 msgstr ""
+"_CAM_AUTOSENSE_FAIL_ - устройство вернуло ошибку и команда REQUEST SENSE "
+"завершилась неудачно"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1474
 msgid "_CAM_MSG_REJECT_REC_ - MESSAGE REJECT message was received"
-msgstr ""
+msgstr "_CAM_MSG_REJECT_REC_ - получено сообщение MESSAGE REJECT"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1475
 msgid "_CAM_SCSI_BUS_RESET_ - received SCSI bus reset"
-msgstr ""
+msgstr "_CAM_SCSI_BUS_RESET_ - получен сброс шины SCSI"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1476
@@ -3946,26 +4138,31 @@ msgid ""
 "_CAM_REQ_CMP_ERR_ - \"impossible\" SCSI phase occurred or something else as "
 "weird or just a generic error if further detail is not available"
 msgstr ""
+"_CAM_REQ_CMP_ERR_ - произошла «невозможная» фаза SCSI или что-то столь же "
+"странное, либо это просто общая ошибка, если дополнительная информация "
+"недоступна"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1477
 msgid "_CAM_UNEXP_BUSFREE_ - unexpected disconnect occurred"
-msgstr ""
+msgstr "_CAM_UNEXP_BUSFREE_ - произошло неожиданное отключение"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1478
 msgid "_CAM_BDR_SENT_ - BUS DEVICE RESET message was sent to the target"
 msgstr ""
+"_CAM_BDR_SENT_ - Сообщение BUS DEVICE RESET было отправлено целевому "
+"устройству"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1479
 msgid "_CAM_UNREC_HBA_ERROR_ - unrecoverable Host Bus Adapter Error"
-msgstr ""
+msgstr "_CAM_UNREC_HBA_ERROR_ - невосстановимая ошибка адаптера шины хоста"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1480
 msgid "_CAM_REQ_TOO_BIG_ - the request was too large for this controller"
-msgstr ""
+msgstr "_CAM_REQ_TOO_BIG_ - запрос слишком велик для данного контроллера"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1484
@@ -3978,6 +4175,14 @@ msgid ""
 "cases the troublesome command returns the status indicating the error, the "
 "and the other commands which have not be sent to the bus yet get re-queued."
 msgstr ""
+"_CAM_REQUEUE_REQ_ - этот запрос должен быть повторно поставлен в очередь для "
+"сохранения порядка транзакций. Обычно это происходит, когда SIM обнаруживает "
+"ошибку, которая должна заморозить очередь, и необходимо поместить другие "
+"запросы в очереди для цели на уровне SIM обратно в очередь XPT. Типичными "
+"случаями таких ошибок являются тайм-ауты выбора, тайм-ауты команд и другие "
+"подобные условия. В таких случаях проблемная команда возвращает статус, "
+"указывающий на ошибку, а другие команды, которые ещё не были отправлены на "
+"шину, повторно ставятся в очередь."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1485
@@ -3985,6 +4190,8 @@ msgid ""
 "_CAM_LUN_INVALID_ - the LUN ID in the request is not supported by the SCSI "
 "controller"
 msgstr ""
+"_CAM_LUN_INVALID_ - идентификатор LUN в запросе не поддерживается "
+"контроллером SCSI"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1486
@@ -3992,12 +4199,14 @@ msgid ""
 "_CAM_TID_INVALID_ - the target ID in the request is not supported by the "
 "SCSI controller"
 msgstr ""
+"_CAM_TID_INVALID_ - идентификатор целевого устройства в запросе не "
+"поддерживается контроллером SCSI"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1488
 #, no-wrap
 msgid "Timeout Handling"
-msgstr ""
+msgstr "Обработка таймаутов"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1496
@@ -4013,6 +4222,16 @@ msgid ""
 "reset the whole SCSI bus if a device reset request got stuck.  So after all "
 "the timeout function would look like:"
 msgstr ""
+"Когда время ожидания для HCB истекает, этот запрос должен быть прерван, как "
+"и в случае с запросом XPT_ABORT. Единственное отличие заключается в том, что "
+"возвращаемый статус прерванного запроса должен быть CAM_CMD_TIMEOUT вместо "
+"CAM_REQ_ABORTED (вот почему реализацию прерывания лучше сделать в виде "
+"функции). Но есть ещё одна возможная проблема: что если сам запрос на "
+"прерывание зависнет? В этом случае шина SCSI должна быть сброшена, как и при "
+"запросе XPT_RESET_BUS (и идея о реализации этого в виде функции, вызываемой "
+"из обоих мест, применима и здесь). Также мы должны сбросить всю шину SCSI, "
+"если запрос на сброс устройства завис. В итоге функция обработки таймаута "
+"будет выглядеть следующим образом:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/scsi/_index.adoc:1505
@@ -4071,3 +4290,10 @@ msgid ""
 "then probably something really bad is happening to the device, so if they "
 "would not be disturbed they would time out by themselves."
 msgstr ""
+"Когда мы прерываем запрос, все остальные отключенные запросы к тому же "
+"целевому устройству/LUN также прерываются. Возникает вопрос: следует ли "
+"возвращать их со статусом CAM_REQ_ABORTED или CAM_CMD_TIMEOUT? Текущие "
+"драйверы используют CAM_CMD_TIMEOUT. Это кажется логичным, потому что если "
+"один запрос превысил время ожидания, то, вероятно, с устройством происходит "
+"что-то действительно плохое, и если их не трогать, они бы сами превысили "
+"время ожидания."

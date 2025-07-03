@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-28 21:10+0000\n"
+"PO-Revision-Date: 2025-07-03 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookpccard_index/ru/>\n"
@@ -29,7 +29,7 @@ msgstr "PC Card"
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:1
 #, no-wrap
 msgid "Chapter 16. PC Card"
-msgstr ""
+msgstr "Глава 16. PC Card"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:52
@@ -38,12 +38,15 @@ msgid ""
 "driver for a PC Card or CardBus device. However, at present it just "
 "documents how to add a new device to an existing pccard driver."
 msgstr ""
+"Эта глава расскажет о механизмах FreeBSD для написания драйвера устройства "
+"для PC Card или CardBus устройства. Однако в настоящее время она лишь "
+"документирует, как добавить новое устройство к существующему драйверу pccard."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:54
 #, no-wrap
 msgid "Adding a Device"
-msgstr ""
+msgstr "Добавление устройства"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:57
@@ -51,6 +54,9 @@ msgid ""
 "Device drivers know what devices they support. There is a table of supported "
 "devices in the kernel that drivers use to attach to a device."
 msgstr ""
+"Драйверы устройств знают, какие устройства они поддерживают. В ядре "
+"существует таблица поддерживаемых устройств, которую драйверы используют для "
+"подключения к устройству."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:59
@@ -68,6 +74,13 @@ msgid ""
 "uses a centralized database and some macros to facilitate a design pattern "
 "to help the driver writer match devices to his driver."
 msgstr ""
+"PC Cards идентифицируются одним из двух способов, оба основаны на _Card "
+"Information Structure_ (CIS), хранящейся на карте. Первый метод — "
+"использование числовых идентификаторов производителя и продукта. Второй "
+"метод — использование удобочитаемых строк, также содержащихся в CIS. Шина PC "
+"Card использует централизованную базу данных и некоторые макросы для "
+"упрощения шаблона проектирования, помогающего автору драйвера сопоставлять "
+"устройства с его драйвером."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:64
@@ -81,6 +94,15 @@ msgid ""
 "the human readable strings in the CIS space, but leave the manufacturer and "
 "product IDs unchanged."
 msgstr ""
+"Производители оригинального оборудования (OEM) часто разрабатывают эталонный "
+"дизайн для продуктов PC Card, а затем продают этот дизайн другим компаниям "
+"для продвижения на рынке. Эти компании дорабатывают дизайн, продвигают "
+"продукт для своей целевой аудитории или географического региона и размещают "
+"на карте свою собственную торговую марку. Доработки физической карты обычно "
+"очень незначительны, если они вообще вносятся. Чтобы усилить свой бренд, "
+"такие поставщики указывают название своей компании в читаемых человеком "
+"строках в пространстве CIS, но оставляют идентификаторы производителя и "
+"продукта без изменений."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:66
@@ -95,6 +117,17 @@ msgid ""
 "designs can be sold in Japan under names such as Buffalo and Corega. Often, "
 "these devices will all have the same manufacturer and product IDs."
 msgstr ""
+"Из-за такой практики драйверы FreeBSD обычно полагаются на числовые "
+"идентификаторы для распознавания устройств. Использование числовых "
+"идентификаторов и централизованной базы данных усложняет добавление ID и "
+"поддержку карт в систему. Необходимо тщательно проверять, кто на самом деле "
+"произвел карту, особенно когда кажется, что у производителя карты уже может "
+"быть другой идентификатор производителя в центральной базе данных. Linksys, "
+"D-Link и NetGear — это несколько американских производителей сетевого "
+"оборудования, которые часто продают один и тот же дизайн. Эти же дизайны "
+"могут продаваться в Японии под такими названиями, как Buffalo и Corega. "
+"Часто все эти устройства будут иметь одинаковые идентификаторы производителя "
+"и продукта."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:68
@@ -104,6 +137,11 @@ msgid ""
 "pccarddevs#. It also provides a set of macros that allow one to easily "
 "construct simple entries in the table the driver uses to claim devices."
 msgstr ""
+"Код шины PC Card хранит централизованную базу данных информации о картах, но "
+"не о том, какой драйвер с ними связан, в [.filename]#/sys/dev/pccard/"
+"pccarddevs#. Он также предоставляет набор макросов, которые позволяют легко "
+"создавать простые записи в таблице, используемой драйвером для заявки "
+"устройств."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:70
@@ -117,12 +155,20 @@ msgid ""
 "recognition of the OEM nature of the PC Card business. When adding new "
 "devices, prefer using the numeric method."
 msgstr ""
+"Наконец, некоторые устройства очень низкого уровня вообще не содержат "
+"идентификации производителя. Эти устройства должны быть обнаружены путем "
+"сопоставления читаемых человеком строк CIS. Хотя было бы хорошо, если бы нам "
+"не нужен был этот метод в качестве запасного варианта, он необходим для "
+"некоторых очень дешевых CD-плееров и Ethernet-карт. Этот метод, как правило, "
+"следует избегать, но ряд устройств перечислен в этом разделе, потому что они "
+"были добавлены до осознания OEM-характера бизнеса PC Card. При добавлении "
+"новых устройств предпочтительнее использовать числовой метод."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:72
 #, no-wrap
 msgid "Format of [.filename]#pccarddevs#"
-msgstr ""
+msgstr "Формат файла [.filename]#pccarddevs#"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:75
@@ -138,6 +184,16 @@ msgid ""
 "comments enclosed in `/*` and `*/` characters are allowed anywhere in the "
 "file."
 msgstr ""
+"В файле [.filename]#pccarddevs# есть четыре раздела. Первый раздел содержит "
+"номера производителей для вендоров, которые их используют. Этот раздел "
+"отсортирован в числовом порядке. Следующий раздел включает все продукты, "
+"используемые этими вендорами, вместе с их идентификаторами продуктов и "
+"строкой описания. Строка описания обычно не используется (вместо этого мы "
+"устанавливаем описание устройства на основе читаемого CIS, даже если "
+"совпадение найдено по числовому идентификатору). Затем эти два раздела "
+"повторяются для устройств, использующих метод строкового сопоставления. "
+"Наконец, C-подобные комментарии, заключенные между символами `/*` и `*/`, "
+"допускаются в любом месте файла."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:77
@@ -147,6 +203,11 @@ msgid ""
 "because we share it with NetBSD to help facilitate a common clearing house "
 "for this information. For example, here are the first few vendor IDs:"
 msgstr ""
+"Первая часть файла содержит идентификаторы производителей. Пожалуйста, "
+"сохраняйте этот список в числовом порядке. Также, пожалуйста, согласовывайте "
+"изменения в этом файле, так как мы делимся им с NetBSD для создания общего "
+"центра обработки этой информации. Например, вот первые несколько "
+"идентификаторов производителей:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:84
@@ -179,6 +240,20 @@ msgid ""
 "that makes the card. This string is not used in FreeBSD for anything but "
 "commentary purposes."
 msgstr ""
+"Вероятно, запись `NETGEAR_2` на самом деле относится к OEM-производителю, у "
+"которого NETGEAR приобретал карты, и автор поддержки этих карт не знал на "
+"тот момент, что Netgear использовал чужой идентификатор. Эти записи довольно "
+"просты. Ключевое слово `vendor` обозначает тип строки, за которым следует "
+"название производителя. Это название будет повторяться позже в [."
+"filename]#pccarddevs#, а также использоваться в таблицах соответствия "
+"драйверов, поэтому оно должно быть коротким и допустимым идентификатором в "
+"C. Числовой идентификатор в шестнадцатеричном формате указывает "
+"производителя. Не добавляйте идентификаторы вида `0xffffffff` или `0xffff`, "
+"так как они зарезервированы (первый означает \"идентификатор не установлен\""
+", а второй иногда встречается в крайне некачественных картах для указания "
+"\"отсутствует\"). Наконец, следует строковое описание компании, производящей "
+"карту. Эта строка в FreeBSD ни для чего не используется, кроме как в "
+"комментариях."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:89
@@ -186,6 +261,8 @@ msgid ""
 "The second section of the file contains the products. As shown in this "
 "example, the format is similar to the vendor lines:"
 msgstr ""
+"Вторая секция файла содержит продукты. Как показано в этом примере, формат "
+"аналогичен строкам поставщиков:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:94
@@ -222,6 +299,18 @@ msgid ""
 "numerical order by product ID. They have a C comment before each "
 "manufacturer's entries and there is a blank line between entries."
 msgstr ""
+"Ключевое слово `product` следует за именем производителя, повторяющимся "
+"сверху. После него идет название продукта, которое используется драйвером и "
+"должно быть допустимым идентификатором в C, но также может начинаться с "
+"цифры. Как и в случае с производителями, шестнадцатеричный идентификатор "
+"продукта для этой карты следует тем же соглашениям для `0xffffffff` и "
+"`0xffff`. Наконец, идет строковое описание самого устройства. Эта строка "
+"обычно не используется в FreeBSD, поскольку драйвер шины pccard в FreeBSD "
+"формирует строку из читаемых человеком записей CIS, но она может быть "
+"использована в редких случаях, когда этого недостаточно. Продукты "
+"перечислены в алфавитном порядке по производителю, затем в числовом порядке "
+"по идентификатору продукта. Перед записями каждого производителя есть "
+"комментарий в C, а между записями — пустая строка."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:102
@@ -232,6 +321,11 @@ msgid ""
 "be unique. Otherwise the format is identical to the first section of the "
 "file."
 msgstr ""
+"Третий раздел аналогичен предыдущему разделу производителей, но все числовые "
+"идентификаторы производителей установлены в `-1`, что означает \"совпадение "
+"с любым найденным\" в коде шины pccard FreeBSD. Поскольку это идентификаторы "
+"C, их имена должны быть уникальными. В остальном формат идентичен первому "
+"разделу файла."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:104
@@ -240,6 +334,9 @@ msgid ""
 "identified by string entries. This section's format is a little different "
 "from the generic section:"
 msgstr ""
+"Последний раздел содержит записи для тех карт, которые должны быть "
+"идентифицированы по строковым значениям. Формат этого раздела немного "
+"отличается от общего раздела:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:109
@@ -274,12 +371,29 @@ msgid ""
 "vendor kept the same manufacturer/product pair. Regular expression matching "
 "is not available at this time."
 msgstr ""
+"Знакомое ключевое слово `product` сопровождается названием производителя и "
+"именем карты, как и во втором разделе файла. Здесь формат отличается от "
+"использованного ранее. Идёт группировка {}, за которой следует несколько "
+"строк. Эти строки соответствуют производителю, продукту и дополнительной "
+"информации, определённой в кортеже CIS_INFO. Эти строки фильтруются "
+"программой, которая генерирует [.filename]#pccarddevs.h#, чтобы заменить &sp "
+"на реальный пробел. Строки NULL означают, что соответствующую часть записи "
+"следует игнорировать. В приведённом здесь примере есть некорректная запись. "
+"Она не должна содержать номер версии, если только он не критичен для работы "
+"карты. Иногда у производителей может быть множество различных версий карты в "
+"обращении, которые все работают, и в таком случае эта информация только "
+"затрудняет использование аналогичной карты с FreeBSD. Иногда это необходимо, "
+"когда производитель хочет продавать множество различных компонентов под "
+"одним брендом из-за рыночных соображений (доступность, цена и т. д.). Тогда "
+"это может быть критично для различения карты в тех редких случаях, когда "
+"производитель сохранил ту же пару производитель/продукт. На данный момент "
+"использование регулярных выражений для сопоставления недоступно."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:114
 #, no-wrap
 msgid "Sample Probe Routine"
-msgstr ""
+msgstr "Пример процедуры обнаружения"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:117
@@ -290,6 +404,11 @@ msgid ""
 "for OLDCARD present as well. Since only the window-dressing is different, an "
 "idealized version will be presented here."
 msgstr ""
+"Чтобы понять, как добавить устройство в список поддерживаемых, необходимо "
+"разобраться в процедурах `probe` (обнаружение) и/или `match` (сопоставление)"
+", которые есть во многих драйверах. В FreeBSD 5.x это немного сложнее из-за "
+"наличия слоя совместимости с OLDCARD. Поскольку различия лишь косметические, "
+"здесь будет представлена идеализированная версия."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:127
@@ -361,6 +480,16 @@ msgid ""
 "may be some variance in the table. The only requirement is that each row of "
 "the table must have a `struct pccard_product` as the first element."
 msgstr ""
+"Вот простая процедура проверки pccard, которая соответствует нескольким "
+"устройствам. Как упоминалось выше, название может отличаться (если это не "
+"`foo_pccard_probe()`, то это будет `foo_pccard_match()`). Функция "
+"`pccard_product_lookup()` является обобщенной функцией, которая проходит по "
+"таблице и возвращает указатель на первую запись, которой соответствует. "
+"Некоторые драйверы могут использовать этот механизм для передачи "
+"дополнительной информации о некоторых картах остальной части драйвера, "
+"поэтому в таблице могут быть вариации. Единственное требование — каждая "
+"строка таблицы должна содержать `struct pccard_product` в качестве первого "
+"элемента."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:147
@@ -376,12 +505,23 @@ msgid ""
 "and manufacturer numbers, in the \"use the default description\" and \"take "
 "the description from pccarddevs\" flavors."
 msgstr ""
+"Рассматривая таблицу `wi_pccard_products`, можно заметить, что все записи "
+"имеют вид `PCMCIA_CARD(_foo_, _bar_, _baz_)`. Часть _foo_ — это "
+"идентификатор производителя из [.filename]#pccarddevs#. Часть _bar_ — это "
+"идентификатор продукта. _baz_ — ожидаемый номер функции для этой карты. "
+"Многие pccard-устройства могут иметь несколько функций, поэтому требуется "
+"способ различать функцию 1 и функцию 0. Вы можете встретить `PCMCIA_CARD_D`, "
+"который включает описание устройства из [.filename]#pccarddevs#. Также могут "
+"встречаться `PCMCIA_CARD2` и `PCMCIA_CARD2_D`, которые используются, когда "
+"необходимо сопоставить как строки CIS, так и номера производителей, в "
+"вариантах «использовать описание по умолчанию» и «взять описание из "
+"pccarddevs»."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:149
 #, no-wrap
 msgid "Putting it All Together"
-msgstr ""
+msgstr "Собираем все вместе"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:152
@@ -390,6 +530,10 @@ msgid ""
 "from the device. The easiest way to do this is to insert the device into a "
 "PC Card or CF slot and issue `devinfo -v`. Sample output:"
 msgstr ""
+"Для добавления нового устройства необходимо сначала получить "
+"идентификационную информацию от устройства. Проще всего это сделать, вставив "
+"устройство в слот PC Card или CF и выполнив команду `devinfo -v`. Пример "
+"вывода:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:159
@@ -414,6 +558,9 @@ msgid ""
 "`cisvendor` and `cisproduct` are the product description strings from the "
 "CIS."
 msgstr ""
+"`manufacturer` и `product` являются числовыми идентификаторами данного "
+"продукта, в то время как `cisvendor` и `cisproduct` представляют собой "
+"строки описания продукта из CIS."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:164
@@ -423,6 +570,10 @@ msgid ""
 "purpose of this example. The vendor is BUFFALO, which we see already has an "
 "entry:"
 msgstr ""
+"Поскольку мы сначала хотим предпочесть числовой вариант, попробуем сначала "
+"создать запись на его основе. Приведённая выше карта была слегка изменена "
+"для целей данного примера. Производитель — BUFFALO, у которого, как мы "
+"видим, уже есть запись:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:168
@@ -433,7 +584,7 @@ msgstr "vendor BUFFALO\t\t\t0x026f\tBUFFALO (Melco Corporation)\n"
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:171
 msgid "But there is no entry for this particular card. Instead we find:"
-msgstr ""
+msgstr "Но нет записи для этой конкретной карты. Вместо этого мы видим:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:179
@@ -456,6 +607,8 @@ msgstr ""
 msgid ""
 "To add the device, we can just add this entry to [.filename]#pccarddevs#:"
 msgstr ""
+"Чтобы добавить устройство, мы можем просто добавить эту запись в [."
+"filename]#pccarddevs#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:186
@@ -470,6 +623,8 @@ msgid ""
 "Once these steps are complete, the card can be added to the driver. That is "
 "a simple operation of adding one line:"
 msgstr ""
+"После выполнения этих шагов карту можно добавить в драйвер. Это простая "
+"операция добавления одной строки:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:200
@@ -504,6 +659,13 @@ msgid ""
 "and submit a patch. If the device is not recognized at all, you have done "
 "something wrong and should recheck each step."
 msgstr ""
+"Обратите внимание, что я добавил символ '`+`' перед строкой, которую "
+"добавил, но это только для выделения строки. Не добавляйте его в реальный "
+"драйвер. После добавления строки вы можете пересобрать ядро или модуль и "
+"протестировать его. Если устройство распознано и работает, отправьте патч. "
+"Если оно не работает, определите, что необходимо для его работы, и отправьте "
+"патч. Если устройство не распознаётся вообще, вы где-то ошиблись и следует "
+"перепроверить каждый шаг."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:205
@@ -515,12 +677,19 @@ msgid ""
 "committed as a second step, ensuring that the right $FreeBSD$ tag is in the "
 "latter file. Finally, commit the additions to the driver."
 msgstr ""
+"Если вы коммиттер исходного кода FreeBSD, и всё работает корректно, то "
+"можете закоммитить изменения в дерево. Однако есть несколько небольших "
+"нюансов, которые следует учесть. [.filename]#pccarddevs# должен быть "
+"закоммичен в дерево первым. Затем [.filename]#pccarddevs.h# необходимо "
+"перегенерировать и закоммитить вторым шагом, убедившись, что правильный тег "
+"$FreeBSD$ присутствует в последнем файле. В конце закоммитьте добавления в "
+"драйвер."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:207
 #, no-wrap
 msgid "Submitting a New Device"
-msgstr ""
+msgstr "Отправка кода для нового устройства"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pccard/_index.adoc:209
@@ -535,3 +704,12 @@ msgid ""
 "investigation. Committers should not commit OEM99, but instead find the "
 "highest OEM entry and commit one more than that."
 msgstr ""
+"Пожалуйста, не отправляйте записи о новых устройствах автору напрямую. "
+"Вместо этого оформите их как PR и сообщите автору номер PR для учета. Это "
+"гарантирует, что записи не будут потеряны. При отправке PR нет необходимости "
+"включать в патч diff-файлы [.filename]#pccardevs.h#, так как они будут "
+"перегенерированы. Однако необходимо включить описание устройства, а также "
+"патчи для клиентского драйвера. Если название устройства неизвестно, "
+"используйте имя OEM99, и автор скорректирует OEM99 после изучения. Коммитеры "
+"не должны коммитить OEM99, а вместо этого найти наибольший OEM-номер и "
+"закоммитить на единицу больше."

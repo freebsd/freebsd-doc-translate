@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-28 21:10+0000\n"
+"PO-Revision-Date: 2025-07-03 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksarch-handbookpci_index/ru/>\n"
@@ -23,13 +23,13 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:14
 #, no-wrap
 msgid "PCI Devices"
-msgstr ""
+msgstr "Устройства PCI"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:1
 #, no-wrap
 msgid "Chapter 11. PCI Devices"
-msgstr ""
+msgstr "Глава 11. Устройства PCI"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:52
@@ -37,12 +37,14 @@ msgid ""
 "This chapter will talk about the FreeBSD mechanisms for writing a device "
 "driver for a device on a PCI bus."
 msgstr ""
+"Эта глава расскажет о механизмах FreeBSD для написания драйвера устройства "
+"на шине PCI."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:54
 #, no-wrap
 msgid "Probe and Attach"
-msgstr ""
+msgstr "Обнаружение и подключение"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:57
@@ -50,12 +52,15 @@ msgid ""
 "Information here about how the PCI bus code iterates through the unattached "
 "devices and see if a newly loaded kld will attach to any of them."
 msgstr ""
+"Информация о том, как код шины PCI перебирает неприсоединённые устройства и "
+"проверяет, сможет ли только что загруженный kld присоединиться к любому из "
+"них."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:58
 #, no-wrap
 msgid "Sample Driver Source ([.filename]#mypci.c#)"
-msgstr ""
+msgstr "Пример исходного кода драйвера ([.filename]#mypci.c#)"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:67
@@ -636,7 +641,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:269
 #, no-wrap
 msgid "[.filename]#Makefile# for Sample Driver"
-msgstr ""
+msgstr "[.filename]#Makefile# для примера драйвера"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:274
@@ -670,17 +675,21 @@ msgid ""
 "you may run `make load` to load the driver into the currently running kernel "
 "and `make unload` to unload the driver after it is loaded."
 msgstr ""
+"Если вы поместите исходный файл выше и [.filename]#Makefile# в каталог, вы "
+"можете запустить `make` для компиляции примера драйвера. Дополнительно можно "
+"выполнить `make load` для загрузки драйвера в текущее ядро и `make unload` "
+"для выгрузки драйвера после его загрузки."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:284
 #, no-wrap
 msgid "Additional Resources"
-msgstr ""
+msgstr "Дополнительные ресурсы"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:287
 msgid "http://www.pcisig.org/[PCI Special Interest Group]"
-msgstr ""
+msgstr "http://www.pcisig.org/[Группа по стандартам PCI]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:288
@@ -691,7 +700,7 @@ msgstr "PCI System Architecture, Fourth Edition by Tom Shanley, et al."
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:290
 #, no-wrap
 msgid "Bus Resources"
-msgstr ""
+msgstr "Ресурсы шины"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:293
@@ -701,12 +710,17 @@ msgid ""
 "(PCI, ISA, USB, SCSI, etc) and these devices need to acquire resources from "
 "their parent bus (such as memory segments, interrupt lines, or DMA channels)."
 msgstr ""
+"FreeBSD предоставляет объектно-ориентированный механизм для запроса ресурсов "
+"от родительской шины. Почти все устройства будут дочерними элементами какого-"
+"либо типа шины (PCI, ISA, USB, SCSI и т.д.), и этим устройствам необходимо "
+"получать ресурсы от своей родительской шины (такие как сегменты памяти, "
+"линии прерываний или каналы DMA)."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:294
 #, no-wrap
 msgid "Base Address Registers"
-msgstr ""
+msgstr "Регистры базовых адресов"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:297
@@ -716,6 +730,10 @@ msgid ""
 "PCI-specific details of obtaining the BAR are abstracted in the "
 "`bus_alloc_resource()` function."
 msgstr ""
+"Для выполнения каких-либо полезных действий с устройством PCI необходимо "
+"получить _регистры базовых адресов_ (BAR) из конфигурационного пространства "
+"PCI. Специфичные для PCI детали получения BAR абстрагированы в функции "
+"`bus_alloc_resource()`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:299
@@ -723,6 +741,8 @@ msgid ""
 "For example, a typical driver might have something similar to this in the "
 "`attach()` function:"
 msgstr ""
+"Например, типичный драйвер может содержать что-то подобное в функции "
+"`attach()`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:310
@@ -784,6 +804,8 @@ msgid ""
 "Handles for each base address register are kept in the `softc` structure so "
 "that they can be used to write to the device later."
 msgstr ""
+"Дескрипторы для каждого регистра базовых адресов хранятся в структуре `softc`"
+", чтобы их можно было использовать для записи на устройство в дальнейшем."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:328
@@ -792,6 +814,10 @@ msgid ""
 "with the `bus_space_*` functions. For example, a driver might contain a "
 "shorthand function to read from a board specific register like this:"
 msgstr ""
+"Эти дескрипторы затем могут быть использованы для чтения или записи из "
+"регистров устройства с помощью функций `bus_space_*`. Например, драйвер "
+"может содержать сокращённую функцию для чтения из специфичного для платы "
+"регистра, как показано ниже:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:336
@@ -812,7 +838,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:339
 msgid "Similarly, one could write to the registers with:"
-msgstr ""
+msgstr "Аналогично, можно записать в регистры с помощью:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:347
@@ -836,6 +862,8 @@ msgid ""
 "These functions exist in 8bit, 16bit, and 32bit versions and you should use "
 "`bus_space_{read|write}_{1|2|4}` accordingly."
 msgstr ""
+"Эти функции существуют в 8-битных, 16-битных и 32-битных версиях, и вам "
+"следует использовать `bus_space_{read|write}_{1|2|4}` соответственно."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:354
@@ -845,6 +873,11 @@ msgid ""
 "instead of a bus tag and handle. Thus, you could drop the bus tag and bus "
 "handle members from the `softc` and rewrite the `board_read()` function as:"
 msgstr ""
+"В FreeBSD 7.0 и более поздних версиях вы можете использовать функции `bus_*` "
+"вместо `bus_space_*`. Функции `bus_*` принимают указатель на структуру "
+"resource * вместо тега шины и дескриптора. Таким образом, вы можете удалить "
+"тег шины и дескриптор шины из `softc` и переписать функцию `board_read()` "
+"как:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:362
@@ -866,7 +899,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:366
 #, no-wrap
 msgid "Interrupts"
-msgstr ""
+msgstr "Прерывания"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:369
@@ -876,11 +909,17 @@ msgid ""
 "parent bus, and then the interrupt handler must be set up to deal with this "
 "IRQ."
 msgstr ""
+"Прерывания выделяются объектно-ориентированным кодом шины аналогично "
+"ресурсам памяти. Сначала ресурс IRQ должен быть выделен из родительской "
+"шины, а затем должен быть настроен обработчик прерывания для работы с этим "
+"IRQ."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:371
 msgid "Again, a sample from a device `attach()` function says more than words."
 msgstr ""
+"Вот пример из функции `attach()` устройства, который скажет больше, чем "
+"слова."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:375
@@ -946,6 +985,13 @@ msgid ""
 "executing this interrupt handler have returned. Since this function can "
 "sleep, you must not hold any mutexes when calling this function."
 msgstr ""
+"Некоторые меры предосторожности должны быть приняты в процедуре отключения "
+"драйвера. Необходимо остановить поток прерываний устройства и удалить "
+"обработчик прерываний. Как только `bus_teardown_intr()` завершится, можно "
+"быть уверенным, что обработчик прерываний больше не будет вызываться и все "
+"потоки, которые могли выполнять этот обработчик, завершили работу. Поскольку "
+"эта функция может засыпать, нельзя удерживать какие-либо мьютексы при её "
+"вызове."
 
 #. type: Title ===
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:397
@@ -963,6 +1009,12 @@ msgid ""
 "API is in a bit of flux, so once that settles down, it would be good to "
 "update this section to reflect that."
 msgstr ""
+"Этот раздел устарел и приведён только в исторических целях. Правильный "
+"способ решения этих проблем — использование функций `bus_space_dma*()`. Этот "
+"абзац можно удалить, когда раздел будет обновлён с учётом данного подхода. "
+"Однако на данный момент API находится в состоянии изменения, поэтому, когда "
+"он стабилизируется, будет полезно обновить этот раздел соответствующим "
+"образом."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:402
@@ -972,6 +1024,11 @@ msgid ""
 "deals almost exclusively with virtual addresses. Fortunately, there is a "
 "function, `vtophys()` to help."
 msgstr ""
+"На ПК периферийные устройства, которые хотят использовать DMA с управлением "
+"шиной, должны работать с физическими адресами. Это проблема, поскольку "
+"FreeBSD использует виртуальную память и работает почти исключительно с "
+"виртуальными адресами. К счастью, существует функция `vtophys()`, которая "
+"поможет."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:407
@@ -995,6 +1052,8 @@ msgid ""
 "The solution is a bit different on the alpha however, and what we really "
 "want is a function called `vtobus()`."
 msgstr ""
+"Однако решение немного отличается на alpha, и на самом деле нам нужна "
+"функция под названием `vtobus()`."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:420
@@ -1016,7 +1075,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:422
 #, no-wrap
 msgid "Deallocating Resources"
-msgstr ""
+msgstr "Освобождение ресурсов"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/pci/_index.adoc:424
@@ -1026,3 +1085,7 @@ msgid ""
 "on a failure condition so that the system will remain usable while your "
 "driver dies."
 msgstr ""
+"Очень важно освободить все ресурсы, которые были выделены во время `attach()`"
+". Необходимо внимательно следить за освобождением правильных ресурсов даже в "
+"случае ошибки, чтобы система оставалась работоспособной при завершении "
+"работы вашего драйвера."
