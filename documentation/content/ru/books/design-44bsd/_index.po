@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2024-12-29 08:29-0500\n"
-"PO-Revision-Date: 2025-06-22 04:45+0000\n"
+"PO-Revision-Date: 2025-07-03 13:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksdesign-44bsd_index/ru/>\n"
@@ -29,7 +29,7 @@ msgstr ""
 #: documentation/content/en/books/design-44bsd/_index.adoc:16
 #, no-wrap
 msgid "The Design and Implementation of the 4.4BSD Operating System"
-msgstr ""
+msgstr "Архитектура и реализация операционной системы 4.4BSD"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:50
@@ -55,6 +55,9 @@ msgid ""
 "communications, and system startup.  This section outlines where each of "
 "these four basic services is described in this book."
 msgstr ""
+"Ядро 4.4BSD предоставляет четыре основных системных сервиса: процессы, "
+"файловую систему, коммуникации и запуск системы. Этот раздел перечисляет, в "
+"каком месте этой книги описана каждая из этих служб."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:63
@@ -64,6 +67,10 @@ msgid ""
 "Chapter 4. The system multiplexes separate virtual-address spaces for each "
 "process; this memory management is discussed in Chapter 5."
 msgstr ""
+"Процессы образуют поток управления в адресном пространстве. Механизмы "
+"создания, завершения и другие управляющие процессы описаны в Главе 4. Для "
+"каждого процесса система мультиплексирует отдельное виртуальное адресное "
+"пространство; такое управление памятью обсуждается в Главе 5."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:64
@@ -77,6 +84,15 @@ msgid ""
 "subject of Chapter 9. Terminals are used to access the system; their "
 "operation is the subject of Chapter 10."
 msgstr ""
+"Механизм доступа пользователя к файловой системе и устройствам один и тот же;"
+" общие аспекты обсуждаются в Главе 6. Файловая система является набором "
+"именованных файлов, организованных в древовидную иерархию каталогов, а "
+"операции по управлению ими представлены в Главе 7. Файлы располагаются на "
+"таких физических носителях, как диски. 4.4BSD поддерживает несколько типов "
+"организации данных на диске, как описано далее в Главе 8. Доступ к файлам на "
+"удаленных машинах является предметом обсуждения в Главе 9. Для доступа к "
+"системе Терминалы используются терминалы; их функционированию посвящена "
+"глава 10."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:65
@@ -92,6 +108,17 @@ msgid ""
 "facility. Chapter 13 describes a particular networking implementation in "
 "detail."
 msgstr ""
+"Механизмы коммуникаций, предоставляемые традиционными UNIX-системами, "
+"включают однонаправленные потоки байтов между связанными процессами ("
+"смотрите материал о конвейерах в Разделе 11.1) и извещение об исключительных "
+"событиях (смотрите материал о сигналах в Разделе 4.7). В 4.4BSD имеется "
+"также механизм межпроцессного взаимодействия между процессами. Этот "
+"механизм, описываемый в Главе 11, использует способы доступа, отличающиеся "
+"от тех, что используются в файловой системе, но, как только соединение "
+"установлено, процесс может работать с ним, как будто это конвейер. Имеется и "
+"механизм работы с сетью, описываемый в Главе 12, который обычно используется "
+"как слой ниже механизма IPC. В Главе 13 дается детальное описание конкретной "
+"реализации механизма работы с сетью."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:66
@@ -99,6 +126,8 @@ msgid ""
 "Any real operating system has operational issues, such as how to start it "
 "running. Startup and operational issues are described in Chapter 14."
 msgstr ""
+"В любой операционной системе присутствуют вопросы управления, такие, как ее "
+"запуск. Запуск и вопросы управления обсуждаются в Главе 14."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:70
@@ -108,12 +137,16 @@ msgid ""
 "explore historical developments.  Finally, we shall give the reasons for "
 "many major design decisions."
 msgstr ""
+"Разделы с 2.3 по 2.14 представляют собой вводный материал, относящийся к "
+"главам с 3 по 14. Мы определим понятия, коснемся основных системных вызовов "
+"и рассмотрим исторические разработки. Наконец, мы расскажем о причинах "
+"многих ключевых архитектурных решений."
 
 #. type: Title ====
 #: documentation/content/en/books/design-44bsd/_index.adoc:71
 #, no-wrap
 msgid "The Kernel"
-msgstr ""
+msgstr "Ядро"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:78
@@ -130,6 +163,18 @@ msgid ""
 "several kernel mechanisms that do not execute as the direct result of a "
 "process doing a system call."
 msgstr ""
+"_Ядро_ является частью системы, которая работает в защищенном режиме и "
+"управляет доступом всех пользовательских программ к низкоуровнему "
+"аппаратному обеспечению (к примеру, ЦПУ, дискам, терминалам, сетевым связям) "
+"и программным компонентам (к примеру, файловой системе, сетевым протоколам). "
+"Ядро предоставляет основные системные услуги; оно создает процессы и "
+"управляет ими, предоставляет функции для доступа к файловой системе и "
+"службам связи. Такие функции, называемые _системными вызовами_, доступны "
+"процессам пользователей в виде библиотечных подпрограмм. Эти системные "
+"вызовы являются единственным способом доступа к таким услугам. Подробно "
+"механизм работы системных вызовов дается в Главе 3, вместе с описанием "
+"некоторых механизмов ядра, работа которых не является прямым результатом "
+"процесса, выполняющего системный вызов."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:84
@@ -145,6 +190,16 @@ msgid ""
 "Services such as filesystems and networking protocols are implemented as "
 "client application processes of the nucleus or kernel."
 msgstr ""
+"_Ядро_, по традиционной терминологии операционных систем, является маленьким "
+"куском программного обеспечения, которое предоставляет только минимальный "
+"набор услуг, необходимый для реализации дополнительных служб операционной "
+"системы. В современных исследовательских операционных системах - таких, как "
+"Chorus <<biblio-rozier, [Rozier et al, 1988]>>, Mach <<biblio-accetta, ["
+"Accetta et al, 1986]>>, Tunis <<biblio-ewens, [Ewens et al, 1985]>>, и V "
+"Kernel <<biblio-cheriton, [Cheriton, 1988]>> - такое разделение "
+"функциональности выполнено не только логически. Такие службы, как файловые "
+"системы и сетевые протоколы, выполнены в виде прикладных процессов клиентов "
+"ядра или микроядра."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:93
@@ -161,6 +216,18 @@ msgid ""
 "current trend in operating-systems research is to reduce the kernel size by "
 "placing such services in user space."
 msgstr ""
+"Ядро 4.4BSD не разбивается на несколько процессов. Это основополагающее "
+"архитектурное решение было сделано в самых ранних версиях UNIX. В первых "
+"двух реализациях Кена Томпсона (Ken Thompson) не было отображаемой памяти, и "
+"поэтому не было аппаратного различия между адресным пространством "
+"пользователя и ядра <<biblio-ritchie, [Ritchie, 1988]>>. Могла бы быть "
+"придумана система обмена сообщениями как реально реализуемая модель "
+"процессов ядра и пользователя. Для простоты и увеличения производительности "
+"было выбрано монолитное ядро. К тому же ранние ядра были маленькими; "
+"включение таких служб, как сетевые коммуникации, в ядро увеличило его "
+"размер. Современные тенденции в области операционных систем сводятся к "
+"уменьшению размера ядра за счет перевода таких служб в пользовательское "
+"адресное пространство."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:97
@@ -171,6 +238,11 @@ msgid ""
 "processes.  Details of such programs are beyond the scope of this book, "
 "which instead concentrates almost exclusively on the kernel."
 msgstr ""
+"Пользователи обычно общаются с системой через интерпретатор языка команд, "
+"называемый оболочкой (_shell_), и, может быть, через дополнительные "
+"прикладные пользовательские программы. Такие программы и оболочка "
+"реализованы в виде процессов. Подробное описание таких программ выходит за "
+"рамки этой книги, которая практически полностью посвящена работе ядра."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:100
@@ -180,18 +252,22 @@ msgid ""
 "detailed design and implementation of these services as they appear in "
 "4.4BSD."
 msgstr ""
+"В разделах 2.3 и 2.4 описываются сервисы, предоставляемые ядром 4.4BSD, и "
+"дается обзор их архитектуры. Последующие главы описывают подробности "
+"архитектуры и реализации этих сервисов в 4.4BSD."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:102
 #, no-wrap
 msgid "Kernel Organization"
-msgstr ""
+msgstr "Организация ядра"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:105
 msgid ""
 "In this section, we view the organization of the 4.4BSD kernel in two ways:"
 msgstr ""
+"В этом разделе мы рассматриваем организацию ядра 4.4BSD с двух точек зрения:"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:108
@@ -199,6 +275,8 @@ msgid ""
 "As a static body of software, categorized by the functionality offered by "
 "the modules that make up the kernel"
 msgstr ""
+"Как статический блок программного обеспечения, категоризуемый по "
+"функциональности модулей, составляющих ядро"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:109
@@ -206,6 +284,7 @@ msgid ""
 "By its dynamic operation, categorized according to the services provided to "
 "users"
 msgstr ""
+"В его динамике, категоризуемой по услугам, предоставляемым пользователям"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:112
@@ -214,6 +293,9 @@ msgid ""
 "applications access through system calls.  In 4.4BSD, this software has been "
 "organized according to the following:"
 msgstr ""
+"Самая большая часть ядра реализует системные услуги, к которым приложения "
+"обращаются через системные вызовы. В 4.4BSD это программное обеспечение "
+"организуется по следующим принципам:"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:114
@@ -221,11 +303,13 @@ msgid ""
 "Basic kernel facilities: timer and system-clock handling, descriptor "
 "management, and process management"
 msgstr ""
+"Базовые услуги ядра: обработка таймеров и системного таймера, управление "
+"дескрипторами и процессами"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:115
 msgid "Memory-management support: paging and swapping"
-msgstr ""
+msgstr "Поддержка управления памятью: подкачка и выгрузка"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:116
@@ -233,6 +317,8 @@ msgid ""
 "Generic system interfaces: the I/O, control, and multiplexing operations "
 "performed on descriptors"
 msgstr ""
+"Общесистемные интерфейсы: ввод/вывод, управление и мультиплексирование "
+"операций, выполняемых над дескрипторами"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:117
@@ -240,6 +326,8 @@ msgid ""
 "The filesystem: files, directories, pathname translation, file locking, and "
 "I/O buffer management"
 msgstr ""
+"Файловая система: файлы, каталоги, преобразование маршрутов, блокировка "
+"файлов и управление буфером ввода/вывода"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:118
@@ -247,11 +335,13 @@ msgid ""
 "Terminal-handling support: the terminal-interface driver and terminal line "
 "disciplines"
 msgstr ""
+"Поддержка работы с терминалами: драйвер терминального интерфейса и режимы "
+"работы терминального канала"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:119
 msgid "Interprocess-communication facilities: sockets"
-msgstr ""
+msgstr "Службы межпроцессного взаимодействия: сокеты"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:120
@@ -259,6 +349,8 @@ msgid ""
 "Support for network communication: communication protocols and generic "
 "network facilities, such as routing"
 msgstr ""
+"Поддержка сетевых коммуникаций: коммуникационные протоколы и общесетевые "
+"службы, такие, как маршрутизация"
 
 #. type: Block title
 #: documentation/content/en/books/design-44bsd/_index.adoc:121
@@ -644,6 +736,8 @@ msgid ""
 "Most of the software in these categories is machine independent and is "
 "portable across different hardware architectures."
 msgstr ""
+"Большая часть программного обеспечения в этих категориях является машинно-"
+"независимой и переносима между различными аппаратными архитектурами."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:154
@@ -655,31 +749,37 @@ msgid ""
 "dependent function that is located in the machine-dependent code.  The "
 "software that is machine dependent includes"
 msgstr ""
+"Машинно-зависимые аспекты ядра отделены от основного кода. В частности, ни в "
+"одной части машинно-независимого кода не содержится кода, зависимого от "
+"конкретной архитектуры. Когда требуется произвести действия, зависимые от "
+"архитектуры, машинно-независимый код вызывает функцию, зависимую от "
+"архитектуры машины, которая находится в машинно-зависимой части кода. "
+"Машинно-зависимое программное обеспечение включает в себя"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:156
 msgid "Low-level system-startup actions"
-msgstr ""
+msgstr "Низкоуровневые действия по запуску системы"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:157
 msgid "Trap and fault handling"
-msgstr ""
+msgstr "Обработка исключительных ситуаций и прерываний"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:158
 msgid "Low-level manipulation of the run-time context of a process"
-msgstr ""
+msgstr "Низкоуровневые манипуляции процессом во время работы"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:159
 msgid "Configuration and initialization of hardware devices"
-msgstr ""
+msgstr "Конфигурация и инициализация аппаратных устройств"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:160
 msgid "Run-time support for I/O devices"
-msgstr ""
+msgstr "Поддержка устройств ввода/вывода во время работы"
 
 #. type: Block title
 #: documentation/content/en/books/design-44bsd/_index.adoc:161
@@ -815,6 +915,13 @@ msgid ""
 "kernel] show, the machine-dependent software, excluding HP/UX and device "
 "support, accounts for a minuscule 6.9 percent of the kernel."
 msgstr ""
+"<<table-mach-indep>> суммаризует машинно-независимый код, который составляет "
+"ядро 4.4BSD для HP300. Числа во второй колонке обозначают количество строк "
+"исходного кода на языке C, заголовочных файлов и ассемблерного кода. "
+"Практически весь код ядра написан на языке программирования C; менее двух "
+"процентов написано на языке ассемблера. Как показывает статистика в <<table-"
+"mach-dep>>, машинно-зависимый код, не включающий поддержку HP/UX и "
+"устройств, составляет менее 6.9 процента ядра."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:185
@@ -831,12 +938,23 @@ msgid ""
 "throughout, and it usually appears in places logically associated with what "
 "is being initialized."
 msgstr ""
+"Лишь малая часть ядра отвечает за инициализацию системы. Этот код "
+"используется при _начальной загрузке_ системы для перехода в рабочий режим и "
+"отвечает за настройку аппаратного и программного окружения ядра (обратитесь "
+"к Главе 14). Некоторые операционные системы (особенно те, что ограничены "
+"объемом физической памяти) выполняют действия по выгрузке или _перекрытию_ "
+"программного кода, выполняющего эти функции, после окончания его работы. "
+"Ядро 4.4BSD не работает повторно с памятью, использованной начальным кодом, "
+"потому что этот объем памяти составляет менее 0.5 процентов ресурсов ядра, "
+"используемых на типичной машине. Также начальный код не находится только в "
+"одном месте ядра - он рассредоточен везде, и обычно появляется там, где "
+"логически связан с объектом инициализации."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:187
 #, no-wrap
 msgid "Kernel Services"
-msgstr ""
+msgstr "Службы ядра"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:197
@@ -857,6 +975,22 @@ msgid ""
 "kernel buffer while the process waits, but will usually return from the "
 "system call before the kernel buffer is written to the disk."
 msgstr ""
+"Разграничение между кодом уровней ядра и пользователя обеспечивается "
+"аппаратными методами, предоставляемыми оборудованием. Ядро работает в "
+"отдельном адресном пространстве, которое недоступно процессам пользователя. "
+"Привилегированные операции - такие, как осуществление ввода/вывода и "
+"остановка модуля центрального процессора (CPU) - доступны только ядру. "
+"Приложения делают запросы ядру на доступ к его сервисам при помощи "
+"_системных вызовов_. Системные вызовы используются для указания ядру на "
+"выполнение как сложных операций, таких, как запись данных во вторичный "
+"носитель, так и простых, таких, как получение текущего времени. Все "
+"системные вызовы выполняются _синхронно_ с приложением: Приложение не будет "
+"продолжать работу, пока ядро не выполнит действия, соответствующие "
+"системному вызову. Ядро может завершить некоторые операции, связанные с "
+"системным вызовом, после его окончания. Например, системный вызов _write_ "
+"будет копировать записываемые данные от пользовательского процесса в буфер "
+"ядра, пока процесс находится в ожидании, но, как правило, будет немедленно "
+"завершаться до того, как буфер ядра реально будет записан на диск."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:206
@@ -876,6 +1010,22 @@ msgid ""
 "programming language, this error code is stored in the global variable "
 "_errno_, and the function that executed the system call returns the value -1."
 msgstr ""
+"Системный вызов обычно реализуется как аппаратное прерывание, которое "
+"изменяет режим работы CPU и текущее отображение адресного пространства. "
+"Параметры, передаваемые пользователями системным вызовам, перед "
+"использованием проверяются ядром. Такая проверка обеспечивает целостность "
+"системы. Все параметры, передаваемые в ядро, копируются в адресное "
+"пространство ядра, для того, чтобы проверенные параметры не могли быть "
+"изменены в результате побочного действия системного вызова. Результаты "
+"выполнения системного вызова возвращаются ядром либо в аппаратных регистрах, "
+"либо копированием их значений в области памяти, указанные пользователем. Как "
+"и параметры, переданные в ядро, адреса, используемые для возвращения "
+"результатов, должны быть проверены на то, что они являются частью адресного "
+"пространства приложения. Если при обработке системного вызова ядром "
+"возникает ошибка, код ошибки возвращается пользователю. В случае языка "
+"программирования C код этой ошибки сохраняется в глобальной переменной "
+"_errno_, а функция, соответствующая системному вызову, возвращает в качестве "
+"результата значение -1."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:211
@@ -887,12 +1037,19 @@ msgid ""
 "The kernel makes most state changes, such as suspending a process while "
 "another is running, invisible to the processes involved."
 msgstr ""
+"Пользовательские приложения и ядро работают независимо друг от друга. 4.4BSD "
+"не хранит управляющие блоки ввода/вывода и другие связанные с операционной "
+"системой структуры данных в адресном пространстве приложения. Каждому "
+"пользовательскому приложению предоставляется независимое адресное "
+"пространство, в котором оно и выполняется. Ядро выполняет большинство "
+"управляющих действий, таких, как приостановка процесса на время выполнения "
+"другого, незаметно для участвующих процессов."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:213
 #, no-wrap
 msgid "Process Management"
-msgstr ""
+msgstr "Управление процессами"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:222
@@ -909,6 +1066,18 @@ msgid ""
 "This value is used by the kernel to identify a process when reporting status "
 "changes to a user, and by a user when referencing a process in a system call."
 msgstr ""
+"4.4BSD поддерживает многозадачность. Каждая задача или выполняющийся поток "
+"называется _процессом_. _Контекст_ процесса 4.4BSD состоит из состояния "
+"пользовательского уровня, включая содержимое его адресного пространства и "
+"окружения времени выполнения, и состояния уровня ядра, в который включаются "
+"параметры планировщика задач, управляющие ресурсы и идентифицирующая "
+"информация. В контекст включается все, что используется ядром при "
+"предоставлении своих сервисов процессу. Пользователи могут создавать "
+"процессы, управлять их выполнением и получать уведомления при изменении "
+"состояния выполнения процессов. Каждому процессу назначается уникальное "
+"число, называемое _идентификатором процесса_ (PID). Это число используется "
+"ядром для идентификации процесса при сообщении пользователю об изменении его "
+"состояния, и пользователем для указания процесса в системном вызове."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:227
@@ -919,17 +1088,22 @@ msgid ""
 "execution state of the process and the process's system state managed by the "
 "kernel.  Important components of the kernel state are described in Chapter 4."
 msgstr ""
+"Ядро создает процесс, дублируя контекст другого процесса. Новый процесс "
+"считается _порожденным процессом_ исходного _родительского процесса_. "
+"Контекст, копируемый в ходе создания процесса, включает как состояние "
+"выполнения процесса уровня пользователя, так и системное состояние процесса, "
+"управляемое ядром. Важные компоненты состояния ядра описаны в Главе 4."
 
 #. type: Block title
 #: documentation/content/en/books/design-44bsd/_index.adoc:229
 #, no-wrap
 msgid "Process lifecycle"
-msgstr ""
+msgstr "Жизненный цикл процесса"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:231
 msgid "image:fig1.png[Process lifecycle]"
-msgstr ""
+msgstr "image:fig1.png[Жизненный цикл процесса]"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:238
@@ -944,6 +1118,15 @@ msgid ""
 "its parent's resources, such as file descriptors, signal-handling status, "
 "and memory layout."
 msgstr ""
+"Жизненный цикл процесса изображен на <<fig-process-lifecycle>>. Процесс "
+"может создать новый процесс, который является копией исходного процесса с "
+"помощью системного вызова _fork_. Возврат из вызова _fork_ происходит два "
+"раза: один раз в родительском процессе, в котором возвращаемое значение "
+"является идентификатором порожденного процесса, и второй раз в порожденном "
+"процессе, в котором возвращаемое значение равно 0. Связь родитель-потомок "
+"порождает иерархическую структуру процессов в системе. Новый процесс имеет "
+"доступ ко всем ресурсам его родителя, таким, как файловые дескрипторы, "
+"состояние обработки сигналов и распределение памяти."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:242
@@ -957,6 +1140,14 @@ msgid ""
 "binary-executable file or a file that causes the execution of a specified "
 "interpreter program to process its contents."
 msgstr ""
+"Хотя есть ситуации, когда процесс должен быть копией своего родителя, "
+"наиболее типичным и полезным действием является загрузка и выполнение другой "
+"программы. Процесс может заместить себя образом памяти другой программы, "
+"передавая вновь созданному образу набор параметров, при помощи системного "
+"вызова _execve_. Одним из параметров является имя файла, содержимое которого "
+"имеет формате, распознаваемый системой - это либо двоичный выполняемый файл, "
+"либо файл, который приводит к запуску указанной программы интерпретации для "
+"обработки его содержимого."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:246
@@ -968,6 +1159,12 @@ msgid ""
 "intermediate file.  Interprocess communication is discussed extensively in "
 "Chapter 11."
 msgstr ""
+"Процесс может завершить работу, выполнив системный вызов _exit_, посылающий "
+"8-битовое значение состояния завершения своему родителю. Если процесс хочет "
+"передать родительскому процессу информацию, превышающую один байт, он должен "
+"либо создать канал межпроцессных коммуникаций при помощи конвейеров или "
+"сокетов, или при помощи промежуточного файла. Коммуникации между процессами "
+"подробно обсуждаются в Главе 11."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:251
@@ -983,6 +1180,18 @@ msgid ""
 "exit status to be passed back to a special system process _init_: see "
 "Sections 3.1 and 14.6)."
 msgstr ""
+"Процесс может приостановить выполнение до тех пор, пока не завершит работу "
+"любой из порожденных им процессов, при помощи системного вызова _wait_, "
+"который возвращает PID и статус завершения выполненного дочернего процесса. "
+"Родительский процесс может быть настроен на получение сигнала в случае, "
+"когда порожденный процесс завершает работу или аварийно прекращает "
+"выполнение. При помощи системного вызова _wait4_ родитель может получить "
+"информацию о событии, приведшем к завершению порожденного процесса и о "
+"ресурсах, использованных процессом за время его работы. Если процесс "
+"становится сиротой из-за того, что процесс, его породивший, завершил работу "
+"до окончания работы потомка, то ядро перенаправляет состояние завершения "
+"порожденного процесса особому системному процессу _init_: обратитесь к "
+"разделам 3.1 и 14.6)."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:253
@@ -990,6 +1199,8 @@ msgid ""
 "The details of how the kernel creates and destroys processes are given in "
 "Chapter 5."
 msgstr ""
+"Подробное описание того, как ядро создает и уничтожает процессы, дается в "
+"Главе 5."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:257
@@ -1001,12 +1212,18 @@ msgid ""
 "still obligated to share the underlying CPU resources according to the "
 "kernel's scheduling policy."
 msgstr ""
+"Планирование выполнения процессов осуществляется согласно параметру "
+"_приоритетности процесса_. Этот приоритет управляется алгоритмом "
+"планирования задач в ядре. Пользователи могут влиять на выполнение процесса, "
+"задавая этот параметр (_nice_), который влияет на суммарный приоритет, но "
+"ограничен использованием ресурсов CPU согласно алгоритму планировщика задач "
+"ядра."
 
 #. type: Title ====
 #: documentation/content/en/books/design-44bsd/_index.adoc:258
 #, no-wrap
 msgid "Signals"
-msgstr ""
+msgstr "Сигналы"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:267
@@ -1022,6 +1239,18 @@ msgid ""
 "setting a global variable).  If the handler returns, the signal is unblocked "
 "and can be generated (and caught) again."
 msgstr ""
+"В системе определен набор _сигналов_, которые могут быть отправлены "
+"процессу. Сигналы в 4.4BSD сделаны по образу аппаратных прерываний. Процесс "
+"может определить пользовательскую подпрограмму, которая будет являться "
+"_обработчиком_, и которой должен будет перенаправляться сигнал. Когда сигнал "
+"генерируется, он блокируется от повторного появления до тех пор, пока не "
+"будет _перехвачен_ обработчиком. Перехват сигнала включает в себя сохранение "
+"контекста текущего процесса и построение нового, в котором запускается "
+"обработчик. Затем сигнал направляется обработчику, который может либо "
+"прервать процесс, либо передать управление обратно выполняемому процессу ("
+"может быть, после установки значения глобальной переменной). Если обработчик "
+"возвратил управление, сигнал разблокировывается и может быть сгенерирован (и "
+"получен) снова."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:271
@@ -1032,6 +1261,11 @@ msgid ""
 "termination may be accompanied by creation of a _core file_ that contains "
 "the current memory image of the process for use in postmortem debugging."
 msgstr ""
+"Либо процесс может определить, что сигнал будет _игнорироваться_ или будет "
+"выполняться действие по умолчанию, определяемое ядром. Действием по "
+"умолчанию для некоторых сигналов является прекращение процесса. Это "
+"завершение работы может сопровождаться созданием _файла дампа_, содержащего "
+"текущий образ памяти процесса для использования в последующей отладке."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:274
@@ -1039,6 +1273,9 @@ msgid ""
 "Some signals cannot be caught or ignored.  These signals include _SIGKILL_, "
 "which kills runaway processes, and the job-control signal _SIGSTOP_."
 msgstr ""
+"Некоторые сигналы не могут быть перехвачены или проигнорированы. К таким "
+"сигналам относятся _SIGKILL_, прерывающий неуправляемый процесс, и сигнал "
+"управления заданиями _SIGSTOP_."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:279
@@ -1051,6 +1288,13 @@ msgid ""
 "signal stack, the space allocated for each coroutine must be expanded by the "
 "amount of space required to catch a signal."
 msgstr ""
+"Процесс может выбрать получение сигналов в специальный стек для выполнения "
+"хитроумных программных манипуляций стеком. Например, подпрограммам поддержки "
+"языка нужно иметь стек для каждой подпрограммы. Система времени выполнения "
+"языка может выделять эти стеки, разделяя единственный стек, предоставляемый "
+"в 4.4BSD. Если ядро не поддерживает отдельный стек сигналов, то "
+"пространство, выделяемое каждой подпрограмме, должно быть расширено на "
+"объем, требуемый для перехвата сигнала."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:284
@@ -1062,6 +1306,12 @@ msgid ""
 "Mechanisms are provided so that processes can protect critical sections of "
 "code against the occurrence of specified signals."
 msgstr ""
+"Все сигналы имеют один и тот же _приоритет_. Если обработки ожидают "
+"несколько сигналов, то порядок их направления процессу зависит от "
+"реализации. Обработчики сигналов, выполняемые по сигналу, который их вызвал, "
+"блокируются, но при этом могут быть сгенерированы дополнительные сигналы. "
+"Имеется механизм, позволяющий защитить критический участок кода от появления "
+"заданных сигналов."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:286
@@ -1069,12 +1319,14 @@ msgid ""
 "The detailed design and implementation of signals is described in Section "
 "4.7."
 msgstr ""
+"Подробное описание архитектуры и реализации механизма сигналов дается в "
+"Разделе 4.7."
 
 #. type: Title ====
 #: documentation/content/en/books/design-44bsd/_index.adoc:287
 #, no-wrap
 msgid "Process Groups and Sessions"
-msgstr ""
+msgstr "Группы управления и сеансы"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:294
@@ -1087,6 +1339,13 @@ msgid ""
 "Creating a new process group is easy; the value of a new process group is "
 "ordinarily the process identifier of the creating process."
 msgstr ""
+"Процессы организованы в _группы управления_. Группы управления используются "
+"для управления доступом к терминалам и для обеспечения передачи сигналов "
+"наборам связанных процессов. Процесс наследует группу управления от своего "
+"родительского процесса. Ядром обеспечиваются механизмы, позволяющие процессу "
+"изменять свою группу управления или группу управления своих наследников. "
+"Создание новой группы управления просто; значение, соответствующее новой "
+"группе управления, обычно является идентификатором создающего ее процесса."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:298
@@ -1099,6 +1358,15 @@ msgid ""
 "forth.  The shell creates such a job by forking a process for each stage of "
 "the pipeline, then putting all those processes into a separate process group."
 msgstr ""
+"Группу процессов в группе управления иногда называют _заданием_ и оно "
+"управляется высокоуровневым системным программным обеспечением, таким, как "
+"командный процессор. Типичным примером задания, созданного командным "
+"процессором, является _конвейер_ из нескольких связанных процессов, так что "
+"выходной поток первого процесса является входным потоком для второго, "
+"выходной поток второго процесса является входным потоком для третьего, и так "
+"далее. Командный процессор создает такое задание, порождая процесс для "
+"каждого участка конвейера, а затем помещая все эти процессы в отдельную "
+"группу обработки."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:301
@@ -1108,6 +1376,11 @@ msgid ""
 "software interrupts affecting the group, causing the group to suspend or "
 "resume execution, or to be interrupted or terminated."
 msgstr ""
+"Пользовательский процесс может послать сигнал как всем процессам в группе "
+"управления, так и конкретному процессу. Процесс в заданной группе управления "
+"может получать программные прерывания, отражающиеся на группе, приводящие к "
+"приостановке или продолжению выполнения, или к прерыванию или завершению "
+"работы."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:309
@@ -1124,6 +1397,18 @@ msgid ""
 "a terminal among several different jobs.  This arbitration is called _job "
 "control_ and is described, with process groups, in Section 4.8."
 msgstr ""
+"Терминалу ставится в соответствие идентификатор группы управления. Этот "
+"идентификатор обычно равен идентификатору группы управления, соответствующей "
+"терминалу. Управляющий заданиями командный процессор может создать несколько "
+"групп управления, связанных с одним и тем же терминалом; терминал является "
+"_управляющим терминалом_ для каждого процесса в этих группах. Процесс может "
+"выполнять чтение из дескриптора своего управляющего терминала, если только "
+"идентификатор группы управления соответствует идентификатору группы этого "
+"процесса. Если идентификаторы не совпадают, процесс будет блокирован при "
+"попытке чтения с терминала. Изменяя идентификатор группы управления "
+"терминала, командный процессор может распределять терминал между несколькими "
+"различными заданиями. Такое распределение называется _управлением заданиями_ "
+"и описывается вместе с группами управления в Разделе 4.8."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:312
@@ -1134,12 +1419,18 @@ msgid ""
 "children, and to collect together a user's login shell and the jobs that "
 "shell spawns."
 msgstr ""
+"Так же, как и наборы связанных процессов могут объединяться в группы "
+"управления, набор групп управления может быть объединен в _сеанс_. Основное "
+"назначение сеансов заключается создании изолированного окружения для "
+"процесса-даемона и порожденных им процессов, а также для объединения "
+"начального командного процессора пользователя и заданий, которые он "
+"порождает."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:314
 #, no-wrap
 msgid "Memory Management"
-msgstr ""
+msgstr "Управление памятью"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:324
@@ -1158,6 +1449,19 @@ msgid ""
 "segments of a child process are duplicates of the segments of a parent "
 "process."
 msgstr ""
+"Каждый процесс имеет собственное адресное пространство. Адресное "
+"пространство изначально разделяется на три логических сегмента: _код_, "
+"_данные_ и _стек_. Сегмент кода доступен только для чтения и содержит "
+"машинные коды программы. Сегменты данных и стека оба доступны как для "
+"чтения, так и для записи. Сегмент данных содержит как инициализированные, "
+"так и неинициализированные области данных программы, когда как стековый "
+"сегмент представляет собой стек программы на этапе выполнения. На "
+"большинстве машин сегмент стека автоматически расширяется ядром в процессе "
+"работы программы. Процесс может расширять или уменьшать свой сегмент данных, "
+"выполняя системный вызов, когда как размер сегмента кода процесс может "
+"изменить только когда содержимое сегмента перекрывается данными файловой "
+"системы или в процессе отладки. Начальное содержимое сегментов порожденного "
+"процесса копируется из сегментов родительского процесса."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:332
@@ -1175,12 +1479,25 @@ msgid ""
 "process may, however, advise the system about expected future memory "
 "utilization as a performance aid."
 msgstr ""
+"Для выполнения процесса вовсе не обязательно постоянно хранить в памяти "
+"полное содержимое его адресного пространства. Если процесс обращается к "
+"области адресного пространства, которая не присутствует в оперативной "
+"памяти, то система _подгружает страницу_ с необходимой информацией в память. "
+"Когда возникает нехватка системных ресурсов, то система использует "
+"двухуровневый подход к управлению имеющимися ресурсами. Если не хватает "
+"памяти, то система будет забирать ресурсы памяти от процессов, если они "
+"давно не использовались. Если ресурсов не хватает очень сильно, то система "
+"будет прибегать к _выгрузке_ всего контекста процесса во вторичную "
+"подсистему хранения данных. _Постраничная подгрузка по требованию_ и "
+"_выгрузка_ выполняются системой абсолютно незаметно для процессов. Процесс "
+"может, однако, указать системе объем памяти, который будет использоваться, в "
+"качестве помощи."
 
 #. type: Title ====
 #: documentation/content/en/books/design-44bsd/_index.adoc:333
 #, no-wrap
 msgid "BSD Memory-Management Design Decisions"
-msgstr ""
+msgstr "Решения BSD по архитектуре управления памятью"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:339
@@ -1195,6 +1512,17 @@ msgid ""
 "_mmap_ interface, because of pressure to make other features, such as "
 "networking, available."
 msgstr ""
+"В 4.2BSD требовалось реализовать поддержку больших несвязанных адресных "
+"пространств, отображаемых в память файлов и совместно используемой памяти. "
+"Был спроектирован интерфейс, который назвали _mmap_, позволяющий несвязанным "
+"процессам запрашивать отображение в их адресное пространство файла в режиме "
+"совместного использования. Если несколько процессов отображают в свое "
+"адресное пространство один и тот же файл, то изменение адресного "
+"пространства процесса, соответствующего файлу, в одном процессе, будет "
+"отображено в области отображения этого файла в другом процессе, а также и в "
+"самом файле. Однако в конце концов 4.2BSD была выпущена без интерфейса "
+"_mmap_ из-за необходимости сделать в первую очередь другие возможности, "
+"такие, как работа с сетью."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:346
@@ -1207,6 +1535,12 @@ msgid ""
 "implemented the revised interface crossref:design-44bsd[biblio-gingell, "
 "[Gingell et al, 1987]]."
 msgstr ""
+"Затем разработка интерфейса _mmap_ продолжалась во время работы над 4.3BSD. "
+"Более 40 компаний и исследовательских групп принимали участие в обсуждениях, "
+"которые привели к появлению обновленной концепции, описанной в Berkeley "
+"Software Architecture Manual <<biblio-mckusick-1, [McKusick et al, 1994]>>. "
+"Несколько компаний реализовали этот обновленный интерфейс <<biblio-gingell, ["
+"Gingell et al, 1987]>>."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:353
@@ -1225,6 +1559,19 @@ msgid ""
 "to support the tightly coupled multiprocessors that are becoming "
 "increasingly common and important today."
 msgstr ""
+"И снова сроки разработки не позволили включить в 4.3BSD реализацию этого "
+"интерфейса. Хотя позже она могла быть встроена в имеющуюся подсистему "
+"виртуальной памяти 4.3BSD, разработчики решили не включать ее сюда. потому "
+"что этой реализации было уже более 10 лет. Более того, оригинальная "
+"архитектура виртуальной памяти была основана на предположении, что "
+"компьютерная память мала и дорога, а диски подключены непосредственно к "
+"компьютеру, быстры и дешевы. Поэтому подсистема виртуальной памяти была "
+"разработана с упором на бережное использование памяти ценой более частых "
+"обращений к диску. Вдобавок реализация в 4.3BSD была пронизана зависимостями "
+"от аппаратной системы управления памятью машин VAX, что препятствовало ее "
+"переносу на другие аппаратные платформы. И наконец, подсистема виртуальной "
+"памяти не была предназначена для поддержки связных многопроцессорных систем, "
+"которые сейчас становятся все более распространенными и необходимыми."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:364
@@ -1246,6 +1593,23 @@ msgid ""
 "being visible to other processes mapping the file or being written back to "
 "the file itself."
 msgstr ""
+"Попытки постепенно усовершенствовать старую реализацию заведомо были "
+"обречены на неудачу. Полностью новая архитектура, с другой стороны, могла бы "
+"использовать большие объемы памяти, уменьшить дисковые операции и "
+"обеспечивать работу с несколькими процессорами. Наконец, система виртуальной "
+"памяти в 4.4BSD была полностью изменена. Система виртуальной памяти 4.4BSD "
+"основана на системе виртуальной памяти (VM) Mach 2.0 <<biblio-tevanian, ["
+"Tevanian, 1987]>> с заимствованиями из Mach 2.5 и Mach 3.0. В ней была "
+"эффективная поддержка совместного использования, полное разделение машинно-"
+"зависимой и машинно-независимой частей, а также (сейчас не используемая) "
+"поддержка работы с несколькими процессорами. Процессы могут отображать файлы "
+"в любую область своего адресного пространства. Они могут совместно "
+"использовать части своих адресных пространств посредством отображения в "
+"память одного и того же файла. Изменения, сделанные одним процессом, видны в "
+"адресном пространстве другого процесса, а также записываются и в сам файл. "
+"Процессы могут также запрашивать эксклюзивное отображение файла в память, "
+"при котором любые изменения, сделанные процессом, не видны другим процессам, "
+"которые отображают файл в память и не записываются обратно в файл."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:370
@@ -1258,6 +1622,13 @@ msgid ""
 "remap the process memory into the kernel.  The 4.4BSD kernel always copies "
 "the data for several reasons:"
 msgstr ""
+"Еще одной проблемой с системой виртуальной памяти является способ, которым "
+"информация передается ядру при выполнении системного вызова. 4.4BSD всегда "
+"копирует данные из адресного пространства процесса в буфер ядра. Для "
+"операций чтения и записи, при которых передаются большие объемы данных, "
+"выполнение копирования может оказаться занимающим время процессом. "
+"Альтернативным способом является манипуляции с адресным пространством "
+"процесса в ядре. Ядро 4.4BSD всегда копирует данные о нескольким причинам:"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:372
@@ -1265,6 +1636,8 @@ msgid ""
 "Often, the user data are not page aligned and are not a multiple of the "
 "hardware page length."
 msgstr ""
+"Зачастую пользовательские данные не выравнены по границе страницы памяти и "
+"их объем не кратен размеру аппаратной страницы памяти."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:373
@@ -1273,6 +1646,9 @@ msgid ""
 "reference that page. Some programs depend on the data remaining in the "
 "buffer even after those data have been written."
 msgstr ""
+"Если страница памяти забирается от процесса, он не может больше ссылаться на "
+"эту страницу. Некоторые программы зависят от данных, остающихся в буфере, "
+"даже после записи этих данных."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:374
@@ -1285,6 +1661,14 @@ msgid ""
 "Unfortunately, the typical process will immediately try to write new data to "
 "its output buffer, forcing the data to be copied anyway."
 msgstr ""
+"Если процесс позволяет хранить копию страницы памяти (как это делается в "
+"существующей 4.4BSD), то страница должна иметь атрибут _копирования-при-"
+"записи_. Такая страница является одной из таковых, что защищается от записи "
+"при помощи атрибута только-для-чтения. Если процесс пытается модифицировать "
+"страницу памяти, в ядре возникает ситуация ошибки записи. После этого ядро "
+"делает копию страницы, которую процесс может изменять. К несчастью, "
+"большинство процессов будет немедленно пытаться записать новые данные в свой "
+"буфер вывода, что приводит в любом случае к копированию данных."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:375
@@ -1294,6 +1678,11 @@ msgid ""
 "purged selectively. The cache purges are often slow. The net effect is that "
 "remapping is slower than copying for blocks of data less than 4 to 8 Kbyte."
 msgstr ""
+"Когда страницы переносятся в новые адреса виртуальной памяти, большинство "
+"аппаратных менеджеров памяти требуют, чтобы кэш аппаратного переназначения "
+"адресов был выборочно очищен. Очистка кэша зачастую выполняется медленно. В "
+"итоге получается, что переназначение адресов оказывается медленнее, чем "
+"копирование блоков данных, не превышающих 4 или 8 килобайт."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:378
@@ -1303,12 +1692,15 @@ msgid ""
 "_mmap_ interface provides a way for both of these tasks to be done without "
 "copying."
 msgstr ""
+"Больше всего отображение памяти нужно для работы к большими файлами и "
+"передачи больших объемов данных между процессами. Интерфейс _mmap_ дает "
+"методы для выполнения обеих этих операций без копирования."
 
 #. type: Title ====
 #: documentation/content/en/books/design-44bsd/_index.adoc:379
 #, no-wrap
 msgid "Memory Management Inside the Kernel"
-msgstr ""
+msgstr "Управление памятью внутри ядра"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:388
@@ -1324,6 +1716,18 @@ msgid ""
 "allocated on the stack even if there was space.  An example is protocol-"
 "control blocks that remain throughout the duration of a network connection."
 msgstr ""
+"Ядро часто выполняет выделение памяти, которое нужно только для выполнения "
+"единственного системного вызова. В пользовательском процессе такая "
+"кратковременно используемая память будет выделяться в стеке во время "
+"выполнения. Так как ядро имеет ограниченный объем стека времени выполнения, "
+"то неэффективно выделять в нем даже блоки памяти среднего размера. Таким "
+"образом, такая память должна выделяться посредством более гибкого механизма. "
+"Например, когда системный вызов должен преобразовать имя каталога, он должен "
+"выделить буфер размером 1 Кбайт для хранения имени. Другие блоки памяти "
+"должны выделяться на более продолжительный срок, чем один системный вызов, и "
+"поэтому не могут выделяться в стеке, даже если там есть место. В качестве "
+"примера можно взять блоки управления протоколами, которые существуют на всем "
+"протяжении сетевого соединения."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:398
@@ -1341,12 +1745,25 @@ msgid ""
 "The free routine takes a pointer to the storage being freed, but does not "
 "require the size of the piece of memory being freed."
 msgstr ""
+"Необходимость в динамическом выделении памяти в ядре становилась все более "
+"острой вместе с добавлением количества сервисов. Общий механизм выделения "
+"памяти уменьшает сложность написания кода в ядре. Поэтому в 4.4BSD ядро "
+"имеет единый механизм выделения памяти, который может использоваться в любой "
+"части системы. У него есть интерфейс, похожий на функции библиотеки языка C "
+"_malloc_ и _free_, которые обеспечивают выделение памяти в прикладных "
+"программах <<biblio-mckusick-2, [McKusick & Karels, 1988]>>. Как интерфейс "
+"библиотеки языка C, функция выделения памяти получает параметр, указывающий "
+"на размер памяти, который необходим. Диапазон запрашиваемых объемов "
+"выделяемой памяти не ограничен; однако выделяемая физическая память не "
+"подвергается постраничной подгрузке. Функции освобождения памяти передается "
+"указатель на освобождаемый участок памяти, но указывать размер "
+"освобождаемого участка памяти не нужно."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:400
 #, no-wrap
 msgid "I/O System"
-msgstr ""
+msgstr "Система ввода/вывода"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:404
@@ -1355,6 +1772,10 @@ msgid ""
 "accessed either randomly or sequentially.  There are no _access methods_ and "
 "no _control blocks_ in a typical UNIX user process."
 msgstr ""
+"Базовой моделью системы ввода/вывода UNIX является последовательность байт, "
+"доступ к которым может осуществляться как последовательно, так и в в "
+"произвольном порядке. В типичном пользовательском процессе UNIX нет таких "
+"понятий, как _методы доступа_ или _управляющие блоки_."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:412
@@ -1372,12 +1793,26 @@ msgid ""
 "Edition stream I/O system or with the System V, Release 3 STREAMS, both of "
 "which can be accessed as traditional I/O streams.)"
 msgstr ""
+"Различные программы используют разнообразные структуры данных, но ядро не "
+"связывает ввод/вывод с используемыми структурами. Например, текстовым файлом "
+"считается файл из строк символов набора ASCII, которые разделены одним "
+"символом новой строки (символ ASCII перевода строки), но ядро не знает "
+"ничего об этом соглашении. Для удовлетворения потребностей большинства "
+"программ модель еще более упрощена и сводится к потоку байт данных, или "
+"_потоку ввода/вывода_. Такое единое представление данных позволяет работать "
+"характерному для UNIX подходу на основе инструментов <<biblio-kernighan, ["
+"Kernighan & Pike, 1984]>>. Поток ввода/вывода одной программы может быть "
+"подан в качестве входной информации практически любой другой программе. ("
+"Этот тип традиционных для UNIX потоков ввода/выводы не нужно путать с "
+"потоковой системой ввода/вывода из Eighth Edition или с потоками из System "
+"V, Release 3 (STREAMS), оба из которых доступны как обычные потоки "
+"ввода/вывода.)"
 
 #. type: Title ====
 #: documentation/content/en/books/design-44bsd/_index.adoc:413
 #, no-wrap
 msgid "Descriptors and I/O"
-msgstr ""
+msgstr "Дескрипторы и ввод/вывод"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:421
@@ -1391,6 +1826,15 @@ msgid ""
 "descriptor to transfer data.  The _close_ system call can be used to "
 "deallocate any descriptor."
 msgstr ""
+"Процессы UNIX для работы с потоками ввода/вывода используют _дескрипторы_. "
+"Дескрипторы представляют собой беззнаковые целые числа, получаемые после "
+"выполнения системных вызовов _open_ и _socket_. Системный вызов _open_ "
+"получает в качестве аргументов имя файла и режим доступа, который "
+"определяет, должен ли файл открываться для чтения, для записи или для обеих "
+"операций. Этот системный вызов может также использоваться для создания "
+"нового пустого файла. Системные вызовы _read_ и _write_ могут применяться к "
+"дескриптору для переноса данных. Системный вызов _close_ может "
+"использоваться для уничтожения любого дескриптора."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:424
@@ -1400,6 +1844,10 @@ msgid ""
 "kinds of objects can be represented by descriptors: files, pipes, and "
 "sockets."
 msgstr ""
+"Дескрипторы представляют низкоуровневые объекты, поддерживаемые ядром, и "
+"создаваемые системными вызовами, специфичными для каждого типа объектов. В "
+"4.4BSD дескрипторы могут представлять три типа таких объектов: файлы, каналы "
+"и сокеты."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:426
@@ -1409,6 +1857,11 @@ msgid ""
 "for it. A process acquires a descriptor for a file by opening that file's "
 "name with the _open_ system call. I/O devices are accessed as files."
 msgstr ""
+"_Файл_ представляет собой линейную последовательность байт, имеющую по "
+"крайней мере одно имя. Файл существует, пока все его имена не удалены и ни "
+"один из процессов не хранит его дескриптор. Процесс получает дескриптор "
+"файла, открывая имя файла посредством системного вызова _open_. Работа с "
+"устройствами ввода/вывода осуществляется как с файлами."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:427
@@ -1423,6 +1876,17 @@ msgid ""
 "using the _open_ system call. Two processes that wish to communicate each "
 "open the FIFO: One opens it for reading, the other for writing."
 msgstr ""
+"_Каналом_ является линейная последовательность байт, такая же, как файл, но "
+"используемая исключительно как поток ввода/вывода, причем однонаправленный. "
+"У канала нет имени, и поэтому он не может быть открыт при помощи _open_. "
+"Вместо этого он создается посредством системного вызова _pipe_, который "
+"возвращает два дескриптора, один из которых принимает входные данные, без "
+"искажений, без повторений и в той же самой последовательности посылаемый на "
+"другой дескриптор. Система также поддерживает именованный канал, или FIFO. "
+"FIFO имеет те же самые свойства, что и канал, за исключением того, что он "
+"располагается в файловой системе; поэтому он может быть открыт системным "
+"вызовом _open_. Процессы, которые хотят обмениваться данными, открывают FIFO:"
+" Один процесс открывает его для чтения, а другой для записи."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:428
@@ -1434,6 +1898,13 @@ msgid ""
 "support various communication semantics, such as reliable delivery of data, "
 "preservation of message ordering, and preservation of message boundaries."
 msgstr ""
+"_Сокет_ является промежуточным объектом, который используется для "
+"межпроцессных коммуникаций; он существует, пока какой-либо процесс хранит "
+"дескриптор, ссылающийся на него. Сокет создается системным вызовом _socket_, "
+"который возвращает его дескриптор. Имеется несколько типов сокетов, которые "
+"поддерживают различные коммуникационные возможности, такие, как надежную "
+"доставку данных, сохранение последовательности передаваемых сообщений, и "
+"сохранение границ сообщений."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:430
@@ -1441,6 +1912,9 @@ msgid ""
 "In systems before 4.2BSD, pipes were implemented using the filesystem; when "
 "sockets were introduced in 4.2BSD, pipes were reimplemented as sockets."
 msgstr ""
+"В системах, предшествующих 4.2BSD, каналы были реализованы в файловой "
+"системе, когда в 4.2BSD появились сокеты, то каналы были повторно "
+"реализованы как сокеты."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:436
@@ -1455,6 +1929,16 @@ msgid ""
 "inheritance from the parent process.  In addition, socket IPC allows passing "
 "of descriptors in messages between unrelated processes on the same machine."
 msgstr ""
+"Для каждого процесса ядро хранит _таблицу дескрипторов_, которая является "
+"таблицей, используемой ядром для преобразования внешнего представления "
+"дескриптора в его внутреннее представление. (Дескриптор является просто "
+"индексом в этой таблице.) Таблица дескрипторов процесса наследуется от "
+"родительского процесса, и вместе с ней наследуется и доступ к объектам, на "
+"которые ссылаются дескрипторы. Основными способами, при помощи которых "
+"процесс может получить дескриптор, является открытие или создание объекта, а "
+"также наследование от родительского процесса. Кроме того, межпроцессные "
+"коммуникации при помощи сокетов позволяют передавать дескрипторы в "
+"сообщениях между несвязанными процессами на одной и той же машине."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:442
@@ -1466,6 +1950,13 @@ msgid ""
 "Ordinary files permit random access, and some devices do, as well.  Pipes "
 "and sockets do not."
 msgstr ""
+"Любой рабочий дескриптор имеет связанное с ним _смещение в файле_ в байтах "
+"от начала объекта. Операции чтения и записи начинаются от этого смещения, "
+"который обновляется после каждой передачи данных. Для объектов, к которым "
+"разрешен произвольный доступ, смещение в файле может быть установлено "
+"посредством системного вызова _lseek_. Обычные файлы, а также некоторые "
+"устройства, разрешают произвольный доступ к ним. Каналы и сокеты этого "
+"делать не позволяют."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:445
@@ -1476,12 +1967,16 @@ msgid ""
 "cleanup actions, such as final deletion of a file or deallocation of a "
 "socket."
 msgstr ""
+"Когда процесс завершается, ядро освобождает все дескрипторы, которые "
+"использовались этим процессом. Если процесс хранил последнюю ссылку на "
+"объект, то менеджер объектов уведомляется для выполнения всех необходимых "
+"действий, таких, как окончательное удаление файла или уничтожение сокета."
 
 #. type: Title ====
 #: documentation/content/en/books/design-44bsd/_index.adoc:446
 #, no-wrap
 msgid "Descriptor Management"
-msgstr ""
+msgstr "Управление дескрипторами"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:453
@@ -1497,6 +1992,17 @@ msgid ""
 "writing and is used for error output, whereas standard output is used for "
 "ordinary output."
 msgstr ""
+"Большинство процессов ожидают, что перед началом их работы уже будут открыты "
+"три дескриптора. Это дескрипторы 0, 1 и 2, больше известные как _стандартный "
+"ввод_, _стандартный вывод_ и _стандартный поток диагностических сообщений_, "
+"соответственно. Как правило, все они связываются с пользовательским "
+"терминалом по время входа в систему (смотри Раздел 14.6) и наследуются через "
+"вызовы _fork_ и _exec_ процессами, запускаемыми пользователем. Таким "
+"образом, программа может считывать то, что набирает пользователь, из "
+"стандартного ввода, и программа может выдавать результат на экран "
+"пользователя, осуществляя запись в стандартный вывод. Дескриптор потока "
+"диагностических сообщений также открыт для записи и используется для вывода "
+"ошибок, когда как стандартный вывод используется для обычного вывода."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:457
@@ -1509,6 +2015,13 @@ msgid ""
 "standard input to come from a file by closing descriptor 0 and opening the "
 "file."
 msgstr ""
+"Эти (и другие) дескрипторы могут отображаться на объекты, отличающиеся от "
+"терминала; такое отображение называется _перенаправлением ввода/вывода_, и "
+"все стандартные командные процессоры позволяют пользователю это делать. "
+"Оболочка может направить вывод программы в файл, закрывая дескриптор 1 ("
+"стандартный вывод) и открывая выбранный выходной файл для создания нового "
+"дескриптора 1. Подобным же образом стандартный ввод может браться из файла, "
+"при этом закрывается дескриптор 0 и открывается файл."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:463
@@ -1522,6 +2035,14 @@ msgid ""
 "two processes and the connecting pipe is known as a _pipeline_.  Pipelines "
 "can be arbitrarily long series of processes connected by pipes."
 msgstr ""
+"Каналы позволяют выводу одной программы становиться вводом другой программы "
+"без переписывания и даже перекомпоновки программ. Вместо того, чтобы "
+"дескриптор 1 (стандартный вывод) исходной программы был настроен на запись "
+"на терминал, он настраивается на входной дескриптор канала. Аналогично "
+"дескриптор 0 (стандартный ввод) принимающей программы настраивается на "
+"обращение к выводу канала, а не к клавиатуре терминала. Результирующий набор "
+"двух процессов и соединяющий канал называется _конвейером_. Конвейеры могут "
+"быть весьма большими последовательностями процессов, соединенных каналами."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:470
@@ -1539,12 +2060,25 @@ msgid ""
 "of the desired descriptor (if the desired descriptor was already open, "
 "_dup2_ closes it before reusing it)."
 msgstr ""
+"Системные вызовы _open_, _pipe_ и _socket_ порождают новые дескрипторы с "
+"наименьшим неиспользуемым номером, подходящим для дескриптора. Для того, "
+"чтобы конвейеры могли работать, должен существовать механизм для отображения "
+"таких дескрипторов в 0 и 1. Системный вызов _dup_ создает копию дескриптора, "
+"которая указывает на ту же самую запись в таблице файлов. Новый дескриптор "
+"также является наименьшим неиспользуемым, но если нужный дескриптор сначала "
+"закрыть, то _dup_ можно использовать для выполнения нужного отображения. "
+"Однако здесь требуется некоторая осторожность: если нужен дескриптор 1, а "
+"дескриптор 0 уже закрыт, то в результате получится дескриптор 0. Во "
+"избежание этой проблемы в системе имеется системный вызов _dup2_; он похож "
+"на _dup_, но воспринимает дополнительный аргумент, указывающий номер нужного "
+"дескриптора (если нужный дескриптор уже открыт, то _dup2_ его закроет перед "
+"повторным использованием)."
 
 #. type: Title ====
 #: documentation/content/en/books/design-44bsd/_index.adoc:471
 #, no-wrap
 msgid "Devices"
-msgstr ""
+msgstr "Устройства"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:477
@@ -1558,6 +2092,15 @@ msgid ""
 "peculiarities are kept in the kernel as much as possible, and even in the "
 "kernel most of them are segregated in the device drivers."
 msgstr ""
+"Аппаратные устройства имеют связанные с ними имена файлов, и к ним может "
+"обращаться пользователь при помощи тех же самых системных вызовов, что "
+"используются для обычных файлов. Ядро может различать _специальный файл "
+"устройства_ или просто _специальный файл_, и может определять, к какому "
+"устройству он относится, но большинство процессов не выполняют такого "
+"распознавания. Терминалы, принтеры и стримеры все доступны как "
+"последовательности байт, как дисковые файлы 4.4BSD. Таким образом, "
+"особенности работы устройств максимально скрываются ядром, и даже в ядре "
+"большинство из них отличаются в драйверах."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:482
@@ -1572,6 +2115,17 @@ msgid ""
 "name space, because the _raw-socket_ interface provides a more natural "
 "interface than does a special file."
 msgstr ""
+"Аппаратные устройства могут быть разделены на _структурированные_ или "
+"_неструктурированные_; они известны под названиями _блочные_ и "
+"_посимвольные_, соответственно. Как правило, процессы обращаются к "
+"устройствам посредством _специальных файлов_ в файловой системе. Операции "
+"ввода/вывода, выполняемые с такими файлами, обрабатываются постоянно "
+"находящимися в ядре программными модулями, называемыми _драйверами "
+"устройств_. Большинство аппаратных устройств для сетевых коммуникаций "
+"доступны только при помощи механизмов межпроцессного взаимодействия, и не "
+"имеют специальных устройств в пространстве имен файловой системы, так как "
+"интерфейс _низкоуровневых сокетов_ дает более естественный интерфейс, чем "
+"специальный файл."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:486
@@ -1582,6 +2136,12 @@ msgid ""
 "latter to be read and written in a totally random byte-addressed fashion, "
 "like regular files.  Filesystems are created on block devices."
 msgstr ""
+"Структурированные или блочные устройства разделяются на диски и магнитные "
+"ленты и включают в себя большинство устройств с произвольным доступом. Ядро "
+"поддерживает операции буферизации типа чтение-изменение-запись с блочными "
+"структурированными устройствами для того, чтобы разрешить последним "
+"осуществлять чтение и запись полностью произвольным образом, как с обычными "
+"файлами. Файловые системы создаются на блочных устройствах."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:490
@@ -1591,6 +2151,11 @@ msgid ""
 "plotters, and unbuffered magnetic tapes and disks.  Unstructured devices "
 "typically support large block I/O transfers."
 msgstr ""
+"Неструктурированными устройствами являются те, что не поддерживают блочную "
+"структуру. Типичными неструктурированными устройствами являются линии связи, "
+"растровые графопостроители и небуферизируемые магнитные ленты и диски. "
+"Неструктурированные устройства, как правило, поддерживают перенос больших "
+"объемов данных."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:493
@@ -1600,6 +2165,10 @@ msgid ""
 "driver for these devices proved convenient for other devices that were not "
 "block structured."
 msgstr ""
+"Неструктурированные файлы называют _символьными устройствами_, потому что "
+"первые из них являлись драйверами терминальных устройств. Интерфейс ядра к "
+"драйверу для этих устройств доказал удобство его использования для других "
+"неструктурированных устройств."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:499
@@ -1612,12 +2181,19 @@ msgid ""
 "calls.  For example, there is an _ioctl_ on a tape drive to write an end-of-"
 "tape mark, instead of there being a special or modified version of _write_."
 msgstr ""
+"Специальные файлы устройств создаются системным вызовом _mknod_. Имеется "
+"дополнительный системный вызов, _ioctl_, для управления низкоуровневыми "
+"параметрами специальных файлов. Выполняемые операции для каждого устройства "
+"различны. Этот системный вызов позволяет осуществлять доступ к специальным "
+"характеристикам устройств, не перегружая смысл других системных вызовов. "
+"Например, для стримера существует _ioctl_ для записи метки конца ленты, но "
+"нет особой или измененной версии функции _write_."
 
 #. type: Title ====
 #: documentation/content/en/books/design-44bsd/_index.adoc:500
 #, no-wrap
 msgid "Socket IPC"
-msgstr ""
+msgstr "Механизм межпроцессных коммуникаций посредством сокетов"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:509
@@ -1635,6 +2211,18 @@ msgid ""
 "sockets can be set up by two unrelated processes, possibly residing on "
 "different machines."
 msgstr ""
+"В ядре 4.2BSD появился механизм межпроцессного взаимодействия, более гибкий, "
+"чем каналы, основанный на _сокетах_. Сокет является конечной точкой "
+"коммуникаций, доступный через дескриптор, как файл или канал. Каждый из двух "
+"процессов может создать сокет, а затем соединить эти конечные точки для "
+"получения надежного канала передачи потока байт. После соединения процесс "
+"может выполнять с дескрипторами операции чтения и записи, как это делалось с "
+"каналами. Прозрачность сокетов позволяет ядру перенаправить вывод одного "
+"процесса на вход другого, работающего на другой машине. Большим различием "
+"между каналами и сокетами является то, что каналы требуют наличия общего "
+"родительского процесса для установки коммуникации. Соединение между сокетами "
+"может быть установлено двумя несвязанными процессами, возможно, работающими "
+"на разных машинах."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:516
@@ -1649,6 +2237,17 @@ msgid ""
 "FIFOs are implemented in 4.4BSD only because they are required by the "
 "POSIX.1 standard.  Their functionality is a subset of the socket interface."
 msgstr ""
+"System V предоставляет механизм локального межпроцессного взаимодействия "
+"через FIFO (также называемые _именованными каналами_). FIFO отображаются как "
+"объекты файловой системы, которые могут быть открыты несвязанными "
+"процессами, и в которые можно открывать и посылать данные так же, как в "
+"случае каналов. Таким образом, FIFO не требуют общего родительского процесса "
+"для установки соединения; они могут быть соединены после того, как будут "
+"запущены два процесса. В отличие от сокетов, FIFO могут быть использованы "
+"только на локальной машине; они не могут быть использованы для связи между "
+"процессами, работающими на разных машинах. FIFO реализованы в 4.4BSD, потому "
+"что это требует стандарт POSIX.1. Их функциональность является подмножеством "
+"функций интерфейса сокетов."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:523
@@ -1667,12 +2266,26 @@ msgid ""
 "should have been added as library interfaces to _recvmsg_ and _sendmsg_, "
 "respectively."
 msgstr ""
+"Механизм сокетов требует расширения традиционных для UNIX системных вызовов "
+"ввода/вывода для обеспечения соответствующих имен и смыслов соединениям. "
+"Вместо того, чтобы перегружать существующий интерфейс, разработчики "
+"использовали существующие интерфейсы, расширив их так, что они продолжили "
+"работать без изменений, и разработали новые интерфейсы для работы с новыми "
+"возможностями. Системные вызовы _read_ и _write_ использовались для "
+"соединений типа потока байт, и было добавлено шесть новых системных вызовов, "
+"что позволило посылать и принимать адресованные сообщения, такие, как "
+"сетевые датаграммы. Системные вызовы для записи сообщений включают в себя "
+"_send_, _sendto_ и _sendmsg_. Системные вызовы для чтения сообщений включают "
+"_recv_, _recvfrom_ и _recvmsg_. В ретроспективе, первые два в каждом классе "
+"являются особыми случаями других; _recvfrom_ и _sendto_, наверное, должны "
+"были быть добавлены как библиотечные интерфейсы к _recvmsg_ и _sendmsg_, "
+"соответственно."
 
 #. type: Title ====
 #: documentation/content/en/books/design-44bsd/_index.adoc:524
 #, no-wrap
 msgid "Scatter/Gather I/O"
-msgstr ""
+msgstr "Множественный ввод/вывод"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:530
@@ -1686,6 +2299,15 @@ msgid ""
 "passes in a pointer to an array of buffers and lengths, along with a count "
 "describing the size of the array."
 msgstr ""
+"Кроме традиционных системных вызовов _read_ и _write_, в 4.2BSD появилась "
+"возможность выполнять множественный ввод/вывод. Множественный ввод "
+"использует системный вызов _readv_ для размещения результата единственной "
+"операции чтения в нескольких различных буферах. Обратно, системный вызов "
+"_writev_ позволяет осуществлять запись нескольких различных буферов за одну "
+"атомарную операцию записи. Вместо передачи одного буфера и его длины в "
+"качестве параметров, как это делается при использовании системных вызовов "
+"_read_ и _write_, процесс передает указатель на массив буферов и их длин, а "
+"также счетчик, определяющий размер массива."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:535
@@ -1702,6 +2324,17 @@ msgid ""
 "memory-to-memory copying in such cases often would more than double the "
 "running time of the affected application."
 msgstr ""
+"Такой механизм позволяет буферам в различных областях адресного пространства "
+"процесса записываться атомарно, без необходимости копировать их в один "
+"буфер. Атомарные операции записи необходимы в случае, когда низкоуровневые "
+"абстракции основаны на записях, например, стримеры, которые выводят блок "
+"ленты при каждом запросе на запись. Также полезна возможность помещать "
+"результат одного запроса на чтение в нескольких различных буферах (например, "
+"заголовок записи в одно место, а данные в другое). Хотя приложение может "
+"симулировать возможность выполнять множественные операции посредством чтения "
+"данных в большой буфер с последующим копированием их частей в нужные "
+"области, и накладные расходы на копирование в памяти в таких случаях часто "
+"увеличивает время выполнения приложения чуть ли не вдвое."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:538
@@ -1712,12 +2345,16 @@ msgid ""
 "are used so much more frequently that the added cost of simulating them "
 "would not have been worthwhile."
 msgstr ""
+"Так же, как _send_ и _recv_ могут быть реализованы в виде библиотечных "
+"интерфейсов к _sendto_ и _recvfrom_, возможно симулирование _read_ через "
+"_readv_ и _write_ через _writev_. Однако _read_ и _write_ используются столь "
+"часто, что накладные расходы на такую симуляцию не стоят того."
 
 #. type: Title ====
 #: documentation/content/en/books/design-44bsd/_index.adoc:539
 #, no-wrap
 msgid "Multiple Filesystem Support"
-msgstr ""
+msgstr "Поддержка нескольких файловых систем"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:545
@@ -1730,21 +2367,30 @@ msgid ""
 "filesystem.  However, they may be supported by a wide range of filesystem "
 "types:"
 msgstr ""
+"Вместе с распространением сетевых вычислений возникла потребность в "
+"поддержке как локальных, так и удаленных файловых систем. Для облегчения "
+"поддержки нескольких файловых систем разработчики добавили в ядро интерфейс "
+"виртуальных узлов файловой системы, или интерфейс _vnode_. Набор операций, "
+"экспортируемых через интерфейс vnode, похож на операции файловой системы, "
+"ранее поддерживаемые локальной файловой системой. Однако они могут "
+"поддерживаться широким спектром типов файловых систем:"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:547
 msgid "Local disk-based filesystems"
-msgstr ""
+msgstr "Локальные файловые системы, использующие диск"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:548
 msgid "Files imported using a variety of remote filesystem protocols"
 msgstr ""
+"Файлы, импортируемые при помощи разнообразных протоколов удаленных файловых "
+"систем"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:549
 msgid "Read-only CD-ROM filesystems"
-msgstr ""
+msgstr "Файловые системы CD-ROM, доступные только для чтения"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:550
@@ -1752,6 +2398,8 @@ msgid ""
 "Filesystems providing special-purpose interfaces -- for example, the `/proc` "
 "filesystem"
 msgstr ""
+"Файловые системы, предоставляющие специализированные услуги - к примеру, "
+"файловая система [.filename]#/proc#"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:553
@@ -1762,12 +2410,17 @@ msgid ""
 "support routines are described in Section 6.6; several of the special-"
 "purpose filesystems are described in Section 6.7."
 msgstr ""
+"Некоторые варианты 4.4BSD, такие, как FreeBSD, позволяют выполнять "
+"динамическую загрузку файловых систем при первом обращении к ним при помощи "
+"системного вызова _mount_. Интерфейс vnode описан в Разделе 6.5; вдобавок он "
+"поддерживает функции, описанные в Разделе 6.6; некоторые из файловых систем "
+"специального назначения описаны в Разделе 6.7."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:555
 #, no-wrap
 msgid "Filesystems"
-msgstr ""
+msgstr "Файловые системы"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:560
@@ -1780,6 +2433,13 @@ msgid ""
 "in the file itself, but the filesystem stores a small amount of ownership, "
 "protection, and usage information with each file."
 msgstr ""
+"Обычный файл представляет собой массив байтов, и может читаться и "
+"записываться, начиная с произвольного байта файла. Ядро не различает в "
+"обычных файлах границ записей, хотя многие программы воспринимают символы "
+"перевода строки в качестве признаков конца строк, но другие программы могут "
+"предполагать наличие других структур. В самом файле не хранится никакой "
+"системной информации о файле, но в файловой системе размещается некоторая "
+"информация о владельце, правах доступа и об использовании каждого файла."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:565
@@ -1791,6 +2451,13 @@ msgid ""
 "may refer to other directories, as well as to plain files.  A hierarchy of "
 "directories and files is thus formed, and is called a _filesystem_;"
 msgstr ""
+"Компонент под названием _имя файла_ является строкой длиной до 255 символов. "
+"Эти имена хранятся в файле особого типа, который называется _каталогом_. "
+"Информация о файле в каталоге называется _записью каталога_ и включает, "
+"кроме имени файла, указатель на сам файл. Записи каталога могут ссылаться "
+"как на другие каталоги, так и на обычные файлы. Таким образом формируется "
+"иерархия каталогов и файлов, которая и называется файловой системой "
+"_filesystem_;"
 
 #. type: Block title
 #: documentation/content/en/books/design-44bsd/_index.adoc:566
@@ -1802,6 +2469,7 @@ msgstr ""
 #: documentation/content/en/books/design-44bsd/_index.adoc:569
 msgid "image:fig2.png[A small filesystem]"
 msgstr ""
+"Небольшая файловая система image::fig2.png[Дерево небольшой файловой системы]"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:574
@@ -1814,6 +2482,12 @@ msgid ""
 "only plain files and directories, but also references to other objects, such "
 "as devices and sockets."
 msgstr ""
+"Одна небольшая файловая система показана на <<fig-small-fs>>. Каталоги могут "
+"содержать подкаталоги, и нет ограничений вложенности одного каталога в "
+"другой по глубине. Для соблюдения целостности файловой системы, ядро не "
+"позволяет процессу производить запись непосредственно в каталоги. Файловая "
+"система может хранить не только обычные файлы и каталоги, но также ссылки на "
+"другие объекты, такие, как устройства и сокеты."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:579
@@ -1826,6 +2500,15 @@ msgid ""
 "directory.  Within the `usr` directory is the `bin` directory, which mostly "
 "contains executable object code of programs, such as the files `ls` and `vi`."
 msgstr ""
+"Файловая система образует дерево, начало которого находится в _корневом "
+"каталоге_, иногда называемому по имени _слэш_, которое соответствует символу "
+"одинарной наклонной черты (/). Корневой каталог содержит файлы; в нашем "
+"примере на Рисунке 2.2, он содержит [.filename]#vmunix#, копию выполнимого "
+"объектного файла ядра. В нем также расположены каталоги; в этом примере он "
+"содержит каталог [.filename]#usr#. Внутри каталога [.filename]#usr# "
+"располагается каталог [.filename]#bin#, который в основном содержит "
+"выполнимый объектный код программ, таких, как [.filename]#ls# и [."
+"filename]#vi#."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:584
@@ -1839,6 +2522,14 @@ msgid ""
 "slash is called an _absolute pathname_, and is interpreted by the kernel "
 "starting with the process's root directory."
 msgstr ""
+"Процесс обращается к файлу, указывая _путь_ до него, который является "
+"строкой, состоящей из нескольких или ни одного имен файлов, разделенных "
+"символами слэша (/). С каждым процессом ядро связывает два каталога, при "
+"помощи которых можно интерпретировать маршруты до файлов. _Корневой каталог_ "
+"процесса является самой верхней точкой файловой системы, которую может "
+"достичь процесс; обычно он соответствует корневому каталогу всей файловой "
+"системы. Маршрут, начинающийся с символа слэша, называется _абсолютным "
+"маршрутом_, и интерпретируется ядром, начиная с корневого каталога процесса."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:590
@@ -1851,6 +2542,13 @@ msgid ""
 "The filename _dot-dot_ (`..`) refers to a directory's parent directory.  The "
 "root directory is its own parent."
 msgstr ""
+"Имя пути, которое не начинается со слэша, называется _относительным "
+"маршрутом_, и интерпретируется относительно _текущего рабочего каталога_ "
+"процесса. (Этот каталог кратко также называют _текущим каталогом_ или "
+"_рабочим каталогом_.) Текущий каталог сам по себе можно обозначить "
+"непосредственно по имени _dot_, что соответствует одной точке ([."
+"filename]#.#). Имя файла _dot-dot_ ([.filename]#..#) обозначает родительский "
+"каталог текущего каталога. Корневой каталог является предком самому себе."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:594
@@ -1861,6 +2559,11 @@ msgid ""
 "privileges.  _Chroot_ is normally used to set up restricted access to the "
 "system."
 msgstr ""
+"Процесс может задать собственный корневой каталог при помощи системного "
+"вызова _chroot_, и установить текущий каталог системным вызовом _chdir_. "
+"Каждый процесс может в любой момент выполнить вызов _chdir_, но _chroot_ "
+"позволено выполнять только процессу с административными привилегиями. "
+"_Chroot_ обычно используется для ограничения доступа к системе."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:596
@@ -1871,6 +2574,11 @@ msgid ""
 "pathname `/usr/bin/vi`, or from its current directory with the relative "
 "pathname `bin/vi`."
 msgstr ""
+"Взяв файловую систему, изображенную на Рисунке 2.2, и полагая, что процесс "
+"имеет в качестве корневого каталога корневой каталог файловой системы, и в "
+"качестве текущего каталога [.filename]#/usr#, он может обратиться к файлу [."
+"filename]#vi# либо от корня по абсолютному имени [.filename]#/usr/bin/vi#, "
+"либо из текущего каталога с относительным именем [.filename]#bin/vi#."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:602
@@ -1883,6 +2591,15 @@ msgid ""
 "directories, users can create directories as easily as they can regular "
 "files.  Thus, a user can build arbitrarily complex subhierarchies."
 msgstr ""
+"Системные утилиты и базы данных располагаются в нескольких всем известных "
+"каталогах. Частью предопределенной иерархии является каталог, содержащий "
+"_домашний каталог_ для каждого пользователя - например, [.filename]#/usr/"
+"staff/mckusick# и [.filename]#/usr/staff/karels# на Рисунке 2.2. Когда "
+"пользователи регистрируются в системе, то рабочий каталог их командного "
+"процессора устанавливается в домашний каталог. В своих домашних каталогах "
+"пользователи могут создавать каталоги так же легко, как и обычные файлы. "
+"Таким образом, пользователь может строить иерархии каталогов произвольной "
+"сложности."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:609
@@ -1900,6 +2617,20 @@ msgid ""
 "it are converted transparently by the kernel into references to the root "
 "directory of the mounted filesystem."
 msgstr ""
+"Пользователь обычно знает только об одной файловой системе, но система может "
+"знать, что одна виртуальная файловая система на самом деле состоит из "
+"нескольких физических файловых систем, каждая из которых расположена на "
+"отдельном устройстве. Физическая файловая система не может располагаться на "
+"нескольких физических устройствах. Так как большинство физических дисковых "
+"устройств разбиваются на несколько логических устройств, то на одном "
+"физическом устройстве может располагаться более одной файловой системы, но "
+"не более одной для каждого логического устройства. Одна из файловых систем - "
+"та, с которой начинаются все абсолютные имена - называется _корневой "
+"файловой системой_, и она всегда доступна. Другие файловые системы могут "
+"монтироваться; это значит, что они могут интегрироваться в иерархию "
+"каталогов корневой файловой системы. Ссылки на каталог, в котором находится "
+"смонтированная в него файловая системе, прозрачно преобразуются ядром в "
+"ссылки на корневой каталог смонтированной файловой системы."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:614
@@ -1910,6 +2641,12 @@ msgid ""
 "system call.  When the final name for a file is removed (and the final "
 "process that has the file open closes it), the file is deleted."
 msgstr ""
+"Системный вызов _link_ в качестве параметров принимает имя существующего "
+"файла и новое имя, которое будет присвоено файлу. После успешного выполнения "
+"вызова _link_, файл может быть доступен по любому из имен. Имя файла может "
+"быть удалено при помощи системного вызова _unlink_. Когда удаляется "
+"последнее имя для файла (и последний процесс, который держал файл открытым, "
+"закрыл его), удаляется и сам файл."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:621
@@ -1924,6 +2661,14 @@ msgid ""
 "done.  There were three reasons for adding systems calls explicitly to "
 "create and delete directories:"
 msgstr ""
+"Файлы организованы иерархически в _каталоги_. Каталог является типом файла, "
+"но, в отличие от обычных файлов, каталог имеет структуру, определяемую "
+"системой. Процесс может читать каталог, как будто это обычный файл, но "
+"только ядру разрешено изменять каталог. Каталоги создаются системным вызовом "
+"_mkdir_ и удаляются системным вызовом _rmdir_. До 4.2BSD системные вызовы "
+"_mkdir_ и _rmdir_ были реализованы как последовательность системных вызовов "
+"_link_ и _unlink_. Имелось три причины для добавления системных вызовов "
+"специально для создания и удаления каталогов:"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:624
@@ -1932,6 +2677,9 @@ msgid ""
 "would not be left half-constructed, as could happen when a series of link "
 "operations were used."
 msgstr ""
+"Операция может быть сделана атомарной. Если система завершила работу "
+"аварийно, то каталог не может оставаться в промежуточном состоянии, что "
+"может случиться при последовательном вызове серии операций."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:625
@@ -1940,6 +2688,8 @@ msgid ""
 "and directories need to be specified atomically so that they can be "
 "serialized."
 msgstr ""
+"При работе сетевой файловой системы создание и удаление файлов и каталогов "
+"должны выполняться атомарно, чтобы могли выполняться последовательно."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:626
@@ -1952,6 +2702,13 @@ msgid ""
 "delete directories only if explicit directory create and delete requests "
 "were presented."
 msgstr ""
+"При реализации поддержки не-UNIX файловых систем, таких, как файловая "
+"система MS-DOS, на другом разделе диска, может оказаться, что эта файловая "
+"система не поддерживает ссылочных операций. Хотя другие файловые системы "
+"могут поддерживать концепцию каталогов, скорее всего, они не будут создавать "
+"и удалять каталоги со ссылками, как это делается в файловой системе UNIX. "
+"Соответственно они могут создавать и и удалять каталоги только при наличии "
+"явных запросов на удаление или создание каталогов."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:633
@@ -1967,6 +2724,17 @@ msgid ""
 "local filesystem.  Later, it proved useful explicitly to export renaming "
 "operations to foreign filesystems and over the network."
 msgstr ""
+"Системный вызов _chown_ устанавливает владельца и группу файла, а _chmod_ "
+"изменяет атрибуты защиты. Вызов _stat_, примененный к имени файла, может "
+"использоваться для чтения этих свойств файла. Системные вызовы _fchown_, "
+"_fchmod_ и _fstat_ применяются с дескрипторами, а не с именами файлов, для "
+"выполнения того же самого набора операций. Системный вызов _rename_ может "
+"использоваться для присвоения файлу нового имени в файловой системе с "
+"заменой старого имени файла. Как и операции по созданию и удалению "
+"каталогов, системный вызов _rename_ был добавлен в 4.2BSD для придания "
+"атомарности изменению имен в локальной файловой системе. Позже он оправдал "
+"свою исключительную полезность для экспортирования операций по "
+"переименованию в сторонних файловых системах и по сети."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:638
@@ -1981,6 +2749,15 @@ msgid ""
 "as this algorithm being slow, the library could potentially fail on a full "
 "filesystem."
 msgstr ""
+"Системный вызов _truncate_ был добавлен в 4.2BSD для того, чтобы файлы могли "
+"обрезаться по указанному смещению. Вызов был добавлен первоначально для "
+"поддержки библиотеки времени выполнения языка Fortran, в котором применялось "
+"понятие конца файла с произвольным доступом, который мог устанавливаться в "
+"любую позицию, в которой был последний раз доступ к файлу. Без системного "
+"вызова _truncate_ единственным способом обрезать файл было копирование "
+"нужной части в новый файл, удаление старого и переименование копии в "
+"первоначальное имя. Библиотека могла теоретически отказываться работать на "
+"заполненной файловой системе, к тому же такой алгоритм оказывался медленным."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:641
@@ -1990,6 +2767,10 @@ msgid ""
 "of shortening empty directories is that it reduces the time spent in the "
 "kernel searching them when names are being created or deleted."
 msgstr ""
+"После того, как файловая система получила возможность обрезать файлы, ядро "
+"применяло эту возможность для уменьшения больших пустых каталогов. "
+"Преимущество в уменьшении пустых каталогов заключается в сокращении времени "
+"ядра на поиск в них при создании или удалении имен."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:645
@@ -2000,21 +2781,25 @@ msgid ""
 "protection of files.  These three levels specify the accessibility of a file "
 "to"
 msgstr ""
+"Вновь создаваемым файлам присваивается идентификатор пользователя процесса, "
+"который их создал, и идентификатор группы каталога, в котором они были "
+"созданы. Для защиты файлов применяется трехуровневый механизм управления "
+"доступом. Эти три уровня определяют доступность файла для"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:648
 msgid "The user who owns the file"
-msgstr ""
+msgstr "Пользователя, который является владельцем файла"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:649
 msgid "The group that owns the file"
-msgstr ""
+msgstr "Группы, которая приписана файлу"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:650
 msgid "Everyone else"
-msgstr ""
+msgstr "Всех остальных"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:652
@@ -2022,6 +2807,8 @@ msgid ""
 "Each level of access has separate indicators for read permission, write "
 "permission, and execute permission."
 msgstr ""
+"Каждый уровень доступа имеет отдельные индикаторы прав для чтения, записи и "
+"выполнения."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:662
@@ -2038,6 +2825,18 @@ msgid ""
 "positioning the pointer past the current end-of-file and writing.  When "
 "read, holes are treated by the system as zero-valued bytes."
 msgstr ""
+"Файлы создаются с нулевым размером, который может увеличиться при выполнении "
+"операций записи. Пока файл открыт, система отслеживает указатель на файл, "
+"соответствующий текущему положению в файле, связанном с дескриптором. Этот "
+"указатель может перемешаться по файлу в произвольном порядке. Процессы, "
+"использующие один и тот же дескриптор файла посредством системных вызовов "
+"_fork_ или _dup_, используют одновременно один и тот же указатель текущей "
+"позиции. Дескрипторы, созданные различными системными вызовами _open_, имеют "
+"различные указатели текущей позиции. В файлах могут присутствовать _дыры_. "
+"Дыры представляют собой пустые пространства в теле файла, в которые никаких "
+"данных не записывалось. Процесс может создать такие дыры, перемещая "
+"указатель за текущий конец файла и производя запись. При чтении дыры "
+"интерпретируются системой как заполненные нулевыми байтами."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:668
@@ -2053,6 +2852,18 @@ msgid ""
 "their purposes, leaving eight to 10 characters.  It is easy to use 10 or 12 "
 "characters in a single English word as a basename (e.g., `multiplexer`)."
 msgstr ""
+"Ранние версии UNIX имели ограничение в 14 символов на имя файла. Это "
+"ограничение зачастую вызывало проблемы. Например, кроме естественного "
+"желания пользователей давать файлам длинные описательные имена, "
+"распространенным способом формировать имена файлов является использование "
+"формата [.filename]#basename.extension#, где расширение (указывающее на тип "
+"файла, скажем, `.c` для исходного года на языке C или `.o` для "
+"промежуточного двоичного объекта) имеет длину от одного до трех символов, "
+"оставляя от 10 до 12 символов на имя файла. Системы управления исходным "
+"кодом и редакторы обычно используют дополнительно два символа для своих "
+"целей, для префикса или суффикса имени файла, при этом остается от восьми до "
+"10 символов. В качестве имени файла легко использовать от 10 до 12 символов "
+"одного английского слова (например, `multiplexer`)."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:673
@@ -2069,12 +2880,26 @@ msgid ""
 "problem, but the long filenames first introduced in 4.2BSD practically "
 "eliminate it."
 msgstr ""
+"Можно смириться с этими ограничениями, но это непоследовательно и даже "
+"опасно, потому что другие системы UNIX могут работать со строками, "
+"превышающими этот лимит, при создании файлов, но затем имя будет _обрезано_. "
+"Исходный файл с именем [.filename]#multiplexer.c#, содержащий исходный код "
+"на языке C, (уже 13 символов) может иметь соответствующий файл из системы "
+"управления исходным кодом с префиксом `s.`, при этом получается имя файла [."
+"filename]#s.multiplexer#, которое не будет отличаться от файла системы "
+"управления исходным кодом для файла [.filename]#multiplexer.ms#, содержащего "
+"исходный код `troff` для документации программы на языке C. Содержимое двух "
+"оригинальных файлов может оказаться перепутанным без каких-либо "
+"предупреждений от системы управления исходным кодом. При тщательном "
+"кодировании эту проблему можно обнаружить, но поддержка длинных имен файлов, "
+"впервые появившаяся в 4.2BSD, практически полностью ликвидировала эту "
+"проблему."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:675
 #, no-wrap
 msgid "Filestores"
-msgstr ""
+msgstr "Размещение файлов"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:680
@@ -2085,6 +2910,11 @@ msgid ""
 "the data will be stored. 4.4BSD has a single implementation to provide these "
 "semantics."
 msgstr ""
+"Операции, определенные для локальных файловых систем, делятся на две "
+"категории. Общими для всех локальных систем являются иерархический принцип "
+"именования, блокировка, квоты, управление атрибутами и защита. Эти механизмы "
+"не зависят от того, как хранятся данные. В 4.4BSD имеется единая реализация "
+"для предоставления этих сервисов."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:683
@@ -2094,11 +2924,15 @@ msgid ""
 "storage media is the responsibility of the filestore. 4.4BSD supports three "
 "different filestore layouts:"
 msgstr ""
+"Другой частью локальной файловой системы является организация и управление "
+"данными на носителях информации. Размещение содержимого файлов на носителях "
+"является вопросом хранилища файлов. В 4.4BSD поддерживает три различных типа "
+"хранилищ файлов:"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:685
 msgid "The traditional Berkeley Fast Filesystem"
-msgstr ""
+msgstr "Традиционная файловая система Berkeley Fast Filesystem"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:687
@@ -2106,11 +2940,13 @@ msgid ""
 "The log-structured filesystem, based on the Sprite operating-system design "
 "crossref:design-44bsd[biblio-rosenblum, [Rosenblum & Ousterhout, 1992]]"
 msgstr ""
+"Журналируемая файловая система, основанная на архитектуре операционной "
+"системы Sprite <<biblio-rosenblum, [Rosenblum & Ousterhout, 1992]>>"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:688
 msgid "A memory-based filesystem"
-msgstr ""
+msgstr "Файловая система в памяти"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:690
@@ -2119,6 +2955,8 @@ msgid ""
 "these differences are indistinguishable to the processes using the "
 "filestores."
 msgstr ""
+"Хотя организация этих хранилищ совершенно различна, эти различия скрыты от "
+"процессов, использующих файловые системы."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:695
@@ -2129,6 +2967,12 @@ msgid ""
 "expected to accessed together are moved into different cylinder groups.  "
 "Thus, files written at the same time may be placed far apart on the disk."
 msgstr ""
+"В файловой системе Fast Filesystem организует данные в группы дорожек. "
+"Файлы, к которым, скорее всего, будет осуществляться доступ одновременно (на "
+"основе их расположения в иерархии файловой системы), хранятся на одной и той "
+"же группе дорожек. Файлы, к которым не предполагается одновременный доступ, "
+"перемещаются на разные группы дорожек. Таким образом, файлы, записываемые в "
+"одно и то же время, могут располагаться в абсолютно разных областях диска."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:700
@@ -2140,6 +2984,13 @@ msgid ""
 "garbage-collection process that runs when the filesystem becomes full and "
 "additional free space is needed."
 msgstr ""
+"Файловая система с журнальной организацией организует данные в виде журнала. "
+"Все данные, записываемые в некоторый момент времени, собираются вместе и "
+"записываются в одно и то же место диска. Данные никогда не перезаписываются; "
+"вместо этого записывается новая копия файла, которая заменяет старую. Старые "
+"файлы уничтожаются процессом-сборщиком мусора, который запускается, когда "
+"файловая система переполняется и появляется необходимость в свободном "
+"пространстве."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:704
@@ -2150,12 +3001,18 @@ msgid ""
 "packed as compactly as possible to minimize the usage of virtual-memory "
 "resources."
 msgstr ""
+"Файловая система в памяти предназначена для хранения данных в виртуальной "
+"памяти. Она используется для файловых систем, в которых должны храниться "
+"временные данные с обеспечением быстрого доступа к ним, к примеру, [."
+"filename]#/tmp#. При организации файловой системы в памяти преследуется цель "
+"организовать максимально компактное хранение данных для минимизации "
+"использования ресурсов виртуальной памяти."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:706
 #, no-wrap
 msgid "Network Filesystem"
-msgstr ""
+msgstr "Сетевая файловая система"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:712
@@ -2167,6 +3024,13 @@ msgid ""
 "Users working locally do not experience the network delays on each "
 "keystroke, so they have a more responsive environment."
 msgstr ""
+"Изначально сетевые возможности использовались для передачи данных от одной "
+"машины к другой. Позже это получило свое развитие в обеспечении подключения "
+"пользователей удаленно к другим машинам. Следующим логическим шагом было "
+"предоставление данных пользователю, а не приближение пользователя к данным - "
+"так родились сетевые файловые системы. Пользователи, работающие локально, не "
+"ощущают сетевых задержек при каждом нажатии клавиши, так что они получают "
+"более удобное рабочее окружение."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:718
@@ -2181,6 +3045,16 @@ msgid ""
 "binaries within that remote filesystem identically to the way that they can "
 "do these operations on a local filesystem."
 msgstr ""
+"Подключение файловой системы к локальной машине было одним из первых "
+"основных клиент-серверных приложений. _Сервер_ является удаленной машиной, "
+"которая экспортирует одну или более своих файловых систем. _Клиентом_ "
+"является локальная машина, которая импортирует эти файловые системы. С точки "
+"зрения локального клиента, смонтированные удаленные файловые системы "
+"появляются в пространстве имен дерева файлов, как любая другая локально "
+"смонтированная файловая система. Локальные клиенты могут перемещаться в "
+"каталоги на удаленной файловой системе, и могут осуществлять чтение, запись "
+"и выполнение двоичных файлов на удаленной файловой системе точно так же, как "
+"они выполняют эти операции на локальной файловой системе."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:723
@@ -2193,6 +3067,13 @@ msgid ""
 "filesystems lies in maintaining cache consistency between the server and its "
 "many clients."
 msgstr ""
+"Когда локальный клиент выполняет операцию на удаленной файловой системе, "
+"оформляется и посылается запрос к серверу. Сервер выполняет запрошенную "
+"операцию и возвращает либо запрошенную информацию, либо ошибку, почему "
+"запрос был отклонен. Для получения удовлетворительной производительности, "
+"клиент должен кэшировать данные, к которым доступ осуществляется часто. "
+"Сложность удаленных файловых систем отражается на поддержке соответствия "
+"между сервером и множеством его клиентов."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:729
@@ -2205,6 +3086,12 @@ msgid ""
 "specification crossref:design-44bsd[biblio-macklem, [Macklem, 1994]].  The "
 "NFS protocol is described in Chapter 9."
 msgstr ""
+"Хотя за эти годы было разработано множество протоколов работы с удаленными "
+"файловыми системами, самой распространенной на системах UNIX является "
+"сетевая файловая система Network Filesystem (NFS), которая была "
+"спроектирована и реализована в Sun Microsystems. Ядро 4.4BSD поддерживает "
+"протокол NFS, хотя его реализация была выполнена независимо от спецификаций "
+"протокола <<biblio-macklem, [Macklem, 1994]>>. Протокол NFS описан в Главе 9."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:731
@@ -2223,6 +3110,13 @@ msgid ""
 "rate, and according to a set of software-controllable parameters, such as "
 "parity checking."
 msgstr ""
+"Терминалы поддерживают стандартные системные операции ввода/вывода, а также "
+"набор операций, специфичных для терминалов, для управления редактированием "
+"входных символов и задержек вывода. На самом нижнем уровне находятся "
+"драйверы терминальных устройств, которые управляют портами аппаратных "
+"терминалов. Терминальный ввод обрабатывается согласно низлежащим "
+"характеристикам связи, таким, как скорость передачи, и согласно набору "
+"программно контролируемых параметров, таких, как контроль четности."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:740
@@ -2234,6 +3128,12 @@ msgid ""
 "standard line-oriented editing functions, and input is presented to a "
 "process on a line-by-line basis."
 msgstr ""
+"Выше уровня драйверов терминальных устройств находятся режимы каналов, "
+"которые обеспечивают различные уровни обработки символов. По умолчанию режим "
+"работы канала выбирается, когда порт используется для интерактивного входа в "
+"систему. Режим работы канала устанавливается в _канонический_; входной поток "
+"обрабатывается так, что обеспечиваются стандартные функции, ориентированные "
+"на редактирование строк, и он представляется процессу в виде целых строк."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:744
@@ -2246,6 +3146,13 @@ msgid ""
 "processing is done, and all characters are passed to the program that is "
 "reading from the terminal."
 msgstr ""
+"Экранные редакторы и программы, которые взаимодействуют с другими машинами, "
+"обычно работают в _неканоническом режиме_ (часто называемом _raw-режимом_ "
+"или _посимвольным режимом_). В этом режиме входной поток передается в "
+"читающий процесс сразу же и без всякой обработки. Выключается вся обработка "
+"специальных символов, не выполняется удаление символов и другое "
+"редактирование строк, все символы передаются программе, которая выполняет "
+"чтение с терминала."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:747
@@ -2257,6 +3164,12 @@ msgid ""
 "noncanonical mode; all other characters would be passed through to the "
 "process uninterpreted."
 msgstr ""
+"Терминал может быть настроен тысячами различных способов, промежуточных "
+"между этими двумя. Например, экранный редактор, которому необходимо получать "
+"прерывания от пользователя асинхронно, может разрешить использование "
+"специальных символов, которые генерируют сигналы и разрешить управление "
+"выходным потоком, в противном случае работать в неканоническом режиме; все "
+"остальные символы будут передаваться в процесс необработанными."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:749
@@ -2264,6 +3177,8 @@ msgid ""
 "On output, the terminal handler provides simple formatting services, "
 "including"
 msgstr ""
+"Что касается выходного потока, то терминальный обработчик предоставляет "
+"простые службы по его форматированию, включая"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:751
@@ -2271,16 +3186,18 @@ msgid ""
 "Converting the line-feed character to the two-character carriage-return-line-"
 "feed sequence"
 msgstr ""
+"Преобразование символа перевода строки на двухсимвольную последовательность "
+"из символов возврата каретки и перевода строки"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:752
 msgid "Inserting delays after certain standard control characters"
-msgstr ""
+msgstr "Выдерживание пауз после некоторых стандартных управляющих символов"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:753
 msgid "Expanding tabs"
-msgstr ""
+msgstr "Замещение символов табуляции"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:754
@@ -2289,6 +3206,10 @@ msgid ""
 "the form `^C` (i.e., the ASCII caret character followed by the ASCII "
 "character that is the character's value offset from the ASCII `@` character)."
 msgstr ""
+"Вывод неграфических символов ASCII в виде двухсимвольных последовательностей "
+"вида `^C` (другими словами, вывод знака вставки, за которым следует символ, "
+"который находится по смещению от символа `@`, соответствующему значению "
+"этого символа)."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:756
@@ -2296,6 +3217,8 @@ msgid ""
 "Each of these formatting services can be disabled individually by a process "
 "through control requests."
 msgstr ""
+"Каждый из этих сервисов преобразования может быть независимо выключен "
+"процессом при помощи управляющих запросов."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:758
@@ -2314,6 +3237,14 @@ msgid ""
 "between sites required to run them; and the _XNS domain_, for communication "
 "between processes using the XEROX Network Systems (XNS) protocols."
 msgstr ""
+"Межпроцессные коммуникации в 4.4BSD организованы в _коммуникационные "
+"домены_. К поддерживаемым на данный момент доменам относятся _локальный "
+"домен_ для взаимодействия между процессами, выполняющимися на одной и той же "
+"машине; _межсетевой домен_ для связи между процессами посредством набора "
+"протоколов TCP/IP (возможно, в сети Интернет); семейство протоколов ISO/OSI "
+"для взаимодействия между сайтами, которым нужна именно такая связь, и _домен "
+"XNS_ для коммуникаций между процессами при помощи протоколов XEROX Network "
+"Systems (XNS)."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:766
@@ -2325,6 +3256,13 @@ msgid ""
 "communications semantics; these semantics include properties such as "
 "reliability, ordering, and prevention of duplication of messages."
 msgstr ""
+"В пределах домена соединения имеют место между конечными точками связи, "
+"также называемыми _сокетами_. Как отмечено в Разделе 2.6, системный вызов "
+"_socket_ создает сокет и возвращает дескриптор; другие системные вызовы IPC "
+"описаны в Главе 11. Каждый сокет имеет тип, определяющий его "
+"коммуникационные свойства; к ним относятся такие характеристики, как "
+"надежность, сохранение последовательности передаваемой информации и "
+"предупреждение дублирования сообщений."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:770
@@ -2335,6 +3273,11 @@ msgid ""
 "socket, or may allow the system to select a protocol that is appropriate for "
 "the type of socket being created."
 msgstr ""
+"с каждым сокетом связан некоторый _коммуникационный протокол_. Этот протокол "
+"обеспечивает выполнение операций, требуемых сокету, согласно его типу. "
+"Приложения могут задавать нужный протокол при создании сокета или могут "
+"разрешить системе выбрать протокол, который соответствует типу создаваемого "
+"сокета."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:774
@@ -2344,6 +3287,10 @@ msgid ""
 "created.  Binding a name to a socket in the local domain causes a file to be "
 "created in the filesystem."
 msgstr ""
+"Сокеты могут иметь адреса, связанные с ними. Формат и смысл адресов сокетов "
+"зависят от коммуникационного домена, в котором был создан сокет. Привязка "
+"имени к сокету в локальном домене приводит к созданию файла в файловой "
+"системе."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:779
@@ -2356,6 +3303,12 @@ msgid ""
 "domain, for example, uses this facility to pass descriptors between "
 "processes."
 msgstr ""
+"Обычные данные, передаваемые и получаемые при помощи сокетов, не имеют типа. "
+"Вопросы представления данных зависят от библиотек, которые находятся на "
+"верху коммуникационных сервисов. Вдобавок к передаче обычных данных, "
+"коммуникационные домены могут поддерживать передачу и прием специальных "
+"типов данных, которые называются _правами доступа_. Например, локальный "
+"домен использует эту возможность для передачи дескрипторов между процессами."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:785
@@ -2370,6 +3323,15 @@ msgid ""
 "datagrams, with which a destination address must be presented with each "
 "_send_ call."
 msgstr ""
+"До 4.2BSD сетевые реализации в UNIX обычно работали через интерфейсы "
+"символьных устройств. Одной из целей создания интерфейса сокетов было "
+"обеспечение работы простеньким программам без изменения на потоковых "
+"соединениях. Такие программы могут работать, если только не меняются "
+"системные вызовы _read_ и _write_. Соответственно, оригинальные интерфейсы "
+"не трогались, но были исправлены для работы с потоковыми сокетами. Для более "
+"сложных сокетов, таких, как те, что используются для посылки датаграмм и в "
+"которых при каждом вызове _send_ должен указываться адрес назначения, был "
+"добавлен новый интерфейс."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:790
@@ -2385,6 +3347,16 @@ msgid ""
 "interface was used as the basis for Microsoft's Winsock networking interface "
 "for Windows."
 msgstr ""
+"Другим достоинством является то, что новый интерфейс легко переносим. Вскоре "
+"после тестового релиза, полученного из Беркли, интерфейс сокетов был "
+"перенесен в System III поставщиком UNIX (хотя AT&T не поддерживала интерфейс "
+"сокетов до выхода System V Release 4, решив использовать вместо него "
+"механизм потоков из Eighth Edition). Интерфейс сокетов был также перенесен "
+"для работы на многих адаптерах Ethernet поставщиками, такими, как Excelan и "
+"Interlan, который продавался на рынке PC, где компьютеры были слишком "
+"слабыми, чтобы обрабатывать сетевой код на основном процессоре. Сравнительно "
+"недавно интерфейс сокетов был использован в качестве основы для сетевого "
+"интерфейса Winsock от Microsoft для Windows."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:792
@@ -2402,6 +3374,13 @@ msgid ""
 "message routing, standardized interfaces to the protocols, and interfaces to "
 "the network interface drivers for the use of the various network protocols."
 msgstr ""
+"Некоторые из коммуникационных доменов, поддерживаемых IPC-механизмом "
+"_сокетов_ дают доступ к сетевым протоколам. Эти протоколы реализованы как "
+"отдельный программный слой, логически находящийся ниже программного "
+"обеспечения сокетов в ядре. Ядро предоставляет много вспомогательных "
+"сервисов, таких, как управление буферами, маршрутизация сообщений, "
+"стандартные интерфейсы к протоколам и интерфейсы к драйверам сетевых "
+"интерфейсов для использования в различных сетевых протоколах."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:806
@@ -2421,12 +3400,26 @@ msgid ""
 "physical network as is used by newer applications running with a newer "
 "network protocol."
 msgstr ""
+"В те времена, когда разрабатывалась 4.2BSD, использовалось или "
+"разрабатывалось много сетевых протоколов, каждый со своими сильными и "
+"слабыми сторонами. Не существует единственного подходящего на все случаи "
+"жизни протокола или набора протоколов. Поддерживая много протоколов, 4.2BSD "
+"может обеспечить взаимодействие и обмен ресурсами между различными машинами, "
+"которые были доступны в Беркли. Поддержка многих протоколов необходим также "
+"для изменений в будущем. Современные протоколы, разработанные для Ethernet "
+"со скоростями работы 10 и 100 Mbit в секунду, вряд ли будут соответствовать "
+"для завтрашних оптических сетей пропускной способностью 1 и 10 Gbit в "
+"секунду. Поэтому уровень сетевых коммуникаций разработан с учетом поддержки "
+"многих протоколов. Новые протоколы добавляются к ядру, не затрагивая "
+"поддержку старых протоколов. Старые приложения могут продолжать работать с "
+"использованием старых протоколов в той же самой физической сети, что "
+"использовалась для новых приложений, работающих с новым сетевым протоколом."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:808
 #, no-wrap
 msgid "Network Implementation"
-msgstr ""
+msgstr "Сетевая реализация"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:815
@@ -2441,6 +3434,15 @@ msgid ""
 "TCP/IP implementation have also been widely adopted.  The TCP/IP "
 "implementation is described in detail in Chapter 13."
 msgstr ""
+"Первым набором протоколов, реализованным в 4.2BSD, был Transmission Control "
+"Protocol/Internet Protocol (TCP/IP) от DARPA. CSRG выбрала TCP/IP в качестве "
+"первого для включения в набор протоколов IPC, потому что реализация на "
+"основе 4.1 была всем доступна из проекта, спонсируемого DARPA, в Bolt, "
+"Beranek и Newman (BBN). Это был выбор, повлиявший на многое: Реализация в "
+"4.2BSD стала основной причиной очень широкой распространенности и "
+"использования этого набора протоколов. Более поздние усовершенствования "
+"производительности и возможностей TCP/IP были также широко приняты. "
+"Реализация TCP/IP подробно описана в Главе 13."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:818
@@ -2450,6 +3452,10 @@ msgid ""
 "University.  This suite was needed to connect isolated machines that could "
 "not communicate using TCP/IP."
 msgstr ""
+"В релизе 4.3BSD появился набор протоколов Xerox Network Systems (XNS), "
+"частично основанный на работе, выполненной в Университете Мэрилэнда и "
+"Университете Корнелла. Этот набор был нужен для объединения отдельных машин, "
+"которые не могли работать с протоколом TCP/IP."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:824
@@ -2464,12 +3470,21 @@ msgid ""
 "The greatly expanded routing capabilities of 4.4BSD include arbitrary levels "
 "of routing with variable-length addresses and network masks."
 msgstr ""
+"В релиз 4.4BSD был добавлен набор протоколов ISO из-за его все большей "
+"распространенности как внутри, так и во вне США. По причине использования в "
+"протоколах ISO несколько другого подхода к сети, в интерфейсе сокетов "
+"потребовалось сделать некоторые небольшие изменения для реализации этого "
+"подхода. Изменения были сделаны так, что они были незаметны для клиентов "
+"других существующих протоколов. Протоколы ISO требуют также большой работы с "
+"двухуровневыми таблицами маршрутизации, имеющимися в 4.3BSD. К значительно "
+"расширенным возможностям по маршрутизации в 4.4BSD относятся раздельные "
+"уровни маршрутизации с адресами переменной длины и сетевыми масками."
 
 #. type: Title ===
 #: documentation/content/en/books/design-44bsd/_index.adoc:826
 #, no-wrap
 msgid "System Operation"
-msgstr ""
+msgstr "Работа системы"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:834
@@ -2484,6 +3499,16 @@ msgid ""
 "start-up script starts the general system services and brings up the system "
 "to full multiuser operation."
 msgstr ""
+"Механизмы начальной загрузки используются для запуска системы. Сначала ядро "
+"4.4BSD должно быть загружено в основную память процессора. После загрузки "
+"оно должно пройти через фазу инициализации для установки аппаратуры в "
+"известное состояние. Затем ядро должно выполнить автоконфигурацию, в "
+"процессе которой распознаются и настраиваются периферийные устройства, "
+"подключенные к процессору. Система начинает работу в однопользовательском "
+"режиме, пока начальный скрипт выполняет проверку дисков и включает подсчет "
+"статистики и использования квот. Наконец, начальный скрипт запускает "
+"общесистемные службы и переводит систему в полностью многопользовательский "
+"режим."
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:838
@@ -2494,6 +3519,12 @@ msgid ""
 "validation is done.  When the login validation is successful, a login shell "
 "is created from which the user can run additional processes."
 msgstr ""
+"При работе в многопользовательском режиме процессы ждут запросов на вход в "
+"систему с терминальных линий и сетевых портов, которые были настроены на "
+"вход пользователей. После обнаружения запроса на вход, вызывается процесс "
+"входа в систему и выполняется аутентификация пользователя. Если она прошла "
+"успешно, запускается начальная оболочка, из которой пользователь может "
+"запускать дополнительные процессы."
 
 #. type: Title ==
 #: documentation/content/en/books/design-44bsd/_index.adoc:843
@@ -2509,6 +3540,10 @@ msgid ""
 "Young 93-113 USENIX Association Conference Proceedings USENIX Association "
 "June 1986"
 msgstr ""
+"[[biblio-accetta]] Accetta et al, 1986 Mach: A New Kernel Foundation for "
+"UNIX Development\" M.Accetta R.Baron W.Bolosky D.Golub R.Rashid A.Tevanian "
+"M.Young 93-113 USENIX Association Conference Proceedings USENIX Association "
+"June 1986"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:848
@@ -2516,6 +3551,8 @@ msgid ""
 "[[biblio-cheriton]] Cheriton, 1988 The V Distributed System D. R.Cheriton "
 "314-333 Comm ACM, 31, 3 March 1988"
 msgstr ""
+"[[biblio-cheriton]] Cheriton, 1988 The V Distributed System D. R.Cheriton "
+"314-333 Comm ACM, 31, 3 March 1988"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:850
@@ -2524,6 +3561,9 @@ msgid ""
 "Operating System P.Ewens D. R.Blythe M.Funkenhauser R. C.Holt 247-254 USENIX "
 "Assocation Conference Proceedings USENIX Association June 1985"
 msgstr ""
+"[[biblio-ewens]] Ewens et al, 1985 Tunis: A Distributed Multiprocessor "
+"Operating System P.Ewens D. R.Blythe M.Funkenhauser R. C.Holt 247-254 USENIX "
+"Assocation Conference Proceedings USENIX Association June 1985"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:852
@@ -2532,6 +3572,9 @@ msgid ""
 "R.Gingell J.Moran W.Shannon 81-94 USENIX Association Conference Proceedings "
 "USENIX Association June 1987"
 msgstr ""
+"[[biblio-gingell]] Gingell et al, 1987 Virtual Memory Architecture in SunOS "
+"R.Gingell J.Moran W.Shannon 81-94 USENIX Association Conference Proceedings "
+"USENIX Association June 1987"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:854
@@ -2539,6 +3582,8 @@ msgid ""
 "[[biblio-kernighan]] Kernighan & Pike, 1984 The UNIX Programming Environment "
 "B. W.Kernighan R.Pike Prentice-Hall Englewood Cliffs NJ 1984"
 msgstr ""
+"[[biblio-kernighan]] Kernighan & Pike, 1984 The UNIX Programming Environment "
+"B. W.Kernighan R.Pike Prentice-Hall Englewood Cliffs NJ 1984"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:856
@@ -2547,6 +3592,9 @@ msgid ""
 "6:1-14 4.4BSD System Manager's Manual O'Reilly & Associates, Inc. Sebastopol "
 "CA 1994"
 msgstr ""
+"[[biblio-macklem]] Macklem, 1994 The 4.4BSD NFS Implementation R.Macklem 6:1-"
+"14 4.4BSD System Manager's Manual O'Reilly & Associates, Inc. Sebastopol CA "
+"1994"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:858
@@ -2555,6 +3603,9 @@ msgid ""
 "Memory Allocator for the 4.3BSD UNIX Kernel M. K.McKusick M. J.Karels "
 "295-304 USENIX Assocation Conference Proceedings USENIX Assocation June 1998"
 msgstr ""
+"[[biblio-mckusick-2]] McKusick & Karels, 1988 Design of a General Purpose "
+"Memory Allocator for the 4.3BSD UNIX Kernel M. K.McKusick M. J.Karels 295-"
+"304 USENIX Assocation Conference Proceedings USENIX Assocation June 1998"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:860
@@ -2564,6 +3615,10 @@ msgid ""
 "Faber 5:1-42 4.4BSD Programmer's Supplementary Documents O'Reilly & "
 "Associates, Inc. Sebastopol CA 1994"
 msgstr ""
+"[[biblio-mckusick-1]] McKusick et al, 1994 Berkeley Software Architecture "
+"Manual, 4.4BSD Edition M. K.McKusick M. J.Karels S. J.Leffler W. N.Joy R. "
+"S.Faber 5:1-42 4.4BSD Programmer's Supplementary Documents O'Reilly & "
+"Associates, Inc. Sebastopol CA 1994"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:862
@@ -2571,6 +3626,8 @@ msgid ""
 "[[biblio-ritchie]] Ritchie, 1988 Early Kernel Design private communication "
 "D. M.Ritchie March 1988"
 msgstr ""
+"[[biblio-ritchie]] Ritchie, 1988 Early Kernel Design private communication "
+"D. M.Ritchie March 1988"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:864
@@ -2580,6 +3637,10 @@ msgid ""
 "26-52 ACM Transactions on Computer Systems, 10, 1 Association for Computing "
 "Machinery February 1992"
 msgstr ""
+"[[biblio-rosenblum]] Rosenblum & Ousterhout, 1992 The Design and "
+"Implementation of a Log-Structured File System M.Rosenblum K.Ousterhout 26-"
+"52 ACM Transactions on Computer Systems, 10, 1 Association for Computing "
+"Machinery February 1992"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:866
@@ -2589,6 +3650,10 @@ msgid ""
 "S.Langlois P.Leonard W.Neuhauser 305-370 USENIX Computing Systems, 1, 4 Fall "
 "1988"
 msgstr ""
+"[[biblio-rozier]] Rozier et al, 1988 Chorus Distributed Operating Systems "
+"M.Rozier V.Abrossimov F.Armand I.Boule M.Gien M.Guillemont F.Herrmann "
+"C.Kaiser S.Langlois P.Leonard W.Neuhauser 305-370 USENIX Computing Systems, "
+"1, 4 Fall 1988"
 
 #. type: Plain text
 #: documentation/content/en/books/design-44bsd/_index.adoc:867
@@ -2598,3 +3663,7 @@ msgid ""
 "Technical Report CMU-CS-88-106, A.Tevanian Department of Computer Science, "
 "Carnegie-Mellon University Pittsburgh PA December 1987"
 msgstr ""
+"[[biblio-tevanian]] Tevanian, 1987 Architecture-Independent Virtual Memory "
+"Management for Parallel and Distributed Environments: The Mach Approach "
+"Technical Report CMU-CS-88-106, A.Tevanian Department of Computer Science, "
+"Carnegie-Mellon University Pittsburgh PA December 1987"
