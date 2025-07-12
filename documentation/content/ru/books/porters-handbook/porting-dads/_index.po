@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-07-06 04:45+0000\n"
+"PO-Revision-Date: 2025-07-12 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksporters-handbookporting-dads_index/ru/>\n"
@@ -107,7 +107,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:83
 #, no-wrap
 msgid "#include <sys/param.h>\n"
-msgstr ""
+msgstr "#include <sys/param.h>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:86
@@ -131,6 +131,11 @@ msgid ""
 "#  endif\n"
 "#endif\n"
 msgstr ""
+"#if __FreeBSD__ >= 9\n"
+"#  if __FreeBSD_version >= 901000\n"
+"\t /* 9.1+ release specific code here */\n"
+"#  endif\n"
+"#endif\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:100
@@ -285,6 +290,10 @@ msgid ""
 "BROKEN=\tperl is in system\n"
 ".endif\n"
 msgstr ""
+"# no need to compile lang/perl5 if perl5 is already in system\n"
+".if ${OSVERSION} > 300003\n"
+"BROKEN=\tperl is in system\n"
+".endif\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:157
@@ -313,6 +322,8 @@ msgid ""
 "#!/bin/sh\n"
 "exec %%LOCALBASE%%/bin/java -jar %%DATADIR%%/foo.jar \"$@\"\n"
 msgstr ""
+"#!/bin/sh\n"
+"exec %%LOCALBASE%%/bin/java -jar %%DATADIR%%/foo.jar \"$@\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:174
@@ -382,13 +393,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:201
 #, no-wrap
 msgid "CC?= gcc\n"
-msgstr ""
+msgstr "CC?= gcc\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:206
 #, no-wrap
 msgid "CXX?= g++\n"
-msgstr ""
+msgstr "CXX?= g++\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:209
@@ -399,13 +410,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:213
 #, no-wrap
 msgid "CC= gcc\n"
-msgstr ""
+msgstr "CC= gcc\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:218
 #, no-wrap
 msgid "CXX= g++\n"
-msgstr ""
+msgstr "CXX= g++\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:223
@@ -450,7 +461,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:239
 #, no-wrap
 msgid "CFLAGS+= -Wall -Werror\n"
-msgstr ""
+msgstr "CFLAGS+= -Wall -Werror\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:242
@@ -461,7 +472,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:246
 #, no-wrap
 msgid "CFLAGS= -Wall -Werror\n"
-msgstr ""
+msgstr "CFLAGS= -Wall -Werror\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:251
@@ -483,7 +494,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:259
 #, no-wrap
 msgid "CFLAGS= -O3 -funroll-loops -DHAVE_SOUND\n"
-msgstr ""
+msgstr "CFLAGS= -O3 -funroll-loops -DHAVE_SOUND\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:262
@@ -496,7 +507,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:266
 #, no-wrap
 msgid "CFLAGS+= -DHAVE_SOUND\n"
-msgstr ""
+msgstr "CFLAGS+= -DHAVE_SOUND\n"
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:269
@@ -524,6 +535,9 @@ msgid ""
 "  CC     source2.o\n"
 "  CCLD   someprogram\n"
 msgstr ""
+"  CC     source1.o\n"
+"  CC     source2.o\n"
+"  CCLD   someprogram\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:284
@@ -538,6 +552,9 @@ msgid ""
 "cc -O2 -pipe -I/usr/local/include -c -o source2.o source2.c\n"
 "cc -o someprogram source1.o source2.o -L/usr/local/lib -lsomelib\n"
 msgstr ""
+"cc -O2 -pipe -I/usr/local/include -c -o source1.o source1.c\n"
+"cc -O2 -pipe -I/usr/local/include -c -o source2.o source2.c\n"
+"cc -o someprogram source1.o source2.o -L/usr/local/lib -lsomelib\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:294
@@ -551,7 +568,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:296
 #, no-wrap
 msgid "Feedback"
-msgstr ""
+msgstr "Feedback"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:300
@@ -726,13 +743,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:359
 #, no-wrap
 msgid "BROKEN=\tfails to link with base -lcrypto\n"
-msgstr ""
+msgstr "BROKEN=\tfails to link with base -lcrypto\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:364
 #, no-wrap
 msgid "IGNORE=\tunsupported on recent versions\n"
-msgstr ""
+msgstr "IGNORE=\tunsupported on recent versions\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:367
@@ -744,12 +761,13 @@ msgstr ""
 #, no-wrap
 msgid "===>  foobar-0.1 is marked as broken: fails to link with base -lcrypto.\n"
 msgstr ""
+"===>  foobar-0.1 is marked as broken: fails to link with base -lcrypto.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:376
 #, no-wrap
 msgid "===>  foobar-0.1 is unsupported on recent versions.\n"
-msgstr ""
+msgstr "===>  foobar-0.1 is unsupported on recent versions.\n"
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:379
@@ -780,7 +798,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:392
 #, no-wrap
 msgid "cd ${SRCDIR}; make targets\n"
-msgstr ""
+msgstr "cd ${SRCDIR}; make targets\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:397
@@ -840,13 +858,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:420
 #, no-wrap
 msgid "ONLY_FOR_ARCHS=\ti386 amd64\n"
-msgstr ""
+msgstr "ONLY_FOR_ARCHS=\ti386 amd64\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:425
 #, no-wrap
 msgid "NOT_FOR_ARCHS=\tia64 sparc64\n"
-msgstr ""
+msgstr "NOT_FOR_ARCHS=\tia64 sparc64\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:429
@@ -981,13 +999,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:485
 #, no-wrap
 msgid ".error \"option is not supported\"\n"
-msgstr ""
+msgstr ".error \"option is not supported\"\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:490
 #, no-wrap
 msgid "IGNORE=option is not supported\n"
-msgstr ""
+msgstr "IGNORE=option is not supported\n"
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/porting-dads/_index.adoc:495

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-06-21 19:10+0000\n"
+"PO-Revision-Date: 2025-07-12 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksporters-handbookquick-porting_index/ru/>\n"
@@ -28,13 +28,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:1
 #, no-wrap
 msgid "Chapter 3. Quick Porting"
-msgstr ""
+msgstr "Глава 3. Быстрое портирование"
 
 #. type: Title =
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:14
 #, no-wrap
 msgid "Quick Porting"
-msgstr ""
+msgstr "Быстрое портирование"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:53
@@ -50,6 +50,9 @@ msgid ""
 "First, get the original tarball and put it into `DISTDIR`, which defaults to "
 "[.filename]#/usr/ports/distfiles#."
 msgstr ""
+"Во-первых, скачайте оригинальный tar-файл и поместите его в каталог `DISTDIR`"
+", который по умолчанию есть не что иное, как [.filename]#/usr/ports/"
+"distfiles#."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:61
@@ -59,6 +62,10 @@ msgid ""
 "FreeBSD system.  If anything had to be changed, refer to crossref:slow-"
 "porting[slow-porting,Slow Porting]."
 msgstr ""
+"Здесь предполагается, что программное обеспечение компилируется без проблем "
+"как есть, то есть для работы приложения на вашей системе FreeBSD не "
+"потребовалось абсолютно никаких изменений. Если требовалось что-то изменить, "
+"то вам придется обратиться также и к следующему разделу."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:66
@@ -66,12 +73,14 @@ msgid ""
 "It is recommended to set the `DEVELOPER` man:make[1] variable in "
 "[.filename]#/etc/make.conf# before getting into porting."
 msgstr ""
+"Перед началом портирования рекомендуется установить переменную man:make[1] "
+"`DEVELOPER` в [.filename]#/etc/make.conf#."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:70
 #, no-wrap
 msgid "# echo DEVELOPER=yes >> /etc/make.conf\n"
-msgstr ""
+msgstr "# echo DEVELOPER=yes >> /etc/make.conf\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:73
@@ -79,17 +88,20 @@ msgid ""
 "This setting enables the \"developer mode\" that displays deprecation "
 "warnings and activates some further quality checks on calling `make`."
 msgstr ""
+"Эта настройка включает \"режим разработчика\", в котором отображаются "
+"предупреждения при использовании устаревших конструкций и задействуются "
+"некоторые дополнительные проверки при вызове команды `make`."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:76
 #, no-wrap
 msgid "Writing the Makefile"
-msgstr ""
+msgstr "Создание файла [.filename]#Makefile#"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:79
 msgid "The minimal [.filename]#Makefile# would look something like this:"
-msgstr ""
+msgstr "Минимальный [.filename]#Makefile# будет выглядеть примерно так:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:86
@@ -100,6 +112,10 @@ msgid ""
 "CATEGORIES=\tgames\n"
 "MASTER_SITES=\tftp://ftp.rediris.es/sites/ftp.freebsd.org/pub/FreeBSD/\n"
 msgstr ""
+"PORTNAME=\toneko\n"
+"DISTVERSION=\t1.1b\n"
+"CATEGORIES=\tgames\n"
+"MASTER_SITES=\tftp://ftp.rediris.es/sites/ftp.freebsd.org/pub/FreeBSD/\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:90
@@ -109,6 +125,9 @@ msgid ""
 "COMMENT=\tCat chasing a mouse all over the screen\n"
 "WWW=\t\thttp://www.daidouji.com/oneko/\n"
 msgstr ""
+"MAINTAINER=\tyouremail@example.com\n"
+"COMMENT=\tCat chasing a mouse all over the screen\n"
+"WWW=\t\thttp://www.daidouji.com/oneko/\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:92
@@ -122,12 +141,14 @@ msgid ""
 "Try to figure it out.  A more detailed example is shown in the "
 "crossref:porting-samplem[porting-samplem,sample Makefile] section."
 msgstr ""
+"Посмотрим, сможете ли вы его понять. Более подробный пример приведен в "
+"секции crossref:porting-samplem[porting-samplem,пример Makefile]."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:98
 #, no-wrap
 msgid "Writing the Description Files"
-msgstr ""
+msgstr "Создание информационных файлов"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:103
@@ -137,6 +158,10 @@ msgid ""
 "[.filename]#pkg-plist#.  Their [.filename]#pkg-# prefix distinguishes them "
 "from other files."
 msgstr ""
+"Имеется два информационных файла, которые требуются для любого порта, вне "
+"зависимости от того, является ли он пакетом или нет. Это [.filename]#pkg-"
+"descr# и [.filename]#pkg-plist#. Префикс [.filename]#pkg-# отличает их от "
+"других файлов."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:105
@@ -150,6 +175,8 @@ msgid ""
 "This is a longer description of the port.  One to a few paragraphs concisely "
 "explaining what the port does is sufficient."
 msgstr ""
+"Это более подробное краткое описание порта. От одного до нескольких абзацев, "
+"кратко описывающих, что представляет собой порт, будет достаточно."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:116
@@ -180,6 +207,18 @@ msgid ""
 "implementation languages help users decide whether this port will work for "
 "them."
 msgstr ""
+"Хорошо составленный [.filename]#pkg-descr# описывает порт достаточно полно, "
+"чтобы пользователю не приходилось сверяться с документацией или посещать "
+"вебсайт для понимания того, что делает данное программное обеспечение, чем "
+"оно может быть полезно или какие хорошие функции у него имеются. Упоминание "
+"про определённые требования, такие как используемый графический "
+"инструментарий, тяжёлые зависимости, окружение для запуска или используемый "
+"язык программирования помогут пользователям определиться, будет ли этот порт "
+"для них работать. Включите сюда URL официальной домашней страницы Интернет. "
+"Перед _одним_ из сайтов (выберите основной) добавьте `WWW:` (с последующим "
+"единичным пробелом) для того, чтобы вспомогательные утилиты работали "
+"правильно. Если URI является корнем сайта или каталогом, то значение должно "
+"быть дополнено косой чертой."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:126
@@ -202,11 +241,15 @@ msgid ""
 "listed here.  The pathnames are relative to the installation prefix (usually "
 "[.filename]#/usr/local#)."
 msgstr ""
+"Здесь перечисляются все файлы, устанавливаемые портом. Его также называют "
+"\"списком для упаковки\", потому что пакет генерируется упаковкой файлов, "
+"которые здесь указаны. Имена путей указываются относительно установочного "
+"префикса (обычно [.filename]#/usr/local#)."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:136
 msgid "Here is a small example:"
-msgstr ""
+msgstr "Вот маленький пример:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:145
@@ -219,12 +262,20 @@ msgid ""
 "lib/X11/oneko/cat2.xpm\n"
 "lib/X11/oneko/mouse.xpm\n"
 msgstr ""
+"bin/oneko\n"
+"man/man1/oneko.1.gz\n"
+"lib/X11/app-defaults/Oneko\n"
+"lib/X11/oneko/cat1.xpm\n"
+"lib/X11/oneko/cat2.xpm\n"
+"lib/X11/oneko/mouse.xpm\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:148
 msgid ""
 "Refer to the man:pkg-create[8] manual page for details on the packing list."
 msgstr ""
+"Обратитесь к странице справочной системы по команде man:pkg-create[8] с "
+"подробным описанием формата списка упаковки."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:155
@@ -235,6 +286,9 @@ msgid ""
 "place.  The framework does this correctly when the package list is "
 "crossref:plist[plist-autoplist,generated automatically]."
 msgstr ""
+"Рекомендуется, чтобы имена файлов в этом списке были отсортированы в "
+"алфавитном порядке. Это позволит значительно облегчить сверку изменений при "
+"обновлении порта."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:161
@@ -243,6 +297,10 @@ msgid ""
 "installs a large numbers of files, crossref:plist[plist-autoplist,creating "
 "the packing list automatically] might save time."
 msgstr ""
+"Создание списка упаковки вручную может оказаться весьма трудоёмкой задачей. "
+"Если порт устанавливает большое количество файлов, раздел об <<plist-"
+"autoplist,автоматическом построении списка упаковки>> может помочь "
+"сэкономить время."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:166
@@ -253,6 +311,13 @@ msgid ""
 "could get along without [.filename]#pkg-plist# in the above "
 "[.filename]#oneko# port by adding these lines to the [.filename]#Makefile#:"
 msgstr ""
+"Существует только одно исключение, когда у порта может отсутствовать [."
+"filename]#pkg-plist#. Если порт устанавливает лишь несколько файлов, а "
+"возможно, и каталогов, то они могут быть перечислены в переменных "
+"`PLIST_FILES` и `PLIST_DIRS`, соответственно, внутри файла [."
+"filename]#Makefile# порта. К примеру, мы можем обойтись без файла [.filename"
+"]#pkg-plist# у приведённого выше порта [.filename]#oneko#, добавив следующие "
+"строки в [.filename]#Makefile#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:175
@@ -265,6 +330,12 @@ msgid ""
 "\t\tlib/X11/oneko/cat2.xpm \\\n"
 "\t\tlib/X11/oneko/mouse.xpm\n"
 msgstr ""
+"PLIST_FILES=\tbin/oneko \\\n"
+"\t\tman/man1/oneko.1.gz \\\n"
+"\t\tlib/X11/app-defaults/Oneko \\\n"
+"\t\tlib/X11/oneko/cat1.xpm \\\n"
+"\t\tlib/X11/oneko/cat2.xpm \\\n"
+"\t\tlib/X11/oneko/mouse.xpm\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:182
@@ -296,7 +367,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:197
 #, no-wrap
 msgid "PLIST_FILES=\t\"@sample ${ETCDIR}/oneko.conf.sample\"\n"
-msgstr ""
+msgstr "PLIST_FILES=\t\"@sample ${ETCDIR}/oneko.conf.sample\"\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:201
@@ -309,7 +380,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:203
 #, no-wrap
 msgid "Creating the Checksum File"
-msgstr ""
+msgstr "Создание файла с контрольной суммой"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:208
@@ -317,12 +388,15 @@ msgid ""
 "Just type `make makesum`.  The ports framework will automatically generate "
 "[.filename]#distinfo#.  Do not try to generate the file manually."
 msgstr ""
+"Просто введите команду `make makesum`. Правила утилиты make автоматически "
+"сгенерируют файл [.filename]#distinfo#. Не пытайтесь создавать этот файл "
+"вручную."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:210
 #, no-wrap
 msgid "Testing the Port"
-msgstr ""
+msgstr "Тестирование порта"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:214
@@ -330,18 +404,24 @@ msgid ""
 "Make sure that the port rules do exactly what is desired, including "
 "packaging up the port.  These are the important points to verify:"
 msgstr ""
+"Вы должны удостовериться, что правила построения порта выполняют именно то, "
+"что вы хотите, включая создание пакета для порта. Вот те важные вещи, "
+"которые вы должны проверить."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:216
 msgid ""
 "[.filename]#pkg-plist# does not contain anything not installed by the port."
 msgstr ""
+"[.filename]#pkg-plist# не содержит ничего сверх того, что устанавливается "
+"портом"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:217
 msgid ""
 "[.filename]#pkg-plist# contains everything that is installed by the port."
 msgstr ""
+"[.filename]#pkg-plist# содержит абсолютно все, что устанавливается портом"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:218
@@ -349,6 +429,8 @@ msgid ""
 "The port can be installed using the `install` target. This verifies that the "
 "install script works correctly."
 msgstr ""
+"Порт может быть установлен с помощью указания цели `install`. Это позволяет "
+"убедиться в правильной работе сценария установки."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:219
@@ -356,6 +438,8 @@ msgid ""
 "The port can be deinstalled properly using the `deinstall` target. This "
 "verifies that the deinstall script works correctly."
 msgstr ""
+"Порт может быть правильным образом удалён с помощью указания цели `deinstall`"
+". Это позволяет убедиться в правильной работе сценария удаления."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:220
@@ -378,7 +462,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:223
 #, no-wrap
 msgid "Procedure: Recommended Test Ordering"
-msgstr ""
+msgstr "*Procedure: Рекомендуемый порядок проверки*"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:225
@@ -388,7 +472,7 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:226
 msgid "`make stage-qa`"
-msgstr ""
+msgstr "`make check-orphans`"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:227
@@ -413,7 +497,7 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:232
 msgid "Make certain no warnings are shown in any of the stages."
-msgstr ""
+msgstr "Убедитесь, что на любом из этапов не выдается никаких предупреждений."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:235
@@ -428,7 +512,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:237
 #, no-wrap
 msgid "Checking the Port with `portlint`"
-msgstr ""
+msgstr "Проверка вашего порта утилитой `portlint`"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:242
@@ -439,6 +523,12 @@ msgid ""
 "samplem,Makefile] is in the right shape and the crossref:porting-"
 "pkgname[porting-pkgname,package] is named appropriately."
 msgstr ""
+"Будьте добры, пользуйтесь утилитой `portlint` для проверки того, что ваш "
+"порт соответствует нашим рекомендациям. Программа package:ports-mgmt/"
+"portlint[] является частью Коллекции Портов. В частности, вы можете захотеть "
+"проверить, правильно ли сформирован файл crossref:porting-samplem[porting-"
+"samplem,Makefile] и соответствующим ли образом именован crossref:porting-"
+"pkgname[porting-pkgname,пакет]."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:246
@@ -451,7 +541,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:249
 #, no-wrap
 msgid "Submitting the New Port"
-msgstr ""
+msgstr "Посылка нового порта"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:252
@@ -459,6 +549,8 @@ msgid ""
 "Before submitting the new port, read the crossref:porting-dads[porting-"
 "dads,DOs and DON'Ts] section."
 msgstr ""
+"Перед посылкой нового порта прочитайте раздел о том, что crossref:porting-"
+"dads[porting-dads,можно и нельзя] делать."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:254
@@ -466,6 +558,9 @@ msgid ""
 "Once happy with the port, the only thing remaining is to put it in the main "
 "FreeBSD ports tree and make everybody else happy about it too."
 msgstr ""
+"Когда вы наконец довольны своим первым портом, единственное, что осталось "
+"сделать, это включить его в основное дерево портов FreeBSD и осчастливить "
+"этим всех остальных."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:258
@@ -563,6 +658,10 @@ msgid ""
 "port_\".  Using this scheme makes it easier and faster to begin the work of "
 "committing the new port."
 msgstr ""
+"Хорошее описание в заголовке сообщения о проблеме значительно облегчает "
+"работу коммиттеров портов. Для новых портов мы предпочитаем нечто вроде \"["
+"NEW PORT] _категория/название_порта краткое описание порта_\". Следование "
+"этой схеме упрощает и ускоряет начало работы по добавлению нового порта."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:308
@@ -572,6 +671,10 @@ msgid ""
 "search form of the Problem Report database can be searched at https://"
 "bugs.freebsd.org/bugzilla/query.cgi[]."
 msgstr ""
+"После отправки порта, пожалуйста, потерпите. Время, необходимое для "
+"включения нового порта во FreeBSD, может занимать от нескольких дней до "
+"нескольких месяцев. https://bugs.freebsd.org/bugzilla/query.cgi[ Здесь] "
+"можно увидеть список ожидающих PR для портов."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/quick-porting/_index.adoc:310
