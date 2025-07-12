@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-07-12 04:45+0000\n"
+"PO-Revision-Date: 2025-07-12 12:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksporters-handbookpkg-files_index/ru/>\n"
@@ -28,7 +28,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:1
 #, no-wrap
 msgid "Chapter 9. pkg-*"
-msgstr ""
+msgstr "Глава 9. Файлы pkg-*"
 
 #. type: Title =
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:14
@@ -42,6 +42,8 @@ msgid ""
 "There are some tricks we have not mentioned yet about the [.filename]#pkg-*# "
 "files that come in handy sometimes."
 msgstr ""
+"Есть несколько приёмов работы с файлами [.filename]#pkg-*#, которые мы ещё "
+"не описали, но они иногда могут быть очень кстати."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:54
@@ -57,6 +59,11 @@ msgid ""
 "additional installation steps to be taken after a `pkg install` or `pkg "
 "upgrade`."
 msgstr ""
+"Если вам нужно вывести сообщение для человека, устанавливающего приложение, "
+"то вы можете поместить сообщение в файл [.filename]#pkg-message#. Эта "
+"возможность часто оказывается полезной для вывода дополнительных шагов "
+"установки, которые нужно предпринять после выполнения команды `pkg install`, "
+"или для вывода информации о лицензировании."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:62
@@ -527,7 +534,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:282
 #, no-wrap
 msgid "Changing the Names of pkg-*"
-msgstr ""
+msgstr "Изменение имён файлов [.filename]#pkg-*#"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:287
@@ -540,6 +547,14 @@ msgid ""
 "bad idea to write directly into the directory containing the [.filename]#pkg-"
 "*# files."
 msgstr ""
+"Все имена файлов [.filename]#pkg-\\*# определяются с помощью переменных, так "
+"что вы можете изменить их, если это нужно, в вашем файле [."
+"filename]#Makefile#. Это особенно полезно, если вы используете одни и те же "
+"файлы [.filename]#pkg-*# совместно между несколькими портами или пишете в "
+"один из вышеперечисленных файлов (в главе о crossref:porting-dads[porting-"
+"wrkdir,\"записи в каталоги, отличные от ``WRKDIR``\"] объяснено, почему не "
+"рекомендуется осуществлять запись непосредственно в файлы [."
+"filename]#pkg-*#)."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:290
@@ -547,6 +562,8 @@ msgid ""
 "Here is a list of variable names and their default values.  (`PKGDIR` "
 "defaults to `${MASTERDIR}`.)"
 msgstr ""
+"Вот список имён переменных и их значений по умолчанию. (Значение `PKGDIR` по "
+"умолчанию равно `${MASTERDIR}`.)"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:295
@@ -558,7 +575,7 @@ msgstr "Переменная"
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:297
 #, no-wrap
 msgid "Default value"
-msgstr ""
+msgstr "Значение по умолчанию"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:298
@@ -672,7 +689,7 @@ msgstr "`${PKGDIR}/pkg-message`"
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:326
 #, no-wrap
 msgid "Making Use of `SUB_FILES` and `SUB_LIST`"
-msgstr ""
+msgstr "Использование `SUB_FILES` и `SUB_LIST`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:329
@@ -680,6 +697,9 @@ msgid ""
 "`SUB_FILES` and `SUB_LIST` are useful for dynamic values in port files, such "
 "as the installation `PREFIX` in [.filename]#pkg-message#."
 msgstr ""
+"Переменные `SUB_FILES` и `SUB_LIST` подходят для задания в файлах порта "
+"динамических значений, таких как `PREFIX` установки в [.filename]#pkg-"
+"message#."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:335
@@ -693,6 +713,14 @@ msgid ""
 "deinstall#, the corresponding Makefile variable is automatically set to "
 "point to the processed version."
 msgstr ""
+"В переменной `SUB_FILES` указывается перечень файлов для автоматического "
+"изменения. Каждый _file_ из перечня `SUB_FILES` обязан иметь соответствующий "
+"[.filename]#file.in#, присутствующий в `FILESDIR`. Измененная версия будет "
+"создана в `WRKDIR`. Файлы, определенные в качестве значения `USE_RC_SUBR` ("
+"или устаревшего `USE_RCORDER`), автоматически добавляются в `SUB_FILES`. Для "
+"файлов [.filename]#pkg-message#, [.filename]#pkg-install# и [.filename]#pkg-"
+"deinstall# устанавливается соответствующая переменная Makefile, указывающая "
+"на обработанную версию."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:340
@@ -704,6 +732,12 @@ msgid ""
 "`@comment` followed by a space, will be deleted from resulting files after a "
 "variable substitution."
 msgstr ""
+"Переменная `SUB_LIST` содержит перечень пар `VAR=VALUE`. В каждом файле из "
+"`SUB_FILES` для каждой пары будет произведена замена `%%VAR%%` на `VALUE`. "
+"Некоторые общие пары определяются автоматически: `PREFIX`, `LOCALBASE`, "
+"`DATADIR`, `DOCSDIR`, `EXAMPLESDIR`, `WWWDIR` и `ETCDIR`. Любая строка, "
+"начинающаяся с `@comment`, будет удалена из конечного файла после "
+"подстановки переменной."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:342
@@ -711,6 +745,8 @@ msgid ""
 "This example replaces `%%ARCH%%` with the system architecture in a "
 "[.filename]#pkg-message#:"
 msgstr ""
+"В следующем примере в [.filename]#pkg-message# будет сделана замена "
+"`%%ARCH%%` на системную архитектуру:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:347
@@ -728,11 +764,13 @@ msgid ""
 "Note that for this example, [.filename]#pkg-message.in# must exist in "
 "`FILESDIR`."
 msgstr ""
+"Обратите внимание, что в этом примере в `FILESDIR` обязательно существование "
+"файла [.filename]#pkg-message.in#."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:352
 msgid "Example of a good [.filename]#pkg-message.in#:"
-msgstr ""
+msgstr "Пример хорошего [.filename]#pkg-message.in#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/pkg-files/_index.adoc:358

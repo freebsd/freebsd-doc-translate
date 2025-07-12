@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-07-12 04:45+0000\n"
+"PO-Revision-Date: 2025-07-12 12:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksporters-handbookspecial_index/ru/>\n"
@@ -28,13 +28,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1
 #, no-wrap
 msgid "Chapter 6. Special Considerations"
-msgstr ""
+msgstr "Глава 6. Особые соглашения"
 
 #. type: Title =
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:14
 #, no-wrap
 msgid "Special Considerations"
-msgstr ""
+msgstr "Особые соглашения"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:52
@@ -42,6 +42,8 @@ msgid ""
 "This section explains the most common things to consider when creating a "
 "port."
 msgstr ""
+"Имеется ещё несколько вещей, которые вы должны иметь в виду при создании "
+"порта. Этот раздел описывает наиболее часто встречающиеся из них."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:54
@@ -84,7 +86,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:67
 msgid "[.filename]#Makefile.${ARCH}-${OPSYS}#"
-msgstr ""
+msgstr "[.filename]#Makefile.${ARCH}-${OPSYS}#"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:68
@@ -96,12 +98,12 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:69
 msgid "[.filename]#Makefile.${ARCH}#"
-msgstr ""
+msgstr "[.filename]#Makefile.${ARCH}#"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:70
 msgid "[.filename]#Makefile.local#"
-msgstr ""
+msgstr "[.filename]#Makefile.local#"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:76
@@ -159,6 +161,11 @@ msgid ""
 "empty directories will be seen as orphans.  To prevent man:mtree[8] "
 "extraction, add this line:"
 msgstr ""
+"Метапорты, то есть порты, которые не устанавливают файлы непосредственно, а "
+"только зависят от других портов, должны по возможности избегать распаковки "
+"man:mtree[8] в каталог сборки. Это основная иерархия каталогов пакета, и эти "
+"пустые каталоги будут выглядеть лишними. Для предотвращения распаковки "
+"man:mtree[8] добавьте эту строку:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:101
@@ -315,7 +322,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:175
 #, no-wrap
 msgid "Bugs"
-msgstr "Bugs"
+msgstr "Ошибки"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:177
@@ -328,7 +335,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:178
 #, no-wrap
 msgid "Forking"
-msgstr "Forking"
+msgstr "Ветвление"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:182
@@ -458,6 +465,17 @@ msgid ""
 "the package can start using the shared library immediately and de-"
 "installation will not cause the system to still believe the library is there."
 msgstr ""
+"Если ваш порт устанавливает одну или несколько динамических библиотек, "
+"определите переменную `USE_LDCONFIG`, которая приведёт к запуску из [."
+"filename]#bsd.port.mk# команды `${LDCONFIG} -m` относительно каталога, в "
+"который устанавливается новая библиотека (как правило, это [.filename]#"
+"PREFIX/lib#), во время выполнения цели `post-install` для её регистрации в "
+"кэше динамических библиотек. Эта переменная, если она определена, также "
+"приведёт к добавлению соответствующей пары команд `@exec /sbin/ldconfig -m` "
+"и `@unexec /sbin/ldconfig -R` в ваш файл [.filename]#pkg-plist#, так что "
+"пользователь, устанавливающий пакет, сможет сразу же использовать "
+"динамическую библиотеку, а удаление пакета не приведёт к тому, что система "
+"будет предполагать, что библиотека всё ещё имеется в наличии."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:231
@@ -473,6 +491,12 @@ msgid ""
 "example, if the port installs shared libraries into [.filename]#PREFIX/lib/"
 "foo# and [.filename]#PREFIX/lib/bar# use this in [.filename]#Makefile#:"
 msgstr ""
+"Если нужно, вы можете переопределить каталог по умолчанию, задав значение "
+"`USE_LDCONFIG`, в котором должны быть перечислены каталоги, в которые "
+"устанавливаются динамические библиотеки. Например, если ваш порт "
+"устанавливает динамические библиотеки в каталоги [.filename]#PREFIX/lib/foo# "
+"и [.filename]#PREFIX/lib/bar#, то вы можете в файле [.filename]#Makefile# "
+"указать следующее:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:239
@@ -489,6 +513,11 @@ msgid ""
 "`LD_LIBRARY_PATH` before invoking the binary, like package:www/seamonkey[] "
 "does."
 msgstr ""
+"Будьте добры перепроверить, т.к. часто это вовсе не является необходимым и "
+"может быть решено иначе с помощью `-rpath` или установки `LD_RUN_PATH` во "
+"время компоновки (для примера смотрите package:lang/moscow_ml[]), или с "
+"помощью сценария-обёртки, который выставляет `LD_LIBRARY_PATH` перед "
+"запуском исполняемого файла как это делает package:www/seamonkey[]."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:244
@@ -496,6 +525,8 @@ msgid ""
 "When installing 32-bit libraries on a 64-bit system, use `USE_LDCONFIG32` "
 "instead."
 msgstr ""
+"При установке 32-разрядных библиотек на 64-разрядной системе используйте "
+"вместо этого `USE_LDCONFIG32`."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:246
@@ -512,12 +543,16 @@ msgid ""
 "their `PORTREVISION` incremented, to force recompilation with the new "
 "library version."
 msgstr ""
+"Если при обновлении порта увеличивается старший номер версии библиотеки, то "
+"для всех портов, компонуемых с затронутой библиотекой, следует увеличить "
+"значение `PORTREVISION` для форсирования перекомпиляции с новой версией "
+"библиотеки."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:250
 #, no-wrap
 msgid "Ports with Distribution Restrictions or Legal Concerns"
-msgstr ""
+msgstr "Порты с ограничениями на распространение или с правовым обременением"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:253
@@ -525,6 +560,9 @@ msgid ""
 "Licenses vary, and some of them place restrictions on how the application "
 "can be packaged, whether it can be sold for profit, and so on."
 msgstr ""
+"Лицензии бывают разных видов, и некоторые накладывают ограничение на то, как "
+"приложение может быть оформлено в виде пакета, может ли оно продаваться для "
+"извлечения коммерческой выгоды, и так далее."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:258
@@ -534,6 +572,12 @@ msgid ""
 "for violating them by redistributing the source or compiled binaries either "
 "via FTP/HTTP or CD-ROM.  If in doubt, please contact the {freebsd-ports}."
 msgstr ""
+"На вас, как на человека, портирующего приложение, ложится обязанность "
+"прочесть лицензионные соглашения на программное обеспечение и "
+"удостовериться, что проект FreeBSD не будет являться их нарушителем, если "
+"будет заниматься распространением исходного кода или в бинарном виде по FTP/"
+"HTTP или на CD-ROM. Если у вас возникли сомнения, то, пожалуйста, обратитесь "
+"в {freebsd-ports}."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:261
@@ -541,12 +585,14 @@ msgid ""
 "In situations like this, the variables described in the next sections can be "
 "set."
 msgstr ""
+"В подобных ситуациях можно использовать переменные, описываемые в "
+"последующих разделах."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:263
 #, no-wrap
 msgid "`NO_PACKAGE`"
-msgstr ""
+msgstr "`NO_PACKAGE`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:267
@@ -555,6 +601,9 @@ msgid ""
 "application.  For instance, the license may disallow binary redistribution, "
 "or it may prohibit distribution of packages created from patched sources."
 msgstr ""
+"Эта переменная указывает, что мы не можем создавать для приложения двоичный "
+"пакет. К примеру, лицензия не позволяет бинарное распространение или она "
+"может запрещать распространение пакетов, созданных из изменённых исходников."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:270
@@ -563,6 +612,9 @@ msgid ""
 "may also be distributed on a CD-ROM (or similar media) unless `NO_CDROM` is "
 "set as well."
 msgstr ""
+"Однако файлы `DISTFILES` могут свободно зеркалироваться по FTP/HTTP. Они "
+"также могут распространяться, используя CD-ROM (или на похожих носителях), "
+"если не установлена переменная `NO_CDROM`."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:273
@@ -572,6 +624,11 @@ msgid ""
 "the application has configuration information that is site specific hard "
 "coded into it at compile time, set `NO_PACKAGE`."
 msgstr ""
+"`NO_PACKAGE` должна также использоваться, если двоичный пакет, как правило, "
+"бесполезен, а приложение должно всегда компилироваться из исходного кода. К "
+"примеру, если в приложение во время компиляции жёстко включается "
+"конфигурационная информация, привязанная к конкретной системе, то задайте "
+"переменную `NO_PACKAGE`."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:275
@@ -579,12 +636,14 @@ msgid ""
 "Set `NO_PACKAGE` to a string describing the reason why the package cannot be "
 "generated."
 msgstr ""
+"Значением переменной `NO_PACKAGE` должна быть строка, описывающая причину, "
+"по которой пакет не должен создаваться."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:277
 #, no-wrap
 msgid "`NO_CDROM`"
-msgstr ""
+msgstr "`NO_CDROM`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:281
@@ -595,6 +654,10 @@ msgid ""
 "binary packages and the port's `DISTFILES` will still be available via FTP/"
 "HTTP."
 msgstr ""
+"Эта переменная указывает на то, что, хотя мы имеем право создавать бинарные "
+"пакеты, мы не можем помещать эти пакеты или файлы `DISTFILES` порта на CD-"
+"ROM (или на похожие носители) для перепродажи. Однако бинарные пакеты и "
+"файлы `DISTFILES` порта будут оставаться доступными посредством FTP/HTTP."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:283
@@ -602,6 +665,8 @@ msgid ""
 "If this variable is set along with `NO_PACKAGE`, then only the port's "
 "`DISTFILES` will be available, and only via FTP/HTTP."
 msgstr ""
+"Если эта переменная устанавливается вместе с `NO_PACKAGE`, то только файлы "
+"порта `DISTFILES` будут доступны, и только посредством FTP/HTTP."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:286
@@ -610,12 +675,16 @@ msgid ""
 "redistributed on CD-ROM.  For instance, use this if the port's license is "
 "for \"non-commercial\" use only."
 msgstr ""
+"В качестве значения `NO_CDROM` должна указываться строка, описывающая "
+"причины, по которым порт не может распространяться на CD-ROM. К примеру, это "
+"применяется, если лицензионное соглашение приложения предполагает только его "
+"\"некоммерческое\" использование."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:288
 #, no-wrap
 msgid "`NOFETCHFILES`"
-msgstr ""
+msgstr "`NOFETCHFILES`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:292
@@ -624,6 +693,9 @@ msgid ""
 "`MASTER_SITES`.  An example of such a file is when the file is supplied on "
 "CD-ROM by the vendor."
 msgstr ""
+"Файлы, определенные в переменной `NOFETCHFILES`, не будут извлекаться ни из "
+"одного из `MASTER_SITES`. Примером такого файла является файл, поставляемый "
+"на CD-ROM."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:294
@@ -631,12 +703,14 @@ msgid ""
 "Tools which check for the availability of these files on `MASTER_SITES` have "
 "to ignore these files and not report about them."
 msgstr ""
+"Инструменты, проверяющие доступность этих файлов на `MASTER_SITES`, должны "
+"игнорировать эти файлы и не сообщать о них."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:296
 #, no-wrap
 msgid "`RESTRICTED`"
-msgstr ""
+msgstr "`RESTRICTED`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:299
@@ -645,6 +719,9 @@ msgid ""
 "mirroring the application's `DISTFILES` nor distributing the binary package "
 "in any way."
 msgstr ""
+"Задайте эту переменную, если лицензия на приложение не позволяет ни "
+"зеркалировать файлы `DISTFILES`, ни распространять бинарный пакет через FTP/"
+"HTTP или на CD-ROM."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:301
@@ -652,6 +729,8 @@ msgid ""
 "Do not set `NO_CDROM` or `NO_PACKAGE` along with `RESTRICTED`, since the "
 "latter variable implies the former ones."
 msgstr ""
+"Ни `NO_CDROM`, ни `NO_PACKAGE` не стоит устанавливать вместе с `RESTRICTED`, "
+"так как последняя переменная подразумевает первые две."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:305
@@ -662,12 +741,17 @@ msgid ""
 "possibly after registering for the software or agreeing to accept the terms "
 "of an EULA."
 msgstr ""
+"В качестве значения `RESTRICTED` должна указываться строка, описывающая "
+"причины, по которым порт нельзя распространять. Обычно это означает, что "
+"порт использует закрытое программное обеспечение, а пользователь должен "
+"вручную сгрузить файлы `DISTFILES`, возможно, после заполнения "
+"регистрационной формы или подтверждения соглашения с условиями EULA."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:307
 #, no-wrap
 msgid "`RESTRICTED_FILES`"
-msgstr ""
+msgstr "`RESTRICTED_FILES`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:311
@@ -676,12 +760,16 @@ msgid ""
 "{DISTFILES} ${PATCHFILES}`, otherwise it is empty.  If only some of the "
 "distribution files are restricted, then set this variable to list them."
 msgstr ""
+"Если заданы `RESTRICTED` или `NO_CDROM`, то значение этой переменной по "
+"умолчанию соответствует `${DISTFILES} ${PATCHFILES}`, в противном случае она "
+"пуста. Если ограничены в распространении лишь некоторые из дистрибутивных "
+"файлов, то в этой переменной задаётся их список."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:313
 #, no-wrap
 msgid "`LEGAL_TEXT`"
-msgstr ""
+msgstr "`LEGAL_TEXT`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:317
@@ -691,12 +779,17 @@ msgid ""
 "permission was obtained for FreeBSD to redistribute the binary, this "
 "variable must indicate so."
 msgstr ""
+"Если порт имеет правовое обременение, которое не покрывается перечисленными "
+"выше переменными, то переменной `LEGAL_TEXT` следует присвоить строку с "
+"описанием данного обременения. Например, если было получено особое "
+"разрешение для FreeBSD на распространение двоичного файла, то эта переменная "
+"должна содержать соответствующее указание."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:319
 #, no-wrap
 msgid "[.filename]#/usr/ports/LEGAL# and `LEGAL`"
-msgstr ""
+msgstr "[.filename]#/usr/ports/LEGAL# и `LEGAL`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:325
@@ -706,6 +799,11 @@ msgid ""
 "restricted distfiles.  The second column is the port's origin.  The third "
 "column is the output of `make -VLEGAL`."
 msgstr ""
+"Порт, содержащий любую из перечисленных выше переменных, также должен быть "
+"добавлен в [.filename]#/usr/ports/LEGAL#. Первый столбец содержит шаблон "
+"совпадения с дистрибутивными файлами, имеющими ограничения на "
+"распространение. Второй столбец содержит корень порта. Третий столбец "
+"содержит вывод `make -VLEGAL`."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:327
@@ -721,6 +819,8 @@ msgid ""
 "The preferred way to state \"the distfiles for this port must be fetched "
 "manually\" is as follows:"
 msgstr ""
+"Предпочтительным способом реализации утверждения \"архивы исходных текстов "
+"для этого порта должны загружаться самостоятельно\" является следующее:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:336
@@ -742,6 +842,9 @@ msgid ""
 "This both informs the user, and sets the proper metadata on the user's "
 "machine for use by automated programs."
 msgstr ""
+"Это одновременно и информирует пользователя, и устанавливает нужные "
+"метаданные на пользовательской машине для использования автоматическими "
+"программами."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:341
@@ -749,18 +852,20 @@ msgid ""
 "Note that this stanza must be preceded by an inclusion of "
 "[.filename]#bsd.port.pre.mk#."
 msgstr ""
+"Обратите внимание, что данная кляуза должна предшествовать подключению файла "
+"[.filename]#bsd.port.pre.mk#."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:343
 #, no-wrap
 msgid "Building Mechanisms"
-msgstr ""
+msgstr "Механизмы построения"
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:346
 #, no-wrap
 msgid "Building Ports in Parallel"
-msgstr ""
+msgstr "Параллельное построение портов"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:350
@@ -769,6 +874,10 @@ msgid ""
 "sub-processes, which allows SMP systems to utilize all of their available "
 "CPU power, allowing port builds to be faster and more effective."
 msgstr ""
+"Инфраструктура портов FreeBSD поддерживает параллельное построение с "
+"использованием множественных подпроцессов `make`, что позволяет системам SMP "
+"задействовать всю доступную мощность CPU, тем самым делая построение портов "
+"более быстрым и эффективным."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:355
@@ -780,6 +889,12 @@ msgid ""
 "used when a port is known to be broken with `-jX` due to race conditions "
 "causing intermittent build failures."
 msgstr ""
+"Это достигается путём передачи флага `-jX` команде man:make[1]. Такое "
+"построение портов является поведением по умолчанию. К сожалению, не все "
+"порты поддерживают параллельную сборку достаточно хорошо, и поэтому может "
+"потребоваться выключить этот механизм явным образом путём добавления "
+"переменной `MAKE_JOBS_UNSAFE=yes`. Эта переменная используется в случае, "
+"когда известно, что порт ломается с `-jX`."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:360
@@ -827,6 +942,12 @@ msgid ""
 "See the crossref:uses[uses-imake,`USES=imake`] section of "
 "crossref:uses[uses,Using `USES` Macros] for more details."
 msgstr ""
+"Если ваш порт является приложением X, которое создает файлы [."
+"filename]#Makefile# из [.filename]#Imakefile#, используя imake, то "
+"установите `USES= imake`. Это заставит стадию конфигурирования автоматически "
+"выполнить `xmkmf -a`. Если флаг `-a` представляет для вашего порта проблему, "
+"то установите `XMKMF=xmkmf`. Если порт использует imake, но не понимает цель "
+"`install.man`, то следует установить `NO_INSTALL_MANPAGES=yes`."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:377
@@ -835,12 +956,15 @@ msgid ""
 "the main build target, set `ALL_TARGET` accordingly.  The same goes for "
 "`install` and `INSTALL_TARGET`."
 msgstr ""
+"Если исходный [.filename]#Makefile# вашего порта имеет что-нибудь помимо "
+"`all` в качестве основной цели построения, то задайте соответствующее "
+"значение `ALL_TARGET`. То же касается `install` и `INSTALL_TARGET`."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:379
 #, no-wrap
 msgid "`configure` Script"
-msgstr ""
+msgstr "Сценарий `configure`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:384
@@ -852,6 +976,14 @@ msgid ""
 "{CONFIGURE_TARGET}`), set those extra arguments in `CONFIGURE_ARGS`.  Extra "
 "environment variables can be passed using `CONFIGURE_ENV`."
 msgstr ""
+"Если ваш порт использует сценарий `configure` для получения файлов [."
+"filename]#Makefile# из файлов [.filename]#Makefile.in#, то установите "
+"`GNU_CONFIGURE=yes`. Если вы хотите дать дополнительные параметры сценарию "
+"`configure` (аргументом по умолчанию является `--prefix=${PREFIX} "
+"--infodir=${PREFIX}/${INFO_PATH} --mandir=${MANPREFIX}/man "
+"--build=${CONFIGURE_TARGET}`), установите эти параметры в `CONFIGURE_ARGS`. "
+"Дополнительные переменные окружения можно передать, используя переменную "
+"`CONFIGURE_ENV`."
 
 #. type: Block title
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:386
@@ -882,91 +1014,97 @@ msgstr "Переменная"
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3175
 #, no-wrap
 msgid "Means"
-msgstr ""
+msgstr "Значение"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:393
 #, no-wrap
 msgid "`GNU_CONFIGURE`"
-msgstr ""
+msgstr "`GNU_CONFIGURE`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:395
 #, no-wrap
 msgid "The port uses `configure` script to prepare build."
-msgstr ""
+msgstr "Порт использует сценарий `configure` для подготовки построения."
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:396
 #, no-wrap
 msgid "`HAS_CONFIGURE`"
-msgstr ""
+msgstr "`HAS_CONFIGURE`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:398
 #, no-wrap
 msgid "Same as `GNU_CONFIGURE`, except default configure target is not added to `CONFIGURE_ARGS`."
 msgstr ""
+"То же, что и `GNU_CONFIGURE`, кроме того, что цель configure по умолчанию не "
+"добавляется в `CONFIGURE_ARGS`."
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:399
 #, no-wrap
 msgid "`CONFIGURE_ARGS`"
-msgstr ""
+msgstr "`CONFIGURE_ARGS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:401
 #, no-wrap
 msgid "Additional arguments passed to `configure` script."
-msgstr ""
+msgstr "Дополнительные параметры, передаваемые сценарию `configure`."
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:402
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:438
 #, no-wrap
 msgid "`CONFIGURE_ENV`"
-msgstr ""
+msgstr "`CONFIGURE_ENV`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:404
 #, no-wrap
 msgid "Additional environment variables to be set for `configure` script run."
 msgstr ""
+"Дополнительные переменные окружения, задаваемые для запуска сценария "
+"`configure`."
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:405
 #, no-wrap
 msgid "`CONFIGURE_TARGET`"
-msgstr ""
+msgstr "`CONFIGURE_TARGET`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:406
 #, no-wrap
 msgid "Override default configure target. Default value is `${MACHINE_ARCH}-portbld-freebsd${OSREL}`."
 msgstr ""
+"Переопределить цель configure по умолчанию. Значением по умолчанию является "
+"`${MACHINE_ARCH}-portbld-freebsd${OSREL}`."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:409
 #, no-wrap
 msgid "Using `cmake`"
-msgstr ""
+msgstr "Использование `cmake`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:412
 msgid "For ports that use CMake, define `USES= cmake`."
-msgstr ""
+msgstr "Если порт использует CMake, определите `USES= cmake`."
 
 #. type: Block title
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:414
 #, no-wrap
 msgid "Variables for Ports That Use `cmake`"
-msgstr ""
+msgstr "Переменные для портов, использующих `cmake`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:421
 #, no-wrap
 msgid "`CMAKE_ARGS`"
-msgstr ""
+msgstr "`CMAKE_ARGS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:423
@@ -978,7 +1116,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:424
 #, no-wrap
 msgid "`CMAKE_ON`"
-msgstr ""
+msgstr "`CMAKE_ON`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:427
@@ -992,7 +1130,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:428
 #, no-wrap
 msgid "`CMAKE_OFF`"
-msgstr ""
+msgstr "`CMAKE_OFF`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:431
@@ -1006,7 +1144,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:432
 #, no-wrap
 msgid "`CMAKE_BUILD_TYPE`"
-msgstr ""
+msgstr "`CMAKE_BUILD_TYPE`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:434
@@ -1018,7 +1156,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:435
 #, no-wrap
 msgid "`CMAKE_SOURCE_PATH`"
-msgstr ""
+msgstr "`CMAKE_SOURCE_PATH`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:437
@@ -1042,13 +1180,15 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:449
 #, no-wrap
 msgid "`CMAKE_NOCOLOR`"
-msgstr ""
+msgstr "`CMAKE_NOCOLOR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:450
 #, no-wrap
 msgid "Disables color build output. Default not set, unless `BATCH` or `PACKAGE_BUILDING` are set."
 msgstr ""
+"Запрещает цветной вывод сообщений при построении. Значение по умолчанию не "
+"задано, если не заданы `BATCH` или `PACKAGE_BUILDING`."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:457
@@ -1065,6 +1205,18 @@ msgid ""
 "a project respect `CFLAGS` and `WITH_DEBUG`, the `CMAKE_BUILD_TYPE` "
 "definitions must be removed from those files."
 msgstr ""
+"CMake поддерживает следующие профили построения: `Debug`, `Release`, "
+"`RelWithDebInfo` и `MinSizeRel`. Профили `Debug` и `Release` учитывают "
+"системные флаги `\\*FLAGS`; `RelWithDebInfo` и `MinSizeRel` соответственно "
+"определяют `CFLAGS` со значением `-O2 -g` и `-Os -DNDEBUG`. Значение "
+"`CMAKE_BUILD_TYPE` экспортируется в нижнем регистре в `PLIST_SUB` и должно "
+"использоваться, если порт устанавливает файлы `*.cmake` в зависимости от "
+"типа построения (для примера посмотрите на package:deskutils/strigi[]). "
+"Следует учитывать, что некоторые проекты могут определять собственные "
+"профили построения и/или форсировать конкретный тип построения через "
+"установку `CMAKE_BUILD_TYPE` в файлах [.filename]#CMakeLists.txt#. Для того "
+"чтобы порт для такого проекта учитывал `CFLAGS` и `WITH_DEBUG`, из этих "
+"файлов должны быть удалены значения `CMAKE_BUILD_TYPE`."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:462
@@ -1077,12 +1229,18 @@ msgid ""
 "generated during configuration and build stages, leaving the source "
 "directory intact."
 msgstr ""
+"Большинство проектов, основанных на CMake, поддерживают метод внешнего (out-"
+"of-source) построения. Для порта внешнее построение можно запросить с "
+"использованием суффикса `:outsource`. В этом случае `CONFIGURE_WRKSRC`, "
+"`BUILD_WRKSRC` и `INSTALL_WRKSRC` будут иметь значение `${WRKDIR}/.build` "
+"для каталога, содержащего файлы, получаемые на этапах конфигурации и "
+"построения; при этом каталог с исходным кодом будет оставаться без изменений."
 
 #. type: Block title
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:464
 #, no-wrap
 msgid "`USES= cmake` Example"
-msgstr ""
+msgstr "Пример для `USES= cmake`"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:469
@@ -1092,6 +1250,10 @@ msgid ""
 "the top directory, or if only a subset of the project is intended to be "
 "built by the port."
 msgstr ""
+"Следующий отрывок демонстрирует использование CMake для порта. "
+"`CMAKE_SOURCE_PATH` обычно не требуется, но может быть установлен, когда "
+"исходный код не находится в верхнем каталоге или если порт используется для "
+"построения части проекта."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:474
@@ -1232,7 +1394,7 @@ msgstr "Описание"
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:533
 #, no-wrap
 msgid "`CARGO_CRATES`"
-msgstr ""
+msgstr "`CARGO_CRATES`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:539
@@ -1248,7 +1410,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:540
 #, no-wrap
 msgid "`CARGO_FEATURES`"
-msgstr ""
+msgstr "`CARGO_FEATURES`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:543
@@ -1260,13 +1422,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:544
 #, no-wrap
 msgid "`CARGO_CARGOTOML`"
-msgstr ""
+msgstr "`CARGO_CARGOTOML`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:545
 #, no-wrap
 msgid "`${WRKSRC}/Cargo.toml`"
-msgstr ""
+msgstr "`${WRKSRC}/Cargo.toml`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:547
@@ -1278,13 +1440,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:548
 #, no-wrap
 msgid "`CARGO_CARGOLOCK`"
-msgstr ""
+msgstr "`CARGO_CARGOLOCK`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:549
 #, no-wrap
 msgid "`${WRKSRC}/Cargo.lock`"
-msgstr ""
+msgstr "`${WRKSRC}/Cargo.lock`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:551
@@ -1296,7 +1458,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:552
 #, no-wrap
 msgid "`CARGO_ENV`"
-msgstr ""
+msgstr "`CARGO_ENV`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:555
@@ -1308,7 +1470,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:556
 #, no-wrap
 msgid "`RUSTFLAGS`"
-msgstr ""
+msgstr "`RUSTFLAGS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:559
@@ -1320,7 +1482,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:560
 #, no-wrap
 msgid "`CARGO_CONFIGURE`"
-msgstr ""
+msgstr "`CARGO_CONFIGURE`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:561
@@ -1330,7 +1492,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:597
 #, no-wrap
 msgid "`yes`"
-msgstr ""
+msgstr "`yes`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:563
@@ -1342,7 +1504,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:564
 #, no-wrap
 msgid "`CARGO_UPDATE_ARGS`"
-msgstr ""
+msgstr "`CARGO_UPDATE_ARGS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:567
@@ -1354,7 +1516,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:568
 #, no-wrap
 msgid "`CARGO_BUILDDEP`"
-msgstr ""
+msgstr "`CARGO_BUILDDEP`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:571
@@ -1366,13 +1528,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:572
 #, no-wrap
 msgid "`CARGO_CARGO_BIN`"
-msgstr ""
+msgstr "`CARGO_CARGO_BIN`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:573
 #, no-wrap
 msgid "`${LOCALBASE}/bin/cargo`"
-msgstr ""
+msgstr "`${LOCALBASE}/bin/cargo`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:575
@@ -1384,7 +1546,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:576
 #, no-wrap
 msgid "`CARGO_BUILD`"
-msgstr ""
+msgstr "`CARGO_BUILD`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:579
@@ -1396,7 +1558,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:580
 #, no-wrap
 msgid "`CARGO_BUILD_ARGS`"
-msgstr ""
+msgstr "`CARGO_BUILD_ARGS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:583
@@ -1408,7 +1570,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:584
 #, no-wrap
 msgid "`CARGO_INSTALL`"
-msgstr ""
+msgstr "`CARGO_INSTALL`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:587
@@ -1420,7 +1582,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:588
 #, no-wrap
 msgid "`CARGO_INSTALL_ARGS`"
-msgstr ""
+msgstr "`CARGO_INSTALL_ARGS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:591
@@ -1432,13 +1594,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:592
 #, no-wrap
 msgid "`CARGO_INSTALL_PATH`"
-msgstr ""
+msgstr "`CARGO_INSTALL_PATH`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:593
 #, no-wrap
 msgid "`.`"
-msgstr ""
+msgstr "`.`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:595
@@ -1450,7 +1612,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:596
 #, no-wrap
 msgid "`CARGO_TEST`"
-msgstr ""
+msgstr "`CARGO_TEST`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:599
@@ -1462,7 +1624,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:600
 #, no-wrap
 msgid "`CARGO_TEST_ARGS`"
-msgstr ""
+msgstr "`CARGO_TEST_ARGS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:603
@@ -1474,13 +1636,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:604
 #, no-wrap
 msgid "`CARGO_TARGET_DIR`"
-msgstr ""
+msgstr "`CARGO_TARGET_DIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:605
 #, no-wrap
 msgid "`${WRKDIR}/target`"
-msgstr ""
+msgstr "`${WRKDIR}/target`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:607
@@ -1492,13 +1654,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:608
 #, no-wrap
 msgid "`CARGO_DIST_SUBDIR`"
-msgstr ""
+msgstr "`CARGO_DIST_SUBDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:609
 #, no-wrap
 msgid "[.filename]#rust/crates#"
-msgstr ""
+msgstr "[.filename]#rust/crates#"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:611
@@ -1510,13 +1672,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:612
 #, no-wrap
 msgid "`CARGO_VENDOR_DIR`"
-msgstr ""
+msgstr "`CARGO_VENDOR_DIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:613
 #, no-wrap
 msgid "`${WRKSRC}/cargo-crates`"
-msgstr ""
+msgstr "`${WRKSRC}/cargo-crates`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:615
@@ -1528,14 +1690,14 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:616
 #, no-wrap
 msgid "`CARGO_USE_GITHUB`"
-msgstr ""
+msgstr "`CARGO_USE_GITHUB`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:617
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:621
 #, no-wrap
 msgid "`no`"
-msgstr ""
+msgstr "`no`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:619
@@ -1547,7 +1709,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:620
 #, no-wrap
 msgid "`CARGO_USE_GITLAB`"
-msgstr ""
+msgstr "`CARGO_USE_GITLAB`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:622
@@ -1940,7 +2102,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:815
 #, no-wrap
 msgid "`MESON_ARGS`"
-msgstr ""
+msgstr "`MESON_ARGS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:817
@@ -1952,7 +2114,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:818
 #, no-wrap
 msgid "`MESON_BUILD_DIR`"
-msgstr ""
+msgstr "`MESON_BUILD_DIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:819
@@ -2761,7 +2923,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1235
 #, no-wrap
 msgid "Optional Usage"
-msgstr ""
+msgstr "Оптимальное использование"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1241
@@ -2771,6 +2933,10 @@ msgid ""
 "`gettext` conditionally, depending on the status of the `NLS` option.  For "
 "ports of low to medium complexity, use this idiom:"
 msgstr ""
+"Некоторые программные продукты позволяют отключать NLS, к примеру, передавая "
+"параметр `--disable-nls` сценарию `configure`. В этом случае ваш порт должен "
+"использовать `gettext`, в зависимости от значения `NLS`. Для портов "
+"небольшой или средней сложности вы можете полагаться на следующую идиому:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1245
@@ -2868,12 +3034,15 @@ msgid ""
 "In high complexity cases, more advanced techniques may be needed, such as "
 "crossref:plist[plist-dynamic,dynamic packing list generation]."
 msgstr ""
+"В особо сложных случаях вам понадобиться использовать более продвинутые "
+"техники, чем данный рецепт, такие как <<plist-dynamic,динамические списки "
+"упаковки>>."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1293
 #, no-wrap
 msgid "Handling Message Catalog Directories"
-msgstr ""
+msgstr "Управление каталогами сообщений"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1300
@@ -2887,12 +3056,21 @@ msgid ""
 "plist# and see whether the port is going to install a message catalog file "
 "for a unique language."
 msgstr ""
+"Существует момент, который следует учитывать при установке файлов каталогов "
+"сообщений. Целевые каталоги для размещения, расположенные под [.filename]#"
+"LOCALBASE/shared/locale#, редко когда должны создаваться и удаляться портом. "
+"Для наиболее популярных языков имеются собственные каталоги, перечисленные в "
+"[.filename]#PORTSDIR/Templates/BSD.local.dist#. Каталоги для множества "
+"других языков управляются с помощью порта package:devel/gettext[]. Обратите "
+"внимание на его [.filename]#pkg-plist# и посмотрите, куда данный порт "
+"собирается установить файлы каталогов сообщений для единственного в своем "
+"роде языка."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1302
 #, no-wrap
 msgid "Using Perl"
-msgstr ""
+msgstr "Использование Perl"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1310
@@ -2906,6 +3084,12 @@ msgid ""
 "https://cpan.org/modules/by-module/[cpan.org].  This keeps the port working "
 "when the author of the module changes."
 msgstr ""
+"Если `MASTER_SITES` установлена в значение `MASTER_SITE_PERL_CPAN`, то "
+"предпочтительным значением `MASTER_SITE_SUBDIR` является имя иерархии "
+"верхнего уровня. Например, рекомендуемым значением для `p5-Module-Name` "
+"является `Module`. Иерархию верхнего уровня можно посмотреть на сайте "
+"http://cpan.org/modules/by-module/[cpan.org]. Это поддерживает порт в "
+"рабочем состоянии при изменении модуля автором."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1315
@@ -2916,6 +3100,9 @@ msgid ""
 "which will be translated to the hashed author directory.  For example, "
 "`CPAN:AUTHOR` will be converted to `authors/id/A/AU/AUTHOR`."
 msgstr ""
+"Исключением этого правила является отсутствие соответствующего каталога или "
+"файла с дистрибутивом в этом каталоге. В качестве `MASTER_SITE_SUBDIR` в "
+"этом случае разрешается использовать id автора."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1317
@@ -2929,7 +3116,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1319
 #, no-wrap
 msgid "Read-Only Variables for Ports That Use Perl"
-msgstr ""
+msgstr "Переменные (только для чтения) для портов, использующих Perl"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1323
@@ -2941,7 +3128,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1326
 #, no-wrap
 msgid "`PERL`"
-msgstr ""
+msgstr "`PERL`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1328
@@ -2953,7 +3140,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1329
 #, no-wrap
 msgid "`PERL_VERSION`"
-msgstr ""
+msgstr "`PERL_VERSION`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1331
@@ -2965,7 +3152,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1332
 #, no-wrap
 msgid "`PERL_LEVEL`"
-msgstr ""
+msgstr "`PERL_LEVEL`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1334
@@ -2977,7 +3164,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1335
 #, no-wrap
 msgid "`PERL_ARCH`"
-msgstr ""
+msgstr "`PERL_ARCH`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1337
@@ -2989,7 +3176,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1338
 #, no-wrap
 msgid "`PERL_PORT`"
-msgstr ""
+msgstr "`PERL_PORT`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1340
@@ -3001,7 +3188,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1341
 #, no-wrap
 msgid "`SITE_PERL`"
-msgstr ""
+msgstr "`SITE_PERL`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1342
@@ -3242,7 +3429,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1489
 #, no-wrap
 msgid "`USES= imake`"
-msgstr ""
+msgstr "`USES= imake`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1491
@@ -3254,7 +3441,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1492
 #, no-wrap
 msgid "`XMKMF`"
-msgstr ""
+msgstr "`XMKMF`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1493
@@ -3603,7 +3790,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1656
 #, no-wrap
 msgid "Variables"
-msgstr ""
+msgstr "Переменные"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1662
@@ -3618,7 +3805,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1663
 #, no-wrap
 msgid "`GLIB_SCHEMAS`"
-msgstr ""
+msgstr "`GLIB_SCHEMAS`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1666
@@ -3657,7 +3844,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1683
 #, no-wrap
 msgid "`GCONF_SCHEMAS`"
-msgstr ""
+msgstr "`GCONF_SCHEMAS`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1686
@@ -3695,7 +3882,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1703
 #, no-wrap
 msgid "`INSTALLS_OMF`"
-msgstr ""
+msgstr "`INSTALLS_OMF`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1707
@@ -3763,7 +3950,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1734
 #, no-wrap
 msgid "`atk`"
-msgstr ""
+msgstr "`atk`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1735
@@ -3781,7 +3968,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1738
 #, no-wrap
 msgid "`atkmm`"
-msgstr ""
+msgstr "`atkmm`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1739
@@ -3799,7 +3986,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1742
 #, no-wrap
 msgid "`cairo`"
-msgstr ""
+msgstr "`cairo`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1743
@@ -3817,7 +4004,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1746
 #, no-wrap
 msgid "`cairomm`"
-msgstr ""
+msgstr "`cairomm`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1747
@@ -3835,7 +4022,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1750
 #, no-wrap
 msgid "`dconf`"
-msgstr ""
+msgstr "`dconf`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1751
@@ -3853,7 +4040,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1754
 #, no-wrap
 msgid "`evolutiondataserver3`"
-msgstr ""
+msgstr "`evolutiondataserver3`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1755
@@ -3871,7 +4058,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1758
 #, no-wrap
 msgid "`gdkpixbuf2`"
-msgstr ""
+msgstr "`gdkpixbuf2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1759
@@ -3890,7 +4077,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1762
 #, no-wrap
 msgid "`glib20`"
-msgstr ""
+msgstr "`glib20`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1763
@@ -3908,7 +4095,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1766
 #, no-wrap
 msgid "`glibmm`"
-msgstr ""
+msgstr "`glibmm`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1767
@@ -3926,7 +4113,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1770
 #, no-wrap
 msgid "`gnomecontrolcenter3`"
-msgstr ""
+msgstr "`gnomecontrolcenter3`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1771
@@ -3944,7 +4131,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1774
 #, no-wrap
 msgid "`gnomedesktop3`"
-msgstr ""
+msgstr "`gnomedesktop3`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1775
@@ -3962,7 +4149,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1778
 #, no-wrap
 msgid "`gsound`"
-msgstr ""
+msgstr "`gsound`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1779
@@ -3980,7 +4167,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1782
 #, no-wrap
 msgid "`gtk-update-icon-cache`"
-msgstr ""
+msgstr "`gtk-update-icon-cache`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1783
@@ -3998,7 +4185,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1786
 #, no-wrap
 msgid "`gtk20`"
-msgstr ""
+msgstr "`gtk20`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1787
@@ -4016,7 +4203,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1790
 #, no-wrap
 msgid "`gtk30`"
-msgstr ""
+msgstr "`gtk30`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1791
@@ -4034,7 +4221,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1794
 #, no-wrap
 msgid "`gtkmm20`"
-msgstr ""
+msgstr "`gtkmm20`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1795
@@ -4052,7 +4239,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1798
 #, no-wrap
 msgid "`gtkmm24`"
-msgstr ""
+msgstr "`gtkmm24`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1799
@@ -4070,7 +4257,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1802
 #, no-wrap
 msgid "`gtkmm30`"
-msgstr ""
+msgstr "`gtkmm30`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1803
@@ -4088,7 +4275,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1806
 #, no-wrap
 msgid "`gtksourceview2`"
-msgstr ""
+msgstr "`gtksourceview2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1807
@@ -4107,7 +4294,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1810
 #, no-wrap
 msgid "`gtksourceview3`"
-msgstr ""
+msgstr "`gtksourceview3`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1811
@@ -4125,7 +4312,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1814
 #, no-wrap
 msgid "`gtksourceviewmm3`"
-msgstr ""
+msgstr "`gtksourceviewmm3`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1815
@@ -4143,7 +4330,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1818
 #, no-wrap
 msgid "`gvfs`"
-msgstr ""
+msgstr "`gvfs`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1819
@@ -4161,7 +4348,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1822
 #, no-wrap
 msgid "`intltool`"
-msgstr ""
+msgstr "`intltool`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1823
@@ -4179,7 +4366,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1826
 #, no-wrap
 msgid "`introspection`"
-msgstr ""
+msgstr "`introspection`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1827
@@ -4197,7 +4384,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1830
 #, no-wrap
 msgid "`libgda5`"
-msgstr ""
+msgstr "`libgda5`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1831
@@ -4216,7 +4403,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1834
 #, no-wrap
 msgid "`libgda5-ui`"
-msgstr ""
+msgstr "`libgda5-ui`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1835
@@ -4234,7 +4421,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1838
 #, no-wrap
 msgid "`libgdamm5`"
-msgstr ""
+msgstr "`libgdamm5`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1839
@@ -4252,7 +4439,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1842
 #, no-wrap
 msgid "`libgsf`"
-msgstr ""
+msgstr "`libgsf`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1843
@@ -4270,7 +4457,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1846
 #, no-wrap
 msgid "`librsvg2`"
-msgstr ""
+msgstr "`librsvg2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1847
@@ -4288,7 +4475,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1850
 #, no-wrap
 msgid "`libsigc++20`"
-msgstr ""
+msgstr "`libsigc++20`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1851
@@ -4307,7 +4494,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1854
 #, no-wrap
 msgid "`libxml++26`"
-msgstr ""
+msgstr "`libxml++26`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1855
@@ -4325,7 +4512,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1858
 #, no-wrap
 msgid "`libxml2`"
-msgstr ""
+msgstr "`libxml2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1859
@@ -4343,7 +4530,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1862
 #, no-wrap
 msgid "`libxslt`"
-msgstr ""
+msgstr "`libxslt`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1863
@@ -4361,7 +4548,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1866
 #, no-wrap
 msgid "`metacity`"
-msgstr ""
+msgstr "`metacity`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1867
@@ -4379,7 +4566,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1870
 #, no-wrap
 msgid "`nautilus3`"
-msgstr ""
+msgstr "`nautilus3`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1871
@@ -4397,7 +4584,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1874
 #, no-wrap
 msgid "`pango`"
-msgstr ""
+msgstr "`pango`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1875
@@ -4415,7 +4602,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1878
 #, no-wrap
 msgid "`pangomm`"
-msgstr ""
+msgstr "`pangomm`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1879
@@ -4433,7 +4620,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1882
 #, no-wrap
 msgid "`py3gobject3`"
-msgstr ""
+msgstr "`py3gobject3`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1883
@@ -4451,7 +4638,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1886
 #, no-wrap
 msgid "`pygobject3`"
-msgstr ""
+msgstr "`pygobject3`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1887
@@ -4469,7 +4656,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1890
 #, no-wrap
 msgid "`vte3`"
-msgstr ""
+msgstr "`vte3`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1891
@@ -4494,7 +4681,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1902
 #, no-wrap
 msgid "`gnomeprefix`"
-msgstr ""
+msgstr "`gnomeprefix`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1904
@@ -4506,7 +4693,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1905
 #, no-wrap
 msgid "`intlhack`"
-msgstr ""
+msgstr "`intlhack`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1907
@@ -4518,7 +4705,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1908
 #, no-wrap
 msgid "`referencehack`"
-msgstr ""
+msgstr "`referencehack`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1909
@@ -4536,7 +4723,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1920
 #, no-wrap
 msgid "`atspi`"
-msgstr ""
+msgstr "`atspi`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1921
@@ -4554,7 +4741,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1924
 #, no-wrap
 msgid "`esound`"
-msgstr ""
+msgstr "`esound`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1925
@@ -4572,7 +4759,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1928
 #, no-wrap
 msgid "`gal2`"
-msgstr ""
+msgstr "`gal2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1929
@@ -4590,7 +4777,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1932
 #, no-wrap
 msgid "`gconf2`"
-msgstr ""
+msgstr "`gconf2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1933
@@ -4608,7 +4795,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1936
 #, no-wrap
 msgid "`gconfmm26`"
-msgstr ""
+msgstr "`gconfmm26`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1937
@@ -4626,7 +4813,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1940
 #, no-wrap
 msgid "`gdkpixbuf`"
-msgstr ""
+msgstr "`gdkpixbuf`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1941
@@ -4638,7 +4825,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1944
 #, no-wrap
 msgid "`glib12`"
-msgstr ""
+msgstr "`glib12`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1945
@@ -4656,7 +4843,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1948
 #, no-wrap
 msgid "`gnomedocutils`"
-msgstr ""
+msgstr "`gnomedocutils`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1949
@@ -4674,7 +4861,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1952
 #, no-wrap
 msgid "`gnomemimedata`"
-msgstr ""
+msgstr "`gnomemimedata`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1953
@@ -4692,7 +4879,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1956
 #, no-wrap
 msgid "`gnomesharp20`"
-msgstr ""
+msgstr "`gnomesharp20`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1957
@@ -4710,7 +4897,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1960
 #, no-wrap
 msgid "`gnomespeech`"
-msgstr ""
+msgstr "`gnomespeech`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1961
@@ -4728,7 +4915,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1964
 #, no-wrap
 msgid "`gnomevfs2`"
-msgstr ""
+msgstr "`gnomevfs2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1965
@@ -4746,7 +4933,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1968
 #, no-wrap
 msgid "`gtk12`"
-msgstr ""
+msgstr "`gtk12`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1969
@@ -4764,7 +4951,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1972
 #, no-wrap
 msgid "`gtkhtml3`"
-msgstr ""
+msgstr "`gtkhtml3`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1973
@@ -4784,7 +4971,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1976
 #, no-wrap
 msgid "`gtkhtml4`"
-msgstr ""
+msgstr "`gtkhtml4`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1977
@@ -4796,7 +4983,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1980
 #, no-wrap
 msgid "`gtksharp20`"
-msgstr ""
+msgstr "`gtksharp20`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1981
@@ -4814,7 +5001,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1984
 #, no-wrap
 msgid "`gtksourceview`"
-msgstr ""
+msgstr "`gtksourceview`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1985
@@ -4826,7 +5013,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1988
 #, no-wrap
 msgid "`libartgpl2`"
-msgstr ""
+msgstr "`libartgpl2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1989
@@ -4844,7 +5031,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1992
 #, no-wrap
 msgid "`libbonobo`"
-msgstr ""
+msgstr "`libbonobo`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1993
@@ -4862,7 +5049,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1996
 #, no-wrap
 msgid "`libbonoboui`"
-msgstr ""
+msgstr "`libbonoboui`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:1997
@@ -4880,7 +5067,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2000
 #, no-wrap
 msgid "`libgda4`"
-msgstr ""
+msgstr "`libgda4`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2001
@@ -4892,7 +5079,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2004
 #, no-wrap
 msgid "`libglade2`"
-msgstr ""
+msgstr "`libglade2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2005
@@ -4910,7 +5097,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2008
 #, no-wrap
 msgid "`libgnome`"
-msgstr ""
+msgstr "`libgnome`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2009
@@ -4928,7 +5115,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2012
 #, no-wrap
 msgid "`libgnomecanvas`"
-msgstr ""
+msgstr "`libgnomecanvas`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2013
@@ -4946,7 +5133,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2016
 #, no-wrap
 msgid "`libgnomekbd`"
-msgstr ""
+msgstr "`libgnomekbd`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2017
@@ -4964,7 +5151,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2020
 #, no-wrap
 msgid "`libgnomeprint`"
-msgstr ""
+msgstr "`libgnomeprint`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2021
@@ -4983,7 +5170,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2024
 #, no-wrap
 msgid "`libgnomeprintui`"
-msgstr ""
+msgstr "`libgnomeprintui`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2025
@@ -4995,7 +5182,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2028
 #, no-wrap
 msgid "`libgnomeui`"
-msgstr ""
+msgstr "`libgnomeui`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2029
@@ -5013,7 +5200,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2032
 #, no-wrap
 msgid "`libgtkhtml`"
-msgstr ""
+msgstr "`libgtkhtml`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2033
@@ -5025,7 +5212,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2036
 #, no-wrap
 msgid "`libgtksourceviewmm`"
-msgstr ""
+msgstr "`libgtksourceviewmm`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2037
@@ -5043,7 +5230,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2040
 #, no-wrap
 msgid "`libidl`"
-msgstr ""
+msgstr "`libidl`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2041
@@ -5061,7 +5248,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2044
 #, no-wrap
 msgid "`libsigc++12`"
-msgstr ""
+msgstr "`libsigc++12`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2045
@@ -5073,7 +5260,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2048
 #, no-wrap
 msgid "`libwnck`"
-msgstr ""
+msgstr "`libwnck`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2049
@@ -5092,7 +5279,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2052
 #, no-wrap
 msgid "`libwnck3`"
-msgstr ""
+msgstr "`libwnck3`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2053
@@ -5104,7 +5291,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2056
 #, no-wrap
 msgid "`orbit2`"
-msgstr ""
+msgstr "`orbit2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2057
@@ -5122,7 +5309,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2060
 #, no-wrap
 msgid "`pygnome2`"
-msgstr ""
+msgstr "`pygnome2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2061
@@ -5140,7 +5327,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2064
 #, no-wrap
 msgid "`pygobject`"
-msgstr ""
+msgstr "`pygobject`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2065
@@ -5158,7 +5345,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2068
 #, no-wrap
 msgid "`pygtk2`"
-msgstr ""
+msgstr "`pygtk2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2069
@@ -5176,7 +5363,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2072
 #, no-wrap
 msgid "`pygtksourceview`"
-msgstr ""
+msgstr "`pygtksourceview`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2073
@@ -5194,7 +5381,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2076
 #, no-wrap
 msgid "`vte`"
-msgstr ""
+msgstr "`vte`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2077
@@ -5212,7 +5399,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2088
 #, no-wrap
 msgid "`pangox-compat`"
-msgstr ""
+msgstr "`pangox-compat`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2089
@@ -5264,7 +5451,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2113
 #, no-wrap
 msgid "`QMAKE`"
-msgstr ""
+msgstr "`QMAKE`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2115
@@ -5276,7 +5463,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2116
 #, no-wrap
 msgid "`LRELEASE`"
-msgstr ""
+msgstr "`LRELEASE`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2118
@@ -5288,7 +5475,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2119
 #, no-wrap
 msgid "`MOC`"
-msgstr ""
+msgstr "`MOC`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2121
@@ -5300,7 +5487,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2122
 #, no-wrap
 msgid "`RCC`"
-msgstr ""
+msgstr "`RCC`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2124
@@ -5312,7 +5499,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2125
 #, no-wrap
 msgid "`UIC`"
-msgstr ""
+msgstr "`UIC`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2127
@@ -5324,7 +5511,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2128
 #, no-wrap
 msgid "`QT_INCDIR`"
-msgstr ""
+msgstr "`QT_INCDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2130
@@ -5336,7 +5523,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2131
 #, no-wrap
 msgid "`QT_LIBDIR`"
-msgstr ""
+msgstr "`QT_LIBDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2133
@@ -5348,7 +5535,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2134
 #, no-wrap
 msgid "`QT_PLUGINDIR`"
-msgstr ""
+msgstr "`QT_PLUGINDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2135
@@ -5408,7 +5595,7 @@ msgstr "Имя"
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2154
 #, no-wrap
 msgid "`3d`"
-msgstr ""
+msgstr "`3d`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2156
@@ -5420,7 +5607,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2157
 #, no-wrap
 msgid "`5compat`"
-msgstr ""
+msgstr "`5compat`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2159
@@ -5432,7 +5619,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2160
 #, no-wrap
 msgid "`assistant`"
-msgstr ""
+msgstr "`assistant`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2162
@@ -5444,7 +5631,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2163
 #, no-wrap
 msgid "`base`"
-msgstr ""
+msgstr "`base`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2165
@@ -5456,7 +5643,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2166
 #, no-wrap
 msgid "`canvas3d`"
-msgstr ""
+msgstr "`canvas3d`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2168
@@ -5468,7 +5655,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2169
 #, no-wrap
 msgid "`charts`"
-msgstr ""
+msgstr "`charts`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2171
@@ -5480,7 +5667,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2172
 #, no-wrap
 msgid "`concurrent`"
-msgstr ""
+msgstr "`concurrent`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2174
@@ -5492,7 +5679,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2175
 #, no-wrap
 msgid "`connectivity`"
-msgstr ""
+msgstr "`connectivity`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2177
@@ -5504,7 +5691,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2178
 #, no-wrap
 msgid "`core`"
-msgstr ""
+msgstr "`core`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2180
@@ -5516,7 +5703,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2181
 #, no-wrap
 msgid "`datavis3d`"
-msgstr ""
+msgstr "`datavis3d`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2183
@@ -5528,7 +5715,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2184
 #, no-wrap
 msgid "`dbus`"
-msgstr ""
+msgstr "`dbus`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2186
@@ -5540,7 +5727,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2187
 #, no-wrap
 msgid "`declarative`"
-msgstr ""
+msgstr "`declarative`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2189
@@ -5552,7 +5739,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2190
 #, no-wrap
 msgid "`designer`"
-msgstr ""
+msgstr "`designer`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2192
@@ -5564,7 +5751,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2193
 #, no-wrap
 msgid "`diag`"
-msgstr ""
+msgstr "`diag`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2195
@@ -5576,7 +5763,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2196
 #, no-wrap
 msgid "`doc`"
-msgstr ""
+msgstr "`doc`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2198
@@ -5588,7 +5775,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2199
 #, no-wrap
 msgid "`examples`"
-msgstr ""
+msgstr "`examples`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2201
@@ -5600,7 +5787,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2202
 #, no-wrap
 msgid "`gamepad`"
-msgstr ""
+msgstr "`gamepad`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2204
@@ -5612,7 +5799,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2205
 #, no-wrap
 msgid "`graphicaleffects`"
-msgstr ""
+msgstr "`graphicaleffects`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2207
@@ -5624,7 +5811,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2208
 #, no-wrap
 msgid "`gui`"
-msgstr ""
+msgstr "`gui`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2210
@@ -5636,7 +5823,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2211
 #, no-wrap
 msgid "`help`"
-msgstr ""
+msgstr "`help`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2213
@@ -5648,7 +5835,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2214
 #, no-wrap
 msgid "`l10n`"
-msgstr ""
+msgstr "`l10n`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2216
@@ -5660,7 +5847,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2217
 #, no-wrap
 msgid "`languageserver`"
-msgstr ""
+msgstr "`languageserver`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2219
@@ -5672,7 +5859,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2220
 #, no-wrap
 msgid "`linguist`"
-msgstr ""
+msgstr "`linguist`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2222
@@ -5684,7 +5871,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2223
 #, no-wrap
 msgid "`location`"
-msgstr ""
+msgstr "`location`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2225
@@ -5696,7 +5883,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2226
 #, no-wrap
 msgid "`lottie`"
-msgstr ""
+msgstr "`lottie`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2228
@@ -5708,7 +5895,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2229
 #, no-wrap
 msgid "`multimedia`"
-msgstr ""
+msgstr "`multimedia`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2231
@@ -5720,7 +5907,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2232
 #, no-wrap
 msgid "`network`"
-msgstr ""
+msgstr "`network`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2234
@@ -5732,7 +5919,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2235
 #, no-wrap
 msgid "`networkauth`"
-msgstr ""
+msgstr "`networkauth`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2237
@@ -5744,7 +5931,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2238
 #, no-wrap
 msgid "`opengl`"
-msgstr ""
+msgstr "`opengl`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2240
@@ -5756,7 +5943,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2241
 #, no-wrap
 msgid "`paths`"
-msgstr ""
+msgstr "`paths`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2243
@@ -5768,7 +5955,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2244
 #, no-wrap
 msgid "`phonon4`"
-msgstr ""
+msgstr "`phonon4`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2246
@@ -5780,7 +5967,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2247
 #, no-wrap
 msgid "`pixeltool`"
-msgstr ""
+msgstr "`pixeltool`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2249
@@ -5792,7 +5979,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2250
 #, no-wrap
 msgid "`plugininfo`"
-msgstr ""
+msgstr "`plugininfo`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2252
@@ -5804,7 +5991,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2253
 #, no-wrap
 msgid "`positioning`"
-msgstr ""
+msgstr "`positioning`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2255
@@ -5816,7 +6003,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2256
 #, no-wrap
 msgid "`printsupport`"
-msgstr ""
+msgstr "`printsupport`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2258
@@ -5828,7 +6015,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2259
 #, no-wrap
 msgid "`qdbus`"
-msgstr ""
+msgstr "`qdbus`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2261
@@ -5840,7 +6027,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2262
 #, no-wrap
 msgid "`qdbusviewer`"
-msgstr ""
+msgstr "`qdbusviewer`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2264
@@ -5852,7 +6039,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2265
 #, no-wrap
 msgid "`qdoc`"
-msgstr ""
+msgstr "`qdoc`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2267
@@ -5864,7 +6051,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2268
 #, no-wrap
 msgid "`qdoc-data`"
-msgstr ""
+msgstr "`qdoc-data`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2270
@@ -5876,7 +6063,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2271
 #, no-wrap
 msgid "`qev`"
-msgstr ""
+msgstr "`qev`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2273
@@ -5889,7 +6076,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2404
 #, no-wrap
 msgid "`qmake`"
-msgstr ""
+msgstr "`qmake`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2276
@@ -5901,7 +6088,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2277
 #, no-wrap
 msgid "`quickcontrols`"
-msgstr ""
+msgstr "`quickcontrols`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2279
@@ -5914,13 +6101,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2280
 #, no-wrap
 msgid "`quickcontrols2`"
-msgstr ""
+msgstr "`quickcontrols2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2283
 #, no-wrap
 msgid "`remoteobjects`"
-msgstr ""
+msgstr "`remoteobjects`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2285
@@ -5933,7 +6120,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2286
 #, no-wrap
 msgid "`script`"
-msgstr ""
+msgstr "`script`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2288
@@ -5945,7 +6132,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2289
 #, no-wrap
 msgid "`scripttools`"
-msgstr ""
+msgstr "`scripttools`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2291
@@ -5957,13 +6144,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2292
 #, no-wrap
 msgid "`scxml`"
-msgstr ""
+msgstr "`scxml`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2295
 #, no-wrap
 msgid "`sensors`"
-msgstr ""
+msgstr "`sensors`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2297
@@ -5975,7 +6162,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2298
 #, no-wrap
 msgid "`serialbus`"
-msgstr ""
+msgstr "`serialbus`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2300
@@ -5987,7 +6174,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2301
 #, no-wrap
 msgid "`serialport`"
-msgstr ""
+msgstr "`serialport`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2303
@@ -5999,7 +6186,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2304
 #, no-wrap
 msgid "`shadertools`"
-msgstr ""
+msgstr "`shadertools`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2306
@@ -6011,7 +6198,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2307
 #, no-wrap
 msgid "`speech`"
-msgstr ""
+msgstr "`speech`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2309
@@ -6023,7 +6210,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2310
 #, no-wrap
 msgid "`sql`"
-msgstr ""
+msgstr "`sql`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2312
@@ -6035,7 +6222,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2313
 #, no-wrap
 msgid "`sql-ibase`"
-msgstr ""
+msgstr "`sql-ibase`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2315
@@ -6047,7 +6234,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2316
 #, no-wrap
 msgid "`sql-mysql`"
-msgstr ""
+msgstr "`sql-mysql`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2318
@@ -6059,7 +6246,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2319
 #, no-wrap
 msgid "`sql-odbc`"
-msgstr ""
+msgstr "`sql-odbc`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2321
@@ -6071,7 +6258,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2322
 #, no-wrap
 msgid "`sql-pgsql`"
-msgstr ""
+msgstr "`sql-pgsql`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2324
@@ -6083,7 +6270,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2325
 #, no-wrap
 msgid "`sql-sqlite2`"
-msgstr ""
+msgstr "`sql-sqlite2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2327
@@ -6095,7 +6282,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2328
 #, no-wrap
 msgid "`sql-sqlite3`"
-msgstr ""
+msgstr "`sql-sqlite3`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2330
@@ -6107,7 +6294,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2331
 #, no-wrap
 msgid "`sql-tds`"
-msgstr ""
+msgstr "`sql-tds`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2333
@@ -6120,7 +6307,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3926
 #, no-wrap
 msgid "`svg`"
-msgstr ""
+msgstr "`svg`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2336
@@ -6132,7 +6319,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2337
 #, no-wrap
 msgid "`testlib`"
-msgstr ""
+msgstr "`testlib`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2339
@@ -6144,7 +6331,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2340
 #, no-wrap
 msgid "`tools`"
-msgstr ""
+msgstr "`tools`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2342
@@ -6156,7 +6343,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2343
 #, no-wrap
 msgid "`translations`"
-msgstr ""
+msgstr "`translations`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2345
@@ -6168,7 +6355,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2346
 #, no-wrap
 msgid "`uiplugin`"
-msgstr ""
+msgstr "`uiplugin`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2348
@@ -6180,7 +6367,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2349
 #, no-wrap
 msgid "`uitools`"
-msgstr ""
+msgstr "`uitools`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2351
@@ -6192,7 +6379,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2352
 #, no-wrap
 msgid "`virtualkeyboard`"
-msgstr ""
+msgstr "`virtualkeyboard`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2354
@@ -6205,7 +6392,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3079
 #, no-wrap
 msgid "`wayland`"
-msgstr ""
+msgstr "`wayland`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2357
@@ -6217,7 +6404,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2358
 #, no-wrap
 msgid "`webchannel`"
-msgstr ""
+msgstr "`webchannel`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2360
@@ -6229,7 +6416,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2361
 #, no-wrap
 msgid "`webengine`"
-msgstr ""
+msgstr "`webengine`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2363
@@ -6241,7 +6428,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2364
 #, no-wrap
 msgid "`webkit`"
-msgstr ""
+msgstr "`webkit`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2366
@@ -6253,7 +6440,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2367
 #, no-wrap
 msgid "`websockets`"
-msgstr ""
+msgstr "`websockets`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2369
@@ -6265,7 +6452,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2370
 #, no-wrap
 msgid "`websockets-qml`"
-msgstr ""
+msgstr "`websockets-qml`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2372
@@ -6277,7 +6464,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2373
 #, no-wrap
 msgid "`webview`"
-msgstr ""
+msgstr "`webview`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2375
@@ -6289,7 +6476,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2376
 #, no-wrap
 msgid "`widgets`"
-msgstr ""
+msgstr "`widgets`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2378
@@ -6301,7 +6488,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2379
 #, no-wrap
 msgid "`x11extras`"
-msgstr ""
+msgstr "`x11extras`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2381
@@ -6313,7 +6500,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2382
 #, no-wrap
 msgid "`xml`"
-msgstr ""
+msgstr "`xml`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2384
@@ -6325,7 +6512,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2385
 #, no-wrap
 msgid "`xmlpatterns`"
-msgstr ""
+msgstr "`xmlpatterns`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2386
@@ -6351,7 +6538,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3128
 #, no-wrap
 msgid "`buildtools`"
-msgstr ""
+msgstr "`buildtools`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2400
@@ -6363,7 +6550,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2401
 #, no-wrap
 msgid "`linguisttools`"
-msgstr ""
+msgstr "`linguisttools`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2403
@@ -6387,7 +6574,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2415
 #, no-wrap
 msgid "`imageformats`"
-msgstr ""
+msgstr "`imageformats`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2416
@@ -6452,7 +6639,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2452
 #, no-wrap
 msgid "`no_configure`"
-msgstr ""
+msgstr "`no_configure`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2454
@@ -6464,7 +6651,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2455
 #, no-wrap
 msgid "`no_env`"
-msgstr ""
+msgstr "`no_env`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2457
@@ -6476,7 +6663,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2458
 #, no-wrap
 msgid "`norecursive`"
-msgstr ""
+msgstr "`norecursive`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2460
@@ -6488,7 +6675,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2461
 #, no-wrap
 msgid "`outsource`"
-msgstr ""
+msgstr "`outsource`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2462
@@ -6506,7 +6693,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2472
 #, no-wrap
 msgid "`QMAKE_ARGS`"
-msgstr ""
+msgstr "`QMAKE_ARGS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2474
@@ -6518,7 +6705,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2475
 #, no-wrap
 msgid "`QMAKE_ENV`"
-msgstr ""
+msgstr "`QMAKE_ENV`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2477
@@ -6530,7 +6717,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2478
 #, no-wrap
 msgid "`QMAKE_SOURCE_PATH`"
-msgstr ""
+msgstr "`QMAKE_SOURCE_PATH`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2479
@@ -6682,7 +6869,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2548
 #, no-wrap
 msgid "`activities`"
-msgstr ""
+msgstr "`activities`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2550
@@ -6694,7 +6881,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2551
 #, no-wrap
 msgid "`activities-stats`"
-msgstr ""
+msgstr "`activities-stats`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2553
@@ -6706,7 +6893,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2554
 #, no-wrap
 msgid "`activitymanagerd`"
-msgstr ""
+msgstr "`activitymanagerd`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2556
@@ -6718,7 +6905,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2557
 #, no-wrap
 msgid "`akonadi`"
-msgstr ""
+msgstr "`akonadi`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2559
@@ -6730,7 +6917,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2560
 #, no-wrap
 msgid "`akonadicalendar`"
-msgstr ""
+msgstr "`akonadicalendar`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2562
@@ -6742,7 +6929,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2563
 #, no-wrap
 msgid "`akonadiconsole`"
-msgstr ""
+msgstr "`akonadiconsole`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2565
@@ -6754,7 +6941,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2566
 #, no-wrap
 msgid "`akonadicontacts`"
-msgstr ""
+msgstr "`akonadicontacts`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2568
@@ -6766,7 +6953,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2569
 #, no-wrap
 msgid "`akonadiimportwizard`"
-msgstr ""
+msgstr "`akonadiimportwizard`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2571
@@ -6778,7 +6965,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2572
 #, no-wrap
 msgid "`akonadimime`"
-msgstr ""
+msgstr "`akonadimime`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2574
@@ -6790,7 +6977,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2575
 #, no-wrap
 msgid "`akonadinotes`"
-msgstr ""
+msgstr "`akonadinotes`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2577
@@ -6803,7 +6990,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2578
 #, no-wrap
 msgid "`akonadisearch`"
-msgstr ""
+msgstr "`akonadisearch`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2580
@@ -6815,7 +7002,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2581
 #, no-wrap
 msgid "`akregator`"
-msgstr ""
+msgstr "`akregator`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2583
@@ -6827,7 +7014,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2584
 #, no-wrap
 msgid "`alarmcalendar`"
-msgstr ""
+msgstr "`alarmcalendar`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2586
@@ -6839,7 +7026,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2587
 #, no-wrap
 msgid "`apidox`"
-msgstr ""
+msgstr "`apidox`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2589
@@ -6851,7 +7038,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2590
 #, no-wrap
 msgid "`archive`"
-msgstr ""
+msgstr "`archive`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2592
@@ -6863,7 +7050,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2593
 #, no-wrap
 msgid "`attica`"
-msgstr ""
+msgstr "`attica`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2595
@@ -6876,7 +7063,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2596
 #, no-wrap
 msgid "`attica5`"
-msgstr ""
+msgstr "`attica5`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2599
@@ -6894,7 +7081,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2602
 #, no-wrap
 msgid "`baloo`"
-msgstr ""
+msgstr "`baloo`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2604
@@ -6907,7 +7094,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2605
 #, no-wrap
 msgid "`baloo-widgets`"
-msgstr ""
+msgstr "`baloo-widgets`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2607
@@ -6919,13 +7106,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2608
 #, no-wrap
 msgid "`baloo5`"
-msgstr ""
+msgstr "`baloo5`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2611
 #, no-wrap
 msgid "`blog`"
-msgstr ""
+msgstr "`blog`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2613
@@ -6937,7 +7124,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2614
 #, no-wrap
 msgid "`bookmarks`"
-msgstr ""
+msgstr "`bookmarks`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2616
@@ -6949,7 +7136,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2617
 #, no-wrap
 msgid "`breeze`"
-msgstr ""
+msgstr "`breeze`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2619
@@ -6961,7 +7148,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2620
 #, no-wrap
 msgid "`breeze-gtk`"
-msgstr ""
+msgstr "`breeze-gtk`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2622
@@ -6973,7 +7160,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2623
 #, no-wrap
 msgid "`breeze-icons`"
-msgstr ""
+msgstr "`breeze-icons`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2625
@@ -6985,7 +7172,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2626
 #, no-wrap
 msgid "`calendarcore`"
-msgstr ""
+msgstr "`calendarcore`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2628
@@ -6997,7 +7184,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2629
 #, no-wrap
 msgid "`calendarsupport`"
-msgstr ""
+msgstr "`calendarsupport`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2631
@@ -7009,7 +7196,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2632
 #, no-wrap
 msgid "`calendarutils`"
-msgstr ""
+msgstr "`calendarutils`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2634
@@ -7021,7 +7208,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2635
 #, no-wrap
 msgid "`codecs`"
-msgstr ""
+msgstr "`codecs`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2637
@@ -7033,7 +7220,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2638
 #, no-wrap
 msgid "`completion`"
-msgstr ""
+msgstr "`completion`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2640
@@ -7045,7 +7232,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2641
 #, no-wrap
 msgid "`config`"
-msgstr ""
+msgstr "`config`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2643
@@ -7058,13 +7245,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2644
 #, no-wrap
 msgid "`configwidgets`"
-msgstr ""
+msgstr "`configwidgets`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2647
 #, no-wrap
 msgid "`contacts`"
-msgstr ""
+msgstr "`contacts`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2649
@@ -7076,7 +7263,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2650
 #, no-wrap
 msgid "`coreaddons`"
-msgstr ""
+msgstr "`coreaddons`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2652
@@ -7088,7 +7275,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2653
 #, no-wrap
 msgid "`crash`"
-msgstr ""
+msgstr "`crash`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2655
@@ -7100,7 +7287,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2656
 #, no-wrap
 msgid "`dbusaddons`"
-msgstr ""
+msgstr "`dbusaddons`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2658
@@ -7113,7 +7300,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2659
 #, no-wrap
 msgid "`decoration`"
-msgstr ""
+msgstr "`decoration`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2661
@@ -7125,7 +7312,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2662
 #, no-wrap
 msgid "`designerplugin`"
-msgstr ""
+msgstr "`designerplugin`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2664
@@ -7137,7 +7324,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2665
 #, no-wrap
 msgid "`discover`"
-msgstr ""
+msgstr "`discover`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2667
@@ -7149,7 +7336,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2668
 #, no-wrap
 msgid "`dnssd`"
-msgstr ""
+msgstr "`dnssd`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2670
@@ -7161,7 +7348,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2671
 #, no-wrap
 msgid "`doctools`"
-msgstr ""
+msgstr "`doctools`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2673
@@ -7173,7 +7360,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2674
 #, no-wrap
 msgid "`drkonqi`"
-msgstr ""
+msgstr "`drkonqi`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2676
@@ -7185,7 +7372,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2677
 #, no-wrap
 msgid "`ecm`"
-msgstr ""
+msgstr "`ecm`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2679
@@ -7197,7 +7384,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2680
 #, no-wrap
 msgid "`emoticons`"
-msgstr ""
+msgstr "`emoticons`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2682
@@ -7209,7 +7396,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2683
 #, no-wrap
 msgid "`eventviews`"
-msgstr ""
+msgstr "`eventviews`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2685
@@ -7221,7 +7408,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2686
 #, no-wrap
 msgid "`filemetadata`"
-msgstr ""
+msgstr "`filemetadata`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2688
@@ -7233,7 +7420,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2689
 #, no-wrap
 msgid "`frameworkintegration`"
-msgstr ""
+msgstr "`frameworkintegration`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2691
@@ -7245,7 +7432,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2692
 #, no-wrap
 msgid "`gapi`"
-msgstr ""
+msgstr "`gapi`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2694
@@ -7257,7 +7444,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2695
 #, no-wrap
 msgid "`globalaccel`"
-msgstr ""
+msgstr "`globalaccel`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2697
@@ -7269,7 +7456,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2698
 #, no-wrap
 msgid "`grantlee-editor`"
-msgstr ""
+msgstr "`grantlee-editor`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2700
@@ -7281,7 +7468,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2701
 #, no-wrap
 msgid "`grantleetheme`"
-msgstr ""
+msgstr "`grantleetheme`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2703
@@ -7293,7 +7480,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2704
 #, no-wrap
 msgid "`gravatar`"
-msgstr ""
+msgstr "`gravatar`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2706
@@ -7305,7 +7492,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2707
 #, no-wrap
 msgid "`guiaddons`"
-msgstr ""
+msgstr "`guiaddons`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2709
@@ -7317,7 +7504,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2710
 #, no-wrap
 msgid "`holidays`"
-msgstr ""
+msgstr "`holidays`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2712
@@ -7329,7 +7516,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2713
 #, no-wrap
 msgid "`hotkeys`"
-msgstr ""
+msgstr "`hotkeys`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2715
@@ -7341,7 +7528,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2716
 #, no-wrap
 msgid "`i18n`"
-msgstr ""
+msgstr "`i18n`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2718
@@ -7353,7 +7540,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2719
 #, no-wrap
 msgid "`iconthemes`"
-msgstr ""
+msgstr "`iconthemes`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2721
@@ -7365,7 +7552,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2722
 #, no-wrap
 msgid "`identitymanagement`"
-msgstr ""
+msgstr "`identitymanagement`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2724
@@ -7377,7 +7564,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2725
 #, no-wrap
 msgid "`idletime`"
-msgstr ""
+msgstr "`idletime`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2727
@@ -7389,7 +7576,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2728
 #, no-wrap
 msgid "`imap`"
-msgstr ""
+msgstr "`imap`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2730
@@ -7401,7 +7588,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2731
 #, no-wrap
 msgid "`incidenceeditor`"
-msgstr ""
+msgstr "`incidenceeditor`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2733
@@ -7413,7 +7600,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2734
 #, no-wrap
 msgid "`infocenter`"
-msgstr ""
+msgstr "`infocenter`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2736
@@ -7425,7 +7612,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2737
 #, no-wrap
 msgid "`init`"
-msgstr ""
+msgstr "`init`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2739
@@ -7437,7 +7624,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2740
 #, no-wrap
 msgid "`itemmodels`"
-msgstr ""
+msgstr "`itemmodels`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2742
@@ -7449,7 +7636,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2743
 #, no-wrap
 msgid "`itemviews`"
-msgstr ""
+msgstr "`itemviews`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2745
@@ -7461,7 +7648,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2746
 #, no-wrap
 msgid "`jobwidgets`"
-msgstr ""
+msgstr "`jobwidgets`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2748
@@ -7473,7 +7660,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2749
 #, no-wrap
 msgid "`js`"
-msgstr ""
+msgstr "`js`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2751
@@ -7485,7 +7672,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2752
 #, no-wrap
 msgid "`jsembed`"
-msgstr ""
+msgstr "`jsembed`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2754
@@ -7497,7 +7684,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2755
 #, no-wrap
 msgid "`kaddressbook`"
-msgstr ""
+msgstr "`kaddressbook`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2757
@@ -7510,7 +7697,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2761
 #, no-wrap
 msgid "`kalarm`"
-msgstr ""
+msgstr "`kalarm`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2760
@@ -7523,7 +7710,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2764
 #, no-wrap
 msgid "`kate`"
-msgstr ""
+msgstr "`kate`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2766
@@ -7535,7 +7722,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2767
 #, no-wrap
 msgid "`kcmutils`"
-msgstr ""
+msgstr "`kcmutils`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2769
@@ -7547,7 +7734,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2770
 #, no-wrap
 msgid "`kde-cli-tools`"
-msgstr ""
+msgstr "`kde-cli-tools`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2772
@@ -7559,7 +7746,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2773
 #, no-wrap
 msgid "`kde-gtk-config`"
-msgstr ""
+msgstr "`kde-gtk-config`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2775
@@ -7571,7 +7758,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2776
 #, no-wrap
 msgid "`kdeclarative`"
-msgstr ""
+msgstr "`kdeclarative`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2778
@@ -7583,7 +7770,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2779
 #, no-wrap
 msgid "`kded`"
-msgstr ""
+msgstr "`kded`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2781
@@ -7595,7 +7782,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2782
 #, no-wrap
 msgid "`kdelibs4support`"
-msgstr ""
+msgstr "`kdelibs4support`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2784
@@ -7607,7 +7794,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2785
 #, no-wrap
 msgid "`kdepim-addons`"
-msgstr ""
+msgstr "`kdepim-addons`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2787
@@ -7619,7 +7806,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2788
 #, no-wrap
 msgid "`kdepim-apps-libs`"
-msgstr ""
+msgstr "`kdepim-apps-libs`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2790
@@ -7631,7 +7818,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2791
 #, no-wrap
 msgid "`kdepim-runtime5`"
-msgstr ""
+msgstr "`kdepim-runtime5`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2793
@@ -7643,7 +7830,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2794
 #, no-wrap
 msgid "`kdeplasma-addons`"
-msgstr ""
+msgstr "`kdeplasma-addons`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2796
@@ -7655,7 +7842,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2797
 #, no-wrap
 msgid "`kdesu`"
-msgstr ""
+msgstr "`kdesu`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2799
@@ -7667,7 +7854,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2800
 #, no-wrap
 msgid "`kdewebkit`"
-msgstr ""
+msgstr "`kdewebkit`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2802
@@ -7679,7 +7866,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2803
 #, no-wrap
 msgid "`kgamma5`"
-msgstr ""
+msgstr "`kgamma5`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2805
@@ -7691,7 +7878,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2806
 #, no-wrap
 msgid "`khtml`"
-msgstr ""
+msgstr "`khtml`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2808
@@ -7703,7 +7890,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2809
 #, no-wrap
 msgid "`kimageformats`"
-msgstr ""
+msgstr "`kimageformats`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2811
@@ -7715,7 +7902,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2812
 #, no-wrap
 msgid "`kio`"
-msgstr ""
+msgstr "`kio`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2814
@@ -7727,7 +7914,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2815
 #, no-wrap
 msgid "`kirigami2`"
-msgstr ""
+msgstr "`kirigami2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2817
@@ -7739,7 +7926,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2818
 #, no-wrap
 msgid "`kitinerary`"
-msgstr ""
+msgstr "`kitinerary`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2820
@@ -7752,7 +7939,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2824
 #, no-wrap
 msgid "`kmail`"
-msgstr ""
+msgstr "`kmail`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2823
@@ -7765,7 +7952,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2827
 #, no-wrap
 msgid "`kmail-account-wizard`"
-msgstr ""
+msgstr "`kmail-account-wizard`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2829
@@ -7777,7 +7964,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2830
 #, no-wrap
 msgid "`kmenuedit`"
-msgstr ""
+msgstr "`kmenuedit`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2832
@@ -7789,7 +7976,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2833
 #, no-wrap
 msgid "`knotes`"
-msgstr ""
+msgstr "`knotes`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2835
@@ -7802,7 +7989,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2839
 #, no-wrap
 msgid "`kontact`"
-msgstr ""
+msgstr "`kontact`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2838
@@ -7815,7 +8002,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2842
 #, no-wrap
 msgid "`kontactinterface`"
-msgstr ""
+msgstr "`kontactinterface`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2844
@@ -7827,7 +8014,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2845
 #, no-wrap
 msgid "`korganizer`"
-msgstr ""
+msgstr "`korganizer`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2847
@@ -7839,7 +8026,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2848
 #, no-wrap
 msgid "`kpimdav`"
-msgstr ""
+msgstr "`kpimdav`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2850
@@ -7851,7 +8038,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2851
 #, no-wrap
 msgid "`kpkpass`"
-msgstr ""
+msgstr "`kpkpass`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2853
@@ -7863,7 +8050,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2854
 #, no-wrap
 msgid "`kross`"
-msgstr ""
+msgstr "`kross`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2856
@@ -7875,7 +8062,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2857
 #, no-wrap
 msgid "`kscreen`"
-msgstr ""
+msgstr "`kscreen`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2859
@@ -7888,7 +8075,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2860
 #, no-wrap
 msgid "`kscreenlocker`"
-msgstr ""
+msgstr "`kscreenlocker`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2862
@@ -7900,7 +8087,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2863
 #, no-wrap
 msgid "`ksmtp`"
-msgstr ""
+msgstr "`ksmtp`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2865
@@ -7912,7 +8099,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2866
 #, no-wrap
 msgid "`ksshaskpass`"
-msgstr ""
+msgstr "`ksshaskpass`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2868
@@ -7924,7 +8111,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2869
 #, no-wrap
 msgid "`ksysguard`"
-msgstr ""
+msgstr "`ksysguard`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2871
@@ -7936,7 +8123,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2872
 #, no-wrap
 msgid "`kwallet-pam`"
-msgstr ""
+msgstr "`kwallet-pam`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2874
@@ -7948,7 +8135,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2875
 #, no-wrap
 msgid "`kwayland-integration`"
-msgstr ""
+msgstr "`kwayland-integration`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2877
@@ -7960,7 +8147,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2878
 #, no-wrap
 msgid "`kwin`"
-msgstr ""
+msgstr "`kwin`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2880
@@ -7972,7 +8159,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2881
 #, no-wrap
 msgid "`kwrited`"
-msgstr ""
+msgstr "`kwrited`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2883
@@ -7984,7 +8171,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2884
 #, no-wrap
 msgid "`ldap`"
-msgstr ""
+msgstr "`ldap`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2886
@@ -7996,7 +8183,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2887
 #, no-wrap
 msgid "`libkcddb`"
-msgstr ""
+msgstr "`libkcddb`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2889
@@ -8008,7 +8195,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2890
 #, no-wrap
 msgid "`libkcompactdisc`"
-msgstr ""
+msgstr "`libkcompactdisc`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2892
@@ -8020,7 +8207,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2893
 #, no-wrap
 msgid "`libkdcraw`"
-msgstr ""
+msgstr "`libkdcraw`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2895
@@ -8032,7 +8219,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2896
 #, no-wrap
 msgid "`libkdegames`"
-msgstr ""
+msgstr "`libkdegames`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2898
@@ -8044,7 +8231,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2899
 #, no-wrap
 msgid "`libkdepim`"
-msgstr ""
+msgstr "`libkdepim`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2901
@@ -8056,7 +8243,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2902
 #, no-wrap
 msgid "`libkeduvocdocument`"
-msgstr ""
+msgstr "`libkeduvocdocument`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2904
@@ -8068,7 +8255,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2905
 #, no-wrap
 msgid "`libkexiv2`"
-msgstr ""
+msgstr "`libkexiv2`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2907
@@ -8080,7 +8267,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2908
 #, no-wrap
 msgid "`libkipi`"
-msgstr ""
+msgstr "`libkipi`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2910
@@ -8092,7 +8279,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2911
 #, no-wrap
 msgid "`libkleo`"
-msgstr ""
+msgstr "`libkleo`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2913
@@ -8104,7 +8291,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2914
 #, no-wrap
 msgid "`libksane`"
-msgstr ""
+msgstr "`libksane`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2916
@@ -8116,13 +8303,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2917
 #, no-wrap
 msgid "`libkscreen`"
-msgstr ""
+msgstr "`libkscreen`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2920
 #, no-wrap
 msgid "`libksieve`"
-msgstr ""
+msgstr "`libksieve`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2922
@@ -8134,7 +8321,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2923
 #, no-wrap
 msgid "`libksysguard`"
-msgstr ""
+msgstr "`libksysguard`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2925
@@ -8146,7 +8333,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2926
 #, no-wrap
 msgid "`mailcommon`"
-msgstr ""
+msgstr "`mailcommon`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2928
@@ -8159,7 +8346,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2929
 #, no-wrap
 msgid "`mailimporter`"
-msgstr ""
+msgstr "`mailimporter`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2931
@@ -8172,7 +8359,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2932
 #, no-wrap
 msgid "`mailtransport`"
-msgstr ""
+msgstr "`mailtransport`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2934
@@ -8184,7 +8371,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2935
 #, no-wrap
 msgid "`marble`"
-msgstr ""
+msgstr "`marble`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2937
@@ -8196,19 +8383,19 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2938
 #, no-wrap
 msgid "`mbox`"
-msgstr ""
+msgstr "`mbox`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2941
 #, no-wrap
 msgid "`mbox-importer`"
-msgstr ""
+msgstr "`mbox-importer`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2944
 #, no-wrap
 msgid "`mediaplayer`"
-msgstr ""
+msgstr "`mediaplayer`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2946
@@ -8220,7 +8407,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2947
 #, no-wrap
 msgid "`messagelib`"
-msgstr ""
+msgstr "`messagelib`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2949
@@ -8232,7 +8419,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2950
 #, no-wrap
 msgid "`milou`"
-msgstr ""
+msgstr "`milou`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2952
@@ -8244,7 +8431,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2953
 #, no-wrap
 msgid "`mime`"
-msgstr ""
+msgstr "`mime`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2955
@@ -8256,7 +8443,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2956
 #, no-wrap
 msgid "`newstuff`"
-msgstr ""
+msgstr "`newstuff`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2958
@@ -8268,7 +8455,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2959
 #, no-wrap
 msgid "`notifications`"
-msgstr ""
+msgstr "`notifications`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2961
@@ -8280,7 +8467,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2962
 #, no-wrap
 msgid "`notifyconfig`"
-msgstr ""
+msgstr "`notifyconfig`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2964
@@ -8292,7 +8479,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2965
 #, no-wrap
 msgid "`okular`"
-msgstr ""
+msgstr "`okular`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2967
@@ -8304,7 +8491,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2968
 #, no-wrap
 msgid "`oxygen`"
-msgstr ""
+msgstr "`oxygen`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2970
@@ -8316,7 +8503,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2971
 #, no-wrap
 msgid "`oxygen-icons5`"
-msgstr ""
+msgstr "`oxygen-icons5`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2973
@@ -8328,7 +8515,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2974
 #, no-wrap
 msgid "`package`"
-msgstr ""
+msgstr "`package`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2976
@@ -8340,7 +8527,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2977
 #, no-wrap
 msgid "`parts`"
-msgstr ""
+msgstr "`parts`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2979
@@ -8352,7 +8539,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2980
 #, no-wrap
 msgid "`people`"
-msgstr ""
+msgstr "`people`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2982
@@ -8364,7 +8551,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2983
 #, no-wrap
 msgid "`pim-data-exporter`"
-msgstr ""
+msgstr "`pim-data-exporter`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2985
@@ -8376,13 +8563,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2986
 #, no-wrap
 msgid "`pimcommon`"
-msgstr ""
+msgstr "`pimcommon`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2989
 #, no-wrap
 msgid "`pimtextedit`"
-msgstr ""
+msgstr "`pimtextedit`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2991
@@ -8394,7 +8581,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2992
 #, no-wrap
 msgid "`plasma-browser-integration`"
-msgstr ""
+msgstr "`plasma-browser-integration`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2994
@@ -8406,7 +8593,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2995
 #, no-wrap
 msgid "`plasma-desktop`"
-msgstr ""
+msgstr "`plasma-desktop`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2997
@@ -8418,7 +8605,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:2998
 #, no-wrap
 msgid "`plasma-framework`"
-msgstr ""
+msgstr "`plasma-framework`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3000
@@ -8430,7 +8617,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3001
 #, no-wrap
 msgid "`plasma-integration`"
-msgstr ""
+msgstr "`plasma-integration`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3003
@@ -8442,7 +8629,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3004
 #, no-wrap
 msgid "`plasma-pa`"
-msgstr ""
+msgstr "`plasma-pa`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3006
@@ -8454,7 +8641,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3007
 #, no-wrap
 msgid "`plasma-sdk`"
-msgstr ""
+msgstr "`plasma-sdk`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3009
@@ -8466,7 +8653,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3010
 #, no-wrap
 msgid "`plasma-workspace`"
-msgstr ""
+msgstr "`plasma-workspace`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3012
@@ -8478,7 +8665,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3013
 #, no-wrap
 msgid "`plasma-workspace-wallpapers`"
-msgstr ""
+msgstr "`plasma-workspace-wallpapers`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3015
@@ -8490,7 +8677,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3016
 #, no-wrap
 msgid "`plotting`"
-msgstr ""
+msgstr "`plotting`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3018
@@ -8502,7 +8689,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3019
 #, no-wrap
 msgid "`polkit-kde-agent-1`"
-msgstr ""
+msgstr "`polkit-kde-agent-1`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3021
@@ -8514,7 +8701,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3022
 #, no-wrap
 msgid "`powerdevil`"
-msgstr ""
+msgstr "`powerdevil`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3024
@@ -8526,7 +8713,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3025
 #, no-wrap
 msgid "`prison`"
-msgstr ""
+msgstr "`prison`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3027
@@ -8538,7 +8725,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3028
 #, no-wrap
 msgid "`pty`"
-msgstr ""
+msgstr "`pty`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3030
@@ -8550,7 +8737,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3031
 #, no-wrap
 msgid "`purpose`"
-msgstr ""
+msgstr "`purpose`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3033
@@ -8562,7 +8749,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3034
 #, no-wrap
 msgid "`qqc2-desktop-style`"
-msgstr ""
+msgstr "`qqc2-desktop-style`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3036
@@ -8574,7 +8761,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3037
 #, no-wrap
 msgid "`runner`"
-msgstr ""
+msgstr "`runner`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3039
@@ -8586,7 +8773,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3040
 #, no-wrap
 msgid "`service`"
-msgstr ""
+msgstr "`service`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3042
@@ -8598,7 +8785,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3043
 #, no-wrap
 msgid "`solid`"
-msgstr ""
+msgstr "`solid`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3045
@@ -8610,7 +8797,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3046
 #, no-wrap
 msgid "`sonnet`"
-msgstr ""
+msgstr "`sonnet`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3048
@@ -8622,7 +8809,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3049
 #, no-wrap
 msgid "`syndication`"
-msgstr ""
+msgstr "`syndication`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3051
@@ -8634,7 +8821,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3052
 #, no-wrap
 msgid "`syntaxhighlighting`"
-msgstr ""
+msgstr "`syntaxhighlighting`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3054
@@ -8646,7 +8833,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3055
 #, no-wrap
 msgid "`systemsettings`"
-msgstr ""
+msgstr "`systemsettings`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3057
@@ -8658,7 +8845,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3058
 #, no-wrap
 msgid "`texteditor`"
-msgstr ""
+msgstr "`texteditor`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3060
@@ -8670,7 +8857,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3061
 #, no-wrap
 msgid "`textwidgets`"
-msgstr ""
+msgstr "`textwidgets`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3063
@@ -8682,13 +8869,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3064
 #, no-wrap
 msgid "`threadweaver`"
-msgstr ""
+msgstr "`threadweaver`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3067
 #, no-wrap
 msgid "`tnef`"
-msgstr ""
+msgstr "`tnef`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3069
@@ -8700,7 +8887,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3070
 #, no-wrap
 msgid "`unitconversion`"
-msgstr ""
+msgstr "`unitconversion`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3072
@@ -8712,7 +8899,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3073
 #, no-wrap
 msgid "`user-manager`"
-msgstr ""
+msgstr "`user-manager`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3075
@@ -8724,7 +8911,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3076
 #, no-wrap
 msgid "`wallet`"
-msgstr ""
+msgstr "`wallet`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3078
@@ -8742,7 +8929,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3082
 #, no-wrap
 msgid "`widgetsaddons`"
-msgstr ""
+msgstr "`widgetsaddons`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3084
@@ -8754,7 +8941,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3085
 #, no-wrap
 msgid "`windowsystem`"
-msgstr ""
+msgstr "`windowsystem`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3087
@@ -8766,7 +8953,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3088
 #, no-wrap
 msgid "`xmlgui`"
-msgstr ""
+msgstr "`xmlgui`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3090
@@ -8778,7 +8965,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3091
 #, no-wrap
 msgid "`xmlrpcclient`"
-msgstr ""
+msgstr "`xmlrpcclient`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3092
@@ -8845,7 +9032,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3131
 #, no-wrap
 msgid "`libfmqt`"
-msgstr ""
+msgstr "`libfmqt`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3133
@@ -8857,7 +9044,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3134
 #, no-wrap
 msgid "`lxqt`"
-msgstr ""
+msgstr "`lxqt`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3136
@@ -8869,7 +9056,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3137
 #, no-wrap
 msgid "`qtxdg`"
-msgstr ""
+msgstr "`qtxdg`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3138
@@ -8944,7 +9131,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3176
 #, no-wrap
 msgid "`USE_JAVA`"
-msgstr ""
+msgstr "`USE_JAVA`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3178
@@ -8956,7 +9143,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3179
 #, no-wrap
 msgid "`JAVA_VERSION`"
-msgstr ""
+msgstr "`JAVA_VERSION`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3182
@@ -8970,7 +9157,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3183
 #, no-wrap
 msgid "`JAVA_OS`"
-msgstr ""
+msgstr "`JAVA_OS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3185
@@ -8982,7 +9169,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3186
 #, no-wrap
 msgid "`JAVA_VENDOR`"
-msgstr ""
+msgstr "`JAVA_VENDOR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3188
@@ -8994,7 +9181,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3189
 #, no-wrap
 msgid "`JAVA_BUILD`"
-msgstr ""
+msgstr "`JAVA_BUILD`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3191
@@ -9006,7 +9193,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3192
 #, no-wrap
 msgid "`JAVA_RUN`"
-msgstr ""
+msgstr "`JAVA_RUN`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3194
@@ -9018,7 +9205,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3195
 #, no-wrap
 msgid "`JAVA_EXTRACT`"
-msgstr ""
+msgstr "`JAVA_EXTRACT`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3196
@@ -9050,7 +9237,7 @@ msgstr "Значение"
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3208
 #, no-wrap
 msgid "`JAVA_PORT`"
-msgstr ""
+msgstr "`JAVA_PORT`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3210
@@ -9062,7 +9249,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3211
 #, no-wrap
 msgid "`JAVA_PORT_VERSION`"
-msgstr ""
+msgstr "`JAVA_PORT_VERSION`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3213
@@ -9074,7 +9261,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3214
 #, no-wrap
 msgid "`JAVA_PORT_OS`"
-msgstr ""
+msgstr "`JAVA_PORT_OS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3216
@@ -9086,7 +9273,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3217
 #, no-wrap
 msgid "`JAVA_PORT_VENDOR`"
-msgstr ""
+msgstr "`JAVA_PORT_VENDOR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3219
@@ -9098,7 +9285,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3220
 #, no-wrap
 msgid "`JAVA_PORT_OS_DESCRIPTION`"
-msgstr ""
+msgstr "`JAVA_PORT_OS_DESCRIPTION`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3222
@@ -9110,7 +9297,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3223
 #, no-wrap
 msgid "`JAVA_PORT_VENDOR_DESCRIPTION`"
-msgstr ""
+msgstr "`JAVA_PORT_VENDOR_DESCRIPTION`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3225
@@ -9122,7 +9309,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3226
 #, no-wrap
 msgid "`JAVA_HOME`"
-msgstr ""
+msgstr "`JAVA_HOME`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3228
@@ -9134,7 +9321,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3229
 #, no-wrap
 msgid "`JAVAC`"
-msgstr ""
+msgstr "`JAVAC`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3231
@@ -9146,7 +9333,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3232
 #, no-wrap
 msgid "`JAR`"
-msgstr ""
+msgstr "`JAR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3234
@@ -9158,7 +9345,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3235
 #, no-wrap
 msgid "`APPLETVIEWER`"
-msgstr ""
+msgstr "`APPLETVIEWER`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3237
@@ -9170,7 +9357,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3238
 #, no-wrap
 msgid "`JAVA`"
-msgstr ""
+msgstr "`JAVA`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3240
@@ -9182,7 +9369,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3241
 #, no-wrap
 msgid "`JAVADOC`"
-msgstr ""
+msgstr "`JAVADOC`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3243
@@ -9194,7 +9381,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3244
 #, no-wrap
 msgid "`JAVAH`"
-msgstr ""
+msgstr "`JAVAH`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3246
@@ -9206,7 +9393,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3247
 #, no-wrap
 msgid "`JAVAP`"
-msgstr ""
+msgstr "`JAVAP`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3249
@@ -9218,7 +9405,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3250
 #, no-wrap
 msgid "`JAVA_KEYTOOL`"
-msgstr ""
+msgstr "`JAVA_KEYTOOL`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3252
@@ -9230,7 +9417,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3253
 #, no-wrap
 msgid "`JAVA_N2A`"
-msgstr ""
+msgstr "`JAVA_N2A`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3255
@@ -9242,7 +9429,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3256
 #, no-wrap
 msgid "`JAVA_POLICYTOOL`"
-msgstr ""
+msgstr "`JAVA_POLICYTOOL`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3258
@@ -9254,7 +9441,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3259
 #, no-wrap
 msgid "`JAVA_SERIALVER`"
-msgstr ""
+msgstr "`JAVA_SERIALVER`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3261
@@ -9266,7 +9453,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3262
 #, no-wrap
 msgid "`RMIC`"
-msgstr ""
+msgstr "`RMIC`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3264
@@ -9278,7 +9465,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3265
 #, no-wrap
 msgid "`RMIREGISTRY`"
-msgstr ""
+msgstr "`RMIREGISTRY`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3267
@@ -9290,7 +9477,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3268
 #, no-wrap
 msgid "`RMID`"
-msgstr ""
+msgstr "`RMID`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3270
@@ -9302,7 +9489,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3271
 #, no-wrap
 msgid "`JAVA_CLASSES`"
-msgstr ""
+msgstr "`JAVA_CLASSES`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3272
@@ -9340,7 +9527,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3287
 #, no-wrap
 msgid "`JAVASHAREDIR`"
-msgstr ""
+msgstr "`JAVASHAREDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3289
@@ -9352,7 +9539,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3290
 #, no-wrap
 msgid "`JAVAJARDIR`"
-msgstr ""
+msgstr "`JAVAJARDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3292
@@ -9364,7 +9551,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3293
 #, no-wrap
 msgid "`JAVALIBDIR`"
-msgstr ""
+msgstr "`JAVALIBDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3294
@@ -9569,7 +9756,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3377
 #, no-wrap
 msgid "`USE_APACHE`"
-msgstr ""
+msgstr "`USE_APACHE`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3379
@@ -9581,7 +9768,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3380
 #, no-wrap
 msgid "`APXS`"
-msgstr ""
+msgstr "`APXS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3382
@@ -9593,7 +9780,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3383
 #, no-wrap
 msgid "`HTTPD`"
-msgstr ""
+msgstr "`HTTPD`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3385
@@ -9605,7 +9792,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3386
 #, no-wrap
 msgid "`APACHE_VERSION`"
-msgstr ""
+msgstr "`APACHE_VERSION`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3388
@@ -9617,7 +9804,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3389
 #, no-wrap
 msgid "`APACHEMODDIR`"
-msgstr ""
+msgstr "`APACHEMODDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3391
@@ -9629,7 +9816,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3392
 #, no-wrap
 msgid "`APACHEINCLUDEDIR`"
-msgstr ""
+msgstr "`APACHEINCLUDEDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3394
@@ -9641,7 +9828,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3395
 #, no-wrap
 msgid "`APACHEETCDIR`"
-msgstr ""
+msgstr "`APACHEETCDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3396
@@ -9659,7 +9846,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3403
 #, no-wrap
 msgid "`MODULENAME`"
-msgstr ""
+msgstr "`MODULENAME`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3405
@@ -9671,7 +9858,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3406
 #, no-wrap
 msgid "`SHORTMODNAME`"
-msgstr ""
+msgstr "`SHORTMODNAME`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3408
@@ -9683,7 +9870,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3409
 #, no-wrap
 msgid "`AP_FAST_BUILD`"
-msgstr ""
+msgstr "`AP_FAST_BUILD`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3411
@@ -9695,7 +9882,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3412
 #, no-wrap
 msgid "`AP_GENPLIST`"
-msgstr ""
+msgstr "`AP_GENPLIST`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3414
@@ -9707,7 +9894,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3415
 #, no-wrap
 msgid "`AP_INC`"
-msgstr ""
+msgstr "`AP_INC`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3417
@@ -9719,7 +9906,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3418
 #, no-wrap
 msgid "`AP_LIB`"
-msgstr ""
+msgstr "`AP_LIB`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3420
@@ -9731,7 +9918,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3421
 #, no-wrap
 msgid "`AP_EXTRAS`"
-msgstr ""
+msgstr "`AP_EXTRAS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3422
@@ -10017,7 +10204,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3564
 #, no-wrap
 msgid "`USES=python`"
-msgstr ""
+msgstr "`USES=python`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3566
@@ -10029,7 +10216,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3567
 #, no-wrap
 msgid "`USE_PYTHON=distutils`"
-msgstr ""
+msgstr "`USE_PYTHON=distutils`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3569
@@ -10041,7 +10228,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3570
 #, no-wrap
 msgid "`USE_PYTHON=autoplist`"
-msgstr ""
+msgstr "`USE_PYTHON=autoplist`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3572
@@ -10053,7 +10240,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3573
 #, no-wrap
 msgid "`USE_PYTHON=concurrent`"
-msgstr ""
+msgstr "`USE_PYTHON=concurrent`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3575
@@ -10065,7 +10252,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3576
 #, no-wrap
 msgid "`USE_PYTHON=flavors`"
-msgstr ""
+msgstr "`USE_PYTHON=flavors`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3578
@@ -10077,7 +10264,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3579
 #, no-wrap
 msgid "`USE_PYTHON=optsuffix`"
-msgstr ""
+msgstr "`USE_PYTHON=optsuffix`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3581
@@ -10089,7 +10276,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3582
 #, no-wrap
 msgid "`PYTHON_PKGNAMEPREFIX`"
-msgstr ""
+msgstr "`PYTHON_PKGNAMEPREFIX`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3584
@@ -10101,7 +10288,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3585
 #, no-wrap
 msgid "`PYTHON_SITELIBDIR`"
-msgstr ""
+msgstr "`PYTHON_SITELIBDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3587
@@ -10113,7 +10300,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3588
 #, no-wrap
 msgid "`PYTHONPREFIX_SITELIBDIR`"
-msgstr ""
+msgstr "`PYTHONPREFIX_SITELIBDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3590
@@ -10125,7 +10312,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3591
 #, no-wrap
 msgid "`PYTHON_CMD`"
-msgstr ""
+msgstr "`PYTHON_CMD`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3592
@@ -10143,7 +10330,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3599
 #, no-wrap
 msgid "`PYNUMERIC`"
-msgstr ""
+msgstr "`PYNUMERIC`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3601
@@ -10155,7 +10342,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3602
 #, no-wrap
 msgid "`PYNUMPY`"
-msgstr ""
+msgstr "`PYNUMPY`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3604
@@ -10167,7 +10354,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3605
 #, no-wrap
 msgid "`PYXML`"
-msgstr ""
+msgstr "`PYXML`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3607
@@ -10179,7 +10366,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3608
 #, no-wrap
 msgid "`PY_ENUM34`"
-msgstr ""
+msgstr "`PY_ENUM34`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3610
@@ -10191,7 +10378,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3611
 #, no-wrap
 msgid "`PY_ENUM_COMPAT`"
-msgstr ""
+msgstr "`PY_ENUM_COMPAT`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3613
@@ -10203,7 +10390,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3614
 #, no-wrap
 msgid "`PY_PATHLIB`"
-msgstr ""
+msgstr "`PY_PATHLIB`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3616
@@ -10215,7 +10402,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3617
 #, no-wrap
 msgid "`PY_IPADDRESS`"
-msgstr ""
+msgstr "`PY_IPADDRESS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3619
@@ -10227,7 +10414,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3620
 #, no-wrap
 msgid "`PY_FUTURES`"
-msgstr ""
+msgstr "`PY_FUTURES`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3621
@@ -10356,7 +10543,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3681
 #, no-wrap
 msgid "`TCL_VER`"
-msgstr ""
+msgstr "`TCL_VER`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3683
@@ -10368,7 +10555,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3684
 #, no-wrap
 msgid "`TCLSH`"
-msgstr ""
+msgstr "`TCLSH`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3686
@@ -10380,7 +10567,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3687
 #, no-wrap
 msgid "`TCL_LIBDIR`"
-msgstr ""
+msgstr "`TCL_LIBDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3689
@@ -10392,7 +10579,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3690
 #, no-wrap
 msgid "`TCL_INCLUDEDIR`"
-msgstr ""
+msgstr "`TCL_INCLUDEDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3692
@@ -10404,7 +10591,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3693
 #, no-wrap
 msgid "`TCL_PKG_LIB_PREFIX`"
-msgstr ""
+msgstr "`TCL_PKG_LIB_PREFIX`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3695
@@ -10416,7 +10603,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3696
 #, no-wrap
 msgid "`TCL_PKG_STUB_POSTFIX`"
-msgstr ""
+msgstr "`TCL_PKG_STUB_POSTFIX`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3698
@@ -10428,7 +10615,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3699
 #, no-wrap
 msgid "`TK_VER`"
-msgstr ""
+msgstr "`TK_VER`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3701
@@ -10440,7 +10627,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3702
 #, no-wrap
 msgid "`WISH`"
-msgstr ""
+msgstr "`WISH`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3704
@@ -10452,7 +10639,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3705
 #, no-wrap
 msgid "`TK_LIBDIR`"
-msgstr ""
+msgstr "`TK_LIBDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3707
@@ -10464,7 +10651,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3708
 #, no-wrap
 msgid "`TK_INCLUDEDIR`"
-msgstr ""
+msgstr "`TK_INCLUDEDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3709
@@ -10701,13 +10888,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3793
 #, no-wrap
 msgid "Default value"
-msgstr ""
+msgstr "Значение по умолчанию"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3794
 #, no-wrap
 msgid "`USE_WX`"
-msgstr ""
+msgstr "`USE_WX`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3795
@@ -10725,7 +10912,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3798
 #, no-wrap
 msgid "`USE_WX_NOT`"
-msgstr ""
+msgstr "`USE_WX_NOT`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3799
@@ -10768,25 +10955,25 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3830
 #, no-wrap
 msgid "`2.8`"
-msgstr ""
+msgstr "`2.8`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3814
 #, no-wrap
 msgid "package:x11-toolkits/wxgtk28[]"
-msgstr ""
+msgstr "package:x11-toolkits/wxgtk28[]"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3815
 #, no-wrap
 msgid "`3.0`"
-msgstr ""
+msgstr "`3.0`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3816
 #, no-wrap
 msgid "package:x11-toolkits/wxgtk30[]"
-msgstr ""
+msgstr "package:x11-toolkits/wxgtk30[]"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3819
@@ -10824,7 +11011,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3833
 #, no-wrap
 msgid "`2.8+`"
-msgstr ""
+msgstr "`2.8+`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3834
@@ -10836,7 +11023,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3836
 #, no-wrap
 msgid "`3.0-`"
-msgstr ""
+msgstr "`3.0-`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3837
@@ -10849,7 +11036,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3881
 #, no-wrap
 msgid "`2.8-3.0`"
-msgstr ""
+msgstr "`2.8-3.0`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3842
@@ -10875,7 +11062,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3850
 #, no-wrap
 msgid "`WANT_WX_VER`"
-msgstr ""
+msgstr "`WANT_WX_VER`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3852
@@ -10887,7 +11074,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3853
 #, no-wrap
 msgid "`WITH_WX_VER`"
-msgstr ""
+msgstr "`WITH_WX_VER`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3854
@@ -10920,7 +11107,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3914
 #, no-wrap
 msgid "`wx`"
-msgstr ""
+msgstr "`wx`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3872
@@ -10939,7 +11126,7 @@ msgstr "none"
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3917
 #, no-wrap
 msgid "`contrib`"
-msgstr ""
+msgstr "`contrib`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3876
@@ -10951,14 +11138,14 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3878
 #, no-wrap
 msgid "`none`"
-msgstr ""
+msgstr "`none`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3879
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3920
 #, no-wrap
 msgid "`python`"
-msgstr ""
+msgstr "`python`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3880
@@ -10985,7 +11172,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3895
 #, no-wrap
 msgid "`build`"
-msgstr ""
+msgstr "`build`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3897
@@ -10998,7 +11185,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3922
 #, no-wrap
 msgid "`run`"
-msgstr ""
+msgstr "`run`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3900
@@ -11014,7 +11201,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3927
 #, no-wrap
 msgid "`lib`"
-msgstr ""
+msgstr "`lib`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3902
@@ -11043,7 +11230,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3923
 #, no-wrap
 msgid "`mozilla`"
-msgstr ""
+msgstr "`mozilla`"
 
 #. type: Block title
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3930
@@ -11184,7 +11371,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:3999
 #, no-wrap
 msgid "`WX_CONFIG`"
-msgstr ""
+msgstr "`WX_CONFIG`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4001
@@ -11196,7 +11383,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4002
 #, no-wrap
 msgid "`WXRC_CMD`"
-msgstr ""
+msgstr "`WXRC_CMD`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4004
@@ -11208,7 +11395,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4005
 #, no-wrap
 msgid "`WX_VERSION`"
-msgstr ""
+msgstr "`WX_VERSION`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4006
@@ -11324,25 +11511,25 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4058
 #, no-wrap
 msgid "`absolute`"
-msgstr ""
+msgstr "`absolute`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4060
 #, no-wrap
 msgid "`--with-wx-config=${WX_CONFIG}`"
-msgstr ""
+msgstr "`--with-wx-config=${WX_CONFIG}`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4061
 #, no-wrap
 msgid "`relative`"
-msgstr ""
+msgstr "`relative`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4062
 #, no-wrap
 msgid "`--with-wx=${LOCALBASE} --with-wx-config=${WX_CONFIG:T}`"
-msgstr ""
+msgstr "`--with-wx=${LOCALBASE} --with-wx-config=${WX_CONFIG:T}`"
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4065
@@ -11567,7 +11754,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4169
 #, no-wrap
 msgid "`LUA_VER`"
-msgstr ""
+msgstr "`LUA_VER`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4171
@@ -11579,7 +11766,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4172
 #, no-wrap
 msgid "`LUA_VER_STR`"
-msgstr ""
+msgstr "`LUA_VER_STR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4174
@@ -11591,7 +11778,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4175
 #, no-wrap
 msgid "`LUA_FLAVOR`"
-msgstr ""
+msgstr "`LUA_FLAVOR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4177
@@ -11603,7 +11790,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4178
 #, no-wrap
 msgid "`LUA_BASE`"
-msgstr ""
+msgstr "`LUA_BASE`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4180
@@ -11615,7 +11802,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4181
 #, no-wrap
 msgid "`LUA_PREFIX`"
-msgstr ""
+msgstr "`LUA_PREFIX`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4183
@@ -11627,7 +11814,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4184
 #, no-wrap
 msgid "`LUA_INCDIR`"
-msgstr ""
+msgstr "`LUA_INCDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4186
@@ -11639,7 +11826,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4187
 #, no-wrap
 msgid "`LUA_LIBDIR`"
-msgstr ""
+msgstr "`LUA_LIBDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4189
@@ -11651,7 +11838,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4190
 #, no-wrap
 msgid "`LUA_REFMODLIBDIR`"
-msgstr ""
+msgstr "`LUA_REFMODLIBDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4192
@@ -11663,7 +11850,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4193
 #, no-wrap
 msgid "`LUA_REFMODSHAREDIR`"
-msgstr ""
+msgstr "`LUA_REFMODSHAREDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4195
@@ -11675,7 +11862,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4196
 #, no-wrap
 msgid "`LUA_MODLIBDIR`"
-msgstr ""
+msgstr "`LUA_MODLIBDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4198
@@ -11687,7 +11874,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4199
 #, no-wrap
 msgid "`LUA_MODSHAREDIR`"
-msgstr ""
+msgstr "`LUA_MODSHAREDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4201
@@ -11699,7 +11886,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4202
 #, no-wrap
 msgid "`LUA_PKGNAMEPREFIX`"
-msgstr ""
+msgstr "`LUA_PKGNAMEPREFIX`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4204
@@ -11711,7 +11898,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4205
 #, no-wrap
 msgid "`LUA_CMD`"
-msgstr ""
+msgstr "`LUA_CMD`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4207
@@ -11723,7 +11910,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4208
 #, no-wrap
 msgid "`LUAC_CMD`"
-msgstr ""
+msgstr "`LUAC_CMD`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4209
@@ -11748,7 +11935,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4221
 #, no-wrap
 msgid "`LUA_DOCSDIR`"
-msgstr ""
+msgstr "`LUA_DOCSDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4223
@@ -11760,7 +11947,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4224
 #, no-wrap
 msgid "`LUA_EXAMPLESDIR`"
-msgstr ""
+msgstr "`LUA_EXAMPLESDIR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4225
@@ -12142,13 +12329,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4405
 #, no-wrap
 msgid "`GUILE_VER`"
-msgstr ""
+msgstr "`GUILE_VER`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4406
 #, no-wrap
 msgid "3.0"
-msgstr ""
+msgstr "3.0"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4408
@@ -12160,7 +12347,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4409
 #, no-wrap
 msgid "`GUILE_SFX`"
-msgstr ""
+msgstr "`GUILE_SFX`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4410
@@ -12180,7 +12367,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4414
 #, no-wrap
 msgid "`GUILE_FLAVOR`"
-msgstr ""
+msgstr "`GUILE_FLAVOR`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4415
@@ -12198,7 +12385,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4418
 #, no-wrap
 msgid "`GUILE_PORT`"
-msgstr ""
+msgstr "`GUILE_PORT`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4419
@@ -12216,7 +12403,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4422
 #, no-wrap
 msgid "`GUILE_PREFIX`"
-msgstr ""
+msgstr "`GUILE_PREFIX`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4423
@@ -12234,7 +12421,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4426
 #, no-wrap
 msgid "`GUILE_CMD`"
-msgstr ""
+msgstr "`GUILE_CMD`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4427
@@ -12252,7 +12439,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4430
 #, no-wrap
 msgid "`GUILE_CMDPATH`"
-msgstr ""
+msgstr "`GUILE_CMDPATH`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4431
@@ -12270,7 +12457,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4434
 #, no-wrap
 msgid "`GUILD_CMD`"
-msgstr ""
+msgstr "`GUILD_CMD`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4435
@@ -12288,7 +12475,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4438
 #, no-wrap
 msgid "`GUILD_CMDPATH`"
-msgstr ""
+msgstr "`GUILD_CMDPATH`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4439
@@ -12320,7 +12507,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4447
 #, no-wrap
 msgid "`GUILE_PKGCONFIG_PATH`"
-msgstr ""
+msgstr "`GUILE_PKGCONFIG_PATH`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4448
@@ -12338,7 +12525,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4451
 #, no-wrap
 msgid "`GUILE_INFO_PATH`"
-msgstr ""
+msgstr "`GUILE_INFO_PATH`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4452
@@ -12549,7 +12736,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4537
 #, no-wrap
 msgid "`ICONV_CMD`"
-msgstr ""
+msgstr "`ICONV_CMD`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4538
@@ -12561,19 +12748,19 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4539
 #, no-wrap
 msgid "`${LOCALBASE}/bin/iconv`"
-msgstr ""
+msgstr "`${LOCALBASE}/bin/iconv`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4541
 #, no-wrap
 msgid "[.filename]#/usr/bin/iconv#"
-msgstr ""
+msgstr "[.filename]#/usr/bin/iconv#"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4542
 #, no-wrap
 msgid "`ICONV_LIB`"
-msgstr ""
+msgstr "`ICONV_LIB`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4543
@@ -12585,7 +12772,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4544
 #, no-wrap
 msgid "`-liconv`"
-msgstr ""
+msgstr "`-liconv`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4546
@@ -12599,7 +12786,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4547
 #, no-wrap
 msgid "`ICONV_PREFIX`"
-msgstr ""
+msgstr "`ICONV_PREFIX`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4548
@@ -12611,19 +12798,19 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4549
 #, no-wrap
 msgid "`${LOCALBASE}`"
-msgstr ""
+msgstr "`${LOCALBASE}`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4551
 #, no-wrap
 msgid "[.filename]#/usr#"
-msgstr ""
+msgstr "[.filename]#/usr#"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4552
 #, no-wrap
 msgid "`ICONV_CONFIGURE_ARG`"
-msgstr ""
+msgstr "`ICONV_CONFIGURE_ARG`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4553
@@ -12636,19 +12823,19 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4554
 #, no-wrap
 msgid "`--with-libiconv-prefix=${LOCALBASE}`"
-msgstr ""
+msgstr "`--with-libiconv-prefix=${LOCALBASE}`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4557
 #, no-wrap
 msgid "`ICONV_CONFIGURE_BASE`"
-msgstr ""
+msgstr "`ICONV_CONFIGURE_BASE`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4559
 #, no-wrap
 msgid "`--with-libiconv=${LOCALBASE}`"
-msgstr ""
+msgstr "`--with-libiconv=${LOCALBASE}`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4563
@@ -12799,7 +12986,7 @@ msgstr "garcon"
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4644
 msgid "package:sysutils/garcon[]"
-msgstr ""
+msgstr "package:sysutils/garcon[]"
 
 #. type: Labeled list
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4645
@@ -12810,7 +12997,7 @@ msgstr "libexo"
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4647
 msgid "package:x11/libexo[]"
-msgstr ""
+msgstr "package:x11/libexo[]"
 
 #. type: Labeled list
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4648
@@ -12821,7 +13008,7 @@ msgstr "libgui"
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4650
 msgid "package:x11-toolkits/libxfce4gui[]"
-msgstr ""
+msgstr "package:x11-toolkits/libxfce4gui[]"
 
 #. type: Labeled list
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4651
@@ -12832,7 +13019,7 @@ msgstr "libmenu"
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4653
 msgid "package:x11/libxfce4menu[]"
-msgstr ""
+msgstr "package:x11/libxfce4menu[]"
 
 #. type: Labeled list
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4654
@@ -12843,7 +13030,7 @@ msgstr "libutil"
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4656
 msgid "package:x11/libxfce4util[]"
-msgstr ""
+msgstr "package:x11/libxfce4util[]"
 
 #. type: Labeled list
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4657
@@ -12854,7 +13041,7 @@ msgstr ""
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4659
 msgid "package:x11-wm/xfce4-panel[]"
-msgstr ""
+msgstr "package:x11-wm/xfce4-panel[]"
 
 #. type: Labeled list
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4660
@@ -12865,7 +13052,7 @@ msgstr "thunar"
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4662
 msgid "package:x11-fm/thunar[]"
-msgstr ""
+msgstr "package:x11-fm/thunar[]"
 
 #. type: Labeled list
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4663
@@ -12876,7 +13063,7 @@ msgstr "xfconf"
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4665
 msgid "package:x11/xfce4-conf[]"
-msgstr ""
+msgstr "package:x11/xfce4-conf[]"
 
 #. type: Block title
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4667
@@ -12977,7 +13164,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4727
 #, no-wrap
 msgid "`libbudgie`"
-msgstr ""
+msgstr "`libbudgie`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4729
@@ -12989,7 +13176,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4730
 #, no-wrap
 msgid "`libmagpie`"
-msgstr ""
+msgstr "`libmagpie`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4732
@@ -13001,7 +13188,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4733
 #, no-wrap
 msgid "`raven`"
-msgstr ""
+msgstr "`raven`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4735
@@ -13013,7 +13200,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4736
 #, no-wrap
 msgid "`screensaver`"
-msgstr ""
+msgstr "`screensaver`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4738
@@ -13102,7 +13289,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4779
 #, no-wrap
 msgid "crossref:uses[uses-bdb,`bdb`]"
-msgstr ""
+msgstr "crossref:uses[uses-bdb,`bdb`]"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4780
@@ -13114,7 +13301,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4782
 #, no-wrap
 msgid "crossref:uses[uses-mysql,`mysql`]"
-msgstr ""
+msgstr "crossref:uses[uses-mysql,`mysql`]"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4783
@@ -13126,7 +13313,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4785
 #, no-wrap
 msgid "crossref:uses[uses-pgsql,`pgsql`]"
-msgstr ""
+msgstr "crossref:uses[uses-pgsql,`pgsql`]"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4786
@@ -13138,7 +13325,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4787
 #, no-wrap
 msgid "crossref:uses[uses-sqlite,`sqlite`]"
-msgstr ""
+msgstr "crossref:uses[uses-sqlite,`sqlite`]"
 
 #. type: Block title
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:4790
@@ -13753,13 +13940,15 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:5034
 #, no-wrap
 msgid "`bash`"
-msgstr ""
+msgstr "`bash`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:5035
 #, no-wrap
 msgid "[.filename]#${PREFIX}/etc/bash_completion.d# or [.filename]#${PREFIX}/share/bash-completion/completions#"
 msgstr ""
+"[.filename]#${PREFIX}/etc/bash_completion.d# or [.filename]#${PREFIX}/share/"
+"bash-completion/completions#"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:5037
@@ -13771,25 +13960,25 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:5038
 #, no-wrap
 msgid "`fish`"
-msgstr ""
+msgstr "`fish`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:5039
 #, no-wrap
 msgid "[.filename]#${PREFIX}/share/fish/completions/${PORTNAME}.fish#"
-msgstr ""
+msgstr "[.filename]#${PREFIX}/share/fish/completions/${PORTNAME}.fish#"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:5042
 #, no-wrap
 msgid "`zsh`"
-msgstr ""
+msgstr "`zsh`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:5043
 #, no-wrap
 msgid "[.filename]#${PREFIX}/share/zsh/site-functions/_${PORTNAME}#"
-msgstr ""
+msgstr "[.filename]#${PREFIX}/share/zsh/site-functions/_${PORTNAME}#"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:5046

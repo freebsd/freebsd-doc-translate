@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-07-12 04:45+0000\n"
+"PO-Revision-Date: 2025-07-12 12:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksporters-handbookslow-porting_index/ru/>\n"
@@ -34,7 +34,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:14
 #, no-wrap
 msgid "Slow Porting"
-msgstr ""
+msgstr "Медленное портирование"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:53
@@ -43,12 +43,16 @@ msgid ""
 "get it to work.  In this section, we will explain, step by step, how to "
 "modify it to get it to work with the ports paradigm."
 msgstr ""
+"Итак, все оказалось не так уж и просто, и порт потребовал некоторых "
+"модификаций для того, чтобы заставить его работать. В этом разделе мы "
+"расскажем, шаг за шагом, как его модифицировать, чтобы он работал с нашей "
+"системой портов."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:55
 #, no-wrap
 msgid "How Things Work"
-msgstr ""
+msgstr "Как всё это работает"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:59
@@ -57,6 +61,10 @@ msgid ""
 "`make` in the port's directory.  Having [.filename]#bsd.port.mk# in another "
 "window while reading this really helps to understand it."
 msgstr ""
+"Во-первых, когда пользователь дает в своем каталоге с портом команду `make`, "
+"происходит целая череда событий. Во время чтения этого текста может "
+"оказаться полезным иметь файл [.filename]#bsd.port.mk# открытым в другом "
+"окне, что сильно поможет в их понимании."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:61
@@ -64,6 +72,8 @@ msgid ""
 "But do not worry, not many people understand exactly how "
 "[.filename]#bsd.port.mk# is working... _:-)_"
 msgstr ""
+"Но не волнуйтесь сильно, если вы не до конца понимаете, что делается в [."
+"filename]#bsd.port.mk#, не так уж много людей его понимает... _:->_"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:64
@@ -77,6 +87,15 @@ msgid ""
 "Internet. If that succeeds, it will save the file in `DISTDIR` for future "
 "use and proceed."
 msgstr ""
+"Запускается цель `fetch`. Цель `fetch` отвечает за то, что архив исходных "
+"текстов имеется в наличии локально в каталоге `DISTDIR`. Если цель `fetch` "
+"не может найти требуемые файлы в каталоге `DISTDIR`, то они будут искаться "
+"по указателю URL `MASTER_SITES`, который устанавливается в Makefile, а также "
+"на наших FTP зеркалах, куда мы по возможности помещаем дистрибутивные файлы "
+"для архива. Затем она попытается сгрузить указанный файл с помощью `FETCH`, "
+"полагая, что запрашивающая машина имеет прямое подключение к Интернет. Если "
+"файл скачается удачно, то он будет помещен в каталог `DISTDIR` для "
+"последующего использования и обработки."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:65
@@ -85,6 +104,9 @@ msgid ""
 "(typically a compressed tarball) in `DISTDIR` and unpacks it into a "
 "temporary subdirectory specified by `WRKDIR` (defaults to [.filename]#work#)."
 msgstr ""
+"Выполняется цель `extract`. Она ищет дистрибутивный файл порта (как правило, "
+"tar-архив `gzip`) в каталоге `DISTDIR` и распаковывает его во временный "
+"каталог, задаваемый переменной `WRKDIR` (по умолчанию [.filename]#work#)."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:66
@@ -94,12 +116,19 @@ msgid ""
 "`PATCHDIR` (defaults to the [.filename]#files# subdirectory), they are "
 "applied at this time in alphabetical order."
 msgstr ""
+"Выполняется цель `patch`. Во-первых, применяются все патчи, заданные "
+"переменной `PATCHFILES`. Во-вторых, если какие-либо файлы с патчами, носящие "
+"имена [.filename]#patch-*#, имеются в подкаталоге `PATCHDIR` (по умолчанию "
+"это каталог [.filename]#files#), то они применяются в этот момент в "
+"алфавитном порядке."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:67
 msgid ""
 "The `configure` target is run. This can do any one of many different things."
 msgstr ""
+"Запускается цель `configure`. Здесь может выполняться любая из многих "
+"различных вещей."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:68
@@ -119,6 +148,8 @@ msgid ""
 "The `build` target is run. This is responsible for descending into the "
 "port's private working directory (`WRKSRC`) and building it."
 msgstr ""
+"Выполняется цель `build`. Она отвечает за переход в собственный рабочий "
+"каталог порта (`WRKSRC`) и его построение."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:72
@@ -128,6 +159,10 @@ msgid ""
 "hierarchy of this directory mirrors that of the system on which the package "
 "will be installed."
 msgstr ""
+"Выполняется цель `stage`. Конечный набор построенных файлов помещается во "
+"временный каталог (`STAGEDIR`, смотрите crossref:special[staging,Staging]). "
+"Иерархия этого каталога отражает иерархию каталогов системы, в которую "
+"данный пакет будет устанавливаться."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:73
@@ -152,6 +187,10 @@ msgid ""
 "[.filename]#scripts# subdirectory, and they will be run before or after the "
 "default actions are done."
 msgstr ""
+"Выше перечислены стандартные действия. Кроме того, вы сами можете определить "
+"цели `pre-_что-то_` или `post-_что-то_`, или создать скрипты с такими "
+"именами в подкаталоге [.filename]#scripts#, и они будут запущены до или "
+"после выполнения действий по умолчанию."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:82
@@ -165,6 +204,14 @@ msgid ""
 "will be easier for someone to figure out what kind of non-default action the "
 "port requires."
 msgstr ""
+"Например, если у вас есть цель `post-extract`, определённая в вашем файле [."
+"filename]#Makefile# и файл [.filename]#pre-build# в подкаталоге [."
+"filename]#scripts#, то после выполнения обычных действий по распаковке, "
+"будет вызвана цель `post-extract` а скрипт [.filename]#pre-build# будет "
+"выполнен перед запуском стандартных правил построения. Рекомендуется "
+"использовать цели из [.filename]#Makefile#, если действия достаточно просты, "
+"потому что в дальнейшем будет проще определить, какие нестандартные действия "
+"требует порт."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:86
@@ -174,6 +221,10 @@ msgid ""
 "in the target `do-extract`.  If the default target does not do the job "
 "right, redefine the `do-_something_` target in the [.filename]#Makefile#."
 msgstr ""
+"Действия по умолчанию выполняются целями `do-_что-то_` из [.filename]#bsd."
+"port.mk#. Например, команды для распаковки порта находятся в цели `do-"
+"extract`. Если вам не хватает цели по умолчанию, вы можете ее исправить, "
+"переопределив цель `do-_something_` в вашем файле [.filename]#Makefile#."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:92
@@ -185,6 +236,12 @@ msgid ""
 "operates! Additionally, the target `post-deinstall` is invalid and is not "
 "run by the ports infrastructure."
 msgstr ""
+"\"Основные\" цели (к примеру, `extract`, `configure` и так далее) не делают "
+"ничего больше, чем проверяют успешность завершения всех предыдущих шагов и "
+"вызывают настоящие цели или скрипты, и их не нужно менять. Если вам нужно "
+"изменить распаковку, исправляйте `do-extract`, но никогда не меняйте способ "
+"работы `extract`! Кроме того, цель `post-deinstall` является "
+"недействительной и не выполняется инфраструктурой портов."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:95
@@ -193,12 +250,15 @@ msgid ""
 "understood, let us go through the recommended steps to create the perfect "
 "port."
 msgstr ""
+"Теперь, когда вы представляете, что происходит, когда пользователь набирает "
+"команду `make install`, давайте пройдемся через шаги, рекомендуемые для "
+"создания настоящего порта."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:97
 #, no-wrap
 msgid "Getting the Original Sources"
-msgstr ""
+msgstr "Получение исходного кода"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:101
@@ -207,6 +267,10 @@ msgid ""
 "([.filename]#foo.tar.gz# or [.filename]#foo.tar.bz2#) and copy it into "
 "`DISTDIR`.  Always use _mainstream_ sources when and where possible."
 msgstr ""
+"Получите оригинальные исходные тексты (обычно) в виде упакованного tar-"
+"архива ([.filename]#foo.tar.gz# или [.filename]#foo.tar.bz2#) и скопируйте "
+"его в каталог `DISTDIR`. Всегда используйте исходные тексты _основной ветки "
+"разработки_ везде, где это возможно."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:108
@@ -220,6 +284,13 @@ msgid ""
 "everyone involved.  See crossref:makefiles[makefile-"
 "master_sites,`MASTER_SITES`] for details."
 msgstr ""
+"Вам потребуется задать значение переменной `MASTER_SITES` так, чтобы оно "
+"указывало на местоположение оригинального tar-архива. В файле [.filename]#bsd"
+".sites.mk# вы найдёте краткие обозначения для большинства популярных сайтов. "
+"Пожалуйста, используйте эти сайты-и соответствующие определения-везде, где "
+"это возможно, чтобы избежать проблем повторения одной и той же информации в "
+"базе источников. Так как эти сайты со временем меняются, для всех причастных "
+"поддержка становится настоящим кошмаром."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:110
@@ -228,6 +299,10 @@ msgid ""
 "find sites that have irritatingly non-standard formats, put a copy on a "
 "reliable FTP or HTTP server (for example, a home page)."
 msgstr ""
+"Если вы не можете найти FTP/HTTP сайт с хорошим подключением к сети, или "
+"находите только сайты, которые имеют раздражающе нестандартные форматы, то "
+"можете захотеть поместить копию на надежный сервер FTP или HTTP, который вам "
+"доступен (например, ваша домашняя страница)."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:114
@@ -239,6 +314,14 @@ msgid ""
 "commits the port to do this. This person will also set `MASTER_SITES` to "
 "`LOCAL/_username_` where `_username_` is their FreeBSD cluster login."
 msgstr ""
+"Если вы не можете найти доступного и надёжного места для помещения "
+"дистрибутивного файла, то мы сами сможем разместить его на сервере `ftp."
+"FreeBSD.org`; однако это наименее рекомендуемое решение. Дистрибутивный файл "
+"должен быть помещён в каталог [.filename]#~/public_distfiles/# одного из "
+"пользователей машины `freefall`. Попросите того, кто коммиттил ваш порт, "
+"сделать это. Этот человек также задаст переменной `MASTER_SITES` значение "
+"`MASTER_SITE_LOCAL`, а в переменной `MASTER_SITE_SUBDIR` укажет логин "
+"кластера FreeBSD."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:119
@@ -253,6 +336,16 @@ msgid ""
 "recommended to house a backup on a home page and list it as the second "
 "`MASTER_SITES`."
 msgstr ""
+"Если дистрибутивные файлы вашего порта постоянно меняются по неизвестным "
+"причинам без изменения версий со стороны автора, остаётся только поместить "
+"дистрибутив на вашу домашнюю Web-страницу и указать её первой в списке "
+"`MASTER_SITES`. Если можете, попытайтесь договориться с автором порта об "
+"этом; это действительно помогает в достижении некоторого управления исходным "
+"кодом. Размещение собственной версии поможет избежать появления ошибок у "
+"пользователей типа `checksum mismatch`, а также уменьшит нагрузку на людей, "
+"сопровождающих наш FTP-сервер. Также, если у порта имеется только один "
+"основной сервер, то рекомендуется поместить архивную копию на свой сайт и "
+"указать его в списке `MASTER_SITES` вторым."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:123
@@ -263,12 +356,17 @@ msgid ""
 "these situations (see the description of crossref:makefiles[porting-"
 "patchfiles,PATCHFILES] below)."
 msgstr ""
+"Если вашему порту требуются дополнительные `патчи`, доступные в Интернет, "
+"скачайте также и их, поместив в каталог `DISTDIR`. Не волнуйтесь, если они "
+"находятся не на том же сайте, откуда взят дистрибутивный архив, мы умеем "
+"обрабатывать такие ситуации (смотрите описание crossref:makefiles[porting-"
+"patchfiles,PATCHFILES] ниже)."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:125
 #, no-wrap
 msgid "Modifying the Port"
-msgstr ""
+msgstr "Модификация порта"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:130
@@ -280,6 +378,12 @@ msgid ""
 "addition, or modification of files has to be doable using an automated "
 "script or patch file when the port is finished."
 msgstr ""
+"Распакуйте копию дистрибутивного файла в отдельный каталог и внесите "
+"изменения, которые необходимы для того, чтобы порт компилировался нормально "
+"в текущей версии FreeBSD. _Тщательно отслеживайте_ все, что вы делаете, этот "
+"процесс вам предстоит автоматизировать. Все, включая удаление, добавление "
+"или модификацию в файлах должны будут выполняться автоматически с помощью "
+"скриптов или файлов патчей, когда вы завершите работу над портом."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:133
@@ -290,6 +394,13 @@ msgid ""
 "make each port as \"plug-and-play\" as possible for the end-user while using "
 "a minimum of disk space."
 msgstr ""
+"Если вашему порту во время компиляции, установки и настройки требуется "
+"довольно много взаимодействовать с пользователем, то посмотрите на один из "
+"классических скриптов Configure Лэрри Уолла (Larry Wall) и сделайте сами что-"
+"либо подобное. Предназначение новой коллекции портов - это сделать каждое "
+"приложение в стиле \"plug-and-play\" настолько, насколько это вообще "
+"возможно для конечного пользователя при минимальном использовании дискового "
+"пространства."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:137
@@ -298,6 +409,9 @@ msgid ""
 "contributed to the FreeBSD ports collection are assumed to be covered by the "
 "standard BSD copyright conditions."
 msgstr ""
+"Если явно не указано обратное, то патчи, скрипты и другие файлы, которые вы "
+"создали и предоставили для Коллекции Портов FreeBSD, неявно подпадают под "
+"стандартные условия лицензии BSD."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:140
@@ -313,6 +427,11 @@ msgid ""
 "with a typical file involves saving a copy of the original file before "
 "making any changes using a [.filename]#.orig# suffix."
 msgstr ""
+"Файлы, которые добавлялись или изменялись в процессе создания порта, могут "
+"быть выявлены программой man:diff[1], а результат работы этой программы "
+"может быть в дальнейшем передан программе man:patch[1]. Такое действие с "
+"обычным файлом подразумевает сохранение копии файла с первоначальным "
+"содержимым перед внесением каких-либо изменений."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:148
@@ -327,6 +446,9 @@ msgid ""
 "`make makepatch` to generate updated patch files in the [.filename]#files# "
 "directory."
 msgstr ""
+"Патчи сохраняются в виде файлов с именем [.filename]#patch-*#, где _*_ "
+"обозначает путь к файлу, к которому применяется патч, такой как [.filename"
+"]#patch-Imakefile# или [.filename]#patch-src-config.h#."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:157
@@ -453,6 +575,9 @@ msgid ""
 "man:diff[1] to treat the non-existent original file as if it existed but was "
 "empty:"
 msgstr ""
+"Для порождении патчей для новых добавляемых файлов используется параметр `-N`"
+", который заставляет man:diff[1] трактовать несуществующие прежде файлы как "
+"если бы они существовали, но имели пустое содержимое:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:207
@@ -729,7 +854,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:351
 #, no-wrap
 msgid "Configuring"
-msgstr ""
+msgstr "Конфигурирование"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:355
@@ -740,12 +865,17 @@ msgid ""
 "scripts with the name [.filename]#pre-configure# or [.filename]#post-"
 "configure#."
 msgstr ""
+"Поместите все дополнительные команды, требуемые для настройки, в ваш скрипт ["
+".filename]#configure# и сохраните его в подкаталоге [.filename]#scripts#. "
+"Как отмечено выше, вы можете сделать это целями в файле [.filename]#Makefile#"
+" и/или скриптами с именами [.filename]#pre-configure# или [.filename]#post-"
+"configure#."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:357
 #, no-wrap
 msgid "Handling User Input"
-msgstr ""
+msgstr "Обработка пользовательского ввода"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:364
@@ -757,6 +887,14 @@ msgid ""
 "those ports requiring interaction are built).  This will save a lot of "
 "wasted time on the set of machines that continually build ports (see below)."
 msgstr ""
+"Если для построения, конфигурации или установки вашего порта требуется "
+"некоторый ввод со стороны пользователя, то вы должны задать переменную "
+"`IS_INTERACTIVE` в вашем файле [.filename]#Makefile#. В случае \"ночного "
+"построения\" это позволит пропустить ваш порт, если пользователь в своем "
+"окружении задал переменную `BATCH` (и если пользователь установил переменную "
+"`INTERACTIVE`, то будут строиться _только_ порты, которые требуют "
+"взаимодействия с пользователем. Это сэкономит значительное количество "
+"времени на части машин, которые постоянно строят порты (смотрите ниже)."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/slow-porting/_index.adoc:366
@@ -765,3 +903,7 @@ msgid ""
 "questions, `PACKAGE_BUILDING` be used to turn off the interactive script "
 "when it is set.  This will allow us to build the packages for CDROMs and FTP."
 msgstr ""
+"При наличии разумных ответов на задаваемые вопросы, подходящих по умолчанию, "
+"также рекомендуется проверять переменную `PACKAGE_BUILDING` и выключать "
+"интерактивный скрипт, если он есть. Это позволит нам строить пакеты для "
+"помещения на компакт-диски и FTP-серверы."

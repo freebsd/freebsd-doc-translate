@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-07-12 04:45+0000\n"
+"PO-Revision-Date: 2025-07-12 12:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksporters-handbooksecurity_index/ru/>\n"
@@ -28,7 +28,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:1
 #, no-wrap
 msgid "Chapter 12. Security"
-msgstr ""
+msgstr "Глава 12. Безопасность портов"
 
 #. type: Title =
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:14
@@ -40,7 +40,7 @@ msgstr "Безопасность"
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:52
 #, no-wrap
 msgid "Why Security is So Important"
-msgstr ""
+msgstr "Почему безопасность так важна"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:58
@@ -51,6 +51,11 @@ msgid ""
 "the bugs that caused them.  However, the policies for handling mere bugs and "
 "security vulnerabilities are very different."
 msgstr ""
+"Ошибки в программном обеспечении появляются случайно. Возможно, самые "
+"опасные из них те, что создают уязвимости безопасности. С технической точки "
+"зрения подобные уязвимости должны быть закрыты путем исправления вызывающих "
+"их ошибок. Тем не менее, политики обработки несущественных ошибок и "
+"уязвимостей очень различаются."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:64
@@ -65,6 +70,17 @@ msgid ""
 "loss, and so they make backups of important data; in addition, a critical "
 "bug will be discovered really soon."
 msgstr ""
+"Обычная небольшая ошибка затрагивает только тех пользователей, которые "
+"задействуют некоторые комбинации настроек, активирующие эту ошибку. "
+"Разработчик в конечном счете выпустит патч, а зачтем новую версию "
+"программного обеспечения, свободного от ошибки, но большинство пользователей "
+"не посчитают нужным сразу же произвести обновление, поскольку эта ошибка "
+"никогда у них не проявлялась. Критическая ошибка, которая может приводить к "
+"потере данных, представляет серьезную проблему. Тем не менее, "
+"предусмотрительные пользователи знают, что большинство возможных "
+"происшествий, и среди них программные ошибки, скорее всего приводят к потере "
+"данных, поэтому они выполняют резервное копирование важных данных; "
+"дополнительно, критическая ошибка будет обнаружена очень скоро."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:72
@@ -80,12 +96,23 @@ msgid ""
 "manner, which will allow them to evaluate the danger and take appropriate "
 "action."
 msgstr ""
+"С уязвимостью безопасности всё иначе. Во-первых, она может сохраняться "
+"необнаруженной целые годы, потому что чаще всего не вызывает ошибок в "
+"работе. Во-вторых, компания злоумышленников может использовать ее для "
+"получения неавторизованного доступа к уязвимой системе, уничтожить или "
+"подменить важные данные; в худшем случае пользователь даже не заметит "
+"нанесенный урон. В-третьих, взлом уязвимой системы часто упрощает задачу "
+"проникновения атакующих в другие системы, которые не могут быть "
+"скомпрометированы иначе. Таким образом, устранение уязвимости как таковой "
+"недостаточно: следует разослать всем заинтересованным уведомления в наиболее "
+"понятной и исчерпывающей форме, что позволит оценить риск и предпринять "
+"подходящие меры."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:74
 #, no-wrap
 msgid "Fixing Security Vulnerabilities"
-msgstr ""
+msgstr "Исправление уязвимостей безопасности"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:82
@@ -101,6 +128,17 @@ msgid ""
 "upgrading[port-upgrading,the standard procedure for submitting changes] "
 "unless having rights to commit it directly to the ports tree."
 msgstr ""
+"Что касается портов и пакетов, уязвимость безопасности изначально может "
+"появиться в исходном дистрибутиве или файлах порта. В первом случае, "
+"разработчик исходного программного обеспечения скорее всего сразу же "
+"выпустит патч или новую версию, и вам лишь понадобится сразу обновить порт в "
+"соответствии с исправлением автора. Если исправление по какой-то причине "
+"задерживается, вам следует либо <<dads-noinstall,пометить порт как "
+"`FORBIDDEN`>>, либо добавить в порт ваш собственный патч. В случае "
+"уязвимости порта просто исправьте этот порт как можно скорее. В любом случае "
+"нужно следовать <<port-upgrading,стандартной процедуре отправки вашего "
+"изменения>>, если вы не обладаете правами на коммит изменения "
+"непосредственно в дерево портов."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:87
@@ -108,6 +146,9 @@ msgid ""
 "Being a ports committer is not enough to commit to an arbitrary port.  "
 "Remember that ports usually have maintainers, must be respected."
 msgstr ""
+"Быть коммиттером портов недостаточно для коммита произвольного порта. "
+"Помните, что обычно у портов есть сопровождающие, мнение которых вы должны "
+"учитывать."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:95
@@ -123,18 +164,28 @@ msgid ""
 "`DISTVERSION`.  Please refer to the crossref:makefiles[makefile-naming-"
 "revepoch,corresponding section] for more information."
 msgstr ""
+"Пожалуйста, убедитесь, что ревизия порта после закрытия уязвимости "
+"увеличена. Вот как пользователи, обновляющие установленные пакеты на "
+"постоянной основе, увидят, что им нужно запустить обновление. Кроме того, "
+"новый пакет будет собран и распространен через FTP и WWW зеркала, замещая "
+"уязвимый. Если в процессе исправления уязвимости не было изменено значение "
+"`PORTVERSION`, то должно быть увеличено значение `PORTREVISION`. Вам следует "
+"увеличить значение `PORTREVISION` после добавления в порт файла с патчем, но "
+"не когда вы обновили порт до последней версии программного обеспечения, "
+"попутно затронув при этом `PORTVERSION`. За дальнейшей информацией "
+"обращайтесь к <<makefile-naming-revepoch,соответствующему разделу>>."
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:97
 #, no-wrap
 msgid "Keeping the Community Informed"
-msgstr ""
+msgstr "Обеспечение сообщества информацией"
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:100
 #, no-wrap
 msgid "The VuXML Database"
-msgstr ""
+msgstr "База данных VuXML"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:108
@@ -149,6 +200,15 @@ msgid ""
 "notification that they _must_ update the package without delay as soon as a "
 "corrected version is available."
 msgstr ""
+"Очень важным и первостепенным шагом при действии как можно раньше после "
+"раскрытия уязвимости является уведомление сообщества пользователей порта об "
+"опасности. Такие уведомления служат двум целям. Во-первых, в случае "
+"действительно серьезной угрозы, будет посоветовано применить мгновенное "
+"воздействие. Например, остановить затрагиваемый сетевой сервис или даже "
+"удалить порт целиком, пока уязвимость не будет устранена. Во-вторых, масса "
+"пользователей имеет тенденцию обновлять установленные пакеты только от "
+"случая к случаю. Из уведомления они узнают, что _должны_ обновить пакет без "
+"промедления сразу же после появления исправленной версии."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:112
@@ -160,6 +220,13 @@ msgid ""
 "[the FreeBSD VuXML database].  The Security Officer Team members also "
 "monitor it for issues requiring their intervention."
 msgstr ""
+"Учитывая огромное число портов в дереве, невозможно по каждому случаю "
+"выпускать бюллетень безопасности без создания флуда и потери внимания "
+"сообщества к моменту появления действительно серьезных причин. Поэтому "
+"уязвимости безопасности, обнаруженные в портах, записываются в http://vuxml."
+"freebsd.org/[базу данных FreeBSD VuXML]. Члены Команды Офицеров Безопасности "
+"также отслеживают её на предмет появления вопросов, требующих их "
+"вмешательства."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:115
@@ -171,6 +238,13 @@ msgid ""
 "Team directly, as described on the https://www.freebsd.org/security/"
 "#how[FreeBSD Security Information] page."
 msgstr ""
+"Если вы обладаете правами коммиттера, вы можете сам обновить базу данных "
+"VuXML. Так вы поможете Команде Офицеров Безопасности и своевременно пошлете "
+"ценную информацию сообществу. Тем не менее, если вы не являетесь коммиттером "
+"или верите, что нашли исключительно серьезную уязвимость, то не задумываясь "
+"свяжитесь с Командой Офицеров Безопасности напрямую как это описано на "
+"странице https://www.freebsd.org/security/#how[информационной безопасности "
+"FreeBSD]."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:121
@@ -183,12 +257,19 @@ msgid ""
 "VuXML, the best thing to do is to find an existing entry fitting the case at "
 "hand, then copy it and use it as a template."
 msgstr ""
+"База данных VuXML является документом XML. Его исходный файл [.filename]#vuln"
+".xml# содержится прямо внутри порта package:security/vuxml[]. Следовательно, "
+"полное имя пути к файлу будет [.filename]#PORTSDIR/security/vuxml/vuln.xml#. "
+"Каждый раз, при обнаружении вами в порте уязвимости безопасности добавьте об "
+"этом запись в этот файл. Пока вы не знакомы с VuXML, лучшее, что вы можете "
+"сделать, это найти существующую запись, подпадающую под ваш случай, затем "
+"скопировать ее и использовать в качестве шаблона."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:123
 #, no-wrap
 msgid "A Short Introduction to VuXML"
-msgstr ""
+msgstr "Короткое вступление в VuXML"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:135
@@ -204,11 +285,21 @@ msgid ""
 "intrinsic structure XML puts otherwise amorphous data into shape.  VuXML is "
 "particularly tailored to mark up descriptions of security vulnerabilities."
 msgstr ""
+"В совокупности XML является очень сложным форматом, и его описание выходит "
+"далеко за рамки этой книги. Тем не менее, для достижения основного понимания "
+"структуры записи VuXML вам понадобится всего лишь понять теги. Имена тегов "
+"XML обрамляются в угловые скобки. Каждый открывающий <tag> должен иметь "
+"совпадающий закрывающий </tag>. Теги могут быть вложенными. При вложенности "
+"внутренние теги должны быть закрыты до закрытия внешних. Существует иерархия "
+"тегов, т.е. более сложные правила вкладывания тегов. Это похоже на HTML. "
+"Основное отличие в расширяемости XML, т.е. в определении собственных тегов. "
+"Из-за своей характерной структуры XML придает форму разрозненным данным. В "
+"частности, XML подходит для разметки описаний уязвимостей безопасности."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:137
 msgid "Now consider a realistic VuXML entry:"
-msgstr ""
+msgstr "Теперь рассмотрим настоящую запись VuXML:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:184
@@ -311,6 +402,8 @@ msgid ""
 "The tag names are supposed to be self-explanatory so we shall take a closer "
 "look only at fields which needs to be filled in:"
 msgstr ""
+"Имена тегов должны быть самодокументируемыми, чтобы мы сфокусировались "
+"только на полях, нужных нам для заполнения:"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:190
@@ -321,11 +414,16 @@ msgid ""
 "substitute it for the template UUID unless writing the entry from scratch).  "
 "Use man:uuidgen[1] to generate a VuXML UUID."
 msgstr ""
+"Это тег верхнего уровня записи VuXML. У него есть обязательный атрибут `vid`"
+", указывающий на универсальный уникальный идентификатор (UUID) для этой "
+"записи (в кавычках). Вы должны формировать UUID для каждой новой записи "
+"VuXML (и не забудьте заменить ее для шаблона UUID, если вы не пишете запись "
+"с нуля). Для получения VuXML UUID вы можете использовать man:uuidgen[1]."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:192
 msgid "This is a one-line description of the issue found."
-msgstr ""
+msgstr "Однострочное описание найденной проблемы."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:194
@@ -336,6 +434,12 @@ msgid ""
 "versions, and slave ports featuring different choices of important build-"
 "time configuration options."
 msgstr ""
+"Здесь перечислены имена затронутых пакетов. Может быть дано несколько имен, "
+"поскольку некоторые пакеты могут быть основаны на одном главном порте или "
+"программном продукте. Сюда можно включить стабильную ветвь и ветвь "
+"разработки, локализованные версии и подчиненные порты, зависящие от "
+"различного выбора важных вариантов конфигурации, указанных на этапе "
+"построения."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:198
@@ -355,6 +459,12 @@ msgid ""
 "its bugs and vulnerabilities. Note the difference from listing multiple "
 "names within a single <package> section."
 msgstr ""
+"Некоторые связанные группы пакетов (в конечном счете, порты) могут быть "
+"указаны в разделе `<affected>`. Это можно использовать, если некоторые "
+"программные продукты (скажем, FooBar, FreeBar and OpenBar) являются "
+"производными от общей кодовой базы и всё еще совместно используют её ошибки "
+"и уязвимости. Имейте в виду отличие от перечисления множественных имён в "
+"одном разделе <package>."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:202
@@ -364,6 +474,10 @@ msgid ""
 "with a non-zero `PORTEPOCH` is greater than any version without `PORTEPOCH`, "
 "for example, `3.0,1` is greater than `3.1` or even than `8.9`."
 msgstr ""
+"Диапазоны версий должны учитывать `PORTEPOCH` и `PORTREVISION`, если это "
+"применимо. Пожалуйста, помните, что в соответствии с правилами сравнения "
+"строк версия с ненулевым значением `PORTEPOCH` выше, чем любая версия без "
+"`PORTEPOCH`, например, `3.0,1` выше, чем `3.1` или даже `8.9`."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:204
@@ -372,6 +486,10 @@ msgid ""
 "enclosing `<p>` and `</p>` has to appear. More complex mark-up may be used, "
 "but only for the sake of accuracy and clarity: No eye candy please."
 msgstr ""
+"Сводная информация о проблеме. В этом поле используется XHTML. По крайней "
+"мере, должны быть обрамляющие `<p>` и `</p>`. Может быть использована более "
+"сложная разметка, но только в целях аккуратности и ясности: без эстетства, "
+"пожалуйста."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:206
@@ -379,27 +497,30 @@ msgid ""
 "This section contains references to relevant documents. As many references "
 "as apply are encouraged."
 msgstr ""
+"Этот раздел содержит ссылки на имеющие отношение документы. Приветствуется "
+"как можно большее количество ссылок."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:208
 msgid ""
 "This is a https://www.freebsd.org/security/#adv[FreeBSD security advisory]."
 msgstr ""
+"Это https://www.freebsd.org/security/#adv[бюллетень безопасности FreeBSD]."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:210
 msgid "This is a https://www.freebsd.org/support/[FreeBSD problem report]."
-msgstr ""
+msgstr "Это https://www.freebsd.org/support/[сообщение об ошибке FreeBSD]."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:212
 msgid "This is a https://cve.mitre.org/[MITRE CVE] identifier."
-msgstr ""
+msgstr "Идентификатор https://cve.mitre.org/[MITRE CVE]."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:214
 msgid "This is a https://www.kb.cert.org/vuls/[US-CERT] vulnerability note."
-msgstr ""
+msgstr "Это https://www.kb.cert.org/vuls/[SecurityFocus Bug ID]."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:216
@@ -407,6 +528,8 @@ msgid ""
 "This is a https://www.cisa.gov/news-events/cybersecurity-advisories[US-CERT] "
 "Technical Cyber Security Alert."
 msgstr ""
+"Бюллетень безопасности https://www.cisa.gov/news-events/cybersecurity-"
+"advisories[US-CERT]."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:218
@@ -414,6 +537,8 @@ msgid ""
 "This is a URL to an archived posting in a mailing list. The attribute "
 "`msgid` is optional and may specify the message ID of the posting."
 msgstr ""
+"URL к архивному сообщению в списке рассылки. Атрибут `msgid` является "
+"необязательным и может указывать на message ID сообщения."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:220
@@ -444,7 +569,7 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:228
 #, no-wrap
 msgid "Testing Changes to the VuXML Database"
-msgstr ""
+msgstr "Тестирование ваших изменений в базе данных VuXML"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/security/_index.adoc:231

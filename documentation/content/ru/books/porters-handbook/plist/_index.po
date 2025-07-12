@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-07-12 04:45+0000\n"
+"PO-Revision-Date: 2025-07-12 12:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksporters-handbookplist_index/ru/>\n"
@@ -23,19 +23,20 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:14
 #, no-wrap
 msgid "Advanced pkg-plist Practices"
-msgstr ""
+msgstr "Продвинутые практики pkg-plist"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:1
 #, no-wrap
 msgid "Chapter 8. Advanced pkg-plist Practices"
-msgstr ""
+msgstr "Глава 8. Продвинутые практики pkg-plist"
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:52
 #, no-wrap
 msgid "Changing pkg-plist Based on Make Variables"
 msgstr ""
+"Изменение содержимого [.filename]#pkg-plist# в зависимости от make-переменных"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:59
@@ -51,6 +52,17 @@ msgid ""
 "documentation files are described in crossref:makefiles[install-"
 "documentation,the relevant section]."
 msgstr ""
+"Некоторые порты, в частности, порты `p5-`, должны менять содержимое своих "
+"файлов [.filename]#pkg-plist# в зависимости от того, с какими параметрами "
+"они были отконфигурированы (или в зависимости от версии языка `perl` в "
+"случае портов `p5-`). Чтобы облегчить этот процесс, любые вхождения ключевых "
+"слов `%%OSREL%%`, `%%PERL_VER%%` и `%%PERL_VERSION%%` в файле [.filename"
+"]#pkg-plist# будут заменяться соответствующими значениями. Значением "
+"`%%OSREL%%` является номер версии операционной системы (например, `4.9`). "
+"`%%PERL_VERSION%%` и `%%PERL_VER%%` обозначают полный номер версии `perl` ("
+"например, `5.8.9`). Некоторые другие `%%VARS%%`, имеющие отношение к файлам "
+"документации порта, описаны в <<install-documentation,соответствующем "
+"разделе>>."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:61
@@ -59,6 +71,9 @@ msgid ""
 "pairs and instances of `%%_VAR_%%` will be substituted with _VALUE_ in "
 "[.filename]#pkg-plist#."
 msgstr ""
+"Если вам нужно сделать другие подстановки, вы можете указать в переменной "
+"`PLIST_SUB` список пар `VAR=VALUE`, и все вхождения `%%VAR%%` в файле [."
+"filename]#pkg-plist# будут заменяться на значение _VALUE_."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:64
@@ -68,6 +83,8 @@ msgid ""
 "plist# does not have to be regenerated every time the port is updated.  For "
 "example, set:"
 msgstr ""
+"Например, если у вас имеется порт, который устанавливает много файлов в "
+"каталог, зависящий от версии, вы можете задать нечто типа"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:69
@@ -87,6 +104,10 @@ msgid ""
 "will not be necessary to edit dozens (or in some cases, hundreds) of lines "
 "in [.filename]#pkg-plist#."
 msgstr ""
+"в файле [.filename]#Makefile# и использовать `%%OCTAVE_VERSION%%` везде, где "
+"нужно указать номер версии в файле [.filename]#pkg-plist#. Таким образом, "
+"при обновлении порта вам не нужно будет менять десятки (а в некоторых "
+"случаях и сотни) строк в файле [.filename]#pkg-plist#."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:76
@@ -139,6 +160,13 @@ msgid ""
 "install`.  Also, if the port needs to edit the resulting file, do so in "
 "`post-install` to a file named [.filename]#TMPPLIST#."
 msgstr ""
+"Эта подстановка будет сделана между выполнением целей `pre-install` и `do-"
+"install`, посредством чтения файла [.filename]#PLIST# и записью в файл [."
+"filename]#TMPPLIST# (по умолчанию это файл [.filename]#WRKDIR/.PLIST.mktmp#)"
+". Так что если ваш порт строит [.filename]#PLIST# на лету, делайте это во "
+"время или до выполнения цели `pre-install`. Кроме того, если вашему порту "
+"требуется отредактировать получающийся файл, делайте это в цели `post-"
+"install` изменением файла [.filename]#TMPPLIST#."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:101
@@ -191,13 +219,13 @@ msgstr ""
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:118
 #, no-wrap
 msgid "Empty Directories"
-msgstr ""
+msgstr "Пустые каталоги"
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:121
 #, no-wrap
 msgid "Cleaning Up Empty Directories"
-msgstr ""
+msgstr "Очистка пустых каталогов"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/plist/_index.adoc:127
