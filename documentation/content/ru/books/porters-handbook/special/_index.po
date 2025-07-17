@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-05-01 19:56-0300\n"
-"PO-Revision-Date: 2025-07-16 22:10+0000\n"
+"PO-Revision-Date: 2025-07-17 21:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/booksporters-handbookspecial_index/ru/>\n"
@@ -120,7 +120,6 @@ msgstr "[.filename]#Makefile.local#"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:76
-#, fuzzy
 msgid ""
 "It is also usual practice to split the packaging list of the port into "
 "several files if the list varies a lot from one architecture to another or "
@@ -135,13 +134,13 @@ msgid ""
 msgstr ""
 "Также распространённой практикой является разделение списка пакетов порта на "
 "несколько файлов, если список сильно различается в зависимости от "
-"архитектуры или выбранного варианта (flavor). В этом случае файл [.filename"
-"]#pkg-plist# для каждой архитектуры именуется по шаблону [.filename]#pkg-"
+"архитектуры или выбранного флейвора. В этом случае файл [.filename]#pkg-"
+"plist# для каждой архитектуры именуется по шаблону [.filename]#pkg-"
 "plist.${ARCH}# или [.filename]#pkg-plist.${FLAVOR}#. Фреймворк не создаёт "
 "список пакетов автоматически, если существует несколько файлов [.filename"
 "]#pkg-plist#. Ответственность за выбор подходящего файла [.filename]#pkg-"
-"plist# и его присвоение переменной `PLIST` лежит на сопровождающем порт "
-"(porter). Примеры работы с этим можно найти в портах package:audio/"
+"plist# и его присвоение переменной `PLIST` лежит на того, кто делает порт. "
+"Примеры работы с этим можно найти в портах package:audio/"
 "logitechmediaserver[] и package:deskutils/libportal[]."
 
 #. type: Title ==
@@ -152,7 +151,6 @@ msgstr "Staging"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:85
-#, fuzzy
 msgid ""
 "[.filename]#bsd.port.mk# expects ports to work with a \"stage directory\".  "
 "This means that a port must not install files directly to the regular "
@@ -165,21 +163,19 @@ msgid ""
 "to this concept as `DESTDIR`, but in FreeBSD, `DESTDIR` has a different "
 "meaning (see crossref:testing[porting-prefix,`PREFIX` and `DESTDIR`])."
 msgstr ""
-"[.filename]#bsd.port.mk# ожидает, что порты будут работать с \"stage "
-"directory\" (директорией стадии). Это означает, что порт не должен "
-"устанавливать файлы напрямую в обычные целевые директории (например, под "
-"`PREFIX`), а вместо этого в отдельную директорию, из которой затем "
-"собирается пакет. Во многих случаях это не требует прав root, что позволяет "
-"собирать пакеты от имени непривилегированного пользователя. При "
-"использовании стадии порт собирается и устанавливается в директорию стадии "
-"`STAGEDIR`. Пакет создаётся из директории стадии и затем устанавливается в "
-"систему. Инструменты Automake называют эту концепцию `DESTDIR`, но в FreeBSD "
-"`DESTDIR` имеет другое значение (см. crossref:testing[porting-prefix,`PREFIX`"
-" и `DESTDIR`])."
+"[.filename]#bsd.port.mk# ожидает, что порты будут работать с \"директорией "
+"стадии\". Это означает, что порт не должен устанавливать файлы напрямую в "
+"обычные целевые директории (например, под `PREFIX`), а вместо этого в "
+"отдельную директорию, из которой затем собирается пакет. Во многих случаях "
+"это не требует прав root, что позволяет собирать пакеты от имени "
+"непривилегированного пользователя. При использовании стадии порт собирается "
+"и устанавливается в директорию стадии `STAGEDIR`. Пакет создаётся из "
+"директории стадии и затем устанавливается в систему. Инструменты Automake "
+"называют эту концепцию `DESTDIR`, но в FreeBSD `DESTDIR` имеет другое "
+"значение (см. crossref:testing[porting-prefix,`PREFIX` и `DESTDIR`])."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:92
-#, fuzzy
 msgid ""
 "No port _really_ needs to be root.  It can mostly be avoided by using "
 "crossref:uses[uses-uidfix,`USES=uidfix`].  If the port still runs commands "
@@ -219,7 +215,6 @@ msgstr "NO_MTREE=\tyes\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:107
-#, fuzzy
 msgid ""
 "Metaports should use crossref:special[uses-metaport,`USES=metaport`].  It "
 "sets up defaults for ports that do not fetch, build, or install anything."
@@ -230,7 +225,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:113
-#, fuzzy
 msgid ""
 "Staging is enabled by prepending `STAGEDIR` to paths used in the `pre-"
 "install`, `do-install`, and `post-install` targets (see the examples through "
@@ -246,7 +240,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:117
-#, fuzzy
 msgid ""
 "Ports that install kernel modules must prepend `STAGEDIR` to their "
 "destination, by default [.filename]#/boot/modules#."
@@ -256,13 +249,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:120
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Handling Symbolic Links"
 msgstr "Обработка символических ссылок"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:125
-#, fuzzy
 msgid ""
 "When creating a symbolic link, relative ones are strongly recommended.  Use "
 "`${RLN}` to create relative symbolic links.  It uses man:install[1] under "
@@ -275,19 +267,18 @@ msgstr ""
 
 #. type: Block title
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:127
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Create Relative Symbolic Links Automatically"
-msgstr "Создавать Относительные Символические Ссылки Автоматически"
+msgstr "Автоматическое создание относительных символических ссылок"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:131
-#, fuzzy
 msgid ""
 "`${RLN}` uses man:install[1]'s relative symbolic feature which frees the "
 "porter of computing the relative path."
 msgstr ""
 "`${RLN}` использует относительную символическую ссылку из man:install[1], "
-"что освобождает сборщика от вычисления относительного пути."
+"что освобождает сборщика порта от вычисления относительного пути."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:137
@@ -304,7 +295,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:140
-#, fuzzy
 msgid "Will generate:"
 msgstr "Будет создано:"
 
@@ -331,29 +321,27 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:155
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Bundled Libraries"
 msgstr "Встроенные библиотеки"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:158
-#, fuzzy
 msgid ""
 "This section explains why bundled dependencies are considered bad and what "
 "to do about them."
 msgstr ""
-"Этот раздел объясняет, почему связанные зависимости считаются плохими и что "
+"Этот раздел объясняет, почему встроенные зависимости считаются плохими и что "
 "с этим делать."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:160
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Why Bundled Libraries Are Bad"
 msgstr "Почему встроенные библиотеки — это плохо"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:165
-#, fuzzy
 msgid ""
 "Some software requires the porter to locate third-party libraries and add "
 "the required dependencies to the port.  Other software bundles all necessary "
@@ -367,7 +355,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:167
-#, fuzzy
 msgid ""
 "This list is loosely based on the https://fedoraproject.org/wiki/"
 "Packaging:No_Bundled_Libraries[Fedora] and https://wiki.gentoo.org/wiki/"
@@ -387,7 +374,6 @@ msgstr "Безопасность"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:174
-#, fuzzy
 msgid ""
 "If vulnerabilities are found in the upstream library and fixed there, they "
 "might not be fixed in the library bundled with the port.  One reason could "
@@ -414,7 +400,6 @@ msgstr "Ошибки"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:177
-#, fuzzy
 msgid ""
 "This problem is similar to the problem with security in the last paragraph, "
 "but generally less severe."
@@ -444,7 +429,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:185
-#, fuzzy
 msgid ""
 "Another problem of forking is that because code diverges from upstream, bugs "
 "get solved over and over again instead of just once at a central location.  "
@@ -457,13 +441,12 @@ msgstr ""
 
 #. type: Labeled list
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:186
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Symbol collision"
-msgstr "Столкновение символов"
+msgstr "Конфликты символов"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:191
-#, fuzzy
 msgid ""
 "When a library is installed on the system, it might collide with the bundled "
 "version.  This can cause immediate errors at compile or link time.  It can "
@@ -471,21 +454,20 @@ msgid ""
 "down.  The latter problem could be caused because the versions of the two "
 "libraries are incompatible."
 msgstr ""
-"При установке библиотеки в системе может возникнуть конфликт с встроенной "
-"версией. Это может привести к немедленным ошибкам во время компиляции или "
-"компоновки. Также могут возникать ошибки при запуске программы, которые "
-"сложнее отследить. Последняя проблема может быть вызвана несовместимостью "
-"версий двух библиотек."
+"Когда библиотека установлена в системе, может возникнуть конфликт с "
+"встроенной в порт версией. Это может привести к немедленным ошибкам во время "
+"компиляции или компоновки. Также могут возникать ошибки при запуске "
+"программы, которые сложнее отследить. Последняя проблема может быть вызвана "
+"несовместимостью версий двух библиотек."
 
 #. type: Labeled list
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:192
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Licensing"
 msgstr "Лицензирование"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:194
-#, fuzzy
 msgid ""
 "When bundling projects from different sources, license issues can arise more "
 "easily, especially when licenses are incompatible."
@@ -495,13 +477,12 @@ msgstr ""
 
 #. type: Labeled list
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:195
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Waste of resources"
 msgstr "Растрата ресурсов"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:199
-#, fuzzy
 msgid ""
 "Bundled libraries waste resources on several levels.  It takes longer to "
 "build the actual application, especially if these libraries are already "
@@ -518,13 +499,12 @@ msgstr ""
 
 #. type: Labeled list
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:200
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Waste of effort"
 msgstr "Пустая трата усилий"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:204
-#, fuzzy
 msgid ""
 "When a library needs patches for FreeBSD, these patches have to be "
 "duplicated again in the bundled library.  This wastes developer time because "
@@ -538,13 +518,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:206
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "What to do About Bundled Libraries"
 msgstr "Что делать со встроенными библиотеками"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:210
-#, fuzzy
 msgid ""
 "Whenever possible, use the unbundled version of the library by adding a "
 "`LIB_DEPENDS` to the port.  If such a port does not exist yet, consider "
@@ -556,7 +535,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:212
-#, fuzzy
 msgid ""
 "Only use bundled libraries if the upstream has a good track record on "
 "security and using unbundled versions leads to overly complex patches."
@@ -567,7 +545,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:220
-#, fuzzy
 msgid ""
 "In some very special cases, for example emulators, like Wine, a port has to "
 "bundle libraries, because they are in a different architecture, or they have "
@@ -669,7 +646,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:246
-#, fuzzy
 msgid ""
 "If the software uses crossref:special[using-autotools,autotools], and "
 "specifically `libtool`, add crossref:uses[uses-libtool,`USES=libtool`]."
@@ -1041,7 +1017,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:360
-#, fuzzy
 msgid ""
 "When setting `MAKE_JOBS_UNSAFE`, it is very important to explain either with "
 "a comment in the [.filename]#Makefile#, or at least in the commit message, "
@@ -1057,13 +1032,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:363
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "`make`, `gmake`, and `imake`"
 msgstr "`make`, `gmake` и `imake`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:366
-#, fuzzy
 msgid ""
 "Several differing `make` implementations exist. Ported software often "
 "requires a particular implementation, like GNU `make`, known in FreeBSD as "
@@ -1075,13 +1049,11 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:368
-#, fuzzy
 msgid "If the port uses GNU make, add `gmake` to `USES`."
 msgstr "Если порт использует GNU make, добавьте `gmake` в `USES`."
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:371
-#, fuzzy
 msgid ""
 "`MAKE_CMD` can be used to reference the specific command configured by the "
 "`USES` setting in the port's [.filename]#Makefile#.  Only use `MAKE_CMD` "
@@ -1146,7 +1118,7 @@ msgstr ""
 
 #. type: Block title
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:386
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Variables for Ports That Use `configure`"
 msgstr "Переменные для портов, использующих `configure`"
 
@@ -1267,7 +1239,7 @@ msgstr "`CMAKE_ARGS`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:423
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Port specific CMake flags to be passed to the `cmake` binary."
 msgstr ""
 "Специфичные для порта флаги CMake, передаваемые в бинарный файл `cmake`."
@@ -1280,7 +1252,7 @@ msgstr "`CMAKE_ON`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:427
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "For each entry in `CMAKE_ON`, an enabled boolean value is added to\n"
 "`CMAKE_ARGS`. See crossref:special[using-cmake-example2,`CMAKE_ON` and `CMAKE_OFF`]."
@@ -1297,7 +1269,7 @@ msgstr "`CMAKE_OFF`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:431
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "For each entry in `CMAKE_OFF`, a disabled boolean value is added to\n"
 "`CMAKE_ARGS`. See crossref:special[using-cmake-example2,`CMAKE_ON` and `CMAKE_OFF`]."
@@ -1315,7 +1287,7 @@ msgstr "`CMAKE_BUILD_TYPE`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:434
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Type of build (CMake predefined build profiles). Default is `Release`, or `Debug` if `WITH_DEBUG` is set."
 msgstr ""
 "Тип сборки (предопределённые профили сборки CMake). По умолчанию `Release`, "
@@ -1329,13 +1301,13 @@ msgstr "`CMAKE_SOURCE_PATH`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:437
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Path to the source directory. Default is `${WRKSRC}`."
 msgstr "Путь к исходному каталогу. По умолчанию `${WRKSRC}`."
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:439
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Additional environment variables to be set for the `cmake` binary."
 msgstr ""
 "Дополнительные переменные окружения, которые должны быть установлены для "
@@ -1343,7 +1315,7 @@ msgstr ""
 
 #. type: Block title
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:442
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Variables the Users Can Define for `cmake` Builds"
 msgstr "Переменные, которые пользователи могут определить для сборок `cmake`"
 
@@ -1438,13 +1410,12 @@ msgstr ""
 
 #. type: Block title
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:479
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "`CMAKE_ON` and `CMAKE_OFF`"
 msgstr "`CMAKE_ON` и `CMAKE_OFF`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:483
-#, fuzzy
 msgid ""
 "When adding boolean values to `CMAKE_ARGS`, it is easier to use the "
 "`CMAKE_ON` and `CMAKE_OFF` variables instead. This:"
@@ -1475,7 +1446,6 @@ msgstr "CMAKE_ARGS=\t-DVAR1:BOOL=TRUE -DVAR2:BOOL=TRUE -DVAR3:BOOL=FALSE\n"
 
 #. type: delimited block = 6
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:501
-#, fuzzy
 msgid ""
 "This is only for the default values off `CMAKE_ARGS`.  The helpers described "
 "in crossref:makefiles[options-cmake_bool,`OPT_CMAKE_BOOL` and "
@@ -1488,19 +1458,17 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:506
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Using `scons`"
 msgstr "Использование `scons`"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:509
-#, fuzzy
 msgid "If the port uses SCons, define `USES=scons`."
 msgstr "Если порт использует SCons, определите `USES=scons`."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:511
-#, fuzzy
 msgid ""
 "To make third party [.filename]#SConstruct# respect everything that is "
 "passed to SCons in the environment (that is, most importantly, `CC/CXX/"
@@ -1520,25 +1488,23 @@ msgstr "env = Environment(**ARGUMENTS)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:518
-#, fuzzy
 msgid "It may be then modified with `env.Append` and `env.Replace`."
 msgstr "Он может быть изменён с помощью `env.Append` и `env.Replace`."
 
 #. type: Title ===
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:520
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Building Rust Applications with `cargo`"
 msgstr "Сборка приложений на Rust с помощью `cargo`"
 
 #. type: Plain text
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:523
-#, fuzzy
 msgid "For ports that use Cargo, define `USES=cargo`."
 msgstr "Для портов, использующих Cargo, определите `USES=cargo`."
 
 #. type: Block title
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:525
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Variables the Users Can Define for `cargo` Builds"
 msgstr "Переменные, которые пользователи могут определить для сборок `cargo`"
 
@@ -1585,7 +1551,7 @@ msgstr "`CARGO_CRATES`"
 
 #. type: Table
 #: documentation/content/en/books/porters-handbook/special/_index.adoc:539
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "List of crates the port depends on. Each entry needs to have a format like `cratename-semver` for example, `libc-0.2.40`. Port maintainers can generate this list from [.filename]#Cargo.lock# using `make cargo-crates`. Manually bumping crate versions is possible but be mindful of transitive dependencies.\n"
 "If the list generated by `make cargo-crates` is big, it might be convenient to place it inside a `Makefile.crates` file in the top-level port directory.\n"
