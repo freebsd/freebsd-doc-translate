@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2024-01-17 20:35-0300\n"
-"PO-Revision-Date: 2025-06-12 17:10+0000\n"
+"PO-Revision-Date: 2025-07-24 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesfreebsd-src-lsp_index/ru/>\n"
@@ -77,7 +77,7 @@ msgstr ""
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:63
 #, no-wrap
 msgid "# pkg install ccls\n"
-msgstr ""
+msgstr "# pkg install ccls\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:66
@@ -90,7 +90,7 @@ msgstr ""
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:70
 #, no-wrap
 msgid "# pkg install llvm15\n"
-msgstr ""
+msgstr "# pkg install llvm15\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:73
@@ -107,7 +107,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:76
 msgid "package:devel/ccls[]"
-msgstr ""
+msgstr "package:devel/ccls[]"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:77
@@ -154,7 +154,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:85
 msgid "package:devel/bear[]"
-msgstr ""
+msgstr "package:devel/bear[]"
 
 #. type: Title ==
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:87
@@ -166,7 +166,7 @@ msgstr ""
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:90
 #, no-wrap
 msgid "Vim/Neovim"
-msgstr ""
+msgstr "Vim/Neovim"
 
 #. type: Title ====
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:92
@@ -195,6 +195,9 @@ msgid ""
 "# mkdir -p ~/.config/nvim/pack/lsp/start\n"
 "# git clone https://github.com/prabirshrestha/vim-lsp ~/.config/nvim/pack/lsp/start/vim-lsp\n"
 msgstr ""
+"# mkdir -p ~/.config/nvim/pack/lsp/start\n"
+"# git clone https://github.com/prabirshrestha/vim-lsp ~/.config/nvim/pack/"
+"lsp/start/vim-lsp\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:106
@@ -208,6 +211,9 @@ msgid ""
 "# mkdir -p ~/.vim/pack/lsp/start\n"
 "# git clone https://github.com/prabirshrestha/vim-lsp ~/.vim/pack/lsp/start/vim-lsp\n"
 msgstr ""
+"# mkdir -p ~/.vim/pack/lsp/start\n"
+"# git clone https://github.com/prabirshrestha/vim-lsp ~/.vim/pack/lsp/start/"
+"vim-lsp\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:114
@@ -238,6 +244,15 @@ msgid ""
 "    \\     }\n"
 "    \\ }})\n"
 msgstr ""
+"au User lsp_setup call lsp#register_server({\n"
+"    \\ 'name': 'ccls',\n"
+"    \\ 'cmd': {server_info->['ccls']},\n"
+"    \\ 'allowlist': ['c', 'cpp', 'objc'],\n"
+"    \\ 'initialization_options': {\n"
+"    \\     'cache': {\n"
+"    \\         'hierarchicalPath': v:true\n"
+"    \\     }\n"
+"    \\ }})\n"
 
 #. type: Block title
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:129
@@ -257,6 +272,13 @@ msgid ""
 "    \\ 'initialization_options': {},\n"
 "    \\ })\n"
 msgstr ""
+"au User lsp_setup call lsp#register_server({\n"
+"    \\ 'name': 'clangd',\n"
+"    \\ 'cmd': {server_info->['clangd15', '--background-index', '--header-"
+"insertion=never']},\n"
+"    \\ 'allowlist': ['c', 'cpp', 'objc'],\n"
+"    \\ 'initialization_options': {},\n"
+"    \\ })\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:141
@@ -292,6 +314,10 @@ msgid ""
 "    setlocal completeopt-=preview\n"
 "    setlocal keywordprg=:LspHover\n"
 msgstr ""
+"function! s:on_lsp_buffer_enabled() abort\n"
+"    setlocal omnifunc=lsp#complete\n"
+"    setlocal completeopt-=preview\n"
+"    setlocal keywordprg=:LspHover\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:168
@@ -311,6 +337,19 @@ msgid ""
 "    nmap <buffer> gm <plug>(lsp-signature-help)\n"
 "endfunction\n"
 msgstr ""
+"    nmap <buffer> <C-]> <plug>(lsp-definition)\n"
+"    nmap <buffer> <C-W>] <plug>(lsp-peek-definition)\n"
+"    nmap <buffer> <C-W><C-]> <plug>(lsp-peek-definition)\n"
+"    nmap <buffer> gr <plug>(lsp-references)\n"
+"    nmap <buffer> <C-n> <plug>(lsp-next-reference)\n"
+"    nmap <buffer> <C-p> <plug>(lsp-previous-reference)\n"
+"    nmap <buffer> gI <plug>(lsp-implementation)\n"
+"    nmap <buffer> go <plug>(lsp-document-symbol)\n"
+"    nmap <buffer> gS <plug>(lsp-workspace-symbol)\n"
+"    nmap <buffer> ga <plug>(lsp-code-action)\n"
+"    nmap <buffer> gR <plug>(lsp-rename)\n"
+"    nmap <buffer> gm <plug>(lsp-signature-help)\n"
+"endfunction\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:173
@@ -321,12 +360,16 @@ msgid ""
 "    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()\n"
 "augroup END\n"
 msgstr ""
+"augroup lsp_install\n"
+"    au!\n"
+"    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()\n"
+"augroup END\n"
 
 #. type: Title ===
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:176
 #, no-wrap
 msgid "VSCode"
-msgstr ""
+msgstr "VSCode"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:183
@@ -362,6 +405,16 @@ msgid ""
 "    \"clangd.path\": \"clangd12\"\n"
 "]\n"
 msgstr ""
+"[\n"
+"    /* Begin of your existing configurations */\n"
+"    ...\n"
+"    /* End of your existing configurations */\n"
+"    \"clangd.arguments\": [\n"
+"        \"--background-index\",\n"
+"        \"--header-insertion=never\"\n"
+"    ],\n"
+"    \"clangd.path\": \"clangd12\"\n"
+"]\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:212
@@ -374,6 +427,12 @@ msgid ""
 "    \"ccls.cache.hierarchicalPath\": true\n"
 "]\n"
 msgstr ""
+"[\n"
+"    /* Begin of your existing configurations */\n"
+"    ...\n"
+"    /* End of your existing configurations */\n"
+"    \"ccls.cache.hierarchicalPath\": true\n"
+"]\n"
 
 #. type: Title ==
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:215
@@ -434,6 +493,7 @@ msgstr ""
 #, no-wrap
 msgid "# git clone https://github.com/llvm/llvm-project /path/to/llvm-project\n"
 msgstr ""
+"# git clone https://github.com/llvm/llvm-project /path/to/llvm-project\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:244
@@ -447,6 +507,8 @@ msgstr ""
 #, no-wrap
 msgid "alias intercept-build='/path/to/llvm-project/clang/tools/scan-build-py/bin/intercept-build'\n"
 msgstr ""
+"alias intercept-build='/path/to/llvm-project/clang/tools/scan-build-py/bin/"
+"intercept-build'\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:254
@@ -477,6 +539,8 @@ msgstr ""
 #, no-wrap
 msgid "# intercept-build --append make buildworld buildkernel -j`sysctl -n hw.ncpu`\n"
 msgstr ""
+"# intercept-build --append make buildworld buildkernel -j`sysctl -n hw.ncpu`"
+"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:267
@@ -505,7 +569,7 @@ msgstr ""
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:278
 #, no-wrap
 msgid "# bear --append -- make buildworld buildkernel -j`sysctl -n hw.ncpu`\n"
-msgstr ""
+msgstr "# bear --append -- make buildworld buildkernel -j`sysctl -n hw.ncpu`\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:283
@@ -521,7 +585,7 @@ msgstr ""
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:285
 #, no-wrap
 msgid "Final"
-msgstr ""
+msgstr "Final"
 
 #. type: Plain text
 #: documentation/content/en/articles/freebsd-src-lsp/_index.adoc:289

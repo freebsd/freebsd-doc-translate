@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2024-12-29 08:30-0500\n"
-"PO-Revision-Date: 2025-07-13 04:45+0000\n"
+"PO-Revision-Date: 2025-07-24 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesremote-install_index/ru/>\n"
@@ -207,6 +207,9 @@ msgid ""
 "# tar xvzf mfsbsd-2.1.tar.gz\n"
 "# cd mfsbsd-2.1/\n"
 msgstr ""
+"# fetch http://mfsbsd.vx.sk/release/mfsbsd-2.1.tar.gz\n"
+"# tar xvzf mfsbsd-2.1.tar.gz\n"
+"# cd mfsbsd-2.1/\n"
 
 #. type: Title ===
 #: documentation/content/en/articles/remote-install/_index.adoc:113
@@ -255,6 +258,9 @@ msgid ""
 "ifconfig_ext1_mac=\"00:00:00:00:00:00\"\n"
 "ifconfig_ext1=\"inet 192.168.0.2/24\"\n"
 msgstr ""
+"mac_interfaces=\"ext1\"\n"
+"ifconfig_ext1_mac=\"00:00:00:00:00:00\"\n"
+"ifconfig_ext1=\"inet 192.168.0.2/24\"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:137
@@ -267,7 +273,7 @@ msgstr ""
 #: documentation/content/en/articles/remote-install/_index.adoc:141
 #, no-wrap
 msgid "defaultrouter=\"192.168.0.1\"\n"
-msgstr ""
+msgstr "defaultrouter=\"192.168.0.1\"\n"
 
 #. type: Title ====
 #: documentation/content/en/articles/remote-install/_index.adoc:143
@@ -297,6 +303,8 @@ msgid ""
 "defaultrouter=\"192.168.0.1\"\n"
 "ifconfig_re0=\"inet 192.168.0.2/24\"\n"
 msgstr ""
+"defaultrouter=\"192.168.0.1\"\n"
+"ifconfig_re0=\"inet 192.168.0.2/24\"\n"
 
 #. type: Title ===
 #: documentation/content/en/articles/remote-install/_index.adoc:157
@@ -326,6 +334,8 @@ msgid ""
 "# mdconfig -a -t vnode -u 10 -f FreeBSD-10.1-RELEASE-amd64-disc1.iso\n"
 "# mount_cd9660 /dev/md10 /cdrom\n"
 msgstr ""
+"# mdconfig -a -t vnode -u 10 -f FreeBSD-10.1-RELEASE-amd64-disc1.iso\n"
+"# mount_cd9660 /dev/md10 /cdrom\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:172
@@ -343,6 +353,9 @@ msgid ""
 "# tar -xvf /cdrom/usr/freebsd-dist/base.txz -C DIST\n"
 "# tar -xvf /cdrom/usr/freebsd-dist/kernel.txz -C DIST\n"
 msgstr ""
+"# mkdir DIST\n"
+"# tar -xvf /cdrom/usr/freebsd-dist/base.txz -C DIST\n"
+"# tar -xvf /cdrom/usr/freebsd-dist/kernel.txz -C DIST\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:181
@@ -353,7 +366,7 @@ msgstr ""
 #: documentation/content/en/articles/remote-install/_index.adoc:185
 #, no-wrap
 msgid "# make BASE=DIST\n"
-msgstr ""
+msgstr "# make BASE=DIST\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/remote-install/_index.adoc:190
@@ -380,7 +393,7 @@ msgstr ""
 #: documentation/content/en/articles/remote-install/_index.adoc:200
 #, no-wrap
 msgid "# scp disk.img root@192.168.0.2:.\n"
-msgstr ""
+msgstr "# scp disk.img root@192.168.0.2:.\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:204
@@ -394,7 +407,7 @@ msgstr ""
 #: documentation/content/en/articles/remote-install/_index.adoc:208
 #, no-wrap
 msgid "# dd if=/root/disk.img of=/dev/sda bs=1m\n"
-msgstr ""
+msgstr "# dd if=/root/disk.img of=/dev/sda bs=1m\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:213
@@ -447,7 +460,7 @@ msgstr ""
 #: documentation/content/en/articles/remote-install/_index.adoc:232
 #, no-wrap
 msgid "# dd if=/dev/zero of=/dev/ad0 count=2\n"
-msgstr ""
+msgstr "# dd if=/dev/zero of=/dev/ad0 count=2\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:240
@@ -493,6 +506,20 @@ msgid ""
 "# newfs /dev/mirror/var\n"
 "# newfs /dev/mirror/usr\n"
 msgstr ""
+"# fdisk -BI /dev/ad0 <.>\n"
+"# fdisk -BI /dev/ad1\n"
+"# bsdlabel -wB /dev/ad0s1 <.>\n"
+"# bsdlabel -wB /dev/ad1s1\n"
+"# bsdlabel -e /dev/ad0s1 <.>\n"
+"# bsdlabel /dev/ad0s1 > /tmp/bsdlabel.txt && bsdlabel -R /dev/ad1s1 /tmp/"
+"bsdlabel.txt <.>\n"
+"# gmirror label root /dev/ad[01]s1a <.>\n"
+"# gmirror label var /dev/ad[01]s1d\n"
+"# gmirror label usr /dev/ad[01]s1e\n"
+"# gmirror label -F swap /dev/ad[01]s1b <.>\n"
+"# newfs /dev/mirror/root <.>\n"
+"# newfs /dev/mirror/var\n"
+"# newfs /dev/mirror/usr\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:261
@@ -566,6 +593,10 @@ msgid ""
 "# mount /dev/mirror/var /mnt/var\n"
 "# mount /dev/mirror/usr /mnt/usr\n"
 msgstr ""
+"# mount /dev/mirror/root /mnt\n"
+"# mkdir /mnt/var /mnt/usr\n"
+"# mount /dev/mirror/var /mnt/var\n"
+"# mount /dev/mirror/usr /mnt/usr\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:293
@@ -642,7 +673,7 @@ msgstr ""
 #: documentation/content/en/articles/remote-install/_index.adoc:326
 #, no-wrap
 msgid "# chroot /mnt\n"
-msgstr ""
+msgstr "# chroot /mnt\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:329
@@ -658,7 +689,7 @@ msgstr ""
 #: documentation/content/en/articles/remote-install/_index.adoc:335
 #, no-wrap
 msgid "# cp -Rp /boot/GENERIC/* /boot/kernel\n"
-msgstr ""
+msgstr "# cp -Rp /boot/GENERIC/* /boot/kernel\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:338
@@ -680,6 +711,13 @@ msgid ""
 "/dev/mirror/var         /var            ufs     rw              2       2\n"
 "/dev/cd0                /cdrom          cd9660  ro,noauto       0       0\n"
 msgstr ""
+"# Device                Mountpoint      FStype  Options         Dump    Pass#"
+"\n"
+"/dev/mirror/swap        none            swap    sw              0       0\n"
+"/dev/mirror/root        /               ufs     rw              1       1\n"
+"/dev/mirror/usr         /usr            ufs     rw              2       2\n"
+"/dev/mirror/var         /var            ufs     rw              2       2\n"
+"/dev/cd0                /cdrom          cd9660  ro,noauto       0       0\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:349
@@ -693,6 +731,8 @@ msgid ""
 "geom_mirror_load=\"YES\"\n"
 "zfs_load=\"YES\"\n"
 msgstr ""
+"geom_mirror_load=\"YES\"\n"
+"zfs_load=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:356
@@ -705,7 +745,7 @@ msgstr ""
 #: documentation/content/en/articles/remote-install/_index.adoc:360
 #, no-wrap
 msgid "# sysrc zfs_enable=\"YES\"\n"
-msgstr ""
+msgstr "# sysrc zfs_enable=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:363
@@ -731,7 +771,7 @@ msgstr ""
 #: documentation/content/en/articles/remote-install/_index.adoc:369
 #, no-wrap
 msgid "ZFS"
-msgstr ""
+msgstr "ZFS"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:373
@@ -753,7 +793,7 @@ msgstr ""
 #: documentation/content/en/articles/remote-install/_index.adoc:380
 #, no-wrap
 msgid "# zpool create tank mirror /dev/ad[01]s1f\n"
-msgstr ""
+msgstr "# zpool create tank mirror /dev/ad[01]s1f\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:383
@@ -771,6 +811,12 @@ msgid ""
 "# zfs set mountpoint=/usr/ports tank/ports\n"
 "# zfs set mountpoint=/usr/src tank/src\n"
 msgstr ""
+"# zfs create tank/ports\n"
+"# zfs create tank/src\n"
+"# zfs set compression=gzip tank/ports\n"
+"# zfs set compression=on tank/src\n"
+"# zfs set mountpoint=/usr/ports tank/ports\n"
+"# zfs set mountpoint=/usr/src tank/src\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/remote-install/_index.adoc:395
