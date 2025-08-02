@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2024-01-17 20:35-0300\n"
-"PO-Revision-Date: 2025-07-26 04:45+0000\n"
+"PO-Revision-Date: 2025-08-02 15:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesfiltering-bridges_index/ru/>\n"
@@ -147,6 +147,9 @@ msgid ""
 "options IPFIREWALL\n"
 "options IPFIREWALL_VERBOSE\n"
 msgstr ""
+"options BRIDGE\n"
+"options IPFIREWALL\n"
+"options IPFIREWALL_VERBOSE\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:97
@@ -180,7 +183,7 @@ msgstr ""
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:109
 #, no-wrap
 msgid "bridge_load=\"YES\"\n"
-msgstr ""
+msgstr "bridge_load=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:113
@@ -219,6 +222,10 @@ msgid ""
 "firewall_quiet=\"YES\"\n"
 "firewall_logging=\"YES\"\n"
 msgstr ""
+"firewall_enable=\"YES\"\n"
+"firewall_type=\"open\"\n"
+"firewall_quiet=\"YES\"\n"
+"firewall_logging=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:131
@@ -301,6 +308,9 @@ msgid ""
 "# sysctl net.link.ether.bridge.ipfw=1\n"
 "# sysctl net.link.ether.bridge.enable=1\n"
 msgstr ""
+"# sysctl net.link.ether.bridge.config=fxp0:0,xl0:0\n"
+"# sysctl net.link.ether.bridge.ipfw=1\n"
+"# sysctl net.link.ether.bridge.enable=1\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:162
@@ -376,7 +386,7 @@ msgstr ""
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:193
 #, no-wrap
 msgid "firewall_type=\"/etc/rc.firewall.local\"\n"
-msgstr ""
+msgstr "firewall_type=\"/etc/rc.firewall.local\"\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:198
@@ -401,6 +411,8 @@ msgid ""
 "# Things that we have kept state on before get to go through in a hurry\n"
 "add check-state\n"
 msgstr ""
+"# Things that we have kept state on before get to go through in a hurry\n"
+"add check-state\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:211
@@ -411,6 +423,10 @@ msgid ""
 "add drop all from 172.16.0.0/12 to any in via fxp0\n"
 "add drop all from 192.168.0.0/16 to any in via fxp0\n"
 msgstr ""
+"# Throw away RFC 1918 networks\n"
+"add drop all from 10.0.0.0/8 to any in via fxp0\n"
+"add drop all from 172.16.0.0/12 to any in via fxp0\n"
+"add drop all from 192.168.0.0/16 to any in via fxp0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:217
@@ -422,6 +438,11 @@ msgid ""
 "add pass udp from 1.2.3.4 to any keep-state\n"
 "add pass ip from 1.2.3.4 to any\n"
 msgstr ""
+"# Allow the bridge machine to say anything it wants\n"
+"# (if the machine is IP-less do not include these rows)\n"
+"add pass tcp from 1.2.3.4 to any setup keep-state\n"
+"add pass udp from 1.2.3.4 to any keep-state\n"
+"add pass ip from 1.2.3.4 to any\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:222
@@ -432,6 +453,10 @@ msgid ""
 "add pass udp from any to any in via xl0 keep-state\n"
 "add pass ip from any to any in via xl0\n"
 msgstr ""
+"# Allow the inside hosts to say anything they want\n"
+"add pass tcp from any to any in via xl0 setup keep-state\n"
+"add pass udp from any to any in via xl0 keep-state\n"
+"add pass ip from any to any in via xl0\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:234
@@ -449,6 +474,17 @@ msgid ""
 "# Pass the \"quarantine\" range\n"
 "add pass tcp from any to any 49152-65535 in via fxp0 setup keep-state\n"
 msgstr ""
+"# TCP section\n"
+"# Allow SSH\n"
+"add pass tcp from any to any 22 in via fxp0 setup keep-state\n"
+"# Allow SMTP only towards the mail server\n"
+"add pass tcp from any to relay 25 in via fxp0 setup keep-state\n"
+"# Allow zone transfers only by the secondary name server [dns2.nic.it]\n"
+"add pass tcp from 193.205.245.8 to ns 53 in via fxp0 setup keep-state\n"
+"# Pass ident probes.  It is better than waiting for them to timeout\n"
+"add pass tcp from any to any 113 in via fxp0 setup keep-state\n"
+"# Pass the \"quarantine\" range\n"
+"add pass tcp from any to any 49152-65535 in via fxp0 setup keep-state\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:240
@@ -460,6 +496,11 @@ msgid ""
 "# Pass the \"quarantine\" range\n"
 "add pass udp from any to any 49152-65535 in via fxp0 keep-state\n"
 msgstr ""
+"# UDP section\n"
+"# Allow DNS only towards the name server\n"
+"add pass udp from any to ns 53 in via fxp0 keep-state\n"
+"# Pass the \"quarantine\" range\n"
+"add pass udp from any to any 49152-65535 in via fxp0 keep-state\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:247
@@ -472,6 +513,12 @@ msgid ""
 "add pass icmp from any to any icmptypes 3\n"
 "add pass icmp from any to any icmptypes 11\n"
 msgstr ""
+"# ICMP section\n"
+"# Pass 'ping'\n"
+"add pass icmp from any to any icmptypes 8 keep-state\n"
+"# Pass error messages generated by 'traceroute'\n"
+"add pass icmp from any to any icmptypes 3\n"
+"add pass icmp from any to any icmptypes 11\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:250
@@ -480,6 +527,8 @@ msgid ""
 "# Everything else is suspect\n"
 "add drop log all from any to any\n"
 msgstr ""
+"# Everything else is suspect\n"
+"add drop log all from any to any\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:254
@@ -493,7 +542,7 @@ msgstr ""
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:258
 #, no-wrap
 msgid "add deny all from 1.2.3.4/8 to any in via fxp0\n"
-msgstr ""
+msgstr "add deny all from 1.2.3.4/8 to any in via fxp0\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:264

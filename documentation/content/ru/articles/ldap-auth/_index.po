@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2024-12-29 08:30-0500\n"
-"PO-Revision-Date: 2025-07-05 04:45+0000\n"
+"PO-Revision-Date: 2025-08-02 15:10+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesldap-auth_index/ru/>\n"
@@ -152,6 +152,8 @@ msgid ""
 "# cd /usr/ports/net/openldap26-server\n"
 "# make install clean\n"
 msgstr ""
+"# cd /usr/ports/net/openldap26-server\n"
+"# make install clean\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:107
@@ -222,7 +224,7 @@ msgstr ""
 #: documentation/content/en/articles/ldap-auth/_index.adoc:136
 #, no-wrap
 msgid "security ssf=128\n"
-msgstr ""
+msgstr "security ssf=128\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:140
@@ -232,6 +234,9 @@ msgid ""
 "TLSCertificateKeyFile /path/to/your/cert.key\n"
 "TLSCACertificateFile /path/to/your/cacert.crt\n"
 msgstr ""
+"TLSCertificateFile /path/to/your/cert.crt\n"
+"TLSCertificateKeyFile /path/to/your/cert.key\n"
+"TLSCACertificateFile /path/to/your/cacert.crt\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:144
@@ -267,12 +272,17 @@ msgid ""
 "...++++++\n"
 "e is 65537 (0x10001)\n"
 msgstr ""
+"% openssl genrsa -out cert.key 1024\n"
+"Generating RSA private key, 1024 bit long modulus\n"
+"....................++++++\n"
+"...++++++\n"
+"e is 65537 (0x10001)\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:162
 #, no-wrap
 msgid "% openssl req -new -key cert.key -out cert.csr\n"
-msgstr ""
+msgstr "% openssl req -new -key cert.key -out cert.csr\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:171
@@ -305,6 +315,10 @@ msgid ""
 "subject=/C=AU/ST=Some-State/O=Internet Widgits Pty Ltd\n"
 "Getting Private key\n"
 msgstr ""
+"% openssl x509 -req -in cert.csr -days 365 -signkey cert.key -out cert.crt\n"
+"Signature ok\n"
+"subject=/C=AU/ST=Some-State/O=Internet Widgits Pty Ltd\n"
+"Getting Private key\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:192
@@ -326,7 +340,7 @@ msgstr ""
 #: documentation/content/en/articles/ldap-auth/_index.adoc:198
 #, no-wrap
 msgid "slapd_enable=\"YES\"\n"
-msgstr ""
+msgstr "slapd_enable=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:203
@@ -342,6 +356,8 @@ msgid ""
 "% sockstat -4 -p 389\n"
 "ldap     slapd      3261  7  tcp4   *:389                 *:*\n"
 msgstr ""
+"% sockstat -4 -p 389\n"
+"ldap     slapd      3261  7  tcp4   *:389                 *:*\n"
 
 #. type: Title ====
 #: documentation/content/en/articles/ldap-auth/_index.adoc:211
@@ -374,6 +390,10 @@ msgid ""
 "ssl start_tls\n"
 "tls_cacert /path/to/your/cacert.crt\n"
 msgstr ""
+"base dc=example,dc=org\n"
+"uri ldap://server.example.org/\n"
+"ssl start_tls\n"
+"tls_cacert /path/to/your/cacert.crt\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:230
@@ -447,6 +467,10 @@ msgid ""
 "objectClass: organizationalUnit\n"
 "ou: people\n"
 msgstr ""
+"dn: ou=people,dc=example,dc=org\n"
+"objectClass: top\n"
+"objectClass: organizationalUnit\n"
+"ou: people\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:267
@@ -493,6 +517,17 @@ msgid ""
 "uid: tuser\n"
 "cn: tuser\n"
 msgstr ""
+"dn: uid=tuser,ou=people,dc=example,dc=org\n"
+"objectClass: person\n"
+"objectClass: posixAccount\n"
+"objectClass: shadowAccount\n"
+"objectClass: top\n"
+"uidNumber: 10000\n"
+"gidNumber: 10000\n"
+"homeDirectory: /home/tuser\n"
+"loginShell: /bin/csh\n"
+"uid: tuser\n"
+"cn: tuser\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:294
@@ -518,6 +553,10 @@ msgid ""
 "objectClass: organizationalUnit\n"
 "ou: groups\n"
 msgstr ""
+"dn: ou=groups,dc=example,dc=org\n"
+"objectClass: top\n"
+"objectClass: organizationalUnit\n"
+"ou: groups\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:310
@@ -529,6 +568,11 @@ msgid ""
 "gidNumber: 10000\n"
 "cn: tuser\n"
 msgstr ""
+"dn: cn=tuser,ou=groups,dc=example,dc=org\n"
+"objectClass: posixGroup\n"
+"objectClass: top\n"
+"gidNumber: 10000\n"
+"cn: tuser\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:314
@@ -618,7 +662,7 @@ msgstr ""
 #: documentation/content/en/articles/ldap-auth/_index.adoc:351
 #, no-wrap
 msgid "pam_login_attribute uid\n"
-msgstr ""
+msgstr "pam_login_attribute uid\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:359
@@ -645,7 +689,7 @@ msgstr ""
 #: documentation/content/en/articles/ldap-auth/_index.adoc:369
 #, no-wrap
 msgid "% getent passwd username\n"
-msgstr ""
+msgstr "% getent passwd username\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:374
@@ -660,7 +704,7 @@ msgstr ""
 #: documentation/content/en/articles/ldap-auth/_index.adoc:378
 #, no-wrap
 msgid "# ln -s /usr/local/bin/bash /bin/bash\n"
-msgstr ""
+msgstr "# ln -s /usr/local/bin/bash /bin/bash\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:382
@@ -702,7 +746,7 @@ msgstr ""
 #: documentation/content/en/articles/ldap-auth/_index.adoc:396
 #, no-wrap
 msgid "auth  sufficient  /usr/local/lib/pam_ldap.so  no_warn\n"
-msgstr ""
+msgstr "auth  sufficient  /usr/local/lib/pam_ldap.so  no_warn\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:399
@@ -741,7 +785,7 @@ msgstr ""
 #: documentation/content/en/articles/ldap-auth/_index.adoc:413
 #, no-wrap
 msgid "pam_groupdn cn=servername,ou=accessgroups,dc=example,dc=org\n"
-msgstr ""
+msgstr "pam_groupdn cn=servername,ou=accessgroups,dc=example,dc=org\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:417
@@ -762,7 +806,7 @@ msgstr ""
 #: documentation/content/en/articles/ldap-auth/_index.adoc:424
 #, no-wrap
 msgid "memberUid: uid=someuser,ou=people,dc=example,dc=org\n"
-msgstr ""
+msgstr "memberUid: uid=someuser,ou=people,dc=example,dc=org\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:430
@@ -798,6 +842,13 @@ msgid ""
 "auth            sufficient      /usr/local/lib/pam_ldap.so      no_warn\n"
 "auth            required        pam_unix.so             no_warn try_first_pass\n"
 msgstr ""
+"auth            required        pam_nologin.so          no_warn\n"
+"auth            sufficient      pam_opie.so             no_warn "
+"no_fake_prompts\n"
+"auth            requisite       pam_opieaccess.so       no_warn allow_local\n"
+"auth            sufficient      /usr/local/lib/pam_ldap.so      no_warn\n"
+"auth            required        pam_unix.so             no_warn "
+"try_first_pass\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:448
@@ -806,6 +857,9 @@ msgid ""
 "account         required        pam_login_access.so\n"
 "account         required        /usr/local/lib/pam_ldap.so      no_warn ignore_authinfo_unavail ignore_unknown_user\n"
 msgstr ""
+"account         required        pam_login_access.so\n"
+"account         required        /usr/local/lib/pam_ldap.so      no_warn "
+"ignore_authinfo_unavail ignore_unknown_user\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:457
@@ -820,7 +874,7 @@ msgstr ""
 #: documentation/content/en/articles/ldap-auth/_index.adoc:460
 #, no-wrap
 msgid "Name Service Switch"
-msgstr ""
+msgstr "Name Service Switch"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:464
@@ -854,6 +908,8 @@ msgid ""
 "group: compat\n"
 "passwd: compat\n"
 msgstr ""
+"group: compat\n"
+"passwd: compat\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:479
@@ -867,6 +923,8 @@ msgid ""
 "group: files ldap\n"
 "passwd: files ldap\n"
 msgstr ""
+"group: files ldap\n"
+"passwd: files ldap\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:487
@@ -917,6 +975,11 @@ msgid ""
 "read -p \"Retype New Password: \" np2; echo\n"
 "stty echo\n"
 msgstr ""
+"stty -echo\n"
+"read -p \"Old Password: \" oldp; echo\n"
+"read -p \"New Password: \" np1; echo\n"
+"read -p \"Retype New Password: \" np2; echo\n"
+"stty echo\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:518
@@ -927,6 +990,10 @@ msgid ""
 "  exit 1\n"
 "fi\n"
 msgstr ""
+"if [ \"$np1\" != \"$np2\" ]; then\n"
+"  echo \"Passwords do not match.\"\n"
+"  exit 1\n"
+"fi\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:523
@@ -937,6 +1004,10 @@ msgid ""
 "  -a \"$oldp\" \\\n"
 "  -s \"$np1\"\n"
 msgstr ""
+"ldappasswd -D uid=\"$USER\",ou=people,dc=example,dc=org \\\n"
+"  -w \"$oldp\" \\\n"
+"  -a \"$oldp\" \\\n"
+"  -s \"$np1\"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/ldap-auth/_index.adoc:532
@@ -950,7 +1021,7 @@ msgstr ""
 #: documentation/content/en/articles/ldap-auth/_index.adoc:536
 #, no-wrap
 msgid "# sysctl security.bsd.see_other_uids=0\n"
-msgstr ""
+msgstr "# sysctl security.bsd.see_other_uids=0\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:543
@@ -976,6 +1047,10 @@ msgid ""
 "require 'digest'\n"
 "require 'password' # ruby-password\n"
 msgstr ""
+"require 'ldap'\n"
+"require 'base64'\n"
+"require 'digest'\n"
+"require 'password' # ruby-password\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:558
@@ -984,6 +1059,8 @@ msgid ""
 "ldap_server = \"ldap.example.org\"\n"
 "luser = \"uid=#{ENV['USER']},ou=people,dc=example,dc=org\"\n"
 msgstr ""
+"ldap_server = \"ldap.example.org\"\n"
+"luser = \"uid=#{ENV['USER']},ou=people,dc=example,dc=org\"\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:563
@@ -994,6 +1071,10 @@ msgid ""
 "  pwd1 = Password.get(\"New Password: \")\n"
 "  pwd2 = Password.get(\"Retype New Password: \")\n"
 msgstr ""
+"# get the new password, check it, and create a salted hash from it\n"
+"def get_password\n"
+"  pwd1 = Password.get(\"New Password: \")\n"
+"  pwd2 = Password.get(\"Retype New Password: \")\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:566
@@ -1002,6 +1083,8 @@ msgid ""
 "  raise if pwd1 != pwd2\n"
 "  pwd1.check # check password strength\n"
 msgstr ""
+"  raise if pwd1 != pwd2\n"
+"  pwd1.check # check password strength\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:572
@@ -1013,6 +1096,12 @@ msgid ""
 "  return hash\n"
 "end\n"
 msgstr ""
+"  salt = rand.to_s.gsub(/0\\./, '')\n"
+"  pass = pwd1.to_s\n"
+"  hash = \"{SSHA}\"+Base64.encode64(Digest::SHA1.digest(\"#{pass}#{salt}\""
+")+salt).chomp!\n"
+"  return hash\n"
+"end\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:575
@@ -1021,6 +1110,8 @@ msgid ""
 "oldp = Password.get(\"Old Password: \")\n"
 "newp = get_password\n"
 msgstr ""
+"oldp = Password.get(\"Old Password: \")\n"
+"newp = get_password\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:578
@@ -1029,6 +1120,8 @@ msgid ""
 "# We'll just replace it.  That we can bind proves that we either know\n"
 "# the old password or are an admin.\n"
 msgstr ""
+"# We'll just replace it.  That we can bind proves that we either know\n"
+"# the old password or are an admin.\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:582
@@ -1038,6 +1131,9 @@ msgid ""
 "                        \"userPassword\",\n"
 "                        [newp])\n"
 msgstr ""
+"replace = LDAP::Mod.new(LDAP::LDAP_MOD_REPLACE | LDAP::LDAP_MOD_BVALUES,\n"
+"                        \"userPassword\",\n"
+"                        [newp])\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:587
@@ -1048,6 +1144,10 @@ msgid ""
 "conn.bind(luser, oldp)\n"
 "conn.modify(luser, [replace])\n"
 msgstr ""
+"conn = LDAP::SSLConn.new(ldap_server, 389, true)\n"
+"conn.set_option(LDAP::LDAP_OPT_PROTOCOL_VERSION, 3)\n"
+"conn.bind(luser, oldp)\n"
+"conn.modify(luser, [replace])\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:592
@@ -1119,6 +1219,11 @@ msgid ""
 "  by anonymous auth\n"
 "  by * none\n"
 msgstr ""
+"access to dn.subtree=\"ou=people,dc=example,dc=org\"\n"
+"  attrs=userPassword\n"
+"  by self write\n"
+"  by anonymous auth\n"
+"  by * none\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:627
@@ -1129,6 +1234,9 @@ msgid ""
 "  by self write\n"
 "  by * read\n"
 msgstr ""
+"access to *\n"
+"  by self write\n"
+"  by * read\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:632
@@ -1159,6 +1267,8 @@ msgid ""
 "access to attrs=homeDirectory,uidNumber,gidNumber\n"
 "  by * read\n"
 msgstr ""
+"access to attrs=homeDirectory,uidNumber,gidNumber\n"
+"  by * read\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:661
@@ -1218,6 +1328,13 @@ msgid ""
 "memberUid: uid=tuser,ou=people,dc=example,dc=org\n"
 "memberUid: uid=user2,ou=people,dc=example,dc=org\n"
 msgstr ""
+"dn: cn=homemanagement,dc=example,dc=org\n"
+"objectClass: top\n"
+"objectClass: posixGroup\n"
+"cn: homemanagement\n"
+"gidNumber: 121 # required for posixGroup\n"
+"memberUid: uid=tuser,ou=people,dc=example,dc=org\n"
+"memberUid: uid=user2,ou=people,dc=example,dc=org\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:698
@@ -1239,6 +1356,10 @@ msgid ""
 "  by dn=\"cn=homemanagement,dc=example,dc=org\"\n"
 "  dnattr=memberUid write\n"
 msgstr ""
+"access to dn.subtree=\"ou=people,dc=example,dc=org\"\n"
+"  attr=homeDirectory\n"
+"  by dn=\"cn=homemanagement,dc=example,dc=org\"\n"
+"  dnattr=memberUid write\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:715
@@ -1364,6 +1485,9 @@ msgid ""
 "% openssl req -new -key root.key -out root.csr\n"
 "% openssl x509 -req -days 1024 -in root.csr -signkey root.key -out root.crt\n"
 msgstr ""
+"% openssl genrsa -out root.key 1024\n"
+"% openssl req -new -key root.key -out root.csr\n"
+"% openssl x509 -req -days 1024 -in root.csr -signkey root.key -out root.crt\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:777
@@ -1409,6 +1533,9 @@ msgid ""
 "-in ldap-server-one.csr -CA root.crt -CAkey root.key \\\n"
 "-out ldap-server-one.crt\n"
 msgstr ""
+"% openssl x509 -req -days 1024 \\\n"
+"-in ldap-server-one.csr -CA root.crt -CAkey root.key \\\n"
+"-out ldap-server-one.crt\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/ldap-auth/_index.adoc:803
