@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2024-01-17 20:35-0300\n"
-"PO-Revision-Date: 2025-08-02 15:10+0000\n"
+"PO-Revision-Date: 2025-08-08 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesfiltering-bridges_index/ru/>\n"
@@ -20,16 +20,18 @@ msgstr ""
 
 #. type: YAML Front Matter: description
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:1
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Configuring firewalls and filtering on FreeBSD hosts acting as bridges rather than routers"
 msgstr ""
+"Настройка межсетевых экранов и фильтрации на хостах FreeBSD, выступающих в "
+"роли мостов, а не маршрутизаторов"
 
 #. type: Title =
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:1
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:11
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Filtering Bridges"
-msgstr ""
+msgstr "Фильтрующие мосты"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:44
@@ -38,6 +40,7 @@ msgstr "Аннотация"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:48
+#, fuzzy
 msgid ""
 "Often it is useful to divide one physical network (like an Ethernet) into "
 "two separate segments without having to create subnets, and use a router to "
@@ -45,9 +48,15 @@ msgid ""
 "is called a bridge.  A FreeBSD system with two network interfaces is enough "
 "to act as a bridge."
 msgstr ""
+"Часто бывает полезно разделить одну физическую сеть (например, Ethernet) на "
+"два отдельных сегмента без необходимости создания подсетей и использовать "
+"маршрутизатор для их соединения. Устройство, которое соединяет две сети "
+"таким образом, называется мостом. Система FreeBSD с двумя сетевыми "
+"интерфейсами достаточна для работы в качестве моста."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:51
+#, fuzzy
 msgid ""
 "A bridge works by scanning the addresses of MAC level (Ethernet addresses) "
 "of the devices connected to each of its network interfaces and then "
@@ -55,6 +64,11 @@ msgid ""
 "destination are on different segments.  Under many points of view a bridge "
 "is similar to an Ethernet switch with only two ports."
 msgstr ""
+"Мост работает, сканируя адреса на MAC-уровне (Ethernet-адреса) устройств, "
+"подключённых к каждому из его сетевых интерфейсов, и затем пересылая трафик "
+"между двумя сетями только в том случае, если источник и получатель находятся "
+"в разных сегментах. Во многих аспектах мост аналогичен Ethernet-коммутатору "
+"с двумя портами."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:53
@@ -63,12 +77,13 @@ msgstr "'''"
 
 #. type: Title ==
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:57
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Why use a filtering bridge?"
-msgstr ""
+msgstr "Зачем использовать фильтрующий мост?"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:62
+#, fuzzy
 msgid ""
 "More and more frequently, thanks to the lowering costs of broad band "
 "Internet connections (xDSL) and also because of the reduction of available "
@@ -81,38 +96,62 @@ msgid ""
 "it does not support such functionalities.  In these scenarios the use of a "
 "filtering bridge is highly advised."
 msgstr ""
+"Всё чаще, благодаря снижению стоимости широкополосных подключений к "
+"Интернету (xDSL), а также из-за сокращения доступных IPv4-адресов, многие "
+"компании подключены к Интернету 24 часа в сутки и имеют мало (иногда даже не "
+"степень двойки) IP-адресов. В таких ситуациях часто возникает желание иметь "
+"межсетевой экран, который фильтрует входящий и исходящий трафик из Интернета "
+"и в него, но решение для фильтрации пакетов на основе маршрутизатора может "
+"быть неприменимо — из-за проблем с подсетями, потому что маршрутизатор "
+"принадлежит поставщику услуг (ISP) или потому что он не поддерживает такие "
+"функции. В таких сценариях настоятельно рекомендуется использовать "
+"фильтрующий мост."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:64
+#, fuzzy
 msgid ""
 "A bridge-based firewall can be configured and inserted between the xDSL "
 "router and your Ethernet hub/switch without any IP numbering issues."
 msgstr ""
+"Межсетевой экран на основе моста может быть настроен и установлен между xDSL-"
+"маршрутизатором и вашим Ethernet-концентратором/коммутатором без каких-либо "
+"проблем с IP-адресацией."
 
 #. type: Title ==
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:66
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "How to Install"
-msgstr ""
+msgstr "Как установить"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:71
+#, fuzzy
 msgid ""
 "Adding bridge functionalities to a FreeBSD system is not difficult.  Since "
 "4.5 release it is possible to load such functionalities as modules instead "
 "of having to rebuild the kernel, simplifying the procedure a great deal.  In "
 "the following subsections I will explain both installation ways."
 msgstr ""
+"Добавление функциональности моста в систему FreeBSD не является сложной "
+"задачей. Начиная с версии 4.5, появилась возможность загружать такие функции "
+"как модули, вместо необходимости пересборки ядра, что значительно упрощает "
+"процедуру. В следующих подразделах я объясню оба способа установки."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:76
+#, fuzzy
 msgid ""
 "_Do not_ follow both instructions: a procedure _excludes_ the other one.  "
 "Select the best choice according to your needs and abilities."
 msgstr ""
+"_Не_ следуйте обеим инструкциям: одна процедура _исключает_ другую. Выберите "
+"наиболее подходящий вариант в соответствии с вашими потребностями и "
+"возможностями."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:82
+#, fuzzy
 msgid ""
 "Before going on, be sure to have at least two Ethernet cards that support "
 "the promiscuous mode for both reception and transmission, since they must be "
@@ -124,6 +163,16 @@ msgid ""
 "drivers) to distinguish clearly which interface is connected to the router "
 "and which to the inner network."
 msgstr ""
+"Прежде чем продолжить, убедитесь, что у вас есть как минимум две Ethernet-"
+"карты, поддерживающие режим promiscuous как для приёма, так и для передачи, "
+"поскольку они должны уметь отправлять Ethernet-пакеты с любым адресом, а не "
+"только с собственным. Кроме того, для обеспечения хорошей пропускной "
+"способности карты должны поддерживать управление шиной PCI. Наилучшим "
+"выбором по-прежнему остаются Intel EtherExpress(TM) Pro, за которыми следуют "
+"карты серии 3Com(R) 3c9xx. Для упрощения настройки межсетевого экрана может "
+"быть полезно иметь две карты от разных производителей (использующие разные "
+"драйверы), чтобы чётко различать, какой интерфейс подключён к "
+"маршрутизатору, а какой — к внутренней сети."
 
 #. type: Title ===
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:84
@@ -133,11 +182,14 @@ msgstr "Настройка ядра"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:88
+#, fuzzy
 msgid ""
 "So you have decided to use the older but well tested installation method.  "
 "To begin, you have to add the following rows to your kernel configuration "
 "file:"
 msgstr ""
+"Итак, вы решили использовать старый, но хорошо проверенный метод установки. "
+"Для начала вам нужно добавить следующие строки в файл конфигурации ядра:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:94
@@ -153,31 +205,42 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:97
+#, fuzzy
 msgid ""
 "The first line is to compile the bridge support, the second one is the "
 "firewall and the third one is the logging functions of the firewall."
 msgstr ""
+"Первая строка компилирует поддержку моста, вторая — межсетевой экран, а "
+"третья — функции логирования межсетевого экрана."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:100
+#, fuzzy
 msgid ""
 "Now it is necessary to build and install the new kernel.  You may find "
 "detailed instructions in the extref:{handbook}[Building and Installing a "
 "Custom Kernel, kernelconfig-building] section of the FreeBSD Handbook."
 msgstr ""
+"Теперь необходимо собрать и установить новое ядро. Подробные инструкции "
+"можно найти в разделе extref:{handbook}[Сборка и установка пользовательского "
+"ядра, kernelconfig-building] руководства FreeBSD."
 
 #. type: Title ===
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:102
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Modules Loading"
-msgstr ""
+msgstr "Загрузка модулей"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:105
+#, fuzzy
 msgid ""
 "If you have chosen to use the new and simpler installation method, the only "
 "thing to do now is add the following row to [.filename]#/boot/loader.conf#:"
 msgstr ""
+"Если вы выбрали использование нового и более простого метода установки, "
+"единственное, что нужно сделать сейчас, это добавить следующую строку в [."
+"filename]#/boot/loader.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:109
@@ -187,21 +250,27 @@ msgstr "bridge_load=\"YES\"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:113
+#, fuzzy
 msgid ""
 "In this way, during the system startup, the [.filename]#bridge.ko# module "
 "will be loaded together with the kernel.  It is not required to add a "
 "similar row for the [.filename]#ipfw.ko# module, since it will be loaded "
 "automatically after the execution of the steps in the following section."
 msgstr ""
+"Таким образом, во время загрузки системы модуль [.filename]#bridge.ko# будет "
+"загружен вместе с ядром. Не требуется добавлять аналогичную строку для "
+"модуля [.filename]#ipfw.ko#, так как он будет загружен автоматически после "
+"выполнения шагов из следующего раздела."
 
 #. type: Title ==
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:115
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Final Preparation"
-msgstr ""
+msgstr "Окончательная подготовка"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:121
+#, fuzzy
 msgid ""
 "Before rebooting to load the new kernel or the required modules (according "
 "to the previously chosen installation method), you have to make some changes "
@@ -212,6 +281,14 @@ msgid ""
 "configuration will avoid you to remain isolated from the network).  Put "
 "these lines in [.filename]#/etc/rc.conf#:"
 msgstr ""
+"Прежде чем перезагрузиться для загрузки нового ядра или необходимых модулей ("
+"в соответствии с выбранным ранее методом установки), необходимо внести "
+"некоторые изменения в конфигурационный файл [.filename]#/etc/rc.conf#.  "
+"Правило по умолчанию для межсетевого экрана — отклонять все IP-пакеты.  "
+"Изначально мы настроим `открытый` межсетевой экран, чтобы проверить его "
+"работу без каких-либо проблем, связанных с фильтрацией пакетов (если вы "
+"выполняете эту процедуру удалённо, такая конфигурация позволит избежать "
+"изоляции от сети).  Добавьте следующие строки в [.filename]#/etc/rc.conf#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:128
@@ -229,6 +306,7 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:131
+#, fuzzy
 msgid ""
 "The first row will enable the firewall (and will load the module [."
 "filename]#ipfw.ko# if it is not compiled in the kernel), the second one to "
@@ -236,9 +314,14 @@ msgid ""
 "the third one to not show rules loading and the fourth one to enable logging "
 "support."
 msgstr ""
+"Первая строка включит межсетевой экран (и загрузит модуль [.filename]#ipfw."
+"ko#, если он не встроен в ядро), вторая настроит его в режиме `open` (как "
+"описано в [.filename]#/etc/rc.firewall#), третья отключит отображение "
+"загрузки правил, а четвёртая включит поддержку логирования."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:137
+#, fuzzy
 msgid ""
 "About the configuration of the network interfaces, the most used way is to "
 "assign an IP to only one of the network cards, but the bridge will work "
@@ -256,9 +339,25 @@ msgid ""
 "make much sense, unless, during the start procedure, applications should "
 "access to services on both Ethernet segments."
 msgstr ""
+"О конфигурации сетевых интерфейсов: наиболее распространённый способ — "
+"назначить IP только одной из сетевых карт, но мост будет работать одинаково, "
+"даже если оба интерфейса или ни один из них не имеют настроенного IP. В "
+"последнем случае (без IP) машина с мостом останется более скрытой, так как "
+"будет недоступна из сети: для её настройки потребуется войти с консоли или "
+"через третий сетевой интерфейс, отделённый от моста. Иногда во время запуска "
+"системы некоторым программам требуется доступ к сети, например, для "
+"разрешения доменных имён: в этом случае необходимо назначить IP внешнему "
+"интерфейсу (тому, который подключён к интернету, где находится DNS-сервер), "
+"так как мост будет активирован в конце процедуры запуска. Это означает, что "
+"интерфейс [.filename]#fxp0# (в нашем случае) должен быть указан в разделе "
+"ifconfig файла [.filename]#/etc/rc.conf#, тогда как [.filename]#xl0# — нет. "
+"Назначение IP обеим сетевым картам не имеет особого смысла, за исключением "
+"случаев, когда во время запуска приложения должны получать доступ к сервисам "
+"на обоих сегментах Ethernet."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:144
+#, fuzzy
 msgid ""
 "There is another important thing to know.  When running IP over Ethernet, "
 "there are actually two Ethernet protocols in use: one is IP, the other is "
@@ -270,21 +369,38 @@ msgid ""
 "therefore all non-IP packets (ARP included) will be forwarded without being "
 "filtered, even if the firewall is configured to not permit anything."
 msgstr ""
+"Есть ещё один важный момент. При работе IP поверх Ethernet фактически "
+"используются два протокола Ethernet: один — это IP, другой — ARP. ARP "
+"выполняет преобразование IP-адреса хоста в его Ethernet-адрес (уровень MAC). "
+"Чтобы обеспечить связь между двумя хостами, разделёнными мостом, необходимо, "
+"чтобы мост передавал ARP-пакеты. Этот протокол не включён в уровень IP, так "
+"как он существует только при работе IP поверх Ethernet. Межсетевой экран "
+"FreeBSD фильтрует исключительно на уровне IP, поэтому все не-IP пакеты ("
+"включая ARP) будут передаваться без фильтрации, даже если межсетевой экран "
+"настроен на запрет всего."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:146
+#, fuzzy
 msgid ""
 "Now it is time to reboot the system and use it as before: there will be some "
 "new messages about the bridge and the firewall, but the bridge will not be "
 "activated and the firewall, being in `open` mode, will not avoid any "
 "operations."
 msgstr ""
+"Вот теперь пришло время перезагрузить систему и использовать её как прежде: "
+"будут появляться некоторые новые сообщения о мосте и межсетевом экране, но "
+"мост не будет активирован, а межсетевой экран, находясь в режиме `open`, не "
+"будет препятствовать никаким операциям."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:148
+#, fuzzy
 msgid ""
 "If there are any problems, you should sort them out now before proceeding."
 msgstr ""
+"Если возникли какие-либо проблемы, их следует решить сейчас, прежде чем "
+"продолжить."
 
 #. type: Title ==
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:150
@@ -294,11 +410,15 @@ msgstr "Включение моста"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:153
+#, fuzzy
 msgid ""
 "At this point, to enable the bridge, you have to execute the following "
 "commands (having the shrewdness to replace the names of the two network "
 "interfaces [.filename]#fxp0# and [.filename]#xl0# with your own ones):"
 msgstr ""
+"На этом этапе, чтобы включить мост, необходимо выполнить следующие команды ("
+"с учётом замены имён двух сетевых интерфейсов [.filename]#fxp0# и [."
+"filename]#xl0# на ваши собственные):"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:159
@@ -314,14 +434,18 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:162
+#, fuzzy
 msgid ""
 "The first row specifies which interfaces should be activated by the bridge, "
 "the second one will enable the firewall on the bridge and finally the third "
 "one will enable the bridge."
 msgstr ""
+"Первая строка указывает, какие интерфейсы должны быть активированы мостом, "
+"вторая включает межсетевой экран на мосту, а третья активирует сам мост."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:165
+#, fuzzy
 msgid ""
 "At this point you should be able to insert the machine between two sets of "
 "hosts without compromising any communication abilities between them.  If so, "
@@ -329,15 +453,21 @@ msgid ""
 "portions of these rows to the [.filename]#/etc/sysctl.conf# file, to have "
 "them execute at startup."
 msgstr ""
+"На этом этапе вы должны быть способны разместить машину между двумя группами "
+"хостов, не нарушая их способности к взаимодействию. Если это так, следующим "
+"шагом будет добавление строк `net.link.ether.bridge._[blah]_=_[blah]_` в "
+"файл [.filename]#/etc/sysctl.conf#, чтобы они выполнялись при запуске "
+"системы."
 
 #. type: Title ==
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:167
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Configuring The Firewall"
-msgstr ""
+msgstr "Настройка Межсетевого Экрана"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:177
+#, fuzzy
 msgid ""
 "Now it is time to create your own file with custom firewall rules, to secure "
 "the inside network.  There will be some complication in doing this because "
@@ -354,9 +484,24 @@ msgid ""
 "still be used, but only on traffic to or from the bridge machine itself (if "
 "it has an IP address)."
 msgstr ""
+"Время создать собственный файл с правилами межсетевого экрана для защиты "
+"внутренней сети. Это будет несколько сложно, так как не все функции "
+"межсетевого экрана доступны для мостовых пакетов. Кроме того, есть разница "
+"между пакетами, которые перенаправляются, и пакетами, которые принимаются "
+"локальной машиной. В целом, входящие пакеты проходят через межсетевой экран "
+"только один раз, а не два, как обычно; фактически они фильтруются только при "
+"получении, поэтому правила с `out` или `xmit` никогда не сработают. Лично я "
+"использую `in via` — это более старый синтаксис, но он интуитивно понятен "
+"при чтении. Ещё одно ограничение заключается в том, что для пакетов, "
+"фильтруемых мостом, можно использовать только команды `pass` или `drop`. "
+"Более сложные действия, такие как `divert`, `forward` или `reject`, "
+"недоступны. Такие опции всё ещё можно использовать, но только для трафика, "
+"направленного на саму машину моста или исходящего от неё (если у неё есть "
+"IP-адрес)."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:185
+#, fuzzy
 msgid ""
 "New in FreeBSD 4.0, is the concept of stateful filtering.  This is a big "
 "improvement for UDP traffic, which typically is a request going out, "
@@ -370,9 +515,22 @@ msgid ""
 "allows you to avoid some denial of service attacks and other nasty tricks, "
 "but it also typically makes your state table grow quickly in size."
 msgstr ""
+"В FreeBSD 4.0 появилась концепция фильтрации с сохранением состояния. Это "
+"значительное улучшение для UDP-трафика, который обычно представляет собой "
+"запрос, отправляемый наружу, за которым вскоре следует ответ с тем же "
+"набором IP-адресов и номеров портов (но, конечно, с поменянными местами "
+"источником и назначением). Для межсетевых экранов без сохранения состояния "
+"практически нет возможности обрабатывать такой трафик как единую сессию. "
+"Однако, если межсетевой экран может «запоминать» исходящий UDP-пакет и в "
+"течение нескольких минут разрешать ответ, обработка UDP-сервисов становится "
+"тривиальной. В следующем примере показано, как это сделать. То же самое "
+"можно проделать и с TCP-пакетами. Это позволяет избежать некоторых атак типа "
+"«отказ в обслуживании» и других неприятных трюков, но также обычно приводит "
+"к быстрому росту таблицы состояний."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:189
+#, fuzzy
 msgid ""
 "Let's look at an example setup.  Note first that at the top of [.filename]#/"
 "etc/rc.firewall# there are already standard rules for the loopback interface "
@@ -381,6 +539,13 @@ msgid ""
 "local#) and loaded at system startup, by modifying the row of [.filename]#/"
 "etc/rc.conf# where we defined the `open` firewall:"
 msgstr ""
+"Рассмотрим пример настройки. Обратите внимание, что в начале файла [."
+"filename]#/etc/rc.firewall# уже есть стандартные правила для интерфейса "
+"обратной связи [.filename]#lo0#, поэтому нам не нужно о них заботиться. "
+"Пользовательские правила следует поместить в отдельный файл (например, [."
+"filename]#/etc/rc.firewall.local#) и загружать его при старте системы, "
+"изменив строку в [.filename]#/etc/rc.conf#, где мы определили `open` для "
+"межсетевого экрана:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:193
@@ -390,19 +555,27 @@ msgstr "firewall_type=\"/etc/rc.firewall.local\"\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:198
+#, fuzzy
 msgid ""
 "You have to specify the _full_ path, otherwise it will not be loaded with "
 "the risk to remain isolated from the network."
 msgstr ""
+"Вы должны указать _полный_ путь, иначе он не будет загружен с риском "
+"остаться изолированным от сети."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:201
+#, fuzzy
 msgid ""
 "For our example imagine to have the [.filename]#fxp0# interface connected "
 "towards the outside (Internet) and the [.filename]#xl0# towards the inside "
 "(LAN). The bridge machine has the IP `1.2.3.4` (it is not possible that your "
 "ISP can give you an address quite like this, but for our example it is good)."
 msgstr ""
+"Для нашего примера представим, что интерфейс [.filename]#fxp0# подключён к "
+"внешней сети (Интернет), а [.filename]#xl0# — к внутренней (ЛВС). У машины с "
+"мостом IP-адрес `1.2.3.4` (ваш провайдер вряд ли выдаст вам такой адрес, но "
+"для нашего примера он подходит)."
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:206
@@ -532,11 +705,15 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:254
+#, fuzzy
 msgid ""
 "Those of you who have set up firewalls before may notice some things "
 "missing.  In particular, there are no anti-spoofing rules, in fact we did "
 "_not_ add:"
 msgstr ""
+"Те из вас, кто ранее настраивал межсетевые экраны, могут заметить некоторые "
+"отсутствующие элементы. В частности, здесь нет правил защиты от спуфинга, и "
+"фактически мы _не_ добавили:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:258
@@ -546,6 +723,7 @@ msgstr "add deny all from 1.2.3.4/8 to any in via fxp0\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:264
+#, fuzzy
 msgid ""
 "That is, drop packets that are coming in from the outside claiming to be "
 "from our network.  This is something that you would commonly do to be sure "
@@ -555,17 +733,29 @@ msgid ""
 "do not want to ignore: the router.  But usually, the ISP anti-spoofs at "
 "their router, so we do not need to bother that much."
 msgstr ""
+"То есть, отбрасывать пакеты, которые поступают извне, утверждая, что они из "
+"нашей сети. Это стандартная мера для предотвращения попыток обхода "
+"межсетевого экрана путем генерации вредоносных пакетов, которые выглядят "
+"так, будто они из внутренней сети. Проблема в том, что есть _как минимум_ "
+"один хост на внешнем интерфейсе, который нельзя игнорировать: маршрутизатор. "
+"Однако обычно интернет-провайдер применяет антиспуфинг на своем "
+"маршрутизаторе, так что нам не нужно слишком беспокоиться об этом."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:267
+#, fuzzy
 msgid ""
 "The last rule seems to be an exact duplicate of the default rule, that is, "
 "do not let anything pass that is not specifically allowed.  But there is a "
 "difference: all suspected traffic will be logged."
 msgstr ""
+"Последнее правило кажется точной копией правила по умолчанию, то есть не "
+"пропускать ничего, что явно не разрешено. Однако есть разница: весь "
+"подозрительный трафик будет записываться в журнал."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:273
+#, fuzzy
 msgid ""
 "There are two rules for passing SMTP and DNS traffic towards the mail server "
 "and the name server, if you have them.  Obviously the whole rule set should "
@@ -576,9 +766,18 @@ msgid ""
 "the correct network card.  Alternatively it is possible to specify the IP "
 "address instead of the host name (required if the machine is IP-less)."
 msgstr ""
+"Существует два правила для пропуска SMTP и DNS-трафика к почтовому серверу и "
+"серверу имен, если они у вас есть. Очевидно, весь набор правил должен быть "
+"адаптирован под личные предпочтения — это лишь конкретный пример (формат "
+"правил подробно описан на man:ipfw[8]). Обратите внимание, что для работы "
+"\"relay\" и \"ns\" разрешение имен должно работать _до_ включения моста. Это "
+"пример того, как убедиться, что IP-адрес установлен на правильной сетевой "
+"карте. Альтернативно можно указать IP-адрес вместо имени хоста (это "
+"требуется, если у машины нет IP-адреса)."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:278
+#, fuzzy
 msgid ""
 "People that are used to setting up firewalls are probably also used to "
 "either having a `reset` or a `forward` rule for ident packets (TCP port "
@@ -588,9 +787,17 @@ msgid ""
 "harmless.  The alternative is dropping connections on port 113, which "
 "creates some problems with services like IRC (the ident probe must timeout)."
 msgstr ""
+"Люди, привыкшие настраивать межсетевые экраны, вероятно, также привыкли "
+"использовать правило `reset` или `forward` для идентификационных пакетов "
+"(TCP-порт 113). К сожалению, это не применимо при использовании моста, "
+"поэтому лучше всего просто передавать их целевому устройству. Пока на этом "
+"устройстве не запущен идентификационный демон, это относительно безопасно. "
+"Альтернативой является сброс соединений на порту 113, что создает проблемы с "
+"такими сервисами, как IRC (запрос идентификации будет ожидать таймаута)."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:285
+#, fuzzy
 msgid ""
 "The only other thing that is a little weird that you may have noticed is "
 "that there is a rule to let the bridge machine speak, and another for "
@@ -603,6 +810,16 @@ msgid ""
 "locally generated packets, because they did not come in via any of our "
 "interfaces."
 msgstr ""
+"Единственное, что может показаться немного странным — это наличие правила, "
+"разрешающего общение для мостовой машины, и другого правила для внутренних "
+"хостов. Помните, что это связано с тем, что два типа трафика проходят разные "
+"пути через ядро и попадают в пакетный фильтр. Трафик внутренней сети "
+"проходит через мост, в то время как локальная машина использует обычный IP-"
+"стек для общения. Поэтому и нужны два правила для обработки разных случаев. "
+"Правила `in via fxp0` работают для обоих путей. В общем случае, если вы "
+"используете правила `in via` во всём фильтре, вам потребуется сделать "
+"исключение для локально сгенерированных пакетов, так как они не поступают "
+"через какие-либо из наших интерфейсов."
 
 #. type: Title ==
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:287
@@ -612,23 +829,33 @@ msgstr "Участники"
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:291
+#, fuzzy
 msgid ""
 "Many parts of this article have been taken, updated and adapted from an old "
 "text about bridging, edited by Nick Sayer.  A pair of inspirations are due "
 "to an introduction on bridging by Steve Peterson."
 msgstr ""
+"Многие части этой статьи были взяты, обновлены и адаптированы из старого "
+"текста о мостах, отредактированного Ником Сайером. Пара вдохновений обязана "
+"введению в мосты от Стива Петерсона."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:293
+#, fuzzy
 msgid ""
 "A big thanks to Luigi Rizzo for the implementation of the bridge code in "
 "FreeBSD and for the time he has dedicated to me answering all of my related "
 "questions."
 msgstr ""
+"Огромная благодарность Луиджи Риццо за реализацию кода моста в FreeBSD и за "
+"время, которое он уделил мне, отвечая на все мои связанные вопросы."
 
 #. type: Plain text
 #: documentation/content/en/articles/filtering-bridges/_index.adoc:294
+#, fuzzy
 msgid ""
 "A thanks goes out also to Tom Rhodes who looked over my job of translation "
 "from Italian (the original language of this article) into English."
 msgstr ""
+"Благодарность также выражается Тому Родсу, который проверил мою работу по "
+"переводу с итальянского (оригинального языка этой статьи) на английский."

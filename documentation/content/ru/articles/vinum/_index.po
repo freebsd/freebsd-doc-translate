@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-01-24 10:22-0300\n"
-"PO-Revision-Date: 2025-08-02 15:10+0000\n"
+"PO-Revision-Date: 2025-08-08 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesvinum_index/ru/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: documentation/content/en/articles/vinum/_index.adoc:1
 #, no-wrap
 msgid "The vinum Volume Manager in FreeBSD"
-msgstr ""
+msgstr "Менеджер томов vinum в FreeBSD"
 
 #. The Vinum Volume Manager
 #. By Greg Lehey (grog at lemis dot com)
@@ -34,7 +34,7 @@ msgstr ""
 #: documentation/content/en/articles/vinum/_index.adoc:19
 #, no-wrap
 msgid "The vinum Volume Manager"
-msgstr ""
+msgstr "Менеджер томов vinum"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:51
@@ -57,6 +57,12 @@ msgid ""
 "capacity.  Various solutions to these problems have been proposed and "
 "implemented."
 msgstr ""
+"Независимо от типа дисков, всегда существуют потенциальные проблемы.  Диски "
+"могут быть слишком малы, слишком медленны или недостаточно надежны для "
+"соответствия требованиям системы.  Хотя диски становятся больше, требования "
+"к хранению данных также растут.  Часто требуется файловая система, размер "
+"которой превышает емкость одного диска.  Были предложены и реализованы "
+"различные решения этих проблем."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:66
@@ -70,6 +76,15 @@ msgid ""
 "than traditional disk storage and implements `RAID`-0, `RAID`-1, and "
 "`RAID`-5 models, both individually and in combination."
 msgstr ""
+"Один из методов заключается в использовании нескольких, а иногда и "
+"избыточных дисков. Помимо поддержки различных карт и контроллеров для "
+"аппаратных систем RAID (Redundant Array of Independent Disks), базовая "
+"система FreeBSD включает менеджер томов [.filename]#vinum#, драйвер блочных "
+"устройств, который реализует виртуальные диски и решает эти три проблемы. [."
+"filename]#vinum# обеспечивает большую гибкость, производительность и "
+"надежность по сравнению с традиционными системами хранения данных, а также "
+"реализует модели `RAID`-0, `RAID`-1 и `RAID`-5 как по отдельности, так и в "
+"комбинации."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:68
@@ -77,6 +92,8 @@ msgid ""
 "This chapter provides an overview of potential problems with traditional "
 "disk storage, and an introduction to the [.filename]#vinum# volume manager."
 msgstr ""
+"Эта глава предоставляет обзор потенциальных проблем с традиционным дисковым "
+"хранилищем и введение в менеджер томов [.filename]#vinum#."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/vinum/_index.adoc:73
@@ -85,6 +102,9 @@ msgid ""
 "advised to migrate to man:gconcat[8], man:gmirror[8], man:gstripe[8], "
 "man:graid[8], or man:zfs[8]."
 msgstr ""
+"vinum устарел и отсутствует в FreeBSD 15.0 и более поздних версиях. "
+"Пользователям рекомендуется перейти на man:gconcat[8], man:gmirror[8], "
+"man:gstripe[8], man:graid[8] или man:zfs[8]."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/vinum/_index.adoc:82
@@ -100,12 +120,21 @@ msgid ""
 "original [.filename]#vinum# implementation is no longer available in the "
 "code base."
 msgstr ""
+"Начиная с FreeBSD 5, [.filename]#vinum# был переписан для интеграции в "
+"extref:{handbook}geom/[архитектуру GEOM, geom-synopsis], сохраняя при этом "
+"оригинальные идеи, терминологию и метаданные на диске. Эта переработанная "
+"версия называется _gvinum_ (от _GEOM vinum_). Хотя в этой главе используется "
+"термин [.filename]#vinum#, все команды должны выполняться с помощью `gvinum`"
+". Имя модуля ядра изменилось с оригинального [.filename]#vinum.ko# на [."
+"filename]#geom_vinum.ko#, а все узлы устройств находятся в [.filename]#/dev/"
+"gvinum# вместо [.filename]#/dev/vinum#. Начиная с FreeBSD 6, оригинальная "
+"реализация [.filename]#vinum# больше не доступна в кодовой базе."
 
 #. type: Title ==
 #: documentation/content/en/articles/vinum/_index.adoc:85
 #, no-wrap
 msgid "Access Bottlenecks"
-msgstr ""
+msgstr "Узкие места доступа"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:89
@@ -115,6 +144,11 @@ msgid ""
 "concurrent sessions and have multiple 100 Mbit/s connections to the outside "
 "world, well beyond the sustained transfer rate of most disks."
 msgstr ""
+"Современные системы часто нуждаются в доступе к данным в условиях высокой "
+"параллельности. Например, крупные FTP- или HTTP-серверы могут поддерживать "
+"тысячи одновременных сеансов и иметь несколько 100 Мбит/с соединений с "
+"внешним миром, что значительно превышает устойчивую скорость передачи "
+"большинства дисков."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:93
@@ -127,6 +161,13 @@ msgid ""
 "load that a transfer places on the subsystem, or the time for which a "
 "transfer occupies the drives involved in the transfer."
 msgstr ""
+"Современные дисковые накопители могут передавать данные последовательно со "
+"скоростью до 70 МБ/с, но это значение имеет мало значения в среде, где "
+"множество независимых процессов обращаются к накопителю и могут достичь лишь "
+"доли этих значений. В таких случаях более интересно рассмотреть проблему с "
+"точки зрения дисковой подсистемы. Важным параметром является нагрузка, "
+"которую передача данных создаёт на подсистему, или время, в течение которого "
+"передача занимает задействованные накопители."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:96
@@ -136,6 +177,10 @@ msgid ""
 "These actions can be considered to be atomic as it does not make any sense "
 "to interrupt them."
 msgstr ""
+"При любом переносе данных на диск сначала необходимо позиционировать "
+"головки, дождаться, пока первый сектор окажется под считывающей головкой, а "
+"затем выполнить перенос. Эти действия можно считать атомарными, так как их "
+"прерывание не имеет смысла."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:101
@@ -148,6 +193,13 @@ msgid ""
 "case, the effective transfer rate drops to a little over 1 MB/s and is "
 "clearly highly dependent on the transfer size."
 msgstr ""
+"[[vinum-latency]] Рассмотрим типичную передачу около 10 КБ: современные "
+"высокопроизводительные диски могут позиционировать головки в среднем за 3,5 "
+"мс. Самые быстрые диски вращаются со скоростью 15 000 об/мин, поэтому "
+"средняя задержка вращения (половина оборота) составляет 2 мс. При скорости "
+"70 МБ/с сама передача занимает около 150 мкс, что почти ничто по сравнению с "
+"временем позиционирования. В таком случае эффективная скорость передачи "
+"падает до чуть более 1 МБ/с и явно сильно зависит от размера передачи."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:104
@@ -158,6 +210,11 @@ msgid ""
 "transferring independently, so the effective throughput increases by a "
 "factor close to the number of disks used."
 msgstr ""
+"Традиционное и очевидное решение этой проблемы — «больше дисков»: вместо "
+"одного большого диска использовать несколько дисков меньшего размера с тем "
+"же общим объёмом хранилища. Каждый диск способен позиционироваться и "
+"передавать данные независимо, поэтому эффективная пропускная способность "
+"увеличивается почти пропорционально количеству используемых дисков."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:108
@@ -167,6 +224,11 @@ msgid ""
 "is no way to ensure that the requests are evenly distributed across the "
 "drives.  Inevitably the load on one drive will be higher than on another."
 msgstr ""
+"Фактическое увеличение пропускной способности меньше, чем количество "
+"задействованных дисков. Хотя каждый диск способен передавать данные "
+"параллельно, нет возможности гарантировать равномерное распределение "
+"запросов между дисками. Неизбежно нагрузка на один диск будет выше, чем на "
+"другой."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:116
@@ -186,12 +248,26 @@ msgid ""
 "Organization] illustrates the sequence in which storage units are allocated "
 "in a concatenated organization."
 msgstr ""
+"Равномерность нагрузки на диски сильно зависит от способа распределения "
+"данных по накопителям. В дальнейшем обсуждении удобно представлять дисковое "
+"хранилище как большое количество секторов данных, адресуемых по номерам, "
+"подобно страницам в книге. Наиболее очевидный метод — разделить виртуальный "
+"диск на группы последовательных секторов размером с отдельные физические "
+"диски и хранить их таким образом, как если бы большую книгу разорвали на "
+"меньшие разделы. Этот метод называется _ объединением (конкатенацией)_ и "
+"имеет преимущество в том, что диски не требуют каких-либо определённых "
+"соотношений размеров. Он хорошо работает, когда доступ к виртуальному диску "
+"равномерно распределён по его адресному пространству. Если доступ "
+"сосредоточен на меньшей области, улучшение менее заметно. crossref:vinum"
+"[vinum-concat, Организация методом объединения] иллюстрирует "
+"последовательность выделения блоков хранения в организации методом "
+"объединения."
 
 #. type: Block title
 #: documentation/content/en/articles/vinum/_index.adoc:118
 #, no-wrap
 msgid "Concatenated Organization"
-msgstr ""
+msgstr "Организация методом объединения"
 
 #. type: Target for macro image
 #: documentation/content/en/articles/vinum/_index.adoc:119
@@ -209,6 +285,13 @@ msgid ""
 "process repeats until the disks are full.  This mapping is called _striping_ "
 "or RAID-0."
 msgstr ""
+"Альтернативный метод распределения заключается в разделении адресного "
+"пространства на меньшие равные по размеру компоненты и их последовательном "
+"хранении на разных устройствах. Например, первые 256 секторов могут "
+"храниться на первом диске, следующие 256 секторов — на следующем диске и так "
+"далее. После заполнения последнего диска процесс повторяется, пока все диски "
+"не будут заполнены. Такой метод называется _чередованием (striping)_ или "
+"RAID-0."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:129
@@ -221,12 +304,20 @@ msgid ""
 "Organization] illustrates the sequence in which storage units are allocated "
 "in a striped organization."
 msgstr ""
+"`RAID` предлагает различные формы отказоустойчивости, хотя RAID-0 несколько "
+"вводит в заблуждение, так как не обеспечивает избыточности. Разделение "
+"данных требует несколько больше усилий для их поиска и может создавать "
+"дополнительную нагрузку ввода-вывода, когда передача распределяется по "
+"нескольким дискам, но также может обеспечить более равномерную нагрузку на "
+"диски. crossref:vinum[vinum-striped,Организация методом чередования] "
+"иллюстрирует последовательность, в которой организуется распределение блоков "
+"хранения с чередованием."
 
 #. type: Block title
 #: documentation/content/en/articles/vinum/_index.adoc:131
 #, no-wrap
 msgid "Striped Organization"
-msgstr ""
+msgstr "Организация методом чередования"
 
 #. type: Target for macro image
 #: documentation/content/en/articles/vinum/_index.adoc:132
@@ -238,7 +329,7 @@ msgstr "vinum-striped.png"
 #: documentation/content/en/articles/vinum/_index.adoc:135
 #, no-wrap
 msgid "Data Integrity"
-msgstr ""
+msgstr "Целостность данных"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:140
@@ -249,6 +340,11 @@ msgid ""
 "the results can be catastrophic and replacing a failed disk drive and "
 "restoring data can result in server downtime."
 msgstr ""
+"Последняя проблема с дисками заключается в их ненадёжности. Хотя надёжность "
+"значительно повысилась за последние годы, дисковые накопители остаются "
+"наиболее вероятным компонентом сервера, который может выйти из строя. Когда "
+"это происходит, последствия могут быть катастрофическими, а замена вышедшего "
+"из строя диска и восстановление данных могут привести к простою сервера."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:143
@@ -258,16 +354,23 @@ msgid ""
 "writes to both disks; a read can be satisfied from either, so if one drive "
 "fails, the data is still available on the other drive."
 msgstr ""
+"Один из подходов к этой проблеме — _зеркалирование_, или `RAID-1`, при "
+"котором данные хранятся в двух экземплярах на разных физических носителях. "
+"Любая запись на том записывается на оба диска; чтение может выполняться с "
+"любого из них, поэтому при отказе одного диска данные остаются доступны на "
+"другом."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:145
 msgid "Mirroring has two problems:"
-msgstr ""
+msgstr "Зеркалирование имеет две проблемы:"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:147
 msgid "It requires twice as much disk storage as a non-redundant solution."
 msgstr ""
+"Требуется в два раза больше дискового пространства, чем для решения без "
+"избыточности."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:148
@@ -276,6 +379,9 @@ msgid ""
 "of a non-mirrored volume. Reads do not suffer from a performance penalty and "
 "can even be faster."
 msgstr ""
+"Запись должна выполняться на оба диска, поэтому она занимает в два раза "
+"больше пропускной способности, чем в незеркалированном томе. Чтение не "
+"страдает от потери производительности и может быть даже быстрее."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:155
@@ -290,12 +396,21 @@ msgid ""
 "from one stripe to the next.  The numbers in the data blocks indicate the "
 "relative block numbers."
 msgstr ""
+"Альтернативным решением является _четность_, реализованная в уровнях `RAID` "
+"2, 3, 4 и 5. Из них `RAID-5` представляет наибольший интерес. В реализации [."
+"filename]#vinum# это вариант организации с чередованием, где один блок "
+"каждой полосы выделяется под четность одного из других блоков. В реализации ["
+".filename]#vinum# плекс `RAID-5` аналогичен плексу с чередованием, за "
+"исключением того, что он реализует `RAID-5`, включая блок четности в каждую "
+"полосу. Как требуется в `RAID-5`, расположение этого блока четности меняется "
+"от одной полосы к другой. Числа в блоках данных обозначают относительные "
+"номера блоков."
 
 #. type: Block title
 #: documentation/content/en/articles/vinum/_index.adoc:157
 #, no-wrap
 msgid "`RAID`-5 Organization"
-msgstr ""
+msgstr "Организация `RAID`-5"
 
 #. type: Target for macro image
 #: documentation/content/en/articles/vinum/_index.adoc:158
@@ -314,12 +429,20 @@ msgid ""
 "drives continues normally, but a read from the failed drive is recalculated "
 "from the corresponding block from all the remaining drives."
 msgstr ""
+"По сравнению с зеркалированием, `RAID-5` имеет преимущество в виде "
+"значительно меньшего требуемого объема хранилища. Скорость чтения аналогична "
+"таковой при чередующейся организации, но скорость записи значительно ниже — "
+"примерно 25% от скорости чтения. Если один диск выходит из строя, массив "
+"может продолжать работу в деградировавшем режиме, при котором чтение с "
+"оставшихся доступных дисков продолжается в обычном режиме, а чтение с "
+"отказавшего диска пересчитывается из соответствующих блоков всех оставшихся "
+"дисков."
 
 #. type: Title ==
 #: documentation/content/en/articles/vinum/_index.adoc:165
 #, no-wrap
 msgid "[.filename]#vinum# Objects"
-msgstr ""
+msgstr "Объекты [.filename]#vinum#"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:168
@@ -327,6 +450,8 @@ msgid ""
 "To address these problems, [.filename]#vinum# implements a four-level "
 "hierarchy of objects:"
 msgstr ""
+"Для решения этих проблем [.filename]#vinum# реализует четырёхуровневую "
+"иерархию объектов:"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:170
@@ -335,6 +460,10 @@ msgid ""
 "essentially the same properties as a UNIX(R) disk drive, though there are "
 "some minor differences. For one, they have no size limitations."
 msgstr ""
+"Наиболее заметным объектом является виртуальный диск, называемый _томом_. "
+"Том обладает практически теми же свойствами, что и UNIX(R) дисковый "
+"накопитель, хотя есть некоторые незначительные отличия. Например, у тома нет "
+"ограничений по размеру."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:171
@@ -344,6 +473,10 @@ msgid ""
 "plexes as individual disks in a mirrored array, each containing the same "
 "data."
 msgstr ""
+"Тома состоят из _плексов_, каждый из которых представляет полное адресное "
+"пространство тома. Этот уровень в иерархии обеспечивает избыточность. Можно "
+"представить плексы как отдельные диски в зеркальном массиве, каждый из "
+"которых содержит одинаковые данные."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:172
@@ -356,6 +489,14 @@ msgid ""
 "contiguous areas called _subdisks_, which are used as building blocks for "
 "plexes."
 msgstr ""
+"Поскольку [.filename]#vinum# существует в рамках системы хранения данных "
+"UNIX(R), можно было бы использовать разделы UNIX(R) в качестве строительных "
+"блоков для многодисковых plexes. Однако на практике это оказывается слишком "
+"негибким, так как диски UNIX(R) могут иметь только ограниченное количество "
+"разделов. Вместо этого [.filename]#vinum# разбивает единственный раздел "
+"UNIX(R), называемый _дисковый раздел (drive)_, на непрерывные области, "
+"называемые _поддисками (subdisk)_, которые используются как строительные "
+"блоки для плексов."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:173
@@ -366,6 +507,11 @@ msgid ""
 "storing configuration and state information, the entire drive is available "
 "for data storage."
 msgstr ""
+"Поддиски располагаются на _дисковых разделах_ [.filename]#vinum#, в "
+"настоящее время это разделы UNIX(R). Разделы [.filename]#vinum# могут "
+"содержать любое количество поддисков. За исключением небольшой области в "
+"начале раздела, которая используется для хранения конфигурации и состояния, "
+"весь раздел доступен для хранения данных."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:175
@@ -373,12 +519,14 @@ msgid ""
 "The following sections describe the way these objects provide the "
 "functionality required of [.filename]#vinum#."
 msgstr ""
+"Следующие разделы статьи описывают, каким образом эти объекты обеспечивают "
+"функциональность, требуемую для [.filename]#vinum#."
 
 #. type: Title ===
 #: documentation/content/en/articles/vinum/_index.adoc:176
 #, no-wrap
 msgid "Volume Size Considerations"
-msgstr ""
+msgstr "Учет размера томов"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:180
@@ -387,12 +535,15 @@ msgid ""
 "[.filename]#vinum# configuration.  As a result, the size of an individual "
 "drive does not limit the size of a plex or a volume."
 msgstr ""
+"Плексы могут включать несколько поддисков, распределенных по всем дискам в "
+"конфигурации [.filename]#vinum#. В результате, размер отдельного диска не "
+"ограничивает размер плекса или тома."
 
 #. type: Title ===
 #: documentation/content/en/articles/vinum/_index.adoc:181
 #, no-wrap
 msgid "Redundant Data Storage"
-msgstr ""
+msgstr "Избыточное хранение данных"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:186
@@ -401,6 +552,9 @@ msgid ""
 "volume.  Each plex is a representation of the data in a volume.  A volume "
 "may contain between one and eight plexes."
 msgstr ""
+"[.filename]#vinum# реализует зеркалирование путем присоединения нескольких "
+"плекс к тому. Каждый плекс представляет данные в томе. Том может содержать "
+"от одного до восьми плексов."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:189
@@ -411,12 +565,17 @@ msgid ""
 "the failure of a drive).  As long as at least one plex can provide the data "
 "for the complete address range of the volume, the volume is fully functional."
 msgstr ""
+"Хотя плекс представляет полные данные тома, возможно, что некоторые части "
+"представления физически отсутствуют — либо по замыслу (если поддиск для "
+"частей плекса не определён), либо случайно (в результате выхода диска из "
+"строя). До тех пор, пока хотя бы один плекс может предоставить данные для "
+"полного адресного пространства тома, том остаётся полностью работоспособным."
 
 #. type: Title ===
 #: documentation/content/en/articles/vinum/_index.adoc:190
 #, no-wrap
 msgid "Which Plex Organization?"
-msgstr ""
+msgstr "Какую организацию плексов выбрать?"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:193
@@ -424,6 +583,8 @@ msgid ""
 "[.filename]#vinum# implements both concatenation and striping at the plex "
 "level:"
 msgstr ""
+"[.filename]#vinum# реализует как объединение, так и чередование на уровне "
+"плекс:"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:195
@@ -436,6 +597,14 @@ msgid ""
 "the other hand, they are most susceptible to hot spots, where one disk is "
 "very active and others are idle."
 msgstr ""
+"_Плекс с объединением_ использует адресное пространство каждого поддиска по "
+"очереди. Объединённые плексы являются наиболее гибкими, так как могут "
+"содержать любое количество поддисков, а поддиски могут быть разной длины. "
+"Плекс может быть расширен путём добавления дополнительных поддисков. Они "
+"требуют меньше процессорного времени, чем чередующиеся плексы, хотя разница "
+"в нагрузке на процессор незначительна. С другой стороны, они наиболее "
+"подвержены \"горячим точкам\", когда один диск очень активен, а другие "
+"простаивают."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:196
@@ -448,6 +617,14 @@ msgid ""
 "adding new subdisks is so complicated that [.filename]#vinum# does not "
 "implement it."
 msgstr ""
+"_Плекс с чередованием_ распределяет данные по каждому поддиску. Поддиски "
+"должны быть одного размера, и их должно быть как минимум два, чтобы отличить "
+"такой плекс от объединенного. Главное преимущество чередующихся плексов в "
+"том, что они уменьшают вероятность появления \"горячих точек\". Выбрав "
+"оптимальный размер полосы (около 256 КБ), можно равномерно распределить "
+"нагрузку на диски – компоненты системы. Расширение плекса путем добавления "
+"новых поддисков настолько сложно, что [.filename]#vinum# не реализует эту "
+"возможность."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:198
@@ -455,36 +632,38 @@ msgid ""
 "crossref:vinum[vinum-comparison, [.filename]#vinum# Plex Organizations] "
 "summarizes the advantages and disadvantages of each plex organization."
 msgstr ""
+"crossref:vinum[vinum-comparison, Организации плексов в [.filename]#vinum#] "
+"обобщает преимущества и недостатки каждой организации плексов."
 
 #. type: Block title
 #: documentation/content/en/articles/vinum/_index.adoc:200
 #, no-wrap
 msgid "[.filename]#vinum# Plex Organizations"
-msgstr ""
+msgstr "Организации плексов в [.filename]#vinum#"
 
 #. type: Table
 #: documentation/content/en/articles/vinum/_index.adoc:204
 #, no-wrap
 msgid "Plex type"
-msgstr ""
+msgstr "Тип плекса"
 
 #. type: Table
 #: documentation/content/en/articles/vinum/_index.adoc:205
 #, no-wrap
 msgid "Minimum subdisks"
-msgstr ""
+msgstr "Минимальное количество поддисков"
 
 #. type: Table
 #: documentation/content/en/articles/vinum/_index.adoc:206
 #, no-wrap
 msgid "Can add subdisks"
-msgstr ""
+msgstr "Может добавлять поддиски"
 
 #. type: Table
 #: documentation/content/en/articles/vinum/_index.adoc:207
 #, no-wrap
 msgid "Must be equal size"
-msgstr ""
+msgstr "Должен быть равного размера"
 
 #. type: Table
 #: documentation/content/en/articles/vinum/_index.adoc:209
@@ -496,7 +675,7 @@ msgstr "Приложение"
 #: documentation/content/en/articles/vinum/_index.adoc:210
 #, no-wrap
 msgid "concatenated"
-msgstr ""
+msgstr "объединённый"
 
 #. type: Table
 #: documentation/content/en/articles/vinum/_index.adoc:211
@@ -509,7 +688,7 @@ msgstr "1"
 #: documentation/content/en/articles/vinum/_index.adoc:219
 #, no-wrap
 msgid "yes"
-msgstr ""
+msgstr "да"
 
 #. type: Table
 #: documentation/content/en/articles/vinum/_index.adoc:213
@@ -523,12 +702,14 @@ msgstr "no"
 #, no-wrap
 msgid "Large data storage with maximum placement flexibility and moderate performance"
 msgstr ""
+"Крупное хранилище данных с максимальной гибкостью размещения и умеренной "
+"производительностью"
 
 #. type: Table
 #: documentation/content/en/articles/vinum/_index.adoc:216
 #, no-wrap
 msgid "striped"
-msgstr ""
+msgstr "чередуемый"
 
 #. type: Table
 #: documentation/content/en/articles/vinum/_index.adoc:217
@@ -540,13 +721,13 @@ msgstr "2"
 #: documentation/content/en/articles/vinum/_index.adoc:220
 #, no-wrap
 msgid "High performance in combination with highly concurrent access"
-msgstr ""
+msgstr "Высокая производительность в сочетании с высокопараллельным доступом"
 
 #. type: Title ==
 #: documentation/content/en/articles/vinum/_index.adoc:223
 #, no-wrap
 msgid "Some Examples"
-msgstr ""
+msgstr "Некоторые примеры"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:229
@@ -559,6 +740,14 @@ msgid ""
 "on each state change, so that a restart accurately restores the state of "
 "each [.filename]#vinum# object."
 msgstr ""
+"[.filename]#vinum# поддерживает _базу данных конфигурации_, которая "
+"описывает объекты, известные конкретной системе. Первоначально пользователь "
+"создает базу данных конфигурации из одного или нескольких конфигурационных "
+"файлов с помощью man:gvinum[8]. [.filename]#vinum# хранит копию своей базы "
+"данных конфигурации на каждом _устройстве_ диска, находящемся под его "
+"управлением. Эта база данных обновляется при каждом изменении состояния, так "
+"что перезапуск точно восстанавливает состояние каждого объекта [."
+"filename]#vinum#."
 
 #. type: Title ===
 #: documentation/content/en/articles/vinum/_index.adoc:230
@@ -572,6 +761,8 @@ msgid ""
 "The configuration file describes individual [.filename]#vinum# objects.  The "
 "definition of a simple volume might be:"
 msgstr ""
+"Файл конфигурации описывает отдельные объекты [.filename]#vinum#. "
+"Определение простого тома может выглядеть следующим образом:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:241
@@ -590,7 +781,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:244
 msgid "This file describes four [.filename]#vinum# objects:"
-msgstr ""
+msgstr "Этот файл описывает четыре объекта [.filename]#vinum#:"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:246
@@ -600,6 +791,10 @@ msgid ""
 "separation of symbolic names from device names allows disks to be moved from "
 "one location to another without confusion."
 msgstr ""
+"Строка _drive_ описывает раздел диска (_drive_) и его расположение "
+"относительно оборудования, на котором он расположен. Ему присваивается "
+"символическое имя _a_. Такое разделение символических имён от имён устройств "
+"позволяет перемещать диски из одного места в другое без путаницы."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:247
@@ -607,6 +802,8 @@ msgid ""
 "The _volume_ line describes a volume. The only required attribute is the "
 "name, in this case _myvol_."
 msgstr ""
+"Строка _volume_ описывает том. Единственный обязательный атрибут — это имя, "
+"в данном случае _myvol_."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:248
@@ -617,6 +814,10 @@ msgid ""
 "_.px_, where _x_ is the number of the plex in the volume. Thus this plex "
 "will be called _myvol.p0_."
 msgstr ""
+"Строка _plex_ определяет плекс. Единственный обязательный параметр — это "
+"организация, в данном случае _concat_. Имя не требуется, так как система "
+"автоматически генерирует его из имени тома, добавляя суффикс _.px_, где _x_ —"
+" номер плекса в томе. Таким образом, этот плекс будет называться _myvol.p0_."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:249
@@ -627,12 +828,19 @@ msgid ""
 "name by adding the suffix _.sx_, where _x_ is the number of the subdisk in "
 "the plex. Thus [.filename]#vinum# gives this subdisk the name _myvol.p0.s0_."
 msgstr ""
+"Строка _sd_ описывает поддиск. Минимальные требования — это имя диска для "
+"его хранения и длина поддиска. Имя не обязательно, так как система "
+"автоматически назначает имена, производные от имени плекса, добавляя суффикс "
+"_.sx_, где _x_ — номер поддиска в плексе. Таким образом, [.filename]#vinum# "
+"присваивает этому поддиску имя _myvol.p0.s0_."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:251
 msgid ""
 "After processing this file, man:gvinum[8] produces the following output:"
 msgstr ""
+"После обработки этого файла команда man:gvinum[8] выводит следующий "
+"результат:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:261
@@ -688,12 +896,15 @@ msgid ""
 "represented graphically in crossref:vinum[vinum-simple-vol, A Simple "
 "[.filename]#vinum# Volume]."
 msgstr ""
+"Этот вывод показывает краткий формат списка man:gvinum[8]. Он представлен "
+"графически в crossref:vinum[vinum-simple-vol, Простой том [."
+"filename]#vinum#]."
 
 #. type: Block title
 #: documentation/content/en/articles/vinum/_index.adoc:275
 #, no-wrap
 msgid "A Simple [.filename]#vinum# Volume"
-msgstr ""
+msgstr "Простой том [.filename]#vinum#"
 
 #. type: Target for macro image
 #: documentation/content/en/articles/vinum/_index.adoc:276
@@ -708,6 +919,9 @@ msgid ""
 "the plexes, which in turn contains the subdisks.  In this example, the "
 "volume contains one plex, and the plex contains one subdisk."
 msgstr ""
+"Этот рисунок и следующие представляют том, который содержит плексы, которые, "
+"в свою очередь, содержат поддиски. В этом примере том содержит один плекс, а "
+"плекс содержит один поддиск."
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:285
@@ -718,12 +932,17 @@ msgid ""
 "from a conventional disk partition.  The following sections illustrate "
 "various more interesting configuration methods."
 msgstr ""
+"Этот конкретный том не имеет особых преимуществ по сравнению с обычным "
+"разделом диска. Он содержит один плекс, поэтому не является избыточным. "
+"Плекс содержит один поддиск, поэтому нет различий в распределении хранилища "
+"по сравнению с обычным разделом диска. В следующих разделах показаны "
+"различные более интересные методы конфигурации."
 
 #. type: Title ===
 #: documentation/content/en/articles/vinum/_index.adoc:286
 #, no-wrap
 msgid "Increased Resilience: Mirroring"
-msgstr ""
+msgstr "Увеличенная отказоустойчивость: зеркалирование"
 
 #. type: Plain text
 #: documentation/content/en/articles/vinum/_index.adoc:291
@@ -733,6 +952,10 @@ msgid ""
 "are on different drives, so that a drive failure will not take down both "
 "plexes.  The following configuration mirrors a volume:"
 msgstr ""
+"Устойчивость тома может быть повышена за счёт зеркалирования. При создании "
+"зеркального тома важно убедиться, что поддиски каждого плекса находятся на "
+"разных дисках, чтобы выход из строя одного диска не затронул оба плекса. "
+"Следующая конфигурация создаёт зеркальный том:"
 
 #. type: delimited block . 4
 #: documentation/content/en/articles/vinum/_index.adoc:300
