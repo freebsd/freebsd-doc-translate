@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2024-09-14 15:00-0300\n"
-"PO-Revision-Date: 2025-08-08 04:45+0000\n"
+"PO-Revision-Date: 2025-08-11 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/articlesrc-scripting_index/ru/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #. type: YAML Front Matter: description
 #: documentation/content/en/articles/rc-scripting/_index.adoc:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "A guide to writing new rc.d scripts and understanding those already written"
 msgstr ""
 "Руководство по написанию новых rc.d-скриптов и пониманию уже существующих"
@@ -28,9 +28,9 @@ msgstr ""
 #. type: Title =
 #: documentation/content/en/articles/rc-scripting/_index.adoc:1
 #: documentation/content/en/articles/rc-scripting/_index.adoc:12
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Practical rc.d scripting in BSD"
-msgstr "Практическое написание rc.d скриптов в BSD"
+msgstr "Практическое руководство по написанию rc.d скриптов в BSD"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:45
@@ -39,7 +39,6 @@ msgstr "Аннотация"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:49
-#, fuzzy
 msgid ""
 "Beginners may find it difficult to relate the facts from the formal "
 "documentation on the BSD [.filename]#rc.d# framework with the practical "
@@ -70,7 +69,6 @@ msgstr "Введение"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:61
-#, fuzzy
 msgid ""
 "The historical BSD had a monolithic startup script, [.filename]#/etc/rc#.  "
 "It was invoked by man:init[8] at system boot time and performed all userland "
@@ -90,7 +88,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:67
-#, fuzzy
 msgid ""
 "The real problem with the monolithic approach was that it provided no "
 "control over the individual components started from [.filename]#/etc/rc#.  "
@@ -117,7 +114,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:74
-#, fuzzy
 msgid ""
 "Later there was an attempt to split out some parts of [.filename]#/etc/rc# "
 "for the sake of starting the most important subsystems separately.  The "
@@ -147,7 +143,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:82
-#, fuzzy
 msgid ""
 "Without a clean and well-designed framework, the startup scripts had to bend "
 "over backwards to satisfy the needs of rapidly developing BSD-based "
@@ -172,7 +167,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:93
-#, fuzzy
 msgid ""
 "The basic ideas behind BSD [.filename]#rc.d# are _fine modularity_ and "
 "__code reuse__.  _Fine modularity_ means that each basic \"service\" such as "
@@ -217,7 +211,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:101
-#, fuzzy
 msgid ""
 "The BSD [.filename]#rc.d# design is described in crossref:rc-"
 "scripting[lukem, the original article by Luke Mewburn], and the [."
@@ -249,7 +242,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:105
-#, fuzzy
 msgid ""
 "There are prerequisites to understanding this article.  First of all, you "
 "should be familiar with the man:sh[1] scripting language to master [."
@@ -264,7 +256,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:108
-#, fuzzy
 msgid ""
 "This article focuses on the FreeBSD branch of [.filename]#rc.d#.  "
 "Nevertheless, it may be useful to NetBSD developers, too, because the two "
@@ -278,13 +269,12 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:110
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Outlining the task"
 msgstr "Обрисовка задачи"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:114
-#, fuzzy
 msgid ""
 "A little consideration before starting `$EDITOR` will not hurt.  To write a "
 "well-tempered [.filename]#rc.d# script for a system service, we should be "
@@ -296,13 +286,11 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:116
-#, fuzzy
 msgid "Is the service mandatory or optional?"
 msgstr "Является ли служба обязательной или опциональной?"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:117
-#, fuzzy
 msgid ""
 "Will the script serve a single program, e.g., a daemon, or perform more "
 "complex actions?"
@@ -312,13 +300,11 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:118
-#, fuzzy
 msgid "Which other services will our service depend on, and vice versa?"
 msgstr "От каких других служб зависит наша служба, и наоборот?"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:120
-#, fuzzy
 msgid ""
 "From the examples that follow we will see why it is important to know the "
 "answers to these questions."
@@ -327,13 +313,12 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:122
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "A dummy script"
-msgstr "Фиктивный скрипт"
+msgstr "Примитивный скрипт"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:125
-#, fuzzy
 msgid ""
 "The following script just emits a message each time the system boots up:"
 msgstr ""
@@ -389,13 +374,11 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:146
-#, fuzzy
 msgid "Things to note are:"
 msgstr "Вот что следует учитывать:"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:152
-#, fuzzy
 msgid ""
 "&#10122; An interpreted script should begin with the magic \"shebang\" "
 "line.  That line specifies the interpreter program for the script.  Due to "
@@ -418,7 +401,6 @@ msgstr "# /etc/rc.d/dummy start\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:162
-#, fuzzy
 msgid ""
 "To be properly managed by the [.filename]#rc.d# framework, its scripts need "
 "to be written in the man:sh[1] language.  If you have a service or port that "
@@ -436,7 +418,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:167
-#, fuzzy
 msgid ""
 "If you would like to learn the details of why [.filename]#rc.d# scripts must "
 "be written in the man:sh[1] language, see how [.filename]#/etc/rc# invokes "
@@ -450,7 +431,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:173
-#, fuzzy
 msgid ""
 "&#10123; In [.filename]#/etc/rc.subr#, a number of man:sh[1] functions are "
 "defined for an [.filename]#rc.d# script to use.  The functions are "
@@ -470,7 +450,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:176
-#, fuzzy
 msgid ""
 "An [.filename]#rc.d# script must \"source\"[.filename]#/etc/rc.subr# "
 "(include it using \"`.`\") _before_ it calls man:rc.subr[8] functions so "
@@ -479,12 +458,11 @@ msgid ""
 msgstr ""
 "Файл [.filename]#rc.d# должен \"подгрузить\" ([.filename]#/etc/rc.subr#, "
 "включить его с помощью \"`.`\") _до_ вызова функций man:rc.subr[8], чтобы у "
-"man:sh[1] была возможность изучить эти функции. Предпочтительный стиль — "
-"подгружать [.filename]#/etc/rc.subr# в самом начале."
+"man:sh[1] была возможность знать об этих функциях заранее. Предпочтительный "
+"стиль — подгружать [.filename]#/etc/rc.subr# в самом начале."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:180
-#, fuzzy
 msgid ""
 "Some useful functions related to networking are provided by another include "
 "file, [.filename]#/etc/network.subr#."
@@ -494,7 +472,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:185
-#, fuzzy
 msgid ""
 "&#10124; [[name-var]]The mandatory variable `name` specifies the name of our "
 "script.  It is required by man:rc.subr[8].  That is, each [.filename]#rc.d# "
@@ -507,7 +484,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:191
-#, fuzzy
 msgid ""
 "Now it is the right time to choose a unique name for our script once and for "
 "all.  We will use it in a number of places while developing the script.  The "
@@ -527,7 +503,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:198
-#, fuzzy
 msgid ""
 "The current style of [.filename]#rc.d# scripting is to enclose values "
 "assigned to variables in double quotes.  Keep in mind that it is just a "
@@ -548,7 +523,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:204
-#, fuzzy
 msgid ""
 "&#10125; The main idea behind man:rc.subr[8] is that an [.filename]#rc.d# "
 "script provides handlers, or methods, for man:rc.subr[8] to invoke.  In "
@@ -569,7 +543,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:209
-#, fuzzy
 msgid ""
 "To make the code in [.filename]#rc.d# more uniform, it is common to use "
 "`${name}` wherever appropriate.  Thus a number of lines can be just copied "
@@ -581,7 +554,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:213
-#, fuzzy
 msgid ""
 "&#10126; We should keep in mind that man:rc.subr[8] provides default methods "
 "for the standard arguments.  Consequently, we must override a standard "
@@ -594,7 +566,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:216
-#, fuzzy
 msgid ""
 "&#10127; The body of a sophisticated method can be implemented as a "
 "function.  It is a good idea to make the function name meaningful."
@@ -604,7 +575,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:220
-#, fuzzy
 msgid ""
 "It is strongly recommended to add the prefix `${name}` to the names of all "
 "functions defined in our script so they never clash with the functions from "
@@ -616,7 +586,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:224
-#, fuzzy
 msgid ""
 "&#10128; This call to man:rc.subr[8] loads man:rc.conf[5] variables.  Our "
 "script makes no use of them yet, but it still is recommended to load man:rc."
@@ -630,7 +599,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:227
-#, fuzzy
 msgid ""
 "&#10129; Usually this is the last command in an [.filename]#rc.d# script.  "
 "It invokes the man:rc.subr[8] machinery to perform the requested action "
@@ -642,13 +610,12 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:229
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "A configurable dummy script"
 msgstr "Настраиваемый фиктивный скрипт"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:239
-#, fuzzy
 msgid ""
 "Now let us add some controls to our dummy script.  As you may know, [."
 "filename]#rc.d# scripts are controlled with man:rc.conf[5].  Fortunately, "
@@ -751,13 +718,11 @@ msgstr "run_rc_command \"$1\"\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:265
-#, fuzzy
 msgid "What changed in this example?"
 msgstr "Что изменилось в этом примере?"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:267
-#, fuzzy
 msgid ""
 "&#10122; The variable `rcvar` specifies the name of the ON/OFF knob variable."
 msgstr ""
@@ -765,7 +730,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:269
-#, fuzzy
 msgid ""
 "&#10123; Now `load_rc_config` is invoked earlier in the script, before any "
 "man:rc.conf[5] variables are accessed."
@@ -775,7 +739,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:275
-#, fuzzy
 msgid ""
 "While examining [.filename]#rc.d# scripts, keep in mind that man:sh[1] "
 "defers the evaluation of expressions in a function until the latter is "
@@ -794,7 +757,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:281
-#, fuzzy
 msgid ""
 "&#10124; A warning will be emitted by `run_rc_command` if `rcvar` itself is "
 "set, but the indicated knob variable is unset.  If your [.filename]#rc.d# "
@@ -813,7 +775,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:288
-#, fuzzy
 msgid ""
 "You can make man:rc.subr[8] act as though the knob is set to `ON`, "
 "irrespective of its current setting, by prefixing the argument to the script "
@@ -839,7 +800,6 @@ msgstr "# /etc/rc.d/dummy onestart\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:299
-#, fuzzy
 msgid ""
 "&#10125; Now the message to be shown at boot time is no longer hard-coded in "
 "the script.  It is specified by an man:rc.conf[5] variable named "
@@ -853,7 +813,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:304
-#, fuzzy
 msgid ""
 "The names of all man:rc.conf[5] variables used exclusively by our script "
 "_must_ have the same prefix: `${name}_`.  For example: `dummy_mode`, "
@@ -865,7 +824,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:309
-#, fuzzy
 msgid ""
 "While it is possible to use a shorter name internally, e.g., just `msg`, "
 "adding the unique prefix `${name}_` to all global names introduced by our "
@@ -879,7 +837,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:312
-#, fuzzy
 msgid ""
 "As a rule, [.filename]#rc.d# scripts of the base system need not provide "
 "defaults for their man:rc.conf[5] variables because the defaults should be "
@@ -895,7 +852,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:316
-#, fuzzy
 msgid ""
 "&#10126; Here we use `dummy_msg` to actually control our script, i.e., to "
 "emit a variable message.  Use of a shell function is overkill here, since it "
@@ -914,13 +870,12 @@ msgstr "start_cmd=\"echo \\\"$dummy_msg\\\"\"\n"
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:323
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Startup and shutdown of a simple daemon"
 msgstr "Запуск и остановка простого демона"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:330
-#, fuzzy
 msgid ""
 "We said earlier that man:rc.subr[8] could provide default methods.  "
 "Obviously, such defaults cannot be too general.  They are suited for the "
@@ -967,7 +922,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:348
-#, fuzzy
 msgid ""
 "Pleasingly simple, isn't it? Let us examine our little script.  The only new "
 "thing to note is as follows:"
@@ -977,7 +931,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:352
-#, fuzzy
 msgid ""
 "&#10122; The `command` variable is meaningful to man:rc.subr[8].  If it is "
 "set, man:rc.subr[8] will act according to the scenario of serving a "
@@ -991,7 +944,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:361
-#, fuzzy
 msgid ""
 "The daemon will be started by running `$command` with command-line flags "
 "specified by `$mumbled_flags`.  Thus all the input data for the default "
@@ -1019,7 +971,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:368
-#, fuzzy
 msgid ""
 "Some programs are in fact executable scripts.  The system runs such a script "
 "by starting its interpreter and passing the name of the script to it as a "
@@ -1037,7 +988,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:374
-#, fuzzy
 msgid ""
 "For each [.filename]#rc.d# script, there is an optional man:rc.conf[5] "
 "variable that takes precedence over `command`.  Its name is constructed as "
@@ -1055,7 +1005,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:378
-#, fuzzy
 msgid ""
 "Of course, man:sh[1] will permit you to set `${name}_program` from man:rc."
 "conf[5] or the script itself even if `command` is unset.  In that case, the "
@@ -1073,7 +1022,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:381
-#, fuzzy
 msgid ""
 "For more detailed information on default methods, refer to man:rc.subr[8]."
 msgstr ""
@@ -1082,13 +1030,12 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:383
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Startup and shutdown of an advanced daemon"
 msgstr "Запуск и остановка продвинутого демона"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:388
-#, fuzzy
 msgid ""
 "Let us add some meat onto the bones of the previous script and make it more "
 "complex and featureful.  The default methods can do a good job for us, but "
@@ -1217,7 +1164,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:448
-#, fuzzy
 msgid ""
 "&#10122; Additional arguments to `$command` can be passed in "
 "`command_args`.  They will be added to the command line after "
@@ -1233,7 +1179,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:455
-#, fuzzy
 msgid ""
 "_Never_ include dashed options, like `-X` or `--foo`, in `command_args`.  "
 "The contents of `command_args` will appear at the end of the final command "
@@ -1254,7 +1199,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:459
-#, fuzzy
 msgid ""
 "&#10123; A good-mannered daemon should create a _pidfile_ so that its "
 "process can be found more easily and reliably.  The variable `pidfile`, if "
@@ -1268,7 +1212,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:464
-#, fuzzy
 msgid ""
 "In fact, man:rc.subr[8] will also use the pidfile to see if the daemon is "
 "already running before starting it.  This check can be skipped by using the "
@@ -1280,7 +1223,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:469
-#, fuzzy
 msgid ""
 "&#10124; If the daemon cannot run unless certain files exist, just list them "
 "in `required_files`, and man:rc.subr[8] will check that those files do exist "
@@ -1296,7 +1238,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:473
-#, fuzzy
 msgid ""
 "The default method from man:rc.subr[8] can be forced to skip the "
 "prerequisite checks by using `forcestart` as the argument to the script."
@@ -1307,7 +1248,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:479
-#, fuzzy
 msgid ""
 "&#10125; We can customize signals to send to the daemon in case they differ "
 "from the well-known ones.  In particular, `sig_reload` specifies the signal "
@@ -1324,7 +1264,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:484
-#, fuzzy
 msgid ""
 "The signal names should be specified to man:rc.subr[8] without the `SIG` "
 "prefix, as it is shown in the example.  The FreeBSD version of man:kill[1] "
@@ -1336,7 +1275,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:489
-#, fuzzy
 msgid ""
 "&#10126;&#10127; Performing additional tasks before or after the default "
 "methods is easy.  For each command-argument supported by our script, we can "
@@ -1345,14 +1283,13 @@ msgid ""
 "their names."
 msgstr ""
 "&#10126;&#10127; Выполнение дополнительных задач до или после стандартных "
-"методов является простым. Для каждого аргумента команды, поддерживаемого "
-"нашим скриптом, мы можем определить `argument_precmd` и `argument_postcmd`. "
-"Эти команды man:sh[1] вызываются до и после соответствующего метода, что "
+"методов — это просто. Для каждого аргумента команды, поддерживаемого нашим "
+"скриптом, мы можем определить `argument_precmd` и `argument_postcmd`. Эти "
+"команды man:sh[1] вызываются до и после соответствующего метода, что "
 "очевидно из их названий."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:495
-#, fuzzy
 msgid ""
 "Overriding a default method with a custom `argument_cmd` still does not "
 "prevent us from making use of `argument_precmd` or `argument_postcmd` if we "
@@ -1370,7 +1307,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:498
-#, fuzzy
 msgid ""
 "Do not forget that you can cram any valid man:sh[1] expressions into the "
 "methods, pre-, and post-commands you define.  Just invoking a function that "
@@ -1385,7 +1321,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:501
-#, fuzzy
 msgid ""
 "&#10128; If we would like to implement custom arguments, which can also be "
 "thought of as _commands_ to our script, we need to list them in "
@@ -1397,7 +1332,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:509
-#, fuzzy
 msgid ""
 "The `reload` command is special. On the one hand, it has a preset method in "
 "man:rc.subr[8].  On the other hand, `reload` is not offered by default.  The "
@@ -1414,7 +1348,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:513
-#, fuzzy
 msgid ""
 "What do we get from the default method for `reload`? Quite often daemons "
 "reload their configuration upon reception of a signal - typically, SIGHUP.  "
@@ -1430,7 +1363,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:518
-#, fuzzy
 msgid ""
 "&#10129;&#9454; Our script supports two non-standard commands, `plugh` and "
 "`xyzzy`.  We saw them listed in `extra_commands`, and now it is time to "
@@ -1444,7 +1376,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:522
-#, fuzzy
 msgid ""
 "Non-standard commands are not invoked during startup or shutdown.  Usually "
 "they are for the system admin's convenience.  They can also be used from "
@@ -1457,7 +1388,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:525
-#, fuzzy
 msgid ""
 "The full list of available commands can be found in the usage line printed "
 "by man:rc.subr[8] when the script is invoked without arguments.  For "
@@ -1480,7 +1410,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:537
-#, fuzzy
 msgid ""
 "&#9453; A script can invoke its own standard or non-standard commands if "
 "needed.  This may look similar to calling functions, but we know that "
@@ -1500,7 +1429,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:543
-#, fuzzy
 msgid ""
 "&#10130; A handy function named `checkyesno` is provided by man:rc.subr[8].  "
 "It takes a variable name as its argument and returns a zero exit code if and "
@@ -1520,7 +1448,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:545
-#, fuzzy
 msgid ""
 "Keep in mind that for man:sh[1] a zero exit code means true and a non-zero "
 "exit code means false."
@@ -1530,7 +1457,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:550
-#, fuzzy
 msgid ""
 "The `checkyesno` function takes a __variable name__.  Do not pass the "
 "expanded _value_ of a variable to it; it will not work as expected."
@@ -1540,7 +1466,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:552
-#, fuzzy
 msgid "The following is the correct usage of `checkyesno`:"
 msgstr "Ниже приведено правильное использование `checkyesno`:"
 
@@ -1558,7 +1483,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:561
-#, fuzzy
 msgid ""
 "On the contrary, calling `checkyesno` as shown below will not work - at "
 "least not as expected:"
@@ -1580,7 +1504,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:572
-#, fuzzy
 msgid ""
 "&#10131; [[rc-flags]]We can affect the flags to be passed to `$command` by "
 "modifying `rc_flags` in `$start_precmd`."
@@ -1590,7 +1513,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:576
-#, fuzzy
 msgid ""
 "&#9451; In certain cases we may need to emit an important message that "
 "should go to `syslog` as well.  This can be done easily with the following "
@@ -1604,7 +1526,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:580
-#, fuzzy
 msgid ""
 "&#9452; The exit codes from methods and their pre-commands are not just "
 "ignored by default.  If `argument_precmd` returns a non-zero exit code, the "
@@ -1618,7 +1539,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:584
-#, fuzzy
 msgid ""
 "However, man:rc.subr[8] can be instructed from the command line to ignore "
 "those exit codes and invoke all commands anyway by prefixing an argument "
@@ -1630,13 +1550,12 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:587
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Connecting a script to the rc.d framework"
 msgstr "Подключение скрипта к инфраструктуре rc.d"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:594
-#, fuzzy
 msgid ""
 "After a script has been written, it needs to be integrated into [."
 "filename]#rc.d#.  The crucial step is to install the script in [.filename]#/"
@@ -1655,12 +1574,11 @@ msgstr ""
 "этого, и обычно вам не нужно беспокоиться о правильных правах доступа и "
 "режиме. Системные скрипты должны устанавливаться из [.filename]#src/libexec/"
 "rc/rc.d# через [.filename]#Makefile#, находящийся там. Скрипты портов можно "
-"установить с помощью `USE_RC_SUBR`, как описано extref:{porters-handbook}[в "
-"Руководстве портера, rc-скрипты]."
+"установить с помощью `USE_RC_SUBR`, как описано extref:{porters-handbook}"
+"special/[в Руководстве FreeBSD по созданию портов, rc-скрипты]."
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:599
-#, fuzzy
 msgid ""
 "However, we should consider beforehand the place of our script in the system "
 "startup sequence.  The service handled by our script is likely to depend on "
@@ -1678,7 +1596,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:605
-#, fuzzy
 msgid ""
 "We mentioned man:rcorder[8] already.  Now it is time to have a close look at "
 "it.  In a nutshell, man:rcorder[8] takes a set of files, examines their "
@@ -1696,7 +1613,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:607
-#, fuzzy
 msgid ""
 "the names of the \"conditions\" (which means services to us) it __provides__;"
 msgstr ""
@@ -1705,19 +1621,16 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:608
-#, fuzzy
 msgid "the names of the \"conditions\" it __requires__;"
-msgstr "имена \"условий\", которые она __требует__;"
+msgstr "имена \"условий\", которые он __требует__;"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:609
-#, fuzzy
 msgid "the names of the \"conditions\" this file should run __before__;"
 msgstr "имена \"условий\", перед которыми должен выполняться этот файл;"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:610
-#, fuzzy
 msgid ""
 "additional _keywords_ that can be used to select a subset from the whole set "
 "of files (man:rcorder[8] can be instructed via options to include or omit "
@@ -1730,7 +1643,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:615
-#, fuzzy
 msgid ""
 "It is no surprise that man:rcorder[8] can handle only text files with a "
 "syntax close to that of man:sh[1].  That is, special lines understood by man:"
@@ -1746,7 +1658,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:618
-#, fuzzy
 msgid ""
 "Besides using man:rcorder[8] special lines, a script can insist on its "
 "dependency upon another service by just starting it forcibly.  This can be "
@@ -1761,7 +1672,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:620
-#, fuzzy
 msgid ""
 "With this general knowledge in mind, let us consider the simple daemon "
 "script enhanced with dependency stuff:"
@@ -1817,13 +1727,11 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:652
-#, fuzzy
 msgid "As before, detailed analysis follows:"
 msgstr "Как и ранее, следует детальный анализ:"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:655
-#, fuzzy
 msgid ""
 "&#10122; That line declares the names of \"conditions\" our script "
 "provides.  Now other scripts can record a dependency on our script by those "
@@ -1835,7 +1743,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:660
-#, fuzzy
 msgid ""
 "Usually a script specifies a single condition provided.  However, nothing "
 "prevents us from listing several conditions there, e.g., for compatibility "
@@ -1846,7 +1753,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:662
-#, fuzzy
 msgid ""
 "In any case, the name of the main, or the only, `PROVIDE:` condition should "
 "be the same as `${name}`."
@@ -1856,7 +1762,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:666
-#, fuzzy
 msgid ""
 "&#10123;&#10124; So our script indicates which \"conditions\" provided by "
 "other scripts it depends on.  According to the lines, our script asks man:"
@@ -1871,7 +1776,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:672
-#, fuzzy
 msgid ""
 "The `BEFORE:` line should not be abused to work around an incomplete "
 "dependency list in the other script.  The appropriate case for using `BEFORE:"
@@ -1891,7 +1795,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:676
-#, fuzzy
 msgid ""
 "Besides conditions corresponding to a single service each, there are meta-"
 "conditions and their \"placeholder\" scripts used to ensure that certain "
@@ -1906,7 +1809,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:682
-#, fuzzy
 msgid ""
 "Keep in mind that putting a service name in the `REQUIRE:` line does not "
 "guarantee that the service will actually be running by the time our script "
@@ -1928,7 +1830,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:687
-#, fuzzy
 msgid ""
 "[[keywords]]&#10125; As we remember from the above text, man:rcorder[8] "
 "keywords can be used to select or leave out some scripts.  Namely any man:"
@@ -1949,7 +1850,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:690
-#, fuzzy
 msgid ""
 "In FreeBSD, man:rcorder[8] is used by [.filename]#/etc/rc# and [.filename]#/"
 "etc/rc.shutdown#.  These two scripts define the standard list of FreeBSD [."
@@ -1967,7 +1867,6 @@ msgstr "nojail"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:693
-#, fuzzy
 msgid ""
 "The service is not for man:jail[8] environment.  The automatic startup and "
 "shutdown procedures will ignore the script if inside a jail."
@@ -1984,7 +1883,6 @@ msgstr "nostart"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:697
-#, fuzzy
 msgid ""
 "The service is to be started manually or not started at all.  The automatic "
 "startup procedure will ignore the script.  In conjunction with the [."
@@ -2004,7 +1902,6 @@ msgstr "shutdown"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:699
-#, fuzzy
 msgid ""
 "This keyword is to be listed __explicitly__ if the service needs to be "
 "stopped before system shutdown."
@@ -2014,7 +1911,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:712
-#, fuzzy
 msgid ""
 "When the system is going to shut down, [.filename]#/etc/rc.shutdown# runs.  "
 "It assumes that most [.filename]#rc.d# scripts have nothing to do at that "
@@ -2056,7 +1952,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:716
-#, fuzzy
 msgid ""
 "[[forcedep]]&#10126; To begin with, `force_depend` should be used with much "
 "care.  It is generally better to revise the hierarchy of configuration "
@@ -2068,7 +1963,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:725
-#, fuzzy
 msgid ""
 "If you still cannot do without `force_depend`, the example offers an idiom "
 "of how to invoke it conditionally.  In the example, our `mumbled` daemon "
@@ -2095,13 +1989,12 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:727
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Giving more flexibility to an rc.d script"
 msgstr "Придание большей гибкости скрипту rc.d"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:736
-#, fuzzy
 msgid ""
 "When invoked during startup or shutdown, an [.filename]#rc.d# script is "
 "supposed to act on the entire subsystem it is responsible for.  E.g., [."
@@ -2133,7 +2026,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:739
-#, fuzzy
 msgid ""
 "Fortunately, man:rc.subr[8] allows for passing any number of arguments to "
 "script's methods (within the system limits).  Due to that, the changes in "
@@ -2145,7 +2037,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:744
-#, fuzzy
 msgid ""
 "How can man:rc.subr[8] gain access to the extra command-line arguments.  "
 "Should it just grab them directly? Not by any means.  Firstly, an man:sh[1] "
@@ -2163,7 +2054,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:748
-#, fuzzy
 msgid ""
 "So the approach adopted by man:rc.subr[8] is as follows: `run_rc_command` "
 "passes on all its arguments but the first one to the respective method "
@@ -2181,7 +2071,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:751
-#, fuzzy
 msgid ""
 "To illustrate this opportunity, let us modify the primitive dummy script so "
 "that its messages depend on the additional arguments supplied.  Here we go:"
@@ -2276,13 +2165,11 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:794
-#, fuzzy
 msgid "What essential changes can we notice in the script?"
 msgstr "Какие основные изменения мы можем заметить в скрипте?"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:799
-#, fuzzy
 msgid ""
 "&#10122; All arguments you type after `start` can end up as positional "
 "parameters to the respective method.  We can use them in any way according "
@@ -2319,7 +2206,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:811
-#, fuzzy
 msgid ""
 "&#10123; The same applies to any method our script provides, not only to a "
 "standard one.  We have added a custom method named `kiss`, and it can take "
@@ -2352,7 +2238,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:822
-#, fuzzy
 msgid ""
 "&#10124; If we want just to pass all extra arguments to any method, we can "
 "merely substitute `\"$@\"` for `\"$1\"` in the last line of our script, "
@@ -2364,7 +2249,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:828
-#, fuzzy
 msgid ""
 "An man:sh[1] programmer ought to understand the subtle difference between "
 "`$*` and `$@` as the ways to designate all positional parameters.  For its "
@@ -2381,7 +2265,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:835
-#, fuzzy
 msgid ""
 "Currently `run_rc_command` may have a bug that prevents it from keeping the "
 "original boundaries between arguments.  That is, arguments with embedded "
@@ -2394,23 +2277,21 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/articles/rc-scripting/_index.adoc:838
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Making a script ready for Service Jails"
 msgstr "Подготовка скрипта для сервисных клеток"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:841
-#, fuzzy
 msgid ""
 "Scripts which start a long running service are suitable for service jails, "
 "and should come with a suitable service jail configuration."
 msgstr ""
-"Скрипты, запускающие долго работающую службу, подходят для клеток служб и "
-"должны поставляться с соответствующей конфигурацией клетки службы."
+"Скрипты, запускающие долго работающую службу, подходят для служебных клеток "
+"и должны поставляться с соответствующей конфигурацией сервисной клетки."
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:843
-#, fuzzy
 msgid ""
 "Some examples of scripts which are not suitable to run in a service jail:"
 msgstr ""
@@ -2419,7 +2300,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:845
-#, fuzzy
 msgid ""
 "any script which in the start command only changes a runtime setting for "
 "programs or the kernel,"
@@ -2429,13 +2309,11 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:846
-#, fuzzy
 msgid "or tries to mount something,"
 msgstr "или пытается что-то смонтировать,"
 
 #. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:847
-#, fuzzy
 msgid "or finds and deletes files"
 msgstr "или находит и удаляет файлы"
 
