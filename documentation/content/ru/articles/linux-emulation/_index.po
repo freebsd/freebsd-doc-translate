@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2024-01-17 20:35-0300\n"
-"PO-Revision-Date: 2025-08-11 04:45+0000\n"
+"PO-Revision-Date: 2025-08-12 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/articleslinux-emulation_index/ru/>\n"
@@ -1606,13 +1606,12 @@ msgstr ""
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:517
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Blocking"
-msgstr "Запрещение"
+msgstr "Блокирующие"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:522
-#, fuzzy
 msgid ""
 "Block locks let waiters to be descheduled and blocked until the lock owner "
 "does not drop it and wakes up one or more contenders.  To avoid starvation "
@@ -1621,11 +1620,11 @@ msgid ""
 "are intended to be the most used kind of locks in the kernel, if no "
 "particular conditions are met."
 msgstr ""
-"Блокировки с блокировкой позволяют ожидающим потокам быть выгруженными и "
+"Блокирующие блокировки позволяют ожидающим потокам быть выгруженными и "
 "заблокированными до тех пор, пока владелец блокировки не освободит её и не "
 "разбудит один или несколько конкурентов. Чтобы избежать проблем с "
-"голоданием, блокировки с блокировкой передают приоритет от ожидающих к "
-"владельцу. Блокировки с блокировкой должны быть реализованы через интерфейс "
+"голоданием, блокирующие блокировки передают приоритет от ожидающих к "
+"владельцу. Блокирующие блокировки должны быть реализованы через интерфейс "
 "турникета и предназначены для наиболее частого использования в ядре, если "
 "нет особых условий."
 
@@ -1637,7 +1636,6 @@ msgstr "Спящие"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:529
-#, fuzzy
 msgid ""
 "Sleep locks let waiters to be descheduled and fall asleep until the lock "
 "holder does not drop it and wakes up one or more waiters.  Since sleep locks "
@@ -1645,16 +1643,15 @@ msgid ""
 "events, they do not do any form of priority propagation.  They must be "
 "implemented through the man:sleepqueue[9] interface."
 msgstr ""
-"Блокировки с ожиданием позволяют ожидающим потокам быть вытесненными и "
-"заснуть до тех пор, пока держатель блокировки не освободит её и не разбудит "
-"один или несколько ожидающих. Поскольку блокировки с ожиданием предназначены "
-"для защиты больших участков кода и обработки асинхронных событий, они не "
-"поддерживают распространение приоритетов. Они должны быть реализованы через "
-"интерфейс man:sleepqueue[9]."
+"Спящие блокировки (с ожиданием) позволяют ожидающим потокам быть "
+"вытесненными и заснуть до тех пор, пока держатель блокировки не освободит её "
+"и не разбудит один или несколько ожидающих. Поскольку блокировки с ожиданием "
+"предназначены для защиты больших участков кода и обработки асинхронных "
+"событий, они не поддерживают распространение приоритетов. Они должны быть "
+"реализованы через интерфейс man:sleepqueue[9]."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:533
-#, fuzzy
 msgid ""
 "The order used to acquire locks is very important, not only for the "
 "possibility to deadlock due at lock order reversals, but even because lock "
@@ -1675,107 +1672,94 @@ msgstr ""
 "если поток удерживает блокировку уровня n (где уровень — это число, "
 "указанное рядом с типом блокировки), ему запрещено захватывать блокировки "
 "более высоких уровней, так как это нарушит заданную семантику пути. "
-"Например, если поток удерживает блокировку блока (уровень 2), ему разрешено "
-"захватывать спин-блокировку (уровень 1), но не спящую блокировку (уровень 3)"
-", поскольку блокировки блока предназначены для защиты более коротких путей, "
-"чем спящие блокировки (однако эти правила не касаются атомарных операций или "
-"барьеров планирования)."
+"Например, если поток удерживает блокирующую блокировку (уровень 2), ему "
+"разрешено захватывать спин-блокировку (уровень 1), но не спящую блокировку ("
+"уровень 3), поскольку блокирующие блокировки предназначены для защиты более "
+"коротких путей, чем спящие блокировки (однако эти правила не касаются "
+"атомарных операций или барьеров планирования)."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:535
-#, fuzzy
 msgid "This is a list of lock with their respective behaviors:"
 msgstr "Вот список блокировок с соответствующими типами поведения:"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:537
-#, fuzzy
 msgid "spin mutex - spinning - man:mutex[9]"
-msgstr "спин-мьютекс - spinning - man:mutex[9]"
+msgstr "spin mutex – вращающийся режим – man:mutex[9]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:538
-#, fuzzy
 msgid "sleep mutex - blocking - man:mutex[9]"
-msgstr "`sleep mutex` - блокирующий - man:mutex[9]"
+msgstr "sleep mutex – блокирующий режим – man:mutex[9]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:539
 msgid "pool mutex - blocking - man:mtx[pool]"
-msgstr "pool mutex - блокирующий - man:mtx[pool]"
+msgstr "pool mutex – блокирующий режим – man:mtx[pool]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:540
-#, fuzzy
 msgid ""
 "sleep family - sleeping - man:sleep[9] pause tsleep msleep msleep spin "
 "msleep rw msleep sx"
 msgstr ""
-"Семейство функций sleep - спящий режим - man:sleep[9]  \n"
-"pause  \n"
-"tsleep  \n"
-"msleep  \n"
-"msleep_spin  \n"
-"msleep_rw  \n"
-"msleep_sx"
+"Семейство функций sleep – спящий режим – man:sleep[9] pause tsleep msleep "
+"msleep_spin msleep_rw msleep_sx"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:541
 msgid "condvar - sleeping - man:condvar[9]"
-msgstr "condvar - спящий - man:condvar[9]"
+msgstr "condvar – спящий режим – man:condvar[9]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:542
 msgid "rwlock - blocking - man:rwlock[9]"
-msgstr "rwlock - блокирующий - man:rwlock[9]"
+msgstr "rwlock – блокирующий режим – man:rwlock[9]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:543
 msgid "sxlock - sleeping - man:sx[9]"
-msgstr "sxlock - спящий - man:sx[9]"
+msgstr "sxlock – спящий режим – man:sx[9]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:544
 msgid "lockmgr - sleeping - man:lockmgr[9]"
-msgstr "lockmgr - спящий - man:lockmgr[9]"
+msgstr "lockmgr – спящий режим – man:lockmgr[9]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:545
-#, fuzzy
 msgid "semaphores - sleeping - man:sema[9]"
-msgstr "==== Семафоры - состояние ожидания - man:sema[9] ===="
+msgstr "семафоры – спящий режим – man:sema[9]"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:547
-#, fuzzy
 msgid ""
 "Among these locks only mutexes, sxlocks, rwlocks and lockmgrs are intended "
 "to handle recursion, but currently recursion is only supported by mutexes "
 "and lockmgrs."
 msgstr ""
-"Среди этих блокировок только мьютексы, sxlocks, rwlocks и lockmgrs "
+"Среди этих блокировок только мьютексы, sxlock, rwlock и lockmgr "
 "предназначены для обработки рекурсии, но в настоящее время рекурсия "
-"поддерживается только мьютексами и lockmgrs."
+"поддерживается только мьютексами и lockmgr."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:549
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Scheduling barriers"
-msgstr "Планирование барьеров"
+msgstr "Барьеры планирования"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:553
-#, fuzzy
 msgid ""
 "Scheduling barriers are intended to be used to drive scheduling of "
 "threading.  They consist mainly of three different stubs:"
 msgstr ""
-"Планирующие барьеры предназначены для управления планированием потоков. Они "
+"Барьеры планирования предназначены для управления планированием потоков. Они "
 "в основном состоят из трех различных заглушек:"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:555
-#, fuzzy
 msgid "critical sections (and preemption)"
 msgstr "критические секции (и вытеснение)"
 
@@ -1791,7 +1775,6 @@ msgstr "sched_pin"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:559
-#, fuzzy
 msgid ""
 "Generally, these should be used only in a particular context and even if "
 "they can often replace locks, they should be avoided because they do not let "
@@ -1805,13 +1788,12 @@ msgstr ""
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:561
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Critical sections"
 msgstr "Критические секции"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:569
-#, fuzzy
 msgid ""
 "The FreeBSD kernel has been made preemptive basically to deal with interrupt "
 "threads.  In fact, to avoid high interrupt latency, time-sharing priority "
@@ -1846,7 +1828,6 @@ msgstr "sched_pin/sched_unpin"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:577
-#, fuzzy
 msgid ""
 "Another way to deal with preemption is the `sched_pin()` interface.  If a "
 "piece of code is closed in the `sched_pin()` and `sched_unpin()` pair of "
@@ -1860,9 +1841,10 @@ msgstr ""
 "участок кода заключен между функциями `sched_pin()` и `sched_unpin()`, "
 "гарантируется, что соответствующий поток, даже если он может быть вытеснен, "
 "всегда будет выполняться на том же CPU. Закрепление очень эффективно в "
-"частном случае, когда нам необходимо обращаться к данным per-cpu и мы "
-"предполагаем, что другие потоки не изменят эти данные. Последнее условие "
-"делает критическую секцию избыточно строгим условием для нашего кода."
+"частном случае, когда нам необходимо обращаться к данным, привязанным к "
+"определенным CPU, и мы предполагаем, что другие потоки не изменят эти "
+"данные. Последнее условие делает критическую секцию избыточно строгим "
+"условием для нашего кода."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:579
@@ -1872,7 +1854,6 @@ msgstr "sched_bind/sched_unbind"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:584
-#, fuzzy
 msgid ""
 "`sched_bind` is an API used to bind a thread to a particular CPU for all the "
 "time it executes the code, until a `sched_unbind` function call does not "
@@ -1893,13 +1874,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:586
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Proc structure"
-msgstr "Структура Proc"
+msgstr "Структура proc"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:592
-#, fuzzy
 msgid ""
 "Various emulation layers sometimes require some additional per-process "
 "data.  It can manage separate structures (a list, a tree etc.) containing "
@@ -1917,7 +1897,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:597
-#, fuzzy
 msgid ""
 "The FreeBSD `proc` structure contains a `p_sysent` entry that identifies, "
 "which ABI this process is running.  In fact, it is a pointer to the "
@@ -1945,7 +1924,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:606
-#, fuzzy
 msgid ""
 "As you can see, we effectively use the `__predict_true` modifier to collapse "
 "the most common case (FreeBSD process) to a simple return operation thus "
@@ -1968,7 +1946,6 @@ msgstr "VFS"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:617
-#, fuzzy
 msgid ""
 "The FreeBSD VFS subsystem is very complex but the Linux(R) emulation layer "
 "uses just a small subset via a well defined API.  It can either operate on "
@@ -1980,7 +1957,7 @@ msgid ""
 "vnode."
 msgstr ""
 "Подсистема VFS в FreeBSD очень сложна, но слой эмуляции Linux(R) использует "
-"лишь небольшую её часть через чётко определённый API. Он может работать как "
+"лишь небольшую её часть через чётко определённый API. Она может работать как "
 "с vnode, так и с файловыми дескрипторами. Vnode представляет собой "
 "виртуальный vnode, то есть представление узла в VFS. Другое представление — "
 "это файловый дескриптор, который представляет открытый файл с точки зрения "
@@ -1996,7 +1973,6 @@ msgstr "namei"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:626
-#, fuzzy
 msgid ""
 "The man:namei[9] routine is a central entry point to pathname lookup and "
 "translation.  It traverses the path point by point from the starting point "
@@ -3049,16 +3025,13 @@ msgid ""
 msgstr ""
 "Поскольку между FreeBSD и Linux(R) существуют различия в представлении "
 "идентификатора процесса (PID) и идентификатора потока (TID), нам необходимо "
-"преобразовывать эти понятия. Это достигается за счёт модификации PID.  \n"
-"\n"
-"Это означает, что мы изменяем представление о PID (=TGID) и TID (=PID) между "
+"преобразовывать эти понятия. Это достигается за счёт модификации PID. Это "
+"означает, что мы изменяем представление о PID (=TGID) и TID (=PID) между "
 "ядром и пользовательским пространством. Основное правило заключается в "
-"следующем:  \n"
-"- В ядре (в Linuxulator) `PID = PID`, а `TGID = shared -> group_pid`.  \n"
-"- Для пользовательского пространства мы представляем `PID = shared -> "
-"group_pid` и `TID = proc -> p_pid`.  \n"
-"\n"
-"Член `PID` в структуре `linux_emuldata` является FreeBSD PID."
+"следующем: в ядре (в Linuxulator) `PID = PID`, а `TGID = shared -> "
+"group_pid`; для пользовательского пространства мы представляем `PID = shared "
+"-> group_pid` и `TID = proc -> p_pid`. Член `PID` в структуре "
+"`linux_emuldata` является FreeBSD PID."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:966
@@ -3166,21 +3139,16 @@ msgstr ""
 "отдельно, поэтому мы эмулируем это, не устанавливая RFFDG (копирование "
 "таблицы файловых дескрипторов и другой информации о файловой системе), если "
 "задан любой из этих флагов. Это не вызывает проблем, так как эти флаги "
-"всегда устанавливаются вместе.  \n"
-"\n"
-"После установки флагов процесс создаётся с помощью внутренней процедуры "
-"`fork1`, при этом процесс настраивается так, чтобы не помещаться в очередь "
-"выполнения (т.е. не становиться исполняемым). После завершения ветвления мы, "
-"при необходимости, изменяем родителя для нового процесса, чтобы эмулировать "
-"семантику `CLONE_PARENT`.  \n"
-"\n"
-"Следующий шаг — создание данных эмуляции. Потоки в Linux(R) не отправляют "
-"сигналы своим родителям, поэтому мы устанавливаем сигнал завершения в 0, "
-"чтобы отключить эту возможность. Затем выполняется настройка `child_set_tid` "
-"и `child_clear_tid`, что активирует соответствующую функциональность далее в "
-"коде. На этом этапе мы копируем PID по адресу, указанному в `parent_tidptr`"
-".  \n"
-"\n"
+"всегда устанавливаются вместе. После установки флагов процесс создаётся с "
+"помощью внутренней процедуры `fork1`, при этом процесс настраивается так, "
+"чтобы не помещаться в очередь выполнения (т.е. не становиться исполняемым). "
+"После завершения ветвления мы, при необходимости, изменяем родителя для "
+"нового процесса, чтобы эмулировать семантику `CLONE_PARENT`. Следующий шаг — "
+"создание данных эмуляции. Потоки в Linux(R) не отправляют сигналы своим "
+"родителям, поэтому мы устанавливаем сигнал завершения в 0, чтобы отключить "
+"эту возможность. Затем выполняется настройка `child_set_tid` и "
+"`child_clear_tid`, что активирует соответствующую функциональность далее в "
+"коде. На этом этапе мы копируем PID по адресу, указанному в `parent_tidptr`. "
 "Установка стека процесса выполняется простой перезаписью регистра `%esp` "
 "(`%rsp` на amd64) в кадре потока. Далее настраивается TLS для нового "
 "процесса. После этого может быть эмулирована семантика man:vfork[2], и, "
@@ -3248,7 +3216,6 @@ msgstr "Введение в многопоточность"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1040
-#, fuzzy
 msgid ""
 "Threads in computer science are entities within a process that can be "
 "scheduled independently from each other.  The threads in the process share "
@@ -3286,40 +3253,34 @@ msgstr ""
 "разделяют общие данные процесса (например, файловые дескрипторы), но также "
 "имеют свой собственный стек для своих данных. Иногда возникает необходимость "
 "в данных, специфичных для конкретного потока, но доступных на уровне "
-"процесса. Например, имя выполняемого потока или что-то подобное.  \n"
-"\n"
+"процесса. Например, имя выполняемого потока или что-то подобное. "
 "Традиционный API для работы с потоками в UNIX® — pthreads — предоставляет "
 "способ сделать это через функции `man:pthread_key_create[3]`, "
 "`man:pthread_setspecific[3]` и `man:pthread_getspecific[3]`, где поток может "
 "создать ключ к локальным данным потока и использовать "
 "`man:pthread_getspecific[3]` или `man:pthread_getspecific[3]` для управления "
-"этими данными. Легко заметить, что это не самый удобный способ.  \n"
-"\n"
-"Поэтому различные разработчики компиляторов C/C++ предложили более удобный "
-"метод. Они ввели новое ключевое слово `thread`, которое указывает, что "
-"переменная является специфичной для потока. Также был разработан новый метод "
-"доступа к таким переменным (по крайней мере, на архитектуре i386).  \n"
-"\n"
-"Метод pthreads обычно реализуется в пользовательском пространстве в виде "
-"простой таблицы поиска. Производительность такого решения не очень высока. "
-"Новый метод использует (на i386) сегментные регистры для адресации области, "
-"где хранится TLS (Thread-Local Storage), так что фактический доступ к "
-"переменной потока сводится к добавлению сегментного регистра к адресу, таким "
-"образом обращаясь через него. Сегментные регистры, обычно `%gs` и `%fs`, "
-"действуют как селекторы сегментов.  \n"
-"\n"
-"Каждый поток имеет свою собственную область, где хранятся локальные данные "
-"потока, и сегмент должен загружаться при каждом переключении контекста. Этот "
-"метод очень быстрый и используется практически повсеместно в мире UNIX® на "
-"архитектуре i386.  \n"
-"\n"
-"И FreeBSD, и Linux® реализуют этот подход, и он даёт очень хорошие "
-"результаты. Единственный недостаток — необходимость перезагружать сегмент "
-"при каждом переключении контекста, что может замедлять переключения. FreeBSD "
-"пытается минимизировать эти накладные расходы, используя только 1 дескриптор "
-"сегмента, в то время как Linux® использует 3. Интересно, что почти ничто не "
-"использует больше 1 дескриптора (только Wine, кажется, использует 2), "
-"поэтому Linux® платит эту необязательную цену при переключении контекстов."
+"этими данными. Легко заметить, что это не самый удобный способ. Поэтому "
+"различные разработчики компиляторов C/C++ предложили более удобный метод. "
+"Они ввели новое ключевое слово `thread`, которое указывает, что переменная "
+"является специфичной для потока. Также был разработан новый метод доступа к "
+"таким переменным (по крайней мере, на архитектуре i386). Метод pthreads "
+"обычно реализуется в пользовательском пространстве в виде простой таблицы "
+"поиска. Производительность такого решения не очень высока. Новый метод "
+"использует (на i386) сегментные регистры для адресации области, где хранится "
+"TLS (Thread-Local Storage), так что фактический доступ к переменной потока "
+"сводится к добавлению сегментного регистра к адресу, таким образом обращаясь "
+"через него. Сегментные регистры, обычно `%gs` и `%fs`, действуют как "
+"селекторы сегментов. Каждый поток имеет свою собственную область, где "
+"хранятся локальные данные потока, и сегмент должен загружаться при каждом "
+"переключении контекста. Этот метод очень быстрый и используется практически "
+"повсеместно в мире UNIX® на архитектуре i386. И FreeBSD, и Linux® реализуют "
+"этот подход, и он даёт очень хорошие результаты. Единственный недостаток — "
+"необходимость перезагружать сегмент при каждом переключении контекста, что "
+"может замедлять переключения. FreeBSD пытается минимизировать эти накладные "
+"расходы, используя только 1 дескриптор сегмента, в то время как Linux® "
+"использует 3. Интересно, что почти ничто не использует больше 1 дескриптора ("
+"только Wine, кажется, использует 2), поэтому Linux® платит эту "
+"необязательную цену при переключении контекстов."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1042
@@ -3450,31 +3411,27 @@ msgstr ""
 "отдельном блоке в `clone`. Эти две функции очень похожи. Единственное "
 "различие заключается в фактической загрузке сегмента GDT, которая происходит "
 "при следующем переключении контекста для вновь созданного процесса, в то "
-"время как `set_thread_area` должен загрузить его напрямую.  \n"
-"\n"
-"Код в основном делает следующее. Он копирует дескриптор сегмента в формате "
-"Linux(R) из пользовательского пространства. Код проверяет номер дескриптора, "
-"но поскольку он различается между FreeBSD и Linux(R), мы немного имитируем "
-"его. Мы поддерживаем только индексы 6, 3 и -1. Число 6 — это оригинальный "
-"номер Linux(R), 3 — оригинальный номер FreeBSD, а -1 означает авто-выбор. "
-"Затем мы устанавливаем номер дескриптора на константу 3 и копируем его "
-"обратно в пользовательское пространство. Мы полагаемся на то, что процесс в "
+"время как `set_thread_area` должен загрузить его напрямую. Код в основном "
+"делает следующее. Он копирует дескриптор сегмента в формате Linux(R) из "
+"пользовательского пространства. Код проверяет номер дескриптора, но "
+"поскольку он различается между FreeBSD и Linux(R), мы немного имитируем его. "
+"Мы поддерживаем только индексы 6, 3 и -1. Число 6 — это оригинальный номер "
+"Linux(R), 3 — оригинальный номер FreeBSD, а -1 означает авто-выбор. Затем мы "
+"устанавливаем номер дескриптора на константу 3 и копируем его обратно в "
+"пользовательское пространство. Мы полагаемся на то, что процесс в "
 "пользовательском пространстве использует номер из дескриптора, но это "
 "работает в большинстве случаев (никогда не встречалось ситуации, когда это "
 "не срабатывало), так как процесс в пользовательском пространстве обычно "
-"передает 1.  \n"
-"\n"
-"Затем мы преобразуем дескриптор из формата Linux(R) в машинно-зависимую "
-"форму (т.е. независимую от операционной системы) и копируем его в дескриптор "
-"сегмента, определенный FreeBSD. Наконец, мы можем загрузить его. Мы "
-"назначаем дескриптор PCB потока (блок управления процессом) и загружаем "
+"передает 1. Затем мы преобразуем дескриптор из формата Linux(R) в машинно-"
+"зависимую форму (т.е. независимую от операционной системы) и копируем его в "
+"дескриптор сегмента, определенный FreeBSD. Наконец, мы можем загрузить его. "
+"Мы назначаем дескриптор PCB потока (блок управления процессом) и загружаем "
 "сегмент `%gs` с помощью `load_gs`. Эта загрузка должна выполняться в "
-"критической секции, чтобы ничто не могло нас прервать.  \n"
-"\n"
-"Случай `CLONE_SETTLS` работает точно так же, только загрузка с помощью "
-"`load_gs` не выполняется. Сегмент, используемый для этого (сегмент номер 3), "
-"разделяется между процессами FreeBSD и Linux(R), поэтому слой эмуляции "
-"Linux(R) не добавляет накладных расходов по сравнению с обычным FreeBSD."
+"критической секции, чтобы ничто не могло нас прервать. Случай `CLONE_SETTLS` "
+"работает точно так же, только загрузка с помощью `load_gs` не выполняется. "
+"Сегмент, используемый для этого (сегмент номер 3), разделяется между "
+"процессами FreeBSD и Linux(R), поэтому слой эмуляции Linux(R) не добавляет "
+"накладных расходов по сравнению с обычным FreeBSD."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1097
