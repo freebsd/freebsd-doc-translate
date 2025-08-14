@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2024-01-17 20:35-0300\n"
-"PO-Revision-Date: 2025-08-13 04:45+0000\n"
+"PO-Revision-Date: 2025-08-14 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/articleslinux-emulation_index/ru/>\n"
@@ -2737,7 +2737,6 @@ msgstr "Определение эмуляции 2.6 во время выполн
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:883
-#, fuzzy
 msgid ""
 "The Linux(R) emulation layer in FreeBSD supports runtime setting of the "
 "emulated version.  This is done via man:sysctl[8], namely `compat.linux."
@@ -2764,13 +2763,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:885
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Linux(R) processes and thread identifiers"
 msgstr "Идентификаторы процессов и потоков Linux(R)"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:892
-#, fuzzy
 msgid ""
 "The semantics of Linux(R) threading are a little confusing and uses entirely "
 "different nomenclature to FreeBSD.  A process in Linux(R) consists of a "
@@ -2787,7 +2785,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:898
-#, fuzzy
 msgid ""
 "The thread in NPTL is just an ordinary process that happens to have TGID not "
 "equal to PID and have a group leader not equal to itself (and shared VM etc. "
@@ -2805,11 +2802,10 @@ msgstr ""
 "создает некоторое дублирование информации и возможную несогласованность "
 "данных. Ядро Linux(R), похоже, использует информацию о задаче -> группе в "
 "одних местах и информацию о задаче в других, что не очень последовательно и "
-"выглядит подверженным ошибкам."
+"выглядит небезопасно с точки зрения возможных ошибок."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:901
-#, fuzzy
 msgid ""
 "Every NPTL thread is created by a call to the `clone` syscall with a "
 "specific set of flags (more in the next subsection).  The NPTL implements "
@@ -2821,7 +2817,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:903
-#, fuzzy
 msgid ""
 "In FreeBSD we emulate NPTL threads with ordinary FreeBSD processes that "
 "share VM space, etc. and the PID gymnastic is just mimicked in the emulation "
@@ -2877,7 +2872,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:925
-#, fuzzy
 msgid ""
 "The PID is used to identify the FreeBSD process that attaches this "
 "structure.  The `child_se_tid` and `child_clear_tid` are used for TID "
@@ -2925,7 +2919,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:941
-#, fuzzy
 msgid ""
 "The `refs` is a reference counter being used to determine when we can free "
 "the structure to avoid memory leaks.  The `group_pid` is to identify PID ( = "
@@ -2939,7 +2932,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:944
-#, fuzzy
 msgid ""
 "The `linux_emuldata` structure can be obtained from the process using "
 "`em_find`.  The prototype of the function is:"
@@ -2955,7 +2947,6 @@ msgstr "struct linux_emuldata *em_find(struct proc *, int locked);\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:953
-#, fuzzy
 msgid ""
 "Here, `proc` is the process we want the emuldata structure from and the "
 "locked parameter determines whether we want to lock or not.  The accepted "
@@ -2967,13 +2958,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:955
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "PID mangling"
-msgstr "Манипулирование PID"
+msgstr "Преобразование PID"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:962
-#, fuzzy
 msgid ""
 "As there is a difference in view as what to the idea of a process ID and "
 "thread ID is between FreeBSD and Linux(R) we have to translate the view "
@@ -2995,7 +2985,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:966
-#, fuzzy
 msgid ""
 "The above affects mainly getpid, getppid, gettid syscalls.  Where we use PID/"
 "TGID respectively.  In copyout of TIDs in `child_clear_tid` and "
@@ -3007,13 +2996,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:968
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Clone syscall"
-msgstr "Клонирование системного вызова"
+msgstr "Системный вызов clone"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:972
-#, fuzzy
 msgid ""
 "The `clone` syscall is the way threads are created in Linux(R).  The syscall "
 "prototype looks like this:"
@@ -3033,7 +3021,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:987
-#, fuzzy
 msgid ""
 "The `flags` parameter tells the syscall how exactly the processes should be "
 "cloned.  As described above, Linux(R) can create processes sharing various "
@@ -3069,7 +3056,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1001
-#, fuzzy
 msgid ""
 "The syscall itself proceeds by setting corresponding flags depending on the "
 "flags passed in.  For example, `CLONE_VM` maps to RFMEM (sharing of VM), "
@@ -3117,7 +3103,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1004
-#, fuzzy
 msgid ""
 "The `clone` syscall is able and in fact is used for emulating classic man:"
 "fork[2] and man:vfork[2] syscalls.  Newer glibc in a case of 2.6 kernel uses "
@@ -3136,7 +3121,6 @@ msgstr "Блокировка"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1012
-#, fuzzy
 msgid ""
 "The locking is implemented to be per-subsystem because we do not expect a "
 "lot of contention on these.  There are two locks: `emul_lock` used to "
@@ -3150,10 +3134,10 @@ msgstr ""
 "конкуренции за эти ресурсы. Существует две блокировки: `emul_lock`, "
 "используемая для защиты манипуляций с `linux_emuldata`, и `emul_shared_lock`"
 ", используемая для манипуляций с `linux_emuldata_shared`. `emul_lock` "
-"представляет собой немешающую блокирующую мьютекс, в то время как "
-"`emul_shared_lock` — это мешающая блокирующая `sx_lock`. Благодаря "
-"блокировке на уровне подсистем мы можем объединять некоторые блокировки, "
-"поэтому поиск em предлагает доступ без блокировки."
+"представляет собой неспящий блокирующий мьютекс, в то время как "
+"`emul_shared_lock` — это спящий блокирующий `sx_lock`. Благодаря блокировке "
+"на уровне подсистем мы можем объединять некоторые блокировки, поэтому "
+"em_find предлагает доступ без блокировки."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1014
@@ -3163,14 +3147,13 @@ msgstr "TLS"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1017
-#, fuzzy
 msgid "This section deals with TLS also known as thread local storage."
 msgstr ""
 "Этот раздел посвящён TLS, также известному как локальное хранилище потока."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1019
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Introduction to threading"
 msgstr "Введение в многопоточность"
 
@@ -3244,13 +3227,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1042
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Segments on i386"
 msgstr "Сегменты на i386"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1049
-#, fuzzy
 msgid ""
 "The i386 architecture implements the so called segments.  A segment is a "
 "description of an area of memory.  The base address (bottom) of the memory "
@@ -3274,7 +3256,6 @@ msgstr "mov %edx,%gs:0x10\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1062
-#, fuzzy
 msgid ""
 "This will load the content of the `%edx` register into memory location "
 "0x1244.  Some segment registers have a special use, for example `%cs` is "
@@ -3294,13 +3275,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1064
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Implementation on Linux(R) i386"
 msgstr "Реализация на Linux(R) i386"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1072
-#, fuzzy
 msgid ""
 "There are two main ways of setting up TLS in Linux(R).  It can be set when "
 "cloning a process using the `clone` syscall or it can call "
@@ -3327,7 +3307,7 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1074
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Emulation of Linux(R) TLS"
 msgstr "Эмуляция Linux(R) TLS"
 
@@ -3339,7 +3319,6 @@ msgstr "i386"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1095
-#, fuzzy
 msgid ""
 "Loading of TLS for the current thread happens by calling `set_thread_area` "
 "while loading TLS for a second process in `clone` is done in the separate "
@@ -3401,7 +3380,6 @@ msgstr "amd64"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1101
-#, fuzzy
 msgid ""
 "The amd64 implementation is similar to the i386 one but there was initially "
 "no 32bit segment descriptor used for this purpose (hence not even native "
@@ -3423,17 +3401,16 @@ msgstr ""
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1103
 #, no-wrap
 msgid "Futexes"
-msgstr "Futexes"
+msgstr "Фьютексы"
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1106
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Introduction to synchronization"
 msgstr "Введение в синхронизацию"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1116
-#, fuzzy
 msgid ""
 "Threads need some kind of synchronization and POSIX(R) provides some of "
 "them: mutexes for mutual exclusion, read-write locks for mutual exclusion "
@@ -3471,13 +3448,13 @@ msgstr ""
 "ядро. Синхронизация потоков является важной частью программирования с "
 "использованием потоков, и её производительность может значительно влиять на "
 "итоговую программу. Недавние тесты в операционной системе FreeBSD показали, "
-"что улучшенная реализация `sx_lock` дала 40% прироста скорости в _ZFS_ ("
-"активном пользователе `sx`), это внутренние механизмы ядра, но это наглядно "
-"демонстрирует, насколько важна производительность примитивов синхронизации."
+"что улучшенная реализация `sx_lock` дала 40% прироста скорости в _ZFS_ (где "
+"активно используются блокировки sx), это внутренние механизмы ядра, но это "
+"наглядно демонстрирует, насколько важна производительность примитивов "
+"синхронизации."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1120
-#, fuzzy
 msgid ""
 "Threaded programs should be written with as little contention on locks as "
 "possible.  Otherwise, instead of doing useful work the thread just waits on "
@@ -3491,13 +3468,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1122
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Futexes introduction"
-msgstr "Введение в futexes"
+msgstr "Введение в фьютексы"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1127
-#, fuzzy
 msgid ""
 "Linux(R) implements 1:1 threading, i.e. it has to use in-kernel "
 "synchronization primitives.  As stated earlier, well written threaded "
@@ -3525,7 +3501,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1136
-#, fuzzy
 msgid ""
 "1:1 threading forces us to perform two syscalls for those mutex calls, which "
 "is very slow."
@@ -3535,7 +3510,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1141
-#, fuzzy
 msgid ""
 "The solution Linux(R) 2.6 implements is called futexes.  Futexes implement "
 "the check for contention in userspace and call kernel primitives only in a "
@@ -3543,21 +3517,20 @@ msgid ""
 "intervention.  This yields reasonably fast and flexible synchronization "
 "primitives implementation."
 msgstr ""
-"Решение, реализованное в Linux(R) 2.6, называется futexes. Futexes выполняют "
-"проверку на конкуренцию в пользовательском пространстве и вызывают примитивы "
-"ядра только в случае конкуренции. Таким образом, типичный случай обходится "
-"без вмешательства ядра. Это обеспечивает достаточно быструю и гибкую "
-"реализацию примитивов синхронизации."
+"Решение, реализованное в Linux(R) 2.6, называется фьютексы. Фьютексы "
+"выполняют проверку на конкуренцию в пользовательском пространстве и вызывают "
+"примитивы ядра только в случае конкуренции. Таким образом, типичный случай "
+"обходится без вмешательства ядра. Это обеспечивает достаточно быструю и "
+"гибкую реализацию примитивов синхронизации."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1143
 #, no-wrap
 msgid "Futex API"
-msgstr "Futex API"
+msgstr "API фьютексов"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1146
-#, fuzzy
 msgid "The futex syscall looks like this:"
 msgstr "Системный вызов futex выглядит следующим образом:"
 
@@ -3571,7 +3544,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1153
-#, fuzzy
 msgid ""
 "In this example `uaddr` is an address of the mutex in userspace, `op` is an "
 "operation we are about to perform and the other parameters have per-"
@@ -3583,9 +3555,8 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1155
-#, fuzzy
 msgid "Futexes implement the following operations:"
-msgstr "Futexes реализуют следующие операции:"
+msgstr "Фьютексы реализуют следующие операции:"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1157
@@ -3625,7 +3596,6 @@ msgstr "FUTEX_WAIT"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1169
-#, fuzzy
 msgid ""
 "This operation verifies that on address `uaddr` the value `val` is written.  "
 "If not, `EWOULDBLOCK` is returned, otherwise the thread is queued on the "
@@ -3635,7 +3605,7 @@ msgid ""
 msgstr ""
 "Эта операция проверяет, что по адресу `uaddr` записано значение `val`. Если "
 "нет, возвращается `EWOULDBLOCK`, в противном случае поток ставится в очередь "
-"на futex и приостанавливается. Если аргумент `timeout` не равен нулю, он "
+"на фьютекс и приостанавливается. Если аргумент `timeout` не равен нулю, он "
 "задает максимальное время ожидания, в противном случае ожидание бесконечно."
 
 #. type: Title =====
@@ -3646,13 +3616,12 @@ msgstr "FUTEX_WAKE"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1174
-#, fuzzy
 msgid ""
 "This operation takes a futex at `uaddr` and wakes up `val` first futexes "
 "queued on this futex."
 msgstr ""
-"Эта операция захватывает futex по адресу `uaddr` и пробуждает первые `val` "
-"futexов, ожидающих в очереди на этом futex."
+"Эта операция захватывает фьютекс по адресу `uaddr` и пробуждает первые `val` "
+"фьютексов, ожидающих в очереди на этом фьютексе."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1176
@@ -3662,9 +3631,8 @@ msgstr "FUTEX_FD"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1179
-#, fuzzy
 msgid "This operations associates a file descriptor with a given futex."
-msgstr "Эта операция связывает файловый дескриптор с заданным futex."
+msgstr "Эта операция связывает файловый дескриптор с заданным фьютексом."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1181
@@ -3674,14 +3642,13 @@ msgstr "FUTEX_REQUEUE"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1184
-#, fuzzy
 msgid ""
 "This operation takes `val` threads queued on futex at `uaddr`, wakes them "
 "up, and takes `val2` next threads and requeues them on futex at `uaddr2`."
 msgstr ""
-"Эта операция берет `val` потоков, ожидающих на futex по адресу `uaddr`, "
-"пробуждает их и берет следующие `val2` потоков, перемещая их в очередь futex "
-"по адресу `uaddr2`."
+"Эта операция берет `val` потоков, ожидающих на фьютексе по адресу `uaddr`, "
+"пробуждает их и берет следующие `val2` потоков, перемещая их в очередь "
+"фьютекса по адресу `uaddr2`."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1186
@@ -3691,7 +3658,6 @@ msgstr "FUTEX_CMP_REQUEUE"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1189
-#, fuzzy
 msgid ""
 "This operation does the same as `FUTEX_REQUEUE` but it checks that `val3` "
 "equals to `val` first."
@@ -3707,7 +3673,6 @@ msgstr "FUTEX_WAKE_OP"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1195
-#, fuzzy
 msgid ""
 "This operation performs an atomic operation on `val3` (which contains coded "
 "some other value) and `uaddr`.  Then it wakes up `val` threads on futex at "
@@ -3716,14 +3681,14 @@ msgid ""
 msgstr ""
 "Эта операция выполняет атомарную операцию над `val3` (которая содержит "
 "закодированное другое значение) и `uaddr`. Затем она пробуждает `val` "
-"потоков на futex по адресу `uaddr`, и если атомарная операция вернула "
-"положительное число, пробуждает `val2` потоков на futex по адресу `uaddr2`."
+"потоков на фьютексе по адресу `uaddr`, и если атомарная операция вернула "
+"положительное число, пробуждает `val2` потоков на фьютексе по адресу "
+"`uaddr2`."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1197
-#, fuzzy
 msgid "The operations implemented in `FUTEX_WAKE_OP`:"
-msgstr "Реализованные операции в `FUTEX_WAKE_OP`:"
+msgstr "Операции, реализованные в `FUTEX_WAKE_OP`:"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1199
@@ -3752,25 +3717,23 @@ msgstr "`FUTEX_OP_XOR`"
 
 #. type: delimited block = 4
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1208
-#, fuzzy
 msgid ""
 "There is no `val2` parameter in the futex prototype.  The `val2` is taken "
 "from the `struct timespec *timeout` parameter for operations "
 "`FUTEX_REQUEUE`, `FUTEX_CMP_REQUEUE` and `FUTEX_WAKE_OP`."
 msgstr ""
-"В прототипе futex отсутствует параметр `val2`. Значение `val2` берётся из "
-"параметра `struct timespec *timeout` для операций `FUTEX_REQUEUE`, "
-"`FUTEX_CMP_REQUEUE` и `FUTEX_WAKE_OP`."
+"В прототипе системного вызова futex отсутствует параметр `val2`. Значение "
+"`val2` берётся из параметра `struct timespec *timeout` для операций "
+"`FUTEX_REQUEUE`, `FUTEX_CMP_REQUEUE` и `FUTEX_WAKE_OP`."
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1211
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Futex emulation in FreeBSD"
-msgstr "Эмуляция Futex в FreeBSD"
+msgstr "Эмуляция фьютексов в FreeBSD"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1216
-#, fuzzy
 msgid ""
 "The futex emulation in FreeBSD is taken from NetBSD and further extended by "
 "us.  It is placed in `linux_futex.c` and [.filename]#linux_futex.h# files.  "
@@ -3810,7 +3773,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1230
-#, fuzzy
 msgid "And the structure `waiting_proc` is:"
 msgstr "И структура `waiting_proc` выглядит следующим образом:"
 
@@ -3850,7 +3812,6 @@ msgstr "futex_get / futex_put"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1248
-#, fuzzy
 msgid ""
 "A futex is obtained using the `futex_get` function, which searches a linear "
 "list of futexes and returns the found one or creates a new futex.  When "
@@ -3872,7 +3833,6 @@ msgstr "futex_sleep"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1258
-#, fuzzy
 msgid ""
 "When a futex queues a thread for sleeping it creates a `working_proc` "
 "structure and puts this structure to the list inside the futex structure "
@@ -3883,7 +3843,7 @@ msgid ""
 "up from `futex_wake` we have `wp_new_futex` set so we sleep on it.  This way "
 "the actual requeueing is done in this function."
 msgstr ""
-"Когда futex ставит поток в очередь на ожидание, он создает структуру "
+"Когда фьютекс ставит поток в очередь на ожидание, он создает структуру "
 "`working_proc` и помещает эту структуру в список внутри структуры futex, "
 "после чего просто выполняет man:tsleep[9] для приостановки потока. Ожидание "
 "может быть ограничено по времени. После возврата из man:tsleep[9] (поток был "
@@ -3901,7 +3861,6 @@ msgstr "futex_wake"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1268
-#, fuzzy
 msgid ""
 "Waking up a thread sleeping on a futex is performed in the `futex_wake` "
 "function.  First in this function we mimic the strange Linux(R) behavior, "
@@ -3912,14 +3871,14 @@ msgid ""
 "new futex for requeueing.  If so, we requeue up to n2 threads on the new "
 "futex.  This cooperates with `futex_sleep`."
 msgstr ""
-"Пробуждение потока, ожидающего на futex, выполняется в функции `futex_wake`. "
-"Сначала в этой функции мы имитируем странное поведение Linux(R), где "
-"пробуждаются N потоков для всех операций, за исключением того, что операции "
-"REQUEUE выполняются на N+1 потоках. Однако обычно это не имеет значения, так "
-"как мы пробуждаем все потоки. Далее в функции в цикле мы пробуждаем n "
-"потоков, после чего проверяем, есть ли новый futex для перестановки. Если "
-"есть, мы переставляем до n2 потоков на новый futex. Это взаимодействует с "
-"`futex_sleep`."
+"Пробуждение потока, ожидающего на фьютексе, выполняется в функции "
+"`futex_wake`. Сначала в этой функции мы имитируем странное поведение Linux(R)"
+", где пробуждаются N потоков для всех операций, за исключением того, что "
+"операции REQUEUE выполняются на N+1 потоках. Однако обычно это не имеет "
+"значения, так как мы пробуждаем все потоки. Далее в функции в цикле мы "
+"пробуждаем n потоков, после чего проверяем, есть ли новый фьютекс для "
+"перестановки. Если есть, мы переставляем до n2 потоков на новый futex. Это "
+"взаимодействует с `futex_sleep`."
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1270
@@ -3929,7 +3888,6 @@ msgstr "futex_wake_op"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1275
-#, fuzzy
 msgid ""
 "The `FUTEX_WAKE_OP` operation is quite complicated.  First we obtain two "
 "futexes at addresses `uaddr` and `uaddr2` then we perform the atomic "
@@ -3945,13 +3903,12 @@ msgstr ""
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1277
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "futex atomic operation"
-msgstr "futex атомарная операция"
+msgstr "Атомарная операция на фьютексе"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1282
-#, fuzzy
 msgid ""
 "The atomic operation takes two parameters `encoded_op` and `uaddr`.  The "
 "encoded operation encodes the operation itself, comparing value, operation "
@@ -3975,7 +3932,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1291
-#, fuzzy
 msgid ""
 "And this is done atomically. First a copying in of the number at `uaddr` is "
 "performed and the operation is done.  The code handles page faults and if no "
@@ -3989,31 +3945,29 @@ msgstr ""
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1293
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Futex locking"
-msgstr "Futex блокировка"
+msgstr "Блокировка фьютекса"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1297
-#, fuzzy
 msgid ""
 "Futex implementation uses two lock lists protecting `sx_lock` and global "
 "locks (either Giant or another `sx_lock`).  Every operation is performed "
 "locked from the start to the very end."
 msgstr ""
-"Реализация Futex использует два списка блокировок для защиты `sx_lock` и "
+"Реализация фьютексов использует два списка блокировок для защиты `sx_lock` и "
 "глобальных блокировок (либо Giant, либо другой `sx_lock`). Каждая операция "
 "выполняется заблокированной от начала до самого конца."
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1299
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Various syscalls implementation"
 msgstr "Реализация различных системных вызовов"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1302
-#, fuzzy
 msgid ""
 "In this section I am going to describe some smaller syscalls that are worth "
 "mentioning because their implementation is not obvious or those syscalls are "
@@ -4025,13 +3979,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1304
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "*at family of syscalls"
 msgstr "*семейство системных вызовов at"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1313
-#, fuzzy
 msgid ""
 "During development of Linux(R) 2.6.16 kernel, the *at syscalls were added.  "
 "Those syscalls (`openat` for example) work exactly like their at-less "
@@ -4077,7 +4030,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1331
-#, fuzzy
 msgid ""
 "This infrastructure is necessary to avoid races when opening files outside "
 "the working directory.  Imagine that a process consists of two threads, "
@@ -4100,7 +4052,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1334
-#, fuzzy
 msgid ""
 "Linux(R) family of *at syscalls contains: `linux_openat`, `linux_mkdirat`, "
 "`linux_mknodat`, `linux_fchownat`, `linux_futimesat`, `linux_fstatat64`, "
@@ -4118,13 +4069,12 @@ msgstr ""
 
 #. type: Title =====
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1336
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Implementation"
 msgstr "Реализация"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1344
-#, fuzzy
 msgid ""
 "The implementation is done by altering the man:namei[9] routine (described "
 "above) to take additional parameter `dirfd` in its `nameidata` structure, "
@@ -4162,7 +4112,6 @@ msgstr "openat() --> kern_openat() --> vn_open() -> namei()\n"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1354
-#, fuzzy
 msgid ""
 "For this reason `kern_open` and `vn_open` must be altered to incorporate the "
 "additional `dirfd` parameter.  No compat layer is created for those because "
@@ -4184,7 +4133,6 @@ msgstr "Ioctl"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1370
-#, fuzzy
 msgid ""
 "The ioctl interface is quite fragile due to its generality.  We have to bear "
 "in mind that devices differ between Linux(R) and FreeBSD so some care must "
@@ -4236,7 +4184,6 @@ msgstr "Отладка"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1379
-#, fuzzy
 msgid ""
 "Every syscall should be debuggable.  For this purpose we introduce a small "
 "infrastructure.  We have the ldebug facility, which tells whether a given "
@@ -4259,13 +4206,12 @@ msgstr "Заключение"
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1384
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Results"
 msgstr "Результаты"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1390
-#, fuzzy
 msgid ""
 "As of April 2007 the Linux(R) emulation layer is capable of emulating the "
 "Linux(R) 2.6.16 kernel quite well.  The remaining problems concern futexes, "
@@ -4280,7 +4226,7 @@ msgid ""
 msgstr ""
 "По состоянию на апрель 2007 года уровень эмуляции Linux(R) способен "
 "достаточно хорошо эмулировать ядро Linux(R) 2.6.16. Оставшиеся проблемы "
-"касаются futex, незавершённого семейства системных вызовов *at, "
+"касаются фьютексов, незавершённого семейства системных вызовов *at, "
 "проблематичной доставки сигналов, отсутствия `epoll` и `inotify`, а также, "
 "вероятно, некоторых ошибок, которые мы ещё не обнаружили. Несмотря на это, "
 "мы способны запускать практически все программы Linux(R), включённые в "
@@ -4292,7 +4238,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1394
-#, fuzzy
 msgid ""
 "We are able to run the most used applications like package:www/linux-"
 "firefox[], package:net-im/skype[] and some games from the Ports Collection.  "
@@ -4313,7 +4258,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1397
-#, fuzzy
 msgid ""
 "We hope to enable 2.6.16 emulation by default some time after FreeBSD 7.0 is "
 "released at least to expose the 2.6 emulation parts for some wider testing.  "
@@ -4327,25 +4271,24 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1399
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Future work"
 msgstr "Будущие работы"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1402
-#, fuzzy
 msgid ""
 "Future work should focus on fixing the remaining issues with futexes, "
 "implement the rest of the *at family of syscalls, fix the signal delivery "
 "and possibly implement the `epoll` and `inotify` facilities."
 msgstr ""
 "Будущая работа должна быть сосредоточена на исправлении оставшихся проблем с "
-"futex, реализации оставшихся системных вызовов семейства *at, исправлении "
-"доставки сигналов и, возможно, реализации механизмов `epoll` и `inotify`."
+"фьютексами, реализации оставшихся системных вызовов семейства *at, "
+"исправлении доставки сигналов и, возможно, реализации механизмов `epoll` и "
+"`inotify`."
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1404
-#, fuzzy
 msgid ""
 "We hope to be able to run the most important programs flawlessly soon, so we "
 "will be able to switch to the 2.6 emulation by default and make the Fedora "
@@ -4359,7 +4302,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1408
-#, fuzzy
 msgid ""
 "The other possible goal is to share our code with NetBSD and DragonflyBSD.  "
 "NetBSD has some support for 2.6 emulation but its far from finished and not "
@@ -4373,7 +4315,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1413
-#, fuzzy
 msgid ""
 "Generally, as Linux(R) develops we would like to keep up with their "
 "development, implementing newly added syscalls.  Splice comes to mind "
@@ -4389,13 +4330,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1415
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Team"
 msgstr "Команда"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1418
-#, fuzzy
 msgid "I cooperated on this project with (in alphabetical order):"
 msgstr "Я сотрудничал в этом проекте с (в алфавитном порядке):"
 
@@ -4446,7 +4386,6 @@ msgstr "`{davidxu}`"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1430
-#, fuzzy
 msgid ""
 "I would like to thank all those people for their advice, code reviews and "
 "general support."
@@ -4456,9 +4395,9 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1432
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Literatures"
-msgstr "Литературы"
+msgstr "Литература"
 
 #. type: Plain text
 #: documentation/content/en/articles/linux-emulation/_index.adoc:1435
