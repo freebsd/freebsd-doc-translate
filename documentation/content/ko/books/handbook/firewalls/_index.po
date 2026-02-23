@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2025-11-08 16:17+0000\n"
+"POT-Creation-Date: 2026-02-22 15:58+0000\n"
 "PO-Revision-Date: 2023-08-26 02:56+0000\n"
 "Last-Translator: \"Kyung-tak, Yoo\" <stonegaze@me.com>\n"
 "Language-Team: Korean <https://translate-dev.freebsd.org/projects/"
@@ -6651,22 +6651,36 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2455
-#, no-wrap
-msgid "Blacklistd"
+#, fuzzy, no-wrap
+#| msgid "Blacklistd"
+msgid "Blocklistd"
 msgstr "Blacklistd"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2462
+#, fuzzy
+#| msgid ""
+#| "Blacklistd is a daemon listening to sockets awaiting to receive "
+#| "notifications from other daemons about connection attempts that failed or "
+#| "were successful.  It is most widely used in blocking too many connection "
+#| "attempts on open ports.  A prime example is SSH running on the internet "
+#| "getting a lot of requests from bots or scripts trying to guess passwords "
+#| "and gain access.  Using blacklistd, the daemon can notify the firewall to "
+#| "create a filter rule to block excessive connection attempts from a single "
+#| "source after a number of tries. Blacklistd was first developed on NetBSD "
+#| "and appeared there in version 7.  FreeBSD 11 imported blacklistd from "
+#| "NetBSD."
 msgid ""
-"Blacklistd is a daemon listening to sockets awaiting to receive "
+"Blocklistd is a daemon listening to sockets awaiting to receive "
 "notifications from other daemons about connection attempts that failed or "
 "were successful.  It is most widely used in blocking too many connection "
 "attempts on open ports.  A prime example is SSH running on the internet "
 "getting a lot of requests from bots or scripts trying to guess passwords and "
-"gain access.  Using blacklistd, the daemon can notify the firewall to create "
+"gain access.  Using blocklistd, the daemon can notify the firewall to create "
 "a filter rule to block excessive connection attempts from a single source "
-"after a number of tries. Blacklistd was first developed on NetBSD and "
-"appeared there in version 7.  FreeBSD 11 imported blacklistd from NetBSD."
+"after a number of tries. Blocklistd was first developed on NetBSD and "
+"appeared there in version 7, it was originally called blacklistd.  FreeBSD "
+"11 imported blocklistd from NetBSD."
 msgstr ""
 "blacklistd는 소켓을 수신 대기하면서 다른 데몬으로부터 연결 시도가 실패했거나 "
 "성공했다는 알림을 받는 데몬입니다.  열린 포트에서 너무 많은 연결 시도를 차단"
@@ -6679,12 +6693,19 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2467
+#, fuzzy
+#| msgid ""
+#| "This chapter describes how to set up blacklistd, configure it, and "
+#| "provides examples on how to use it.  Readers should be familiar with "
+#| "basic firewall concepts like rules.  For details, refer to the firewall "
+#| "chapter.  PF is used in the examples, but other firewalls available on "
+#| "FreeBSD should be able to work with blacklistd, too."
 msgid ""
-"This chapter describes how to set up blacklistd, configure it, and provides "
+"This chapter describes how to set up blocklistd, configure it, and provides "
 "examples on how to use it.  Readers should be familiar with basic firewall "
 "concepts like rules.  For details, refer to the firewall chapter.  PF is "
 "used in the examples, but other firewalls available on FreeBSD should be "
-"able to work with blacklistd, too."
+"able to work with blocklistd, too."
 msgstr ""
 "이 장에서는 blacklistd를 설정하고 구성하는 방법을 설명하고 사용 방법에 대한 "
 "예제를 제공합니다.  독자는 규칙과 같은 기본 방화벽 개념에 익숙해야 합니다.  "
@@ -6694,18 +6715,27 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2468
-#, no-wrap
-msgid "Enabling Blacklistd"
+#, fuzzy, no-wrap
+#| msgid "Enabling Blacklistd"
+msgid "Enabling Blocklistd"
 msgstr "blacklistd 활성화하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2474
+#, fuzzy
+#| msgid ""
+#| "The main configuration for blacklistd is stored in man:blacklistd."
+#| "conf[5].  Various command line options are also available to change "
+#| "blacklistd's run-time behavior.  Persistent configuration across reboots "
+#| "should be stored in [.filename]#/etc/blacklistd.conf#.  To enable the "
+#| "daemon during system boot, add a `blacklistd_enable` line to [.filename]#/"
+#| "etc/rc.conf# like this:"
 msgid ""
-"The main configuration for blacklistd is stored in man:blacklistd.conf[5].  "
-"Various command line options are also available to change blacklistd's run-"
+"The main configuration for blocklistd is stored in man:blocklistd.conf[5].  "
+"Various command line options are also available to change blocklistd's run-"
 "time behavior.  Persistent configuration across reboots should be stored in "
-"[.filename]#/etc/blacklistd.conf#.  To enable the daemon during system boot, "
-"add a `blacklistd_enable` line to [.filename]#/etc/rc.conf# like this:"
+"[.filename]#/etc/blocklistd.conf#.  To enable the daemon during system boot, "
+"add a `blocklistd_enable` line to [.filename]#/etc/rc.conf# like this:"
 msgstr ""
 "blacklistd의 기본 구성은 man:blacklistd.conf[5]에 저장됩니다.  blacklistd의 "
 "런타임 동작을 변경하기 위해 다양한 명령줄 옵션도 사용할 수 있습니다.  재부팅 "
@@ -6715,8 +6745,9 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2478
-#, no-wrap
-msgid "# sysrc blacklistd_enable=yes\n"
+#, fuzzy, no-wrap
+#| msgid "# sysrc blacklistd_enable=yes\n"
+msgid "# sysrc blocklistd_enable=yes\n"
 msgstr "# sysrc blacklistd_enable=yes\n"
 
 #. type: Plain text
@@ -6726,23 +6757,31 @@ msgstr "서비스를 수동으로 시작하려면 다음 명령을 실행합니�
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2485
-#, no-wrap
-msgid "# service blacklistd start\n"
+#, fuzzy, no-wrap
+#| msgid "# service blacklistd start\n"
+msgid "# service blocklistd start\n"
 msgstr "# service blacklistd start\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2487
-#, no-wrap
-msgid "Creating a Blacklistd Ruleset"
+#, fuzzy, no-wrap
+#| msgid "Creating a Blacklistd Ruleset"
+msgid "Creating a Blocklistd Ruleset"
 msgstr "Blacklistd 규칙 집합 만들기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2492
+#, fuzzy
+#| msgid ""
+#| "Rules for blacklistd are configured in man:blacklistd.conf[5] with one "
+#| "entry per line.  Each rule contains a tuple separated by spaces or tabs.  "
+#| "Rules either belong to a `local` or a `remote`, which applies to the "
+#| "machine where blacklistd is running or an outside source, respectively."
 msgid ""
-"Rules for blacklistd are configured in man:blacklistd.conf[5] with one entry "
+"Rules for blocklistd are configured in man:blocklistd.conf[5] with one entry "
 "per line.  Each rule contains a tuple separated by spaces or tabs.  Rules "
 "either belong to a `local` or a `remote`, which applies to the machine where "
-"blacklistd is running or an outside source, respectively."
+"blocklistd is running or an outside source, respectively."
 msgstr ""
 "Blacklistd에 대한 규칙은 한 줄당 하나의 항목으로 man:blacklistd.conf[5]에 구"
 "성됩니다.  각 규칙은 공백 또는 탭으로 구분된 튜플을 포함합니다.  규칙은 "
@@ -6757,7 +6796,9 @@ msgstr "로컬 규칙"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2496
-msgid "An example blacklistd.conf entry for a local rule looks like this:"
+#, fuzzy
+#| msgid "An example blacklistd.conf entry for a local rule looks like this:"
+msgid "An example blocklistd.conf entry for a local rule looks like this:"
 msgstr "로컬 규칙에 대한 blacklistd.conf 항목의 예는 다음과 같습니다:"
 
 #. type: delimited block . 4
@@ -6784,10 +6825,18 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2513
+#, fuzzy
+#| msgid ""
+#| "Seven fields separated by either tabs or spaces define a rule.  The first "
+#| "four fields identify the traffic that should be blocklisted.  The three "
+#| "fields that follow define backlistd's behavior.  Wildcards are denoted as "
+#| "asterisks (`*`), matching anything in this field.  The first field "
+#| "defines the location.  In local rules, these are the network ports.  The "
+#| "syntax for the location field is as follows:"
 msgid ""
 "Seven fields separated by either tabs or spaces define a rule.  The first "
 "four fields identify the traffic that should be blocklisted.  The three "
-"fields that follow define backlistd's behavior.  Wildcards are denoted as "
+"fields that follow define blocklistd's behavior.  Wildcards are denoted as "
 "asterisks (`*`), matching anything in this field.  The first field defines "
 "the location.  In local rules, these are the network ports.  The syntax for "
 "the location field is as follows:"
@@ -6826,8 +6875,15 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2529
+#, fuzzy
+#| msgid ""
+#| "A protocol can be used in the third field of a blacklistd rule.  The "
+#| "following protocols can be used: `tcp`, `udp`, `tcp6`, `udp6`, or "
+#| "numeric.  A wildcard, like in the example, is typically used to match all "
+#| "protocols unless there is a reason to distinguish traffic by a certain "
+#| "protocol."
 msgid ""
-"A protocol can be used in the third field of a blacklistd rule.  The "
+"A protocol can be used in the third field of a blocklistd rule.  The "
 "following protocols can be used: `tcp`, `udp`, `tcp6`, `udp6`, or numeric.  "
 "A wildcard, like in the example, is typically used to match all protocols "
 "unless there is a reason to distinguish traffic by a certain protocol."
@@ -6850,10 +6906,15 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2535
+#, fuzzy
+#| msgid ""
+#| "The packet filter rule name is declared by the fifth field, which starts "
+#| "the behavior part of the rule.  By default, blacklistd puts all blocks "
+#| "under a pf anchor called `blacklistd` in [.filename]#pf.conf# like this:"
 msgid ""
 "The packet filter rule name is declared by the fifth field, which starts the "
-"behavior part of the rule.  By default, blacklistd puts all blocks under a "
-"pf anchor called `blacklistd` in [.filename]#pf.conf# like this:"
+"behavior part of the rule.  By default, blocklistd puts all blocks under a "
+"pf anchor called `blocklistd` in [.filename]#pf.conf# like this:"
 msgstr ""
 "패킷 필터 규칙 이름은 규칙의 동작 부분을 시작하는 다섯 번째 필드에서 선언됩니"
 "다.  기본적으로 blacklistd는 다음과 같이 모든 블록을 [.filename]#pf.conf# 의 "
@@ -6861,9 +6922,13 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2541
-#, no-wrap
+#, fuzzy, no-wrap
+#| msgid ""
+#| "anchor \"blacklistd/*\" in on $ext_if\n"
+#| "block in\n"
+#| "pass out\n"
 msgid ""
-"anchor \"blacklistd/*\" in on $ext_if\n"
+"anchor \"blocklistd/*\" in on $ext_if\n"
 "block in\n"
 "pass out\n"
 msgstr ""
@@ -6892,9 +6957,13 @@ msgstr "ssh             stream  *       *               -ssh       3       24h\n
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2554
+#, fuzzy
+#| msgid ""
+#| "With such a rule, any new blocklist rules are added to an anchor called "
+#| "`blacklistd-ssh`."
 msgid ""
 "With such a rule, any new blocklist rules are added to an anchor called "
-"`blacklistd-ssh`."
+"`blocklistd-ssh`."
 msgstr ""
 "이러한 규칙을 사용하면 새 blocklist 규칙이 `blacklistd-ssh` 라는 앵커에 추가"
 "됩니다."
@@ -6953,8 +7022,13 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2578
+#, fuzzy
+#| msgid ""
+#| "The last field in a blacklistd rule definition specifies how long a host "
+#| "is blocklisted.  The default unit is seconds, but suffixes like `m`, `h`, "
+#| "and `d` can also be specified for minutes, hours, and days, respectively."
 msgid ""
-"The last field in a blacklistd rule definition specifies how long a host is "
+"The last field in a blocklistd rule definition specifies how long a host is "
 "blocklisted.  The default unit is seconds, but suffixes like `m`, `h`, and "
 "`d` can also be specified for minutes, hours, and days, respectively."
 msgstr ""
@@ -6964,12 +7038,20 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2582
+#, fuzzy
+#| msgid ""
+#| "The example rule in its entirety means that after three times "
+#| "authenticating to SSH will result in a new PF block rule for that host.  "
+#| "Rule matches are performed by first checking local rules one after "
+#| "another, from most specific to least specific.  When a match occurs, the "
+#| "`remote` rules are applied and the name, `nfail`, and disable fields are "
+#| "changed by the `remote` rule that matched."
 msgid ""
 "The example rule in its entirety means that after three times authenticating "
 "to SSH will result in a new PF block rule for that host.  Rule matches are "
 "performed by first checking local rules one after another, from most "
 "specific to least specific.  When a match occurs, the `remote` rules are "
-"applied and the name, `nfail`, and disable fields are changed by the "
+"applied and the `name`, `nfail`, and `duration` fields are changed by the "
 "`remote` rule that matched."
 msgstr ""
 "이 예제 규칙을 전체적으로 보면 SSH에 세 번 인증하면 해당 호스트에 대한 새로"
@@ -6986,11 +7068,18 @@ msgstr "원격 규칙"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2589
+#, fuzzy
+#| msgid ""
+#| "Remote rules are used to specify how blacklistd changes its behavior "
+#| "depending on the remote host currently being evaluated.  Each field in a "
+#| "remote rule is the same as in a local rule.  The only difference is in "
+#| "the way blacklistd is using them.  To explain it, this example rule is "
+#| "used:"
 msgid ""
-"Remote rules are used to specify how blacklistd changes its behavior "
+"Remote rules are used to specify how blocklistd changes its behavior "
 "depending on the remote host currently being evaluated.  Each field in a "
 "remote rule is the same as in a local rule.  The only difference is in the "
-"way blacklistd is using them.  To explain it, this example rule is used:"
+"way blocklistd is using them.  To explain it, this example rule is used:"
 msgstr ""
 "원격 규칙은 현재 평가 중인 원격 호스트에 따라 blacklistd가 동작방법을 변경하"
 "는데 사용됩니다.  원격 규칙의 각 필드는 로컬 규칙과 동일합니다.  유일한 차이"
@@ -7022,13 +7111,23 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2605
+#, fuzzy
+#| msgid ""
+#| "The name fields is different though: the equal sign (`=`) in a remote "
+#| "rule tells blacklistd to use the value from the matching local rule.  It "
+#| "means that the firewall rule entry is taken and the `/25` prefix (a "
+#| "netmask of `255.255.255.128`) is added.  When a connection from that "
+#| "address range is blocklisted, the entire subnet is affected.  A PF anchor "
+#| "name can also be used here, in which case blacklistd will add rules for "
+#| "this address block to the anchor of that name.  The default table is used "
+#| "when a wildcard is specified."
 msgid ""
 "The name fields is different though: the equal sign (`=`) in a remote rule "
-"tells blacklistd to use the value from the matching local rule.  It means "
+"tells blocklistd to use the value from the matching local rule.  It means "
 "that the firewall rule entry is taken and the `/25` prefix (a netmask of "
 "`255.255.255.128`) is added.  When a connection from that address range is "
 "blocklisted, the entire subnet is affected.  A PF anchor name can also be "
-"used here, in which case blacklistd will add rules for this address block to "
+"used here, in which case blocklistd will add rules for this address block to "
 "the anchor of that name.  The default table is used when a wildcard is "
 "specified."
 msgstr ""
@@ -7063,17 +7162,26 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2612
-#, no-wrap
-msgid "Blacklistd Client Configuration"
+#, fuzzy, no-wrap
+#| msgid "Blacklistd Client Configuration"
+msgid "Blocklistd Client Configuration"
 msgstr "blacklistd 클라이언트 구성"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2617
+#, fuzzy
+#| msgid ""
+#| "There are a few software packages in FreeBSD that can utilize "
+#| "blacklistd's functionality.  The two most prominent ones are man:ftpd[8] "
+#| "and man:sshd[8] to block excessive connection attempts.  To activate "
+#| "blacklistd in the SSH daemon, add the following line to [.filename]#/etc/"
+#| "ssh/sshd_config#:"
 msgid ""
-"There are a few software packages in FreeBSD that can utilize blacklistd's "
-"functionality.  The two most prominent ones are man:ftpd[8] and man:sshd[8] "
-"to block excessive connection attempts.  To activate blacklistd in the SSH "
-"daemon, add the following line to [.filename]#/etc/ssh/sshd_config#:"
+"There are a few software packages in FreeBSD that can utilize blocklistd's "
+"functionality.  The two most prominent ones are package:ftp/freebsd-ftpd[] "
+"and man:sshd[8] to block excessive connection attempts.  To activate "
+"blocklistd in the SSH daemon, add the following line to [.filename]#/etc/ssh/"
+"sshd_config#:"
 msgstr ""
 "FreeBSD에는 blacklistd의 기능을 활용할 수 있는 몇 가지 소프트웨어 패키지가 있"
 "습니다.  가장 눈에 띄는 두 패키지는 과도한 연결 시도를 차단하는 man:ftpd[8] "
@@ -7082,8 +7190,9 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2621
-#, no-wrap
-msgid "UseBlacklist yes\n"
+#, fuzzy, no-wrap
+#| msgid "UseBlacklist yes\n"
+msgid "UseBlocklist yes\n"
 msgstr "UseBlacklist yes\n"
 
 #. type: Plain text
@@ -7093,9 +7202,15 @@ msgstr "변경 사항을 적용하려면 나중에 sshd를 다시 시작하세�
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2626
+#, fuzzy
+#| msgid ""
+#| "Blacklisting for man:ftpd[8] is enabled using `-B`, either in [."
+#| "filename]#/etc/inetd.conf# or as a flag in [.filename]#/etc/rc.conf# like "
+#| "this:"
 msgid ""
-"Blacklisting for man:ftpd[8] is enabled using `-B`, either in [.filename]#/"
-"etc/inetd.conf# or as a flag in [.filename]#/etc/rc.conf# like this:"
+"Blocklisting for package:ftp/freebsd-ftpd[] is enabled using `-B`, either in "
+"[.filename]#/etc/inetd.conf# or as a flag in [.filename]#/etc/rc.conf# like "
+"this:"
 msgstr ""
 "man:ftpd[8]에 대한 블랙리스트는 [.filename]#/etc/inetd.conf# 에서 `-B` 를 사"
 "용하거나 다음과 같이 [.filename]#/etc/rc.conf# 에서 플래그로 사용합니다:"
@@ -7108,21 +7223,31 @@ msgstr "ftpd_flags=\"-B\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2633
-msgid "That is all that is needed to make these programs talk to blacklistd."
+#, fuzzy
+#| msgid ""
+#| "That is all that is needed to make these programs talk to blacklistd."
+msgid "That is all that is needed to make these programs talk to blocklistd."
 msgstr "프로그램이 blacklistd와 통신하는 데 필요한 것은 이것뿐입니다."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2634
-#, no-wrap
-msgid "Blacklistd Management"
+#, fuzzy, no-wrap
+#| msgid "Blacklistd Management"
+msgid "Blocklistd Management"
 msgstr "blacklistd 관리"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2639
+#, fuzzy
+#| msgid ""
+#| "Blacklistd provides the user with a management utility called man:"
+#| "blacklistctl[8].  It displays blocked addresses and networks that are "
+#| "blocklisted by the rules defined in man:blacklistd.conf[5].  To see the "
+#| "list of currently blocked hosts, use `dump` combined with `-b` like this."
 msgid ""
-"Blacklistd provides the user with a management utility called man:"
-"blacklistctl[8].  It displays blocked addresses and networks that are "
-"blocklisted by the rules defined in man:blacklistd.conf[5].  To see the list "
+"Blocklistd provides the user with a management utility called man:"
+"blocklistctl[8].  It displays blocked addresses and networks that are "
+"blocklisted by the rules defined in man:blocklistd.conf[5].  To see the list "
 "of currently blocked hosts, use `dump` combined with `-b` like this."
 msgstr ""
 "Blacklistd는 사용자에게 man:blacklistctl[8]이라는 관리 유틸리티를 제공합니"
@@ -7132,11 +7257,15 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2645
-#, no-wrap
+#, fuzzy, no-wrap
+#| msgid ""
+#| "# blacklistctl dump -b\n"
+#| "      address/ma:port id      nfail   last access\n"
+#| "213.0.123.128/25:22   OK      6/3     2019/06/08 14:30:19\n"
 msgid ""
-"# blacklistctl dump -b\n"
-"      address/ma:port id      nfail   last access\n"
-"213.0.123.128/25:22   OK      6/3     2019/06/08 14:30:19\n"
+"# blocklistctl dump -b\n"
+"rulename                address/ma:port id      nfail   last access\n"
+"blocklistd        213.0.123.128/25:22   OK      6/3     2019/06/08 14:30:19\n"
 msgstr ""
 "# blacklistctl dump -b\n"
 "      address/ma:port id      nfail   last access\n"
@@ -7144,12 +7273,20 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2651
+#, fuzzy
+#| msgid ""
+#| "This example shows that there were 6 out of three permitted attempts on "
+#| "port 22 coming from the address range `213.0.123.128/25`.  There are more "
+#| "attempts listed than are allowed because SSH allows a client to try "
+#| "multiple logins on a single TCP connection.  A connection that is "
+#| "currently going on is not stopped by blacklistd.  The last connection "
+#| "attempt is listed in the `last access` column of the output."
 msgid ""
 "This example shows that there were 6 out of three permitted attempts on port "
 "22 coming from the address range `213.0.123.128/25`.  There are more "
 "attempts listed than are allowed because SSH allows a client to try multiple "
 "logins on a single TCP connection.  A connection that is currently going on "
-"is not stopped by blacklistd.  The last connection attempt is listed in the "
+"is not stopped by blocklistd.  The last connection attempt is listed in the "
 "`last access` column of the output."
 msgstr ""
 "이 예에서는 `213.0.123.128/25` 주소 범위에서 포트 22에 허용된 3번의 시도에 대"
@@ -7169,11 +7306,15 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2659
-#, no-wrap
+#, fuzzy, no-wrap
+#| msgid ""
+#| "# blacklistctl dump -br\n"
+#| "      address/ma:port id      nfail   remaining time\n"
+#| "213.0.123.128/25:22   OK      6/3     36s\n"
 msgid ""
-"# blacklistctl dump -br\n"
-"      address/ma:port id      nfail   remaining time\n"
-"213.0.123.128/25:22   OK      6/3     36s\n"
+"# blocklistctl dump -br\n"
+"rulename                address/ma:port id      nfail   remaining time\n"
+"blocklistd        213.0.123.128/25:22   OK      6/3     36s\n"
 msgstr ""
 "# blacklistctl dump -br\n"
 "      address/ma:port id      nfail   remaining time\n"
@@ -7195,14 +7336,27 @@ msgstr "Block List에서 호스트 제거하기"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2674
+#, fuzzy
+#| msgid ""
+#| "Sometimes it is necessary to remove a host from the block list before the "
+#| "remaining time expires.  Unfortunately, there is no functionality in "
+#| "blacklistd to do that.  However, it is possible to remove the address "
+#| "from the PF table using pfctl.  For each blocked port, there is a child "
+#| "anchor inside the blacklistd anchor defined in [.filename]#/etc/pf."
+#| "conf#.  For example, if there is a child anchor for blocking port 22 it "
+#| "is called `blacklistd/22`.  There is a table inside that child anchor "
+#| "that contains the blocked addresses.  This table is called port followed "
+#| "by the port number.  In this example, it would be called `port22`.  With "
+#| "that information at hand, it is now possible to use man:pfctl[8] to "
+#| "display all addresses listed like this:"
 msgid ""
 "Sometimes it is necessary to remove a host from the block list before the "
 "remaining time expires.  Unfortunately, there is no functionality in "
-"blacklistd to do that.  However, it is possible to remove the address from "
+"blocklistd to do that.  However, it is possible to remove the address from "
 "the PF table using pfctl.  For each blocked port, there is a child anchor "
-"inside the blacklistd anchor defined in [.filename]#/etc/pf.conf#.  For "
+"inside the blocklistd anchor defined in [.filename]#/etc/pf.conf#.  For "
 "example, if there is a child anchor for blocking port 22 it is called "
-"`blacklistd/22`.  There is a table inside that child anchor that contains "
+"`blocklistd/22`.  There is a table inside that child anchor that contains "
 "the blocked addresses.  This table is called port followed by the port "
 "number.  In this example, it would be called `port22`.  With that "
 "information at hand, it is now possible to use man:pfctl[8] to display all "
@@ -7220,9 +7374,14 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2681
-#, no-wrap
+#, fuzzy, no-wrap
+#| msgid ""
+#| "# pfctl -a blacklistd/22 -t port22 -T show\n"
+#| "...\n"
+#| "213.0.123.128/25\n"
+#| "...\n"
 msgid ""
-"# pfctl -a blacklistd/22 -t port22 -T show\n"
+"# pfctl -a blocklistd/22 -t port22 -T show\n"
 "...\n"
 "213.0.123.128/25\n"
 "...\n"
@@ -7243,18 +7402,26 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2688
-#, no-wrap
-msgid "# pfctl -a blacklistd/22 -t port22 -T delete 213.0.123.128/25\n"
+#, fuzzy, no-wrap
+#| msgid "# pfctl -a blacklistd/22 -t port22 -T delete 213.0.123.128/25\n"
+msgid "# pfctl -a blocklistd/22 -t port22 -T delete 213.0.123.128/25\n"
 msgstr "# pfctl -a blacklistd/22 -t port22 -T delete 213.0.123.128/25\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/firewalls/_index.adoc:2692
+#, fuzzy
+#| msgid ""
+#| "The address is now removed from PF, but will still show up in the "
+#| "blacklistctl list, since it does not know about any changes made in PF.  "
+#| "The entry in blacklistd's database will eventually expire and be removed "
+#| "from its output.  The entry will be added again if the host is matching "
+#| "one of the block rules in blacklistd again."
 msgid ""
 "The address is now removed from PF, but will still show up in the "
-"blacklistctl list, since it does not know about any changes made in PF.  The "
-"entry in blacklistd's database will eventually expire and be removed from "
+"blocklistctl list, since it does not know about any changes made in PF.  The "
+"entry in blocklistd's database will eventually expire and be removed from "
 "its output.  The entry will be added again if the host is matching one of "
-"the block rules in blacklistd again."
+"the block rules in blocklistd again."
 msgstr ""
 "이제 해당 주소는 PF에서 제거되었지만 PF에서 변경된 내용을 알지 못하므로 "
 "blacklistctl 목록에는 계속 표시됩니다.  blacklistd의 데이터베이스 항목은 결"
