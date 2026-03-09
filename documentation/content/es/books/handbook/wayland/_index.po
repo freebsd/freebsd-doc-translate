@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2026-02-22 15:58+0000\n"
-"PO-Revision-Date: 2026-03-04 20:01+0000\n"
+"PO-Revision-Date: 2026-03-09 18:11+0000\n"
 "Last-Translator: Alfredo Alvarado <alvaradorad@disroot.org>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookwayland_index/es/>\n"
@@ -24,6 +24,8 @@ msgstr ""
 #, no-wrap
 msgid "This chapter describes how to install and configure Wayland and compositors on FreeBSD, which provides a graphical user environment"
 msgstr ""
+"Este capítulo describe cómo instalar y configurar Wayland y compositores en "
+"FreeBSD, lo cual proporciona un entorno de usuario gráfico"
 
 #. type: YAML Front Matter: part
 #: documentation/content/en/books/handbook/wayland/_index.adoc:1
@@ -35,13 +37,13 @@ msgstr "Parte I. Primeros pasos"
 #: documentation/content/en/books/handbook/wayland/_index.adoc:1
 #, no-wrap
 msgid "Chapter 6. Wayland"
-msgstr ""
+msgstr "Capítulo 6. Wayland"
 
 #. type: Title =
 #: documentation/content/en/books/handbook/wayland/_index.adoc:15
 #, no-wrap
 msgid "Wayland on FreeBSD"
-msgstr ""
+msgstr "Wayland en FreeBSD"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/wayland/_index.adoc:53
@@ -56,6 +58,10 @@ msgid ""
 "graphical user interface.  This chapter describes how to select, install, "
 "and configure a Wayland compositor, which provides a graphical environment."
 msgstr ""
+"Una instalación de FreeBSD usando bsdinstall no instala automáticamente una "
+"interfaz gráfica de usuario. Este capítulo describe cómo seleccionar, "
+"instalar y configurar un compositor de Wayland, el cual proporciona un "
+"entorno gráfico."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:59
@@ -67,6 +73,7 @@ msgstr "Antes de leer este capítulo:"
 msgid ""
 "Know how to install crossref:ports[ports,additional third-party software]."
 msgstr ""
+"Saber cómo instalar crossref:ports[ports, software de terceros adicional]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:63
@@ -74,6 +81,8 @@ msgid ""
 "Know how to identify and configure crossref:x11[x-graphic-card-drivers,"
 "drivers for the graphics hardware]."
 msgstr ""
+"Saber cómo identificar y configurar crossref:x11[x-graphic-card-drivers, "
+"controladores para la tarjeta gráfica]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:65
@@ -83,29 +92,30 @@ msgstr "Lea este capítulo para aprender:"
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:67
 msgid "How to configure FreeBSD to host a Wayland graphical environment."
-msgstr ""
+msgstr "Cómo configurar FreeBSD para alojar un entorno gráfico Wayland."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:69
 msgid "How to install and configure a Wayland compositor."
-msgstr ""
+msgstr "Cómo instalar y configurar un compositor de Wayland."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:71
 msgid "How to run programs designed for the older X Window System."
-msgstr ""
+msgstr "Cómo ejecutar programas diseñados para el antiguo X Window System."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:73
 msgid ""
 "How to configure remote desktop access to a Wayland graphical environment."
 msgstr ""
+"Cómo configurar el acceso de escritorio remoto a un entorno gráfico Wayland."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/wayland/_index.adoc:75
 #, no-wrap
 msgid "Wayland Overview"
-msgstr ""
+msgstr "Información general de Wayland"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:81
@@ -118,6 +128,14 @@ msgid ""
 "accept connections and display windows.  Under Wayland, the compositor or "
 "window manager provides the display server instead of a traditional X server."
 msgstr ""
+"Wayland es un protocolo de comunicación que puede reemplazar a un servidor "
+"de pantalla como Xorg. Se diferencia de Xorg en varios aspectos importantes. "
+"En primer lugar, Wayland es solo un protocolo que actúa como intermediario "
+"entre los clientes utilizando un mecanismo que elimina la dependencia de un "
+"servidor X. Xorg incluye tanto el protocolo X11, utilizado para ejecutar "
+"pantallas remotas, como el servidor X, utilizado para aceptar conexiones y "
+"mostrar ventanas. Bajo Wayland, el compositor o gestor de ventanas "
+"proporciona el servidor de pantalla en lugar de un servidor X tradicional."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:84
@@ -128,6 +146,11 @@ msgid ""
 "compositor as a separate entity which does not need to support the X "
 "protocols."
 msgstr ""
+"Dado que Wayland no es un servidor X, las conexiones de pantalla X "
+"tradicionales necesitarán utilizar otros métodos como VNC o RDP para la "
+"gestión de escritorio remoto. En segundo lugar, Wayland puede gestionar las "
+"comunicaciones compuestas entre los clientes y un compositor como una "
+"entidad separada que no necesita soportar el protocolo X."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:88
@@ -139,6 +162,13 @@ msgid ""
 "with the `-rootless` parameter.  The `-rootless` parameter, when removed, "
 "will restore X11 window manager support."
 msgstr ""
+"Wayland es relativamente nuevo y no todo el software se ha actualizado para "
+"ejecutarse de forma nativa sin el soporte de `Xwayland`. Debido a que "
+"Wayland no proporciona el servidor X y espera que los compositores brinden "
+"ese soporte, los gestores de ventanas X11 que aún no admiten Wayland "
+"requerirán que `Xwayland` no se inicie con el parámetro `-rootless`. El "
+"parámetro `-rootless`, cuando se elimina, restaurará el soporte del gestor "
+"de ventanas X11."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:93
@@ -147,6 +177,10 @@ msgid ""
 "it may be a little unstable and not support all features at this time.  "
 "Volunteers to help work on the NVIDIA(R) DRM are requested."
 msgstr ""
+"El controlador actual de NVIDIA(R) debería funcionar con la mayoría de los "
+"compositores wlroots, pero puede ser un poco inestable y no admitir todas "
+"las funciones en este momento. Se solicitan voluntarios para ayudar a "
+"trabajar en el DRM de NVIDIA(R)."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:97
@@ -156,6 +190,10 @@ msgid ""
 "Compiz Fusion replacement, known as Wayfire, and the i3 window manager "
 "replacement, Sway."
 msgstr ""
+"Actualmente, una gran cantidad de software funcionará con problemas mínimos "
+"en Wayland, incluido Firefox. Y también están disponibles algunos "
+"escritorios, como el reemplazo de Compiz Fusion, conocido como Wayfire, y el "
+"reemplazo del gestor de ventanas i3, conocido como Sway."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:104
@@ -165,6 +203,10 @@ msgid ""
 "session` and tie in dbus with: `dbus-launch --exit-with-x11 ck-launch-"
 "session startplasma-wayland` to get it working."
 msgstr ""
+"A partir de mayo de 2021, plasma5-kwin admite Wayland en FreeBSD. Para usar "
+"Plasma bajo Wayland, utilice el parámetro `startplasma-wayland` con `ck-"
+"launch-session` y vincule dbus con: `dbus-launch --exit-with-x11 ck-launch-"
+"session startplasma-wayland` para que funcione."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:110
@@ -176,12 +218,19 @@ msgid ""
 "be loaded.  In addition, users of `Wayland` will need to be members of the "
 "`video` group.  To quickly make this change, use the `pw` command:"
 msgstr ""
+"Para los compositores, debe existir un kernel que admita el controlador "
+"man:evdev[4] para utilizar la funcionalidad de combinación de teclas. Esto "
+"está integrado en el kernel [.filename]#GENERIC# de forma predeterminada; "
+"sin embargo, si se ha personalizado y se ha eliminado el soporte de "
+"man:evdev[4], será necesario cargar el módulo man:evdev[4]. Además, los "
+"usuarios de `Wayland` deberán ser miembros del grupo `video`. Para realizar "
+"este cambio rápidamente, utilice el comando `pw`:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:114
 #, no-wrap
 msgid "pw groupmod video -m user\n"
-msgstr ""
+msgstr "pw groupmod video -m user\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:119
@@ -192,6 +241,12 @@ msgid ""
 "compositor installation and configuration as `seatd` is needed to provide "
 "non-root access to certain devices."
 msgstr ""
+"Instalar Wayland es sencillo; no hay una gran cantidad de configuración para "
+"el protocolo en sí mismo. La mayor parte de la composición dependerá del "
+"compositor elegido. Al instalar `seatd` ahora, se omite un paso como parte "
+"de la instalación y configuración del compositor, ya que `seatd` es "
+"necesario para proporcionar acceso sin privilegios de root a ciertos "
+"dispositivos."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:122
@@ -201,12 +256,16 @@ msgid ""
 "issues when using the proprietary drivers.  Begin by installing the "
 "following packages:"
 msgstr ""
+"Todos los compositores descritos aquí deberían funcionar con los "
+"controladores de código abierto package:graphics/drm-kmod[]; sin embargo, "
+"las tarjetas gráficas NVIDIA(R) pueden tener problemas al utilizar los "
+"controladores propietarios. Comience instalando los siguientes paquetes:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:126
 #, no-wrap
 msgid "# pkg install wayland seatd\n"
-msgstr ""
+msgstr "# pkg install wayland seatd\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:133
@@ -218,12 +277,18 @@ msgid ""
 "and defined automatically.  For previous versions, this is achieved with the "
 "following command in the bourne shell:"
 msgstr ""
+"Una vez que el protocolo y los paquetes de soporte se han instalado, un "
+"compositor debe crear la interfaz de usuario. En las siguientes secciones se "
+"tratarán varios compositores. Todos los compositores que utilizan Wayland "
+"necesitarán un directorio de ejecución definido en el entorno. Desde FreeBSD "
+"14.1, este se crea y se define automáticamente. Para versiones anteriores, "
+"esto se logra con el siguiente comando en el shell bourne:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:137
 #, no-wrap
 msgid "% export XDG_RUNTIME_DIR=/var/run/user/`id -u`\n"
-msgstr ""
+msgstr "% export XDG_RUNTIME_DIR=/var/run/user/`id -u`\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:142
@@ -235,6 +300,13 @@ msgid ""
 "separate.  It is recommended that an alias be configured for each compositor "
 "to load the designated configuration file."
 msgstr ""
+"Es importante tener en cuenta que la mayoría de los compositores buscarán "
+"los archivos de configuración en el directorio XDG_RUNTIME_DIR. En los "
+"ejemplos incluidos aquí, se utilizará un parámetro para especificar un "
+"archivo de configuración en [.filename]#~/.config# para mantener los "
+"archivos temporales y los archivos de configuración separados. Se recomienda "
+"configurar un alias para cada compositor para cargar el archivo de "
+"configuración designado."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:150
@@ -251,6 +323,19 @@ msgid ""
 "var/run/user/$UID# and avoid potential pitfalls with ZFS.  Consider that "
 "scenario when reviewing the configuration examples in the following sections."
 msgstr ""
+"Se ha informado que los usuarios de ZFS pueden experimentar problemas con "
+"algunos clientes de Wayland debido a que necesitan acceso a "
+"`posix_fallocate()` en el directorio de ejecución. Aunque el autor no pudo "
+"reproducir este problema en su sistema ZFS, una solución recomendada es no "
+"utilizar ZFS para el directorio de ejecución y, en su lugar, usar `tmpfs` "
+"para el directorio [.filename]#/var/run#. En este caso, el sistema de "
+"archivos `tmpfs` se utiliza para [.filename]#/var/run# y se monta mediante "
+"el comando `mount -t tmpfs tmpfs /var/run`, haciendo que este cambio sea "
+"persistente tras los reinicios a través de [.filename]#/etc/fstab#. La "
+"variable de entorno XDG_RUNTIME_DIR podría configurarse para usar [."
+"filename]#/var/run/user/$UID# y evitar posibles inconvenientes con ZFS. "
+"Tenga en cuenta ese escenario al revisar los ejemplos de configuración en "
+"las siguientes secciones."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:155
@@ -262,6 +347,13 @@ msgid ""
 "be running before starting a compositor environment.  To enable and start "
 "the `seatd` daemon now, and on system initialization:"
 msgstr ""
+"El demonio seatd ayuda a gestionar el acceso a dispositivos compartidos del "
+"sistema para usuarios sin privilegios de root en los compositores; esto "
+"incluye las tarjetas gráficas. Para los gestores X11 tradicionales, como "
+"Plasma y GNOME, no es necesario `seatd`, pero para los compositores Wayland "
+"que se tratan aquí, será necesario habilitarlo en el sistema y que esté "
+"ejecutándose antes de iniciar un entorno de compositor. Para habilitar e "
+"iniciar el demonio `seatd` ahora, y en el inicio del sistema:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:160
@@ -270,6 +362,8 @@ msgid ""
 "# sysrc seatd_enable=\"YES\"\n"
 "# service seatd start\n"
 msgstr ""
+"# sysrc seatd_enable=\"YES\"\n"
+"# service seatd start\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:164
@@ -279,12 +373,17 @@ msgid ""
 "basic configuration options, setting up a screen lock, and recommendations "
 "for more information."
 msgstr ""
+"Posteriormente, será necesario instalar un compositor, el cual es similar a "
+"un escritorio X11, para el entorno de la interfaz gráfica de usuario (GUI). "
+"Aquí se analizan tres, incluyendo las opciones de configuración básica, la "
+"configuración de un bloqueo de pantalla y recomendaciones para obtener más "
+"información."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/wayland/_index.adoc:166
 #, no-wrap
 msgid "The Wayfire Compositor"
-msgstr ""
+msgstr "El compositor Wayfire"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:171
@@ -295,12 +394,19 @@ msgid ""
 "on modern hardware. To get Wayfire up and running, begin by installing the "
 "required packages:"
 msgstr ""
+"Wayfire es un compositor que aspira a ser ligero y personalizable. Dispone "
+"de varias funciones y recupera diversos elementos del anteriormente lanzado "
+"escritorio Compiz Fusion. Todas sus partes lucen hermosas en hardware "
+"moderno. Para poner en marcha Wayfire, comience instalando los paquetes "
+"requeridos:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:175
 #, no-wrap
 msgid "# pkg install wayfire wf-shell alacritty swaylock-effects swayidle wlogout kanshi mako wlsunset\n"
 msgstr ""
+"# pkg install wayfire wf-shell alacritty swaylock-effects swayidle wlogout "
+"kanshi mako wlsunset\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:181
@@ -313,6 +419,13 @@ msgid ""
 "over to the runtime environment configuration directory and then edit the "
 "file:"
 msgstr ""
+"El paquete `alacritty` proporciona un emulador de terminal. Aun así, no es "
+"completamente obligatorio, ya que otros emuladores de terminal como `kitty` "
+"y la `Terminal` de XFCE-4 han sido probados y se ha verificado que funcionan "
+"bajo el compositor Wayfire. La configuración de Wayfire es relativamente "
+"sencilla; utiliza un archivo que debe ser revisado para cualquier "
+"personalización. Para comenzar, copie el archivo de ejemplo al directorio de "
+"configuración del entorno de ejecución y luego edite el archivo:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:186
@@ -321,6 +434,8 @@ msgid ""
 "% mkdir ~/.config/wayfire\n"
 "% cp /usr/local/share/examples/wayfire/wayfire.ini ~/.config/wayfire\n"
 msgstr ""
+"% mkdir ~/.config/wayfire\n"
+"% cp /usr/local/share/examples/wayfire/wayfire.ini ~/.config/wayfire\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:191
@@ -329,6 +444,10 @@ msgid ""
 "items like the famous `cube` are pre-configured, and there are instructions "
 "to help with the available settings.  A few primary settings of note include:"
 msgstr ""
+"Los valores predeterminados deberían ser adecuados para la mayoría de los "
+"usuarios. Dentro del archivo de configuración, elementos como el famoso "
+"`cube` están preconfigurados, y existen instrucciones para ayudar con los "
+"ajustes disponibles. Algunos ajustes principales a destacar son:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:199
@@ -340,6 +459,11 @@ msgid ""
 "transform = normal\n"
 "scale = 1.000000\n"
 msgstr ""
+"[output]\n"
+"mode = 1920x1080@60000\n"
+"position = 0,0\n"
+"transform = normal\n"
+"scale = 1.000000\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:207
@@ -352,6 +476,15 @@ msgid ""
 "output to the specified scale factor.  The defaults for these options are "
 "generally acceptable; for more information, see the documentation."
 msgstr ""
+"En este ejemplo, tomado del archivo de configuración, la salida de la "
+"pantalla debería ser el modo listado a los hercios indicados. Por ejemplo, "
+"el modo debe establecerse como `ancho_x_alto@frecuencia_de_actualización`. "
+"La posición sitúa la salida en una ubicación de píxeles específica. El valor "
+"predeterminado debería ser adecuado para la mayoría de los usuarios. "
+"Finalmente, transform establece una transformación de fondo, y scale "
+"escalará la salida al factor de escala especificado. Los valores "
+"predeterminados para estas opciones son generalmente aceptables; para más "
+"información, consulte la documentación."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:211
@@ -362,6 +495,12 @@ msgid ""
 "instead in these examples. The configuration file contains options to run "
 "`swayidle` and `swaylock` for idle and locking of the screen."
 msgstr ""
+"Como se ha mencionado, Wayland es nuevo y no todas las aplicaciones "
+"funcionan todavía con el protocolo. En este momento, `sddm` no parece "
+"admitir el inicio y la gestión de compositores en Wayland. En su lugar, en "
+"estos ejemplos se ha utilizado la utilidad `swaylock`. El archivo de "
+"configuración contiene opciones para ejecutar `swayidle` y `swaylock` para "
+"la inactividad y el bloqueo de la pantalla."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:213
@@ -369,17 +508,21 @@ msgid ""
 "This option to define the action to take when the system is idle is listed "
 "as:"
 msgstr ""
+"Esta opción para definir la acción a tomar cuando el sistema está inactivo "
+"se enumera como:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:217
 #, no-wrap
 msgid "idle = swaylock\n"
-msgstr ""
+msgstr "idle = swaylock\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:220
 msgid "And the lock timeout is configured using the following lines:"
 msgstr ""
+"Y el tiempo de espera para el bloqueo se configura mediante las siguientes "
+"líneas:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:227
@@ -390,6 +533,10 @@ msgid ""
 "screensaver_timeout = 300\n"
 "dpms_timeout = 600\n"
 msgstr ""
+"[idle]\n"
+"toggle = <super> KEY_Z\n"
+"screensaver_timeout = 300\n"
+"dpms_timeout = 600\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:230
@@ -397,6 +544,8 @@ msgid ""
 "The first option will lock the screen after 300 seconds, and after another "
 "300, the screen will shut off through the `dpms_timeout` option."
 msgstr ""
+"La primera opción bloqueará la pantalla después de 300 segundos, y tras "
+"otros 300, la pantalla se apagará mediante la opción `dpms_timeout`."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:238
@@ -413,12 +562,24 @@ msgid ""
 "installed, there are several options available such as the blur effect, "
 "which can be seen using the following command:"
 msgstr ""
+"Una última cosa a tener en cuenta es la tecla <super>. La mayor parte de la "
+"configuración menciona esta tecla, y es la tradicional tecla `Windows` del "
+"teclado. La mayoría de los teclados tienen esta tecla super disponible; sin "
+"embargo, si no está disponible, debería remapearse dentro de este archivo de "
+"configuración. Por ejemplo, para bloquear la pantalla, mantenga presionada "
+"la tecla super, la tecla kbd:[shift] y presione la tecla kbd:[escape]. A "
+"menos que los mapeos hayan cambiado, esto ejecutará la aplicación swaylock. "
+"La configuración predeterminada de `swaylock` mostrará una pantalla gris; "
+"sin embargo, la aplicación es altamente ajustable y está bien documentada. "
+"Además, dado que swaylock-effects es la versión que se instaló, hay varias "
+"opciones disponibles, como el efecto de desenfoque (blur), que se puede ver "
+"utilizando el siguiente comando:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:242
 #, no-wrap
 msgid "% swaylock --effect-blur 7x5\n"
-msgstr ""
+msgstr "% swaylock --effect-blur 7x5\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:248
@@ -430,6 +591,12 @@ msgid ""
 "advanced options are available; see the PAM documentation for more "
 "information."
 msgstr ""
+"También existe el parámetro `--clock` que mostrará un reloj con la fecha y "
+"la hora en la pantalla de bloqueo. Cuando se instaló package:x11/swaylock-"
+"effects[], se incluyó una configuración de [.filename]#pam.d# "
+"predeterminada. Esta proporciona las opciones por defecto que deberían ser "
+"adecuadas para la mayoría de los usuarios. Existen opciones más avanzadas "
+"disponibles; consulte la documentación de PAM para obtener más información."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:251
@@ -437,12 +604,14 @@ msgid ""
 "At this point, it is time to test Wayfire and see if it can start up on the "
 "system.  Just type the following command:"
 msgstr ""
+"En este punto, es hora de probar Wayfire y ver si puede iniciarse en el "
+"sistema. Simplemente escriba el siguiente comando:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:255
 #, no-wrap
 msgid "% wayfire -c ~/.config/wayfire/wayfire.ini\n"
-msgstr ""
+msgstr "% wayfire -c ~/.config/wayfire/wayfire.ini\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:262
@@ -458,12 +627,23 @@ msgid ""
 "in the drop-down menu bar but may also be started through a terminal by "
 "issuing the following command:"
 msgstr ""
+"El compositor debería iniciarse ahora y mostrar una imagen de fondo junto "
+"con una barra de menú en la parte superior de la pantalla. Wayfire intentará "
+"listar las aplicaciones instaladas compatibles con el escritorio y las "
+"presentará en este menú desplegable; por ejemplo, si el gestor de archivos "
+"de XFCE-4 está instalado, aparecerá en dicho menú. Si una aplicación "
+"específica es compatible y lo suficientemente útil para un atajo de teclado, "
+"se puede mapear a una secuencia de teclas utilizando el archivo de "
+"configuración [.filename]#wayfire.ini#. Wayfire también cuenta con una "
+"herramienta de configuración llamada Wayfire Config Manager. Se encuentra en "
+"la barra de menú desplegable, pero también puede iniciarse a través de una "
+"terminal ejecutando el siguiente comando:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:266
 #, no-wrap
 msgid "% wcm\n"
-msgstr ""
+msgstr "% wcm\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:270
@@ -473,6 +653,11 @@ msgid ""
 "In addition, for a more user-friendly experience, a background manager, "
 "panel, and docking application may be enabled in the configuration file:"
 msgstr ""
+"A través de esta aplicación se pueden habilitar, deshabilitar o configurar "
+"varias opciones de configuración de Wayfire, incluidos los efectos "
+"especiales de composición. Además, para una experiencia más amigable para el "
+"usuario, se pueden habilitar en el archivo de configuración un gestor de "
+"fondo, un panel y una aplicación de acoplamiento (dock):"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:276
@@ -482,6 +667,9 @@ msgid ""
 "dock = wf-dock\n"
 "background = wf-background\n"
 msgstr ""
+"panel = wf-panel\n"
+"dock = wf-dock\n"
+"background = wf-background\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:282
@@ -491,6 +679,11 @@ msgid ""
 "file is highly recommended to be backed up so any essential changes may be "
 "restored."
 msgstr ""
+"Los cambios realizados a través de `wcm` sobrescribirán los cambios "
+"personalizados en el archivo de configuración [.filename]#wayfire.ini#. Se "
+"recomienda encarecidamente realizar una copia de seguridad del archivo [."
+"filename]#wayfire.ini# para que cualquier cambio esencial pueda ser "
+"restaurado."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:285
@@ -499,12 +692,15 @@ msgid ""
 "package:x11/wf-shell[] which may be replaced with other panels if desired by "
 "the user."
 msgstr ""
+"Finalmente, el lanzador predeterminado que figura en el [.filename]#wayfire."
+"ini# es package:x11/wf-shell[], el cual puede ser reemplazado por otros "
+"paneles si el usuario lo desea."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/wayland/_index.adoc:287
 #, no-wrap
 msgid "The Hikari Compositor"
-msgstr ""
+msgstr "El compositor Hikari"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:297
@@ -524,12 +720,26 @@ msgid ""
 "will comprise of a single package, package:x11-wm/hikari[], and a terminal "
 "emulator `alacritty`:"
 msgstr ""
+"El compositor Hikari utiliza varios conceptos centrados en la productividad, "
+"como sheets, workspaces y más. De ese modo, se asemeja a un gestor de "
+"ventanas de mosaico. Desglosando esto, el compositor comienza con un único "
+"workspace, que es similar a los escritorios virtuales. Hikari utiliza un "
+"único workspace o escritorio virtual para la interacción del usuario. El "
+"workspace se compone de varias views, que son las ventanas de trabajo en el "
+"compositor agrupadas ya sea como sheets o groups. Tanto sheets como groups "
+"están formados por una colección de views; de nuevo, las ventanas que se "
+"agrupan entre sí. Al cambiar entre sheets o groups, el sheet o group activo "
+"se conocerá colectivamente como el workspace. La página de manual desglosará "
+"esto en más información sobre las funciones de cada uno, pero para este "
+"documento, simplemente considere un único workspace utilizando un único "
+"sheet. La instalación de Hikari constará de un solo paquete, package:x11-wm/"
+"hikari[], y un emulador de terminal `alacritty`:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:301
 #, no-wrap
 msgid "# pkg install hikari alacritty\n"
-msgstr ""
+msgstr "# pkg install hikari alacritty\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:306
@@ -538,6 +748,9 @@ msgid ""
 "Wayland. Users should experiment with their favorite terminal editor to "
 "validate compatibility."
 msgstr ""
+"Otros shells, como `kitty` o la `Terminal` de Plasma, funcionarán bajo "
+"Wayland. Los usuarios deben experimentar con su emulador de terminal "
+"favorito para validar la compatibilidad."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:311
@@ -549,6 +762,12 @@ msgid ""
 "configuration is to create the Hikari configuration directory and copy over "
 "the configuration file for editing:"
 msgstr ""
+"Hikari utiliza un archivo de configuración, [.filename]#hikari.conf#, que "
+"puede ubicarse en XDG_RUNTIME_DIR o especificarse al inicio mediante el "
+"parámetro `-c`. No es obligatorio un archivo de configuración de inicio "
+"automático (autostart), pero puede facilitar un poco la migración a este "
+"compositor. Para comenzar la configuración, se debe crear el directorio de "
+"configuración de Hikari y copiar el archivo de configuración para su edición:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:316
@@ -557,6 +776,8 @@ msgid ""
 "% mkdir ~/.config/hikari\n"
 "% cp /usr/local/etc/hikari/hikari.conf ~/.config/hikari\n"
 msgstr ""
+"% mkdir ~/.config/hikari\n"
+"% cp /usr/local/etc/hikari/hikari.conf ~/.config/hikari\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:322
@@ -567,12 +788,18 @@ msgid ""
 "variable is normally not set within the user's environment.  Changing this "
 "variable or altering the [.filename]#hikari.conf# file to read:"
 msgstr ""
+"La configuración se desglosa en varias estancias como ui, outputs, layouts y "
+"otras más. Para la mayoría de los usuarios, los valores predeterminados "
+"funcionarán bien; sin embargo, se deben realizar algunos cambios "
+"importantes. Por ejemplo, la variable $TERMINAL normalmente no está "
+"establecida dentro del entorno del usuario. Cambiar esta variable o alterar "
+"el archivo [.filename]#hikari.conf# para que diga:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:326
 #, no-wrap
 msgid "terminal = \"/usr/local/bin/alacritty\"\n"
-msgstr ""
+msgstr "terminal = \"/usr/local/bin/alacritty\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:334
@@ -587,6 +814,16 @@ msgid ""
 "action definition to be created.  For this, the action item should be listed "
 "in the actions stanza, for example:"
 msgstr ""
+"Iniciará la terminal `alacritty` mediante la combinación de teclas asignada. "
+"Al revisar el archivo de configuración, se debe notar que se utilizan letras "
+"mayúsculas para mapear las teclas del usuario. Por ejemplo, la tecla kbd:[L] "
+"para iniciar la terminal kbd:[L+Return] es en realidad la tecla \"super\" "
+"discutida anteriormente o la tecla con el logo de Windows. Por lo tanto, "
+"mantener presionada la tecla kbd:[L/super/Windows] y presionar kbd:[Enter] "
+"abrirá el emulador de terminal especificado con la configuración "
+"predeterminada. Mapear otras teclas a aplicaciones requiere la creación de "
+"una definición de acción. Para esto, el elemento de acción debe aparecer en "
+"la estancia de acciones (actions stanza), por ejemplo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:341
@@ -597,6 +834,10 @@ msgid ""
 "  browser = \"/usr/local/bin/firefox\"\n"
 "}\n"
 msgstr ""
+"actions {\n"
+"  terminal = \"/usr/local/bin/alacritty\"\n"
+"  browser = \"/usr/local/bin/firefox\"\n"
+"}\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:344
@@ -604,6 +845,8 @@ msgid ""
 "Then an action may be mapped under the keyboard stanza, which is defined "
 "within the bindings stanza:"
 msgstr ""
+"Entonces se puede mapear una acción bajo la sección keyboard, que se define "
+"dentro de la sección bindings:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:353
@@ -616,6 +859,12 @@ msgid ""
 "    \"L+b\" = action-browser\n"
 "SNIP\n"
 msgstr ""
+"bindings {\n"
+"  keyboard {\n"
+"SNIP\n"
+"    \"L+Return\" = action-terminal\n"
+"    \"L+b\" = action-browser\n"
+"SNIP\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:359
@@ -629,6 +878,15 @@ msgid ""
 "compositor, Hikari can be started in the Plasma and GNOME desktop "
 "environments, allowing for a test-drive before completely migrating."
 msgstr ""
+"Después de reiniciar Hikari, al mantener presionada la tecla del logotipo de "
+"Windows y presionar la tecla kbd:[b] en el teclado, se iniciará el navegador "
+"web. El compositor no tiene una barra de menú, y se recomienda que el "
+"usuario configure, como mínimo, un emulador de terminal antes de la "
+"migración. La página de manual contiene una gran cantidad de documentación "
+"que debe leerse antes de realizar una migración completa. Otro aspecto "
+"positivo de Hikari es que, mientras se migra al compositor, Hikari puede "
+"iniciarse en los entornos de escritorio Plasma y GNOME, lo que permite una "
+"prueba antes de migrar completamente."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:366
@@ -642,18 +900,28 @@ msgid ""
 "migrate to a different screen locking utility such as swaylock-effects, "
 "discussed in this section.  To start Hikari, use the following command:"
 msgstr ""
+"Bloquear la pantalla en Hikari es fácil porque con el paquete se incluyen un "
+"archivo de configuración de [.filename]#pam.d# predeterminado y una utilidad "
+"de desbloqueo. El atajo de teclado para bloquear la pantalla es kbd:[L] ("
+"tecla del logotipo de Windows)+ kbd:[Shift] + kbd:[Backspace]. Se debe tener "
+"en cuenta que todas las views que no estén marcadas como public se "
+"ocultarán. Estas views nunca aceptarán entrada cuando estén bloqueadas, pero "
+"tenga cuidado con la información sensible que pueda ser visible. Para "
+"algunos usuarios, puede ser más fácil migrar a una utilidad de bloqueo de "
+"pantalla diferente, como swaylock-effects, que se trata en esta sección. "
+"Para iniciar Hikari, use el siguiente comando:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:370
 #, no-wrap
 msgid "% hikari -c ~/.config/hikari/hikari.conf\n"
-msgstr ""
+msgstr "% hikari -c ~/.config/hikari/hikari.conf\n"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/wayland/_index.adoc:373
 #, no-wrap
 msgid "The Sway Compositor"
-msgstr ""
+msgstr "El compositor Sway"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:377
@@ -662,6 +930,10 @@ msgid ""
 "windows manager.  It should work with the user's current i3 configuration; "
 "however, new features may require some additional setup."
 msgstr ""
+"El compositor Sway es un compositor de mosaico que intenta reemplazar al "
+"gestor de ventanas i3. Debería funcionar con la configuración actual de i3 "
+"del usuario; sin embargo, las nuevas funciones pueden requerir alguna "
+"configuración adicional."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:381
@@ -671,6 +943,11 @@ msgid ""
 "graphic-card-drivers,drivers for the graphics hardware] for guidance.  This "
 "step is essential for the Sway compositor to function properly."
 msgstr ""
+"Antes de comenzar la instalación de Sway, asegúrese de que la tarjeta "
+"gráfica (GPU) esté instalada y configurada correctamente. Consulte la "
+"sección crossref:x11[x-graphic-card-drivers,drivers for the graphics "
+"hardware] para obtener orientación. Este paso es esencial para que el "
+"compositor Sway funcione correctamente."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:384
@@ -679,12 +956,16 @@ msgid ""
 "configuration will be assumed.  To install Sway and valuable components, "
 "issue the following command as the root user:"
 msgstr ""
+"En los siguientes ejemplos, se asumirá una instalación limpia sin migrar "
+"ninguna configuración de i3. Para instalar Sway y sus componentes valiosos, "
+"ejecute el siguiente comando como usuario root:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:388
 #, no-wrap
 msgid "# pkg install sway swayidle swaylock-effects alacritty dmenu-wayland dmenu\n"
 msgstr ""
+"# pkg install sway swayidle swaylock-effects alacritty dmenu-wayland dmenu\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:391
@@ -692,6 +973,8 @@ msgid ""
 "For a basic configuration file, issue the following commands and then edit "
 "the configuration file after it is copied:"
 msgstr ""
+"Para un archivo de configuración básico, ejecute los siguientes comandos y "
+"luego edite el archivo de configuración después de que haya sido copiado:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:396
@@ -700,6 +983,8 @@ msgid ""
 "% mkdir ~/.config/sway\n"
 "% cp /usr/local/etc/sway/config ~/.config/sway\n"
 msgstr ""
+"% mkdir ~/.config/sway\n"
+"% cp /usr/local/etc/sway/config ~/.config/sway\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:400
@@ -707,6 +992,9 @@ msgid ""
 "The base configuration file has many defaults, which will be fine for most "
 "users.  Several important changes should be made like the following:"
 msgstr ""
+"El archivo de configuración base tiene muchos valores predeterminados, que "
+"serán suficientes para la mayoría de los usuarios. Se deben realizar varios "
+"cambios importantes como los siguientes:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:416
@@ -726,6 +1014,20 @@ msgid ""
 "          timeout 600 'swaymsg \"output * dpms off\"' resume 'swaymsg \"output * dpms on\"' \\\n"
 "          before-sleep 'swaylock -f -c 000000'\n"
 msgstr ""
+"# Logo key. Use Mod1 for Alt.\n"
+"input * xkb_rules evdev\n"
+"set $mod Mod4\n"
+"# The preferred terminal emulator\n"
+"set $term alacritty\n"
+"set $lock swaylock -f -c 000000\n"
+"output \"My Workstation\" mode 1366x768@60Hz position 1366 0\n"
+"output * bg ~/wallpapers/mywallpaper.png stretch\n"
+"### Idle configuration\n"
+"exec swayidle -w \\\n"
+"          timeout 300 'swaylock -f -c 000000' \\\n"
+"          timeout 600 'swaymsg \"output * dpms off\"' resume 'swaymsg "
+"\"output * dpms on\"' \\\n"
+"          before-sleep 'swaylock -f -c 000000'\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:426
@@ -744,6 +1046,21 @@ msgid ""
 "reviewed; it includes a great deal of information on customing the output "
 "options available."
 msgstr ""
+"En el ejemplo anterior, se cargan las reglas `xkb` para eventos man:evdev[4]"
+", y la tecla $mod se establece como la tecla del logotipo de Windows para "
+"los atajos de teclado. A continuación, el emulador de terminal se configuró "
+"como `alacritty`, y se definió un comando de bloqueo de pantalla; más sobre "
+"esto se retomará después. La palabra clave output, el modo, la posición, un "
+"fondo de pantalla, y también se le indica a Sway que estire este fondo para "
+"llenar la pantalla. Finalmente, `swayidle` se configura para ejecutarse como "
+"demonio y bloquear la pantalla tras un tiempo de espera de 300 segundos, "
+"poniendo la pantalla o el monitor en modo de suspensión después de 600 "
+"segundos. El color de fondo bloqueado de 000000, que es negro, también se "
+"define aquí. Al usar swaylock-effects, también se puede mostrar un reloj con "
+"el parámetro `--clock`. Consulte la página de manual para ver más opciones. "
+"También se debe revisar la página de manual man:sway-output[5]; esta incluye "
+"una gran cantidad de información sobre la personalización de las opciones de "
+"salida disponibles."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:434
@@ -758,6 +1075,17 @@ msgid ""
 "outside of the example above, enabling a lockout timer.  Creating a lock key "
 "binding requires the following line to the `Key bindings` section:"
 msgstr ""
+"Mientras esté en Sway, para abrir un menú de aplicaciones, mantenga "
+"presionada la tecla del logotipo de Windows (mod) y presione la tecla kbd:[d]"
+". El menú se puede navegar usando las teclas de flecha del teclado. También "
+"existe un método para manipular el diseño de la barra y agregar una bandeja "
+"(tray); lea la página de manual man:sway-bar[5] para obtener más "
+"información. La configuración predeterminada agrega la fecha y la hora en la "
+"esquina superior derecha. Consulte la sección `Bar` en el archivo de "
+"configuración para ver un ejemplo. Por defecto, la configuración no incluye "
+"el bloqueo de la pantalla aparte del ejemplo anterior, que habilita un "
+"temporizador de bloqueo. Crear un atajo de teclado para el bloqueo requiere "
+"añadir la siguiente línea a la sección `Key bindings`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:439
@@ -766,6 +1094,8 @@ msgid ""
 "# Lock the screen manually\n"
 "bindsym $mod+Shift+Return exec $lock\n"
 msgstr ""
+"# Lock the screen manually\n"
+"bindsym $mod+Shift+Return exec $lock\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:445
@@ -777,6 +1107,14 @@ msgid ""
 "configuration should be acceptable for most users, but more advanced options "
 "are available.  Read through the PAM documentation for more information."
 msgstr ""
+"Ahora la pantalla se puede bloquear utilizando la combinación de mantener "
+"presionada la tecla del logotipo de Windows, presionar y mantener presionado "
+"shift, y finalmente presionar return. Cuando se instala Sway, ya sea desde "
+"un paquete o desde la Colección de Ports de FreeBSD, se instala un archivo "
+"predeterminado para [.filename]#pam.d#. La configuración predeterminada "
+"debería ser aceptable para la mayoría de los usuarios, pero hay opciones más "
+"avanzadas disponibles. Lea la documentación de PAM para obtener más "
+"información."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:451
@@ -788,18 +1126,25 @@ msgid ""
 "different changes and key bindings a little easier prior to fully migrating "
 "to this compositor.  To start Sway, issue the following command:"
 msgstr ""
+"Finalmente, para salir de Sway y regresar a la shell, mantenga presionadas "
+"la tecla del logotipo de Windows y la tecla shift, y presione la tecla "
+"kbd:[e]. Se mostrará un aviso con la opción de salir de Sway. Durante la "
+"migración, Sway se puede iniciar a través de un emulador de terminal en un "
+"escritorio X11 como Plasma. Esto facilita un poco la prueba de diferentes "
+"cambios y atajos de teclado antes de migrar completamente a este compositor. "
+"Para iniciar Sway, ejecute el siguiente comando:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:455
 #, no-wrap
 msgid "% sway -c ~/.config/sway/config\n"
-msgstr ""
+msgstr "% sway -c ~/.config/sway/config\n"
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/wayland/_index.adoc:458
 #, no-wrap
 msgid "Using Xwayland"
-msgstr ""
+msgstr "Uso de Xwayland"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:462
@@ -808,12 +1153,16 @@ msgid ""
 "unless Wayland was built without X11 support.  If the [.filename]#/usr/local/"
 "bin/Xwayland# file does not exist, install it using the following command:"
 msgstr ""
+"Al instalar Wayland, el binario `Xwayland` debería haberse instalado a menos "
+"que Wayland se haya compilado sin soporte para X11. Si el archivo [."
+"filename]#/usr/local/bin/Xwayland# no existe, instálelo usando el siguiente "
+"comando:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:466
 #, no-wrap
 msgid "# pkg install xwayland\n"
-msgstr ""
+msgstr "# pkg install xwayland\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:472
@@ -822,6 +1171,9 @@ msgid ""
 "installed with the Wayland package.  Each compositor has a method of "
 "enabling or disabling this feature."
 msgstr ""
+"Se recomienda la versión de desarrollo de Xwayland y lo más probable es que "
+"se haya instalado con el paquete Wayland. Cada compositor tiene un método "
+"para habilitar o deshabilitar esta función."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:476
@@ -830,12 +1182,15 @@ msgid ""
 "compositor.  For Wayfire, the following line is required in the [."
 "filename]#wayfire.ini# file:"
 msgstr ""
+"Una vez que se haya instalado `Xwayland`, configúrelo dentro del compositor "
+"elegido. Para Wayfire, se requiere la siguiente línea en el archivo [."
+"filename]#wayfire.ini#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:480
 #, no-wrap
 msgid "xwayland = true\n"
-msgstr ""
+msgstr "xwayland = true\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:484
@@ -844,12 +1199,15 @@ msgid ""
 "it is recommended to manually add a configuration line in the [.filename]#~/."
 "config/sway/config# like the following:"
 msgstr ""
+"Para el compositor Sway, `Xwayland` debería estar habilitado por defecto. "
+"Aun así, se recomienda añadir manualmente una línea de configuración en [."
+"filename]#~/.config/sway/config# como la siguiente:"
 
 #. type: delimited block . 5
 #: documentation/content/en/books/handbook/wayland/_index.adoc:488
 #, no-wrap
 msgid "xwayland enable\n"
-msgstr ""
+msgstr "xwayland enable\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:493
@@ -858,6 +1216,10 @@ msgid ""
 "in by default.  To disable that support, rebuild the package from the ports "
 "collection and disable Xwayland support at that time."
 msgstr ""
+"Finalmente, para Hikari, no se necesitan cambios. El soporte para `Xwayland` "
+"está integrado de forma predeterminada. Para deshabilitar ese soporte, "
+"recompile el paquete desde la colección de ports y deshabilite el soporte de "
+"Xwayland en ese momento."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:497
@@ -868,13 +1230,18 @@ msgid ""
 "able to properly start the Xwayland X server, these environment variables "
 "should look similar to the following:"
 msgstr ""
+"Después de realizar estos cambios, inicie el compositor en la línea de "
+"comandos y ejecute una terminal desde los atajos de teclado. Dentro de esta "
+"terminal, ejecute el comando `env` y busque las variables `DISPLAY`. Si el "
+"compositor pudo iniciar correctamente el servidor X de Xwayland, estas "
+"variables de entorno deberían verse similares a las siguientes:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:501
 #: documentation/content/en/books/handbook/wayland/_index.adoc:531
 #, no-wrap
 msgid "% env | grep DISPLAY\n"
-msgstr ""
+msgstr "% env | grep DISPLAY\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:507
@@ -883,6 +1250,8 @@ msgid ""
 "WAYLAND_DISPLAY=wayland-1\n"
 "DISPLAY=:0\n"
 msgstr ""
+"WAYLAND_DISPLAY=wayland-1\n"
+"DISPLAY=:0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:513
@@ -895,12 +1264,19 @@ msgid ""
 "following is displayed, something happened during the `Xwayland` "
 "initialization and it may need reinstalled:"
 msgstr ""
+"En esta salida, hay una pantalla Wayland predeterminada y una pantalla "
+"configurada para el servidor Xwayland. Otro método para verificar que "
+"`Xwayland` funciona correctamente es instalar y probar el pequeño package:"
+"x11/eyes[] y comprobar el resultado. Si la aplicación `xeyes` se inicia y "
+"los ojos siguen el puntero del ratón, Xwayland está funcionando "
+"correctamente. Si se muestra un error como el siguiente, algo sucedió "
+"durante la inicialización de `Xwayland` y es posible que deba reinstalarse:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:517
 #, no-wrap
 msgid "Error: Cannot open display wayland-0\n"
-msgstr ""
+msgstr "Error: Cannot open display wayland-0\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:523
@@ -909,6 +1285,10 @@ msgid ""
 "not another network listener.  Once `Xwayland` is enabled, this security "
 "feature is no longer applicable to the system."
 msgstr ""
+"Una característica de seguridad de Wayland es que, al no ejecutar un "
+"servidor X, no hay otro escuchador de red (network listener). Una vez que se "
+"habilita `Xwayland`, esta característica de seguridad ya no se aplica al "
+"sistema."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:527
@@ -917,6 +1297,9 @@ msgid ""
 "As such, `env` will show the following information for the `DISPLAY` "
 "environment variables:"
 msgstr ""
+"Para algunos compositores, como Wayfire, es posible que `Xwayland` no se "
+"inicie correctamente. Como tal, `env` mostrará la siguiente información para "
+"las variables de entorno `DISPLAY`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:537
@@ -925,6 +1308,8 @@ msgid ""
 "DISPLAY=wayland-1\n"
 "WAYLAND_DISPLAY=wayland-1\n"
 msgstr ""
+"DISPLAY=wayland-1\n"
+"WAYLAND_DISPLAY=wayland-1\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:542
@@ -934,17 +1319,22 @@ msgid ""
 "already an instance of `Xwayland` using a UNIX socket through these two "
 "methods.  First, check the output from `sockstat` and search for X11-unix:"
 msgstr ""
+"Aunque `Xwayfire` se instaló y configuró, las aplicaciones X11 no se "
+"iniciarán debido a un problema de pantalla (display). Para solucionar esto, "
+"verifique si ya existe una instancia de `Xwayland` utilizando un socket UNIX "
+"a través de estos dos métodos. Primero, compruebe la salida de `sockstat` y "
+"busque X11-unix:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:546
 #, no-wrap
 msgid "% sockstat | grep x11\n"
-msgstr ""
+msgstr "% sockstat | grep x11\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:549
 msgid "There should be something similar to the following information:"
-msgstr ""
+msgstr "Debería haber algo similar a la siguiente información:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:557
@@ -956,6 +1346,11 @@ msgid ""
 "trhodes  Xwayland   2734  27 stream /tmp/.X11-unix/X0_\n"
 "trhodes  Xwayland   2734  28 stream /tmp/.X11-unix/X0\n"
 msgstr ""
+"trhodes  Xwayland   2734  8  stream /tmp/.X11-unix/X0\n"
+"trhodes  Xwayland   2734  9  stream /tmp/.X11-unix/X0\n"
+"trhodes  Xwayland   2734  10 stream /tmp/.X11-unix/X0\n"
+"trhodes  Xwayland   2734  27 stream /tmp/.X11-unix/X0_\n"
+"trhodes  Xwayland   2734  28 stream /tmp/.X11-unix/X0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:561
@@ -964,12 +1359,15 @@ msgid ""
 "by attempting to execute `Xwayland` manually within a terminal emulator "
 "running under the compositor:"
 msgstr ""
+"Esto sugiere la existencia de un socket X11. Esto se puede verificar más a "
+"fondo intentando ejecutar Xwayland manualmente dentro de un emulador de "
+"terminal que se ejecute bajo el compositor:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:565
 #, no-wrap
 msgid "% Xwayland\n"
-msgstr ""
+msgstr "% Xwayland\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:568
@@ -977,6 +1375,8 @@ msgid ""
 "If an X11 socket is already available, the following error should be "
 "presented to the user:"
 msgstr ""
+"Si un socket X11 ya está disponible, se debería presentar el siguiente error "
+"al usuario:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:577
@@ -989,6 +1389,12 @@ msgid ""
 "\tand start again.\n"
 "(EE)\n"
 msgstr ""
+"(EE)\n"
+"Fatal server error:\n"
+"(EE) Server is already active for display 0\n"
+"\tIf this server is no longer running, remove /tmp/.X0-lock\n"
+"\tand start again.\n"
+"(EE)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:581
@@ -999,12 +1405,17 @@ msgid ""
 "application again.  The following example uses package:mail/claws-mail[] as "
 "the application which needs the `Xwayland` service:"
 msgstr ""
+"Dado que hay una pantalla X activa disponible utilizando la pantalla cero, "
+"la variable de entorno simplemente se configuró de forma incorrecta; para "
+"solucionar esto, cambie la variable de entorno `DISPLAY` a `:0` e intente "
+"ejecutar la aplicación de nuevo. El siguiente ejemplo utiliza package:mail/"
+"claws-mail[] como la aplicación que necesita el servicio `Xwayland`:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:585
 #, no-wrap
 msgid "export DISPLAY=:0\n"
-msgstr ""
+msgstr "export DISPLAY=:0\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:588
@@ -1012,12 +1423,14 @@ msgid ""
 "After this change, the package:mail/claws-mail[] application should now "
 "start using `Xwayland` and function as expected."
 msgstr ""
+"Después de este cambio, la aplicación package:mail/claws-mail[] debería "
+"iniciarse ahora utilizando `Xwayland` y funcionar correctamente."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/wayland/_index.adoc:590
 #, no-wrap
 msgid "Remote Desktop Using VNC"
-msgstr ""
+msgstr "Escritorio remoto mediante VNC"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:596
@@ -1029,12 +1442,18 @@ msgid ""
 "compositors such as the ones discussed here.  This application may be "
 "installed using:"
 msgstr ""
+"Al principio de este documento se señaló que Wayland no proporciona el mismo "
+"acceso al estilo del servidor X que proporciona Xorg. En su lugar, los "
+"usuarios son libres de elegir un protocolo de escritorio remoto como RDP o "
+"VNC. La colección de Ports de FreeBSD incluye `wayvnc`, que admite "
+"compositores basados en wlroots como los analizados aquí. Esta aplicación se "
+"puede instalar mediante el siguiente comando:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:600
 #, no-wrap
 msgid "# pkg install wayvnc\n"
-msgstr ""
+msgstr "# pkg install wayvnc\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:604
@@ -1043,6 +1462,10 @@ msgid ""
 "file.  Thankfully, the manual page documents the important options and they "
 "may be extrapolated into a simple configuration file:"
 msgstr ""
+"A diferencia de otros paquetes, `wayvnc` no incluye un archivo de "
+"configuración. Afortunadamente, la página de manual documenta las opciones "
+"importantes y estas se pueden extrapolar a un archivo de configuración "
+"sencillo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:613
@@ -1055,6 +1478,12 @@ msgid ""
 "private_key_file=/path/to/key.pem\n"
 "certificate_file=/path/to/cert.pem\n"
 msgstr ""
+"address=0.0.0.0\n"
+"enable_auth=true\n"
+"username=username\n"
+"password=password\n"
+"private_key_file=/path/to/key.pem\n"
+"certificate_file=/path/to/cert.pem\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:619
@@ -1066,12 +1495,18 @@ msgid ""
 "starting the server.  Thus, to start the `wayvnc` server, issue the "
 "following command:"
 msgstr ""
+"Será necesario generar los archivos de claves, y se recomienda "
+"encarecidamente que se utilicen para aumentar la seguridad de la conexión. "
+"Al ser invocado, wayvnc buscará el archivo de configuración en [.filename]#~/"
+".config/wayvnc/config#. Esto se puede sobrescribir usando la opción `-C "
+"configuration_file` al iniciar el servidor. Por lo tanto, para iniciar el "
+"servidor `wayvnc`, ejecute el siguiente comando:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:623
 #, no-wrap
 msgid "% wayvnc -C ~/.config/wayvnc/config\n"
-msgstr ""
+msgstr "% wayvnc -C ~/.config/wayvnc/config\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:630
@@ -1081,12 +1516,16 @@ msgid ""
 "file will need to be created.  This is probably a feature request for the "
 "port maintainer."
 msgstr ""
+"Al momento de escribir esto, no existe un script rc.d para iniciar `wayvnc` "
+"en la inicialización del sistema. Si se desea esa funcionalidad, será "
+"necesario crear un archivo de inicio local. Probablemente se trate de una "
+"solicitud de funcionalidad para el mantenedor del port."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/wayland/_index.adoc:633
 #, no-wrap
 msgid "Wayland Login Manager"
-msgstr ""
+msgstr "Gestor de inicio de sesión de Wayland"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:637
@@ -1097,12 +1536,18 @@ msgid ""
 "presenting a login window on system initialization.  To install `ly`, issue "
 "the following command:"
 msgstr ""
+"Si bien existen varios gestores de inicio de sesión que están migrando "
+"lentamente a Wayland, una opción es el gestor de interfaz de usuario de "
+"texto (TUI) package:x11/ly[]. Al requerir una configuración mínima, `ly` "
+"iniciará Sway, Wayfire y otros al presentar una ventana de inicio de sesión "
+"en la inicialización del sistema. Para instalar `ly`, ejecute el siguiente "
+"comando:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:641
 #, no-wrap
 msgid "# pkg install ly\n"
-msgstr ""
+msgstr "# pkg install ly\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:644
@@ -1110,6 +1555,8 @@ msgid ""
 "There will be some configuration hints presented, the import steps are to "
 "add the following lines to [.filename]#/etc/gettytab#:"
 msgstr ""
+"Se presentarán algunas sugerencias de configuración, los pasos importantes "
+"son añadir las siguientes líneas a [.filename]#/etc/gettytab#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:650
@@ -1119,6 +1566,9 @@ msgid ""
 "  :lo=/usr/local/bin/ly:\\\n"
 "  :al=root:\n"
 msgstr ""
+"Ly:\\\n"
+"  :lo=/usr/local/bin/ly:\\\n"
+"  :al=root:\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:653
@@ -1126,12 +1576,14 @@ msgid ""
 "And then modify the ttyv1 line in [.filename]#/etc/ttys# to match the "
 "following line:"
 msgstr ""
+"Y luego modifique la línea ttyv1 en [.filename]#/etc/ttys# para que coincida "
+"con la siguiente línea:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:657
 #, no-wrap
 msgid "ttyv1 \"/usr/libexec/getty Ly\" xterm onifexists secure\n"
-msgstr ""
+msgstr "ttyv1 \"/usr/libexec/getty Ly\" xterm onifexists secure\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:662
@@ -1141,6 +1593,10 @@ msgid ""
 "ini#.  At minimal, this file should have the designated tty that was "
 "previously specified in [.filename]#/etc/ttys#."
 msgstr ""
+"Después de un reinicio del sistema, debería aparecer un inicio de sesión. "
+"Para configurar ajustes específicos, como el idioma, edite [.filename]#/usr/"
+"local/etc/ly/config.ini#. Como mínimo, este archivo debe tener el tty "
+"designado que se especificó previamente en [.filename]#/etc/ttys#."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:666
@@ -1148,6 +1604,9 @@ msgid ""
 "If setting ttyv0 up as the login terminal, it may be required to press the "
 "kbd:[alt] and kbd:[F1] keys to properly see the login window."
 msgstr ""
+"Si se configura ttyv0 como el terminal de inicio de sesión, puede que sea "
+"necesario presionar las teclas kbd:[alt] y kbd:[F1] para ver correctamente "
+"la ventana de inicio de sesión."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:669
@@ -1155,12 +1614,15 @@ msgid ""
 "When the login window appears, using the left and right arrows will swap "
 "through different, supported, window managers."
 msgstr ""
+"Cuando aparezca la ventana de inicio de sesión, el uso de las flechas "
+"izquierda y derecha permitirá desplazarse por los diferentes gestores de "
+"ventanas compatibles."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/wayland/_index.adoc:671
 #, no-wrap
 msgid "Useful Utilities"
-msgstr ""
+msgstr "Utilidades de interés"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:677
@@ -1172,12 +1634,18 @@ msgid ""
 "install the package and a supporting audio control utility, issue the "
 "following command:"
 msgstr ""
+"Una utilidad de Wayland de interés de la que todos los compositores pueden "
+"hacer uso es waybar. Si bien Wayfire incluye un menú de inicio, una barra de "
+"tareas rápida y fácil de usar es un buen accesorio para cualquier compositor "
+"o gestor de escritorio. Una barra de tareas compatible con Wayland que es "
+"rápida y fácil de configurar es waybar. Para instalar el paquete y una "
+"utilidad de control de audio compatible, ejecute el siguiente comando:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:681
 #, no-wrap
 msgid "# pkg install pavucontrol waybar\n"
-msgstr ""
+msgstr "# pkg install pavucontrol waybar\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:684
@@ -1185,6 +1653,8 @@ msgid ""
 "To create the configuration directory and copy over a default configuration "
 "file, execute the following commands:"
 msgstr ""
+"Para crear el directorio de configuración y copiar un archivo de "
+"configuración predeterminado, ejecute los siguientes comandos:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:689
@@ -1193,6 +1663,8 @@ msgid ""
 "% mkdir ~/.config/waybar\n"
 "% cp /usr/local/etc/xdg/waybar/config ~/.config/waybar\n"
 msgstr ""
+"% mkdir ~/.config/waybar\n"
+"% cp /usr/local/etc/xdg/waybar/config ~/.config/waybar\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:693
@@ -1201,12 +1673,15 @@ msgid ""
 "There is no example configuration file provided with the package, so the "
 "following actions must be taken:"
 msgstr ""
+"La utilidad `lavalauncher` proporciona una barra de lanzamiento para "
+"diversas aplicaciones. No se proporciona un archivo de configuración de "
+"ejemplo con el paquete, por lo que se deben realizar las siguientes acciones:"
 
 #. type: delimited block - 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:697
 #, no-wrap
 msgid "mkdir ~/.config/lavalauncher\n"
-msgstr ""
+msgstr "mkdir ~/.config/lavalauncher\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/wayland/_index.adoc:700
@@ -1214,6 +1689,8 @@ msgid ""
 "An example configuration file that only includes Firefox, and is placed on "
 "the right, is below:"
 msgstr ""
+"A continuación se muestra un ejemplo de un archivo de configuración que solo "
+"incluye Firefox y se ubica a la derecha:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:706
@@ -1223,6 +1700,9 @@ msgid ""
 "\twatch-config-file = true;\n"
 "}\n"
 msgstr ""
+"global-settings {\n"
+"\twatch-config-file = true;\n"
+"}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:711
@@ -1233,6 +1713,10 @@ msgid ""
 "\tposition          = bottom;\n"
 "\tbackground-colour = \"#202020\";\n"
 msgstr ""
+"bar {\n"
+"\toutput            = eDP-1;\n"
+"\tposition          = bottom;\n"
+"\tbackground-colour = \"#202020\";\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:714
@@ -1241,6 +1725,8 @@ msgid ""
 "\t# Condition for the default configuration set.\n"
 "\tcondition-resolution = wider-than-high;\n"
 msgstr ""
+"\t# Condition for the default configuration set.\n"
+"\tcondition-resolution = wider-than-high;\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:718
@@ -1250,6 +1736,9 @@ msgid ""
 "\t\tposition = right;\n"
 "\t}\n"
 msgstr ""
+"\tconfig {\n"
+"\t\tposition = right;\n"
+"\t}\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/wayland/_index.adoc:727
@@ -1264,3 +1753,12 @@ msgid ""
 "\t  command[mouse-left]  =   /usr/local/bin/thunderbird;\n"
 "}\n"
 msgstr ""
+"\tbutton {\n"
+"\t\timage-path          =     /usr/local/lib/firefox/browser/chrome/icons/"
+"default/default48.png;\n"
+"\t\tcommand[mouse-left] =     /usr/local/bin/firefox;\n"
+"\t}\n"
+"\tbutton {\n"
+"\t  image-path           =   /usr/local/share/pixmaps/thunderbird.png;\n"
+"\t  command[mouse-left]  =   /usr/local/bin/thunderbird;\n"
+"}\n"
