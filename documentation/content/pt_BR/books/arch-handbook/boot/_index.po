@@ -2,12 +2,13 @@
 # Copyright (C) YEAR The FreeBSD Project
 # This file is distributed under the same license as the FreeBSD Documentation package.
 # Danilo G. Baio <dbaio@FreeBSD.org>, 2021.
+# Matheus Santos <int0x80.c@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-11-08 16:17+0000\n"
-"PO-Revision-Date: 2021-11-05 11:08+0000\n"
-"Last-Translator: Danilo G. Baio <dbaio@FreeBSD.org>\n"
+"PO-Revision-Date: 2026-04-23 04:45+0000\n"
+"Last-Translator: Matheus Santos <int0x80.c@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/booksarch-handbookboot_index/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -15,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.8.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. type: Title =
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1
@@ -28,7 +29,7 @@ msgstr "Bootstrapping e Inicialização do Kernel"
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1
 #, no-wrap
 msgid "Chapter 1. Bootstrapping and Kernel Initialization"
-msgstr ""
+msgstr "Capítulo 1. Bootstrapping e inicialização do Kernel"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:52
@@ -38,7 +39,6 @@ msgstr "Sinopse"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:57
-#, fuzzy
 msgid ""
 "This chapter is an overview of the boot and system initialization processes, "
 "starting from the BIOS (firmware) POST, to the first user process creation.  "
@@ -48,14 +48,16 @@ msgid ""
 "explained in the near future according to the topic of this document."
 msgstr ""
 "Este capítulo é uma visão geral dos processos de inicialização e "
-"inicialização do sistema, desde o <acronym>POST</acronym> da <acronym>BIOS</"
+"inicialização do sistema,  desde o <acronym>POST</acronym> da <acronym>BIOS</"
 "acronym> (firmware) até a primeira criação do processo do usuário. Como as "
 "etapas iniciais da inicialização do sistema são muito dependentes da "
-"arquitetura, a arquitetura IA-32 é usada como um exemplo."
+"arquitetura, a arquitetura IA-32 é usada como um exemplo.  Mas as "
+"arquiteturas AMD64 e ARM64 são exemplos muito mais importantes e "
+"convincentes, e devem ser explicadas em breve, de acordo com o tema deste "
+"documento."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:61
-#, fuzzy
 msgid ""
 "The FreeBSD boot process can be surprisingly complex.  After control is "
 "passed from the BIOS, a considerable amount of low-level configuration must "
@@ -63,12 +65,12 @@ msgid ""
 "done in a simple and flexible manner, allowing the user a great deal of "
 "customization possibilities."
 msgstr ""
-"O processo de inicialização do FreeBSD pode ser surpreendentemente complexo. "
-"Após o controle ser passado da <acronym>BIOS</acronym>, uma quantidade "
-"considerável de configuração de baixo nével deve ser feita antes que o "
-"kernel possa ser carregado e executado. Essa configuração deve ser feita de "
-"maneira simples e flexível, permitindo ao usuário uma grande quantidade de "
-"possibilidades de personalização."
+"O processo de inicialização do FreeBSD pode ser surpreendentemente "
+"complexo.  Após o controle ser passado da <acronym>BIOS</acronym>, uma "
+"quantidade considerável de configuração de baixo nével deve ser feita antes "
+"que o kernel possa ser carregado e executado.  Essa configuração deve ser "
+"feita de maneira simples e flexível, permitindo ao usuário uma grande "
+"quantidade de possibilidades de personalização."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:63
@@ -98,20 +100,24 @@ msgid ""
 "boot code starts the FreeBSD three-stage boot process."
 msgstr ""
 "O processo de inicialização é uma atividade extremamente dependente da "
-"máquina. Não sé deve ser escrito código para cada arquitetura de computador, "
-"mas também pode haver vários tipos de inicialização na mesma arquitetura. "
-"Por exemplo, uma lista de diretórios de <filename>/usr/src/sys/boot</"
-"filename> revela uma grande quantidade de código dependente de arquitetura. "
-"Existe um diretório para cada uma das várias arquiteturas suportadas. No x86-"
-"specific <filename>i386</filename> diretório, existem subdiretórios para "
-"diferentes padrões de inicialização, como <filename>mbr</filename> (Master "
-"Boot Record), <filename>gpt</filename> (Tabela de Partição <acronym>GUID</"
-"acronym> ) e <filename>efi</filename> (Interface de Firmware Extensível). "
-"Cada padrão de inicialização possui suas próprias convenções e estruturas de "
-"dados. O exemplo a seguir mostra a inicialização de um computador x86 de um "
-"disco rígido <acronym>MBR</acronym> com o FreeBSD <filename>boot0</filename> "
-"carregador multi-boot armazenado no primeiro setor. Esse código inicia o "
-"processo de inicialização de três estágios do FreeBSD."
+"máquina. Não só é necessário escrever código para cada arquitetura de "
+"computador, como também pode haver vários tipos de inicialização na mesma "
+"arquitetura. Por exemplo, uma listagem de diretórios como [.filename]#stand# "
+"revela uma grande quantidade de código dependente da arquitetura. Existe um "
+"diretório para cada uma das várias arquiteturas suportadas. O FreeBSD "
+"suporta o padrão de inicialização CSM (Compatibility Support Module). "
+"Portanto, o CSM é suportado (com suporte a partições GPT e MBR) e a "
+"inicialização UEFI (GPT é totalmente suportado, MBR é suportado em grande "
+"parte). Ele também suporta o carregamento de arquivos de sistemas de "
+"arquivos ext2fs, MSDOS, UFS e ZFS. O FreeBSD também suporta o recurso de "
+"ambiente de inicialização do ZFS, que permite que o sistema operacional host "
+"comunique detalhes sobre o que inicializar, indo além de uma simples "
+"partição, como era possível no passado. Mas o UEFI é mais relevante do que o "
+"CSM atualmente. O exemplo a seguir mostra a inicialização de um computador "
+"x86 a partir de um disco rígido particionado em MBR com o carregador de "
+"inicialização múltipla FreeBSD [.filename]#boot0# armazenado no primeiro "
+"setor. Esse código de inicialização inicia o processo de inicialização de "
+"três estágios do FreeBSD."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:82
@@ -123,37 +129,39 @@ msgid ""
 "[.filename]#loader#, is responsible for loading the FreeBSD kernel.  Each "
 "stage is examined in the following sections."
 msgstr ""
+"A chave para o entendimento deste processo é que ele consiste em uma série "
+"de estágios de complexidade crescente. Esses estágios são: [.filename]#boot1#"
+", [.filename]#boot2#, and [.filename]#loader# (Veja man:boot[8] para mais "
+"detalhes). A inicialização do sistema executa cada estágio em sequência. O "
+"último estágio, [.filename]#loader#, é responsável por carregar o kernel "
+"FreeBSD. Cada estágio é examinado nas seções seguintes."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:85
-#, fuzzy
-#| msgid ""
-#| "Here is an example of the output generated by the different boot stages. "
-#| "Actual output may differ from machine to machine:"
 msgid ""
 "Here is an example of the output generated by the different boot stages.  "
 "Actual output may differ from machine to machine:"
 msgstr ""
 "Aqui está um exemplo da saída gerada pelos diferentes estágios de "
-"inicialização. A saída real pode diferir de máquina para máquina:"
+"inicialização.  A saída real pode diferir de máquina para máquina:"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:91
 #, no-wrap
 msgid "*FreeBSD Component*"
-msgstr ""
+msgstr "*Componente FreeBSD*"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:93
 #, no-wrap
 msgid "*Output (may vary)*"
-msgstr ""
+msgstr "*Saída (pode variar)*"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:94
 #, no-wrap
 msgid "`boot0`"
-msgstr ""
+msgstr "`boot0`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:103
@@ -166,12 +174,20 @@ msgid ""
 "F5    Disk 2\n"
 "...."
 msgstr ""
+"[source,bash]\n"
+"....\n"
+"F1    FreeBSD\n"
+"F2    BSD\n"
+"F5    Disk 2\n"
+"...."
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:104
 #, no-wrap
 msgid "`boot2` footnote:[This prompt will appear if the user presses a key just after selecting an OS to boot at the boot0 stage.]"
 msgstr ""
+"`boot2` footnote:[Esta mensagem aparecerá se o usuário pressionar uma tecla "
+"logo após selecionar um sistema operacional para inicializar na fase boot0.]"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:113
@@ -184,12 +200,18 @@ msgid ""
 "boot:\n"
 "...."
 msgstr ""
+"[source,bash]\n"
+"....\n"
+">>FreeBSD/x86 BOOT\n"
+"Default: 0:ad(0p4)/boot/loader\n"
+"boot:\n"
+"...."
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:114
 #, no-wrap
 msgid "[.filename]#loader#"
-msgstr ""
+msgstr "[.filename]#loader#"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:130
@@ -224,11 +246,11 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:131
 #, no-wrap
 msgid "kernel"
-msgstr ""
+msgstr "kernel"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:144
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "[source,bash]\n"
 "....\n"
@@ -247,14 +269,13 @@ msgstr ""
 "FreeBSD is a registered trademark of The FreeBSD Foundation.\n"
 "FreeBSD 10.0-RELEASE #0 r260789: Thu Jan 16 22:34:59 UTC 2014\n"
 "    root@snap.freebsd.org:/usr/obj/usr/src/sys/GENERIC amd64\n"
-"FreeBSD clang version 3.3 (tags/RELEASE_33/final 183502) 20130610\n"
-"\n"
+"FreeBSD clang version 3.3 (tags/RELEASE_33/final 183502) 20130610"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:147
 #, no-wrap
 msgid "The BIOS"
-msgstr ""
+msgstr "A BIOS"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:158
@@ -301,6 +322,10 @@ msgid ""
 "computer's hardware translates this address so that it points to a BIOS "
 "memory block."
 msgstr ""
+"O valor de `0xfffffff0` é um pouco menos de 4 GB, a menos que a máquina "
+"tenha 4 GB de memória física, não pode apontar para um endereço de memória "
+"válido. O hardware do computador traduz este endereço para que ele aponte "
+"para uma memória BIOS."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:166
@@ -323,7 +348,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:170
-#, fuzzy
 msgid ""
 "The POST (Power On Self Test) is a set of routines including the memory "
 "check, system bus check, and other low-level initialization so the CPU can "
@@ -335,11 +359,11 @@ msgstr ""
 "O <acronym>POST</acronym> (Power On Self Test) é um conjunto de rotinas "
 "incluindo a verificação de memória, verificação do barramento do sistema e "
 "outras inicializações de baixo nível para que a <acronym>CPU</acronym> possa "
-"configurar o computador corretamente. A etapa importante deste estágio é "
-"determinar o dispositivo de inicialização. As implementações modernas do "
+"configurar o computador corretamente.   A etapa importante deste estágio é "
+"determinar o dispositivo de inicialização.  As implementações modernas do "
 "<acronym>BIOS</acronym> permitem a seleção de um dispositivo de "
-"inicialização, permitindo a inicialização a partir de um disquete, "
-"<acronym>CD-ROM</acronym>, disco rígido ou outros dispositivos."
+"inicialização, permitindo a inicialização a partir de um disquete, <acronym"
+">CD-ROM</acronym>, disco rígido ou outros dispositivos."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:179
@@ -355,6 +379,16 @@ msgid ""
 "MBR, or Master Boot Record.  The remaining sectors on the first track are "
 "never used."
 msgstr ""
+"A última coisa no POST é a instrução `INT 0x19`. O manipulador `INT 0x19` lê "
+"512 bytes do primeiro setor do dispositivo de inicialização para a memória "
+"no endereço `0x7c00`. O termo _first sector_ origina na arquitetura de "
+"discos rígidos, onde uma placa magnética é dividida em várias trilhas "
+"cilíndricas. As trilhas são numeradas e cada trilha é divididas em um número("
+"geralmente 64) de setores. As numerações das trilhas começa em 0, mas os "
+"números dos setores começam em 1. A trilha 0 é a mais externa na placa "
+"magnética, e o setor 1, o primeiro setor, tem um propósito especial. Ele "
+"também é chamado de MBR ou Master Boot Record. Os setores restantes na "
+"primeira trilha nunca são usados."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:183
@@ -363,12 +397,16 @@ msgid ""
 "sector contains a copy of our [.filename]#boot0# program.  A jump is made by "
 "the BIOS to address `0x7c00` so it starts executing."
 msgstr ""
+"Este setor é nosso ponto de partida na sequência de inicialização. Bem como "
+"nós vimos, este setor contém uma cópia do nosso programa [.filename]#boot0#. "
+"Um salto é feito pela BIOS para o endereço `0x7c00` para que ele comece a "
+"ser executado."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:185
 #, no-wrap
 msgid "The Master Boot Record (`boot0`)"
-msgstr ""
+msgstr "O Master Boot Record (`boot0`)"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:194
@@ -385,6 +423,11 @@ msgid ""
 "the \"bootmanager\" option at installation time.  Indeed, [.filename]#boot0# "
 "_is_ the MBR."
 msgstr ""
+"Após o controle ser recebido pela BIOS no endereço `0x7c00`, é iniciada a "
+"execução de [.filename]#boot0# starts executing. Ele é o primeiro trecho de "
+"código sob controle do FreeBSD. A tarefa do [.filename]#boot0# é bastante "
+"simples: Escanear a tabela de partição e permitir que o usuário escolha a "
+"partir de qual partição inicializar o sistema."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:197
@@ -394,6 +437,11 @@ msgid ""
 "filename]#boot0# can be found in [.filename]#stand/i386/boot0/boot0.S# - "
 "which is an awesome piece of code written by Robert Nordier."
 msgstr ""
+"Como mencionado anteriormente, estamos chamando a interrupção `INT 0x19` da "
+"BIOS para carregar o MBR [.filename]#boot0# no endereço de memória `0x7c00`. "
+"O arquivo fonte para [.filename]#boot0# pode ser encontrado em [.filename]#"
+"stand/i386/boot0/boot0.S# que é um código incrível escrito por Robert "
+"Nordier."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:202
@@ -405,6 +453,13 @@ msgid ""
 "is bootable or not.  Exactly one record must have that flag set, otherwise [."
 "filename]#boot0#'s code will refuse to proceed."
 msgstr ""
+"Uma estrutura especial que começa no deslocamento `0x1be` no MBR é chamado "
+"de _tabela de partições_. Possui quatro registros de 16 bytes cada, chamada "
+"_registro de partição_, que representam como o disco rígido está "
+"particionado ou, na terminologia do FreeBSD, fatiado. Um byte desses 16 "
+"indica se uma partição(fatia) é inicializável ou não. Exatamente um registro "
+"deve ter esse sinalizador definido; caso contrário, o código de [."
+"filename]#boot0#' se recusará a prosseguir."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:204
@@ -441,6 +496,13 @@ msgid ""
 "(Cylinder Head Sector) has coordinates for the first and last sectors of the "
 "partition.  The partition table ends with the special signature `0xaa55`."
 msgstr ""
+"Um descritor de registro de partição contém informações sobre onde "
+"exatamente a partição reside no disco. Ambos descritores, LBA e CHS, "
+"descreve a mesma informação, mas em diferentes caminhos: LBA(Logical Block "
+"Addressing) tem o setor de inicialização para a partição e o tamanho da "
+"partição, enquanto o CHS(Cylinder Head Sector) tem coordenadas para o "
+"primeiro e último setor da partição. A tabela de partição termina com uma "
+"assinatura especial 0xaa55`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:218
@@ -472,6 +534,14 @@ msgid ""
 "at address `0x600`.  In practice this means that [.filename]#boot0# must be "
 "loaded to memory address `0x600` in order to function properly."
 msgstr ""
+"Note que o arquivo fonte [.filename]#boot0.S# é montado \"como está\": as "
+"instruções são traduzidas uma a uma para binário, sem informações adicionais "
+"(sem formato de arquivo ELF, por exemplo). Esse tipo de controle de baixo "
+"nível é obtido no momento da ligação por meio de flags de controle especiais "
+"passadas para o linker. Por exemplo, a seção de texto do programa é definida "
+"para estar localizada no endereço `0x600`. Na prática, isso significa que [."
+"filename]#boot0# deve ser carregado no endereço de memória `0x600` para "
+"funcionar corretamente."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:230
@@ -487,6 +557,17 @@ msgid ""
 "command the linker to start the text section at address `0x600`, and to "
 "build the output file \"as is\" (strip out any file formatting):"
 msgstr ""
+"Vale a pena examinar o [.filename]#Makefile#  para [.filename]#boot0# ([."
+"filename]#stand/i386/boot0/Makefile#), pois ele define alguns dos "
+"comportamentos em tempo de execução de [.filename]#boot0#. Por exemplo, se "
+"um terminal conectado para uma porta serial (COM1) é usada para I/O. a macro "
+"`SIO`deve ser definida (`-DSIO`). `-DPXE`  ativa a inicialização via PXE "
+"pressionando kbd:[F6]. Adicionalmente, o programa define o conjunto de "
+"_flags_ que permite modificar ainda mais seu comportamento. Tudo isso é "
+"ilustrado no [.filename]#Makefile#.  Por exemplo, observe as diretivas do "
+"linker que instruem o linker a iniciar a seção de texto no endereço `0x600` "
+"e a construir o arquivo de saída \"como está\" (Removendo qualquer "
+"formatação de arquivo):"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:235
@@ -503,7 +584,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:237
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/Makefile# [[boot-boot0-makefile-as-is]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/Makefile# [[boot-boot0-makefile-as-is]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:239
@@ -511,6 +592,8 @@ msgid ""
 "Let us now start our study of the MBR, or [.filename]#boot0#, starting where "
 "execution begins."
 msgstr ""
+"Vamos agora começar nosso estudo do MBR, ou [.filename]#boot0#, começando "
+"onde a execução começa."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:245
@@ -555,7 +638,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:258
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-entrypoint]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-entrypoint]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:264
@@ -569,6 +652,14 @@ msgid ""
 "sets the stack pointer register (`%sp`) to ($LOAD = address `0x7c00`), so we "
 "have a working stack."
 msgstr ""
+"Este primeiro bloco de código é o ponto de entrada do programa. É onde a "
+"BIOS transfere o controle. Primeiro, ela garante que as operações de string "
+"incrementem automaticamente seus operandos de ponteiro (a instrução `cld`) ["
+"nota de rodapé: [Em caso de dúvida, consulte os manuais oficiais da Intel, "
+"que descrevem a semântica exata de cada instrução.]]. Em seguida, como não "
+"faz nenhuma suposição sobre o estado dos registradores de segmento, ela os "
+"inicializa. Finalmente, ela define o registrador de ponteiro de pilha (`%sp`)"
+" para ($LOAD = endereço `0x7c00`), de modo que tenhamos uma pilha funcional."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:266
@@ -611,7 +702,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:282
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-relocation]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-relocation]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:293
@@ -633,6 +724,23 @@ msgid ""
 "have changed in the code, so instead of the movsb and stosb, movsw and stosw "
 "have been introduced, which copy 2 bytes(1 word) in one iteration."
 msgstr ""
+"Quando [.filename]#boot0# é carregado pela BIOS no endereço `0x7C00`, ele se "
+"copia para o endereço `0x600` e então transfere o controle para lá (lembre-"
+"se que ele foi vinculado para executar no endereço `0x600`). O endereço de "
+"origem, `0x7c00`, é copiado para o registrador `%si`. O endereço de destino, "
+"`0x600`, é copiado para o registrador `%di`. O número de palavras a serem "
+"copiadas, `256` (o tamanho do programa é 512 bytes), é copiado para o "
+"registrador `%cx`. Em seguida, a instrução `rep` repete a instrução "
+"seguinte, ou seja, `movsw`, o número de vezes ditado pelo registrador `%cx`. "
+"A instrução `movsw` copia a palavra apontada por `%si` para o endereço "
+"apontado por `%di`. Isso é repetido outras 255 vezes. A cada repetição, os "
+"registradores de origem e destino, `%si` e `%di`, são incrementados em um. "
+"Assim, após a conclusão da cópia de 256 palavras (512 bytes), `%di` tem o "
+"valor `0x600`+`512`= `0x800`, e `%si` tem o valor `0x7c00`+`512`= `0x7e00`; "
+"concluímos, portanto, a realocação de código. Desde a última atualização "
+"deste documento, as instruções de cópia foram alteradas no código, de modo "
+"que, em vez de movsb e stosb, foram introduzidas movsw e stosw, que copiam 2 "
+"bytes (1 palavra) em uma iteração."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:304
