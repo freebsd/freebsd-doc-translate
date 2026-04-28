@@ -4,12 +4,13 @@
 # Danilo G. Baio <dbaio@FreeBSD.org>, 2021, 2022.
 # Edson Brandi <ebrandi@freebsd.org>, 2023.
 # George Mendes Marra <george.mendes@gmail.com>, 2024.
+# Matheus Santos <int0x80.c@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-11-08 16:17+0000\n"
-"PO-Revision-Date: 2024-07-08 04:45+0000\n"
-"Last-Translator: George Mendes Marra <george.mendes@gmail.com>\n"
+"PO-Revision-Date: 2026-04-28 04:45+0000\n"
+"Last-Translator: Matheus Santos <int0x80.c@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/booksdevelopers-handbookx86_index/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -24,18 +25,18 @@ msgstr ""
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:15
 #, no-wrap
 msgid "x86 Assembly Language Programming"
-msgstr ""
+msgstr "Programação em Linguagem Assembly x86"
 
 #. type: YAML Front Matter: title
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:1
 #, no-wrap
 msgid "Chapter 11. x86 Assembly Language Programming"
-msgstr ""
+msgstr "Capítulo 11. Programação em Linguagem Assembly x86"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:53
 msgid "_This chapter was written by {stanislav}._"
-msgstr ""
+msgstr "_Este capítulo foi escrito por {stanislav}._"
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:55
@@ -51,6 +52,10 @@ msgid ""
 "UNIX(R) systems run on different microprocessors, so everything should be "
 "written in C for portability."
 msgstr ""
+"A programação em linguagem Assembly sob UNIX(R) é altamente mal documentada. "
+"Geralmente se assume que ninguém jamais desejaria usá-lo porque vários "
+"sistemas UNIX(R) são executados em microprocessadores diferentes, então tudo "
+"deveria ser escrito em C para portabilidade."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:63
@@ -60,6 +65,11 @@ msgid ""
 "processor each runs on.  Typically, such a program is full of conditional "
 "statements depending on the system it is compiled for."
 msgstr ""
+"Na realidade, a portabilidade da linguagem C é um verdadeiro mito.  Até "
+"mesmo programas em C precisam ser modificados quando portados de um sistema "
+"UNIX(R) para outro, independentemente do processador em que cada um seja "
+"executado. Normalmente, um programa desse tipo está repleto de instruções "
+"condicionais que dependem do sistema para o qual foi compilado."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:65
@@ -68,6 +78,10 @@ msgid ""
 "some other high-level language, we still need assembly language programmers: "
 "Who else would write the section of C library that accesses the kernel?"
 msgstr ""
+"Mesmo que acreditemos que todo o software UNIX(R) deva ser escrito em C, ou "
+"alguma outra linguagem de alto nível, ainda precisamos de programadores de "
+"linguagem assembly: Quem mais escreveria a seção da biblioteca C que acessa "
+"o kernel?"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:67
@@ -75,6 +89,8 @@ msgid ""
 "In this chapter I will attempt to show you how you can use assembly language "
 "writing UNIX(R) programs, specifically under FreeBSD."
 msgstr ""
+"Neste capítulo, tentarei mostrar como você pode usar a linguagem assembly "
+"para escrever programas UNIX(R), especificamente no FreeBSD."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:72
@@ -87,24 +103,33 @@ msgid ""
 "chapter is finished, any assembly language programmer will be able to write "
 "programs for FreeBSD quickly and efficiently."
 msgstr ""
+"Este capítulo não explica os fundamentos da linguagem assembly. Existem "
+"recursos suficientes sobre isso (para um curso online completo de linguagem "
+"assembly, veja o livro de Randall Hyde's, http://webster.cs.ucr.edu/[Art of "
+"Assembly Language]; ou, se preferir um livro impresso, dê uma olhada em  "
+"Assembly Language Step-by-Step do Jeff Duntemann's (ISBN: 0471375233). No "
+"entanto, após a leitura deste capítulo, qualquer programador de linguagem "
+"assembly será capaz de escrever programas para FreeBSD de forma rápida e "
+"eficiente."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:74
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:4311
+#, fuzzy
 msgid "Copyright (R) 2000-2001 G. Adam Stanislav. All rights reserved."
-msgstr ""
+msgstr "Copyright (R) 2000-2001 G. Adam Stanislav. All rights reserved."
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:76
 #, no-wrap
 msgid "The Tools"
-msgstr ""
+msgstr "As Ferramentas"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:79
 #, no-wrap
 msgid "The Assembler"
-msgstr ""
+msgstr "O montador"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:82
@@ -112,6 +137,9 @@ msgid ""
 "The most important tool for assembly language programming is the assembler, "
 "the software that converts assembly language code into machine language."
 msgstr ""
+"A ferramenta mais importante para a programação em linguagem assembly é o "
+"montador, o software que converte o código da linguagem assembly em "
+"linguagem de máquina."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:85
@@ -120,6 +148,10 @@ msgid ""
 "as[1] (included in package:devel/llvm[]) and man:as[1] (included in package:"
 "devel/binutils[]) use the traditional UNIX(R) assembly language syntax."
 msgstr ""
+"Três assemblers muito diferentes estão disponíveis para o FreeBSD. Tanto man"
+":llvm-as[1] (included in package:devel/llvm[]) and man:as[1] (included in "
+"package:devel/binutils[]) usam a sintaxe tradicional da linguagem assembly "
+"UNIX(R)."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:88
@@ -128,6 +160,9 @@ msgid ""
 "the Intel syntax.  Its main advantage is that it can assemble code for many "
 "operating systems."
 msgstr ""
+"Por outro lado, man:nasm[1]  (installed through package:devel/nasm[]) uses "
+"the Intel syntax. Sua principal vantagem é que ele pode compilar código para "
+"muitos sistemas operacionais."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:91
@@ -136,12 +171,15 @@ msgid ""
 "coming to FreeBSD from other operating systems will find it easier to "
 "understand.  And, because, quite frankly, that is what I am used to."
 msgstr ""
+"Este capítulo utiliza a sintaxe do NASM porque a maioria dos programadores "
+"de linguagem assembly que migram para o FreeBSD a acharão mais fácil de "
+"entender. E, francamente, porque é com ela que estou acostumado."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:93
 #, no-wrap
 msgid "The Linker"
-msgstr ""
+msgstr "O vinculador"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:96
@@ -149,6 +187,8 @@ msgid ""
 "The output of the assembler, like that of any compiler, needs to be linked "
 "to form an executable file."
 msgstr ""
+"O código gerado pelo montador, assim como o de qualquer compilador, precisa "
+"ser vinculado para formar um arquivo executável."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:99
@@ -156,6 +196,8 @@ msgid ""
 "The standard man:ld[1] linker comes with FreeBSD.  It works with the code "
 "assembled with either assembler."
 msgstr ""
+"O linker padrão man:ld[1] vem com o FreeBSD. Ele funciona com o código "
+"montado com qualquer um dos assemblers."
 
 #. type: Title ==
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:101
@@ -167,7 +209,7 @@ msgstr "Chamadas de Sistema"
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:104
 #, no-wrap
 msgid "Default Calling Convention"
-msgstr ""
+msgstr "Convenção de chamada padrão"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:108
@@ -177,6 +219,10 @@ msgid ""
 "will call a function that issues `int 80h`, rather than issuing `int 80h` "
 "directly."
 msgstr ""
+"Por padrão, o kernel do FreeBSD usa a convenção de chamada C. Além disso, "
+"embora o kernel seja acessado usando `int 80h`, presume-se que o programa "
+"chamará uma função que retorna `int 80h`, em vez de retornar `int 80h` "
+"diretamente."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:111
@@ -185,6 +231,9 @@ msgid ""
 "convention used by MS-DOS(R).  Why? Because the UNIX(R) convention allows "
 "any program written in any language to access the kernel."
 msgstr ""
+"Essa convenção é muito conveniente e bastante superior à convenção "
+"Microsoft(R) usada pelo MS-DOS(R). Por quê? Porque a convenção UNIX(R) "
+"permite que qualquer programa escrito em qualquer linguagem acesse o kernel."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:114
@@ -192,6 +241,8 @@ msgid ""
 "An assembly language program can do that as well.  For example, we could "
 "open a file:"
 msgstr ""
+"Um programa em linguagem assembly também pode fazer isso. Por exemplo, "
+"poderíamos abrir um arquivo:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:120
@@ -201,6 +252,9 @@ msgid ""
 "\tint\t80h\t; Call kernel\n"
 "\tret\n"
 msgstr ""
+"kernel:\n"
+"\tint\t80h\t; Chama o kernel\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:129
@@ -215,6 +269,14 @@ msgid ""
 "\tadd\tesp, byte 12\n"
 "\tret\n"
 msgstr ""
+"open:\n"
+"\tpush\tdword mode\n"
+"\tpush\tdword flags\n"
+"\tpush\tdword path\n"
+"\tmov\teax, 5\n"
+"\tcall\tkernel\n"
+"\tadd\tesp, byte 12\n"
+"\tret\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:133
@@ -223,6 +285,10 @@ msgid ""
 "code to a UNIX(R) system which uses a different interrupt, or a different "
 "way of passing parameters, all you need to change is the kernel procedure."
 msgstr ""
+"Esta é uma forma muito limpa e portátil de codificar. Se você precisar "
+"portar o código para um sistema UNIX(R) que usa uma interrupção diferente ou "
+"uma forma diferente de passar parâmetros, tudo o que você precisa alterar é "
+"o procedimento do kernel."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:137
@@ -231,6 +297,9 @@ msgid ""
 "example requires a `call/ret` combination.  We can eliminate it by "
 "``push``ing an extra dword:"
 msgstr ""
+"Mas os programadores de linguagem assembly gostam de economizar ciclos. O "
+"exemplo acima requer uma combinação de `call/ret`. Podemos eliminá-la "
+"adicionando um dword extra:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:148
@@ -245,6 +314,14 @@ msgid ""
 "\tint\t80h\n"
 "\tadd\tesp, byte 16\n"
 msgstr ""
+"open:\n"
+"\tpush\tdword mode\n"
+"\tpush\tdword flags\n"
+"\tpush\tdword path\n"
+"\tmov\teax, 5\n"
+"\tpush\teax\t\t;Ou qualquer outro dword\n"
+"\tint\t80h\n"
+"\tadd\tesp, byte 16\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:151
@@ -252,12 +329,14 @@ msgid ""
 "The `5` that we have placed in `EAX` identifies the kernel function, in this "
 "case `open`."
 msgstr ""
+"O `5` que colocamos em `EAX` identifica a função do kernel, neste caso "
+"`open`."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:153
 #, no-wrap
 msgid "Alternate Calling Convention"
-msgstr ""
+msgstr "Convenção de Chamada Alternativa"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:158
@@ -266,6 +345,9 @@ msgid ""
 "the kernel.  For it to work, however, the system must have Linux emulation "
 "installed."
 msgstr ""
+"O FreeBSD é um sistema extremamente flexível. Ele oferece outras maneiras de "
+"acessar o kernel. Para que isso funcione, no entanto, o sistema precisa ter "
+"a emulação de Linux instalada."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:163
@@ -276,6 +358,11 @@ msgid ""
 "parameters, however, are not passed on the stack but in `EBX, ECX, EDX, ESI, "
 "EDI, EBP`:"
 msgstr ""
+"O Linux é um sistema semelhante ao UNIX(R). No entanto, seu kernel usa a "
+"mesma convenção de chamada de sistema de passagem de parâmetros em "
+"registradores que o MS-DOS(R). Assim como na convenção UNIX(R), o número da "
+"função é colocado em `EAX`. Os parâmetros, porém, não são passados na pilha, "
+"mas em `EBX, ECX, EDX, ESI, EDI, EBP`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:172
@@ -288,6 +375,12 @@ msgid ""
 "\tmov\tedx, mode\n"
 "\tint\t80h\n"
 msgstr ""
+"open:\n"
+"\tmov\teax, 5\n"
+"\tmov\tebx, path\n"
+"\tmov\tecx, flags\n"
+"\tmov\tedx, mode\n"
+"\tint\t80h\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:178
@@ -298,6 +391,11 @@ msgid ""
 "makes your code bulkier and slower.  Nevertheless, FreeBSD gives you a "
 "choice."
 msgstr ""
+"Essa convenção tem uma grande desvantagem em relação ao método UNIX(R), pelo "
+"menos no que diz respeito à programação em linguagem assembly: a cada "
+"chamada ao kernel, é necessário \"empurrar\" os registradores e, "
+"posteriormente, \"desempurrá-los\". Isso torna o código mais extenso e "
+"lento. Mesmo assim, o FreeBSD oferece uma alternativa."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:181
@@ -306,18 +404,21 @@ msgid ""
 "it.  After your program is assembled and linked, you need to brand the "
 "executable:"
 msgstr ""
+"Se você optar pela convenção Linux, deverá informar o sistema sobre isso. "
+"Após a compilação e a vinculação do seu programa, você precisa personalizar "
+"o executável:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:185
 #, no-wrap
 msgid "% brandelf -t Linux filename\n"
-msgstr ""
+msgstr "% brandelf -t nome do arquivo Linux\n"
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:188
 #, no-wrap
 msgid "Which Convention Should You Use?"
-msgstr ""
+msgstr "Qual convenção você deve usar?"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:193
@@ -327,6 +428,10 @@ msgid ""
 "registers, you do not have to brand the executable, and you do not impose "
 "the installation of the Linux emulation package on the target system."
 msgstr ""
+"Se você estiver programando especificamente para FreeBSD, deve sempre usar a "
+"convenção UNIX(R): é mais rápida, permite armazenar variáveis globais em "
+"registradores, não precisa personalizar o executável e não impõe a "
+"instalação do pacote de emulação Linux no sistema de destino."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:196
@@ -336,12 +441,16 @@ msgid ""
 "possible.  I will show you how you can accomplish that after I have "
 "explained the basics."
 msgstr ""
+"Se você deseja criar um código portátil que também possa ser executado no "
+"Linux, provavelmente ainda vai querer fornecer aos usuários do FreeBSD um "
+"código o mais eficiente possível. Mostrarei como você pode fazer isso depois "
+"de explicar os conceitos básicos."
 
 #. type: Title ===
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:198
 #, no-wrap
 msgid "Call Numbers"
-msgstr ""
+msgstr "Números de chamada"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:202
@@ -349,12 +458,14 @@ msgid ""
 "To tell the kernel which system service you are calling, place its number in "
 "`EAX`.  Of course, you need to know what the number is."
 msgstr ""
+"Para informar ao kernel qual serviço do sistema você está chamando, coloque "
+"o número dele em `EAX`. Obviamente, você precisa saber qual é o número."
 
 #. type: Title ====
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:204
 #, no-wrap
 msgid "The [.filename]#syscalls# File"
-msgstr ""
+msgstr "O arquivo [.filename]#syscalls#"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:208
@@ -363,6 +474,9 @@ msgid ""
 "this file in several different formats, all produced automatically from [."
 "filename]#syscalls.master#."
 msgstr ""
+"Os números estão listados em [.filename]#syscalls#. `locate syscalls` "
+"encontra este arquivo em vários formatos diferentes, todos produzidos "
+"automaticamente a partir de [.filename]#syscalls.master#."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:211
@@ -372,6 +486,10 @@ msgid ""
 "convention implemented in the Linux emulation mode, read [.filename]#/usr/"
 "src/sys/i386/linux/syscalls.master#."
 msgstr ""
+"Você pode encontrar o arquivo mestre para a convenção de chamada UNIX(R) "
+"padrão em [.filename]#/usr/src/sys/kern/syscalls.master#. Se você precisar "
+"usar a outra convenção implementada no modo de emulação Linux, leia [."
+"filename]#/usr/src/sys/i386/linux/syscalls.master#."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:215
@@ -379,11 +497,13 @@ msgid ""
 "Not only do FreeBSD and Linux use different calling conventions, they "
 "sometimes use different numbers for the same functions."
 msgstr ""
+"O FreeBSD e o Linux não apenas usam convenções de chamada diferentes, como "
+"às vezes usam números diferentes para as mesmas funções."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:218
 msgid "[.filename]#syscalls.master# describes how the call is to be made:"
-msgstr ""
+msgstr "[.filename]#syscalls.master# descreve como a chamada deve ser feita:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:229
@@ -398,11 +518,20 @@ msgid ""
 "6\tSTD\tPOSIX\t{ int close(int fd); }\n"
 "etc...\n"
 msgstr ""
+"0\tSTD\tNOHIDE\t{ int nosys(void); } syscall nosys_args int\n"
+"1\tSTD\tNOHIDE\t{ void exit(int rval); } exit rexit_args void\n"
+"2\tSTD\tPOSIX\t{ int fork(void); }\n"
+"3\tSTD\tPOSIX\t{ ssize_t read(int fd, void *buf, size_t nbyte); }\n"
+"4\tSTD\tPOSIX\t{ ssize_t write(int fd, const void *buf, size_t nbyte); }\n"
+"5\tSTD\tPOSIX\t{ int open(char *path, int flags, int mode); }\n"
+"6\tSTD\tPOSIX\t{ int close(int fd); }\n"
+"etc...\n"
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:232
 msgid "It is the leftmost column that tells us the number to place in `EAX`."
 msgstr ""
+"É a coluna mais à esquerda que nos indica o número a ser inserido em `EAX`."
 
 #. type: Plain text
 #: documentation/content/en/books/developers-handbook/x86/_index.adoc:235
