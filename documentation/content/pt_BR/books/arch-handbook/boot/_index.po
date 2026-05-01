@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-11-08 16:17+0000\n"
-"PO-Revision-Date: 2026-04-23 04:45+0000\n"
+"PO-Revision-Date: 2026-05-01 04:45+0000\n"
 "Last-Translator: Matheus Santos <int0x80.c@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/booksarch-handbookboot_index/pt_BR/>\n"
@@ -80,7 +80,6 @@ msgstr "Visão geral"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:76
-#, fuzzy
 msgid ""
 "The boot process is an extremely machine-dependent activity.  Not only must "
 "code be written for every computer architecture, but there may also be "
@@ -215,7 +214,7 @@ msgstr "[.filename]#loader#"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:130
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "[source,bash]\n"
 "....\n"
@@ -231,6 +230,8 @@ msgid ""
 "/boot/kernel/kernel text=0xed9008 data=0x117d28+0x176650 syms=[0x8+0x137988+0x8+0x1515f8]\n"
 "...."
 msgstr ""
+"[source,bash]\n"
+"....\n"
 "BTX loader 1.00 BTX version is 1.02\n"
 "Consoles: internal video/keyboard\n"
 "BIOS drive C: is disk0\n"
@@ -238,9 +239,11 @@ msgstr ""
 "\n"
 "FreeBSD/x86 bootstrap loader, Revision 1.1\n"
 "Console internal video/keyboard\n"
-"(root@snap.freebsd.org, Thu Jan 16 22:18:05 UTC 2014)\n"
+"(root@releng1.nyi.freebsd.org, Fri Apr  9 04:04:45 UTC 2021)\n"
 "Loading /boot/defaults/loader.conf\n"
-"/boot/kernel/kernel text=0xed9008 data=0x117d28+0x176650 syms=[0x8+0x137988+0x8+0x1515f8]"
+"/boot/kernel/kernel text=0xed9008 data=0x117d28+0x176650 "
+"syms=[0x8+0x137988+0x8+0x1515f8]\n"
+"...."
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:131
@@ -423,11 +426,18 @@ msgid ""
 "the \"bootmanager\" option at installation time.  Indeed, [.filename]#boot0# "
 "_is_ the MBR."
 msgstr ""
-"Após o controle ser recebido pela BIOS no endereço `0x7c00`, é iniciada a "
-"execução de [.filename]#boot0# starts executing. Ele é o primeiro trecho de "
-"código sob controle do FreeBSD. A tarefa do [.filename]#boot0# é bastante "
-"simples: Escanear a tabela de partição e permitir que o usuário escolha a "
-"partir de qual partição inicializar o sistema."
+"Após receber o controle da BIOS no endereço de memória `0x7c00`, o arquivo [."
+"filename]#boot0# inicia sua execução. Este é o primeiro trecho de código sob "
+"o controle do FreeBSD. A tarefa de [.filename]#boot0# é bastante simples: "
+"examinar a tabela de partições e permitir que o usuário escolha a partir de "
+"qual partição inicializar o sistema. A tabela de partições é uma estrutura "
+"de dados padrão e especial, incorporada ao MBR (portanto, incorporada em [."
+"filename]#boot0#), que descreve as quatro \"partições\" padrão de um PC. [."
+"filename]#boot0# reside no sistema de arquivos como [.filename]#/boot/boot0#"
+". É um pequeno arquivo de 512 bytes, e é exatamente o que o procedimento de "
+"instalação do FreeBSD gravou no MBR do disco rígido se você escolheu a opção "
+"\"bootmanager\" durante a instalação. De fato, [.filename]#boot0# _é_ o "
+"próprio MBR."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:197
@@ -571,14 +581,13 @@ msgstr ""
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:235
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "      BOOT_BOOT0_ORG?=0x600\n"
 "      ORG=${BOOT_BOOT0_ORG}\n"
 msgstr ""
 "      BOOT_BOOT0_ORG?=0x600\n"
-"      LDFLAGS=-e start -Ttext ${BOOT_BOOT0_ORG} \\\n"
-"      -Wl,-N,-S,--oformat,binary\n"
+"      ORG=${BOOT_BOOT0_ORG}\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:237
@@ -758,6 +767,18 @@ msgid ""
 "Note that until this jump to the relocated code, any reference to an "
 "absolute address was avoided."
 msgstr ""
+"Em seguida, o registrador de destino `%di` é copiado para `%bp`. `%bp` "
+"recebe o valor `0x800`. O valor `8` é copiado para `%cl` em preparação para "
+"uma nova operação de string (como nosso `movsw` anterior). Agora, `stosw` é "
+"executado 8 vezes. Esta instrução copia um valor `0` para o endereço "
+"apontado pelo registrador de destino (`%di`, que é `0x800`) e o incrementa. "
+"Isso é repetido mais 7 vezes, de modo que `%di` termina com o valor `0x810`. "
+"Efetivamente, isso limpa o intervalo de endereços `0x800`-`0x80f`. Este "
+"intervalo é usado como uma tabela de partições (falsa) para gravar o MBR de "
+"volta no disco. Finalmente, o campo de setor para o endereçamento CHS desta "
+"partição falsa recebe o valor 1 e um salto é feito para a função principal a "
+"partir do código realocado. Observe que, até este salto para o código "
+"realocado, qualquer referência a um endereço absoluto foi evitada."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:306
@@ -765,10 +786,12 @@ msgid ""
 "The following code block tests whether the drive number provided by the BIOS "
 "should be used, or the one stored in [.filename]#boot0#."
 msgstr ""
+"O bloco de código a seguir testa se o número da unidade fornecido pela BIOS "
+"deve ser usado ou o armazenado em [.filename]#boot0#."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:318
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "main:\n"
 "      testb $SETDRV,_FLAGS(%bp)\t# Set drive number?\n"
@@ -781,16 +804,20 @@ msgid ""
 "#endif\n"
 msgstr ""
 "main:\n"
-"      testb $SETDRV,-69(%bp)\t# Set drive number?\n"
+"      testb $SETDRV,_FLAGS(%bp)\t# Set drive number?\n"
+"#ifndef CHECK_DRIVE\t/* disable drive checks */\n"
+"      jz save_curdrive\t\t# no, use the default\n"
+"#else\n"
 "      jnz disable_update\t# Yes\n"
 "      testb %dl,%dl\t\t# Drive number valid?\n"
 "      js save_curdrive\t\t# Possibly (0x80 set)\n"
+"#endif\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:320
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-drivenumber]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-drivenumber]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:327
@@ -805,6 +832,15 @@ msgid ""
 "defaults, and that the BIOS provided a valid drive number, so we jump to "
 "`save_curdrive`."
 msgstr ""
+"Este código testa o bit `SETDRV` (`0x20`) na variável _flags_. Lembre-se de "
+"que o registrador `%bp` aponta para o endereço `0x800`, portanto, o teste é "
+"feito na variável _flags_ no endereço `0x800`-`69`= `0x7bb`. Este é um "
+"exemplo do tipo de modificações que podem ser feitas em [.filename]#boot0#. "
+"O sinalizador `SETDRV` não está definido por padrão, mas pode ser definido "
+"no [.filename]#Makefile#. Quando definido, o número da unidade armazenado no "
+"MBR é usado em vez do fornecido pela BIOS. Assumimos os valores padrão e que "
+"a BIOS forneceu um número de unidade válido, então pulamos para "
+"`save_curdrive`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:329
@@ -812,10 +848,12 @@ msgid ""
 "The next block saves the drive number provided by the BIOS, and calls `putn` "
 "to print a new line on the screen."
 msgstr ""
+"O bloco seguinte salva o número da unidade fornecido pela BIOS e chama a "
+"função `putn` para imprimir uma nova linha na tela."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:341
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "save_curdrive:\n"
 "      movb %dl, (%bp)\t\t# Save drive number\n"
@@ -828,20 +866,20 @@ msgid ""
 "      callw putn\t\t# Print a newline\n"
 msgstr ""
 "save_curdrive:\n"
-"      movb %dl, (%bp)\t\t# Save drive number\n"
-"      pushw %dx\t\t\t# Also in the stack\n"
-"#ifdef\tTEST\t/* test code, print internal bios drive */\n"
+"      movb %dl, (%bp)\t\t# Salva o número da unidader\n"
+"      pushw %dx\t\t\t# Também na pilha\n"
+"#ifdef\tTEST\t/* Código de teste, imprime a unidade interna da BIOS */\n"
 "      rolb $1, %dl\n"
 "      movw $drive, %si\n"
 "      call putkey\n"
 "#endif\n"
-"      callw putn\t\t# Print a newline\n"
+"      callw putn\t\t# Imprime uma nova linha\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:343
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-savedrivenumber]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-savedrivenumber]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:345
@@ -864,6 +902,13 @@ msgid ""
 "(Windows(R), ID 0x7), `ext2fs` (Linux(R), ID 0x83), and, of course, `ffs`/"
 "`ufs2` (FreeBSD, ID 0xa5).  The implementation is fairly simple."
 msgstr ""
+"Nosso próximo bloco implementa a varredura da tabela de partições. Ele "
+"imprime na tela o tipo de partição para cada uma das quatro entradas na "
+"tabela de partições. Compara cada tipo com uma lista de sistemas de arquivos "
+"de sistemas operacionais conhecidos. Exemplos de tipos de partição "
+"reconhecidos são  NTFS (Windows(R), ID 0x7)), `ext2fs`  (Linux(R), ID 0x83), "
+"e, claro, `ffs`/`ufs2` (FreeBSD, ID 0xa5). A implementação é bastante "
+"simples."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:356
@@ -872,6 +917,8 @@ msgid ""
 "      movw $(partbl+0x4),%bx\t# Partition table (+4)\n"
 "      xorw %dx,%dx\t\t# Item number\n"
 msgstr ""
+"      movw $(partbl+0x4),%bx\t# Tabela de partição (+4)\n"
+"      xorw %dx,%dx\t\t# Número do item\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:372
