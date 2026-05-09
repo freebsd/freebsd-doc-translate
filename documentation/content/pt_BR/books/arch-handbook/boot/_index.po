@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-11-08 16:17+0000\n"
-"PO-Revision-Date: 2026-05-01 04:45+0000\n"
+"PO-Revision-Date: 2026-05-09 04:45+0000\n"
 "Last-Translator: Matheus Santos <int0x80.c@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/booksarch-handbookboot_index/pt_BR/>\n"
@@ -266,13 +266,19 @@ msgid ""
 "FreeBSD clang version 11.0.1 (git@github.com:llvm/llvm-project.git llvmorg-11.0.1-0-g43ff75f2c3fe)\n"
 "...."
 msgstr ""
-"Copyright (c) 1992-2013 The FreeBSD Project.\n"
+"[source,bash]\n"
+"....\n"
+"Copyright (c) 1992-2021 The FreeBSD Project.\n"
 "Copyright (c) 1979, 1980, 1983, 1986, 1988, 1989, 1991, 1992, 1993, 1994\n"
 "        The Regents of the University of California. All rights reserved.\n"
 "FreeBSD is a registered trademark of The FreeBSD Foundation.\n"
-"FreeBSD 10.0-RELEASE #0 r260789: Thu Jan 16 22:34:59 UTC 2014\n"
-"    root@snap.freebsd.org:/usr/obj/usr/src/sys/GENERIC amd64\n"
-"FreeBSD clang version 3.3 (tags/RELEASE_33/final 183502) 20130610"
+"FreeBSD 13.0-RELEASE 0 releng/13.0-n244733-ea31abc261f: Fri Apr  9 04:04:45 "
+"UTC 2021\n"
+"    root@releng1.nyi.freebsd.org:/usr/obj/usr/src/i386.i386/sys/GENERIC "
+"i386\n"
+"FreeBSD clang version 11.0.1 (git@github.com:llvm/llvm-project.git llvmorg-11"
+".0.1-0-g43ff75f2c3fe)\n"
+"...."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:147
@@ -940,6 +946,21 @@ msgid ""
 "      addw %cx,%di\t\t#  description\n"
 "      callw putx\t\t# Display it\n"
 msgstr ""
+"read_entry:\n"
+"      movb %ch,-0x4(%bx)\t# Zero active flag (ch == 0)\n"
+"      btw %dx,_FLAGS(%bp)\t# Entry enabled?\n"
+"      jnc next_entry\t\t# No\n"
+"      movb (%bx),%al\t\t# Load type\n"
+"      test %al, %al\t\t# skip empty partition\n"
+"      jz next_entry\n"
+"      movw $bootable_ids,%di\t# Lookup tables\n"
+"      movb $(TLEN+1),%cl\t# Number of entries\n"
+"      repne\t\t\t# Locate\n"
+"      scasb\t\t\t#  type\n"
+"      addw $(TLEN-1), %di\t# Adjust\n"
+"      movb (%di),%cl\t\t# Partition\n"
+"      addw %cx,%di\t\t#  description\n"
+"      callw putx\t\t# Display it\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:377
@@ -950,12 +971,16 @@ msgid ""
 "      addb $0x10,%bl\t\t# Next entry\n"
 "      jnc read_entry\t\t# Till done\n"
 msgstr ""
+"next_entry:\n"
+"      incw %dx\t\t\t# Next item\n"
+"      addb $0x10,%bl\t\t# Next entry\n"
+"      jnc read_entry\t\t# Till done\n"
 
 #. type: Block title
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:379
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-partition-scan]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-partition-scan]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:383
@@ -983,6 +1008,11 @@ msgid ""
 "screen.  The user may command [.filename]#boot0# to scan partitions on "
 "another drive later."
 msgstr ""
+"O próximo bloco testa outras unidades. Na inicialização, a BIOS grava o "
+"número de unidades presentes no computador no endereço `0x475`. Se houver "
+"outras unidades presentes, [.filename]#boot0# exibe a unidade atual na tela. "
+"O usuário pode usar o comando [.filename]#boot0#  para verificar partições "
+"em outra unidade posteriormente."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:397
@@ -1006,7 +1036,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:399
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-test-drives]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-test-drives]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:402
@@ -1015,6 +1045,9 @@ msgid ""
 "`print_drive` is not performed.  We also assume nothing strange happened, so "
 "we jump to `print_prompt`."
 msgstr ""
+"Partimos do pressuposto de que existe apenas uma unidade de disco, portanto, "
+"o salto para `print_drive` não é realizado. Também presumimos que nada de "
+"estranho aconteceu, então saltamos para `print_prompt`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:404
@@ -1046,7 +1079,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:416
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-prompt]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-prompt]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:418
@@ -1055,6 +1088,9 @@ msgid ""
 "used to start a timer and for reading user input from the keyboard; if the "
 "timer expires, the default option will be selected:"
 msgstr ""
+"Finalmente, é realizado um salto para `start_input`, onde os serviços da "
+"BIOS são usados para iniciar um temporizador e para ler a entrada do usuário "
+"pelo teclado; se o temporizador expirar, a opção padrão será selecionada:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:434
@@ -1092,7 +1128,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:436
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-start-input]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-start-input]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:449
@@ -1119,6 +1155,29 @@ msgid ""
 "filename]#boot0# continually asks the BIOS for any user input; this is done "
 "through `int 0x16`, argument `1` in `%ah`."
 msgstr ""
+"Uma interrupção é solicitada com o número `0x1a` e argumento `0` no "
+"registrador `%ah`. A BIOS possui um conjunto predefinido de serviços, "
+"solicitados por aplicações como interrupções geradas por software através da "
+"instrução `int` e recebendo argumentos em registradores (neste caso, `%ah`). "
+"Aqui, especificamente, estamos solicitando o número de pulsos de clock desde "
+"a última meia-noite; este valor é calculado pela BIOS através do RTC ("
+"Relógio de Tempo Real). Este clock pode ser programado para operar em "
+"frequências que variam de 2 Hz a 8192 Hz. A BIOS o configura para 18,2 Hz na "
+"inicialização. Quando a solicitação é atendida, um resultado de 32 bits é "
+"retornado pela BIOS nos registradores `%cx` e `%dx` (bytes menos "
+"significativos em `%dx`). Este resultado (a parte `%dx`) é copiado para o "
+"registrador `%di`, e o valor da variável `TICKS` é adicionado a `%di`. Esta "
+"variável reside em [.filename]#boot0# no deslocamento `_TICKS` (um valor "
+"negativo) do registrador `%bp` (que, lembre-se, aponta para `0x800`). O "
+"valor padrão desta variável é `0xb6` (182 em decimal). A ideia é que [."
+"filename]#boot0# solicite constantemente a hora da BIOS e, quando o valor "
+"retornado no registrador `%dx` for maior que o valor armazenado em `%di`, o "
+"tempo se esgota e a seleção padrão será feita. Como o RTC realiza 18,2 "
+"ciclos por segundo, essa condição será atendida após 10 segundos (esse "
+"comportamento padrão pode ser alterado no [.filename]#Makefile#). Até que "
+"esse tempo tenha passado, [.filename]#boot0# solicita continuamente à BIOS "
+"qualquer entrada do usuário; isso é feito através da função `int 0x16`, "
+"argumento `1` em `%ah`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:457
@@ -1182,7 +1241,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:474
 #, no-wrap
 msgid "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-check-bootable]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot0/boot0.S# [[boot-boot0-check-bootable]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:478
@@ -1191,6 +1250,9 @@ msgid ""
 "us where the partition begins on disk.  We assume, of course, that the "
 "partition selected is actually a FreeBSD slice."
 msgstr ""
+"Lembre-se de que `%si` aponta para a entrada de partição selecionada. Essa "
+"entrada nos informa onde a partição começa no disco. Assumimos, "
+"naturalmente, que a partição selecionada seja de fato uma fatia do FreeBSD."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:482
@@ -1198,6 +1260,8 @@ msgid ""
 "From now on, we will favor the use of the technically more accurate term "
 "\"slice\" rather than \"partition\"."
 msgstr ""
+"A partir de agora, daremos preferência ao uso do termo tecnicamente mais "
+"preciso \"fatia\" em vez de \"partição\"."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:488
@@ -1210,12 +1274,20 @@ msgid ""
 "preserved for use by the next stage, and a jump is performed to address "
 "`0x7c00`, where execution of our next stage (the just-read block) is started."
 msgstr ""
+"O buffer de transferência é definido como `0x7c00` (registrador `%bx`), e "
+"uma leitura do primeiro setor da fatia do FreeBSD é solicitada chamando "
+"`intx13`. Assumimos que tudo ocorreu bem, portanto, um salto para `beep` não "
+"é realizado. Em particular, a leitura do novo setor deve terminar com a "
+"sequência mágica `0xaa55`. Finalmente, o valor em `%si` (o ponteiro para a "
+"tabela de partições selecionada) é preservado para uso na próxima etapa, e "
+"um salto é realizado para o endereço `0x7c00`, onde a execução da nossa "
+"próxima etapa (o bloco recém-lido) é iniciada."
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:490
 #, no-wrap
 msgid "`boot1` Stage"
-msgstr ""
+msgstr "Estágio `boot1`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:493
@@ -1229,6 +1301,9 @@ msgid ""
 "MBR ([.filename]#boot0#) was loaded from absolute disk sector one to address "
 "`0x7c00`.  Execution control was passed to that location."
 msgstr ""
+"A BIOS realizou algumas inicializações de hardware preliminares, incluindo o "
+"POST. O MBR ([.filename]#boot0#) foi carregado do setor absoluto um do disco "
+"para o endereço `0x7c00`. O controle de execução foi passado para esse local."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:500
@@ -1271,6 +1346,27 @@ msgid ""
 "of the FreeBSD slice (512 bytes), it is actually loading [.filename]#boot1# "
 "and transferring control to it."
 msgstr ""
+"[.filename]#boot1# é o próximo passo na sequência de carregamento de "
+"inicialização. É o primeiro dos três estágios de inicialização. Observe que "
+"temos lidado exclusivamente com setores de disco. De fato, a BIOS carrega o "
+"primeiro setor absoluto, enquanto [.filename]#boot0# carrega o primeiro "
+"setor da partição FreeBSD. Ambos os carregamentos são para o endereço "
+"`0x7c00`. Podemos pensar conceitualmente nesses setores de disco como "
+"contendo os arquivos [.filename]#boot0# e [.filename]#boot1#, "
+"respectivamente, mas na realidade isso não é totalmente verdade para [."
+"filename]#boot1#. Estritamente falando, diferentemente de [.filename]#boot0#"
+", [.filename]#boot1# não faz parte dos blocos de inicialização. [Nota de "
+"rodapé: Existe um arquivo /boot/boot1, mas ele não é gravado no início da "
+"partição FreeBSD.] Em vez disso, ele é concatenado com boot2 para formar "
+"boot, que é gravado no início da partição do FreeBSD e lido durante a "
+"inicialização. Em vez disso, um único arquivo completo, [.filename]#boot# ([."
+"filename]#/boot/boot#), é o que é gravado no disco. Este arquivo é uma "
+"combinação de [.filename]#boot1#, [.filename]#boot2# e o `Boot Extender` (ou "
+"BTX). Este único arquivo é maior que um único setor (maior que 512 bytes). "
+"Felizmente, [.filename]#boot1# ocupa _exatamente_ os primeiros 512 bytes "
+"deste único arquivo, então quando [.filename]#boot0# carrega o primeiro "
+"setor da partição do FreeBSD (512 bytes), ele está na verdade carregando [."
+"filename]#boot1# e transferindo o controle para ele."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:518
@@ -1281,6 +1377,11 @@ msgid ""
 "will see, the last boot stage, [.filename]#loader#, is also a client of the "
 "BTX server."
 msgstr ""
+"A principal tarefa de [.filename]#boot1# é carregar o próximo estágio de "
+"inicialização. Este próximo estágio é um pouco mais complexo. Ele é composto "
+"por um servidor chamado \"Boot Extender\", ou BTX, e um cliente, chamado [."
+"filename]#boot2#. Como veremos, o último estágio de inicialização, [."
+"filename]#loader#, também é um cliente do servidor BTX."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:520
@@ -1307,7 +1408,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:527
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-entry]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-entry]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:529
@@ -1315,6 +1416,8 @@ msgid ""
 "The entry point at `start` simply jumps past a special data area to the "
 "label `main`, which in turn looks like this:"
 msgstr ""
+"O ponto de entrada em `start` simplesmente ignora uma área de dados especial "
+"e vai direto para o rótulo `main`, que por sua vez se parece com isto:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:544
@@ -1350,7 +1453,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:546
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-main]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-main]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:551
@@ -1361,6 +1464,11 @@ msgid ""
 "`0x7c00`, effectively where it was loaded in the first place.  The reason "
 "for this relocation will be discussed shortly."
 msgstr ""
+"Assim como [.filename]#boot0#, este código realoca [.filename]#boot1#, desta "
+"vez para o endereço de memória `0x700`. No entanto, diferentemente de [."
+"filename]#boot0#, ele não salta para lá. [.filename]#boot1# está vinculado "
+"para executar no endereço `0x7c00`, efetivamente onde foi carregado "
+"inicialmente. O motivo dessa realocação será discutido em breve."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:556
@@ -1374,6 +1482,15 @@ msgid ""
 "rescan the partition table to find where the FreeBSD slice starts.  "
 "Therefore it rereads the MBR:"
 msgstr ""
+"Em seguida, vem um loop que procura a partição do FreeBSD. Embora [."
+"filename]#boot0# tenha carregado [.filename]#boot1# da partição do FreeBSD, "
+"nenhuma informação foi passada para ele sobre esta nota de rodapé: [Na "
+"verdade, passamos um ponteiro para a entrada da partição no registrador %si. "
+"No entanto, boot1 não assume que ela foi carregada por boot0 (talvez algum "
+"outro MBR a tenha carregado e não tenha passado essa informação), então ele "
+"não assume nada.], portanto, [.filename]#boot1# deve reexaminar a tabela de "
+"partições para encontrar onde a partição do FreeBSD começa. "
+"Consequentemente, ele relê o MBR:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:564
@@ -1395,7 +1512,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:566
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-find-freebsd]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-find-freebsd]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:574
@@ -1408,6 +1525,14 @@ msgid ""
 "%si`.  This memory address holds a \"fake partition\" to be used by "
 "`nread`.  The following is the data in the fake partition:"
 msgstr ""
+"No código acima, o registrador `%dl` mantém informações sobre o dispositivo "
+"de inicialização. Essas informações são repassadas pela BIOS e preservadas "
+"pelo MBR. Números `0x80` e superiores indicam que estamos lidando com um "
+"disco rígido, portanto, uma chamada é feita para `nread`, onde o MBR é lido. "
+"Os argumentos para `nread` são passados por meio de `%si` e `%dh`. O "
+"endereço de memória no rótulo `part4` é copiado para `%si`. Esse endereço de "
+"memória contém uma \"partição falsa\" a ser usada por `nread`. Os dados na "
+"partição falsa são os seguintes:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:582
@@ -1430,6 +1555,7 @@ msgstr ""
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot2-make-fake-partition]]"
 msgstr ""
+"[.filename]#stand/i386/boot2/boot1.S# [[boot-boot2-make-fake-partition]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:589
@@ -1450,7 +1576,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:591
 msgid "Let us now proceed to take a look at `nread`:"
-msgstr ""
+msgstr "Vamos agora dar uma olhada em `nread`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:601
@@ -1476,7 +1602,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:603
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-nread]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-nread]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:612
@@ -1491,6 +1617,17 @@ msgid ""
 "we will see shortly, [.filename]#boot2#, in conjunction with the BTX server, "
 "also uses `xread.1`.  This mechanism will be discussed in the next section."
 msgstr ""
+"Lembre-se de que `%si` aponta para a partição falsa. A nota de rodapé: [No "
+"contexto do modo real de 16 bits, uma palavra tem 2 bytes.] no deslocamento "
+"`0x8` é copiada para o registrador `%ax` e a palavra no deslocamento `0xa` "
+"para `%cx`. Elas são interpretadas pela BIOS como o valor dos 4 bytes menos "
+"significativos que denota o LBA a ser lido (os quatro bytes mais "
+"significativos são considerados zero). O registrador `%bx` armazena o "
+"endereço de memória onde o MBR será carregado. A instrução que coloca `%cs` "
+"na pilha é muito interessante. Neste contexto, ela não realiza nada. No "
+"entanto, como veremos em breve, [.filename]#boot2#, em conjunto com o "
+"servidor BTX, também usa `xread.1`. Esse mecanismo será discutido na próxima "
+"seção."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:614
@@ -1498,6 +1635,8 @@ msgid ""
 "The code at `xread.1` further calls the `read` function, which actually "
 "calls the BIOS asking for the disk sector:"
 msgstr ""
+"O código em `xread.1` chama ainda a função `read`, que na verdade chama a "
+"BIOS solicitando o setor do disco:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:631
@@ -1537,7 +1676,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:633
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-xread1]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-xread1]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:637
@@ -1546,6 +1685,9 @@ msgid ""
 "pops out the `%cs` register pushed by `nread`, and returns.  Finally, "
 "`nread` also returns."
 msgstr ""
+"Observe a longa instrução de retorno no final deste bloco. Esta instrução "
+"retira o registrador `%cs` inserido por `nread` e retorna. Finalmente, "
+"`nread` também retorna."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:639
@@ -1553,6 +1695,8 @@ msgid ""
 "With the MBR loaded to memory, the actual loop for searching the FreeBSD "
 "slice begins:"
 msgstr ""
+"Com o MBR carregado na memória, o loop propriamente dito para buscar na "
+"partição do FreeBSD começa:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:659
@@ -1598,7 +1742,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:661
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-find-part]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-find-part]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:665
@@ -1608,6 +1752,11 @@ msgid ""
 "the partition table, and `%dh` holds the partition number.  We assume that a "
 "FreeBSD slice is found, so we continue execution at `main.5`:"
 msgstr ""
+"Se uma partição FreeBSD for identificada, a execução continua em `main.5`. "
+"Observe que, quando uma partição FreeBSD é encontrada, `%si` aponta para a "
+"entrada apropriada na tabela de partições e `%dh` contém o número da "
+"partição. Assumimos que uma partição FreeBSD foi encontrada, portanto, "
+"continuamos a execução em `main.5`:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:680
@@ -1643,7 +1792,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:682
 #, no-wrap
 msgid "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-main5]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/boot2/boot1.S# [[boot-boot1-main5]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:688
@@ -1658,6 +1807,15 @@ msgid ""
 "filename]#/boot/boot#.  Let us look at the size of these files in the "
 "filesystem:"
 msgstr ""
+"Lembre-se de que, neste ponto, o registrador `%si` aponta para a entrada da "
+"fatia do FreeBSD na tabela de partições MBR, portanto, uma chamada para "
+"`nread` lerá efetivamente os setores no início dessa partição. O argumento "
+"passado no registrador `%dh` instrui `nread` a ler 16 setores do disco. "
+"Lembre-se de que os primeiros 512 bytes, ou o primeiro setor da fatia do "
+"FreeBSD, coincidem com o programa [.filename]#boot1#. Lembre-se também de "
+"que o arquivo gravado no início da fatia do FreeBSD não é [.filename]#/boot/"
+"boot1#, mas sim [.filename]#/boot/boot#. Vejamos o tamanho desses arquivos "
+"no sistema de arquivos:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:695
@@ -1688,6 +1846,18 @@ msgid ""
 "concatenate [.filename]#boot1# and [.filename]#boot2# into a single [."
 "filename]#boot# is merely `cat boot1 boot2 > boot`."
 msgstr ""
+"Os arquivos [.filename]#boot0# e [.filename]#boot1# têm 512 bytes cada, "
+"portanto, cabem _exatamente_ em um setor do disco. O arquivo [."
+"filename]#boot2# é muito maior, contendo tanto o servidor BTX quanto o "
+"cliente [.filename]#boot2#. Por fim, um arquivo chamado simplesmente [."
+"filename]#boot# é 512 bytes maior que [.filename]#boot2#. Este arquivo é uma "
+"concatenação de [.filename]#boot1# e [.filename]#boot2#. Como já mencionado, "
+"[.filename]#boot0# é o arquivo gravado no primeiro setor absoluto do disco ("
+"o MBR), e [.filename]#boot# é o arquivo gravado no primeiro setor da "
+"partição FreeBSD; [.filename]#boot1# e [.filename]#boot2# _não_ são gravados "
+"no disco. O comando usado para concatenar [.filename]#boot1# e [."
+"filename]#boot2# em um único [.filename]#boot# é simplesmente `cat boot1 "
+"boot2 > boot`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:707
@@ -1701,6 +1871,14 @@ msgid ""
 "filename]#boot# is formed from [.filename]#boot1# and [.filename]#boot2# in "
 "the next section."
 msgstr ""
+"Assim, [.filename]#boot1# ocupa exatamente os primeiros 512 bytes de [."
+"filename]#boot# e, como [.filename]#boot# é gravado no primeiro setor da "
+"fatia do FreeBSD, [.filename]#boot1# cabe exatamente nesse primeiro setor. "
+"Quando `nread` lê os primeiros 16 setores da fatia do FreeBSD, ele "
+"efetivamente lê o arquivo [.filename]#boot# inteiro [nota de rodapé: 512 * "
+"16 = 8192 bytes, exatamente o tamanho de boot]. Veremos mais detalhes sobre "
+"como [.filename]#boot# é formado a partir de [.filename]#boot1# e [."
+"filename]#boot2# na próxima seção."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:713
@@ -1713,6 +1891,14 @@ msgid ""
 "disklabel.  If you ever wondered where FreeBSD stored this information, it "
 "is in this region - see man:bsdlabel[8]]."
 msgstr ""
+"Lembre-se de que `nread` usa o endereço de memória `0x8c00` como buffer de "
+"transferência para armazenar os setores lidos. Este endereço foi escolhido "
+"de forma conveniente. De fato, como [.filename]#boot1# pertence aos "
+"primeiros 512 bytes, ele acaba no intervalo de endereços `0x8c00`-`0x8dff`. "
+"Os 512 bytes seguintes (intervalo `0x8e00`-`0x8fff`) são usados para "
+"armazenar o _bsdlabel_ [nota de rodapé:[Historicamente conhecido como "
+"disklabel. Se você já se perguntou onde o FreeBSD armazenava essa "
+"informação, é nesta região - veja man:bsdlabel[8]]."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:721
@@ -1727,6 +1913,16 @@ msgid ""
 "because the BTX server arranges [.filename]#boot2# to execute in a segment "
 "starting at `0xa000`.  We explore this in detail in the following section."
 msgstr ""
+"A partir do endereço `0x9000` encontra-se o início do servidor BTX, seguido "
+"imediatamente pelo cliente [.filename]#boot2#. O servidor BTX atua como um "
+"kernel e executa em modo protegido, no nível de privilégio mais elevado. Em "
+"contraste, os clientes BTX (como [.filename]#boot2#, por exemplo) executam "
+"em modo de usuário. Veremos como isso é feito na próxima seção. O código "
+"após a chamada para `nread` localiza o início de [.filename]#boot2# no "
+"buffer de memória e o copia para o endereço de memória `0xc000`. Isso ocorre "
+"porque o servidor BTX organiza a execução de [.filename]#boot2# em um "
+"segmento que começa em `0xa000`. Exploraremos isso em detalhes na seção "
+"seguinte."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:724
@@ -2171,11 +2367,20 @@ msgid ""
 "header is a pointer to the client's ([.filename]#boot2#) entry pointb2.  "
 "This field is patched at link time."
 msgstr ""
+"Observe que os dois primeiros bytes são `0xeb` e `0xe`. Na arquitetura IA-"
+"32, esses dois bytes são interpretados como um salto relativo além do "
+"cabeçalho para o ponto de entrada, portanto, em teoria, [.filename]#boot1# "
+"poderia saltar para cá (endereço `0x9000`) em vez do endereço `0x9010`. "
+"Observe que o último campo no cabeçalho BTX é um ponteiro para o ponto de "
+"entrada b2 do cliente ([.filename]#boot2#). Este campo é corrigido no "
+"momento da vinculação."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:924
 msgid "Immediately following the header is the BTX server's entry point:"
 msgstr ""
+"Imediatamente após o cabeçalho, encontra-se o ponto de entrada do servidor "
+"BTX:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:938
@@ -2209,7 +2414,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:940
 #, no-wrap
 msgid "[.filename]#stand/i386/btx/btx/btx.S# [[btx-init]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-init]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:944
@@ -2221,6 +2426,12 @@ msgid ""
 "EFLAGS register is effectively cleared (IA-32 requires that bit 2 of the "
 "EFLAGS register always be 1)."
 msgstr ""
+"Este código desabilita interrupções, configura uma pilha de trabalho ("
+"iniciando no endereço `0x1800`) e limpa os flags no registrador EFLAGS. "
+"Observe que a instrução `popfl` remove um byte duplo (4 bytes) da pilha e o "
+"coloca no registrador EFLAGS. Como o valor removido é `2`, o registrador "
+"EFLAGS é efetivamente limpo (IA-32 exige que o bit 2 do registrador EFLAGS "
+"seja sempre 1)."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:947
@@ -2228,6 +2439,9 @@ msgid ""
 "Our next code block clears (sets to `0`) the memory range `0x5e00-0x8fff`.  "
 "This range is where the various data structures will be created:"
 msgstr ""
+"O próximo bloco de código limpa (define como `0`) o intervalo de memória "
+"`0x5e00-0x8fff`. É nesse intervalo que as diversas estruturas de dados serão "
+"criadas:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:957
@@ -2253,7 +2467,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:959
 #, no-wrap
 msgid "[.filename]#stand/i386/btx/btx/btx.S# [[btx-clear-mem]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-clear-mem]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:962
@@ -2263,6 +2477,11 @@ msgid ""
 "However, also recall that [.filename]#boot1# was relocated to `0x700`, so "
 "_that_ copy is still in memory, and the BTX server will make use of it."
 msgstr ""
+"Lembre-se de que [.filename]#boot1# foi originalmente carregado no endereço "
+"`0x7c00`, portanto, com essa inicialização de memória, essa cópia "
+"efetivamente desapareceu. No entanto, lembre-se também de que [."
+"filename]#boot1# foi realocado para `0x700`, então _essa_ cópia ainda está "
+"na memória e o servidor BTX fará uso dela."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:970
@@ -2280,6 +2499,20 @@ msgid ""
 "switched to 32-bit protected mode shortly.  However, the BTX server sets up "
 "a mechanism to effectively use the handlers provided by the BIOS:"
 msgstr ""
+"Em seguida, a IVT (Tabela de Vetores de Interrupção) em modo real é "
+"atualizada. A IVT é uma matriz de pares segmento/deslocamento para "
+"manipuladores de exceção e interrupção. Normalmente, a BIOS mapeia "
+"interrupções de hardware para os vetores de interrupção de 0x8 a 0xf e de "
+"0x70 a 0x77, mas, como veremos, o Controlador de Interrupção Programável "
+"8259A, o chip que controla o mapeamento real das interrupções de hardware "
+"para os vetores de interrupção, é programado para remapear esses vetores de "
+"interrupção de 0x8-0xf para 0x20-0x27 e de 0x70-0x77 para 0x28-0x2f. Assim, "
+"manipuladores de interrupção são fornecidos para os vetores de interrupção "
+"de 0x20-0x2f. O motivo pelo qual os manipuladores fornecidos pela BIOS não "
+"são usados diretamente é porque eles funcionam em modo real de 16 bits, mas "
+"não em modo protegido de 32 bits. O modo do processador será alterado para o "
+"modo protegido de 32 bits em breve. No entanto, O servidor BTX configura um "
+"mecanismo para usar efetivamente os manipuladores fornecidos pela BIOS:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:985
@@ -2315,7 +2548,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:987
 #, no-wrap
 msgid "[.filename]#stand/i386/btx/btx/btx.S# [[btx-ivt]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-ivt]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:992
@@ -2396,7 +2629,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1021
 #, no-wrap
 msgid "[.filename]#stand/i386/btx/btx/btx.S# [[btx-idt]]"
-msgstr ""
+msgstr "[.filename]#stand/i386/btx/btx/btx.S# [[btx-idt]]"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1029
