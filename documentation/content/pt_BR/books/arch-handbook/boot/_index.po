@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2025-11-08 16:17+0000\n"
-"PO-Revision-Date: 2026-05-09 04:45+0000\n"
+"PO-Revision-Date: 2026-05-09 23:01+0000\n"
 "Last-Translator: Matheus Santos <int0x80.c@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate-dev.freebsd.org/"
 "projects/documentation/booksarch-handbookboot_index/pt_BR/>\n"
@@ -2916,7 +2916,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1155
 #, no-wrap
 msgid "boot2 Stage"
-msgstr ""
+msgstr "Estágio boot2"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1162
@@ -2928,6 +2928,13 @@ msgid ""
 "filename, BIOS harddisk geometry, BIOS drive number for boot device, "
 "physical memory available, `envp` pointer etc.  The definition for it is:"
 msgstr ""
+"`boot2` define uma estrutura importante, `struct bootinfo`. Essa estrutura é "
+"inicializada por `boot2` e passada para o carregador, e posteriormente para "
+"o kernel. Alguns nós dessa estrutura são definidos por `boot2`, o restante "
+"pelo carregador. Essa estrutura contém, entre outras informações, o nome do "
+"arquivo do kernel, a geometria do disco rígido da BIOS, o número da unidade "
+"da BIOS para o dispositivo de inicialização, a memória física disponível, o "
+"ponteiro `envp`, etc. Sua definição é:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1187
@@ -2992,6 +2999,16 @@ msgid ""
 "`load()` scans the loader's ELF header, loading the content of [.filename]#/"
 "boot/loader# into memory, and passing the execution to the loader's entry:"
 msgstr ""
+"`boot2` entra em um loop infinito aguardando a entrada do usuário e, em "
+"seguida, chama `load()`. Se o usuário não pressionar nada, o loop é "
+"interrompido por um tempo limite, então `load()` carregará o arquivo padrão "
+"([.filename]#/boot/loader#). As funções `ino_t lookup(char *filename)` e `"
+"int xfsread(ino_t inode, void *buf, size_t nbyte)` são usadas para ler o "
+"conteúdo de um arquivo para a memória. [.filename]#/boot/loader# é um "
+"binário ELF, mas onde o cabeçalho ELF é precedido pela estrutura `struct "
+"exec` de [.filename]#a.out#. `load()` examina o cabeçalho ELF do carregador, "
+"carregando o conteúdo de [.filename]#/boot/loader# para a memória e passando "
+"a execução para a entrada do carregador:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1201
@@ -3002,12 +3019,16 @@ msgid ""
 "\t   MAKEBOOTDEV(dev_maj[dsk.type], dsk.slice, dsk.unit, dsk.part),\n"
 "\t   0, 0, 0, VTOP(&bootinfo));\n"
 msgstr ""
+"stand/i386/boot2/boot2.c:\n"
+"    __exec((caddr_t)addr, RB_BOOTINFO | (opts & RBX_MASK),\n"
+"\t   MAKEBOOTDEV(dev_maj[dsk.type], dsk.slice, dsk.unit, dsk.part),\n"
+"\t   0, 0, 0, VTOP(&bootinfo));\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1204
 #, no-wrap
 msgid "loader Stage"
-msgstr ""
+msgstr "Estágio do carregador"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1209
@@ -3016,6 +3037,9 @@ msgid ""
 "there is a comprehensive man page written by Mike Smith, man:loader[8].  The "
 "underlying mechanisms and BTX were discussed above."
 msgstr ""
+"O loader também é um cliente BTX. Não o descreverei aqui em detalhes, pois "
+"existe uma página de manual abrangente escrita por Mike Smith, man:loader[8]"
+". Os mecanismos subjacentes e o BTX foram discutidos acima."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1212
@@ -3023,6 +3047,8 @@ msgid ""
 "The main task for the loader is to boot the kernel.  When the kernel is "
 "loaded into memory, it is being called by the loader:"
 msgstr ""
+"A principal tarefa do carregador é inicializar o kernel. Quando o kernel é "
+"carregado na memória, ele é chamado pelo carregador:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1218
@@ -3032,6 +3058,10 @@ msgid ""
 "    /* Call the exec handler from the loader matching the kernel */\n"
 "    file_formats[fp->f_loader]->l_exec(fp);\n"
 msgstr ""
+"stand/common/boot.c:\n"
+"    /* Chame o manipulador de execução do carregador correspondente ao "
+"kernel. */\n"
+"    file_formats[fp->f_loader]->l_exec(fp);\n"
 
 #. type: Title ==
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1221
@@ -3049,6 +3079,11 @@ msgid ""
 "interests us can be found in [.filename]#/usr/obj/usr/src/i386.i386/sys/"
 "GENERIC/#."
 msgstr ""
+"Vamos analisar o comando que vincula o kernel. Isso ajudará a identificar o "
+"local exato onde o carregador passa a execução para o kernel. Este local é o "
+"ponto de entrada real do kernel. Este comando agora está excluído de [."
+"filename]#sys/conf/Makefile.i386#. O conteúdo que nos interessa pode ser "
+"encontrado em [.filename]#/usr/obj/usr/src/i386.i386/sys/GENERIC/#."
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1235
@@ -3059,6 +3094,12 @@ msgid ""
 "--warn-common --export-dynamic  --dynamic-linker /red/herring -X -o kernel locore.o\n"
 "<lots of kernel .o files>\n"
 msgstr ""
+"/usr/obj/usr/src/i386.i386/sys/GENERIC/kernel.meta:\n"
+"ld -m elf_i386_fbsd -Bdynamic -T /usr/src/sys/conf/ldscript.i386 --build-"
+"id=sha1 --no-warn-mismatch \\\n"
+"--warn-common --export-dynamic  --dynamic-linker /red/herring -X -o kernel "
+"locore.o\n"
+"<lots of kernel .o files>\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1241
@@ -3070,6 +3111,12 @@ msgid ""
 "options are used when compiling a kernel.  Reading through the first few "
 "lines, the string"
 msgstr ""
+"Algumas coisas interessantes podem ser observadas aqui. Primeiro, o kernel é "
+"um binário ELF dinamicamente vinculado, mas o vinculador dinâmico para o "
+"kernel é [.filename]#/red/herring#, que definitivamente é um arquivo falso. "
+"Segundo, uma olhada no arquivo [.filename]#sys/conf/ldscript.i386# dá uma "
+"ideia de quais opções do ld são usadas ao compilar um kernel. Lendo as "
+"primeiras linhas, a string"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1246
@@ -3078,6 +3125,8 @@ msgid ""
 "sys/conf/ldscript.i386:\n"
 "ENTRY(btext)\n"
 msgstr ""
+"sys/conf/ldscript.i386:\n"
+"ENTRY(btext)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1250
@@ -3085,6 +3134,8 @@ msgid ""
 "says that a kernel's entry point is the symbol `btext`.  This symbol is "
 "defined in [.filename]#locore.s#:"
 msgstr ""
+"Diz que o ponto de entrada de um kernel é o símbolo `btext`. Este símbolo "
+"está definido em [.filename]#locore.s#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1261
@@ -3099,6 +3150,15 @@ msgid ""
 " */\n"
 "NON_GPROF_ENTRY(btext)\n"
 msgstr ""
+"sys/i386/i386/locore.s:\n"
+"\t.text\n"
+"/**********************************************************************\n"
+" *\n"
+" * É aqui que os blocos de inicialização dão início ao processo, colocando a "
+"bola em movimento...\n"
+" *\n"
+" */\n"
+"NON_GPROF_ENTRY(btext)\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1265
@@ -3106,6 +3166,8 @@ msgid ""
 "First, the register EFLAGS is set to a predefined value of 0x00000002.  Then "
 "all the segment registers are initialized:"
 msgstr ""
+"Primeiro, o registrador EFLAGS é configurado com o valor predefinido "
+"0x00000002. Em seguida, todos os registradores de segmento são inicializados:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1272
@@ -3116,6 +3178,10 @@ msgid ""
 "\tpushl\t$PSL_KERNEL\n"
 "\tpopfl\n"
 msgstr ""
+"sys/i386/i386/locore.s:\n"
+"/* Don't trust what the BIOS gives for eflags. */\n"
+"\tpushl\t$PSL_KERNEL\n"
+"\tpopfl\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1280
@@ -3129,6 +3195,14 @@ msgid ""
 "\tmov\t%ax, %fs\n"
 "\tmov\t%ax, %gs\n"
 msgstr ""
+"/*\n"
+" *Não confie nos valores fornecidos pela BIOS para %fs e %gs. Confie no "
+"bootstrap\n"
+" * para definir %cs, %ds, %es e %ss.\n"
+" */\n"
+"\tmov\t%ds, %ax\n"
+"\tmov\t%ax, %fs\n"
+"\tmov\t%ax, %gs\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1284
@@ -3137,12 +3211,15 @@ msgid ""
 "also defined in [.filename]#locore.s#.  Here is a description of what they "
 "do:"
 msgstr ""
+"O btext chama as rotinas `recover_bootinfo()` e `identify_cpu()`, que também "
+"estão definidas em [.filename]#locore.s#. Aqui está uma descrição do que "
+"elas fazem:"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1290
 #, no-wrap
 msgid "`recover_bootinfo`"
-msgstr ""
+msgstr "`recover_bootinfo`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1294
@@ -3152,23 +3229,32 @@ msgid ""
 "The kernel may have been booted in 3 ways: by the loader, described above, by the old disk boot blocks, or by the old diskless boot procedure.\n"
 "This function determines the booting method, and stores the `struct bootinfo` structure into the kernel memory."
 msgstr ""
+"Esta rotina analisa os parâmetros passados para o kernel a partir do "
+"bootstrap.\n"
+"O kernel pode ter sido inicializado de 3 maneiras: pelo carregador, descrito "
+"acima, pelos antigos blocos de inicialização em disco ou pelo antigo "
+"procedimento de inicialização sem disco.\n"
+"Esta função determina o método de inicialização e armazena a estrutura `"
+"struct bootinfo` na memória do kernel."
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1295
 #, no-wrap
 msgid "`identify_cpu`"
-msgstr ""
+msgstr "`identify_cpu`"
 
 #. type: Table
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1296
 #, no-wrap
 msgid "This function tries to find out what CPU it is running on, storing the value found in a variable `_cpu`."
 msgstr ""
+"Esta função tenta descobrir em qual CPU está sendo executada, armazenando o "
+"valor encontrado em uma variável `_cpu`."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1299
 msgid "The next steps are enabling VME, if the CPU supports it:"
-msgstr ""
+msgstr "Os próximos passos são habilitar o VME, caso a CPU o suporte:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1307
@@ -3189,7 +3275,7 @@ msgstr ""
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1310
 msgid "Then, enabling paging:"
-msgstr ""
+msgstr "Em seguida, habilite a paginação:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1320
@@ -3216,6 +3302,9 @@ msgid ""
 "The next three lines of code are because the paging was set, so the jump is "
 "needed to continue the execution in virtualized address space:"
 msgstr ""
+"As três linhas de código seguintes são necessárias porque a paginação estava "
+"configurada, então o salto é necessário para continuar a execução no espaço "
+"de endereçamento virtualizado:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1329
@@ -3225,6 +3314,9 @@ msgid ""
 "\tpushl\t$mp_begin\t\t\t\t/* jump to high mem */\n"
 "\tret\n"
 msgstr ""
+"sys/i386/i386/mpboot.s:\n"
+"\tpushl\t$mp_begin\t\t\t\t/* pular para memória alta */\n"
+"\tret\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1332
@@ -3233,6 +3325,9 @@ msgid ""
 "/* now running relocated at KERNBASE where the system is linked to run */\n"
 "mp_begin:\t/* now running relocated at KERNBASE */\n"
 msgstr ""
+"/* Agora em execução, realocado no KERNBASE, onde o sistema está vinculado "
+"para funcionar. */\n"
+"mp_begin:\t/* now running relocated at KERNBASE */\n"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1337
@@ -3243,6 +3338,12 @@ msgid ""
 "one (the 'mi_' prefix stands for Machine Independent).  The kernel never "
 "returns from `mi_startup()`, and by calling it, the kernel finishes booting:"
 msgstr ""
+"A função `init386()` é chamada com um ponteiro para a primeira página física "
+"livre, seguida por `mi_startup()`. `init386` é uma função de inicialização "
+"dependente da arquitetura, enquanto `mi_startup()` é independente da "
+"arquitetura (o prefixo 'mi_' significa \"Machine Independent\" - "
+"Independente da Máquina). O kernel nunca retorna de `mi_startup()` e, ao "
+"chamá-la, o kernel finaliza a inicialização:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1347
@@ -3267,7 +3368,7 @@ msgstr ""
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1349
 #, no-wrap
 msgid "`init386()`"
-msgstr ""
+msgstr "`init386()`"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1354
@@ -3279,6 +3380,12 @@ msgid ""
 "consider the tasks the processor must complete to initialize protected mode "
 "execution:"
 msgstr ""
+"A função `init386()` está definida em [.filename]#sys/i386/i386/machdep.c# e "
+"realiza a inicialização de baixo nível específica do chip i386. A mudança "
+"para o modo protegido foi realizada pelo carregador. O carregador criou a "
+"primeira tarefa, na qual o kernel continua a operar. Antes de analisar o "
+"código, considere as tarefas que o processador deve concluir para "
+"inicializar a execução em modo protegido:"
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1356
@@ -3286,36 +3393,38 @@ msgid ""
 "Initialize the kernel tunable parameters, passed from the bootstrapping "
 "program."
 msgstr ""
+"Inicializa os parâmetros ajustáveis do kernel, passados pelo programa de "
+"inicialização."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1357
 msgid "Prepare the GDT."
-msgstr ""
+msgstr "Prepare o GDT."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1358
 msgid "Prepare the IDT."
-msgstr ""
+msgstr "Prepare o IDT."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1359
 msgid "Initialize the system console."
-msgstr ""
+msgstr "Inicialize o console do sistema."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1360
 msgid "Initialize the DDB, if it is compiled into kernel."
-msgstr ""
+msgstr "Inicialize o DDB, caso esteja compilado no kernel."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1361
 msgid "Initialize the TSS."
-msgstr ""
+msgstr "Inicialize o TSS."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1362
 msgid "Prepare the LDT."
-msgstr ""
+msgstr "Prepare o LDT."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/boot/_index.adoc:1363
