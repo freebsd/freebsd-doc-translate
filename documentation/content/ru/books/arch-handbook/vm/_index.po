@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2025-05-01 19:56-0300\n"
+"POT-Creation-Date: 2026-08-06 22:55+0100\n"
 "PO-Revision-Date: 2025-11-21 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.17\n"
 
 #. type: YAML Front Matter: description
@@ -37,13 +37,13 @@ msgid "Virtual Memory System"
 msgstr "Система управления виртуальной памятью"
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:52
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:51
 #, no-wrap
 msgid "Management of Physical Memory `vm_page_t`"
 msgstr "Управление физической памятью `vm_page_t`"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:55
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:54
 msgid ""
 "Physical memory is managed on a page-by-page basis through the `vm_page_t` "
 "structure. Pages of physical memory are categorized through the placement of "
@@ -55,7 +55,7 @@ msgstr ""
 "очередей подкачки."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:57
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:56
 msgid ""
 "A page can be in a wired, active, inactive, cache, or free state. Except for "
 "the wired state, the page is typically placed in a doubly link list queue "
@@ -69,7 +69,7 @@ msgstr ""
 "Зафиксированные страницы не помещаются ни в одну из очередей."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:59
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:58
 msgid ""
 "FreeBSD implements a more involved paging queue for cached and free pages in "
 "order to implement page coloring. Each of these states involves multiple "
@@ -87,7 +87,7 @@ msgstr ""
 "которого выделяется страница."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:61
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:60
 msgid ""
 "Additionally, a page may be held with a reference count or locked with a "
 "busy count. The VM system also implements an \"ultimate locked\" state for a "
@@ -99,7 +99,7 @@ msgstr ""
 "бита PG_BUSY в флагах страницы."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:63
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:62
 msgid ""
 "In general terms, each of the paging queues operates in a LRU fashion. A "
 "page is typically placed in a wired or active state initially. When wired, "
@@ -112,8 +112,8 @@ msgid ""
 "free pages must be maintained in order to accommodate page allocation at "
 "interrupt time."
 msgstr ""
-"В общем случае каждая из очередей подкачки работает по принципу LRU ("
-"наименее недавно использованная). Обычно страница изначально помещается в "
+"В общем случае каждая из очередей подкачки работает по принципу LRU "
+"(наименее недавно использованная). Обычно страница изначально помещается в "
 "зафиксированное или активное состояние. В зафиксированном состоянии "
 "страница, как правило, ассоциирована с какой-либо таблицей страниц. Система "
 "виртуальной памяти «состаривает» страницу, просматривая страницы в более "
@@ -126,7 +126,7 @@ msgstr ""
 "обеспечения возможности выделения памяти во время обработки прерываний."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:65
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:64
 msgid ""
 "If a process attempts to access a page that does not exist in its page table "
 "but does exist in one of the paging queues (such as the inactive or cache "
@@ -142,7 +142,7 @@ msgstr ""
 "блокироваться до тех пор, пока страница не будет загружена с диска."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:67
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:66
 msgid ""
 "FreeBSD dynamically tunes its paging queues and attempts to maintain "
 "reasonable ratios of pages in the various queues as well as attempts to "
@@ -163,22 +163,23 @@ msgstr ""
 "перераспределения зависит от текущей нагрузки на память системы. Это "
 "перераспределение выполняется демоном выгрузки страниц (pageout daemon) и "
 "включает в себя очистку (laundering) грязных страниц (синхронизацию их с "
-"резервным хранилищем), отслеживание активности страниц по ссылкам на них ("
-"сброс их положения в очередях LRU или перемещение между очередями), миграцию "
-"страниц между очередями при разбалансировке очередей и другие действия. "
-"Система виртуальной памяти FreeBSD допускает определённое количество сбоев "
-"повторной активации страниц, чтобы точнее определить, насколько страница "
-"фактически активна или неактивна. Это позволяет принимать более обоснованные "
-"решения о том, когда очищать или выгружать страницу в файл подкачки."
+"резервным хранилищем), отслеживание активности страниц по ссылкам на них "
+"(сброс их положения в очередях LRU или перемещение между очередями), "
+"миграцию страниц между очередями при разбалансировке очередей и другие "
+"действия. Система виртуальной памяти FreeBSD допускает определённое "
+"количество сбоев повторной активации страниц, чтобы точнее определить, "
+"насколько страница фактически активна или неактивна. Это позволяет принимать "
+"более обоснованные решения о том, когда очищать или выгружать страницу в "
+"файл подкачки."
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:69
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:68
 #, no-wrap
 msgid "The Unified Buffer Cache `vm_object_t`"
 msgstr "Унифицированный буферный кэш `vm_object_t`"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:72
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:71
 msgid ""
 "FreeBSD implements the idea of a generic \"VM object\". VM objects can be "
 "associated with backing store of various typesunbacked, swap-backed, "
@@ -186,15 +187,15 @@ msgid ""
 "the same VM objects to manage in-core data relating to files, the result is "
 "a unified buffer cache."
 msgstr ""
-"FreeBSD реализует концепцию универсального «объекта виртуальной памяти» "
-"(VM-объекта). VM-объекты могут быть связаны с резервным хранилищем различных "
+"FreeBSD реализует концепцию универсального «объекта виртуальной памяти» (VM-"
+"объекта). VM-объекты могут быть связаны с резервным хранилищем различных "
 "типов: без резервного хранилища, с подкачкой, с физическим устройством или с "
 "файловым хранилищем. Поскольку файловая система использует те же VM-объекты "
 "для управления данными в оперативной памяти, связанными с файлами, в "
 "результате получается унифицированный буферный кэш."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:74
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:73
 msgid ""
 "VM objects can be _shadowed_. That is, they can be stacked on top of each "
 "other. For example, you might have a swap-backed VM object stacked on top of "
@@ -211,7 +212,7 @@ msgstr ""
 "пространств созданных при форке процесса."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:76
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:75
 msgid ""
 "It should be noted that a `vm_page_t` can only be associated with one VM "
 "object at a time. The VM object shadowing implements the perceived sharing "
@@ -223,13 +224,13 @@ msgstr ""
 "одной и той же страницы между несколькими экземплярами."
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:78
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:77
 #, no-wrap
 msgid "Filesystem I/O `struct buf`"
 msgstr "Ввод-вывод файловой системы `struct buf`"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:81
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:80
 msgid ""
 "vnode-backed VM objects, such as file-backed objects, generally need to "
 "maintain their own clean/dirty info independent from the VM system's idea of "
@@ -250,7 +251,7 @@ msgstr ""
 "в KVM для выполнения операций с ними."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:83
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:82
 msgid ""
 "The entities used to manage this are known as filesystem buffers, ``struct "
 "buf``'s, or ``bp``'s. When a filesystem needs to operate on a portion of a "
@@ -277,7 +278,7 @@ msgstr ""
 "виртуальной памяти."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:85
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:84
 msgid ""
 "FreeBSD reserves a limited amount of KVM to hold mappings from struct bufs, "
 "but it should be made clear that this KVM is used solely to hold mappings "
@@ -298,13 +299,13 @@ msgstr ""
 "это редко становится проблемой."
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:87
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:86
 #, no-wrap
 msgid "Mapping Page Tables `vm_map_t, vm_entry_t`"
 msgstr "Отображение таблиц страниц `vm_map_t, vm_entry_t`"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:90
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:89
 msgid ""
 "FreeBSD separates the physical page table topology from the VM system. All "
 "hard per-process page tables can be reconstructed on the fly and are usually "
@@ -314,12 +315,12 @@ msgstr ""
 "FreeBSD разделяет топологию физических таблиц страниц от системы виртуальной "
 "памяти. Все основные таблицы страниц, связанные с каждым процессом, могут "
 "быть восстановлены динамически и обычно считаются временными (throwaway). "
-"Специальные таблицы страниц, такие как те, которые управляют KVM ("
-"виртуальной памятью ядра), обычно предварительно выделяются навсегда. Эти "
+"Специальные таблицы страниц, такие как те, которые управляют KVM "
+"(виртуальной памятью ядра), обычно предварительно выделяются навсегда. Эти "
 "таблицы страниц не являются временными."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:92
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:91
 msgid ""
 "FreeBSD associates portions of vm_objects with address ranges in virtual "
 "memory through `vm_map_t` and `vm_entry_t` structures. Page tables are "
@@ -344,13 +345,13 @@ msgstr ""
 "в свою очередь, обеспечивает унификацию буферного кэша."
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:94
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:93
 #, no-wrap
 msgid "KVM Memory Mapping"
 msgstr "Отображение виртуальной памяти ядра"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:97
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:96
 msgid ""
 "FreeBSD uses KVM to hold various kernel structures. The single largest "
 "entity held in KVM is the filesystem buffer cache. That is, mappings "
@@ -361,7 +362,7 @@ msgstr ""
 "отображения, связанные с сущностями `struct buf`."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:99
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:98
 msgid ""
 "Unlike Linux, FreeBSD does _not_ map all of physical memory into KVM. This "
 "means that FreeBSD can handle memory configurations up to 4G on 32 bit "
@@ -379,7 +380,7 @@ msgstr ""
 "практического значения."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:101
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:100
 msgid ""
 "KVM is managed through several mechanisms. The main mechanism used to manage "
 "KVM is the _zone allocator_. The zone allocator takes a chunk of KVM and "
@@ -394,13 +395,13 @@ msgstr ""
 "получить обзор текущего использования KVM, разбитого по зонам."
 
 #. type: Title ==
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:103
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:102
 #, no-wrap
 msgid "Tuning the FreeBSD VM System"
 msgstr "Настройка системы виртуальной памяти во FreeBSD"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:106
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:105
 msgid ""
 "A concerted effort has been made to make the FreeBSD kernel dynamically tune "
 "itself. Typically you do not need to mess with anything beyond the "
@@ -417,7 +418,7 @@ msgstr ""
 "найти в файле [.filename]#/usr/src/sys/i386/conf/LINT#."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:108
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:107
 msgid ""
 "In a large system configuration you may wish to increase `maxusers`. Values "
 "typically range from 10 to 128. Note that raising `maxusers` too high can "
@@ -433,7 +434,7 @@ msgstr ""
 "`NMBCLUSTERS`, для увеличения конкретных ресурсов."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:110
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:109
 msgid ""
 "If your system is going to use the network heavily, you may want to increase "
 "`NMBCLUSTERS`. Typical values range from 1024 to 4096."
@@ -443,7 +444,7 @@ msgstr ""
 "4096."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:112
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:111
 msgid ""
 "The `NBUF` parameter is also traditionally used to scale the system. This "
 "parameter determines the amount of KVA the system can use to map filesystem "
@@ -468,7 +469,7 @@ msgstr ""
 "будет закреплено в памяти."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:114
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:113
 msgid ""
 "By default, FreeBSD kernels are not optimized. You can set debugging and "
 "optimization flags with the `makeoptions` directive in the kernel "
@@ -482,7 +483,7 @@ msgstr ""
 "результате."
 
 #. type: delimited block . 4
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:119
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:118
 #, no-wrap
 msgid ""
 "makeoptions      DEBUG=\"-g\"\n"
@@ -492,7 +493,7 @@ msgstr ""
 "makeoptions      COPTFLAGS=\"-O -pipe\"\n"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:122
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:121
 msgid ""
 "Sysctl provides a way to tune kernel parameters at run-time. You typically "
 "do not need to mess with any of the sysctl variables, especially the VM "
@@ -503,7 +504,7 @@ msgstr ""
 "те, что связаны с виртуальной памятью."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:124
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:123
 msgid ""
 "Run time VM and system tuning is relatively straightforward. First, use Soft "
 "Updates on your UFS/FFS filesystems whenever possible. [.filename]#/usr/src/"
@@ -517,7 +518,7 @@ msgstr ""
 "функции."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:126
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:125
 msgid ""
 "Second, configure sufficient swap. You should have a swap partition "
 "configured on each physical disk, up to four, even on your \"work\" disks. "
@@ -541,7 +542,7 @@ msgstr ""
 "места для хранения дампа."
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/vm/_index.adoc:127
+#: documentation/content/en/books/arch-handbook/vm/_index.adoc:126
 msgid ""
 "NFS-based swap is perfectly acceptable on 4.X or later systems, but you must "
 "be aware that the NFS server will take the brunt of the paging load."
