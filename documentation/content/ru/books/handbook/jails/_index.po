@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
 "POT-Creation-Date: 2026-08-06 22:55+0100\n"
-"PO-Revision-Date: 2026-08-08 08:11+0000\n"
+"PO-Revision-Date: 2026-08-09 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
 "documentation/bookshandbookjails_index/ru/>\n"
@@ -158,7 +158,6 @@ msgstr "Как создать различные типы клетки."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:84
-#, fuzzy
 msgid "How to configure network address translation for jails."
 msgstr "Как настроить трансляцию сетевых адресов для клеток."
 
@@ -185,9 +184,8 @@ msgstr "Как ограничить ресурсы, которые может и
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:89
-#, fuzzy
 msgid "The additional per-jail security and feature options."
-msgstr "Дополнительные параметры безопасности и функций для каждой клетки."
+msgstr "Дополнительные параметры безопасности и функций на уровне клетки."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:90
@@ -321,7 +319,6 @@ msgstr "Тонкие клетки (Thin Jails)"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:130
-#, fuzzy
 msgid ""
 "A thin jail shares the base system from a template, using either OpenZFS "
 "snapshots or NullFS mounts.  Only a minimal subset of the base system is "
@@ -338,7 +335,7 @@ msgid ""
 "jails less isolation and independence than thick jails, since changes in the "
 "shared components affect every jail using them simultaneously."
 msgstr ""
-"Тонкая клетка разделяет базовую систему с шаблона, используя либо снимки "
+"Тонкая клетка использует базовую систему из шаблона, используя либо снимки "
 "OpenZFS, либо монтирования NullFS. Для каждой тонкой клетки дублируется лишь "
 "минимальный поднабор базовой системы, что приводит к меньшему потреблению "
 "ресурсов по сравнению с толстой клеткой. Два механизма ведут себя по-разному "
@@ -749,7 +746,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:230
-#, fuzzy
 msgid ""
 "By default every jail with an entry in the configuration files is started at "
 "boot.  To start only selected jails, list their names in `jail_list`:"
@@ -766,7 +762,6 @@ msgstr "# sysrc jail_list=\"www db\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:239
-#, fuzzy
 msgid ""
 "The names in `jail_list` are separated by spaces and must match the jail "
 "names defined in [.filename]#/etc/jail.conf# or [.filename]#/etc/jail.conf.d/"
@@ -784,7 +779,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:241
-#, fuzzy
 msgid ""
 "To stop the jails in the reverse of their `jail_list` order at shutdown, set "
 "`jail_reverse_stop`:"
@@ -800,7 +794,6 @@ msgstr "# sysrc jail_reverse_stop=\"YES\"\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:253
-#, fuzzy
 msgid ""
 "With `jail_parallel_start` enabled, jails start in the background and the "
 "`jail_list` order is no longer guaranteed.  When one jail must be running "
@@ -812,13 +805,13 @@ msgid ""
 "Files]."
 msgstr ""
 "С включённым `jail_parallel_start` клетки запускаются в фоновом режиме, и "
-"порядок `jail_list` больше не гарантируется.  Когда одна клетка должна "
+"порядок `jail_list` больше не гарантируется. Когда одна клетка должна "
 "работать до запуска другой, выразите эту зависимость с помощью параметра "
 "`depend` в [.filename]#/etc/jail.conf# вместо того, чтобы полагаться на "
-"порядок списка.  Зависимости клетки создаются автоматически до её запуска и "
+"порядок списка. Зависимости клетки создаются автоматически до её запуска и "
 "останавливаются в обратном порядке, независимо от `jail_list`.  Параметр "
-"`depend` описан в crossref:jails[jail-configuration-files,Файлы конфигурации "
-"клеток]."
+"`depend` описан в разделе crossref:jails[jail-configuration-files,Файлы "
+"конфигурации клеток]."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:256
@@ -841,7 +834,6 @@ msgstr "Режим сетевого взаимодействия хоста (р�
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:264
-#, fuzzy
 msgid ""
 "In host networking mode a jail shares the host's network stack instead of "
 "receiving its own.  Sharing the stack does not mean sharing the address: the "
@@ -852,15 +844,15 @@ msgid ""
 "answers on the host's own address, gaining unrestricted access to every "
 "address the host holds."
 msgstr ""
-"В режиме сетевого доступа хоста клетка использует сетевой стек хоста, а не "
-"получает собственный. Совместное использование стека не означает совместное "
-"использование адреса: распространённая настройка предоставляет клетке "
-"собственный выделенный `ip4.addr` (и `ip6.addr`), который man:jail[8] "
-"добавляет как псевдоним на интерфейсе хоста, поэтому клетка и хост отвечают "
-"на разных адресах через один и тот же стек. Только клетка, настроенная с `"
-"ip4 = inherit`, полностью разделяет адреса хоста и отвечает на собственном "
-"адресе хоста, получая неограниченный доступ ко всем адресам, которыми "
-"владеет хост."
+"В режиме сетевого доступа хоста клетка использует сетевой стек хост-системы, "
+"а не получает собственный. Совместное использование стека не означает "
+"совместное использование адреса: распространённая настройка предоставляет "
+"клетке собственный выделенный `ip4.addr` (и `ip6.addr`), который man:jail[8] "
+"добавляет как псевдоним на интерфейсе хост-системы, поэтому клетка и хост-"
+"система отвечают на разных адресах через один и тот же стек. Только клетка, "
+"настроенная с `ip4 = inherit`, полностью видит и может пользоваться адресами "
+"хост-системы и отвечает на собственном адресе хост-системы, получая "
+"неограниченный доступ ко всем адресам, которыми владеет хост-система."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/jails/_index.adoc:265
@@ -907,13 +899,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/jails/_index.adoc:275
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Where a Jail's IP Address Comes From"
 msgstr "Откуда берется IP-адрес клетки"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:280
-#, fuzzy
 msgid ""
 "A shared-stack jail reaches the network through an address on a host "
 "interface.  The `interface` parameter names that interface, and for every "
@@ -923,22 +914,22 @@ msgid ""
 "after the jail is removed\".  Nothing on the host has to pre-configure the "
 "address."
 msgstr ""
-"Клетка с общей стекой достигает сети через адрес на интерфейсе хоста.  "
-"Параметр `interface` называет этот интерфейс, и для каждого адреса в `ip4."
-"addr` и `ip6.addr` man:jail[8] сам управляет псевдонимом: как выражается "
-"jail(8), «псевдоним для каждого адреса будет добавлен к интерфейсу до "
-"создания клетки и будет удалён из интерфейса после удаления клетки».  Ничто "
-"на хосте не должно предварительно настраивать адрес."
+"Клетка с общим стеком получает доступ к сети через адрес на интерфейсе "
+"хоста. В параметре `interface` указывается имя этого интерфейса, и для "
+"каждого адреса в `ip4.addr` и `ip6.addr` man:jail[8] сам управляет "
+"псевдонимом: как выражается jail(8), «псевдоним для каждого адреса будет "
+"добавлен к интерфейсу до создания клетки и будет удалён из интерфейса после "
+"удаления клетки». Ничто на хост-системе не обязано предварительно "
+"настраивать адрес."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:282
-#, fuzzy
 msgid ""
 "The interface can also be given per address, so a single line ties an "
 "address to the interface that should carry it:"
 msgstr ""
 "Интерфейс также может быть указан для каждого адреса, так что одна строка "
-"связывает адрес с интерфейсом, который должен его переносить:"
+"связывает адрес с интерфейсом, который должен этот адрес использовать:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:286
@@ -948,7 +939,6 @@ msgstr "ip4.addr = \"em0|192.168.1.151/24\";\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:289
-#, fuzzy
 msgid ""
 "When an address must persist independently of the jail — because another "
 "service on the host relies on it, or because the `interface` parameter is "
@@ -956,9 +946,9 @@ msgid ""
 "jail(8)'s management:"
 msgstr ""
 "Когда адрес должен сохраняться независимо от клетки — потому что другая "
-"служба на хосте полагается на него, или потому что параметр `interface` не "
-"используется — назначьте его на хосте как псевдоним rc.conf и исключите его "
-"из управления jail(8):"
+"служба на хост-системе полагается на него, или потому что параметр "
+"`interface` не используется — назначьте его на хост-системе как псевдоним "
+"rc.conf и исключите его из управления jail(8):"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:293
@@ -968,7 +958,6 @@ msgstr "# sysrc ifconfig_em0_aliases=\"inet 192.168.1.151/32\"\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:296
-#, fuzzy
 msgid ""
 "The older, numbered form `ifconfig_em0_alias0=\"inet 192.168.1.151/32\"` "
 "still works, but the `_aliases` form is preferred for new configurations "
@@ -983,13 +972,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/jails/_index.adoc:298
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Loopback Addresses in Shared-IP Jails"
 msgstr "Адреса loopback в клетках с общей IP-адресацией"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:303
-#, fuzzy
 msgid ""
 "A shared-stack jail has no loopback interface of its own.  The FreeBSD "
 "kernel compensates for this: in a non-VNET jail, whenever `127.0.0.1` or "
@@ -998,16 +986,15 @@ msgid ""
 "first `ip4.addr` or `ip6.addr`.  This behavior is not documented in man:"
 "jail[8], but it matters, because it carries a security consequence."
 msgstr ""
-"Клетка с общей стековой реализацией не имеет собственного интерфейса "
-"loopback. Ядро FreeBSD компенсирует это: в клетке без VNET, когда `127.0.0.1`"
-" или `::1` сами по себе не являются адресами клетки, ядро молча переписывает "
-"как `bind()`, так и `connect()` на адрес loopback на первый `ip4.addr` или "
-"`ip6.addr` клетки. Это поведение не документировано в man:jail[8], но оно "
-"важно, поскольку несет последствия для безопасности."
+"Клетка с общим стеком не имеет собственного интерфейса loopback. Ядро "
+"FreeBSD компенсирует это: в клетке без VNET, когда `127.0.0.1` или `::1` "
+"сами по себе не являются адресами клетки, ядро молча переписывает как "
+"`bind()`, так и `connect()` на адрес loopback на первый `ip4.addr` или `ip6."
+"addr` клетки. Это поведение не документировано в man:jail[8], но оно важно, "
+"поскольку несет последствия для безопасности."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:308
-#, fuzzy
 msgid ""
 "Do not assume that binding a service to `localhost` confines it to the "
 "jail.  In a shared-IP jail a daemon told to listen on `127.0.0.1` actually "
@@ -1021,7 +1008,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:312
-#, fuzzy
 msgid ""
 "The standard mitigation is to give the jail a private loopback address and "
 "list it first.  Clone a dedicated loopback interface on the host and assign "
@@ -1044,7 +1030,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:320
-#, fuzzy
 msgid ""
 "Then list that address first in the jail's `ip4.addr`, ahead of any routable "
 "address, so the loopback remap lands on the private address instead of a LAN-"
@@ -1056,13 +1041,12 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/jails/_index.adoc:322
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Preparing Host Services"
 msgstr "Подготовка сервисов хост-системы"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:327
-#, fuzzy
 msgid ""
 "Each jail alias address shares the host's ports.  A host daemon bound to the "
 "wildcard address — shown as `*:port` in listener listings — is therefore "
@@ -1070,12 +1054,12 @@ msgid ""
 "own service can claim it.  Before starting any jails, audit what the host "
 "already listens on:"
 msgstr ""
-"Каждый псевдоним адреса клетки разделяет порты хоста.  Демон хоста, "
-"привязанный к адресу с подстановочным знаком — показанному как `*:port` в "
-"списках прослушивателей — поэтому также прослушивает каждый псевдоним "
-"клетки, и он занимает этот порт прежде, чем собственная служба клетки сможет "
-"его заявить.  Перед запуском любых клеток проверьте, что уже прослушивает "
-"хост:"
+"Каждый псевдоним адреса клетки разделяет порты хост-системы.  Демон хост-"
+"системы, привязанный к адресу с подстановочным знаком — показанному как "
+"`*:port` в списках прослушивателей — поэтому также прослушивает каждый "
+"псевдоним клетки, и он занимает этот порт прежде, чем собственная служба "
+"клетки сможет его заявить.  Перед запуском любых клеток проверьте, что хост-"
+"система уже прослушивает:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:331
@@ -1085,18 +1069,16 @@ msgstr "# sockstat -4 -6 -l\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:334
-#, fuzzy
 msgid ""
 "Restrict each daemon that binds a wildcard address so it uses only the "
 "host's own address and leaves the jail addresses free:"
 msgstr ""
 "Ограничьте каждый демон, который привязывается к адресу-шаблону, чтобы он "
-"использовал только собственный адрес хоста и оставлял адреса клеток "
+"использовал только собственный адрес хост-системы и оставлял адреса клеток "
 "свободными:"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:337
-#, fuzzy
 msgid ""
 "man:syslogd[8]: set `syslogd_flags=\"-ss\"` in [.filename]#/etc/rc.conf#.  A "
 "single `-s` already runs syslogd in secure mode so it does not listen for "
@@ -1105,35 +1087,32 @@ msgid ""
 "sending to remote hosts."
 msgstr ""
 "man:syslogd[8]: задайте `syslogd_flags=\"-ss\"` в [.filename]#/etc/rc.conf#. "
-"Одинокий `-s` уже запускает syslogd в безопасном режиме, чтобы он не "
-"прослушивал удаленные сообщения журнала; согласно syslogd(8), если `-s` "
-"\"указан дважды, сетевой сокет вообще не будет открыт\", что также "
-"предотвращает отправку syslogd на удаленные хосты."
+"Одинарный `-s` уже запускает syslogd в безопасном режиме, чтобы он не "
+"прослушивал соединения с удаленных хостов для отправки сообщений журнала; "
+"согласно syslogd(8), если `-s` \"указан дважды, сетевой сокет вообще не "
+"будет открыт\", что также предотвращает отправку syslogd на удаленные хосты."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:338
-#, fuzzy
 msgid ""
 "man:sshd[8]: pin `ListenAddress` to the host's address in [.filename]#/etc/"
 "ssh/sshd_config# instead of leaving it on the default wildcard."
 msgstr ""
-"man:sshd[8]: закрепите `ListenAddress` на адресе хоста в файле [.filename]#/"
-"etc/ssh/sshd_config# вместо того, чтобы оставлять его по умолчанию на "
-"wildcard."
+"man:sshd[8]: закрепите `ListenAddress` на адресе хост-системы в файле [."
+"filename]#/etc/ssh/sshd_config# вместо того, чтобы оставлять его с "
+"подстановочным знаком(wildcard) по умолчанию."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:339
-#, fuzzy
 msgid ""
 "man:ntpd[8] and man:sendmail[8]: bind them to the host address as well "
 "through their own configuration."
 msgstr ""
-"man:ntpd[8] и man:sendmail[8]: привяжите их к адресу хоста также через их "
-"собственную конфигурацию."
+"man:ntpd[8] и man:sendmail[8]: привяжите их к адресу хост-системы также "
+"через их собственную конфигурацию."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:341
-#, fuzzy
 msgid ""
 "For firewall-level control over which addresses a jail may use, see crossref:"
 "firewalls[firewalls,Firewalls]."
@@ -1226,7 +1205,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:373
-#, fuzzy
 msgid ""
 "Creating a separate child dataset per jail is what later enables per-jail "
 "snapshots, clones, quotas, and dataset delegation.  Because each jail "
@@ -1425,7 +1403,6 @@ msgstr "`exec.clean` — выполнение команд в чистом ок�
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:439
-#, fuzzy
 msgid ""
 "`mount.devfs` - Mount a man:devfs[5] filesystem on the chrooted [.filename]#/"
 "dev# directory to restrict the devices visible inside the jail.  It applies "
@@ -1460,7 +1437,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:447
-#, fuzzy
 msgid ""
 "`ip4.addr` - One IPv4 address, or a comma-separated list of addresses, "
 "assigned to the jail.  Setting `ip4.addr` implies `ip4 = new`; `ip4` itself "
@@ -1476,19 +1452,19 @@ msgid ""
 msgstr ""
 "`ip4.addr` - Один IPv4-адрес или разделённый запятыми список адресов, "
 "назначенных клетке. Установка `ip4.addr` подразумевает `ip4 = new`; сам "
-"параметр `ip4` не остаётся в отдельном значении по умолчанию. Параметр `ip4` "
-"принимает три значения: `new` ограничивает клетку адресами, перечисленными в "
-"`ip4.addr`, `inherit` предоставляет клетке неограниченный доступ ко всем "
-"IPv4-адресам хоста, а `disable` полностью отключает IPv4 в клетке. Клетка, в "
-"которой не заданы ни `ip4`, ни `ip4.addr`, ведёт себя как при `inherit`, и "
-"параметры `interface` и `ip4.addr` не действуют при `inherit`. В клетке с "
-"несколькими адресами `ip4.saddrsel` позволяет ядру выбирать исходный адрес "
-"для исходящих соединений на несвязанных сокетах, тогда как `ip4.nosaddrsel` "
-"принудительно использует первый адрес из списка."
+"параметр `ip4` не имеет значения по умолчанию (если он не указан, то его "
+"значение зависит от значений других параметров). Параметр `ip4` принимает "
+"три значения: `new` ограничивает клетку адресами, перечисленными в `ip4.addr`"
+", `inherit` предоставляет клетке неограниченный доступ ко всем IPv4-адресам "
+"хоста, а `disable` полностью отключает IPv4 в клетке. Клетка, в которой не "
+"заданы ни `ip4`, ни `ip4.addr`, ведёт себя как при `inherit`, и параметры "
+"`interface` и `ip4.addr` не действуют при `inherit`. В клетке с несколькими "
+"адресами `ip4.saddrsel` позволяет ядру выбирать исходный адрес для исходящих "
+"соединений на несвязанных сокетах, тогда как `ip4.nosaddrsel` принудительно "
+"использует первый адрес из списка."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:450
-#, fuzzy
 msgid ""
 "`ip6.addr` - One IPv6 address, or a comma-separated list of addresses, "
 "assigned to the jail.  The `ip6` parameter takes the same `new`, `inherit`, "
@@ -1513,7 +1489,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:459
-#, fuzzy
 msgid ""
 "A jail has no virtual console: man:init[8] and man:getty[8] do not run "
 "inside it, so there is nothing to attach to interactively.  The `exec."
@@ -1526,29 +1501,24 @@ msgid ""
 msgstr ""
 "Клетка не имеет виртуальной консоли: man:init[8] и man:getty[8] не "
 "запускаются внутри неё, поэтому не к чему подключиться в интерактивном "
-"режиме.  Файл `exec.consolelog` захватывает только стандартный вывод и "
+"режиме. Файл `exec.consolelog` захватывает только стандартный вывод и "
 "стандартный поток ошибок команд `exec.*`, то есть вывод сценариев [."
 "filename]#/etc/rc# запуска и [.filename]#/etc/rc.shutdown# завершения "
-"работы.  Это не интерактивная консоль; для этого используйте man:jexec[8] ("
+"работы. Это не интерактивная консоль; для этого используйте man:jexec[8] ("
 "см. crossref:jails[access-jail, Доступ к клетке]) или запустите man:sshd[8] "
-"внутри клетки.  Собственные демоны клетки отправляют свой последующий вывод "
-"в syslog клетки."
+"внутри клетки. Собственные демоны клетки отправляют свой последующий вывод в "
+"syslog клетки."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:465
-#, fuzzy
 msgid ""
 "The `exec.consolelog` files grow without bound.  Rotate them with man:"
 "newsyslog[8] by adding a single glob entry, for example in [.filename]#/etc/"
 "newsyslog.conf.d/jail#:"
 msgstr ""
-"The `exec.consolelog` files grow without bound.  Rotate them with "
-"man:newsyslog[8] by adding a single glob entry, for example in [.filename]#/"
-"etc/newsyslog.conf.d/jail#:\n"
-"\n"
 "Файлы `exec.consolelog` растут без ограничений.  Выполняйте их ротацию с "
-"помощью man:newsyslog[8], добавив одну запись с подстановочным знаком, "
-"например, в [.filename]#/etc/newsyslog.conf.d/jail#:"
+"помощью man:newsyslog[8], добавив одну запись с подстановочным знаком (glob)"
+", например, в [.filename]#/etc/newsyslog.conf.d/jail#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:469
@@ -1558,13 +1528,12 @@ msgstr "/var/log/jail_console_*.log            640  7     100  *     J\n"
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/jails/_index.adoc:473
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Global Settings, Wildcards and Variables"
 msgstr "Глобальные параметры, подстановочные знаки и переменные"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:477
-#, fuzzy
 msgid ""
 "Parameters set outside any jail block are wildcard defaults: man:jail."
 "conf[5] applies them to every jail, exactly as if they were written in a `*` "
@@ -1578,7 +1547,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:480
-#, fuzzy
 msgid ""
 "A name preceded by a dollar sign, and optionally enclosed in braces, is "
 "replaced with the value of that parameter or variable.  The built-in `${name}"
@@ -1593,7 +1561,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:482
-#, fuzzy
 msgid ""
 "The following [.filename]#/etc/jail.conf# defines a common header once and "
 "overrides only what differs per jail:"
@@ -1653,7 +1620,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:506
-#, fuzzy
 msgid ""
 "Here `www` inherits everything from the header and sets only its address, "
 "while `db` also overrides `host.hostname`."
@@ -1663,21 +1629,20 @@ msgstr ""
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/jails/_index.adoc:508
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Command Hooks"
 msgstr "Командные хуки"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:512
-#, fuzzy
 msgid ""
 "man:jail[8] runs a jail through a sequence of lifecycle hooks, and it "
 "matters whether each one runs in the host environment or inside the jail.  "
 "In creation order:"
 msgstr ""
 "man:jail[8] запускает клетку через последовательность перехватчиков "
-"жизненного цикла, и важно, выполняется ли каждый из них в среде хоста или "
-"внутри клетки. В порядке создания:"
+"жизненного цикла (хуков), и важно, выполняется ли каждый из хуков в среде "
+"хост-системы или внутри клетки. В порядке создания:"
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/jails/_index.adoc:513
@@ -1687,9 +1652,8 @@ msgstr "`exec.prestart`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:514
-#, fuzzy
 msgid "Runs in the host environment before the jail is created."
-msgstr "Выполняется в среде хоста до создания клетки."
+msgstr "Выполняется в среде хост-системы до создания клетки."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/jails/_index.adoc:514
@@ -1699,12 +1663,11 @@ msgstr "`exec.created`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:515
-#, fuzzy
 msgid ""
 "Runs in the host environment after the jail exists but before any process "
 "starts inside it."
 msgstr ""
-"Выполняется в среде хоста после создания клетки, но до запуска любого "
+"Выполняется в среде хост-системы после создания клетки, но до запуска любого "
 "процесса внутри неё."
 
 #. type: Labeled list
@@ -1715,7 +1678,6 @@ msgstr "`exec.start`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:516
-#, fuzzy
 msgid ""
 "Runs inside the jail, typically `/bin/sh /etc/rc` to bring up its services."
 msgstr ""
@@ -1729,15 +1691,13 @@ msgstr "`exec.poststart`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:517
-#, fuzzy
 msgid "Runs in the host environment after the jail has started."
-msgstr "Выполняется в среде хоста после запуска клетки."
+msgstr "Выполняется в среде хост-системы после запуска клетки."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:519
-#, fuzzy
 msgid "Shutdown runs the mirror image:"
-msgstr "Завершение работы выполняется зеркально:"
+msgstr "При завершении работы хуки выполняется зеркально в обратном порядке:"
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/jails/_index.adoc:520
@@ -1747,9 +1707,8 @@ msgstr "`exec.prestop`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:521
-#, fuzzy
 msgid "Runs in the host environment before the jail is stopped."
-msgstr "Выполняется в среде хоста до остановки клетки."
+msgstr "Выполняется в среде хост-системы до остановки клетки."
 
 #. type: Labeled list
 #: documentation/content/en/books/handbook/jails/_index.adoc:521
@@ -1759,7 +1718,6 @@ msgstr "`exec.stop`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:522
-#, fuzzy
 msgid "Runs inside the jail, typically `/bin/sh /etc/rc.shutdown`."
 msgstr "Выполняется внутри клетки, обычно `/bin/sh /etc/rc.shutdown`."
 
@@ -1771,20 +1729,18 @@ msgstr "`exec.poststop`"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:523
-#, fuzzy
 msgid ""
 "Runs in the host environment after the jail has stopped, to tear down "
 "whatever `exec.prestart` set up."
 msgstr ""
-"Выполняется в среде хоста после остановки клетки, чтобы разобрать всё, что "
-"было настроено с помощью `exec.prestart`."
+"Выполняется в среде хост-системы после остановки клетки, чтобы разобрать "
+"всё, что было настроено с помощью `exec.prestart`."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:525
-#, fuzzy
 msgid "A hook may be assigned more than one command by appending with `+=`:"
 msgstr ""
-"Крючку может быть назначено более одной команды путём добавления с помощью "
+"Хуку может быть назначено более одной команды путём добавления с помощью "
 "`+=`:"
 
 #. type: delimited block . 4
@@ -1795,7 +1751,6 @@ msgstr "exec.poststart += \"logger jail ${name} started\";\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:533
-#, fuzzy
 msgid ""
 "`exec.timeout` caps how long man:jail[8] waits for a command to finish, and "
 "`exec.consolelog` captures the output of these commands.  The VNET section "
@@ -1811,7 +1766,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:536
-#, fuzzy
 msgid ""
 "Where hooks order commands within a single jail, the `depend` parameter "
 "orders whole jails.  Writing `depend = otherjail;` tells man:jail[8] that "
@@ -1819,21 +1773,20 @@ msgid ""
 "completion of its last `exec.poststart` command, before this jail is "
 "created, and the jails are torn down in the reverse order."
 msgstr ""
-"Там, где hooks упорядочивают команды внутри одной клетки, параметр `depend` "
-"упорядочивает целые клетки. Запись `depend = otherjail;` сообщает man:jail[8]"
-", что эта клетка требует `otherjail`: зависимость создаётся первой, до "
-"завершения её последней команды `exec.poststart`, прежде чем будет создана "
-"эта клетка, и клетки уничтожаются в обратном порядке."
+"Тогда как хуки упорядочивают команды внутри одной клетки, параметр `depend` "
+"упорядочивает запуск целых клеток. Запись `depend = otherjail;` сообщает "
+"man:jail[8], что эта клетка требует `otherjail`: зависимость создаётся "
+"первой, до завершения её последней команды `exec.poststart`, прежде чем "
+"будет создана эта клетка, и клетки уничтожаются в обратном порядке."
 
 #. type: Title ====
 #: documentation/content/en/books/handbook/jails/_index.adoc:538
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Devfs Rulesets"
 msgstr "Наборы правил Devfs"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:544
-#, fuzzy
 msgid ""
 "Every jail that sets `mount.devfs` gets a devfs ruleset that decides which "
 "device nodes appear under its [.filename]#/dev#, either the one named by the "
@@ -1850,19 +1803,18 @@ msgstr ""
 "devfs, определяющий, какие узлы устройств появляются в её [.filename]#/dev#: "
 "либо тот, который задан параметром `devfs_ruleset`, либо, когда этот "
 "параметр не установлен, значение по умолчанию для `mount.devfs` — набор "
-"правил 4.  man:devfs.rules[5] определяет именованные наборы правил в [."
-"filename]#/etc/defaults/devfs.rules#.  Два из них предназначены для клеток: "
+"правил 4. man:devfs.rules[5] определяет именованные наборы правил в [."
+"filename]#/etc/defaults/devfs.rules#. Два из них предназначены для клеток: "
 "`devfsrules_jail`, набор правил 4, является стандартным минимальным набором "
 "устройств для клетки, а `devfsrules_jail_vnet`, набор правил 5, добавляет [."
 "filename]#/dev/pf#, чтобы клетка VNET могла запускать собственный межсетевой "
-"экран.  Примеры клеток VNET устанавливают `devfs_ruleset = 5`, а пример "
+"экран. Примеры клеток VNET устанавливают `devfs_ruleset = 5`, а пример "
 "клетки Linux устанавливает `devfs_ruleset = 4`; примеры классической и "
 "тонкой клеток устанавливают только `mount.devfs` и поэтому используют его "
 "значение по умолчанию — набор правил 4."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:547
-#, fuzzy
 msgid ""
 "To expose an extra device, write a custom ruleset in [.filename]#/etc/devfs."
 "rules# that includes one of the stock rulesets and unhides what it needs.  "
@@ -1889,7 +1841,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:556
-#, fuzzy
 msgid ""
 "Reload the rules, then reference the new ruleset by its number in the jail's "
 "configuration:"
@@ -1911,15 +1862,14 @@ msgstr "devfs_ruleset = 100;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:568
-#, fuzzy
 msgid ""
 "Rulesets in [.filename]#/etc/devfs.rules# override same-numbered rulesets in "
 "[.filename]#/etc/defaults/devfs.rules#; otherwise the two files are "
 "effectively merged."
 msgstr ""
 "Правила в [.filename]#/etc/devfs.rules# переопределяют правила с теми же "
-"номерами в [.filename]#/etc/defaults/devfs.rules#; в остальных случаях два "
-"файла фактически объединяются."
+"номерами в [.filename]#/etc/defaults/devfs.rules#; в остальных случаях "
+"эффект двух файлов фактически объединяется."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:570
@@ -2151,13 +2101,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:654
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Obtaining the Jail Userland"
 msgstr "Получение пользовательского окружения клетки"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:658
-#, fuzzy
 msgid ""
 "The fetch-and-extract procedure shown above is the traditional way to "
 "populate a jail's root directory, but it is not the only one.  The same "
@@ -2172,7 +2121,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:661
-#, fuzzy
 msgid ""
 "man:bsdinstall[8] provides a dedicated `jail` target that sets up a new "
 "userland at the given directory for use with man:jail[8].  It fetches and "
@@ -2181,13 +2129,12 @@ msgid ""
 "a one-command, scriptable alternative to the manual fetch and man:tar[1] "
 "sequence:"
 msgstr ""
-"man:bsdinstall[8] предоставляет выделенную цель `клетка`, которая "
-"настраивает новое пользовательское окружение в заданном каталоге для "
-"использования с man:jail[8]. Она загружает и распаковывает наборы "
-"дистрибутивов без установки ядра, пропуская шаги разбиения диска и настройки "
-"сети обычной установки, что делает её однокомандной, скриптуемой "
-"альтернативой ручной последовательности загрузки и man:tar[1] следующим "
-"образом:"
+"man:bsdinstall[8] предоставляет выделенную цель `jail`, которая настраивает "
+"новое пользовательское окружение в заданном каталоге для использования с "
+"man:jail[8]. Она загружает и распаковывает наборы дистрибутивов без "
+"установки ядра, пропуская шаги разбиения диска и настройки сети обычной "
+"установки, что делает её однокомандным скриптом — альтернативой ручной "
+"последовательности загрузки и man:tar[1] следующим образом:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:665
@@ -2197,21 +2144,19 @@ msgstr "# bsdinstall jail /usr/local/jails/containers/classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:669
-#, fuzzy
 msgid ""
 "The `jail` target installs the base distribution ([.filename]#base.txz#) by "
 "default.  On FreeBSD 15.0 and later man:bsdinstall[8] can also populate the "
 "root from base-system packages with its `pkgbase` target; the pkg-based "
 "method is described next."
 msgstr ""
-"Цель `jail` по умолчанию устанавливает базовое распространение ([."
-"filename]#base.txz#). Начиная с FreeBSD 15.0 и более поздних версий, "
-"man:bsdinstall[8] также может заполнять корневой каталог пакетами базовой "
-"системы с помощью своей цели `pkgbase`; метод на основе пакетов описан далее."
+"Цель `jail` по умолчанию устанавливает базовый дистрибутив ([.filename]#base."
+"txz#). Начиная с FreeBSD 15.0 и более поздних версий, man:bsdinstall[8] "
+"также может заполнять корневой каталог пакетами базовой системы с помощью "
+"своей цели `pkgbase`; метод на основе пакетов описан далее."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:672
-#, fuzzy
 msgid ""
 "Starting with FreeBSD 15.0 the base system is also published as packages, so "
 "a jail userland can be installed entirely with man:pkg[8] from the `FreeBSD-"
@@ -2234,18 +2179,12 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:680
-#, fuzzy
 msgid ""
 "Use `FreeBSD-set-minimal-jail` instead of `FreeBSD-set-base-jail` for a "
 "minimal userland.  A jail installed this way is afterwards patched and "
 "upgraded with man:pkg[8] rather than man:freebsd-update[8]; see crossref:"
 "jails[jail-upgrade-pkgbase, Upgrading pkgbase Jails]."
 msgstr ""
-"Use `FreeBSD-set-minimal-jail` instead of `FreeBSD-set-base-jail` for a "
-"minimal userland.  A jail installed this way is afterwards patched and "
-"upgraded with man:pkg[8] rather than man:freebsd-update[8]; see "
-"crossref:jails[jail-upgrade-pkgbase, Upgrading pkgbase Jails].\n"
-"\n"
 "Используйте `FreeBSD-set-minimal-jail` вместо `FreeBSD-set-base-jail` для "
 "минимального пользовательского окружения. Клетка, установленная таким "
 "образом, впоследствии обновляется и получает исправления с помощью man:pkg[8]"
@@ -2254,7 +2193,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:687
-#, fuzzy
 msgid ""
 "Base-system packages are a technology preview in FreeBSD 15.0.  The `FreeBSD-"
 "base` repository is defined in [.filename]#/etc/pkg/FreeBSD.conf# but "
@@ -2266,24 +2204,23 @@ msgid ""
 "well."
 msgstr ""
 "Пакеты базовой системы — это технологическая предварительная версия в "
-"FreeBSD 15.0.  Репозиторий `FreeBSD-base` определён в [.filename]#/etc/pkg/"
+"FreeBSD 15.0. Репозиторий `FreeBSD-base` определён в [.filename]#/etc/pkg/"
 "FreeBSD.conf#, но по умолчанию отключён, поэтому выбирайте его явно с "
-"помощью `install -r FreeBSD-base`.  Целевой корневой каталог и его "
+"помощью `install -r FreeBSD-base`. Целевой корневой каталог и его "
 "подкаталоги [.filename]#var/cache/pkg# и [.filename]#var/db/pkg# возможно, "
-"потребуется создать заранее.  Традиционное распространение [.filename]#base."
+"потребуется создать заранее. Традиционное распространение [.filename]#base."
 "txz# по-прежнему публикуется для FreeBSD 15.0, поэтому метод fetch-and-"
 "extract продолжает работать и там."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:691
-#, fuzzy
 msgid ""
 "A userland built from a source tree can be installed into a jail's root "
 "directory with the `DESTDIR` variable, which is the way to run a `-STABLE` "
 "or custom-built userland in a jail.  After building the world, install it "
 "and the remaining distribution files into the jail directory:"
 msgstr ""
-"Пользовательское окружение, собранное из дерева исходных текстов, может быть "
+"Пользовательское окружение, собранное из дерева исходных кодов, может быть "
 "установлено в корневой каталог клетки с помощью переменной `DESTDIR`, что "
 "является способом запуска пользовательского окружения `-STABLE` или "
 "собранного вручную в клетке. После сборки мира установите его и остальные "
@@ -2305,7 +2242,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:703
-#, fuzzy
 msgid ""
 "`make distribution` installs the default configuration files under the "
 "jail's [.filename]#/etc# and is run only once, when populating the jail; "
@@ -2327,18 +2263,17 @@ msgstr ""
 "корневой каталог клетки, и удалите устаревшие файлы и библиотеки с помощью `"
 "make delete-old delete-old-libs`, снова с тем же `DESTDIR`, вместо "
 "использования man:freebsd-update[8]. Полную процедуру обновления из "
-"исходников см. в crossref:cutting-edge[makeworld, Updating FreeBSD from "
-"Source]."
+"исходного кода см. в crossref:cutting-edge[makeworld, Обновление FreeBSD из "
+"исходного кода]."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:705
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Cloning a Jail as a Template"
 msgstr "Клонирование клетки как шаблона"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:708
-#, fuzzy
 msgid ""
 "Once a thick jail is fully configured, with packages installed, services "
 "enabled, and local configuration in place, it can serve as a template image: "
@@ -2351,7 +2286,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:711
-#, fuzzy
 msgid ""
 "On OpenZFS this is done by snapshotting the configured jail's dataset and "
 "cloning it.  This requires the source jail to live on its own dataset, so "
@@ -2371,7 +2305,6 @@ msgstr "# zfs create -p zroot/jails/containers/classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:718
-#, fuzzy
 msgid ""
 "Stop the jail before snapshotting so the image is consistent, then snapshot "
 "and clone the dataset once for each new jail:"
@@ -2395,7 +2328,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:727
-#, fuzzy
 msgid "On a UFS host, copy the configured jail's directory tree instead:"
 msgstr ""
 "На хосте UFS скопируйте дерево каталогов настроенной клетки вместо этого:"
@@ -2410,7 +2342,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:735
-#, fuzzy
 msgid ""
 "Each clone needs its own entry in [.filename]#/etc/jail.conf#, or in [."
 "filename]#jail.conf.d#, with a unique name, path, and IP address.  Because "
@@ -2456,7 +2387,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:763
-#, fuzzy
 msgid ""
 "A template-image clone differs from a thin jail (crossref:jails[thin-jail, "
 "Thin Jails]).  A thin jail keeps sharing a read-only base and is maintained "
@@ -2993,7 +2923,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1034
-#, fuzzy
 msgid ""
 "The [.filename]#fstab# file controls how man:mount_nullfs[8] presents the "
 "base template and the skeleton inside the jail.  The base template is "
@@ -3056,7 +2985,6 @@ msgstr "bridge0\n"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1067
-#, fuzzy
 msgid ""
 "Assigning an IP address to an interface that is a member of a bridge is "
 "deprecated.  Assign the host's address to `bridge0` itself rather than to "
@@ -3260,7 +3188,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1140
-#, fuzzy
 msgid ""
 "A per-jail *unique* number used to derive both the epair device name (`epair"
 "${id}`) and the last octet of the jail's address (`192.168.1.${id}`); give "
@@ -3277,7 +3204,6 @@ msgstr "Относится к ранее созданному мосту."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1145
-#, fuzzy
 msgid ""
 "The `vnet.interface` parameter names the interface that man:jail[8] moves "
 "into the jail's network stack once the jail is created, here the jail side "
@@ -3296,7 +3222,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1149
-#, fuzzy
 msgid ""
 "The `devfs_ruleset = 5` line applies the `devfsrules_jail_vnet` ruleset from "
 "[.filename]#/etc/defaults/devfs.rules#, which extends the default jail "
@@ -3317,13 +3242,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:1151
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Automating VNET Networking with jib"
 msgstr "Автоматизация сети VNET с помощью jib"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1155
-#, fuzzy
 msgid ""
 "Wiring up an epair and attaching it to the bridge by hand in `exec.prestart` "
 "and `exec.poststop`, as shown above, becomes tedious across many jails.  The "
@@ -3338,7 +3262,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1157
-#, fuzzy
 msgid ""
 "Reference it from the jail's hooks instead of the five hand-rolled man:"
 "ifconfig[8] lines:"
@@ -3364,7 +3287,6 @@ msgstr "  vnet.interface = \"e0b_${name}\";\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1170
-#, fuzzy
 msgid ""
 "`jib addm` creates an epair whose host side is named `e0a_<name>` and whose "
 "jail side is `e0b_<name>`, then attaches the host side to a bridge that it "
@@ -3383,13 +3305,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:1172
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Netgraph VNET Networking with jng"
 msgstr "Сетевые взаимодействия Netgraph VNET с помощью jng"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1176
-#, fuzzy
 msgid ""
 "The third networking mode mentioned in the crossref:jails[jails-networking, "
 "Networking] overview uses man:netgraph[4] instead of man:bridge[4] and "
@@ -3398,10 +3319,10 @@ msgid ""
 "for each jail:"
 msgstr ""
 "Третий режим работы сети, упомянутый в обзоре crossref:jails[jails-"
-"networking, Networking], использует man:netgraph[4] вместо man:bridge[4] и "
-"epair. В базовой системе поставляется второй вспомогательный скрипт, [."
-"filename]#/usr/share/examples/jails/jng#, который создает `ng_bridge`, "
-"подключенный к `ng_eiface` для каждой клетки:"
+"networking, Сеть], использует man:netgraph[4] вместо man:bridge[4] и epair. "
+"В базовой системе поставляется второй вспомогательный скрипт, [.filename]#/"
+"usr/share/examples/jails/jng#, который создает `ng_bridge`, подключенный к "
+"`ng_eiface` для каждой клетки:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1181
@@ -3421,7 +3342,6 @@ msgstr "  vnet.interface = \"ng0_${name}\";\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1187
-#, fuzzy
 msgid ""
 "`jng bridge` creates the netgraph nodes and a jail-side interface named "
 "`ng0_<name>`, which is named in `vnet.interface`; `jng shutdown` tears the "
@@ -3437,13 +3357,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:1189
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Running a Firewall and DHCP inside a VNET Jail"
 msgstr "Запуск межсетевого экрана и DHCP внутри клетки VNET"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1193
-#, fuzzy
 msgid ""
 "Because `devfs_ruleset = 5` exposes [.filename]#/dev/pf#, a VNET jail can "
 "run its own firewall.  Enable it inside the jail exactly as on any host, "
@@ -3458,7 +3377,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1197
-#, fuzzy
 msgid ""
 "Ruleset 5 does not expose [.filename]#/dev/bpf#, however.  A VNET jail that "
 "obtains its address over DHCP, for example with `ifconfig_e0b_myjail="
@@ -3491,7 +3409,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1206
-#, fuzzy
 msgid ""
 "After running `service devfs restart` on the host, point the jail at the new "
 "ruleset with `devfs_ruleset = 101;`."
@@ -3556,7 +3473,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1233
-#, fuzzy
 msgid ""
 "If the host does not already have an [.filename]#/etc/jail.conf# — for "
 "example on a system whose jails so far have been created only from the "
@@ -3575,7 +3491,6 @@ msgstr "# touch /etc/jail.conf\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1241
-#, fuzzy
 msgid ""
 "The man:service[8] jail script reads [.filename]#/etc/jail.conf# when "
 "stopping a jail, so the stop command fails if the file does not exist.  If "
@@ -3589,7 +3504,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1244
-#, fuzzy
 msgid ""
 "The following man:jail[8] command performs the required configuration for "
 "the jail and starts it directly, without a [.filename]#/etc/jail.conf# "
@@ -3647,7 +3561,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1268
-#, fuzzy
 msgid "Access the newly created jail as `root` with man:jexec[8]:"
 msgstr ""
 "Получите доступ к вновь созданной клетке как `root` с помощью man:jexec[8]:"
@@ -3660,7 +3573,6 @@ msgstr "# jexec -u root ubuntu sh\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1277
-#, fuzzy
 msgid ""
 "Inside the jail, install package:sysutils/debootstrap[] and use it to build "
 "the Ubuntu userland under [.filename]#/compat/ubuntu#.  package:sysutils/"
@@ -3687,7 +3599,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1286
-#, fuzzy
 msgid ""
 "`jammy` selects Ubuntu 22.04 LTS.  A newer LTS such as `noble` (Ubuntu "
 "24.04) can be selected instead, provided it runs under the linuxulator."
@@ -3718,7 +3629,6 @@ msgstr "# service jail onestop ubuntu\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1296
-#, fuzzy
 msgid ""
 "The `onestart` and `onestop` actions are the counterparts of `start` and "
 "`stop` for jails that are not enabled through `jail_enable` or listed in "
@@ -3804,7 +3714,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1337
-#, fuzzy
 msgid ""
 "The jail can also present a specific Linux kernel identity to the programs "
 "running inside it.  The `linux` parameter selects whether the jail inherits "
@@ -3817,12 +3726,12 @@ msgid ""
 msgstr ""
 "Клетка также может представлять конкретную идентичность ядра Linux "
 "программам, работающим внутри неё. Параметр `linux` выбирает, наследует ли "
-"клетка среду эмуляции Linux хоста (`inherit`) или получает собственную "
-"(`new`), а `linux.osname`, `linux.osrelease` и `linux.oss_version` задают "
-"имя ОС, релиз и версию OSS, которые видят бинарные файлы Linux. Например, "
-"`linux.osrelease=6.1.0` заставляет man:uname[1] и проверяющие версию "
-"программы Linux внутри клетки сообщать указанный релиз ядра вместо значения "
-"`compat.linux.osrelease` для всего хоста."
+"клетка среду эмуляции Linux хост-системы (`inherit`) или получает "
+"собственную (`new`), а `linux.osname`, `linux.osrelease` и `linux."
+"oss_version` задают имя ОС, релиз и версию OSS, которые видят бинарные файлы "
+"Linux. Например, `linux.osrelease=6.1.0` заставляет man:uname[1] и "
+"проверяющие версию программы Linux внутри клетки сообщать указанный релиз "
+"ядра вместо значения `compat.linux.osrelease` для всей хоста-системы."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1340
@@ -3857,13 +3766,12 @@ msgstr ""
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/jails/_index.adoc:1356
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "NAT and Port Forwarding for Jails"
-msgstr "NAT и перенаправление портов для клеток (jail)"
+msgstr "NAT и перенаправление портов для клеток"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1360
-#, fuzzy
 msgid ""
 "A jail that is given a private address — on a cloned man:lo[4] interface "
 "such as `lo1`, on a private bridge, or on a VNET epair on an internal "
@@ -3879,7 +3787,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1363
-#, fuzzy
 msgid ""
 "First, allow the host to forward packets between its interfaces.  Enable it "
 "at boot and immediately with the following commands:"
@@ -3899,7 +3806,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1371
-#, fuzzy
 msgid ""
 "For IPv6, use `ipv6_gateway_enable=\"YES\"` and `net.inet6.ip6.forwarding=1`."
 msgstr ""
@@ -3908,7 +3814,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1374
-#, fuzzy
 msgid ""
 "Then configure Network Address Translation on the host with man:pf[4].  The "
 "following [.filename]#/etc/pf.conf# gives every jail on the private "
@@ -3928,7 +3833,7 @@ msgstr "ext_if = \"em0\"\n"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1381
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "# Translate outbound jail traffic to the host address\n"
 "nat on $ext_if from 192.168.0.0/24 to any -> ($ext_if)\n"
@@ -3948,7 +3853,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1387
-#, fuzzy
 msgid "The `rdr` target must be the jail's own address."
 msgstr "Цель `rdr` должна быть собственным адресом клетки."
 
@@ -3969,7 +3873,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1400
-#, fuzzy
 msgid ""
 "FreeBSD 15.0 adds the OpenBSD-style inline `nat-to` and `rdr-to` syntax, "
 "which attaches translation to a `pass` or `match` rule, for example `match "
@@ -3984,7 +3887,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1403
-#, fuzzy
 msgid ""
 "For the full treatment of man:pf[4] and man:ipfw[8], including complete rule "
 "sets and man:ipfw[8]-based NAT, see crossref:firewalls[firewalls,Firewalls]."
@@ -4199,7 +4101,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1489
-#, fuzzy
 msgid ""
 "The default listing is only a small part of what man:jls[8] can report.  Add "
 "the `-v` flag for a verbose, multi-line summary of each jail that includes "
@@ -4218,7 +4119,6 @@ msgstr "# jls -v\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1496
-#, fuzzy
 msgid ""
 "Use `-h` to print a header line with the field names above the values of the "
 "requested parameters:"
@@ -4234,7 +4134,6 @@ msgstr "# jls -h jid name path\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1503
-#, fuzzy
 msgid ""
 "To query specific parameters of a single jail, name it with `-j` and list "
 "the parameters to print:"
@@ -4256,7 +4155,6 @@ msgstr "/usr/local/jails/containers/classic classic 192.168.1.151\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1516
-#, fuzzy
 msgid ""
 "Add `-d` to include jails that are shutting down, which are otherwise hidden "
 "while in the dying state:"
@@ -4305,7 +4203,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1542
-#, fuzzy
 msgid ""
 "Stopping a jail is more than killing the processes inside it.  When a jail "
 "is stopped, man:jail[8] first runs the commands in its `exec.stop` parameter "
@@ -4404,7 +4301,6 @@ msgstr "# rm -rf /usr/local/jails/containers/classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1577
-#, fuzzy
 msgid ""
 "The two steps above apply to a jail stored on a UFS file system.  A jail "
 "backed by its own ZFS dataset — as created in crossref:jails[host-"
@@ -4431,7 +4327,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1585
-#, fuzzy
 msgid "Add `-r` to also destroy any snapshots the dataset holds."
 msgstr ""
 "Добавьте `-r`, чтобы также уничтожить любые снимки, которые хранит набор "
@@ -4439,7 +4334,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1591
-#, fuzzy
 msgid ""
 "A ZFS thin jail created by cloning a template snapshot (see crossref:"
 "jails[thin-jail,Thin Jails]) depends on that snapshot.  While any clone "
@@ -4457,7 +4351,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1595
-#, fuzzy
 msgid ""
 "Finally, in either case, remove the jail entry in [.filename]#/etc/jail."
 "conf# or in [.filename]#/etc/jail.conf.d#.  For a NullFS thin jail, also "
@@ -4508,33 +4401,31 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:1611
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Managing Services in a Jail from the Host"
 msgstr "Управление службами в клетке с хост-системы"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1615
-#, fuzzy
 msgid ""
 "Services inside a jail can be enabled and controlled from the host without "
 "first entering the jail with man:jexec[8].  Both man:service[8] and man:"
 "sysrc[8] accept a `-j` argument that names the target jail by ID or name and "
 "operates on that jail's man:rc[8] configuration."
 msgstr ""
-"Службы внутри клетки можно включать и контролировать с хоста, не заходя "
-"сначала в клетку через man:jexec[8]. Как man:service[8], так и man:sysrc[8] "
-"принимают аргумент `-j`, который указывает целевую клетку по ID или имени и "
-"работает с конфигурацией man:rc[8] этой клетки."
+"Службы внутри клетки можно включать и контролировать с хост-системы, не "
+"заходя сначала в клетку через man:jexec[8]. Как man:service[8], так и "
+"man:sysrc[8] принимают аргумент `-j`, который указывает целевую клетку по ID "
+"или имени и работает с конфигурацией man:rc[8] этой клетки."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1617
-#, fuzzy
 msgid ""
 "Continuing the package example above, enable and start nginx in the "
 "`classic` jail directly from the host:"
 msgstr ""
 "Продолжая пример с пакетами выше, включите и запустите nginx в клетке "
-"`classic` непосредственно с хоста:"
+"`classic` непосредственно с хост-системы:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1622
@@ -4548,7 +4439,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1625
-#, fuzzy
 msgid ""
 "These commands have the same effect as running man:sysrc[8] and man:"
 "service[8] through man:jexec[8], but they keep host-side administration and "
@@ -4556,7 +4446,7 @@ msgid ""
 msgstr ""
 "Эти команды имеют тот же эффект, что и запуск man:sysrc[8] и man:service[8] "
 "через man:jexec[8], но они сохраняют единообразие администрирования и "
-"написания сценариев на стороне хоста с системой без клеток."
+"написания сценариев на стороне хост-системы с системой без клеток."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:1627
@@ -4586,7 +4476,6 @@ msgstr "# jexec -u root jailname\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1642
-#, fuzzy
 msgid ""
 "The `-u` flag selects the user to run as, resolving the name against the "
 "*host* password database.  To resolve the user against the *jail's* own "
@@ -4598,7 +4487,7 @@ msgid ""
 "root."
 msgstr ""
 "Флаг `-u` выбирает пользователя, от имени которого выполняется команда, "
-"разрешая имя через *основную* базу данных паролей. Чтобы разрешить "
+"разрешая имя через базу данных паролей *хост-системы*. Чтобы разрешить "
 "пользователя через *собственную* базу данных паролей клетки, используйте `-U`"
 ". Если команда не задана, как в данном случае, man:jexec[8] запускает "
 "оболочку входа этого пользователя внутри клетки. Добавьте `-l`, чтобы "
@@ -4647,23 +4536,21 @@ msgstr "# jexec -l jailname service nginx stop\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:1658
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Viewing Jailed Processes and Sockets from the Host"
-msgstr "Просмотр процессов и сокетов в клетках с хоста"
+msgstr "Просмотр процессов и сокетов в клетках с хост-системы"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1661
-#, fuzzy
 msgid ""
 "From the host, the processes and sockets of every jail are visible and can "
 "be filtered by jail."
 msgstr ""
-"С хоста процессы и сокеты каждой клетки видны и могут фильтроваться по "
-"клетке."
+"С хост-системы процессы и сокеты каждой клетки видны и могут фильтроваться "
+"по клетке."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1663
-#, fuzzy
 msgid ""
 "man:ps[1] accepts `-J` to restrict its output to a single jail, given by JID "
 "or name:"
@@ -4679,7 +4566,6 @@ msgstr "# ps -J classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1670
-#, fuzzy
 msgid ""
 "The output should be similar to the following, where the `J` in the `STAT` "
 "column marks a process that is running in a jail:"
@@ -4701,17 +4587,16 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1680
-#, fuzzy
 msgid ""
 "Use `ps -J 0` to show only the host's own processes.  The `jail` and `jid` "
 "keywords can also be added to the `-o` output format to show which jail each "
 "process belongs to.  For example, to list every process on the host together "
 "with its jail:"
 msgstr ""
-"Используйте `ps -J 0`, чтобы показать только процессы самого хоста. Ключевые "
-"слова `jail` и `jid` также можно добавить в формат вывода `-o`, чтобы "
-"показать, к какой клетке относится каждый процесс. Например, чтобы вывести "
-"список всех процессов на хосте вместе с их клеткой:"
+"Используйте `ps -J 0`, чтобы показать только процессы самой хост-системы. "
+"Ключевые слова `jail` и `jid` также можно добавить в формат вывода `-o`, "
+"чтобы показать, к какой клетке относится каждый процесс. Например, чтобы "
+"вывести список всех процессов на хост-системе вместе с их клеткой:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1684
@@ -4721,7 +4606,6 @@ msgstr "# ps ax -o pid,jail,command\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1687
-#, fuzzy
 msgid ""
 "man:top[1] takes `-J` to filter its live display to one jail, which implies "
 "`-j` and adds the `JID` column:"
@@ -4737,7 +4621,6 @@ msgstr "# top -J classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1694
-#, fuzzy
 msgid ""
 "man:sockstat[1] lists the sockets belonging to a jail with `-j`, which is "
 "the natural way to check which ports a jail's daemons have actually bound "
@@ -4755,7 +4638,6 @@ msgstr "# sockstat -4 -6 -l -j classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1701
-#, fuzzy
 msgid ""
 "From inside a jail the picture is reversed: a jailed process sees only its "
 "own jail's processes and sockets, never those of the host or of other jails."
@@ -4766,13 +4648,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:1703
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Managing Jails Directly with the jail Utility"
 msgstr "Управление клетками напрямую с помощью утилиты jail"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1706
-#, fuzzy
 msgid ""
 "The man:service[8] wrapper shown above is the usual way to run jails at "
 "boot, but man:jail[8] can also create, modify, and remove jails directly, "
@@ -4786,7 +4667,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1708
-#, fuzzy
 msgid "Create a configured jail by name:"
 msgstr "Создайте настроенную клетку по имени:"
 
@@ -4798,7 +4678,6 @@ msgstr "# jail -c classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1715
-#, fuzzy
 msgid ""
 "Remove a running jail; this also removes any child jails it created and "
 "kills the processes inside it:"
@@ -4814,7 +4693,6 @@ msgstr "# jail -r classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1723
-#, fuzzy
 msgid ""
 "The `-m` flag modifies the parameters of an already-running jail without "
 "restarting it.  For example, to add a second IPv4 address to a running jail:"
@@ -4830,7 +4708,6 @@ msgstr "# jail -m name=classic ip4.addr+=192.168.250.71\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1730
-#, fuzzy
 msgid ""
 "man:jail[8] notes that \"Some parameters may not be changed on a running jail"
 "\"; in practice this includes `path` and `vnet`, which require the jail to "
@@ -4842,7 +4719,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1733
-#, fuzzy
 msgid ""
 "Finally, `-e` exhibits all configured non-wildcard jails and their "
 "parameters without creating, modifying, or removing anything, which is handy "
@@ -4852,7 +4728,7 @@ msgstr ""
 "Наконец, `-e` отображает все настроенные не-шаблонные клетки и их параметры "
 "без создания, изменения или удаления чего-либо, что удобно для проверки "
 "файла конфигурации. В качестве аргумента она принимает строку, используемую "
-"для разделения параметров."
+"для разделения параметров:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1737
@@ -4862,13 +4738,12 @@ msgstr "# jail -e ,\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:1740
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Backing Up and Migrating a Jail"
 msgstr "Резервное копирование и перенос клетки"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1743
-#, fuzzy
 msgid ""
 "A jail is largely self-contained, so backing one up or moving it to another "
 "host is mostly a matter of copying its files and its configuration."
@@ -4879,7 +4754,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1746
-#, fuzzy
 msgid ""
 "Stop the jail first for a consistent copy; a ZFS-backed jail can instead be "
 "snapshotted while running.  For a jail on its own ZFS dataset, take a "
@@ -4905,7 +4779,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1755
-#, fuzzy
 msgid ""
 "The full mechanics of man:zfs-send[8] and man:zfs-receive[8], including "
 "incremental transfers, are covered in crossref:zfs[zfs-zfs-send,Replication]."
@@ -4915,7 +4788,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1757
-#, fuzzy
 msgid ""
 "For a jail on a UFS file system, use man:tar[1] with `-p` so that ownership, "
 "permissions, and file flags are preserved:"
@@ -4931,7 +4803,6 @@ msgstr "# tar -cpf classic.tar -C /usr/local/jails/containers classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1765
-#, fuzzy
 msgid ""
 "Extract the archive as `root` on the destination host with `tar -xpf` so the "
 "flags survive.  man:dump[8] and man:restore[8] are an alternative when a "
@@ -4947,21 +4818,19 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1767
-#, fuzzy
 msgid ""
 "Finally, copy the jail's block from [.filename]#/etc/jail.conf# — or its "
 "file in [.filename]#/etc/jail.conf.d# — to the new host, adjust any host-"
 "specific parameters such as `interface`, `ip4.addr`, or the bridge used by a "
 "VNET jail, and start the jail there."
 msgstr ""
-"Наконец, скопируйте блок клетки из [.filename]#/etc/jail.conf# — или его "
-"файл в [.filename]#/etc/jail.conf.d# — на новый хост, настройте любые "
-"параметры, специфичные для хоста, такие как `interface`, `ip4.addr` или "
-"мост, используемый клеткой VNET, и запустите клетку там."
+"Наконец, скопируйте блок строк, относящихся к клетке, из [.filename]#/etc/"
+"jail.conf# — или его файл в [.filename]#/etc/jail.conf.d# — на новый хост, "
+"настройте любые параметры, специфичные для хоста, такие как `interface`, `ip4"
+".addr` или мост, используемый клеткой VNET, и запустите клетку там."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1773
-#, fuzzy
 msgid ""
 "The destination host must not run an older FreeBSD release than the jail's "
 "userland, following the same rule that a jail can never run a newer version "
@@ -4970,44 +4839,43 @@ msgid ""
 "convert the jail to a thick copy first.  Any man:rctl[8] rules kept in [."
 "filename]#/etc/rctl.conf# must be carried over separately."
 msgstr ""
-"Целевой хост не должен запускать более старую версию FreeBSD, чем "
+"Целевая хост-система не должна запускать более старую версию FreeBSD, чем "
 "пользовательское окружение клетки, следуя тому же правилу, что клетка "
-"никогда не может запускать более новую версию, чем её хост. Тонкая клетка на "
-"NullFS не является автономной: её шаблон и скелет также должны существовать "
-"на целевом хосте, поэтому перенесите и их, или сначала преобразуйте клетку в "
-"толстую копию. Любые правила man:rctl[8], хранящиеся в [.filename]#/etc/rctl."
-"conf#, должны быть перенесены отдельно."
+"никогда не может запускать более новую версию, чем её хост-система. Тонкая "
+"клетка на NullFS не является автономной: её шаблон и скелет также должны "
+"существовать на целевой хост-системе, поэтому перенесите и их, или сначала "
+"преобразуйте клетку в толстую копию. Любые правила man:rctl[8], хранящиеся в "
+"[.filename]#/etc/rctl.conf#, должны быть перенесены отдельно."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/jails/_index.adoc:1776
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Administration from Inside a Jail"
 msgstr "Администрирование изнутри клетки"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1780
-#, fuzzy
 msgid ""
 "Most jail administration is done from the host, but some tasks are performed "
 "from within the jail itself, and a script running inside a jail sometimes "
 "needs to know that it is jailed.  This section describes what an "
 "administrator sees and can do from inside a jail."
 msgstr ""
-"Большая часть администрирования клеток выполняется с хоста, но некоторые "
-"задачи выполняются изнутри самой клетки, и скрипт, запущенный внутри клетки, "
-"иногда должен знать, что он находится в клетке. В этом разделе описывается, "
-"что администратор видит и может делать изнутри клетки."
+"Большая часть администрирования клеток выполняется с хост-системы, но "
+"некоторые задачи выполняются изнутри самой клетки, и скрипт, запущенный "
+"внутри клетки, иногда должен знать, что он находится в клетке. В этом "
+"разделе описывается, что администратор видит и может делать изнутри клетки."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1782
-#, fuzzy
 msgid ""
 "A process can detect whether it is running inside a jail by reading the "
 "`security.jail.jailed` sysctl, which is `1` inside a jail and `0` on the "
 "host:"
 msgstr ""
 "Процесс может определить, находится ли он внутри клетки, прочитав sysctl "
-"`security.jail.jailed`, который равен `1` внутри клетки и `0` на хосте:"
+"`security.jail.jailed`, который равен `1` внутри клетки и `0` на "
+"хост-системе:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1787
@@ -5021,40 +4889,35 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1790
-#, fuzzy
 msgid "Inside a jail the environment is deliberately restricted:"
 msgstr "Внутри клетки окружение намеренно ограничено:"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1793
-#, fuzzy
 msgid ""
 "The host's view of the system is hidden.  A jailed process sees only its own "
 "jail's processes, sockets, and file systems, never those of the host or of "
 "other jails."
 msgstr ""
-"Взгляд хост-системы на систему скрыт. Процесс, находящийся в клетке, видит "
-"только процессы, сокеты и файловые системы своей собственной клетки, но "
-"никогда не видит процессы, сокеты и файловые системы хост-системы или других "
-"клеток."
+"Вид на хост-систему скрыт. Процесс, находящийся в клетке, видит только "
+"процессы, сокеты и файловые системы своей собственной клетки, но никогда не "
+"видит процессы, сокеты и файловые системы хост-системы или других клеток."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1795
-#, fuzzy
 msgid ""
 "Kernel state is largely read-only.  Kernel tunables cannot be written from "
 "inside a jail, man:kldload[8] and man:kldunload[8] are not permitted, and "
 "man:dmesg[8] and the kernel message buffer are unavailable unless `allow."
 "read_msgbuf` is set."
 msgstr ""
-"Состояние ядра в значительной степени доступно только для чтения.  "
+"Состояние ядра в значительной степени доступно только для чтения. "
 "Настраиваемые параметры ядра не могут быть записаны изнутри клетки, "
 "man:kldload[8] и man:kldunload[8] не разрешены, а man:dmesg[8] и буфер "
 "сообщений ядра недоступны, если не установлен параметр `allow.read_msgbuf`."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1797
-#, fuzzy
 msgid ""
 "Privileged operations that would cross the jail boundary are denied unless "
 "the host explicitly allows them.  Creating raw sockets — as man:ping[8] and "
@@ -5065,16 +4928,16 @@ msgid ""
 "upgrading,Jail Upgrading])."
 msgstr ""
 "Привилегированные операции, которые пересекали бы границу клетки, запрещены, "
-"если только хост явно не разрешает их. Создание raw-сокетов — как того "
-"требуют man:ping[8] и man:traceroute[8] — требует `allow.raw_sockets` (см. "
-"описание параметра в crossref:jails[jail-configuration-files,Jail "
-"Configuration Files]), монтирование файловых систем требует `allow.mount` и "
-"его дочерних параметров для конкретных файловых систем, а man:chflags[1] по "
-"умолчанию отключен (см. crossref:jails[jail-upgrading,Jail Upgrading])."
+"если только хост-система явно не разрешает их. Создание raw-сокетов — как "
+"того требуют man:ping[8] и man:traceroute[8] — требует `allow.raw_sockets` ("
+"см. описание параметра в разделе crossref:jails[jail-configuration-"
+"files,Файлы конфигурации клеток]), монтирование файловых систем требует "
+"`allow.mount` и его дочерних параметров для конкретных файловых систем, а "
+"man:chflags[1] по умолчанию отключен (см. crossref:jails[jail-"
+"upgrading,Обновление клеток])."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1800
-#, fuzzy
 msgid ""
 "A handful of per-jail sysctl variables can be changed from inside the jail "
 "without affecting the host, including `kern.hostname`, `kern.domainname`, "
@@ -5096,7 +4959,6 @@ msgstr "# sysctl -d security.jail.param\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1808
-#, fuzzy
 msgid ""
 "Managing the jail's own services from inside works exactly as it does on an "
 "unjailed system: man:service[8] and man:sysrc[8] operate on the jail's own "
@@ -5104,10 +4966,9 @@ msgid ""
 "crossref:jails[jail-services-host,service -j and sysrc -j] shown above."
 msgstr ""
 "Управление собственными службами клетки изнутри работает точно так же, как и "
-"в неограниченной системе: man:service[8] и man:sysrc[8] работают с "
-"собственной конфигурацией man:rc[8] клетки. Это внутриклеточный аналог "
-"показанного выше хостового crossref:jails[jail-services-host,service -j и "
-"sysrc -j]."
+"в системе вне клетки: man:service[8] и man:sysrc[8] работают с собственной "
+"конфигурацией man:rc[8] клетки. Это внутриклеточный аналог показанных выше "
+"crossref:jails[jail-services-host,service -j и sysrc -j] из хост-системы."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/jails/_index.adoc:1810
@@ -5128,7 +4989,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1819
-#, fuzzy
 msgid ""
 "The right tool depends on how the jail's userland was installed.  Jails "
 "installed from a distribution set (the [.filename]#base.txz# extracted in "
@@ -5153,7 +5013,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1824
-#, fuzzy
 msgid ""
 "Support for distribution sets is planned for removal in FreeBSD 16, but will "
 "continue, together with man:freebsd-update[8], for the lifetime of the "
@@ -5169,7 +5028,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1829
-#, fuzzy
 msgid ""
 "On OpenZFS, snapshot the jail's dataset before upgrading, so a failed "
 "upgrade can be undone instantly:"
@@ -5185,7 +5043,6 @@ msgstr "# zfs snapshot zroot/jails/containers/classic@preupgrade\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1839
-#, fuzzy
 msgid ""
 "If the upgrade fails, stop the jail and run `zfs rollback zroot/jails/"
 "containers/classic@preupgrade` to restore the previous state.  This requires "
@@ -5291,7 +5148,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1880
-#, fuzzy
 msgid ""
 "The `install` step is run twice on purpose.  A jail has no kernel of its own "
 "(it runs the host's kernel), so nothing here upgrades a kernel.  The first "
@@ -5340,7 +5196,6 @@ msgstr "Обновление тонкой клетки OpenZFS"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1899
-#, fuzzy
 msgid ""
 "The thin jails created in crossref:jails[creating-thin-jail-openzfs-"
 "snapshots,\"Creating a Thin Jail Using OpenZFS Snapshots\"] are OpenZFS "
@@ -5352,13 +5207,12 @@ msgstr ""
 "Тонкие клетки, созданные в crossref:jails[creating-thin-jail-openzfs-"
 "snapshots,\"Создание тонкой клетки с помощью снимков OpenZFS\"], являются "
 "клонами OpenZFS снимка шаблона, но после создания клон независим от этого "
-"шаблона.  Обновление шаблона *не* обновляет клетки, которые уже были "
-"клонированы из него, а обновление клона *не* обновляет шаблон.  Поэтому "
+"шаблона. Обновление шаблона *не* обновляет клетки, которые уже были "
+"клонированы из него, а обновление клона *не* обновляет шаблон. Поэтому "
 "существует два способа поддерживать эти клетки в актуальном состоянии."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1902
-#, fuzzy
 msgid ""
 "The first option is to update each clone in place with man:freebsd-"
 "update[8], exactly as for a classic jail, as described in crossref:"
@@ -5380,7 +5234,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1905
-#, fuzzy
 msgid ""
 "The second option keeps the sharing intact by refreshing the template and re-"
 "cloning.  Update the template to the latest patch level on the host:"
@@ -5391,7 +5244,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1915
-#, fuzzy
 msgid ""
 "man:freebsd-update[8] with `-b` reads the running release from the host's "
 "`uname -r`, not from the template.  If the template runs an older release "
@@ -5400,15 +5252,14 @@ msgid ""
 "jails[upgrading-thin-jail,\"Upgrading a Thin Jail Using NullFS\"]."
 msgstr ""
 "man:freebsd-update[8] с параметром `-b` читает текущую версию выпуска из `"
-"uname -r` хоста, а не из шаблона. Если шаблон работает на более старой "
-"версии выпуска, чем хост, добавьте `--currently-running <template-release>`, "
-"чтобы он применял исправления к версии выпуска шаблона, а не хоста, как "
-"показано в crossref:jails[upgrading-thin-jail,\"Обновление тонкой клетки с "
-"использованием NullFS\"]."
+"uname -r` хост-системы, а не из шаблона. Если шаблон работает на более "
+"старой версии выпуска, чем хост-система, добавьте `--currently-running "
+"<template-release>`, чтобы он применял исправления к версии выпуска шаблона, "
+"а не хоста-системы, как показано в crossref:jails[upgrading-thin-jail,"
+"\"Обновление тонкой клетки с использованием NullFS\"]."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1918
-#, fuzzy
 msgid "Then take a new snapshot and clone future jails from it:"
 msgstr "Затем создайте новый снимок и клонируйте будущие клетки из него:"
 
@@ -5425,7 +5276,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1927
-#, fuzzy
 msgid ""
 "Existing clones keep the base they were created from until they are re-"
 "created from the new snapshot.  For a major or minor version upgrade, create "
@@ -5437,14 +5287,13 @@ msgstr ""
 "Существующие клоны сохраняют базу, из которой они были созданы, до тех пор, "
 "пока они не будут пересозданы из нового снимка. Для обновления основной или "
 "дополнительной версии создайте новый шаблонный набор данных для нового "
-"выпуска, следуя crossref:jails[creating-thin-jail-openzfs-snapshots,"
+"выпуска, следуя разделу crossref:jails[creating-thin-jail-openzfs-snapshots,"
 "\"Создание тонкой клетки с помощью снимков OpenZFS\"], вместо обновления "
 "существующего шаблона на месте, и клонируйте новые клетки из его снимка "
 "`@base`."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1931
-#, fuzzy
 msgid ""
 "Keep each jail's application data and configuration on separate datasets, or "
 "in the jail's local storage, so that re-creating a jail from an updated "
@@ -5508,7 +5357,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1954
-#, fuzzy
 msgid ""
 "Because the host was upgraded first, man:freebsd-update[8] with `-b` would "
 "otherwise detect the host's new release rather than the template's older "
@@ -5518,13 +5366,13 @@ msgid ""
 "example upgrades a template running 14.2-RELEASE to 14.3-RELEASE; substitute "
 "the releases that apply:"
 msgstr ""
-"Поскольку хост был обновлён первым, man:freebsd-update[8] с `-b` в противном "
-"случае обнаружил бы новый выпуск хоста, а не более старый выпуск шаблона: "
-"`-b` считывает текущую версию из `uname -r` хоста, в отличие от `-j`, "
-"который определяет собственную пользовательскую среду клетки. Передайте "
-"`--currently-running <release-шаблона>`, чтобы шаблон был обновлён с его "
-"фактического выпуска. Следующий пример обновляет шаблон, работающий на 14.2-"
-"RELEASE, до 14.3-RELEASE; подставьте применимые выпуски:"
+"Поскольку хост-система была обновлёна первой, man:freebsd-update[8] с `-b` в "
+"противном случае обнаружил бы новый выпуск хост-системы, а не более старый "
+"выпуск шаблона: `-b` считывает текущую версию из `uname -r` хост-системы, в "
+"отличие от `-j`, который определяет собственную пользовательскую среду "
+"клетки. Передайте `--currently-running <release-шаблона>`, чтобы шаблон был "
+"обновлён с его фактического выпуска. Следующий пример обновляет шаблон, "
+"работающий на 14.2-RELEASE, до 14.3-RELEASE; подставьте применимые выпуски:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:1962
@@ -5545,13 +5393,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:1965
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Upgrading pkgbase Jails"
-msgstr "Обновление клеток pkgbase"
+msgstr "Обновление клеток с pkgbase"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1968
-#, fuzzy
 msgid ""
 "Jails installed from base packages, available from FreeBSD 15.0, are "
 "upgraded with man:pkg[8] against the `FreeBSD-base` repository rather than "
@@ -5563,7 +5410,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1970
-#, fuzzy
 msgid ""
 "The `FreeBSD-base` repository is defined in [.filename]#/etc/pkg/FreeBSD."
 "conf# but is disabled by default on FreeBSD 15.0, so enable it before "
@@ -5575,12 +5421,11 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1972
-#, fuzzy
 msgid ""
 "From the host, point man:pkg[8] at the jail's root directory with `-r` (`--"
 "rootdir`):"
 msgstr ""
-"С хоста укажите man:pkg[8] на корневой каталог клетки с помощью `-r` "
+"С хост-системы укажите man:pkg[8] на корневой каталог клетки с помощью `-r` "
 "(`--rootdir`):"
 
 #. type: delimited block . 4
@@ -5597,7 +5442,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1981
-#, fuzzy
 msgid ""
 "The same upgrade can be run from inside the jail with man:jexec[8] and a "
 "plain `pkg upgrade`:"
@@ -5617,7 +5461,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:1993
-#, fuzzy
 msgid ""
 "man:pkg[8] performs a three-way merge on tagged configuration files under [."
 "filename]#/etc#.  When a merge cannot be completed automatically it leaves "
@@ -5686,7 +5529,6 @@ msgstr "rctl -a jail:<jailname>:resource:action=amount[/per]\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2016
-#, fuzzy
 msgid ""
 "The optional `per` component is not a percentage; it is the accounting "
 "entity the limit is applied to, one of `process`, `user`, `loginclass`, or "
@@ -5736,7 +5578,6 @@ msgstr "jail:classic:memoryuse:deny=2G/jail\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2034
-#, fuzzy
 msgid ""
 "man:rctl[8] can limit far more than memory.  The resources most relevant to "
 "a jail include `pcpu` (percentage of a single CPU core), `maxproc` (number "
@@ -5765,7 +5606,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2044
-#, fuzzy
 msgid ""
 "Disk throughput is limited with `readbps` and `writebps`, but these "
 "resources do not support the `deny` action; pair them with `throttle` "
@@ -5783,7 +5623,6 @@ msgstr "# rctl -a jail:classic:writebps:throttle=1m\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2051
-#, fuzzy
 msgid ""
 "The action after the resource selects what happens when the limit is "
 "reached: `deny` blocks the operation, `log` records it to the system log, "
@@ -5795,7 +5634,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2053
-#, fuzzy
 msgid ""
 "Report the current resource usage of a jail with the `-u` flag, adding `-h` "
 "for human-readable units:"
@@ -5811,7 +5649,6 @@ msgstr "# rctl -hu jail:classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2060
-#, fuzzy
 msgid "List the rules that apply to a jail:"
 msgstr "Перечислите правила, которые применяются к клетке:"
 
@@ -5823,7 +5660,6 @@ msgstr "# rctl jail:classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2067
-#, fuzzy
 msgid "Remove every rule that matches a jail with `-r`:"
 msgstr "Удалите каждое правило, которое соответствует клетке, с помощью `-r`:"
 
@@ -5845,13 +5681,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:2076
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "CPU Pinning with cpuset"
 msgstr "Привязка CPU с помощью cpuset"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2079
-#, fuzzy
 msgid ""
 "man:rctl[8] with `pcpu` caps how much CPU time a jail may consume, but it "
 "does not tie the jail to particular cores; man:cpuset[1] assigns specific "
@@ -5863,7 +5698,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2081
-#, fuzzy
 msgid "Restrict a running jail to a set of CPUs by its name or JID:"
 msgstr "Ограничить работающую клетку набором CPU по её имени или JID:"
 
@@ -5875,7 +5709,6 @@ msgstr "# cpuset -l 0-3 -j classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2088
-#, fuzzy
 msgid "Query the cores a jail is currently allowed to use with `-g`:"
 msgstr ""
 "Запросить ядра, которые клетка в настоящее время может использовать, с "
@@ -5889,7 +5722,6 @@ msgstr "# cpuset -g -j classic\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2096
-#, fuzzy
 msgid ""
 "The assigned set is also reported in the cpuset column of `jls -v`.  There "
 "is no jail.conf parameter for CPU affinity, so pin the jail at start time by "
@@ -5909,13 +5741,12 @@ msgstr "exec.poststart = \"cpuset -l 0-3 -j classic\";\n"
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:2103
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Limiting Disk Space"
 msgstr "Ограничение дискового пространства"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2107
-#, fuzzy
 msgid ""
 "man:rctl[8] has no resource for filesystem space.  When each jail lives in "
 "its own ZFS dataset, cap and guarantee its disk usage with ZFS quotas and "
@@ -5938,7 +5769,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2117
-#, fuzzy
 msgid ""
 "This requires the jail to be a dataset of its own.  The ZFS thin jails "
 "created earlier already are, but the Classic Jail procedure creates the jail "
@@ -5949,22 +5779,21 @@ msgid ""
 "properties."
 msgstr ""
 "Для этого требуется, чтобы клетка была собственным набором данных. Созданные "
-"ранее тонкие клетки ZFS уже таковыми являются, но процедура Classic Jail "
-"создает каталог клетки с помощью `mkdir` внутри общего набора данных [."
-"filename]#containers#, поэтому сначала создайте его с помощью `zfs create`, "
+"ранее тонкие клетки ZFS уже таковыми являются, но процедура Классической "
+"Клетки создает каталог клетки с помощью `mkdir` внутри общего набора данных ["
+".filename]#containers#, поэтому сначала создайте его с помощью `zfs create`, "
 "чтобы эти команды применялись. См. crossref:jails[host-configuration-"
 "directories,\"Настройка дерева каталогов клетки\"] для структуры наборов "
 "данных и man:zfs-set[8] для свойств `quota` и `reservation`."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/jails/_index.adoc:2119
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "More Jail Options"
 msgstr "Дополнительные параметры клетки"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2126
-#, fuzzy
 msgid ""
 "man:jail[8] exposes many more parameters than the examples in this chapter "
 "use.  A jail is a strong isolation boundary, but it is not an absolute one.  "
@@ -5987,13 +5816,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:2128
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "The allow.* Permissions"
 msgstr "Разрешения allow.*"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2132
-#, fuzzy
 msgid ""
 "The `allow.*` parameters are booleans that hand individual privileges to the "
 "jail.  Per man:jail[8], \"With the exception of allow.set_hostname and allow."
@@ -6008,13 +5836,13 @@ msgstr ""
 
 #. type: Block title
 #: documentation/content/en/books/handbook/jails/_index.adoc:2133
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Common `allow.*` parameters"
 msgstr "Общие параметры `allow.*`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2136
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Parameter"
 msgstr "Параметр"
 
@@ -6026,7 +5854,7 @@ msgstr "По умолчанию"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2138
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Effect"
 msgstr "Эффект"
 
@@ -6045,7 +5873,7 @@ msgstr "On"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2142
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "The jail may change its own hostname."
 msgstr "Клетка может изменить собственное имя хоста."
 
@@ -6057,9 +5885,11 @@ msgstr "`allow.reserved_ports`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2146
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Jailed `root` may bind the reserved ports below 1024."
-msgstr "Заключенный `root` может привязывать зарезервированные порты ниже 1024."
+msgstr ""
+"`root` в клетке может открывать (делать bind) зарезервированные порты ниже "
+"1024."
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2147
@@ -6084,11 +5914,11 @@ msgstr "Off"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2150
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Enables raw sockets, so man:ping[8] and man:traceroute[8] work inside the jail."
 msgstr ""
-"Включает «сырые» сокеты, чтобы man:ping[8] и man:traceroute[8] работали "
-"внутри клетки."
+"Включает «сырые» (raw) сокеты, чтобы man:ping[8] и man:traceroute[8] "
+"работали внутри клетки."
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2151
@@ -6098,11 +5928,11 @@ msgstr "`allow.chflags`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2154
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Jailed `root` may manipulate system file flags as it would on the host."
 msgstr ""
-"Заключенный `root` может управлять системными файловыми флагами так же, как "
-"и на хост-системе."
+"`root` в клетке может управлять системными файловыми флагами так же, как и "
+"на хост-системе."
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2155
@@ -6112,7 +5942,7 @@ msgstr "`allow.mount`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2158
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "The jail may mount and unmount filesystems, together with the `allow.mount.*` children."
 msgstr ""
 "Клетка может монтировать и размонтировать файловые системы, вместе с "
@@ -6126,7 +5956,7 @@ msgstr "`allow.quotas`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2162
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "The jail may administer filesystem quotas."
 msgstr "Клетка может администрировать квоты файловой системы."
 
@@ -6138,7 +5968,7 @@ msgstr "`allow.read_msgbuf`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2166
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Jailed processes may read the kernel message buffer with man:dmesg[8]."
 msgstr ""
 "Процессы в клетках могут читать буфер сообщений ядра с помощью man:dmesg[8]."
@@ -6151,7 +5981,7 @@ msgstr "`allow.socket_af`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2170
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Allows socket address families other than IPv4, IPv6, local, and route."
 msgstr ""
 "Разрешает семейства адресов сокетов, отличные от IPv4, IPv6, локальных и "
@@ -6165,7 +5995,7 @@ msgstr "`allow.mlock`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2174
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Jailed processes may lock physical memory with man:mlock[2]."
 msgstr ""
 "Процессы в клетках могут блокировать физическую память с помощью "
@@ -6179,7 +6009,7 @@ msgstr "`allow.unprivileged_proc_debug`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2178
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Unprivileged users may use debugging facilities on their own processes."
 msgstr ""
 "Непривилегированные пользователи могут использовать средства отладки для "
@@ -6193,7 +6023,7 @@ msgstr "`allow.vmm`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2182
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "The jail may use the man:vmm[4] hypervisor to run man:bhyve[8] guests."
 msgstr ""
 "Клетка может использовать гипервизор man:vmm[4] для запуска гостевых систем "
@@ -6207,13 +6037,12 @@ msgstr "`allow.nfsd`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2185
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "The jail may run an NFS server."
 msgstr "Клетка может запускать NFS-сервер."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2188
-#, fuzzy
 msgid ""
 "Weigh each relaxation against what it exposes: `allow.raw_sockets` lets "
 "jailed processes forge packets, `allow.chflags` lets jailed `root` clear the "
@@ -6223,12 +6052,11 @@ msgstr ""
 "Взвесьте каждое послабление относительно того, что оно открывает: `allow."
 "raw_sockets` позволяет процессам в клетке подделывать пакеты, `allow.chflags`"
 " позволяет `root` в клетке снимать флаги неизменяемости и только для "
-"добавления, на которые полагается хост, а `allow.mount` открывает "
+"добавления, на которые полагается хост-система, а `allow.mount` открывает "
 "пространство имён файловой системы."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2190
-#, fuzzy
 msgid ""
 "Running an NFS server inside a jail, highlighted in the FreeBSD 14.0 release "
 "notes, needs `allow.nfsd` set, a VNET jail whose root directory is itself a "
@@ -6241,13 +6069,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:2192
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "System V IPC"
-msgstr "Системная V IPC"
+msgstr "IPC System V (межпроцессное взаимодействие)"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2196
-#, fuzzy
 msgid ""
 "Databases and other software that rely on System V shared memory, "
 "semaphores, and message queues are controlled per module with the `sysvmsg`, "
@@ -6261,12 +6088,10 @@ msgstr ""
 "модулям с помощью параметров `sysvmsg`, `sysvsem` и `sysvshm`. Каждый из них "
 "принимает одно из трёх значений: `inherit` делает все объекты IPC узла "
 "видимыми для клетки, `new` предоставляет клетке собственное частное "
-"пространство имён ключей, а `disable` приводит к сбою связанных системных "
-"вызовов."
+"пространство имён ключей, а `disable` приводит к сбою этих системных вызовов."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2198
-#, fuzzy
 msgid ""
 "For the classic case of running PostgreSQL in a jail, `new` is the right "
 "choice, giving the database its own shared-memory namespace without exposing "
@@ -6274,7 +6099,7 @@ msgid ""
 msgstr ""
 "Для классического случая запуска PostgreSQL в клетке, выбор `new` является "
 "правильным, предоставляя базе данных собственное пространство имён "
-"разделяемой памяти, не раскрывая пространство хоста:"
+"разделяемой памяти, не раскрывая пространство хост-системы:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:2204
@@ -6290,7 +6115,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2208
-#, fuzzy
 msgid ""
 "The older `allow.sysvipc` parameter is deprecated.  It is equivalent to "
 "setting all three module parameters to `inherit`, which shares the host-wide "
@@ -6303,13 +6127,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:2210
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Mounting Filesystems"
 msgstr "Монтирование файловых систем"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2215
-#, fuzzy
 msgid ""
 "`allow.mount` lets a jail mount filesystems, and a family of child "
 "parameters selects which types: `allow.mount.devfs`, `allow.mount.fdescfs`, "
@@ -6334,7 +6157,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2218
-#, fuzzy
 msgid ""
 "The `enforce_statfs` parameter controls both which mount points a jail can "
 "see and, through the rule above, whether the `allow.mount.*` permissions "
@@ -6346,7 +6168,7 @@ msgstr ""
 
 #. type: Block title
 #: documentation/content/en/books/handbook/jails/_index.adoc:2219
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "`enforce_statfs` values"
 msgstr "`enforce_statfs` значения"
 
@@ -6358,7 +6180,7 @@ msgstr "Значение"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2224
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Mount points visible to the jail"
 msgstr "Точки монтирования, видимые клетке"
 
@@ -6370,9 +6192,9 @@ msgstr "`0`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2227
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "All mount points on the host, with no restrictions."
-msgstr "Все точки монтирования на хосте, без каких-либо ограничений."
+msgstr "Все точки монтирования на хост-системе, без каких-либо ограничений."
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2228
@@ -6382,9 +6204,9 @@ msgstr "`1`"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2230
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Only the mount points below the jail's root directory."
-msgstr "Переводятся только точки монтирования ниже корневого каталога клетки."
+msgstr "Видны только точки монтирования ниже корневого каталога клетки."
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2231
@@ -6394,15 +6216,14 @@ msgstr "`2` (по умолчанию)"
 
 #. type: Table
 #: documentation/content/en/books/handbook/jails/_index.adoc:2232
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Only the single mount point where the jail's root directory is located."
 msgstr ""
-"Переводится только единственная точка монтирования, где расположен корневой "
+"Видна только единственная точка монтирования, где расположен корневой "
 "каталог клетки."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2235
-#, fuzzy
 msgid ""
 "Because the `allow.mount.*` permissions require a value lower than `2`, a "
 "jail that must mount its own filesystems is typically configured with "
@@ -6414,13 +6235,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:2237
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Per-Jail securelevel"
 msgstr "Уровень безопасности (securelevel) для каждой клетки"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2242
-#, fuzzy
 msgid ""
 "The `securelevel` parameter sets the jail's `kern.securelevel` and raises "
 "the kernel's immutable-flag and device protections inside the jail.  Per man:"
@@ -6434,8 +6254,8 @@ msgstr ""
 "клетки. Согласно man:jail[8], «клетка никогда не имеет более низкого уровня "
 "securelevel, чем её родительская система, но, установив этот параметр, она "
 "может иметь более высокий». Таким образом, клетка, обращённая к сети, может "
-"работать при ужесточённом `securelevel = 3`, в то время как хост остаётся на "
-"уровне по умолчанию."
+"работать при ужесточённом `securelevel = 3`, в то время как хост-система "
+"остаётся на уровне по умолчанию."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:2244
@@ -6445,7 +6265,6 @@ msgstr "Иерархичские клетки (Hierarchical Jails)"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2250
-#, fuzzy
 msgid ""
 "A jail may itself create child jails, which is how nested or hierarchical "
 "jail hierarchies are built.  The `children.max` parameter sets how many "
@@ -6468,13 +6287,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:2252
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Empty and Persistent Jails"
 msgstr "Пустые и постоянные клетки"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2258
-#, fuzzy
 msgid ""
 "By default a jail exists only while it has running processes; when its last "
 "process exits, the jail disappears.  Setting the `persist` parameter, in the "
@@ -6500,7 +6318,6 @@ msgstr "# jail -c name=test path=/rescue persist\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2265
-#, fuzzy
 msgid ""
 "Clear the flag with `nopersist` to let the jail be removed once idle again."
 msgstr ""
@@ -6509,13 +6326,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:2267
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Presenting a Different OS Release"
 msgstr "Представление другого выпуска ОС"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2274
-#, fuzzy
 msgid ""
 "A jail's userland may be older than the host kernel, but tools inside it "
 "still read the host's version through man:uname[1] unless told otherwise.  "
@@ -6530,20 +6346,20 @@ msgid ""
 "userland can never be newer than the host kernel; see crossref:jails[jail-"
 "upgrading,\"Jail Upgrading\"]."
 msgstr ""
-"Пользовательское окружение клетки может быть старше, чем ядро хоста, но "
-"инструменты внутри нее все равно читают версию хоста через man:uname[1], "
-"если не указано иное.  Параметр `osrelease` задает строку, сообщаемую через "
-"`kern.osrelease` и `uname -r` клетки, а `osreldate` задает число, сообщаемое "
-"через `kern.osreldate` и `uname -K`. Установка их таким образом, чтобы более "
-"старое пользовательское окружение сообщало о собственной версии, "
-"обеспечивает корректную работу man:uname[1], потребителей man:sysctl[8] и "
-"инструментов сборки, определяющих версию, включая man:freebsd-update[8], "
-"запускаемый внутри клетки. Управление пакетами не затрагивается ни в ту, ни "
-"в другую сторону, потому что man:pkg[8] получает свой ABI из ELF-заметок "
-"собственных бинарных файлов клетки, а не из man:uname[1]. Это дополняет "
-"правило, согласно которому пользовательское окружение клетки никогда не "
-"может быть новее, чем ядро хоста; см. crossref:jails[jail-upgrading,"
-"\"Обновление клеток\"]."
+"Пользовательское окружение клетки может быть старше, чем ядро хост-системы, "
+"но инструменты внутри нее все равно читают версию хост-системы через "
+"man:uname[1], если не указано иное. Параметр `osrelease` задает строку, "
+"сообщаемую через `kern.osrelease` и `uname -r` клетки, а `osreldate` задает "
+"число, сообщаемое через `kern.osreldate` и `uname -K`. Установка их таким "
+"образом, чтобы более старое пользовательское окружение сообщало о "
+"собственной версии, обеспечивает корректную работу man:uname[1], "
+"потребителей man:sysctl[8] и инструментов сборки, определяющих версию, "
+"включая man:freebsd-update[8], запускаемый внутри клетки. Управление "
+"пакетами не затрагивается ни в ту, ни в другую сторону, потому что man:pkg[8]"
+" получает свой ABI из ELF-заметок собственных бинарных файлов клетки, а не "
+"из man:uname[1]. Это дополняет правило, согласно которому пользовательское "
+"окружение клетки никогда не может быть новее, чем ядро хоста; см. "
+"crossref:jails[jail-upgrading,\"Обновление клеток\"]."
 
 #. type: Title ==
 #: documentation/content/en/books/handbook/jails/_index.adoc:2276
@@ -6553,7 +6369,6 @@ msgstr "Клетки и ZFS"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2280
-#, fuzzy
 msgid ""
 "A jail can be given control of one or more ZFS datasets, allowing the jailed "
 "root user to create, snapshot, clone, and roll back child datasets without "
@@ -6563,46 +6378,39 @@ msgstr ""
 "Клетка может получить контроль над одним или несколькими наборами данных "
 "ZFS, позволяя привилегированному пользователю внутри клетки создавать, "
 "снимать снимки, клонировать и откатывать дочерние наборы данных без участия "
-"администратора хоста. Это рекомендуемый способ предоставить клетке "
+"администратора хост-системы. Это рекомендуемый способ предоставить клетке "
 "собственное записываемое хранилище с поддержкой снимков."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2283
-#, fuzzy
 msgid ""
 "The host retains ownership of the dataset and only delegates management of "
 "the delegated tree and its descendants to the jail.  The `jailed` property, "
 "the `zfs jail` subcommand, and the interaction between the two are described "
 "in crossref:zfs[zfs-zfs-jail,ZFS and Jails]."
 msgstr ""
-"The host retains ownership of the dataset and only delegates management of "
-"the delegated tree and its descendants to the jail. The `jailed` property, "
-"the `zfs jail` subcommand, and the interaction between the two are described "
-"in crossref:zfs[zfs-zfs-jail,ZFS and Jails].\n"
-"\n"
-"Хост сохраняет право собственности на набор данных и делегирует клетке "
-"только управление делегированным деревом и его потомками. Свойство `jailed`, "
-"подкоманда `zfs jail` и взаимодействие между ними описаны в crossref:zfs[zfs-"
-"zfs-jail,ZFS and Jails]."
+"Хост-система сохраняет право собственности на набор данных и делегирует "
+"клетке только управление делегированным деревом и его потомками. Свойство "
+"`jailed`, подкоманда `zfs jail` и взаимодействие между ними описаны в "
+"crossref:zfs[zfs-zfs-jail,ZFS и клетки]."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:2285
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Delegating a Dataset Manually"
 msgstr "Ручное делегирование набора данных"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2288
-#, fuzzy
 msgid "This method works on all supported releases of FreeBSD."
 msgstr "Этот метод работает на всех поддерживаемых выпусках FreeBSD."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2290
-#, fuzzy
 msgid "On the host, create the dataset to delegate and mark it as jailed:"
 msgstr ""
-"На хосте создайте набор данных для делегирования и пометьте его как клетку:"
+"На хост-системе создайте набор данных для делегирования и пометьте его как "
+"клетку:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:2295
@@ -6616,17 +6424,15 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2298
-#, fuzzy
 msgid ""
 "Setting the `jailed` property tells ZFS that the dataset will be managed "
 "from inside a jail, so the host stops mounting it automatically."
 msgstr ""
 "Установка свойства `jailed` сообщает ZFS, что набор данных будет управляться "
-"изнутри клетки, поэтому хост автоматически перестаёт его монтировать."
+"изнутри клетки, поэтому хост-система автоматически перестаёт его монтировать."
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2301
-#, fuzzy
 msgid ""
 "Next, allow the jail to mount ZFS filesystems and attach the dataset when "
 "the jail is created.  Add the following to the jail's section in [."
@@ -6652,7 +6458,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2313
-#, fuzzy
 msgid ""
 "The `allow.mount.zfs` permission takes effect only together with `allow."
 "mount` and an `enforce_statfs` value below 2; see crossref:jails[jail-more-"
@@ -6673,7 +6478,6 @@ msgstr ""
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:2318
-#, fuzzy
 msgid ""
 "The jail needs access to [.filename]#/dev/zfs#.  The default devfs ruleset "
 "for jails (`devfsrules_jail`, ruleset 4) already unhides it, so no custom "
@@ -6686,7 +6490,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2321
-#, fuzzy
 msgid ""
 "Inside the jail, mount the delegated datasets and manage them like any other:"
 msgstr ""
@@ -6707,25 +6510,23 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2330
-#, fuzzy
 msgid ""
 "The jailed root user can create, snapshot, clone, and roll back datasets "
 "under the delegated tree, but the `quota` property of the delegated dataset "
 "can only be set from the host."
 msgstr ""
-"Заключённый root-пользователь может создавать, делать снимки, клонировать и "
+"root-пользователь в клетке может создавать, делать снимки, клонировать и "
 "откатывать наборы данных в делегированном дереве, но свойство `quota` "
-"делегированного набора данных может быть установлено только с хоста."
+"делегированного набора данных может быть установлено только с хоста-системы."
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:2332
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Attaching Datasets Automatically"
 msgstr "Автоматическое подключение наборов данных"
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:2338
-#, fuzzy
 msgid ""
 "The `zfs.dataset` parameter requires FreeBSD 15.0.  It is not present in the "
 "man:jail[8] of FreeBSD 14.3."
@@ -6735,7 +6536,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2342
-#, fuzzy
 msgid ""
 "Starting with FreeBSD 15.0, man:jail[8] can attach datasets on its own, "
 "removing the need for the manual `jailed` and `zfs jail` steps.  List the "
@@ -6761,7 +6561,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2353
-#, fuzzy
 msgid ""
 "man:jail[8] attaches each listed dataset when the jail starts, so the `exec."
 "created` hook shown above is no longer needed.  The parameter requires "
@@ -6773,7 +6572,6 @@ msgstr ""
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2355
-#, fuzzy
 msgid ""
 "For unmaintained jail managers that do not yet understand `zfs.dataset`, the "
 "rc.d/jail startup script also honors the legacy variable "
@@ -6785,13 +6583,12 @@ msgstr ""
 
 #. type: Title ===
 #: documentation/content/en/books/handbook/jails/_index.adoc:2357
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Accessing Snapshots from Inside a Jail"
 msgstr "Доступ к снимкам изнутри клетки"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2361
-#, fuzzy
 msgid ""
 "The `zfs.mount_snapshot` parameter, available on FreeBSD 14.x and 15.x, lets "
 "jailed users reach snapshot contents without delegating a whole dataset.  "
@@ -6802,7 +6599,7 @@ msgstr ""
 "пользователям внутри клетки получать доступ к содержимому снимков без "
 "делегирования всего набора данных. Когда он установлен в значение `1`, "
 "пользователи клетки могут читать содержимое снимков файловой системы в её "
-"каталоге [.filename]#.zfs/snapshot#."
+"каталоге [.filename]#.zfs/snapshot#:"
 
 #. type: delimited block . 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:2365
@@ -6812,7 +6609,6 @@ msgstr "zfs.mount_snapshot = 1;\n"
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2370
-#, fuzzy
 msgid ""
 "This is convenient for restoring individual files from host-taken "
 "snapshots.  If `allow.mount.zfs` is also set, the snapshots may additionally "
@@ -6820,13 +6616,12 @@ msgid ""
 "whether the [.filename]#.zfs# directory is visible."
 msgstr ""
 "Это удобно для восстановления отдельных файлов из снимков, сделанных на хост-"
-"системе.  Если также установлено `allow.mount.zfs`, снимки могут быть "
-"дополнительно смонтированы внутри клетки.  Свойство `snapdir` набора данных "
+"системе. Если также установлено `allow.mount.zfs`, снимки могут быть "
+"дополнительно смонтированы внутри клетки. Свойство `snapdir` набора данных "
 "управляет тем, будет ли виден каталог [.filename]#.zfs#."
 
 #. type: delimited block = 4
 #: documentation/content/en/books/handbook/jails/_index.adoc:2375
-#, fuzzy
 msgid ""
 "A delegated dataset combined with `allow.mount.zfs` lets the jailed root "
 "user set mount-related ZFS properties and mount filesystems inside the "
@@ -7022,7 +6817,6 @@ msgstr "link:https://erdgeist.org/arts/software/ezjail/[Документация
 
 #. type: Plain text
 #: documentation/content/en/books/handbook/jails/_index.adoc:2421
-#, fuzzy
 msgid ""
 "FreeBSD has published official OCI base-system images since FreeBSD 14.3-"
 "RELEASE, and OCI (Docker-style) containers (which are built on the same jail "
@@ -7034,7 +6828,7 @@ msgstr ""
 "14.3-RELEASE, а OCI-контейнеры (стиль Docker), которые построены на той же "
 "технологии клеток и управляются с помощью инструментария Podman, "
 "рассматриваются в главе crossref:containers[containers,Контейнеры], которая "
-"дополняет нативные клетки, описанные здесь."
+"дополняет обычные клетки, описанные здесь."
 
 #~ msgid ""
 #~ "A thin jail shares the base system using OpenZFS snapshots or NullFS "
