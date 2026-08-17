@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2026-08-06 22:55+0100\n"
+"POT-Creation-Date: 2026-08-16 15:10-0300\n"
 "PO-Revision-Date: 2023-09-05 04:45+0000\n"
 "Last-Translator: Fernando  Apesteguía <fernando.apesteguia@gmail.com>\n"
 "Language-Team: Spanish <https://translate-dev.freebsd.org/projects/"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "The TrustedBSD MAC Framework"
 msgstr "El framework MAC de TrustedBSD"
 
-#. type: YAML Front Matter: title
+#. type: Yaml Front Matter Hash Value: title
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:1
 #, no-wrap
 msgid "Chapter 6. The TrustedBSD MAC Framework"
@@ -1172,56 +1172,43 @@ msgstr ""
 "};\n"
 
 #. type: Plain text
-#: documentation/content/en/books/arch-handbook/mac/_index.adoc:301
+#: documentation/content/en/books/arch-handbook/mac/_index.adoc:305
+#, fuzzy
 msgid ""
 "The MAC policy entry point vector, `mac__policy__ops` in this example, "
 "associates functions defined in the module with specific entry points.  A "
 "complete listing of available entry points and their prototypes may be found "
 "in the MAC entry point reference section.  Of specific interest during "
-"module registration are the .mpo_destroy and .mpo_init entry points."
+"module registration are the .mpo_destroy and .mpo_init entry points.  ."
+"mpo_init will be invoked once a policy is successfully registered with the "
+"module framework but prior to any other entry points becoming active.  This "
+"permits the policy to perform any policy-specific allocation and "
+"initialization, such as initialization of any data or locks.  .mpo_destroy "
+"will be invoked when a policy module is unloaded to permit releasing of any "
+"allocated memory and destruction of locks.  Currently, these two entry "
+"points are invoked with the MAC policy list mutex held to prevent any other "
+"entry points from being invoked: this will be changed, but in the mean time, "
+"policies should be careful about what kernel primitives they invoke so as to "
+"avoid lock ordering or sleeping problems."
 msgstr ""
-"El vector de puntos de entrada de la política MAC, en este ejemplo "
-"`mac__policy__ops`, asocia funciones definidas en el módulo con puntos de "
-"entrada específicos. Se puede encontrar una lista completa de puntos de "
-"entrada disponibles y sus prototipos en la sección de referencia de puntos "
-"de entrada MAC. Los puntos de entrada .mpo_destroy y .mpo_init son de "
-"interés específico durante el registro del módulo."
-
-#. type: Block title
-#: documentation/content/en/books/arch-handbook/mac/_index.adoc:301
-#, no-wrap
-msgid "mpo_init will be invoked once a policy is successfully registered with the module framework but prior to any other entry points becoming active."
-msgstr "mpo_init se invocará una vez que una política se haya registrado con éxito con el framework de módulos pero antes que se ningún otro punto de entrada se convierta en activo."
-
-#. type: Plain text
-#: documentation/content/en/books/arch-handbook/mac/_index.adoc:303
-msgid ""
-"This permits the policy to perform any policy-specific allocation and "
-"initialization, such as initialization of any data or locks."
-msgstr ""
-"Esto permite a la política realizar cualquier reserva e inicialización "
-"específica de la política, como la inicialización de cualquier dato o "
-"bloqueo."
-
-#. type: Block title
-#: documentation/content/en/books/arch-handbook/mac/_index.adoc:303
-#, no-wrap
-msgid "mpo_destroy will be invoked when a policy module is unloaded to permit releasing of any allocated memory and destruction of locks."
-msgstr "mpo_destroy se invocará cuando se descargue un módulo de política para permitir la liberación de la memoria reservada y la destrucción de los bloqueos."
-
-#. type: Plain text
-#: documentation/content/en/books/arch-handbook/mac/_index.adoc:305
-msgid ""
-"Currently, these two entry points are invoked with the MAC policy list mutex "
-"held to prevent any other entry points from being invoked: this will be "
-"changed, but in the mean time, policies should be careful about what kernel "
-"primitives they invoke so as to avoid lock ordering or sleeping problems."
-msgstr ""
-"Actualmente, estos dos puntos de entrada se invocan con el mutex the lista "
-"de políticas MAC cogido para evitar que se invoquen otros puntos de entrada: "
-"esto se cambiará, pero mientras tanto, las políticas deberían tener cuidado "
-"acerca de qué primitivas del kernel invocan para evitar problemas con el "
-"orden de los bloqueos o problemas al dormir el proceso."
+"El vector de punto de entrada de la política MAC,"
+"<varname>mac_<replaceable>policy</replaceable>_ops</varname> en este "
+"ejemplo, asocia funciones definidas en el módulo con puntos de entrada "
+"específicos. Puede encontrar una lista completa de los puntos de entrada "
+"disponibles y sus prototipos en la sección de referencia del punto de "
+"entrada MAC. De especial interés durante el registro del módulo son los "
+"<symbol>.mpo_destroy</symbol> y <symbol>.mpo_init</symbol> puntos de entrada."
+"<symbol>.mpo_init</symbol> se invocará una vez que una política se registre "
+"con éxito en el marco del módulo, pero antes de que cualquier otro punto de "
+"entrada se active. Esto permite que la política realice cualquier asignación "
+"e inicialización específica de la política, como la inicialización de datos "
+"o bloqueos. <symbol>.mpo_destroy</symbol> se invocará cuando se descargue un "
+"módulo de políticas para permitir la liberación de cualquier memoria "
+"asignada y la destrucción de bloqueos. Actualmente, estos dos puntos de "
+"entrada se invocan con el mutex de la lista de políticas MAC retenido para "
+"evitar que se invoquen otros puntos de entrada: esto se cambiará, pero "
+"mientras tanto, las políticas deben tener cuidado con las primitivas del "
+"kernel que invocan para evitar Bloqueo de pedidos o problemas para dormir."
 
 #. type: Plain text
 #: documentation/content/en/books/arch-handbook/mac/_index.adoc:309
@@ -9031,44 +9018,49 @@ msgid ""
 "security service."
 msgstr ""
 
-#, fuzzy
 #~ msgid ""
 #~ "The MAC policy entry point vector, `mac__policy__ops` in this example, "
-#~ "associates functions defined in the module with specific entry points. A "
+#~ "associates functions defined in the module with specific entry points.  A "
 #~ "complete listing of available entry points and their prototypes may be "
-#~ "found in the MAC entry point reference section. Of specific interest "
+#~ "found in the MAC entry point reference section.  Of specific interest "
 #~ "during module registration are the .mpo_destroy and .mpo_init entry "
-#~ "points. .mpo_init will be invoked once a policy is successfully "
-#~ "registered with the module framework but prior to any other entry points "
-#~ "becoming active. This permits the policy to perform any policy-specific "
-#~ "allocation and initialization, such as initialization of any data or "
-#~ "locks. .mpo_destroy will be invoked when a policy module is unloaded to "
-#~ "permit releasing of any allocated memory and destruction of locks. "
+#~ "points."
+#~ msgstr ""
+#~ "El vector de puntos de entrada de la política MAC, en este ejemplo "
+#~ "`mac__policy__ops`, asocia funciones definidas en el módulo con puntos de "
+#~ "entrada específicos. Se puede encontrar una lista completa de puntos de "
+#~ "entrada disponibles y sus prototipos en la sección de referencia de "
+#~ "puntos de entrada MAC. Los puntos de entrada .mpo_destroy y .mpo_init son "
+#~ "de interés específico durante el registro del módulo."
+
+#, no-wrap
+#~ msgid "mpo_init will be invoked once a policy is successfully registered with the module framework but prior to any other entry points becoming active."
+#~ msgstr "mpo_init se invocará una vez que una política se haya registrado con éxito con el framework de módulos pero antes que se ningún otro punto de entrada se convierta en activo."
+
+#~ msgid ""
+#~ "This permits the policy to perform any policy-specific allocation and "
+#~ "initialization, such as initialization of any data or locks."
+#~ msgstr ""
+#~ "Esto permite a la política realizar cualquier reserva e inicialización "
+#~ "específica de la política, como la inicialización de cualquier dato o "
+#~ "bloqueo."
+
+#, no-wrap
+#~ msgid "mpo_destroy will be invoked when a policy module is unloaded to permit releasing of any allocated memory and destruction of locks."
+#~ msgstr "mpo_destroy se invocará cuando se descargue un módulo de política para permitir la liberación de la memoria reservada y la destrucción de los bloqueos."
+
+#~ msgid ""
 #~ "Currently, these two entry points are invoked with the MAC policy list "
 #~ "mutex held to prevent any other entry points from being invoked: this "
 #~ "will be changed, but in the mean time, policies should be careful about "
 #~ "what kernel primitives they invoke so as to avoid lock ordering or "
 #~ "sleeping problems."
 #~ msgstr ""
-#~ "El vector de punto de entrada de la política MAC,"
-#~ "<varname>mac_<replaceable>policy</replaceable>_ops</varname> en este "
-#~ "ejemplo, asocia funciones definidas en el módulo con puntos de entrada "
-#~ "específicos. Puede encontrar una lista completa de los puntos de entrada "
-#~ "disponibles y sus prototipos en la sección de referencia del punto de "
-#~ "entrada MAC. De especial interés durante el registro del módulo son los "
-#~ "<symbol>.mpo_destroy</symbol> y <symbol>.mpo_init</symbol> puntos de "
-#~ "entrada.<symbol>.mpo_init</symbol> se invocará una vez que una política "
-#~ "se registre con éxito en el marco del módulo, pero antes de que cualquier "
-#~ "otro punto de entrada se active. Esto permite que la política realice "
-#~ "cualquier asignación e inicialización específica de la política, como la "
-#~ "inicialización de datos o bloqueos. <symbol>.mpo_destroy</symbol> se "
-#~ "invocará cuando se descargue un módulo de políticas para permitir la "
-#~ "liberación de cualquier memoria asignada y la destrucción de bloqueos. "
-#~ "Actualmente, estos dos puntos de entrada se invocan con el mutex de la "
-#~ "lista de políticas MAC retenido para evitar que se invoquen otros puntos "
-#~ "de entrada: esto se cambiará, pero mientras tanto, las políticas deben "
-#~ "tener cuidado con las primitivas del kernel que invocan para evitar "
-#~ "Bloqueo de pedidos o problemas para dormir."
+#~ "Actualmente, estos dos puntos de entrada se invocan con el mutex the "
+#~ "lista de políticas MAC cogido para evitar que se invoquen otros puntos de "
+#~ "entrada: esto se cambiará, pero mientras tanto, las políticas deberían "
+#~ "tener cuidado acerca de qué primitivas del kernel invocan para evitar "
+#~ "problemas con el orden de los bloqueos o problemas al dormir el proceso."
 
 #~ msgid ""
 #~ "include::shared/attributes/attributes-{{% lang %}}.adoc[] include::shared/"

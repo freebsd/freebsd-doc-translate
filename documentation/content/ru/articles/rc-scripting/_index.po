@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FreeBSD Documentation VERSION\n"
-"POT-Creation-Date: 2026-08-06 22:55+0100\n"
+"POT-Creation-Date: 2026-08-16 15:12-0300\n"
 "PO-Revision-Date: 2026-04-05 04:45+0000\n"
 "Last-Translator: Vladlen Popolitov <vladlenpopolitov@list.ru>\n"
 "Language-Team: Russian <https://translate-dev.freebsd.org/projects/"
@@ -18,7 +18,7 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.17\n"
 
-#. type: YAML Front Matter: description
+#. type: Yaml Front Matter Hash Value: description
 #: documentation/content/en/articles/rc-scripting/_index.adoc:1
 #, no-wrap
 msgid "A guide to writing new rc.d scripts and understanding those already written"
@@ -31,12 +31,12 @@ msgstr "Руководство по написанию новых rc.d-скри�
 msgid "Practical rc.d scripting in BSD"
 msgstr "Практическое руководство по написанию rc.d скриптов в BSD"
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:44
 msgid "Abstract"
 msgstr "Аннотация"
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:48
 msgid ""
 "Beginners may find it difficult to relate the facts from the formal "
@@ -55,7 +55,7 @@ msgstr ""
 "рассмотрение должно дать ориентиры для дальнейшего изучения устройства и "
 "эффективного применения [.filename]#rc.d#."
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:50
 msgid "'''"
 msgstr "'''"
@@ -66,7 +66,7 @@ msgstr "'''"
 msgid "Introduction"
 msgstr "Введение"
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:60
 msgid ""
 "The historical BSD had a monolithic startup script, [.filename]#/etc/rc#.  "
@@ -85,7 +85,7 @@ msgstr ""
 "администраторам требовалось его настраивать. За редкими исключениями, [."
 "filename]#/etc/rc# приходилось изменять, и настоящим хакерам это нравилось."
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:66
 msgid ""
 "The real problem with the monolithic approach was that it provided no "
@@ -111,7 +111,7 @@ msgstr ""
 "с тем, для чего скрипты вообще предназначены: облегчать жизнь администратору "
 "системы."
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:73
 msgid ""
 "Later there was an attempt to split out some parts of [.filename]#/etc/rc# "
@@ -140,7 +140,7 @@ msgstr ""
 "становились разнообразнее и сложнее, \"квазимодульный\" подход стал ещё "
 "большей обузой, чем монолитный [.filename]#/etc/rc#."
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:81
 msgid ""
 "Without a clean and well-designed framework, the startup scripts had to bend "
@@ -164,7 +164,7 @@ msgstr ""
 "Вскоре мы узнаем больше о компонентах системы [.filename]#rc.d# и увидим, "
 "как вызываются отдельные скрипты."
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:92
 msgid ""
 "The basic ideas behind BSD [.filename]#rc.d# are _fine modularity_ and "
@@ -208,7 +208,7 @@ msgstr ""
 "filename]#/etc/rc.shutdown#, поскольку правильный порядок завершения работы "
 "противоположен порядку запуска."
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:100
 msgid ""
 "The BSD [.filename]#rc.d# design is described in crossref:rc-"
@@ -239,7 +239,7 @@ msgstr ""
 "соответствующие страницы Справочника. Не стесняйтесь обращаться к ним для "
 "получения более формальной и полной документации во время чтения этой статьи."
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:104
 msgid ""
 "There are prerequisites to understanding this article.  First of all, you "
@@ -253,7 +253,7 @@ msgstr ""
 "запуска и завершения работы пользовательского пространства, что описано в "
 "man:rc[8]."
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:107
 msgid ""
 "This article focuses on the FreeBSD branch of [.filename]#rc.d#.  "
@@ -272,7 +272,7 @@ msgstr ""
 msgid "Outlining the task"
 msgstr "Обрисовка задачи"
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:113
 msgid ""
 "A little consideration before starting `$EDITOR` will not hurt.  To write a "
@@ -283,12 +283,12 @@ msgstr ""
 "хорошо продуманный скрипт [.filename]#rc.d# для системной службы, сначала "
 "нужно ответить на следующие вопросы:"
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:115
 msgid "Is the service mandatory or optional?"
 msgstr "Является ли служба обязательной или опциональной?"
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:116
 msgid ""
 "Will the script serve a single program, e.g., a daemon, or perform more "
@@ -297,12 +297,12 @@ msgstr ""
 "Будет ли скрипт обслуживать одну программу, например, демон, или выполнять "
 "более сложные действия?"
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:117
 msgid "Which other services will our service depend on, and vice versa?"
 msgstr "От каких других служб зависит наша служба, и наоборот?"
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:119
 msgid ""
 "From the examples that follow we will see why it is important to know the "
@@ -316,7 +316,7 @@ msgstr ""
 msgid "A dummy script"
 msgstr "Примитивный скрипт"
 
-#. type: Plain text
+#. type: .abstract-title
 #: documentation/content/en/articles/rc-scripting/_index.adoc:124
 msgid ""
 "The following script just emits a message each time the system boots up:"
@@ -810,7 +810,7 @@ msgstr ""
 "conf[5]. Это простой пример того, как переменные man:rc.conf[5] могут "
 "управлять скриптом в [.filename]#rc.d#."
 
-#. type: Plain text
+#. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:303
 msgid ""
 "The names of all man:rc.conf[5] variables used exclusively by our script "
@@ -821,7 +821,7 @@ msgstr ""
 "скриптом, _должны_ иметь один и тот же префикс: `${name}_`. Например: "
 "`dummy_mode`, `dummy_state_file` и так далее."
 
-#. type: Plain text
+#. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:308
 msgid ""
 "While it is possible to use a shorter name internally, e.g., just `msg`, "
@@ -834,7 +834,7 @@ msgstr ""
 "вводимым нашим скриптом, избавит нас от возможных конфликтов с пространством "
 "имён man:rc.subr[8]."
 
-#. type: Plain text
+#. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:311
 msgid ""
 "As a rule, [.filename]#rc.d# scripts of the base system need not provide "
@@ -849,7 +849,7 @@ msgstr ""
 "defaults/rc.conf#. С другой стороны, скрипты [.filename]#rc.d# для портов "
 "должны предоставлять значения по умолчанию, как показано в примере."
 
-#. type: delimited block = 4
+#. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:315
 msgid ""
 "&#10126; Here we use `dummy_msg` to actually control our script, i.e., to "
@@ -1534,7 +1534,7 @@ msgstr ""
 "выхода, основной метод не будет выполнен. В свою очередь, `argument_postcmd` "
 "не будет вызван, если основной метод возвращает ненулевой код выхода."
 
-#. type: Plain text
+#. type: delimited block = 4
 #: documentation/content/en/articles/rc-scripting/_index.adoc:583
 msgid ""
 "However, man:rc.subr[8] can be instructed from the command line to ignore "
@@ -1551,7 +1551,7 @@ msgstr ""
 msgid "Connecting a script to the rc.d framework"
 msgstr "Подключение скрипта к инфраструктуре rc.d"
 
-#. type: delimited block = 4
+#. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:593
 msgid ""
 "After a script has been written, it needs to be integrated into [."
@@ -1575,7 +1575,7 @@ msgstr ""
 "{porters-handbook}special[в Руководстве FreeBSD по созданию портов, rc-"
 "scripts]."
 
-#. type: delimited block = 4
+#. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:598
 msgid ""
 "However, we should consider beforehand the place of our script in the system "
@@ -1592,7 +1592,7 @@ msgstr ""
 "не требует, он вряд ли сможет запуститься до проверки и монтирования "
 "основных файловых систем."
 
-#. type: delimited block = 4
+#. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:604
 msgid ""
 "We mentioned man:rcorder[8] already.  Now it is time to have a close look at "
@@ -1609,7 +1609,7 @@ msgstr ""
 "зависимостях _внутри_ файлов, чтобы каждый файл мог описывать только себя. "
 "Файл может содержать следующую информацию:"
 
-#. type: delimited block = 4
+#. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:606
 msgid ""
 "the names of the \"conditions\" (which means services to us) it __provides__;"
@@ -1617,17 +1617,17 @@ msgstr ""
 "имена \"условий\" (что для нас означает сервисы), которые он "
 "__предоставляет__;"
 
-#. type: delimited block = 4
+#. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:607
 msgid "the names of the \"conditions\" it __requires__;"
 msgstr "имена \"условий\", которые он __требует__;"
 
-#. type: delimited block = 4
+#. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:608
 msgid "the names of the \"conditions\" this file should run __before__;"
 msgstr "имена \"условий\", перед которыми должен выполняться этот файл;"
 
-#. type: delimited block = 4
+#. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:609
 msgid ""
 "additional _keywords_ that can be used to select a subset from the whole set "
@@ -1639,7 +1639,7 @@ msgstr ""
 "помощью опций для включения или исключения файлов, содержащих указанные "
 "ключевые слова.)"
 
-#. type: delimited block = 4
+#. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:614
 msgid ""
 "It is no surprise that man:rcorder[8] can handle only text files with a "
@@ -1654,7 +1654,7 @@ msgstr ""
 "специальных строк довольно жёсткий, чтобы упростить их обработку. "
 "Подробности см. в man:rcorder[8]."
 
-#. type: delimited block = 4
+#. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:617
 msgid ""
 "Besides using man:rcorder[8] special lines, a script can insist on its "
@@ -1668,7 +1668,7 @@ msgstr ""
 "опциональной и не запускается самостоятельно, потому что системный "
 "администратор ошибочно отключил её в man:rc.conf[5]."
 
-#. type: delimited block = 4
+#. type: Plain text
 #: documentation/content/en/articles/rc-scripting/_index.adoc:619
 msgid ""
 "With this general knowledge in mind, let us consider the simple daemon "
